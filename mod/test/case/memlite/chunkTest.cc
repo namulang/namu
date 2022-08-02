@@ -1,7 +1,7 @@
 #include "../../common/dep.hpp"
 #include <vector>
 
-using namespace wrd;
+using namespace namu;
 using namespace std;
 
 namespace {

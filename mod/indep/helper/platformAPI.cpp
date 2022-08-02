@@ -10,7 +10,7 @@
 #endif
 #include <time.h>
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(platformAPI)
     using namespace std;

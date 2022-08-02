@@ -1,8 +1,8 @@
-#include "../../wrdTest.hpp"
+#include "../../namuTest.hpp"
 
-using namespace wrd;
+using namespace namu;
 
-struct chunksTest : public wrdTest {
+struct chunksTest : public namuTest {
     void TearDown() {
         _getVault().getVaults().clear();
     }

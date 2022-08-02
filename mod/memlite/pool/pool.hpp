@@ -2,7 +2,7 @@
 
 #include "chunks.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout pool : public memoryHaver {
         WRD_DECL_ME(pool, memoryHaver)

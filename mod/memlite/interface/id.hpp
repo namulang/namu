@@ -3,7 +3,7 @@
 #include "../common.hpp"
 #include <iostream>
 
-namespace wrd {
+namespace namu {
 
     struct _wout id {
         id(wint new_tagN, wint newChkN, wuint newSerial);

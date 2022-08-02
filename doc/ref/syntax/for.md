@@ -26,14 +26,14 @@ for a
 * <var>의 getiterator()를 호출하여 가져온 뒤, 자동으로 next를 호출한다.
 
 ## for 문 condition 부분에 정의한 변수는 최초 1번만 정의되고 다음 부터는 할당으로 간주한다.
-```wrd
+```namu
 foo() int
 for isTrue := foo()
     doSomething()
 ```
 
 * 위의 코드는 사실 다음과 같다.
-```wrd
+```namu
 isTrue int
 for isTrue = foo()
     doSomething()

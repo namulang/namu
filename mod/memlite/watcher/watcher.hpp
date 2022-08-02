@@ -3,7 +3,7 @@
 #include "../pool/chunk.hpp"
 #include "watchCell.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout watcher : public chunk {
         WRD_DECL_ME(watcher, chunk)

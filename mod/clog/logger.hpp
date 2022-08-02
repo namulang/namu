@@ -2,7 +2,7 @@
 
 #include "stream/stream.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout logger : public stream {
         WRD_DECL_ME(logger, stream)

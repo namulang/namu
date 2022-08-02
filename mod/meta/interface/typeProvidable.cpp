@@ -1,7 +1,7 @@
 #include "../type/ttype.hpp"
 #include "typeProvidable.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(typeProvidable)
 

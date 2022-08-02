@@ -2,7 +2,7 @@
 
 #include "buildFeature.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout platformAPI {
         WRD_DECL_ME(platformAPI)

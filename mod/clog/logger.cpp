@@ -2,7 +2,7 @@
 #include <iostream>
 #include "stream.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(logger)
     typedef std::string string;

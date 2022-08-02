@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: wrd
-Source: http://github.com/kniz/wrd
+Upstream-Name: namu
+Source: http://github.com/kniz/namu
 
 Files: *
 Copyright: 2011-2022 kniz <knizofficial@gmail.com>

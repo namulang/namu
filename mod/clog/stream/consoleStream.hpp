@@ -2,7 +2,7 @@
 
 #include "stream.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout consoleStream : public stream {
         WRD_DECL_ME(consoleStream, stream)

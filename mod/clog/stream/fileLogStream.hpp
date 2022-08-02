@@ -3,7 +3,7 @@
 #include "stream.hpp"
 #include <fstream>
 
-namespace wrd {
+namespace namu {
 
     class _wout fileLogStream : public stream {
         WRD_DECL_ME(fileLogStream, stream)

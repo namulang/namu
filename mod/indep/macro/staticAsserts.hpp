@@ -3,7 +3,7 @@
 #include "../common/typedef.hpp"
 #include <type_traits>
 
-namespace wrd {
+namespace namu {
 
     template <wbool...> struct boolPack;
     template <wbool... bp>

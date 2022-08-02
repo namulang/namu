@@ -51,7 +51,7 @@ void main() {
 
 ## as함수의 반환형은 Bind 다.
 
-* Bind 클래스는 Strong과 Weak 모드 양쪽으로 동작 가능한 클래스다. wrd frx 에서는 대부분 이 Bind 클래스로 나갈 것이다.
+* Bind 클래스는 Strong과 Weak 모드 양쪽으로 동작 가능한 클래스다. namu frx 에서는 대부분 이 Bind 클래스로 나갈 것이다.
 * 상황에 따라서 Weak일 수도 있으며 Strong 일 수도 있다.
 * 이는 로컬바인딩으로 나가는 상황을 고려한 것이다.
 * Strong로 나간걸 Weak로 받을 수 있다. Bind로도 받을 수 있다.

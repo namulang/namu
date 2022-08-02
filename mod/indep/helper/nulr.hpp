@@ -2,7 +2,7 @@
 
 #include "../common.hpp"
 
-namespace wrd {
+namespace namu {
     /// means null-reference.
     template <typename T>
     T& nulOf() {
@@ -21,7 +21,7 @@ namespace wrd {
         //  in c++ standard reference, it's not allow to check pointer of reference whether
         //  it's null or not, it's always regarded to not null.
         //
-        //  however, in wrd project, I decided to use only reference for some reason and
+        //  however, in namu project, I decided to use only reference for some reason and
         //  treat it like a pointer. instead, I won't declare a pointer at all.
         //
         //  so we need to check nulity of a reference but compiler always optimize it to true

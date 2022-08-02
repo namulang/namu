@@ -52,7 +52,7 @@ def app
 
 ## generic은 인자T를 받아들여서 obj를 생성하는 간편 함수를 제공해야 한다.
 
-## 기본 container 들 모두 wrd 언어로 짜야한다.
+## 기본 container 들 모두 namu 언어로 짜야한다.
 
 * native binding API를 통해서 C++ container 등을 proxy 한다.
 

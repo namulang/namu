@@ -340,8 +340,8 @@ def _make():
     if isWindow():
         printInfoEnd("build the generated solution using visual studio's msbuild tool...")
         os.system("dir " + cwd + "\\mod")
-        os.system("dir " + cwd + "\\mod\\wrc")
-        res = os.system("msbuild " + winProp + " " + cwd + "\\mod\\wrc\\wrc.vcxproj")
+        os.system("dir " + cwd + "\\mod\\frontend")
+        res = os.system("msbuild " + winProp + " " + cwd + "\\mod\\frontend\\frontend.vcxproj")
         if res != 0:
             printErr("failed")
         else:
@@ -442,7 +442,7 @@ def pub(arg):
         os.system("mkdir usr/lib")
         os.system("mkdir usr/include")
         os.system("mkdir usr/share")
-        os.system("mkdir usr/share/wrd")
+        os.system("mkdir usr/share/namu")
         printOk("done.")
         os.chdir(cwd)
 
@@ -453,9 +453,9 @@ def pub(arg):
         os.chdir(debianDir)
         target = debianDir + "/usr/"
         printInfoEnd("copy outputs into debian target directory")
-        os.system("cp " + binDir + "/wrc " + target + "bin")
+        os.system("cp " + binDir + "/namu " + target + "bin")
         os.system("cp " + binDir + "/*.so " + target + "lib")
-        os.system("cp -r " + binDir + "/pack " + target + "share/wrd")
+        os.system("cp -r " + binDir + "/pack " + target + "share/namu")
         printOk("done")
 
         printInfoEnd("packaging...")
@@ -464,7 +464,7 @@ def pub(arg):
         printOk("done")
 
         printInfoEnd("move package into bin/...")
-        os.system("mv debian.deb " + binDir + "/wrd-" + str(ver_major) + "." + str(ver_minor) +
+        os.system("mv debian.deb " + binDir + "/namu-" + str(ver_major) + "." + str(ver_minor) +
                 "." + str(ver_fix) + "-1-amd64-release.deb")
         printOk("done")
 
@@ -492,7 +492,7 @@ def pub(arg):
         printOk("done")
         printInfoEnd("make an archive")
         os.chdir(binDir + "/..")
-        os.system("tar -zcvf wrd-" + str(ver_major) + "." + str(ver_minor) + "." + str(ver_fix) + "-amd64-release-macos.tar.gz bin")
+        os.system("tar -zcvf namu-" + str(ver_major) + "." + str(ver_minor) + "." + str(ver_fix) + "-amd64-release-macos.tar.gz bin")
         printOk("done")
         return 0
 
@@ -645,10 +645,10 @@ def clean():
     _cleanDir(binDir)
     if isWindow():
         _cleanDir(cwd + "\\mod")
-        bisonDir = cwd + "\\..\\mod\\wrd\\loader\\interpreter\\bison"
+        bisonDir = cwd + "\\..\\mod\\namu\\loader\\interpreter\\bison"
     else:
         _cleanDir(cwd + "/mod")
-        bisonDir = cwd + "/../mod/wrd/loader/interpreter/bison"
+        bisonDir = cwd + "/../mod/namu/loader/interpreter/bison"
     try:
         if isWindow():
             os.remove(bisonDir + "\\lowparser.hpp")
@@ -721,7 +721,7 @@ def _extractEnv():
             python3 = _where("python")
         return python3 == ""
 cwd = ""
-wrdDir = ""
+namuDir = ""
 resDir = ""
 binDir = ""
 externalDir = ""
@@ -729,18 +729,18 @@ generator = "Visual Studio 17 2022" if isWindow() else "Unix Makefiles"
 winProp = ""
 
 def _init():
-    global cwd, wrdDir, binDir, externalDir, resDir
+    global cwd, namuDir, binDir, externalDir, resDir
     cwd = os.path.dirname(os.path.realpath(sys.argv[0]))
     if isWindow():
-        wrdDir = cwd + "\\.."
-        binDir = wrdDir + "\\bin"
-        resDir = wrdDir + "\\res"
-        externalDir = wrdDir + "\\external"
+        namuDir = cwd + "\\.."
+        binDir = namuDir + "\\bin"
+        resDir = namuDir + "\\res"
+        externalDir = namuDir + "\\external"
     else:
-        wrdDir = cwd + "/.."
-        binDir = wrdDir + "/bin"
-        resDir = wrdDir + "/res"
-        externalDir = wrdDir + "/external"
+        namuDir = cwd + "/.."
+        binDir = namuDir + "/bin"
+        resDir = namuDir + "/res"
+        externalDir = namuDir + "/external"
 
     _extractBuildInfo()
     return _extractEnv()

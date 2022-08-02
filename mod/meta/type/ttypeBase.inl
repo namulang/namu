@@ -4,7 +4,7 @@
 #include "ttypeBase.hpp"
 #include "../rtti/rtti.hpp"
 
-namespace wrd {
+namespace namu {
 
 #define TEMPL template <typename T, typename S>
 #define ME ttypeBase<T, S>

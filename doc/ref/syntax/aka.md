@@ -13,7 +13,7 @@
 
 ## 정의와 동시에 aka를 쓸 수 있다.
 
-```wrd
+```namu
 aka sys.console
 
 aka def person from obj() 
@@ -40,7 +40,7 @@ aka def person from obj()
 
 ## aka도 expression 이다.
 
-```wrd
+```namu
 foo(aka (view): view.show() -> lambda, 33)
 /*  or,
 aka (view)

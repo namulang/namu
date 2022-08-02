@@ -2,7 +2,7 @@
 
 #include "memoryHaver.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout allocator : public memoryHaver {
         WRD_DECL_ME(allocator)

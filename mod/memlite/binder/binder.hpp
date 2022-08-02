@@ -4,7 +4,7 @@
 
 struct binderTest;
 
-namespace wrd {
+namespace namu {
 
     class bindTacticable;
     class bindTag;

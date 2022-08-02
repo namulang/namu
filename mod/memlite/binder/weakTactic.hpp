@@ -3,7 +3,7 @@
 #include "bindTacticable.hpp"
 #include "../interface/instance.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout weakTactic : public bindTacticable {
         WRD_DECL_ME(weakTactic, bindTacticable);

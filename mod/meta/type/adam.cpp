@@ -2,6 +2,6 @@
 #include "ttype.hpp"
 #include "ttypeBase.inl"
 
-namespace wrd {
+namespace namu {
     WRD_INIT_META(adam)
 }

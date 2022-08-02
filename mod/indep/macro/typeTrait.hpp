@@ -1,6 +1,6 @@
 #pragma once
 
-namespace wrd
+namespace namu
 {
     template <typename T>
     class TypeTrait {

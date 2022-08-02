@@ -2,7 +2,7 @@
 
 #include "chunk.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout chunks : public allocator {
         WRD_DECL_ME(chunks, allocator)

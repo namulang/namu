@@ -1,9 +1,9 @@
-#include "../../wrdTest.hpp"
+#include "../../namuTest.hpp"
 
 using namespace std;
-using namespace wrd;
+using namespace namu;
 
-struct watcherTest : public wrdTest {};
+struct watcherTest : public namuTest {};
 
 namespace {
     struct A : public instance {

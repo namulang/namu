@@ -1,6 +1,6 @@
 #include "instancer.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(instancer)
 

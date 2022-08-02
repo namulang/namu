@@ -2,7 +2,7 @@
 
 #include "../common.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout sobj : public instance {
         WRD_DECL_ME(sobj, instance)

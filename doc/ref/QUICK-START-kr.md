@@ -1,6 +1,6 @@
 # Quick Start in KR 
 
-```wrd
+```namu
 import sys.cons.
 
 def app
@@ -13,7 +13,7 @@ def app
 
 * 정의시, type은 항상 뒤에 옵니다.
 
-```wrd
+```namu
 str1 := "message" // 변수의 정의
 str1 = "wow" 
 bool1 := false
@@ -29,7 +29,7 @@ toInt := int1 as flt64
 
 * 항상 Indentation 레벨에 의해서 scope를 표현한다.
 
-```wrd
+```namu
 val := 0
 if val == 0
     if val > 0
@@ -40,7 +40,7 @@ else
 
 * ':'를 사용하면 indent 없이 block문을 작성할 수 있다.
 
-```wrd
+```namu
 // ':' only allow to follow a single statement.
 if val == 0: print('this and then,')
     print('this too') // err
@@ -65,7 +65,7 @@ else: print('no') // 'else' has no indentation level.
 
 * closure에서도 동일하게 적용한다.
 
-```wrd
+```namu
 closure(n int) int = null
 
 if val > 0
@@ -84,7 +84,7 @@ if val > 0
     ',' is belongs to the line which has 2 indentation level. so it exists as one of term of
     'return' statement.
     now 'callClosure' function is returning two integer, n+5 and 22, and is not valid syntax
-    in wrdlang. */
+    in namulang. */
 
     callClosure((n): switch n: 22, 23: doSomething(), 23) // ok
     // in above statement, comma was also used to represent the case statement, but it's not
@@ -96,7 +96,7 @@ if val > 0
 
 
 # 흐름 제어
-```wrd
+```namu
 msg := "hello"
 for ch in msg
     c.print("ch=$ch ") // this'll shows like 'ch=h ch=e ch=l ch=l ch=o'
@@ -112,7 +112,7 @@ for ++n < 3
 
 # 컨테이너
 
-```wrd
+```namu
 intArr := {1, 2, 3}
 floatArr := {1.5, 2.5, 3.5}
 
@@ -140,7 +140,7 @@ c.print("how many apple do you have = $map['apple']") // "how many apple do you 
 * 함수의 반환형에는 expr이 올 수 없습니다. 타입만 올 수 있습니다.
 * 반드시 함수의 body를 정의해야 합니다.
 
-```wrd
+```namu
 getLen(b int...) int // '...' means varidic argument
     sum := 0
     for n in b
@@ -174,7 +174,7 @@ lifeFptr() == 0 // true
 
 # 객체정의
 
-```wrd
+```namu
 aka sys.cons -> c
 
 def base // base is incomplete origin object
@@ -229,7 +229,7 @@ msg1 === msg2 // however, they aren't same object.
 
 # 표현식기반
 
-```wrd
+```namu
 max := if isGood := false // max as int
     c.out("never reach here.")
     c.out("and returns the last expr to outside of block")
@@ -245,7 +245,7 @@ val == 10 // true
 
 
 # 프로퍼티
-```wrd
+```namu
 def myObj
     age := 22 // age as int. it has value 22. but is also property.
         get
@@ -271,7 +271,7 @@ def app
 
 # closure
 
-```wrd
+```namu
 def app
     func() int = null // abstract method.
     // when you declare a func, the func can be also used as a type.
@@ -297,7 +297,7 @@ def app
 
 # exceptions
 
-```wrd
+```namu
 def app
     safeNavigation() void
         activity?.appContext?.res?.getString(1) // safe navigation

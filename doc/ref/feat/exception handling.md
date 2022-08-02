@@ -6,7 +6,7 @@
 * on 키워드를 제외하고 multi value가 되는 경우는 없다.
 
 ## on 키워드는 err 값을 반환한다.
-```wrd
+```namu
 foo() str on permErr
 
 got := retVal on someErr := foo()
@@ -71,7 +71,7 @@ def app
 ```
 
 ## on으로 반환받을때 값이나 err 둘 중 1개를 생략할 수 있다.
-```wrd
+```namu
 def someErr err
 foo() int on someErr // on 반환받을때가 아니다. 고로 생략할 수 없다.
 

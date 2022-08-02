@@ -40,7 +40,7 @@ a1 === a2 // true
 ## 2항 연산자와 comma는 Indetation이 무시된다.
 
 * +나 , 같은 경우는 계속해서 이어서 쓰는 경우가 많기 때문에 쉽게 가로로 화면을 벗어난다.
-* wrdlang은 indentation에 민감하기 때문에 이 경우, 블록문이 시작되는 것으로 오인하게 된다.
+* namulang은 indentation에 민감하기 때문에 이 경우, 블록문이 시작되는 것으로 오인하게 된다.
 * 편의를 위해서 col이 화면을 벗어나지만, 다음에 올 토큰이 반드시 블록문이 될 수 없는 상황인 경우
   Indentation체크를 꺼서 블록문으로 오인되지 않게 한다.
 * 2항연산자와 comma는, [, (, {, '.' 가 나오면 다음 token이 나올때까지 indentation이 무시된다.
@@ -52,7 +52,7 @@ a1 === a2 // true
   모든 token을 무시한다.
 * 유의미한 token이 scanner에 인식된 경우부터는 정상동작으로 돌아간다.
 
-```wrd
+```namu
 a = 2 + 3 + constants.VERY_LONG_NAME_I_DONT_KNOW_ITS_NAME_BUT_VERY_LONG + activity.getFrameManager().getScreenPlay(22, (view, context)
     view.update(context)
     view.doSomething(22)

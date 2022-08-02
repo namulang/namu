@@ -9,7 +9,7 @@
 
 #include "../def/common.hpp"
 
-namespace wrd {
+namespace namu {
     typedef int                 wint;
     typedef unsigned int        wuint;
     typedef bool                wbool;

@@ -135,7 +135,7 @@ a A := B(5)
     def <me-identifier>(<constructor call>)* <expr>
 
 * 상속시 부모 클래스가 오는 자리에 expr이 올 수 있다.
-```wrd
+```namu
 foo() A
    return .....
 def B foo()
@@ -187,7 +187,7 @@ MyObject.me.foo()
 ## typelist 정의
 
 * 단순히 encapsulation만을 사용해서 원하는 타입의 객체들을 하나의 객체로 묶으려면 다음과 같이 해야 한다.
-```wrd
+```namu
 def person
     name str
     age int
@@ -199,7 +199,7 @@ person.weight
 ```
 
 * 이와 같은 성격의 객체를 typelist라고 정의하며 다음과 같이 축약할 수 있다.
-```wrd
+```namu
 def person -> name str, age int, weight flt
 
 person.name
@@ -208,7 +208,7 @@ person.weight
 ```
 
 * 만약 @type 선언 문법을 사용하면 더 줄일 수 있다.
-```wrd
+```namu
 def tempVal -> @str, @int, @flt
 foo() tempVal: tempVal("Chales", 35, 89.5)
 ret := foo()

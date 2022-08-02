@@ -1,7 +1,7 @@
-#include <wrd.hpp>
+#include <core.hpp>
 #include <iostream>
 #include "common.hpp"
-using namespace wrd;
+using namespace namu;
 
 struct con {
     void say() {
@@ -30,7 +30,7 @@ struct con {
     }
 };
 
-extern "C" _wout void wrd_bridge_cpp_entrypoint(bicontainable* tray) {
+extern "C" _wout void namu_bridge_cpp_entrypoint(bicontainable* tray) {
     tray->add("con", tcppBridge<con>::def()
         ->func("say", &con::say)
         ->func("add", &con::add)

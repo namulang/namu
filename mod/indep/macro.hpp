@@ -5,7 +5,7 @@
 #include "macro/memLeak.hpp" // 메모리누수 검출 매크로.
 #include "macro/argCounter.hpp"
 #include "macro/argGetter.hpp"
-#include "macro/wrdMeta.hpp"
+#include "macro/namuMeta.hpp"
 #include "macro/helper.hpp"
 #include "macro/pair.hpp"
 #include "macro/declThis.hpp"

@@ -2,7 +2,7 @@
 
 #include "../common.hpp"
 
-namespace wrd {
+namespace namu {
     class _wout typeProvidable {
         WRD_DECL_ME(typeProvidable)
 
@@ -23,7 +23,7 @@ namespace wrd {
         template <typename T>
         T& cast() {
             // this protection:
-            //  this c wrd interpreter uses references in default, and not any pointers.
+            //  this c namu interpreter uses references in default, and not any pointers.
             //  so you always care about a refer can be nulled.
             //  for a convenience of our API users I put this guard.
             //

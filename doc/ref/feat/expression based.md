@@ -5,7 +5,7 @@
 ## ret 는 expression의 값을 도중에 반환한다.
 
 ## if 도 expression으로 취급한다.
-```wrd
+```namu
 flag := true
 val := if flag
     ret 3
@@ -17,7 +17,7 @@ else
     * primitive 라면 0 혹은 ""이 할당되며, 커스텀 타입이라면 null이 들어간다.
 
 ## for 도 expression으로 평가된다.
-```wrd
+```namu
 arr := [1, 2, 3, 4]
 lastElem := for e in arr
     if e == 4: ret e * 5
@@ -26,7 +26,7 @@ lastElem == 20
 ```
 
 ## def 도 expression으로 평가된다.
-```wrd
+```namu
 def myObj
     say() void = null
 
@@ -46,7 +46,7 @@ foo(def helloObj myObj // 이 경우 origin 객체이므로 호출이 불가능�
 ```
 
 ## expression으로 판정시 반환형은 ret 키워드로 판단한다.
-```wrd
+```namu
 arr := [1, 2, 33, 44]
 a := for e : arr
     if e > 22: ret e
@@ -57,7 +57,7 @@ a := for e : arr
 * a 는 obj 타입이다.
 
 ## ret 가 없는 블록문은 void로 판단되며 다른 ret 타입을 우선한다.
-```wrd
+```namu
 a := if e < 2
     ret e * 2 // int로 유도된다.
 else
@@ -75,7 +75,7 @@ else
   많은 예제들에서 에러가 발생할 것이다.
 
 ## ret가 없는 경우 expression으로 받으면 에러가 된다.
-```wrd
+```namu
 a := if flag // err: a에 할당될 블록문에 어떤 라인에서도 ret를 찾지 못했다.
     22
 else

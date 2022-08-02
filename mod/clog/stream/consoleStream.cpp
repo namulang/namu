@@ -1,7 +1,7 @@
 #include "consoleStream.hpp"
 #include <iostream>
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(consoleStream)
 

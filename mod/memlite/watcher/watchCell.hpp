@@ -2,7 +2,7 @@
 
 #include "bindTag.hpp"
 
-namespace wrd {
+namespace namu {
     /// @remark Immortality of WatchCell instance.
     ///         WatchCell is managed by Chunks and Chunks set used instances to some
     ///         index for chaining linked list. in order to hand over quickly to

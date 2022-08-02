@@ -2,7 +2,7 @@
 
 #include "weakTactic.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout strTactic : public weakTactic {
         WRD_DECL_ME(strTactic, weakTactic);

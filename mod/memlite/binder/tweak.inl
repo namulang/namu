@@ -4,7 +4,7 @@
 #include "weakTactic.hpp"
 #include "tbindable.inl"
 
-namespace wrd {
+namespace namu {
 
 #define TEMPL template <typename T, typename TACTIC>
 #define ME tweak<T, TACTIC>

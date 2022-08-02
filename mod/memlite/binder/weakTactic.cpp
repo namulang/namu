@@ -1,7 +1,7 @@
 #include "weakTactic.hpp"
 #include "binder.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(weakTactic)
 

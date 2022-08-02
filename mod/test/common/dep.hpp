@@ -1,4 +1,4 @@
 #pragma once
 
 #include <gtest/gtest.h>
-#include <wrd.hpp>
+#include <core.hpp>

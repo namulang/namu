@@ -26,7 +26,7 @@
 * 이를 구현하는 방법은 frame에 담긴 element가 가진 name과 args 가 중복되면 에러로 판단하는 것이다.
     * 이 검사는 verify 단계에서만 실시한다.
 
-```wrd
+```namu
 def sample
     foo(n int) void
         foo := 5 // ok
@@ -55,7 +55,7 @@ def sample
 
 ## with
 
-```wrd
+```namu
 <indent>
     with <identifier> (, <identifier>)*
 
@@ -78,7 +78,7 @@ def sample
     * reversed라는 것은 chain의 head가 항상 최근에 넣은 container를 가리키게 한다는 것이다.
 * scope는 STACK (FILO) 메카니즘을 가지므로 scope의 추가와 삭제가 다음과 같이 된다.
 
-```wrd
+```namu
 // 추가:
 newChain.link(scope.head)
 scope.head.bind(newChain)
@@ -98,7 +98,7 @@ scope.head.bind(scope.head.next)
 ## with는 콤마를 지원한다.
 
 ## with가 import를 대신한다.
-```wrd
+```namu
 // mymodule:
 def person()
     foo() void
@@ -107,7 +107,7 @@ def person()
 main() void
 
 
-// app.wrd:
+// app.namu:
 mymodule.person.foo() // ok
 
 with mymodule
@@ -115,7 +115,7 @@ person.foo() // ok
 ```
 
 ## 블록문은 indentation으로 표현한다.
-```wrd
+```namu
 b := foo()
     a := koo()
     a.doSomething() // 'a' destoryed
@@ -126,7 +126,7 @@ print(b)
 * with는 현재 최상단 scope에만 영향을 주기 때문이다.
 
 ## with 는 statement 다.
-```wrd
+```namu
 if (b := foo()) > 2
     with b, c := koo()
     // (with b) + 5 -> err
@@ -140,7 +140,7 @@ if (b := foo()) > 2
 
 ## node 기본적으로 sub를 접근할 수 있는 다음 API를 제공한다.
 * 식별자명, 타입과 인자리스트를 모두 받는 것이 원본 API가 된다.
-```wrd
+```namu
 // 정상이면 ret.val로 접근, 2개 이상 hit하면 ret.err에 hit한 sub가 모두 들어있다.
 get<T=node>(name str, types Type[]) ret<ref>
 get<T=node>(name str, type Type...) ret<ref>
@@ -148,15 +148,15 @@ gets(name str) ret<ref[]>
 ```
 
 ## sub를 찾을때 null일 인자를 넣는것과, 빈 인자리스트를 넣는 것은 다르다.
-```wrd
+```namu
 get("anyName") // anyName인 객체를 찾는 것이다.
 get("anyName", {}) // anyName() 를 찾는 것이다.
 ```
 
 ## 블록문 내의 변수의 scope는 항상 indent depth에 의해 판단된다.
-* 다른 언어에 비해 expression 기반인 wrd 는 변수의 scope을 생소한 케이스가 몇개 있다.
+* 다른 언어에 비해 expression 기반인 namu 는 변수의 scope을 생소한 케이스가 몇개 있다.
 
-```wrd
+```namu
 if val := foo()
     val++
 print(val)
@@ -165,7 +165,7 @@ print(val)
 * val은 if 문 내에서 정의되었지만 indent level은 print(val) 구문과 동일하다.
 * 따라서 if 블록문 밖에서도 접근이 가능하다.
 
-```wrd
+```namu
 for n in arr
     print(n)
 print("finally n was $n")
@@ -174,7 +174,7 @@ print("finally n was $n")
 * 마찬가지로 foo 문 내에서 정의된 n은 for 문 바깥에서도 접근이 가능하다.
 * 따라서 다음과 같은 코드는 에러다.
 
-```wrd
+```namu
 for n in arr
     print(n)
 

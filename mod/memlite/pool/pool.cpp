@@ -1,7 +1,7 @@
 #include "pool.hpp"
 #include "../interface/instance.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(pool, memoryHaver)
 

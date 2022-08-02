@@ -1,7 +1,7 @@
 #include "sobj.hpp"
 #include "nullSobj.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(sobj)
 

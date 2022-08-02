@@ -1,6 +1,6 @@
 #include "fileLogStream.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(fileLogStream)
     typedef std::string string;

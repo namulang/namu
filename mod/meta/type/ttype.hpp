@@ -2,7 +2,7 @@
 
 #include "ttypeBase.hpp"
 
-namespace wrd {
+namespace namu {
 
     /// @remark TType returns TType<Type> as its meta class.
     ///         however, this makes impossible to get specific TType instance

@@ -3,7 +3,7 @@
 #include "ttype.hpp"
 #include "type.hpp"
 
-namespace wrd {
+namespace namu {
 
 #define ME type
 

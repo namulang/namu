@@ -3,9 +3,9 @@
 #include "id.hpp"
 #include <map>
 
-struct wrdTest;
+struct namuTest;
 
-namespace wrd {
+namespace namu {
 
     class bindTag;
     class instancer;
@@ -17,7 +17,7 @@ namespace wrd {
         friend class watcher; // for vault.
         friend class chunks; // for vault.
         friend class instancer; // for _id.
-        friend struct ::wrdTest; // for vault.
+        friend struct ::namuTest; // for vault.
 
     public:
         class vault {

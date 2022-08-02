@@ -1,5 +1,5 @@
 #include "rtti.hpp"
 
-namespace wrd {
+namespace namu {
 
 }

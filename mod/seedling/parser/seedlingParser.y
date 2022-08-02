@@ -3,14 +3,14 @@
 #include "../common.hpp"
 #include "../interp/sinterpreter.hpp"
 
-namespace wrd {
+namespace namu {
     class obj;
 }
 
-using namespace wrd;
+using namespace namu;
 
 int yylex();
-extern wrd::sobj* root;
+extern namu::sobj* root;
 extern int yylineno;
 extern char* yytext;
 
@@ -25,7 +25,7 @@ void yyerror(const char* s);
     bool boolVal;
     char charVal;
     const char* strVal;
-    wrd::sobj* obj;
+    namu::sobj* obj;
 }
 
 %verbose
@@ -160,7 +160,7 @@ tdefBlock   : tdefStmt {
 
 tfile       : tdefBlock {
                 $$ = root = $1;
-                wrd::id id = $1->getId();
+                namu::id id = $1->getId();
                 WRD_DI("$1 = %x, %d.%d.%d", $1, id.tagN, id.chkN, id.serial);
                 WRD_DI("tfile(%x) <-- tdefBlock(%x)", $$, $1);
             }

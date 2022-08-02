@@ -2,7 +2,7 @@
 #include "../interface/instancer.hpp"
 #include "../binder/tbindable.inl"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(bindTag)
 
