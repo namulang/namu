@@ -69,19 +69,6 @@ namespace {
     return NEWLINE;
 }
 
-if { return IF; }
-void { return VOIDTYPE; }
-int { return INTTYPE; }
-str { return STRTYPE; }
-bool { return BOOLTYPE; }
-char { return CHARTYPE; }
-flt { return FLTTYPE; }
-null { return NULTYPE; }
-pack { return PACK; }
-aka { return AKA; }
-return { return RETURN; }
-as { return AS; }
-
 [[:digit:]]+ {
     yylval->asInt = atoi(yytext);
     NAMU_DI("scanner: INTVAL=%s", yytext);
@@ -105,6 +92,20 @@ false {
     NAMU_DI("scanner: BOOLVAL=false");
     return BOOLVAL;
 }
+
+if { return IF; }
+void { return VOIDTYPE; }
+int { return INTTYPE; }
+str { return STRTYPE; }
+bool { return BOOLTYPE; }
+char { return CHARTYPE; }
+flt { return FLTTYPE; }
+null { return NULTYPE; }
+pack { return PACK; }
+aka { return AKA; }
+return { return RETURN; }
+as { return AS; }
+def { return DEF; }
 
 [a-zA-Z0-9_]+ {
     yylval->asStr = new std::string(yytext);

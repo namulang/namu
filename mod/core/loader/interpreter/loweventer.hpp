@@ -121,7 +121,7 @@ namespace namu {
         node* onDefVar(const std::string& name, const node& origin);
         node* onDefAssign(const std::string& name, node& rhs);
         //      obj:
-        obj* onDef(const std::string& name, defBlock& blk);
+        obj* onDefObj(const std::string& name, defBlock& blk);;
         //      file:
         void onCompilationUnit(obj& subpack, defBlock& blk);
         //      return:

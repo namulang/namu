@@ -259,8 +259,8 @@ namespace namu {
         return &list;
     }
 
-    obj* me::onDef(const std::string& name, defBlock& blk) {
-        NAMU_DI("tokenEvent: onDef(%s, defBlock[%x])", name.c_str(), &blk);
+    obj* me::onDefObj(const std::string& name, defBlock& blk) {
+        NAMU_DI("tokenEvent: onDefObj(%s, defBlock[%x])", name.c_str(), &blk);
 
         obj& ret = *new obj();
         _onInjectObjSubs(ret, blk);
