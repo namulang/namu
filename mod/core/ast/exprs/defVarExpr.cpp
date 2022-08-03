@@ -14,12 +14,17 @@ namespace namu {
 
     str me::run(const ucontainable& args) {
         const std::string& name = _name;
-        node& org = (node&) *_org;
-        nbool res = _where ? _where->add(name, org) : thread::get()._getNowFrame().pushLocal(name, org);
+        str org = _org->as<node>();
+        if(!org) {
+            NAMU_E("getting origin by %s returns null", _name.c_str());
+            return org;
+        }
+
+        nbool res = _where ? _where->add(name, *org) : thread::get()._getNowFrame().pushLocal(name, *org);
         if(!res)
             NAMU_E("define variable %s is failed.", name.c_str());
 
-        return _org;
+        return org;
     }
 
     const std::string& me::getName() const { return _name; }

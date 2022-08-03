@@ -114,7 +114,7 @@
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
-%token IF AKA RETURN AS
+%token IF AKA RETURN AS DEF
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -140,11 +140,13 @@
 %type <asNode> type
 %type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
 %type <asDefBlock> defblock
-//          value:
+//      value:
 %type <asNode> defvar defvar-exp-no-initial-value defvar-exp-initial-value
-//          func:
+//      func:
 %type <asNode> deffunc deffunc-default deffunc-deduction
 %type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
+//      obj:
+%type <asNode> defobj
 
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
@@ -350,6 +352,7 @@ defexpr-line: defexpr-line-except-aka { $$ = $1; }
             | aka { $$ = $1; }
 defexpr-line-except-aka: defvar { $$ = $1; }
 defexpr-compound: deffunc { $$ = $1; }
+                | defobj { $$ = $1; }
 defstmt: defexpr-line NEWLINE { $$ = $1; }
        | defexpr-compound { $$ = $1; }
 defblock: %empty {
@@ -367,7 +370,8 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
     | BOOLTYPE { $$ = yyget_extra(scanner)->onPrimitive<nBool>(); }
     | FLTTYPE { $$ = yyget_extra(scanner)->onPrimitive<nFlt>(); }
     | NAME { // TODO: handle 'as' expr
-        $$ = new blockExpr(); // TODO: then free it
+        $$ = yyget_extra(scanner)->onGet(*$1);
+        free($1);
     }
 
 //  variable:
@@ -383,6 +387,11 @@ defvar-exp-initial-value: NAME DEFASSIGN expr {
                           free($1);
                       }
 
+//  obj:
+defobj: DEF NAME NEWLINE INDENT defblock DEDENT {
+      $$ = yyget_extra(scanner)->onDefObj(std::string(*$2), *$5);
+      free($2);
+    }
 
 //  func:
 deffunc: deffunc-default { $$ = $1; }
@@ -403,7 +412,7 @@ deffunc-lambda: deffunc-lambda-default {
             } | deffunc-lambda-deduction {
             }
 
-deffunc-lambda-default : list type indentblock {
+deffunc-lambda-default: list type indentblock {
                     // checks list that it's NAME.
                      }
 deffunc-lambda-deduction: list indentblock {
