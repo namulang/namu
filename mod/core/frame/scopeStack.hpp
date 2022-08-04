@@ -6,7 +6,7 @@
 namespace namu {
 
     class _nout scopeStack : public instance, clonable {
-        WRD(CLASS(scopeStack, instance))
+        NAMU(CLASS(scopeStack, instance))
 
     public:
         tstr<scopes>& getTop();

@@ -7,7 +7,7 @@
 namespace namu {
 
     class _nout starter : public node {
-        WRD(CLASS(starter, node))
+        NAMU(CLASS(starter, node))
 
     public:
         // node:

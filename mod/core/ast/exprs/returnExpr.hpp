@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout returnExpr : public expr {
-        WRD(CLASS(returnExpr, expr, expr::exprType))
+        NAMU(CLASS(returnExpr, expr, expr::exprType))
 
     public:
         returnExpr(const node& ret);

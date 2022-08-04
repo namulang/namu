@@ -5,7 +5,7 @@
 namespace namu {
 
     class logInterpreterFlag : public flag {
-        WRD(CLASS(logInterpreterFlag, flag))
+        NAMU(CLASS(logInterpreterFlag, flag))
 
     public:
         const nchar* getName() const override { return "-li"; }

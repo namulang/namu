@@ -6,7 +6,7 @@ namespace namu {
 
     template <typename T>
     class tverification : public verification {
-        WRD(ME(tverification, verification),
+        NAMU(ME(tverification, verification),
             INIT_META(me))
         typedef ntype metaType;
 

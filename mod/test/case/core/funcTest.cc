@@ -8,10 +8,10 @@ struct funcTest : public namuTest {};
 
 namespace {
     class myfunc : public mgdFunc {
-        WRD(CLASS(myfunc, mgdFunc))
+        NAMU(CLASS(myfunc, mgdFunc))
 
         class myBlock : public blockExpr {
-            WRD(CLASS(myBlock, blockExpr))
+            NAMU(CLASS(myBlock, blockExpr))
 
         public:
             str run(const ucontainable& args) override {
@@ -106,7 +106,7 @@ namespace {
     }
 
     struct myObj : public obj {
-        WRD(CLASS(myObj, obj))
+        NAMU(CLASS(myObj, obj))
     };
 
     const char* func1Name = "obj1func1";

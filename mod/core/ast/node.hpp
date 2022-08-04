@@ -14,7 +14,7 @@ namespace namu {
 
     /// node provides common API to manipulate its sub nodes.
     class _nout node : public instance, public clonable, public frameInteractable {
-        WRD(ADT(node, instance))
+        NAMU(ADT(node, instance))
 
     public:
         node& operator[](const std::string& name) const;

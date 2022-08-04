@@ -26,7 +26,7 @@ namespace namu {
     class defBlock;
 
     class muna : public node {
-        WRD(CLASS(muna, node))
+        NAMU(CLASS(muna, node))
         typedef std::function<node*(void)> lambOnBlock;
         typedef std::function<void(defBlock&)> lambOnDefBlock;
 

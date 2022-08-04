@@ -5,7 +5,7 @@ using namespace namu;
 namespace {
 
     struct myObj : public obj {
-        WRD(CLASS(myObj, obj))
+        NAMU(CLASS(myObj, obj))
 
     public:
         myObj(int newVal = 0): val(newVal) {}
@@ -19,10 +19,10 @@ namespace {
     };
 
     class myfunc : public mgdFunc {
-        WRD(CLASS(myfunc, mgdFunc))
+        NAMU(CLASS(myfunc, mgdFunc))
 
         class myBlock : public blockExpr {
-            WRD(CLASS(myBlock, blockExpr))
+            NAMU(CLASS(myBlock, blockExpr))
 
         public:
             str run(const ucontainable& args) override {

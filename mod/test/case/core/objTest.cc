@@ -7,7 +7,7 @@ struct objTest : public namuTest {};
 
 namespace {
     class originObj : public obj {
-        WRD(CLASS(originObj, obj))
+        NAMU(CLASS(originObj, obj))
 
     public:
         originObj(): _subs(*new scopes()) {}

@@ -4,7 +4,7 @@
 
 namespace namu {
     class _nout bufferSrcSupply : public srcSupply {
-        WRD(CLASS(bufferSrcSupply, srcSupply))
+        NAMU(CLASS(bufferSrcSupply, srcSupply))
 
     public:
         bufferSrcSupply(const std::vector<string>& buf);

@@ -4,7 +4,7 @@ using namespace namu;
 
 namespace {
     struct myNode : public node {
-        WRD(CLASS(myNode, node))
+        NAMU(CLASS(myNode, node))
 
     public:
         myNode(int n): num(n) {}

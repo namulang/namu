@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout exprMaker : public typeProvidable, public clonable {
-        WRD(CLASS(exprMaker))
+        NAMU(CLASS(exprMaker))
 
     public:
         exprMaker(): _src(nullptr), _pos({0, 0}) {}

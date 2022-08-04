@@ -5,7 +5,7 @@
 namespace namu {
 
     class frameInteract {
-        WRD(ME(frameInteract))
+        NAMU(ME(frameInteract))
 
     public:
         frameInteract(frameInteractable& it, const bicontainable& args): _it(it) { _it._inFrame(args); }

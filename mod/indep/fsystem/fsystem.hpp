@@ -17,7 +17,7 @@ namespace namu {
     /// fsystem is going to be used before filesystem library fully supported.
     /// to apply fsystem on clang++ is quite hard now.
     class _nout fsystem {
-        WRD(ME(fsystem))
+        NAMU(ME(fsystem))
 
         struct entry {
 #ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
@@ -31,7 +31,7 @@ namespace namu {
         typedef std::vector<entry> entries;
 
         class _nout iterator {
-            WRD(ME(iterator))
+            NAMU(ME(iterator))
             friend class fsystem;
 
         private:

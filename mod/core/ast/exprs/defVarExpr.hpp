@@ -7,7 +7,7 @@
 namespace namu {
 
     class _nout defVarExpr : public expr {
-        WRD(CLASS(defVarExpr, expr, expr::exprType),
+        NAMU(CLASS(defVarExpr, expr, expr::exprType),
             FRIEND_VERIFY(defVarExpr, defineVariable))
         friend class mgdFunc;
 

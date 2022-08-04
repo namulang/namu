@@ -7,7 +7,7 @@
 namespace namu {
 
     class _nout interpreter : public typeProvidable, public clonable {
-        WRD(CLASS(interpreter))
+        NAMU(CLASS(interpreter))
 
     public:
         interpreter();

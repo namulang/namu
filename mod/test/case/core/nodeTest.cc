@@ -7,7 +7,7 @@ struct nodeTest : public namuTest {};
 
 namespace {
     class myFunc : public mgdFunc {
-        WRD(CLASS(myFunc, mgdFunc))
+        NAMU(CLASS(myFunc, mgdFunc))
 
     public:
         myFunc(): super(params(), new nVoid()) {}
@@ -41,7 +41,7 @@ namespace {
     };
 
     struct myObj : public obj {
-        WRD(CLASS(myObj, obj))
+        NAMU(CLASS(myObj, obj))
 
     public:
         myObj(int newVal = 0): val(newVal) {}
@@ -55,7 +55,7 @@ namespace {
     };
 
     class food : public obj {
-        WRD(CLASS(food, obj))
+        NAMU(CLASS(food, obj))
 
     public:
         food(string newName, int newCalorie): name(newName), calorie(newCalorie) {}
@@ -88,7 +88,7 @@ namespace {
                 return *inner;
             }
         };
-        WRD(CLASS(chef, obj, myType))
+        NAMU(CLASS(chef, obj, myType))
 
     public:
         string foodName;

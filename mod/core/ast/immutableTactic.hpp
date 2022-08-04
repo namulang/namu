@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout immutableTactic : public strTactic {
-        WRD(ME(immutableTactic, strTactic))
+        NAMU(ME(immutableTactic, strTactic))
 
     public:
         nbool bind(binder& me, const instance& it) override;

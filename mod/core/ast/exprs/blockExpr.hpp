@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout blockExpr : public expr {
-        WRD(CLASS(blockExpr, expr, expr::exprType),
+        NAMU(CLASS(blockExpr, expr, expr::exprType),
             FRIEND_VERIFY(blockExpr, visitSubNodes))
         friend class mgdFunc;
 

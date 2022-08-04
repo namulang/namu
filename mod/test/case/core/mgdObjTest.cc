@@ -7,7 +7,7 @@ struct objTest : public namuTest {};
 
 namespace {
     struct myObj : public obj {
-        WRD(CLASS(myObj, obj))
+        NAMU(CLASS(myObj, obj))
     };
 }
 

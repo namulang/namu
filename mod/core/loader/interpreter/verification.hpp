@@ -12,7 +12,7 @@ namespace namu {
     typedef tbicontainable<std::string, node> bicontainable;
 
     class _nout verification : public typeProvidable {
-        WRD(ME(verification),
+        NAMU(ME(verification),
             INIT_META(me))
         friend class verifier; // for _onPrepareVerify
 

@@ -14,7 +14,7 @@ namespace namu {
     typedef std::vector<libHandle> libHandles;
 
     class _nout cppPackLoading : public opaquePackLoading{
-        WRD(CLASS(cppPackLoading, opaquePackLoading))
+        NAMU(CLASS(cppPackLoading, opaquePackLoading))
         typedef void (*entrypointFunc)(bicontainable*);
 
     public:

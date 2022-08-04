@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout genericObj : public baseObj {
-        WRD(CLASS(genericObj, baseObj),
+        NAMU(CLASS(genericObj, baseObj),
             FRIEND_VERIFY(genericObj, iterateGenerics))
         typedef std::vector<std::string> strings;
 

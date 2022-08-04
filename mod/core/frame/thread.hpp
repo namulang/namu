@@ -10,7 +10,7 @@ namespace namu {
     typedef tnarr<frame> frames;
 
     class _nout thread : public node {
-        WRD(CLASS(thread, node),
+        NAMU(CLASS(thread, node),
             FRIEND_VERIFY(defAssignExpr, isDefinable),
             FRIEND_VERIFY(defVarExpr, defineVariable))
 

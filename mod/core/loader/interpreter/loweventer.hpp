@@ -22,7 +22,7 @@ namespace namu {
     class FAOExpr;
     class getExpr;
     class _nout loweventer : public tokenScan {
-        WRD(CLASS(loweventer, tokenScan))
+        NAMU(CLASS(loweventer, tokenScan))
         friend class tokenScanModable;
 
     public:

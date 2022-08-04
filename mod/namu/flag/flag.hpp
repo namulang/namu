@@ -8,7 +8,7 @@ namespace namu {
 
     struct cli;
     class flag : public instance, public clonable {
-        WRD(ADT(flag, instance))
+        NAMU(ADT(flag, instance))
 
     public:
         virtual const nchar* getName() const = 0;

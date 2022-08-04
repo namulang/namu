@@ -6,7 +6,7 @@
 namespace namu {
 
     class arithmeticObj : public baseObj {
-        WRD(ADT(arithmeticObj, baseObj))
+        NAMU(ADT(arithmeticObj, baseObj))
 
     public:
         const me& getOrigin() const override { return *this; }

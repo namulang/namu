@@ -8,7 +8,7 @@
 namespace namu {
 
     class _nout autoslot : public slot, public packMakable {
-        WRD(CLASS(autoslot, slot))
+        NAMU(CLASS(autoslot, slot))
 
     public:
         enum state {

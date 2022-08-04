@@ -7,7 +7,7 @@
 namespace namu {
 
     class _nout asExpr : public expr {
-        WRD(CLASS(asExpr, expr, expr::exprType),
+        NAMU(CLASS(asExpr, expr, expr::exprType),
             FRIEND_VERIFY(asExpr, verifyIter))
         friend class mgdFunc;
         typedef scopes::iter iter;

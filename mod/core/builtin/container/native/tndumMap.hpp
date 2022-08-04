@@ -7,7 +7,7 @@ namespace namu {
     template <typename K, typename V, typename TACTIC = strTactic>
     class tndumMap : public tnmap<K, V, TACTIC> {
         typedef tnmap<K, V, TACTIC> _super_;
-        WRD(CLASS(tndumMap, _super_))
+        NAMU(CLASS(tndumMap, _super_))
 
     public:
         tndumMap() {}

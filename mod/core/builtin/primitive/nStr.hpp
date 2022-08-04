@@ -13,7 +13,7 @@ namespace namu {
         protected:
             const ases& _getAses() const override;
         };
-        WRD(CLASS(nStr, primitiveObj, nStrType))
+        NAMU(CLASS(nStr, primitiveObj, nStrType))
 
     public:
         nStr();

@@ -5,7 +5,7 @@
 namespace namu {
 
     class ctor: public func {
-        WRD(ADT(ctor, func))
+        NAMU(ADT(ctor, func))
 
     public:
         ctor(const node& org): _org(org) {}

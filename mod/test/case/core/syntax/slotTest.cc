@@ -7,10 +7,10 @@ namespace {
     struct slotTest : public namuSyntaxTest {};
 
     class myfunc : public mgdFunc {
-        WRD(CLASS(myfunc, mgdFunc))
+        NAMU(CLASS(myfunc, mgdFunc))
 
         class myBlock : public blockExpr {
-            WRD(CLASS(myBlock, blockExpr))
+            NAMU(CLASS(myBlock, blockExpr))
 
         public:
             str run(const ucontainable& args) override {
@@ -64,7 +64,7 @@ namespace {
     };
 
     class nativeFunc : public func {
-        WRD(CLASS(nativeFunc, func))
+        NAMU(CLASS(nativeFunc, func))
 
     public:
         nativeFunc(): super() {}

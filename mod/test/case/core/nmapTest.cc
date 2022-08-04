@@ -8,7 +8,7 @@ struct nmapTest : public namuTest {};
 
 namespace {
     class myNode : public node {
-        WRD(CLASS(myNode, node))
+        NAMU(CLASS(myNode, node))
 
     public:
         myNode(int num): number(num) {}
@@ -65,7 +65,7 @@ namespace {
     }
 
     class myMyNode : public myNode {
-        WRD(CLASS(myMyNode, myNode))
+        NAMU(CLASS(myMyNode, myNode))
 
     public:
         myMyNode(int num): super(num) {}

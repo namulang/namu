@@ -11,7 +11,7 @@ namespace namu {
     typedef tnchain<std::string, slot> slotChain;
 
     class _nout packLoading : public instance, public packMakable, public clonable {
-        WRD(ADT(packLoading, instance))
+        NAMU(ADT(packLoading, instance))
 
         typedef nbool (me::*packEvent)(const slotChain&);
 

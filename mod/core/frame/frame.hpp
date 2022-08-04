@@ -12,7 +12,7 @@ namespace namu {
     class obj;
     class func;
     class _nout frame : public node { // TODO: may be obj, not node.
-        WRD(CLASS(frame, node),
+        NAMU(CLASS(frame, node),
             FRIEND_VERIFY(baseObj, subNodes))
         friend struct ::immutableTest;
         friend struct ::frameTest;

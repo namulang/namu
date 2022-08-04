@@ -22,7 +22,7 @@ namespace namu {
     /// lowparser/scanner should be dependent to THIS.
     class slot;
     class _nout parser : public typeProvidable {
-        WRD(ADT(parser, typeProvidable))
+        NAMU(ADT(parser, typeProvidable))
 
     public:
         parser();

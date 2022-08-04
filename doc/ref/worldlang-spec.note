@@ -3212,7 +3212,7 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
   * Object가 나올때는 이러한 TClass()의 메소드를 shallow copy했기 때문에 문제가 발생하지 않았다.
 
 * 이제 새로운 설계에서는 TClass는 사라지고 Origin 객체가 이걸 대신한다.
-  * 메소드들은 WRD 매크로를 쓰면 일부 매소드들에서만 참조할 수 있는, wrap한 메소드 배열을 returning 하는 static 메소드를 private로 하나씩 박아넣고 있다.
+  * 메소드들은 NAMU 매크로를 쓰면 일부 매소드들에서만 참조할 수 있는, wrap한 메소드 배열을 returning 하는 static 메소드를 private로 하나씩 박아넣고 있다.
   * [x] getMembers() 를 가지고 있는 Node는 초기화시에 Node::onInitWrappers()를 부를때 모든 supers를 다 부른다.
   * OriginMgr는 외부에서 <T>get()이 호출되면 안에서 dummy객체를 만들고, dummy객체는 onInitWrappers()를 호출해서 더미안에 멤버를 채워넣는다.
   * 보통은 origin객체 초기화시에 부모origin의 members를 복제해 넣고, onInitWrappers()를 호출해서 wrapped된 메소드 배열을 가져와 getMembers에 넣는다.
@@ -15339,7 +15339,7 @@ private:
 
 # backbone
 
-## prefix는 NE_ 대신 WRD를 사용한다.
+## prefix는 NE_ 대신 NAMU를 사용한다.
 
 
 

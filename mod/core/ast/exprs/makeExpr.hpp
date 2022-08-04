@@ -6,7 +6,7 @@
 namespace namu {
 
     class _nout makeExpr : public expr {
-        WRD(CLASS(makeExpr, expr, expr::exprType))
+        NAMU(CLASS(makeExpr, expr, expr::exprType))
 
     public:
         makeExpr(const node& from): _from(from) {}

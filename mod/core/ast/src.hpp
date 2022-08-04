@@ -7,7 +7,7 @@ namespace namu {
 
     /// src represents src file of namulang source codes.
     class _nout src : public node {
-        WRD(CLASS(src, node))
+        NAMU(CLASS(src, node))
 
     public:
         src(const std::string& fileName);
