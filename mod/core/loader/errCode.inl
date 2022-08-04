@@ -42,6 +42,7 @@ PAIRX(CANT_DEF_VAR,         "definining variable '%s %s' wouldn't allowed here")
 PAIRX(ALREADY_DEFINED_VAR,  "variable '%s %s' was already defined in this scope")
 PAIRX(HAS_NO_NAME,          "variable should have a name")
 PAIRX(NO_ORIGIN,            "there is no origin %s object")
+PAIRX(TYPE_NOT_EXIST,       "when defines variable '%s', couldn't find the type of it.")
 
 //  assign:
 PAIRX(TYPE_NOT_COMPATIBLE,  "rhs type '%s' is not compatible to lhs '%s' of this assigment")

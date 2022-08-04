@@ -44,6 +44,8 @@ namespace namu {
         NAMU_DI("verify: defVarExpr: check duplication");
         const scopes& top = thread::get().getNowFrame().getTop();
         const node& eval = it.getEval();
+        if(nul(eval)) return _srcErr(errCode::TYPE_NOT_EXIST, it.getName().c_str());
+
         const ntype& t = eval.getType();
         const nchar* typeName = nul(t) ? "null" : t.getName().c_str();
         if(nul(top)) return;
