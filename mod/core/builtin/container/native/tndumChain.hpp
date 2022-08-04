@@ -7,7 +7,7 @@ namespace namu {
     template <typename K, typename V, typename defaultContainer = nmap>
     class tndumChain : public tnchain<K, V, defaultContainer> {
         typedef tnchain<K, V, defaultContainer> _super_;
-        WRD(CLASS(tndumChain, _super_))
+        NAMU(CLASS(tndumChain, _super_))
 
     public:
         tndumChain() {}

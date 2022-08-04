@@ -2,7 +2,7 @@
 
 // nested class of tbicontainable.hpp
 class iteration : public instance, public iterable, public clonable {
-    WRD(ADT(iteration, instance))
+    NAMU(ADT(iteration, instance))
     friend class iter;
 
 public:

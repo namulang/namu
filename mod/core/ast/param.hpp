@@ -7,7 +7,7 @@
 
 namespace namu {
     class _nout param : public instance, public clonable {
-        WRD(CLASS(param, instance))
+        NAMU(CLASS(param, instance))
 
     public:
         param(const std::string& newName, const node& org);

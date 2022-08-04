@@ -24,7 +24,7 @@ namespace  {
     }
 
     struct myObj : public obj {
-        WRD(CLASS(myObj, obj))
+        NAMU(CLASS(myObj, obj))
     };
 
     struct dummy {

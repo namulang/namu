@@ -11,7 +11,7 @@ namespace namu {
     typedef tnbicontainer<std::string, slot> slotContainer;
 
     class _nout verifier : public typeProvidable, clonable {
-        WRD(CLASS(verifier))
+        NAMU(CLASS(verifier))
         friend struct ::verifierTest;
 
     public:

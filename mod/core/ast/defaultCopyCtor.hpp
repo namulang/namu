@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout defaultCopyCtor : public ctor {
-        WRD(CLASS(defaultCopyCtor, ctor))
+        NAMU(CLASS(defaultCopyCtor, ctor))
 
     public:
         defaultCopyCtor(const node& org): super(org) {}

@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout runExpr : public expr {
-        WRD(CLASS(runExpr, expr, expr::exprType))
+        NAMU(CLASS(runExpr, expr, expr::exprType))
 
     public:
         runExpr(const node& meObj, const std::string& name, const narr& args);

@@ -7,7 +7,7 @@
 namespace namu {
 
     class _nout slot : public node {
-        WRD(CLASS(slot, node))
+        NAMU(CLASS(slot, node))
 
     public:
         slot(const manifest& manifest);

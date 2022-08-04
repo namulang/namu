@@ -7,7 +7,7 @@ namespace namu {
 
     template <typename Ret, typename T, typename... Args>
     class tcppBridgeFuncBase : public func {
-        WRD(ADT(tcppBridgeFuncBase, func))
+        NAMU(ADT(tcppBridgeFuncBase, func))
     protected:
         typedef Ret (T::*fptrType)(Args...);
 
@@ -61,7 +61,7 @@ namespace namu {
     template <typename Ret, typename T, typename... Args>
     class tcppBridgeFunc : public tcppBridgeFuncBase<Ret, T, Args...> {
         typedef tcppBridgeFuncBase<Ret, T, Args...> _super_;
-        WRD(CLASS(tcppBridgeFunc, _super_))
+        NAMU(CLASS(tcppBridgeFunc, _super_))
 
     public:
         tcppBridgeFunc(typename _super_::fptrType fptr): super(fptr) {}
@@ -78,7 +78,7 @@ namespace namu {
     template <typename T, typename... Args>
     class tcppBridgeFunc<void, T, Args...> : public tcppBridgeFuncBase<void, T, Args...> {
         typedef tcppBridgeFuncBase<void, T, Args...> _super_;
-        WRD(CLASS(tcppBridgeFunc, _super_))
+        NAMU(CLASS(tcppBridgeFunc, _super_))
 
     public:
         tcppBridgeFunc(typename _super_::fptrType fptr): super(fptr) {}

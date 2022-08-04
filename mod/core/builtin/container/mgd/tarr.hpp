@@ -6,7 +6,7 @@ namespace namu {
 
     template <typename T>
     class tarr : public obj, public tucontainable<T>, tarrayable<T> {
-        WRD(CLASS(tarr, obj))
+        NAMU(CLASS(tarr, obj))
         typedef typename tucontainable<T>::iter iter;
         typedef typename tucontainable<T>::iteration iteration;
 

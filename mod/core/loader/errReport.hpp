@@ -8,7 +8,7 @@
 namespace namu {
 
     class _nout errReport : public instance, public clonable {
-        WRD(CLASS(errReport, instance))
+        NAMU(CLASS(errReport, instance))
 
     public:
         const err& operator[](nidx n) const;
@@ -37,7 +37,7 @@ namespace namu {
     };
 
     class _nout dummyErrReport : public errReport {
-        WRD(CLASS(dummyErrReport, errReport))
+        NAMU(CLASS(dummyErrReport, errReport))
 
     public:
         const err& add(const err* new1) override;

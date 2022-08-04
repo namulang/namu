@@ -15,7 +15,7 @@ namespace namu {
             const ases& _getAses() const override;
         };
 
-        WRD(CLASS(nChar, primitiveObj, wCharType))
+        NAMU(CLASS(nChar, primitiveObj, wCharType))
 
     public:
         nChar();

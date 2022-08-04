@@ -11,7 +11,7 @@ namespace namu {
         typedef tnbicontainer<K, V> _super_;
         typedef tnchain<K, V, defaultContainer> _me_;
 
-        WRD(CLASS(_me_, _super_))
+        NAMU(CLASS(_me_, _super_))
 
     public:
         typedef typename super::iter iter;

@@ -15,7 +15,7 @@ namespace namu {
             const ases& _getAses() const override;
         };
 
-        WRD(CLASS(nFlt, primitiveObj, wFltType))
+        NAMU(CLASS(nFlt, primitiveObj, wFltType))
 
     public:
         nFlt();

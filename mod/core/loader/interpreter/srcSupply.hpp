@@ -5,7 +5,7 @@
 
 namespace namu {
     class _nout srcSupply : public instance, public clonable {
-        WRD(ADT(srcSupply, instance))
+        NAMU(ADT(srcSupply, instance))
 
     public:
         /// @return true if there is no more data to process.

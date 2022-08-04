@@ -7,7 +7,7 @@ namespace namu {
     template <typename T, typename TACTIC = strTactic>
     class tndumArr: public tnarr<T, TACTIC> {
         typedef tnarr<T, TACTIC> _super_;
-        WRD(CLASS(tndumArr, _super_))
+        NAMU(CLASS(tndumArr, _super_))
 
     public:
         tndumArr() {}

@@ -5,7 +5,7 @@
 namespace namu {
 
     class helpFlag : public flag {
-        WRD(CLASS(helpFlag, flag))
+        NAMU(CLASS(helpFlag, flag))
 
     public:
         const nchar* getName() const override;

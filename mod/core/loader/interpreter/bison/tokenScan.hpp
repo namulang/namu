@@ -12,7 +12,7 @@ namespace namu {
     class loweventer;
 
     class _nout tokenScan : public typeProvidable, public clonable {
-        WRD(ADT(tokenScan))
+        NAMU(ADT(tokenScan))
 
     public:
         nint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
@@ -20,7 +20,7 @@ namespace namu {
     };
 
     class _nout normalScan: public tokenScan {
-        WRD(CLASS(normalScan, tokenScan))
+        NAMU(CLASS(normalScan, tokenScan))
         friend class loweventer;
 
     public:
@@ -32,7 +32,7 @@ namespace namu {
     };
 
     class _nout indentScan : public tokenScan {
-        WRD(CLASS(indentScan, tokenScan))
+        NAMU(CLASS(indentScan, tokenScan))
         friend class loweventer;
 
     public:

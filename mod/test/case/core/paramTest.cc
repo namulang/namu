@@ -5,7 +5,7 @@ using namespace std;
 
 namespace {
     struct myObj : public obj {
-        WRD(CLASS(myObj, obj))
+        NAMU(CLASS(myObj, obj))
 
     public:
         myObj(int newVal = 0): val(newVal) {}

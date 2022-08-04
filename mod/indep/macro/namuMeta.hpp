@@ -7,9 +7,9 @@
 //  NAMU_DECL is generalized API used to describe the metadata of
 //  class in namu.
 //  NAMU_DECL can be used to define detailed metadata about a class by chaining sub-command sets.
-//  with WRD macro, I can clarify that those INIT_META, VISIT are should be after of WRD macro.
+//  with NAMU macro, I can clarify that those INIT_META, VISIT are should be after of NAMU macro.
 //  and limit the scope of availbility.
-//  these macros which are available only inside of WRD macro are called to sub-commands.
+//  these macros which are available only inside of NAMU macro are called to sub-commands.
 //
 // Usage:
 //  use NAMU_DECL macro at declaration of your class.
@@ -22,4 +22,4 @@
 //  };
 
 #define _ON_EACH_DECL(cmd) __NAMU__DECL_##cmd
-#define WRD(...) NAMU_EACH(_ON_EACH_DECL, __VA_ARGS__)
+#define NAMU(...) NAMU_EACH(_ON_EACH_DECL, __VA_ARGS__)

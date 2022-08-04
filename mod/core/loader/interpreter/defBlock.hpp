@@ -6,7 +6,7 @@
 namespace namu {
 
     class defBlock : public instance, public clonable {
-        WRD(CLASS(defBlock, instance))
+        NAMU(CLASS(defBlock, instance))
 
     public:
         defBlock(): asScope(new scope()), asPreCtor(new narr()) {}

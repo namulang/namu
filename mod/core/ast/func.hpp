@@ -9,7 +9,7 @@ namespace namu {
     typedef tnarr<param, strTactic> params;
 
     class _nout func : public expr {
-        WRD(ADT(func, expr))
+        NAMU(ADT(func, expr))
 
     public:
         static inline const std::string ME = "me";

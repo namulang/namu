@@ -8,7 +8,7 @@ namespace namu {
 
     template <typename T>
     class primitiveObj : public arithmeticObj {
-        WRD(ADT(primitiveObj, arithmeticObj))
+        NAMU(ADT(primitiveObj, arithmeticObj))
         typedef T trait;
 
     protected:
@@ -60,7 +60,7 @@ namespace namu {
 
     template <>
     class primitiveObj<void> : public arithmeticObj {
-        WRD(ADT(primitiveObj, arithmeticObj))
+        NAMU(ADT(primitiveObj, arithmeticObj))
 
     public:
         const super& getOrigin() const override { return *this; }

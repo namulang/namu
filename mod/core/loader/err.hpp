@@ -11,7 +11,7 @@ namespace namu {
     typedef std::unordered_map<nidx, std::string> msgMap;
 
     struct _nout err : public instance {
-        WRD(ME(err, instance),
+        NAMU(ME(err, instance),
             TYPE(ntype),
             INIT_META(me))
 
@@ -50,7 +50,7 @@ namespace namu {
     };
 
     struct _nout dummyErr : public err {
-        WRD(ME(dummyErr, err),
+        NAMU(ME(dummyErr, err),
             TYPE(ntype),
             INIT_META(me))
 
@@ -62,7 +62,7 @@ namespace namu {
     };
 
     struct _nout srcErr : public err {
-        WRD(ME(srcErr, err),
+        NAMU(ME(srcErr, err),
             TYPE(ntype),
             INIT_META(me))
 
