@@ -17,6 +17,7 @@ namespace namu {
 
     NAMU_VERIFY(genericObj, iterateGenerics, {
         for(auto e : it._cache)
-            verify(*e.second);
+            if(nul(e.second))
+                _srcErr(MAKE_GENERIC_FAIL, e.first.c_str());
     })
 }

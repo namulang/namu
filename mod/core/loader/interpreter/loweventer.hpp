@@ -92,6 +92,8 @@ namespace namu {
         node* onGet(const std::string& name, const narr& args);
         node* onGet(node& from, const std::string& name);
         node* onGet(node& from, const std::string& name, const narr& args);
+        //      generic:
+        node* onGetGeneric(const std::string& genericObjName, const std::vector<std::string>& typeParams);
         //      assign:
         node* onAssign(node& lhs, node& rhs);
 
@@ -106,13 +108,15 @@ namespace namu {
         node* onAkaDefault(const getExpr& dotname, const std::string& newName);
 
         //  expr:
-        //      func:
-        mgdFunc* onFunc(const std::string& name, const narr& params, const node& evalType, const blockExpr& blk);
-        //      list:
+        //      def:
+        //          list:
         narr* onList();
         narr* onList(node* newExpr);
         narr* onList(narr& list, node* newExpr);
-        //      var:
+        //          typenames:
+        std::vector<std::string>* onTypeNames(const std::string& typeName);
+        std::vector<std::string>* onTypeNames(std::vector<std::string>& names, const std::string& typeName);
+        //          var:
         template <typename T, typename... Args>
         T* onPrimitive(Args... args) {
             NAMU_DI("on%s(...)", ttype<T>::get().getName().c_str());
@@ -120,10 +124,14 @@ namespace namu {
         }
         node* onDefVar(const std::string& name, const node& origin);
         node* onDefAssign(const std::string& name, node& rhs);
-        //      obj:
-        obj* onDefObj(const std::string& name, defBlock& blk);;
-        //      file:
+        //          obj:
+        obj* onDefObj(const std::string& name, defBlock& blk);
+        node* onDefObjGeneric(const std::string& name, const std::vector<std::string>& paramNames, defBlock& blk);
+        //          file:
         void onCompilationUnit(obj& subpack, defBlock& blk);
+        //          func:
+        mgdFunc* onFunc(const std::string& name, const narr& params, const node& evalType, const blockExpr& blk);
+
         //      return:
         returnExpr* onReturn();
         returnExpr* onReturn(node& exp);
