@@ -87,6 +87,7 @@
     namu::narr* asNarr;
     namu::scope* asScope;
     namu::defBlock* asDefBlock;
+    std::vector<std::string>* asVecStr;
 }
 
 %define api.pure
@@ -130,6 +131,7 @@
 //  term:
 %type <asNode> term unary postfix primary func-call
 %type <asNarr> list list-items
+%type <asVecStr> typenames typeparams
 //  keyword:
 %type <asNode> return
 %type <asNode> if
@@ -146,7 +148,7 @@
 %type <asNode> deffunc deffunc-default deffunc-deduction
 %type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
 //      obj:
-%type <asNode> defobj
+%type <asNode> defobj defobj-default defobj-default-generic
 
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
@@ -372,7 +374,21 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
     | NAME { // TODO: handle 'as' expr
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
-    }
+  } | NAME typeparams {
+        $$ = yyget_extra(scanner)->onGetGeneric(*$1, *$2);
+        free($1);
+        delete $2;
+  }
+
+//  typeparams:
+typeparams: '<' typenames '>' { $$ = $2; }
+typenames: NAME {
+            $$ = yyget_extra(scanner)->onTypeNames(*$1);
+            free($1);
+       } | typenames ',' NAME {
+            $$ = yyget_extra(scanner)->onTypeNames(*$1, *$3);
+            free($3);
+       }
 
 //  variable:
 defvar: defvar-exp-no-initial-value { $$ = $1; }
@@ -386,13 +402,17 @@ defvar-exp-initial-value: NAME DEFASSIGN expr {
                           $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
                           free($1);
                       }
-
 //  obj:
-defobj: DEF NAME NEWLINE INDENT defblock DEDENT {
-      $$ = yyget_extra(scanner)->onDefObj(std::string(*$2), *$5);
-      free($2);
-    }
-
+defobj: defobj-default { $$ = $1; }
+      | defobj-default-generic { $$ = $1; }
+defobj-default: DEF NAME NEWLINE INDENT defblock DEDENT {
+            $$ = yyget_extra(scanner)->onDefObj(std::string(*$2), *$5);
+            free($2);
+            }
+defobj-default-generic: DEF NAME typeparams NEWLINE INDENT defblock DEDENT {
+                    $$ = yyget_extra(scanner)->onDefObjGeneric(std::string(*$2), *$3, *$6);
+                    delete $3;
+                    }
 //  func:
 deffunc: deffunc-default { $$ = $1; }
        | deffunc-deduction { $$ = new blockExpr(); /* TODO: */ }

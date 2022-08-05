@@ -4,7 +4,7 @@
 #include "../../ast/mgd/mgdFunc.hpp"
 #include "../../builtin/primitive.hpp"
 #include "../../frame/thread.hpp"
-#include "../../ast/obj.hpp"
+#include "../../ast/genericObj.hpp"
 #include "muna.hpp"
 
 namespace namu {
@@ -259,6 +259,18 @@ namespace namu {
         return &list;
     }
 
+    std::vector<std::string>* me::onTypeNames(const std::string& typeName) {
+        NAMU_DI("tokenEvent: onTypeNames(%s)", typeName.c_str());
+        auto* ret = new std::vector<std::string>();
+        ret->push_back(typeName);
+        return ret;
+    }
+    std::vector<std::string>* me::onTypeNames(std::vector<std::string>& names, const std::string& typeName) {
+        NAMU_DI("tokenEvent: onTypeNames(len[%d], %s)", names.size(), typeName.c_str());
+        names.push_back(typeName);
+        return &names;
+    }
+
     obj* me::onDefObj(const std::string& name, defBlock& blk) {
         NAMU_DI("tokenEvent: onDefObj(%s, defBlock[%x])", name.c_str(), &blk);
 
@@ -266,6 +278,14 @@ namespace namu {
         _onInjectObjSubs(ret, blk);
         _onPushName(name, ret);
         return &ret;
+    }
+
+    node* me::onDefObjGeneric(const std::string& name, const std::vector<std::string>& typeParams, defBlock& blk) {
+        NAMU_DI("tokenEvent: onDefObjGeneric(%s, type.len[%d], defBlock[%x]", name.c_str(),
+                typeParams.size(), &blk);
+        obj& org = *new obj();
+        _onInjectObjSubs(org, blk);
+        return new genericObj(org, typeParams);
     }
 
     void me::onCompilationUnit(obj& subpack, defBlock& blk) {
@@ -362,6 +382,11 @@ namespace namu {
         NAMU_DI("tokenEvent: onGet(%s, %s, %d)", from.getType().getName().c_str(), name.c_str(),
                 args.len());
         return new getExpr(from, name, args);
+    }
+
+    node* me::onGetGeneric(const std::string& genericObjName, const std::vector<std::string>& typeParams) {
+        NAMU_DI("tokenEvent: onGetGeneric(%s, params.len[%d])", genericObjName.c_str(), typeParams.len());
+        return new getGenericExpr(genericObjName, typeParams);
     }
 
     void me::_onPushName(const std::string& name, node& n) {

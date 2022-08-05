@@ -43,7 +43,6 @@ PAIRX(ALREADY_DEFINED_VAR,  "variable '%s %s' was already defined in this scope"
 PAIRX(HAS_NO_NAME,          "variable should have a name")
 PAIRX(NO_ORIGIN,            "there is no origin %s object")
 PAIRX(TYPE_NOT_EXIST,       "when defines variable '%s', couldn't find the type of it.")
-
 //  assign:
 PAIRX(TYPE_NOT_COMPATIBLE,  "rhs type '%s' is not compatible to lhs '%s' of this assigment")
 PAIRX(ASSIGN_TO_RVALUE,     "you can't assign %s to this unamed %s. please define it first")
@@ -55,6 +54,8 @@ PAIRX(EXPR_SHOULDNT_BE_HERE,"expression shouldn't be here")
 //  arithmetic operation:
 PAIRX(LHS_IS_NOT_ARITH,     "lhs '%s' is not arithmetic type")
 PAIRX(RHS_IS_NOT_ARITH,     "rhs '%s' is not arithmetic type")
+//  defObj:
+PAIRX(MAKE_GENERIC_FAIL,    "construction '%s' for generic obj has failed.")
 
 
 // func:("verify: arithmeticExpr: lhs & rhs should bind something.");
