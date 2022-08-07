@@ -93,7 +93,7 @@ namespace namu {
         node* onGet(node& from, const std::string& name);
         node* onGet(node& from, const std::string& name, const narr& args);
         //      generic:
-        node* onGetGeneric(const std::string& genericObjName, const std::vector<std::string>& typeParams);
+        node* onGenericType(const std::string& genericObjName, const std::vector<std::string>& typeParams);
         //      assign:
         node* onAssign(node& lhs, node& rhs);
 

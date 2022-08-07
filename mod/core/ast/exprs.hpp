@@ -11,3 +11,4 @@
 #include "exprs/asExpr.hpp"
 #include "exprs/FAOExpr.hpp"
 #include "exprs/makeExpr.hpp"
+#include "exprs/getGenericExpr.hpp"

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../ast/node.hpp"
+#include "../../builtin/container/native/tndumMap.hpp"
 
 namespace namu {
 
@@ -36,7 +37,10 @@ namespace namu {
     public:
         str run(const ucontainable& args) override { return str(); }
         nbool canRun(const ucontainable& args) const override { return false; }
-        nbicontainer& subs() override;
+        nbicontainer& subs() override {
+            static ndumMap inner;
+            return inner;
+        }
 
         R1 case1(C1 arg) { return _act1(arg); }
         R2 case2(C2 arg) { return _act2(arg); }
@@ -48,7 +52,7 @@ namespace namu {
     template <typename C2, typename R1, typename R2>
     class delayRule<void, C2, R1, R2> : public node {
         NAMU(CLASS(delayRule, node))
-        typedef std::function<R1()> action1;
+        typedef std::function<R1(void)> action1;
         typedef std::function<R2(C2)> action2;
 
     public:
@@ -57,7 +61,10 @@ namespace namu {
     public:
         str run(const ucontainable& args) override { return str(); }
         nbool canRun(const ucontainable& args) const override { return false; }
-        nbicontainer& subs() override;
+        nbicontainer& subs() override {
+            static ndumMap inner;
+            return inner;
+        }
 
         R1 case1() { return _act1(); }
         R2 case2(C2 arg) { return _act2(arg); }
@@ -78,7 +85,10 @@ namespace namu {
     public:
         str run(const ucontainable& args) override { return str(); }
         nbool canRun(const ucontainable& args) const override { return false; }
-        nbicontainer& subs() override;
+        nbicontainer& subs() override {
+            static ndumMap inner;
+            return inner;
+        }
 
         R1 case1(C1 arg) { return _act1(arg); }
         R2 case2() { return _act2(); }
@@ -99,7 +109,10 @@ namespace namu {
     public:
         str run(const ucontainable& args) override { return str(); }
         nbool canRun(const ucontainable& args) const override { return false; }
-        nbicontainer& subs() override;
+        nbicontainer& subs() override {
+            static ndumMap inner;
+            return inner;
+        }
 
         R1 case1() { return _act1(); }
         R2 case2() { return _act2(); }
@@ -109,5 +122,5 @@ namespace namu {
         action2 _act2;
     };
 
-    typedef delayRule<void, defBlock&> blockRule;
+    typedef delayRule<void, defBlock&, node*, defBlock&> blockRule;
 }

@@ -5,7 +5,7 @@
 #include "../../builtin/primitive.hpp"
 #include "../../frame/thread.hpp"
 #include "../../ast/genericObj.hpp"
-#include "muna.hpp"
+#include "delayRule.hpp"
 
 namespace namu {
 
@@ -172,9 +172,9 @@ namespace namu {
         if(nul(blk))
             return onSrcErr(errCode::IS_NULL, "blk"), onBlock();
 
-        muna& m = stmt.cast<muna>();
-        if(!nul(m)) {
-            blk.getStmts().add(m.onBlock());
+        blockRule& br = stmt.cast<blockRule>();
+        if(!nul(br)) {
+            blk.getStmts().add(br.case1());
             return &blk;
         }
 
@@ -193,9 +193,9 @@ namespace namu {
         if(nul(s))
             return onSrcErr(errCode::IS_NULL, "s"), onDefBlock();
 
-        muna& m = candidate.cast<muna>();
-        if(!nul(m))
-            return &m.onDefBlock(s);
+        blockRule& br = candidate.cast<blockRule>();
+        if(!nul(br))
+            return &br.case2(s);
 
         s.asScope->add(_onPopName(candidate), &candidate);
         return &s;
@@ -203,10 +203,10 @@ namespace namu {
 
     node* me::onDefVar(const std::string& name, const node& origin) {
         NAMU_DI("tokenEvent: onDefVar(%s, %s)", origin.getType().getName().c_str(), name.c_str());
-        return new muna([&, name]() { return new defVarExpr(name, origin); },
-                [&, name](defBlock& blk) {
-                        blk.asScope->add(name, origin);
-                });
+        return new blockRule(
+            [&, name]() { return new defVarExpr(name, origin); },
+            [&, name](defBlock& blk) -> defBlock& { return blk.asScope->add(name, origin), blk; }
+        );
     }
 
     void me::onSrcArea(area& area) {
@@ -221,10 +221,10 @@ namespace namu {
     params me::_convertParams(const narr& ps) {
         params ret;
         for(auto& p : ps) {
-            muna& cast = p.cast<muna>();
+            blockRule& cast = p.cast<blockRule>();
             if(nul(cast)) return onSrcErr(errCode::NOT_EXPR, p.getType().getName().c_str()), ret;
 
-            tstr<defVarExpr> defVar(cast.onBlock()->cast<defVarExpr>());
+            tstr<defVarExpr> defVar(cast.case1()->cast<defVarExpr>());
             if(!defVar) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
 
             ret.add(new param(defVar->getName(), defVar->getOrigin()));
@@ -384,8 +384,8 @@ namespace namu {
         return new getExpr(from, name, args);
     }
 
-    node* me::onGetGeneric(const std::string& genericObjName, const std::vector<std::string>& typeParams) {
-        NAMU_DI("tokenEvent: onGetGeneric(%s, params.len[%d])", genericObjName.c_str(), typeParams.len());
+    node* me::onGenericType(const std::string& genericObjName, const std::vector<std::string>& typeParams) {
+        NAMU_DI("tokenEvent: onGetGeneric(%s, params.len[%d])", genericObjName.c_str(), typeParams.size());
         return new getGenericExpr(genericObjName, typeParams);
     }
 
@@ -422,10 +422,12 @@ namespace namu {
 
     node* me::onDefAssign(const std::string& name, node& rhs) {
         NAMU_DI("tokenEvent: onDefAssign(%s, %s)", name.c_str(), rhs.getType().getName().c_str());
-        return new muna([&, name]() { return new defAssignExpr(name, rhs); },
-                [&, name](defBlock& blk) {
-                    blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), name, rhs, true));
-                });
+        return new blockRule(
+            [&, name]() { return new defAssignExpr(name, rhs); },
+            [&, name](defBlock& blk) -> defBlock& {
+                return blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), name, rhs, true)), blk;
+            }
+        );
     }
 
     asExpr* me::onAs(const node& me, const node& as) {
@@ -471,10 +473,12 @@ namespace namu {
 
     node* me::onAkaDefault(const getExpr& dotname, const std::string& newName) {
         NAMU_DI("tokenEvent: onAkaDefault(%s..., %s)", dotname.getSubName().c_str(), newName.c_str());
-        return new muna([&, newName]() { return new defAssignExpr(newName, dotname); },
-                [&, newName](defBlock& blk) {
-                        blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), newName, dotname, true));
-                });
+        return new blockRule(
+            [&, newName]() { return new defAssignExpr(newName, dotname); },
+            [&, newName](defBlock& blk) -> defBlock& {
+                return blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), newName, dotname, true)), blk;
+            }
+        );
     }
 
 
