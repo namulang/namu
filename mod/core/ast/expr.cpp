@@ -2,6 +2,7 @@
 #include "../builtin/container/native/tnmap.inl"
 #include "../loader/interpreter/tverification.hpp"
 #include "../loader/interpreter/verifier.hpp"
+#include "args.hpp"
 
 namespace namu {
 
@@ -12,7 +13,7 @@ namespace namu {
         return inner;
     }
 
-    nbool me::canRun(const ucontainable& args) const { return args.len() == 0; }
+    nbool me::canRun(const args& a) const { return a.len() == 0; }
     const src& me::getSrc() const { return *_src; }
     const point& me::getPos() const { return _pos; }
 

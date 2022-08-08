@@ -13,17 +13,17 @@ namespace namu {
         return inner;
     }
 
-    nbool me::canRun(const ucontainable& args) const {
-        return args.len() == 1 && args.begin()->isSub<node>();
+    nbool me::canRun(const args& a) const {
+        return a.len() == 1 && a.begin()->isSub<node>();
     }
 
-    str me::run(const ucontainable& args) {
-        if(!canRun(args))
+    str me::run(const args& a) {
+        if(!canRun(a))
             return NAMU_E("argument doesn't match to main func()"), str();
 
-        node& pak = *args.begin();
+        node& pak = *a.begin();
         NAMU_I("run a pack");
-        node& main = _findMain(pak, narr());
+        node& main = _findMain(pak, args());
         if(nul(main))
             return NAMU_E("there is 0 or more than 2 main() found."), str();
 
@@ -36,9 +36,9 @@ namespace namu {
         return NAMU_E("couldn't run main func(). it doesn't match any argument"), str();
     }
 
-    node& me::_findMain(node& pak, const ucontainable& args) {
+    node& me::_findMain(node& pak, const args& a) {
         // TODO: now, only find to main() but I need to find main(argc, argv) case, too.
-        node& ret = pak.sub("main", narr());
+        node& ret = pak.sub("main", a);
         if(nul(ret))
             NAMU_E("could'nt find main().");
 

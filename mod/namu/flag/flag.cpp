@@ -5,10 +5,10 @@ namespace namu {
 
     NAMU_DEF_ME(flag)
 
-    nbool me::take(interpreter& ip, cli& c, args& a) const {
+    nbool me::take(interpreter& ip, cli& c, flagArgs& a) const {
         std::regex re(_getRegExpr());
         std::vector<int> del;
-        args tray;
+        flagArgs tray;
         for(int n=0; n < a.size() ;n++) {
             if(std::regex_match(a[n], re)) {
                 tray.push_back(a[n]);

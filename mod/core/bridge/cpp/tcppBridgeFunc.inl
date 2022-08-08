@@ -25,11 +25,11 @@ namespace namu {
 
     TEMPL
     template <size_t... index>
-    str ME::_marshal(narr& args, std::index_sequence<index...>) {
-        auto& me = (tcppBridge<T>&) frame::getObj();
+    str ME::_marshal(args& a, std::index_sequence<index...>) {
+        auto& me = (tcppBridge<T>&) a.getObj();
         if(nul(me)) return NAMU_E("object from frame does not exists."), str();
 
-        return tmarshaling<Ret>::toMgd((me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index])...));
+        return tmarshaling<Ret>::toMgd((me._real->*(this->_fptr))(tmarshaling<Args>::toNative(a[index])...));
     }
 
 #undef ME
@@ -39,11 +39,11 @@ namespace namu {
 
     TEMPL
     template <size_t... index>
-    str ME::_marshal(narr& args, std::index_sequence<index...>) {
-        auto& me = (tcppBridge<T>&) frame::getObj();
+    str ME::_marshal(args& a, std::index_sequence<index...>) {
+        auto& me = (tcppBridge<T>&) a.getObj();
         if(nul(me)) return NAMU_E("object from frame does not exists."), str();
 
-        (me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index])...);
+        (me._real->*(this->_fptr))(tmarshaling<Args>::toNative(a[index])...);
         return tmarshaling<void>::toMgd();
     }
 

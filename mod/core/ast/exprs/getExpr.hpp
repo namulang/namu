@@ -11,20 +11,20 @@ namespace namu {
 
     public:
         getExpr(const std::string& name): _name(name) {}
-        getExpr(const std::string& name, const narr& args): _name(name), _args(args) {}
+        getExpr(const std::string& name, const args& a): _name(name), _args(a) {}
         getExpr(const node& from, const std::string& name): _from(from), _name(name) {}
-        getExpr(const node& from, const std::string& name, const narr& args): _from(from), _name(name), _args(args) {}
+        getExpr(const node& from, const std::string& name, const args& a): _from(from), _name(name), _args(a) {}
 
     public:
         using super::run;
-        str run(const ucontainable& args) override;
+        str run(const args& a) override;
         const node& getEval() const override;
         const node& getFrom() const;
         const std::string& getSubName() const;
         void setFrom(const node& newFrom) { _from.bind(newFrom); }
 
         /// @return nullable
-        const narr& getSubArgs() const;
+        const args& getSubArgs() const;
 
     private:
         node& _get() const;
@@ -32,6 +32,6 @@ namespace namu {
     private:
         str _from;
         std::string _name;
-        tstr<narr> _args;
+        tstr<args> _args;
     };
 }

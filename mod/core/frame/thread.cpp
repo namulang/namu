@@ -40,8 +40,8 @@ namespace namu {
         return *inner;
     }
 
-    str me::run(const ucontainable& args) {
-        // TODO: args validness check.
+    str me::run(const args& a) {
+        // TODO: a validness check.
 
         // find 'main' func:
         func& fun = _root->sub<func>("main"); // TODO: support generic type of str[]
@@ -50,7 +50,7 @@ namespace namu {
 
         thread* prev = *_get();
         *_get() = this;
-        str res = fun.run(args);
+        str res = fun.run(a);
         *_get() = prev;
 
         return res;
@@ -74,7 +74,7 @@ namespace namu {
         return _root->subs();
     }
 
-    nbool me::canRun(const ucontainable& args) const { return false; }
+    nbool me::canRun(const args& a) const { return false; }
 
     void me::rel() { _frames.rel(); }
 

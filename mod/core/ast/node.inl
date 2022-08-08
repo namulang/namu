@@ -22,17 +22,17 @@ namespace namu {
     }
 
     template <typename T>
-    T& ME::sub(const std::string& name, const ucontainable& args) {
-        if(nul(args))
+    T& ME::sub(const std::string& name, const args& a) {
+        if(nul(a))
             return sub<T>(name);
 
         return subs().get<T>([&](const std::string& key, const T& val) {
-            return key == name && val.canRun(args);
+            return key == name && val.canRun(a);
         });
     }
 
     template <typename T>
-    T& ME::sub(const std::string& name, const ucontainable& args) const NAMU_UNCONST_FUNC(sub<T>(name, args))
+    T& ME::sub(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(sub<T>(name, a))
 
     template <typename T>
     tnarr<T, strTactic> ME::subAll() const {
@@ -49,17 +49,17 @@ namespace namu {
     }
 
     template <typename T>
-    tnarr<T, strTactic> ME::subAll(const std::string& name, const ucontainable& args) {
-        if(nul(args))
+    tnarr<T, strTactic> ME::subAll(const std::string& name, const args& a) {
+        if(nul(a))
             return subAll<T>(name);
 
         return subs().getAll<T>([&](const std::string& key, const T& val) {
-            return key == name && val.canRun(args);
+            return key == name && val.canRun(a);
         });
     }
 
     template <typename T>
-    tnarr<T, strTactic> ME::subAll(const std::string& name, const ucontainable& args) const NAMU_UNCONST_FUNC(subAll<T>(name, args))
+    tnarr<T, strTactic> ME::subAll(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(subAll<T>(name, a))
 
 #undef ME
 }

@@ -17,7 +17,7 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override;
+        str run(const args& a) override;
         const node& getOrigin() const;
         const std::string& getName() const;
         /// @return null of scope if this variable will be defined to local scope.

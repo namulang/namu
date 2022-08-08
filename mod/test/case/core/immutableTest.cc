@@ -25,12 +25,12 @@ namespace {
             NAMU(CLASS(myBlock, blockExpr))
 
         public:
-            str run(const ucontainable& args) override {
+            str run(const args& a) override {
                 NAMU_I("hello world!");
                 _executed = true;
 
                 if(_lambda)
-                    _res = _lambda(args, (frames&) namu::thread::get().getFrames());
+                    _res = _lambda(a, (frames&) namu::thread::get().getFrames());
                 return str();
             }
 

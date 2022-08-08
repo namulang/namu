@@ -16,7 +16,7 @@ namespace {
             _executed = false;
         }
 
-        str run(const ucontainable& args) override {
+        str run(const args& a) override {
             NAMU_I("hello world!");
             _executed = true;
             return str();
@@ -144,14 +144,14 @@ TEST_F(nodeTest, testManualNativefuncCall) {
     myObj obj;
     obj.subs().add("myFunc", func);
 
-    narr args;
-    narr subs = ((const myObj&) obj).subAll("myFunc", args);
+    args a;
+    narr subs = ((const myObj&) obj).subAll("myFunc", a);
     ASSERT_EQ(subs.len(), 1);
-    ASSERT_TRUE(subs[0].canRun(args));
+    ASSERT_TRUE(subs[0].canRun(a));
 
     // when:
     func.setUp();
-    subs[0].run(args);
+    subs[0].run(a);
     ASSERT_TRUE(func.isRun());
 }
 

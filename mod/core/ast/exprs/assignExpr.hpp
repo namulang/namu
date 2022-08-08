@@ -17,7 +17,7 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override {
+        str run(const args& a) override {
             iter e = _getScopeIterOfLhs(); // e exists. verified.
 
             str ret = _rhs->run();

@@ -8,12 +8,12 @@ namespace namu {
         NAMU(CLASS(runExpr, expr, expr::exprType))
 
     public:
-        runExpr(const node& meObj, const std::string& name, const narr& args);
-        runExpr(const node& meObj, const narr& args);
+        runExpr(const node& meObj, const std::string& name, const args& a);
+        runExpr(const node& meObj, const args& a);
 
     public:
         using super::run;
-        str run(const ucontainable& args) override;
+        str run(const args& a) override;
 
         const node& getEval() const override;
 
@@ -24,12 +24,12 @@ namespace namu {
         const std::string& getName() const;
         std::string& getName();
 
-        narr& getArgs();
-        const narr& getArgs() const;
+        args& getArgs();
+        const args& getArgs() const;
 
     private:
         str _me;
-        narr _args;
+        args _args;
         std::string _name;
     };
 }

@@ -12,10 +12,10 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override {
-            if (!canRun(args)) return str();
+        str run(const args& a) override {
+            if (!canRun(a)) return str();
 
-            return str((node*) args.begin()->clone());
+            return str((node*) a.begin()->clone());
         }
 
         const params& getParams() const override {

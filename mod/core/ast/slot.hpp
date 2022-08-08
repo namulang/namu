@@ -26,18 +26,18 @@ namespace namu {
         using super::subs;
         nbicontainer& subs() override { return getPack().subs(); }
 
-        nbool canRun(const ucontainable& args) const override { return getPack().canRun(args); }
+        nbool canRun(const args& a) const override { return getPack().canRun(a); }
 
         using super::run;
-        str run(const ucontainable& args) override { return getPack().run(args); }
+        str run(const args& a) override { return getPack().run(a); }
 
         const node& getEval() const override { return getPack().getEval(); }
 
     protected:
         virtual nbool _invalidate();
         void _setValid(nbool valid);
-        virtual str _onRunSub(node& sub, const ucontainable& args) override {
-            return getPack()._onRunSub(sub, args);
+        virtual str _onRunSub(node& sub, const args& a) override {
+            return getPack()._onRunSub(sub, a);
         }
 
 

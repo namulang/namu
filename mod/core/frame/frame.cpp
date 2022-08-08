@@ -73,9 +73,9 @@ namespace namu {
         return nul(top) ? _obj->subs() : top;
     }
 
-    nbool me::canRun(const ucontainable& args) const { return false; }
+    nbool me::canRun(const args& a) const { return false; }
 
-    str me::run(const ucontainable& args) { return str(); }
+    str me::run(const args& a) { return str(); }
 
     void me::rel() {
         _rel();

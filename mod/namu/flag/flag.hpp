@@ -1,6 +1,6 @@
 #pragma once
 
-#include "args.hpp"
+#include "flagArgs.hpp"
 #include "../common.hpp"
 #include <regex>
 
@@ -15,17 +15,17 @@ namespace namu {
         virtual const nchar* getDescription() const = 0;
 
         /// @return how many argument taken by this flag.
-        virtual nbool take(interpreter& ip, cli& c, args& a) const;
+        virtual nbool take(interpreter& ip, cli& c, flagArgs& a) const;
 
     protected:
-        void _delArgs(args& a, std::vector<int> indices) const {
+        void _delArgs(flagArgs& a, std::vector<int> indices) const {
             // remove del in reverse order.
             for(auto e=indices.rbegin(); e != indices.rend() ;++e)
                 a.erase(a.begin() + *e);
         }
 
         virtual const nchar* _getRegExpr() const = 0;
-        virtual nbool _onTake(const args& tray, cli& c, interpreter& ip) const = 0;
+        virtual nbool _onTake(const flagArgs& tray, cli& c, interpreter& ip) const = 0;
     };
 
     typedef std::vector<tstr<flag>> flags;

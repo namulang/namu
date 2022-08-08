@@ -6,6 +6,7 @@
 #include "../loader/interpreter/verification.inl"
 #include "../loader/interpreter/verifier.hpp"
 #include "params.hpp"
+#include "args.hpp"
 
 namespace namu {
 
@@ -16,19 +17,19 @@ namespace namu {
     }
 
     str me::run() {
-        return run(narr());
+        return run(args());
     }
 
     str me::run(const std::string& name) {
-        return run(name, narr());
+        return run(name, args());
     }
 
-    str me::run(const std::string& name, const ucontainable& args) {
-        if(name.empty()) return run(args);
-        me& found = sub(name, args);
+    str me::run(const std::string& name, const args& a) {
+        if(name.empty()) return run(a);
+        me& found = sub(name, a);
         if(nul(found)) return str();
 
-        return _onRunSub(found, args);
+        return _onRunSub(found, a);
     }
 
     nbool me::is(const typeProvidable& to) const { return is(to.getType()); }
@@ -45,8 +46,8 @@ namespace namu {
         return *this;
     }
 
-    str me::_onRunSub(node& sub, const ucontainable& args) {
-        return sub.run(args);
+    str me::_onRunSub(node& sub, const args& a) {
+        return sub.run(a);
     }
 
 

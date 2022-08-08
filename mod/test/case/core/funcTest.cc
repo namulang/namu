@@ -14,13 +14,13 @@ namespace {
             NAMU(CLASS(myBlock, blockExpr))
 
         public:
-            str run(const ucontainable& args) override {
-                if(!canRun(args)) return str();
+            str run(const args& a) override {
+                if(!canRun(a)) return str();
                 NAMU_I("hello world!");
                 _executed = true;
 
                 if(_lambda)
-                    _res = _lambda(args, (frames&) namu::thread::get().getFrames());
+                    _res = _lambda(a, (frames&) namu::thread::get().getFrames());
                 return str();
             }
 
@@ -125,7 +125,7 @@ TEST_F(funcTest, testfuncConstructNewFrame) {
         NAMU_I(" - fr[%d]=%s", n++, e->getType().getName().c_str());
     }
 
-    func.setLambda([&](const auto& args, const auto& sf) {
+    func.setLambda([&](const auto& a, const auto& sf) {
         if(sf.len() != 1) return false;
 
         return checkFrameHasfuncAndObjScope(sf[0], func, funcNames[0], obj, funcNames, 1);
@@ -159,7 +159,7 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
     const char* obj2FuncNames[] = {"obj2func1"};
     obj2.subs().add("obj2func1", obj2func1);
 
-    obj1func1.setLambda([&](const auto& args, const auto& sf) {
+    obj1func1.setLambda([&](const auto& a, const auto& sf) {
         if(sf.len() != 1) return NAMU_I("%s: sf.len() != 1", func1Name), false;
         if(!checkFrameHasfuncAndObjScope(sf[0], obj1func1, func1Name, obj1, obj1FuncNames, 2)) return false;
 
@@ -169,28 +169,29 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
             return NAMU_I("return of %s: sf.len() != 1", func1Name), false;
         return true;
     });
-    obj1func2.setLambda([&](const auto& args, const auto& sf) {
+    obj1func2.setLambda([&](const auto& a, const auto& sf) {
         if(sf.len() != 2) return NAMU_I("%s: sf.len(%d) > 2", func2Name, sf.len()), false;
 
         if(!checkFrameHasfuncAndObjScope(sf[1], obj1func2, func2Name, obj1, obj1FuncNames, 2)) return false;
 
-        narr funcArgs;
+        args funcArgs;
         funcArgs.add(obj2);
+        funcArgs.setObj(obj2);
         obj2.run(obj2FuncNames[0], funcArgs);
         if(sf.len() != 2)
             return NAMU_I("return of %s: sf.len() != 2", func2Name), false;
         return true;
     });
-    obj2func1.setLambda([&](const auto& args, const auto& sf) {
+    obj2func1.setLambda([&](const auto& a, const auto& sf) {
         if(sf.len() != 3) return false;
 
         if(!checkFrameHasfuncAndObjScope(sf[2], obj2func1, "obj2func1", obj2, obj2FuncNames, 1)) return false;
         return true;
     });
 
-    narr args;
+    args a(obj1);
     ASSERT_EQ(namu::thread::get().getFrames().len(), 0);
-    obj1.run(func1Name, args);
+    obj1.run(func1Name, a);
     ASSERT_EQ(namu::thread::get().getFrames().len(), 0);
     ASSERT_TRUE(obj1func1.isSuccess());
 
@@ -213,19 +214,19 @@ TEST_F(funcTest, testfuncHasStrParameter) {
 
     params& types = func1.getParams();
     types.add(new param("", new nStr()));
-    func1.setLambda([&](const auto& args, const frames& sf) { return true; });
+    func1.setLambda([&](const auto& a, const frames& sf) { return true; });
 
-    narr args;
-    args.add(new nStr(expectVal));
-    auto e = args.iterate(1);
+    args a;
+    a.add(new nStr(expectVal));
+    auto e = a.iterate(1);
 
-    func1.run(args);
+    func1.run(a);
     ASSERT_FALSE(func1.isSuccess());
 
     obj.run("myfunc", narr());
     ASSERT_FALSE(func1.isSuccess());
 
-    obj.run("myfunc", args);
+    obj.run("myfunc", a);
     ASSERT_TRUE(func1.isSuccess());
 }
 
@@ -236,7 +237,7 @@ TEST_F(funcTest, testArgsAttachedName) {
     params& ps = f.getParams();
     ps.add(new param("msg", new nStr()));
     ps.add(new param("age", new nInt()));
-    f.setLambda([&](const auto& args, const frames& sf) {
+    f.setLambda([&](const auto& a, const frames& sf) {
         const frame& fr = sf[sf.len() - 1];
         return  fr["msg"].cast<nStr>().get() == "hello world" &&
                 fr["age"].cast<nInt>().get() == 55;
@@ -247,20 +248,20 @@ TEST_F(funcTest, testArgsAttachedName) {
 
     nStr msg("hello world");
     nInt age(55);
-    narr args;
-    args.add(msg);
-    args.add(age);
+    args a;
+    a.add(msg);
+    a.add(age);
 
-    o.run("myfunc", args);
+    o.run("myfunc", a);
     ASSERT_TRUE(f.isRun());
     ASSERT_TRUE(f.isSuccess());
 
     f.setUp();
     ASSERT_FALSE(f.isRun());
-    args.rel();
-    args.add(o);
-    args.add(msg);
-    args.add(age);
-    o.run("myfunc", args);
+    a.rel();
+    a.add(o);
+    a.add(msg);
+    a.add(age);
+    o.run("myfunc", a);
     ASSERT_FALSE(f.isRun());
 }

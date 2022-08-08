@@ -17,7 +17,7 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override {
+        str run(const args& a) override {
             if(!_me || !_as) return str();
 
             str eval = _me->run();

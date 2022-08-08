@@ -27,13 +27,13 @@ namespace namu {
     nbicontainer& me::subs() { return _shares; }
     const params& me::getParams() const { return _params; }
 
-    str me::run(const ucontainable& args) {
+    str me::run(const args& a) {
         str ret;
-        if(nul(args)) return NAMU_E("args == null"), ret;
+        if(nul(a)) return NAMU_E("a == null"), ret;
 
         // s is from heap space. but freed by _outFrame() of this class.
-        scope& s = *_evalArgs(args);
-        baseObj& meObj = frame::getObj();
+        scope& s = *_evalArgs(a);
+        baseObj& meObj = a.getObj();
         if(nul(meObj)) return NAMU_E("meObj == null"), ret;
 
         frameInteract f1(meObj); {

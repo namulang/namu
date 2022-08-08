@@ -6,9 +6,9 @@ namespace namu {
 
     me::src(const std::string& fileName): _fileName(fileName) {}
 
-    nbool me::canRun(const ucontainable& args) const { return false; }
+    nbool me::canRun(const args& a) const { return false; }
 
-    str me::run(const ucontainable& args) { return str(); }
+    str me::run(const args& a) { return str(); }
 
     nbicontainer& me::subs() { return _subs; }
 

@@ -22,7 +22,7 @@ namespace namu {
         return got.getEval();
     }
 
-    str me::run(const ucontainable& args) {
+    str me::run(const args& a) {
         // believe that this expression was checked to be valid.
         return str(_get());
     }
@@ -30,7 +30,7 @@ namespace namu {
     const std::string& me::getSubName() const { return _name; }
 
     /// @return nullable
-    const narr& me::getSubArgs() const { return *_args; }
+    const args& me::getSubArgs() const { return *_args; }
 
     node& me::_get() const {
         str evalMe = getFrom().isSub<expr>() ? getFrom().as<node>() : getFrom();
@@ -40,6 +40,7 @@ namespace namu {
 
         return evalMe->sub(_name, *_args);
     }
+
 
 
     NAMU_VERIFY(getExpr, isRunnable, {

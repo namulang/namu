@@ -23,16 +23,16 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override;
+        str run(const args& a) override;
 
-        nbool canRun(const ucontainable& args) const override;
+        nbool canRun(const args& a) const override;
 
         virtual const baseObj& getOrigin() const = 0;
 
     protected:
         void _inFrame(const bicontainable& args) override;
         void _outFrame() override;
-        str _onRunSub(node& sub, const ucontainable& args) override;
+        str _onRunSub(node& sub, const args& a) override;
 
     public:
          inline static const string CTOR_NAME = "@ctor";

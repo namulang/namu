@@ -20,7 +20,7 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override;
+        str run(const args& a) override;
 
         const node& getEval() const override { return _rhs->getEval(); }
         const std::string& getSubName() const { return _name; }

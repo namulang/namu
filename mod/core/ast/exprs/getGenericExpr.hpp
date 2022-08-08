@@ -12,7 +12,7 @@ namespace namu {
         }
 
     public:
-        str run(const ucontainable& args) override {
+        str run(const args& a) override {
             // TODO:
             return str();
         }

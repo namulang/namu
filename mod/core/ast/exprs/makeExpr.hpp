@@ -13,7 +13,7 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override {
+        str run(const args& a) override {
             tstr<obj> out(_from->run());
             if(!out) return str();
 

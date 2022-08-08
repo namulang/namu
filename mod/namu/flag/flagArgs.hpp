@@ -4,5 +4,5 @@
 #include <string>
 
 namespace namu {
-    typedef std::vector<std::string> args;
+    typedef std::vector<std::string> flagArgs;
 }

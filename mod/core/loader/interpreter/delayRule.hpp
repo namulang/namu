@@ -35,8 +35,8 @@ namespace namu {
         delayRule(action1 act1, action2 act2): _act1(act1), _act2(act2) {}
 
     public:
-        str run(const ucontainable& args) override { return str(); }
-        nbool canRun(const ucontainable& args) const override { return false; }
+        str run(const args& a) override { return str(); }
+        nbool canRun(const args& a) const override { return false; }
         nbicontainer& subs() override {
             static ndumMap inner;
             return inner;
@@ -59,8 +59,8 @@ namespace namu {
         delayRule(action1 act1, action2 act2): _act1(act1), _act2(act2) {}
 
     public:
-        str run(const ucontainable& args) override { return str(); }
-        nbool canRun(const ucontainable& args) const override { return false; }
+        str run(const args& a) override { return str(); }
+        nbool canRun(const args& a) const override { return false; }
         nbicontainer& subs() override {
             static ndumMap inner;
             return inner;
@@ -83,8 +83,8 @@ namespace namu {
         delayRule(action1 act1, action2 act2): _act1(act1), _act2(act2) {}
 
     public:
-        str run(const ucontainable& args) override { return str(); }
-        nbool canRun(const ucontainable& args) const override { return false; }
+        str run(const args& a) override { return str(); }
+        nbool canRun(const args& a) const override { return false; }
         nbicontainer& subs() override {
             static ndumMap inner;
             return inner;
@@ -107,8 +107,8 @@ namespace namu {
         delayRule(action1 act1, action2 act2): _act1(act1), _act2(act2) {}
 
     public:
-        str run(const ucontainable& args) override { return str(); }
-        nbool canRun(const ucontainable& args) const override { return false; }
+        str run(const args& a) override { return str(); }
+        nbool canRun(const args& a) const override { return false; }
         nbicontainer& subs() override {
             static ndumMap inner;
             return inner;

@@ -67,8 +67,8 @@ namespace namu {
         using node::subs;
         nbicontainer& subs() override;
 
-        nbool canRun(const ucontainable& args) const override;
-        str run(const ucontainable& args) override;
+        nbool canRun(const args& a) const override;
+        str run(const args& a) override;
 
         void rel() override;
 

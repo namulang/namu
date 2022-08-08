@@ -4,6 +4,7 @@
 #include "../loader/interpreter/tverification.hpp"
 #include "../frame/thread.hpp"
 #include "../loader/interpreter/verifier.hpp"
+#include "args.hpp"
 
 namespace namu {
 
@@ -11,20 +12,20 @@ namespace namu {
 
     me::baseObj() {}
 
-    str me::_onRunSub(node& sub, const ucontainable& args) {
+    str me::_onRunSub(node& sub, const args& a) {
         baseObj& prev = frame::_setObj(*this);
-        str ret = super::_onRunSub(sub, args);
+        str ret = super::_onRunSub(sub, a);
         frame::_setObj(prev);
 
         return ret;
     }
 
-    str me::run(const ucontainable& args) {
+    str me::run(const args& a) {
         return str(this);
     }
 
-    nbool me::canRun(const ucontainable& args) const {
-        return args.len() <= 0;
+    nbool me::canRun(const args& a) const {
+        return a.len() <= 0;
     }
 
     void me::_inFrame(const bicontainable& args) {

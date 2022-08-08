@@ -11,6 +11,7 @@
 namespace namu {
 
     class ases;
+    class args;
 
     /// node provides common API to manipulate its sub nodes.
     class _nout node : public instance, public clonable, public frameInteractable {
@@ -38,8 +39,8 @@ namespace namu {
         }
         template <typename T = me> T& sub() const;
         template <typename T = me> T& sub(const std::string& name) const;
-        template <typename T = me> T& sub(const std::string& name, const ucontainable& args);
-        template <typename T = me> T& sub(const std::string& name, const ucontainable& args) const;
+        template <typename T = me> T& sub(const std::string& name, const args& a);
+        template <typename T = me> T& sub(const std::string& name, const args& a) const;
 
         template <typename T>
         tnarr<T> subAll(std::function<nbool(const std::string&, const T&)> l) const {
@@ -48,13 +49,13 @@ namespace namu {
 
         template <typename T = me> tnarr<T, strTactic> subAll() const;
         template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name) const;
-        template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name, const ucontainable& args);
-        template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name, const ucontainable& args) const;
+        template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name, const args& a);
+        template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name, const args& a) const;
 
-        virtual nbool canRun(const ucontainable& args) const = 0;
+        virtual nbool canRun(const args& a) const = 0;
 
-        virtual str run(const ucontainable& args) = 0;
-        str run(const std::string& name, const ucontainable& args);
+        virtual str run(const args& a) = 0;
+        str run(const std::string& name, const args& a);
         str run(const std::string& name);
         str run();
 
@@ -100,7 +101,7 @@ namespace namu {
         virtual const node& getEval() const;
 
     protected:
-        virtual str _onRunSub(node& sub, const ucontainable& args);
+        virtual str _onRunSub(node& sub, const args& a);
         void _inFrame(const bicontainable& args) override {}
         void _outFrame() override {}
     };
