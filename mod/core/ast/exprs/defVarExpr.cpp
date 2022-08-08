@@ -12,7 +12,7 @@ namespace namu {
     me::defVarExpr(const std::string& name, const node& org, const scope& where): _org(org),
             _name(name), _where(where) {}
 
-    str me::run(const ucontainable& args) {
+    str me::run(const args& a) {
         const std::string& name = _name;
         str org = _org->as<node>();
         if(!org) {

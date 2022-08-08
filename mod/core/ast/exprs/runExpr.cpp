@@ -9,11 +9,11 @@ namespace namu {
 
     NAMU_DEF_ME(runExpr)
 
-    me::runExpr(const node& meObj, const std::string& name, const narr& args):
-            _me(meObj), _args(args), _name(name)  {}
-    me::runExpr(const node& meObj, const narr& args): _me(meObj), _args(args) {}
+    me::runExpr(const node& meObj, const std::string& name, const args& a):
+            _me(meObj), _args(a), _name(name)  {}
+    me::runExpr(const node& meObj, const args& a): _me(meObj), _args(a) {}
 
-    str me::run(const ucontainable& args) {
+    str me::run(const args& a) {
         str me = _me->as<node>();
         if(!me) return NAMU_E("_me as node == null"), str();
 
@@ -26,8 +26,8 @@ namespace namu {
     const std::string& me::getName() const { return _name; }
     std::string& me::getName() { return _name; }
 
-    narr& me::getArgs() { return _args; }
-    const narr& me::getArgs() const { return _args; }
+    args& me::getArgs() { return _args; }
+    const args& me::getArgs() const { return _args; }
 
     void me::setMe(const node& newMe) {
         _me.bind(newMe);
@@ -49,11 +49,11 @@ namespace namu {
 
 
     namespace {
-        narr _evalArgs(const narr& args) {
-            narr ret;
-            for(auto& e : args)
+        args _evalArgs(const args& a) {
+            args ret;
+            for(auto& e : a)
                 ret.add(e.getEval());
-            return ret;
+            return ret.setObj(a.getObj());
         }
     }
 

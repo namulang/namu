@@ -6,7 +6,7 @@ namespace namu {
     struct cli {
         const flags& getFlags() const;
 
-        nbool run(args& a) {
+        nbool run(flagArgs& a) {
             interpreter ip;
 
             for(const auto& op : getFlags()) {

@@ -25,7 +25,7 @@ namespace namu {
         const params& getParams() const override;
 
         using super::run;
-        str run(const ucontainable& args) override;
+        str run(const args& a) override;
 
         void setPos(const point& new1) override {
             _pos = new1;

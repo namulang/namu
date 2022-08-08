@@ -13,10 +13,10 @@ namespace namu {
         src(const std::string& fileName);
 
     public:
-        nbool canRun(const ucontainable& args) const override;
+        nbool canRun(const args& a) const override;
 
         using super::run;
-        str run(const ucontainable& args) override;
+        str run(const args& a) override;
         nbicontainer& subs() override;
         const std::string& getFileName() const;
 

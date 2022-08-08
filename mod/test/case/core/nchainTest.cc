@@ -13,8 +13,8 @@ namespace {
         myNode(int num): number(num) {}
 
         nbicontainer& subs() override { return nulOf<nbicontainer>(); }
-        nbool canRun(const ucontainable& types) const override { return false; }
-        str run(const ucontainable& args) override { return str(); }
+        nbool canRun(const args& types) const override { return false; }
+        str run(const args& a) override { return str(); }
 
         int number;
     };

@@ -12,8 +12,8 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override {
-            if(args.len() >= 1) return str();
+        str run(const args& a) override {
+            if(a.len() >= 1) return str();
 
             return str((node*) getOrigin().clone());
         }

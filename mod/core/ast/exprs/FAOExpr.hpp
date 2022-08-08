@@ -27,7 +27,7 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override {
+        str run(const args& a) override {
             if(!_lhs || !_rhs) return str();
 
             tstr<arithmeticObj> lhs(_lhs->run());

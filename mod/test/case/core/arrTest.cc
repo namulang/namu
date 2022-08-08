@@ -14,9 +14,9 @@ namespace {
         myNode(int num): number(num) {}
 
         nbicontainer& subs() override { return nulOf<nbicontainer>(); }
-        nbool canRun(const ucontainable& types) const override { return false; }
+        nbool canRun(const args& a) const override { return false; }
         using super::run;
-        str run(const ucontainable& args) override { return str(); }
+        str run(const args& a) override { return str(); }
 
         int number;
     };

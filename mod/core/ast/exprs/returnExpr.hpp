@@ -13,15 +13,15 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override;
+        str run(const args& a) override;
 
         node& getRet();
         const node& getRet() const NAMU_UNCONST_FUNC(getRet())
-        nbool canRun(const ucontainable& args) const override;
+        nbool canRun(const args& a) const override;
         const node& getEval() const override;
 
     private:
-        str _decideRet(const ucontainable& args);
+        str _decideRet(const args& a);
 
     private:
         str _ret;

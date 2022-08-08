@@ -100,9 +100,9 @@ struct myObj : public obj {
 public:
     myObj(): executed(false) {}
 
-    str run(const ucontainable& args) override {
+    str run(const args& a) override {
         executed = true;
-        return super::run(args);
+        return super::run(a);
     }
 
     nbool executed;
@@ -123,9 +123,9 @@ struct myGetExpr : public getExpr {
 public:
     myGetExpr(const node& from, const std::string& name): super(from, name), executed(false) {}
 
-    str run(const ucontainable& args) override {
+    str run(const args& a) override {
         executed = true;
-        return super::run(args);
+        return super::run(a);
     }
 
     nbool executed;

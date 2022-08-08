@@ -21,8 +21,7 @@ int main(int argc, char* argv[]) {
     logger::get()["consoleStream"].setEnable(false);
 
     cli ep;
-
-    args a;
+    flagArgs a;
     for(int n=1; n < argc ;n++)
         a.push_back(argv[n]);
 

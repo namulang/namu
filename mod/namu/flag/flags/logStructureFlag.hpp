@@ -18,6 +18,6 @@ namespace namu {
 
     protected:
         const nchar* _getRegExpr() const override { return "^\\-ls$"; }
-        nbool _onTake(const args& tray, cli& c, interpreter& ip) const override;
+        nbool _onTake(const flagArgs& tray, cli& c, interpreter& ip) const override;
     };
 }

@@ -7,7 +7,7 @@
 namespace namu {
     NAMU_DEF_ME(defAssignExpr)
 
-    str me::run(const ucontainable& args) {
+    str me::run(const args& a) {
         str new1 = _rhs->run();
         if(!new1)
             return NAMU_E("new1 is null"), str();

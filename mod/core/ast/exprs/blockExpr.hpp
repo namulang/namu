@@ -16,7 +16,7 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override;
+        str run(const args& a) override;
         const node& getEval() const override;
         const narr& getStmts() const { return _exprs; }
         narr& getStmts() { return _exprs; }

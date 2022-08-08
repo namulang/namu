@@ -7,12 +7,12 @@ namespace namu {
 
     NAMU_DEF_ME(func)
 
-    nbool me::canRun(const ucontainable& args) const {
+    nbool me::canRun(const args& a) const {
         const params& ps = getParams();
-        if(args.len() != ps.len()) return false;
+        if(a.len() != ps.len()) return false;
 
         int n = 0;
-        for(const auto& e : args) {
+        for(const auto& e : a) {
             const node& t = e.getEval();
             if(nul(t)) return NAMU_W("t == null"), false;
             if(!t.isImpli(ps[n++].getOrigin()))

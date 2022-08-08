@@ -33,7 +33,7 @@ namespace namu {
         fr.popLocal();
     }
 
-    str me::run(const ucontainable& args) {
+    str me::run(const args& a) {
         frameInteract f1(*this); {
             str ret;
             frame& fr = namu::thread::get()._getNowFrame();

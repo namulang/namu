@@ -2,6 +2,7 @@
 
 #include "../../ast/func.hpp"
 #include "marshaling.hpp"
+#include "../../ast/args.hpp"
 
 namespace namu {
 
@@ -19,9 +20,9 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override {
-            narr tray;
-            narr& evaluated = _evalArgs(args, tray);
+        str run(const args& a) override {
+            args tray;
+            args& evaluated = _evalArgs(a, tray);
             if(nul(evaluated)) return NAMU_E("evaluated == null"), str();
 
             return _runNative(evaluated);
@@ -35,22 +36,23 @@ namespace namu {
         const params& getParams() const override;
 
     protected:
-        virtual str _runNative(narr& args) = 0;
+        virtual str _runNative(args& args) = 0;
 
     private:
-        narr& _evalArgs(const ucontainable& args, narr& tray) {
+        args& _evalArgs(const args& a, args& tray) {
             const params& ps = getParams();
-            if(args.len() != ps.len())
-                return NAMU_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()),
-                       nulOf<narr>();
+            if(a.len() != ps.len())
+                return NAMU_E("length of a(%d) and typs(%d) doesn't match.", a.len(), ps.len()),
+                       nulOf<args>();
 
             int n = 0;
-            for(const node& e: args) {
+            for(const node& e: a) {
                 str ased = e.as(ps[n++].getOrigin());
-                if(!ased) return nulOf<narr>();
+                if(!ased) return nulOf<args>();
 
                 tray.add(*ased);
             }
+            tray.setObj(a.getObj());
             return tray;
         }
 
@@ -67,12 +69,12 @@ namespace namu {
         tcppBridgeFunc(typename _super_::fptrType fptr): super(fptr) {}
 
     protected:
-        str _runNative(narr& args) override {
+        str _runNative(args& args) override {
             return _marshal(args, std::index_sequence_for<Args...>());
         }
 
         template <size_t... index>
-        str _marshal(narr& args, std::index_sequence<index...>);
+        str _marshal(args& args, std::index_sequence<index...>);
     };
 
     template <typename T, typename... Args>
@@ -84,11 +86,11 @@ namespace namu {
         tcppBridgeFunc(typename _super_::fptrType fptr): super(fptr) {}
 
     protected:
-        str _runNative(narr& args) override {
+        str _runNative(args& args) override {
             return _marshal(args, std::index_sequence_for<Args...>());
         }
 
         template <size_t... index>
-        str _marshal(narr& args, std::index_sequence<index...>);
+        str _marshal(args& args, std::index_sequence<index...>);
     };
 }
