@@ -52,7 +52,7 @@ namespace namu {
     baseObj& me::_setObj() {
         return _setObj(nulOf<baseObj>());
     }
-    baseObj& me::getObj() { return *inner; }
+    baseObj& me::_getObj() { return *inner; }
 
     scopes& me::getTop() { return *_local.getTop(); }
 
