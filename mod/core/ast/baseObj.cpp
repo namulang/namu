@@ -13,11 +13,8 @@ namespace namu {
     me::baseObj() {}
 
     str me::_onRunSub(node& sub, const args& a) {
-        baseObj& prev = frame::_setObj(*this);
-        str ret = super::_onRunSub(sub, a);
-        frame::_setObj(prev);
-
-        return ret;
+        a.setObj(*this);
+        return super::_onRunSub(sub, a);
     }
 
     str me::run(const args& a) {
@@ -36,7 +33,6 @@ namespace namu {
         scope* s = new scope();
         s->add("me", *this);
         fr.pushLocal(s);
-        fr.pushObj(frame::getObj());
         frs.add(fr);
     }
 

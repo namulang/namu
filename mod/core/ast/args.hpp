@@ -15,7 +15,7 @@ namespace namu {
         args(const baseObj& me, const narr& rhs): super(rhs), _me(me) {}
 
     public:
-        me& setObj(const baseObj& me) {
+        const me& setObj(const baseObj& me) const {
             _me.bind(me);
             return *this;
         }

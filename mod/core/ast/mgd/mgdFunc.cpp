@@ -114,7 +114,7 @@ namespace namu {
         scope* s = new scope();
         _prepareArgsAlongParam(it.getParams(), *s);
 
-        baseObj& meObj = frame::getObj();
+        baseObj& meObj = frame::_getObj();
         if(nul(meObj)) return _srcErr(errCode::FUNC_REDIRECTED_OBJ);
 
         frameInteract f1(meObj); {

@@ -13,7 +13,8 @@ namespace namu {
     class func;
     class _nout frame : public node { // TODO: may be obj, not node.
         NAMU(CLASS(frame, node),
-            FRIEND_VERIFY(baseObj, subNodes))
+            FRIEND_VERIFY(baseObj, subNodes),
+            FRIEND_VERIFY(mgdFunc, subNodes))
         friend struct ::immutableTest;
         friend struct ::frameTest;
         friend class baseObj;
@@ -57,8 +58,6 @@ namespace namu {
         // I won't provide API for poping a single node from the scope.
         tstr<scopes> popLocal();
 
-        static baseObj& getObj();
-
         void setFunc(func& new1);
         func& getFunc();
         const func& getFunc() const NAMU_UNCONST_FUNC(getFunc())
@@ -79,6 +78,7 @@ namespace namu {
     protected:
         static baseObj& _setObj(baseObj& new1);
         static baseObj& _setObj();
+        static baseObj& _getObj();
 
     private:
         void _rel();
