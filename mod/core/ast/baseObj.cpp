@@ -33,6 +33,7 @@ namespace namu {
         scope* s = new scope();
         s->add("me", *this);
         fr.pushLocal(s);
+        fr.pushObj(*this);
         frs.add(fr);
     }
 
@@ -55,9 +56,11 @@ namespace namu {
         tray.add(func::ME, it);
         for(auto e = it.subs().begin(); e ;++e) {
             node& val = e.getVal();
-            NAMU_DI("verify: baseObj: iterateSubNode[%s]=%s", e.getKey().c_str(), val.getType()
+            NAMU_DI("verify: baseObj: iteration [%s]=%s", e.getKey().c_str(), val.getType()
                     .getName().c_str());
             verify(val, tray);
+            NAMU_DI("verify: baseObj: end of iteration [%s]=%s", e.getKey().c_str(), val.getType()
+                    .getName().c_str());
         }
 
         frame::_setObj(prev);

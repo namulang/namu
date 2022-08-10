@@ -45,6 +45,8 @@ namespace namu {
         const node& rhs = it.getRight();
         if(nul(lhs)) return _srcErr(errCode::LHS_IS_NULL);
         if(nul(rhs)) return _srcErr(errCode::RHS_IS_NULL);
+
+        NAMU_DI("verify: FAOExpr: finding eval of l(r)hs.");
         const node& lEval = lhs.getEval();
         const node& rEval = rhs.getEval();
         if(nul(lEval)) return _srcErr(errCode::LHS_IS_NULL);
