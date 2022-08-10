@@ -43,7 +43,8 @@ namespace namu {
         if(nul(rhs))
             return _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
 
-        NAMU_DI("verify: defAssignExpr: %s has defined.",
+        NAMU_DI("verify: defAssignExpr: '%s %s' has defined.",
+                it.getSubName().c_str(),
                 nul(rhs) ? "name" : rhs.getType().getName().c_str());
 
         node& to = it.getTo();

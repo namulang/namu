@@ -55,11 +55,15 @@ namespace namu {
 
 
     NAMU_VERIFY(blockExpr, visitSubNodes, { // visit sub nodes.
-        NAMU_DI("verify: blockExpr: visit sub nodes[%d]", it._exprs.len());
+        NAMU_DI("verify: blockExpr: it will iterate all subnodes[%d]", it._exprs.len());
 
         frameInteract f1(it); {
-            for(auto& e : it._exprs)
+            int n = 0;
+            for(auto& e : it._exprs) {
+                NAMU_DI("verify: blockExpr: iterating sub node[%d]", n++);
                 verify(e);
+            }
+            NAMU_DI("verify: blockExpr: end of iteration");
 
             NAMU_DI("verify: last stmt should match to ret type");
 
