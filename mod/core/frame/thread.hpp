@@ -4,6 +4,8 @@
 #include "../builtin/container/native/tnmap.hpp"
 #include "frame.hpp"
 
+struct exprTest;
+
 namespace namu {
 
     class slotLoader;
@@ -24,6 +26,7 @@ namespace namu {
         friend class returnExpr;
         friend class runExpr;
         friend class func; // for frames.
+        friend struct ::exprTest;
 
     private:
         thread();

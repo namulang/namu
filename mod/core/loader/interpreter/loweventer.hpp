@@ -137,7 +137,7 @@ namespace namu {
         returnExpr* onReturn(node& exp);
         //      run:
         runExpr* onFillFromOfFuncCall(const node& me, runExpr& to);
-        runExpr* onRunExpr(const std::string& name, const narr& args);
+        runExpr* onRunExpr(const node& type, const narr& args);
         //      cast:
         asExpr* onAs(const node& me, const node& as);
         //      binary operation:
