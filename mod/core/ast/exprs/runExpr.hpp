@@ -8,7 +8,7 @@ namespace namu {
         NAMU(CLASS(runExpr, expr, expr::exprType))
 
     public:
-        runExpr(const node& meObj, const std::string& name, const args& a);
+        runExpr(const node& meObj, const node& subject, const args& a);
         runExpr(const node& meObj, const args& a);
 
     public:
@@ -21,8 +21,8 @@ namespace namu {
         const node& getMe() const;
         void setMe(const node& newMe);
 
-        const std::string& getName() const;
-        std::string& getName();
+        node& getSubject();
+        const node& getSubject() const;
 
         args& getArgs();
         const args& getArgs() const;
@@ -30,6 +30,6 @@ namespace namu {
     private:
         str _me;
         args _args;
-        std::string _name;
+        str _subject;
     };
 }

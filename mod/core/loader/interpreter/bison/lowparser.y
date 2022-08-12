@@ -200,7 +200,7 @@ unary: postfix {
      $$ = $2; // TODO:
    }
 
-func-call: NAME list %expect 1 {
+func-call: type list {
         //  known shift/reduce conflict on the syntax:
         //      First example: NAME list • NEWLINE INDENT block
         //          e.g. foo(a) •
@@ -209,7 +209,6 @@ func-call: NAME list %expect 1 {
         //          e.g. foo(just_primary) •
         tstr<narr> argsLife($2);
         $$ = yyget_extra(scanner)->onRunExpr(*$1, *argsLife);
-        free($1);
       }
 
 dotname-item: NAME {
@@ -375,7 +374,7 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
   } | NAME typeparams {
-        $$ = yyget_extra(scanner)->onGetGeneric(*$1, *$2);
+        $$ = yyget_extra(scanner)->onGenericType(*$1, *$2);
         free($1);
         delete $2;
   }

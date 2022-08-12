@@ -23,6 +23,10 @@ struct exprTest : public namuTest {
     static void setLine(expr& exp, ncnt row, ncnt col) {
         exp._pos = {row, col};
     }
+
+    static frames& getFrames() {
+        return thread::get()._getFrames();
+    }
 };
 
 void exprTest::SetUp() {
@@ -109,7 +113,13 @@ TEST_F(exprTest, simpleRunExprWithoutMeObjNegative) {
 }
 
 TEST_F(exprTest, simpleRunExpr) {
-    runExpr exp1(*bridge, "main", narr(*new nStr("kniz!")));
+    runExpr exp1(*bridge, *new getExpr("main"), narr(*new nStr("kniz!")));
+
+    frame* fr = new frame();
+    fr->pushLocal(new scope());
+    fr->pushObj(*bridge);
+    getFrames().add(*fr);
+
     errReport rep;
     verifier veri;
     veri.setReport(rep).verify(exp1);
@@ -129,6 +139,7 @@ TEST_F(exprTest, simpleRunExpr) {
     ASSERT_TRUE(res->getType() == ttype<nVoid>::get());
 
     ASSERT_TRUE(helloWorld::isRun);
+    getFrames().del();
 }
 
 TEST_F(exprTest, simpleRunExprNegative) {
@@ -148,13 +159,21 @@ TEST_F(exprTest, simpleRunExprNegative) {
 }
 
 TEST_F(exprTest, constructExprInManual) {
-    runExpr r(*bridge, "main", narr(*new nStr("kniz!")));
+    runExpr r(*bridge, *new getExpr("main"), narr(*new nStr("kniz!")));
     setLine(r, 1, 1);
 
+    frame* fr = new frame();
+    fr->pushLocal(new scope());
+    fr->pushObj(*bridge);
+    getFrames().add(*fr);
+
     str res = r.run();
+
     ASSERT_TRUE(res);
     ASSERT_TRUE(res.getType() == ttype<node>::get());
     ASSERT_TRUE(res->getType() == ttype<nVoid>::get());
+
+    getFrames().del();
 }
 
 TEST_F(exprTest, defVarExpr) {

@@ -399,16 +399,15 @@ namespace namu {
         return ret;
     }
 
-    runExpr* me::onRunExpr(const std::string& name, const narr& args) {
-        NAMU_DI("tokenEvent: onRunExpr(%s, narr[%d])", name.c_str(), args.len());
+    runExpr* me::onRunExpr(const node& type, const narr& args) {
+        NAMU_DI("tokenEvent: onRunExpr(%x, narr[%d])", &type, args.len());
 
-        return new runExpr(nulOf<node>(), name, args);
+        return new runExpr(nulOf<node>(), type, args);
     }
 
     // @param from  can be expr. so I need to evaluate it through 'as()'.
     runExpr* me::onFillFromOfFuncCall(const node& me, runExpr& to) {
-        NAMU_DI("tokenEvent: onFillFromOfFuncCall(%s, runExpr[%s])", me.getType().
-                getName().c_str(), to.getName().c_str());
+        NAMU_DI("tokenEvent: onFillFromOfFuncCall(%s, runExpr[%x])", me.getType().getName().c_str(), &to);
 
         to.setMe(me);
         return &to;
