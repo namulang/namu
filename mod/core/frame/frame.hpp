@@ -76,9 +76,9 @@ namespace namu {
         str popReturn();
 
     protected:
-        static baseObj& _setObj(baseObj& new1);
-        static baseObj& _setObj();
-        static baseObj& _getObj();
+        static baseObj& _setMe(baseObj& new1);
+        static baseObj& _setMe();
+        static baseObj& _getMe();
 
     private:
         void _rel();

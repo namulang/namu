@@ -33,7 +33,7 @@ namespace namu {
 
         // s is from heap space. but freed by _outFrame() of this class.
         scope& s = *_evalArgs(a);
-        baseObj& meObj = a.getObj();
+        baseObj& meObj = a.getMe();
         if(nul(meObj)) return NAMU_E("meObj == null"), ret;
 
         frameInteract f1(meObj); {
@@ -114,7 +114,7 @@ namespace namu {
         scope* s = new scope();
         _prepareArgsAlongParam(it.getParams(), *s);
 
-        baseObj& meObj = frame::_getObj();
+        baseObj& meObj = frame::_getMe();
         if(nul(meObj)) return _srcErr(errCode::FUNC_REDIRECTED_OBJ);
 
         frameInteract f1(meObj); {

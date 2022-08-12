@@ -13,7 +13,7 @@ namespace namu {
     me::baseObj() {}
 
     str me::_onRunSub(node& sub, const args& a) {
-        a.setObj(*this);
+        a.setMe(*this);
         return super::_onRunSub(sub, a);
     }
 
@@ -50,7 +50,7 @@ namespace namu {
         NAMU_DI("verify: baseObj: %s iterateSubNodes. len=%d", it.getType().getName().c_str(),
                 it.subs().len());
 
-        baseObj& prev = frame::_setObj(it);
+        baseObj& prev = frame::_setMe(it);
 
         nmap tray;
         tray.add(func::ME, it);
@@ -63,6 +63,6 @@ namespace namu {
                     .getName().c_str());
         }
 
-        frame::_setObj(prev);
+        frame::_setMe(prev);
     })
 }

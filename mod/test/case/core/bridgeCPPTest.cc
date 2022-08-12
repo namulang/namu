@@ -55,7 +55,7 @@ TEST_F(bridgeCPPTest, testFuncDoesntHaveObjNegative) {
     bridge->run("say", args(*bridge, narr{*bridge, *new nStr("hello native!")}));
     ASSERT_FALSE(kniz::isRun);
 
-    // bridge set its address to args's setObj()
+    // bridge set its address to args's setMe()
     bridge->run("say", args(narr{*new nStr("hello native!")}));
     ASSERT_TRUE(kniz::isRun);
 }

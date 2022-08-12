@@ -176,7 +176,7 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
 
         args funcArgs;
         funcArgs.add(obj2);
-        funcArgs.setObj(obj2);
+        funcArgs.setMe(obj2);
         obj2.run(obj2FuncNames[0], funcArgs);
         if(sf.len() != 2)
             return NAMU_I("return of %s: sf.len() != 2", func2Name), false;
