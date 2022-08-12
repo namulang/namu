@@ -44,15 +44,15 @@ namespace namu {
         thread_local static baseObj* inner = nullptr;
     }
 
-    baseObj& me::_setObj(baseObj& new1) {
+    baseObj& me::_setMe(baseObj& new1) {
         baseObj& ret = *inner;
         inner = &new1;
         return ret;
     }
-    baseObj& me::_setObj() {
-        return _setObj(nulOf<baseObj>());
+    baseObj& me::_setMe() {
+        return _setMe(nulOf<baseObj>());
     }
-    baseObj& me::_getObj() { return *inner; }
+    baseObj& me::_getMe() { return *inner; }
 
     scopes& me::getTop() { return *_local.getTop(); }
 

@@ -18,7 +18,7 @@ namespace namu {
         if(!me) return NAMU_E("me Obj as baseObj == null"), str();
         if(!_subject) return NAMU_E("_subject as node == null"), str();
 
-        _args.setObj(*me);
+        _args.setMe(*me);
         return _subject->as<node>()->run(_args);
     }
 
@@ -50,7 +50,7 @@ namespace namu {
             args ret;
             for(auto& e : a)
                 ret.add(e.getEval());
-            return ret.setObj(a.getObj());
+            return ret.setMe(a.getMe());
         }
     }
 

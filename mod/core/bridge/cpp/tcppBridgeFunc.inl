@@ -26,7 +26,7 @@ namespace namu {
     TEMPL
     template <size_t... index>
     str ME::_marshal(args& a, std::index_sequence<index...>) {
-        auto& me = (tcppBridge<T>&) a.getObj();
+        auto& me = (tcppBridge<T>&) a.getMe();
         if(nul(me)) return NAMU_E("object from frame does not exists."), str();
 
         return tmarshaling<Ret>::toMgd((me._real->*(this->_fptr))(tmarshaling<Args>::toNative(a[index])...));
@@ -40,7 +40,7 @@ namespace namu {
     TEMPL
     template <size_t... index>
     str ME::_marshal(args& a, std::index_sequence<index...>) {
-        auto& me = (tcppBridge<T>&) a.getObj();
+        auto& me = (tcppBridge<T>&) a.getMe();
         if(nul(me)) return NAMU_E("object from frame does not exists."), str();
 
         (me._real->*(this->_fptr))(tmarshaling<Args>::toNative(a[index])...);

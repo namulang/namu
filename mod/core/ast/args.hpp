@@ -15,11 +15,11 @@ namespace namu {
         args(const baseObj& me, const narr& rhs): super(rhs), _me(me) {}
 
     public:
-        const me& setObj(const baseObj& me) const {
+        const me& setMe(const baseObj& me) const {
             _me.bind(me);
             return *this;
         }
-        baseObj& getObj() const { return *_me; }
+        baseObj& getMe() const { return *_me; }
 
     private:
         mutable tstr<baseObj> _me;

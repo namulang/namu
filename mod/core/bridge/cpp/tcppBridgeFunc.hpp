@@ -52,7 +52,7 @@ namespace namu {
 
                 tray.add(*ased);
             }
-            tray.setObj(a.getObj());
+            tray.setMe(a.getMe());
             return tray;
         }
 
