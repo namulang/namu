@@ -259,16 +259,17 @@ namespace namu {
         return &list;
     }
 
-    std::vector<std::string>* me::onTypeNames(const std::string& typeName) {
-        NAMU_DI("tokenEvent: onTypeNames(%s)", typeName.c_str());
-        auto* ret = new std::vector<std::string>();
-        ret->push_back(typeName);
+    args* me::onTypeNames(const getExpr& param) {
+        NAMU_DI("tokenEvent: onTypeNames(%s[name=%s])", param.getType().getName().c_str(), param.getName().c_str());
+        auto* ret = new args();
+        ret->add(param);
         return ret;
     }
-    std::vector<std::string>* me::onTypeNames(std::vector<std::string>& names, const std::string& typeName) {
-        NAMU_DI("tokenEvent: onTypeNames(len[%d], %s)", names.size(), typeName.c_str());
-        names.push_back(typeName);
-        return &names;
+    args* me::onTypeNames(args& params, const getExpr& param) {
+        NAMU_DI("tokenEvent: onTypeNames(len[%d], %s[name=%s])", params.len(),
+                param.getType().getName().c_str(), param.getName().c_str());
+        params.add(param);
+        return &params;
     }
 
     obj* me::onDefObj(const std::string& name, defBlock& blk) {
@@ -384,8 +385,8 @@ namespace namu {
         return new getExpr(from, name, args);
     }
 
-    node* me::onGenericType(const std::string& genericObjName, const std::vector<std::string>& typeParams) {
-        NAMU_DI("tokenEvent: onGetGeneric(%s, params.len[%d])", genericObjName.c_str(), typeParams.size());
+    node* me::onGetGeneric(const std::string& genericObjName, const args& typeParams) {
+        NAMU_DI("tokenEvent: onGetGeneric(%s, params.len[%d])", genericObjName.c_str(), typeParams.len());
         return new getGenericExpr(genericObjName, typeParams);
     }
 
@@ -399,8 +400,8 @@ namespace namu {
         return ret;
     }
 
-    runExpr* me::onRunExpr(const node& type, const narr& args) {
-        NAMU_DI("tokenEvent: onRunExpr(%x, narr[%d])", &type, args.len());
+    runExpr* me::onRunExpr(const getExpr& trg, const narr& args) {
+        NAMU_DI("tokenEvent: onRunExpr(%x[name=%s], narr[%d])", &trg, trg.getName().c_str(), args.len());
 
         return new runExpr(nulOf<node>(), type, args);
     }

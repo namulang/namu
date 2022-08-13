@@ -93,7 +93,7 @@ namespace namu {
         node* onGet(node& from, const std::string& name);
         node* onGet(node& from, const std::string& name, const narr& args);
         //      generic:
-        node* onGenericType(const std::string& genericObjName, const std::vector<std::string>& typeParams);
+        node* onGetGeneric(const std::string& genericObjName, const args& typeParams);
         //      assign:
         node* onAssign(node& lhs, node& rhs);
 
@@ -114,8 +114,8 @@ namespace namu {
         narr* onList(node* newExpr);
         narr* onList(narr& list, node* newExpr);
         //          typenames:
-        std::vector<std::string>* onTypeNames(const std::string& typeName);
-        std::vector<std::string>* onTypeNames(std::vector<std::string>& names, const std::string& typeName);
+        args* onTypeNames(const getExpr& param);
+        args* onTypeNames(args& params, const getExpr& param);
         //          var:
         template <typename T, typename... Args>
         T* onPrimitive(Args... args) {

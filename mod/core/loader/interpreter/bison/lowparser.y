@@ -28,7 +28,8 @@
 
 %code requires {
     #include "../../../ast/point.hpp"
-    #include "../../../ast/node.hpp"
+    #include "../../../ast/exprs/getExpr.hpp"
+    #include "../../../ast/args.hpp"
     #include "../defBlock.hpp"
 
     typedef void* yyscan_t;
@@ -87,7 +88,8 @@
     namu::narr* asNarr;
     namu::scope* asScope;
     namu::defBlock* asDefBlock;
-    std::vector<std::string>* asVecStr;
+    namu::getExpr* asGetExpr;
+    namu::args* asArgs;
 }
 
 %define api.pure
@@ -131,7 +133,7 @@
 //  term:
 %type <asNode> term unary postfix primary func-call
 %type <asNarr> list list-items
-%type <asVecStr> typenames typeparams
+%type <asArgs> typenames typeparams
 //  keyword:
 %type <asNode> return
 %type <asNode> if
@@ -139,7 +141,7 @@
 %type <asObj> pack
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
-%type <asNode> type
+%type <asGetExpr> type
 %type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
 %type <asDefBlock> defblock
 //      value:
@@ -208,7 +210,7 @@ func-call: type list {
         //      Second example: NAME list • NEWLINE DEDENT $end
         //          e.g. foo(just_primary) •
         tstr<narr> argsLife($2);
-        $$ = yyget_extra(scanner)->onRunExpr(*$1, *argsLife);
+        $$ = yyget_extra(scanner)->onRunExpr($1->cast<getExpr>(), *argsLife);
       }
 
 dotname-item: NAME {
@@ -374,17 +376,17 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
   } | NAME typeparams {
-        $$ = yyget_extra(scanner)->onGenericType(*$1, *$2);
+        $$ = yyget_extra(scanner)->onGetGeneric(*$1, *$2);
         free($1);
         delete $2;
   }
 
 //  typeparams:
 typeparams: '<' typenames '>' { $$ = $2; }
-typenames: NAME {
+typenames: type {
             $$ = yyget_extra(scanner)->onTypeNames(*$1);
             free($1);
-       } | typenames ',' NAME {
+       } | typenames ',' type {
             $$ = yyget_extra(scanner)->onTypeNames(*$1, *$3);
             free($3);
        }
