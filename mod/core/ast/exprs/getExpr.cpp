@@ -9,22 +9,22 @@ namespace namu {
 
     NAMU_DEF_ME(getExpr)
 
-    const node& me::getFrom() const {
-        if(!_from)
+    const node& me::getMe() const {
+        if(!_me)
             return thread::get().getNowFrame();
-        return *_from;
+        return *_me;
     }
 
     const node& me::getEval() const {
-        const node& got = _get();
-        if(nul(got))
+        str got = _get();
+        if(!got)
             return nulOf<node>();
-        return got.getEval();
+        return got->getEval();
     }
 
     str me::run(const args& a) {
         // believe that this expression was checked to be valid.
-        return str(_get());
+        return _get();
     }
 
     const std::string& me::getSubName() const { return _name; }
@@ -32,13 +32,13 @@ namespace namu {
     /// @return nullable
     const args& me::getSubArgs() const { return *_args; }
 
-    node& me::_get() const {
-        str evalMe = getFrom().isSub<expr>() ? getFrom().as<node>() : getFrom();
-        if(!evalMe) return NAMU_E("from == null"), nulOf<node>();
+    str me::_get() const {
+        str evalMe = getMe().isSub<expr>() ? getMe().as<node>() : getMe();
+        if(!evalMe) return NAMU_E("from == null"), str();
         NAMU_DI("_name=%s", _name.c_str());
-        if(!_args) return evalMe->sub(_name);
+        if(!_args) return str(evalMe->sub(_name));
 
-        return evalMe->sub(_name, *_args);
+        return str(evalMe->sub(_name, *_args));
     }
 
 
@@ -47,19 +47,19 @@ namespace namu {
         // TODO: I have to check that the evalType has what matched to given _params.
         // Until then, I rather use as() func and it makes slow emmersively.
         if(nul(it.getEval())) return _srcErr(errCode::EVAL_NULL_TYPE);
-        const node& got = it._get();
-        if(nul(got)) {
-            const node& from = it.getFrom();
+        str got = it._get();
+        if(!got) {
+            const node& from = it.getMe();
             return _srcErr(errCode::CANT_ACCESS, from.getType().getName().c_str(), it._name.c_str());
-
-        NAMU_DI("verify: getExpr: isRunnable: got=%s, it=%s", got.getType().getName().c_str(),
-                it.getType().getName().c_str());
         }
+
+        NAMU_DI("verify: getExpr: isRunnable: got=%s, it=%s", got->getType().getName().c_str(),
+                it.getType().getName().c_str());
     })
 
     NAMU_VERIFY({
         NAMU_DI("verify: getExpr: visit 'from' subnodes");
 
-        verify((node&) it.getFrom());
+        verify((node&) it.getMe());
     })
 }

@@ -4,6 +4,7 @@
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
 #include "../../builtin/primitive/nVoid.hpp"
+#include "getExpr.hpp"
 
 namespace namu {
 
@@ -19,6 +20,9 @@ namespace namu {
         if(!_subject) return NAMU_E("_subject as node == null"), str();
 
         _args.setMe(*me);
+        getExpr& get = _subject->cast<getExpr>();
+        if(!nul(get))
+            get.setMe(*me);
         return _subject->as<node>()->run(_args);
     }
 

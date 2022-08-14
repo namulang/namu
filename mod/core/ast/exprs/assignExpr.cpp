@@ -16,7 +16,7 @@ namespace namu {
         if(nul(cast)) return iter();
         // TODO: elementExpr
 
-        iter ret = cast.getFrom().subs().iterate(cast.getSubName());
+        iter ret = cast.getMe().subs().iterate(cast.getSubName());
         while(ret) {
             if(!nul(ret.getVal<baseObj>()))
                 return ret;
