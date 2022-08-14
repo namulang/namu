@@ -259,15 +259,14 @@ namespace namu {
         return &list;
     }
 
-    args* me::onTypeNames(const getExpr& param) {
-        NAMU_DI("tokenEvent: onTypeNames(%s[name=%s])", param.getType().getName().c_str(), param.getName().c_str());
+    args* me::onTypeNames(const node& param) {
+        NAMU_DI("tokenEvent: onTypeNames(%s)", param.getType().getName().c_str());
         auto* ret = new args();
         ret->add(param);
         return ret;
     }
-    args* me::onTypeNames(args& params, const getExpr& param) {
-        NAMU_DI("tokenEvent: onTypeNames(len[%d], %s[name=%s])", params.len(),
-                param.getType().getName().c_str(), param.getName().c_str());
+    args* me::onTypeNames(args& params, const node& param) {
+        NAMU_DI("tokenEvent: onTypeNames(len[%d], %s)", params.len(), param.getType().getName().c_str());
         params.add(param);
         return &params;
     }
@@ -281,12 +280,28 @@ namespace namu {
         return &ret;
     }
 
-    node* me::onDefObjGeneric(const std::string& name, const std::vector<std::string>& typeParams, defBlock& blk) {
+    std::vector<std::string> me::_extractParamTypeNames(const args& types) {
+        std::vector<std::string> ret;
+        for(const auto& a : types) {
+            // all args should be getExpr instances.
+            const getExpr& cast = a.cast<getExpr>();
+            if(nul(cast))
+                return onSrcErr(errCode::SHOULD_TYPE_PARAM_NAME, a.getType().getName().c_str()),
+                       std::vector<std::string>();
+
+            ret.push_back(cast.getSubName());
+        }
+
+        return ret;
+    }
+
+    node* me::onDefObjGeneric(const std::string& name, const args& typeParams, defBlock& blk) {
         NAMU_DI("tokenEvent: onDefObjGeneric(%s, type.len[%d], defBlock[%x]", name.c_str(),
-                typeParams.size(), &blk);
+                typeParams.len(), &blk);
+
         obj& org = *new obj();
         _onInjectObjSubs(org, blk);
-        return new genericObj(org, typeParams);
+        return new genericObj(org, _extractParamTypeNames(typeParams));
     }
 
     void me::onCompilationUnit(obj& subpack, defBlock& blk) {
@@ -360,7 +375,7 @@ namespace namu {
     }
 
     getExpr* me::onDotname(const getExpr& from, getExpr& name) {
-        name.setFrom(from);
+        name.setMe(from);
         return &name;
     }
     getExpr* me::onDotname(const std::string& name) {
@@ -400,10 +415,13 @@ namespace namu {
         return ret;
     }
 
-    runExpr* me::onRunExpr(const getExpr& trg, const narr& args) {
-        NAMU_DI("tokenEvent: onRunExpr(%x[name=%s], narr[%d])", &trg, trg.getName().c_str(), args.len());
+    runExpr* me::onRunExpr(const node& trg, const narr& a) {
+        return new runExpr(nulOf<node>(), trg, *new args(a));
+    }
+    runExpr* me::onRunExpr(const node& trg, const args& a) {
+        NAMU_DI("tokenEvent: onRunExpr(%s, args[%d])", trg.getType().getName().c_str(), a.len());
 
-        return new runExpr(nulOf<node>(), type, args);
+        return new runExpr(nulOf<node>(), trg, a);
     }
 
     // @param from  can be expr. so I need to evaluate it through 'as()'.

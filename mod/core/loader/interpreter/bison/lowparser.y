@@ -28,7 +28,6 @@
 
 %code requires {
     #include "../../../ast/point.hpp"
-    #include "../../../ast/exprs/getExpr.hpp"
     #include "../../../ast/args.hpp"
     #include "../defBlock.hpp"
 
@@ -88,7 +87,6 @@
     namu::narr* asNarr;
     namu::scope* asScope;
     namu::defBlock* asDefBlock;
-    namu::getExpr* asGetExpr;
     namu::args* asArgs;
 }
 
@@ -141,7 +139,7 @@
 %type <asObj> pack
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
-%type <asGetExpr> type
+%type <asNode> type
 %type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
 %type <asDefBlock> defblock
 //      value:
@@ -203,14 +201,9 @@ unary: postfix {
    }
 
 func-call: type list {
-        //  known shift/reduce conflict on the syntax:
-        //      First example: NAME list • NEWLINE INDENT block
-        //          e.g. foo(a) •
-        //                  expectLambdaDoSometing()
-        //      Second example: NAME list • NEWLINE DEDENT $end
-        //          e.g. foo(just_primary) •
         tstr<narr> argsLife($2);
-        $$ = yyget_extra(scanner)->onRunExpr($1->cast<getExpr>(), *argsLife);
+        str typeLife($1);
+        $$ = yyget_extra(scanner)->onRunExpr(*typeLife, *argsLife);
       }
 
 dotname-item: NAME {
@@ -269,13 +262,6 @@ primary: INTVAL {
      } | CHARVAR {
        $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
      } | '(' expr ')' {
-        //  known shift/reduce conflict on the syntax:
-        //      First example: list • NEWLINE INDENT block DEDENT block DEDENT $end
-        //          e.g. (a) •
-        //                  expectLambdaDoSometing()
-        //      Second example: list • NEWLINE DEDENT $end
-        //          e.g. (just_primary) •
-
         // TODO: list should contain 1 element.
         $$ = $2;
      } | NAME {
@@ -376,9 +362,9 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
   } | NAME typeparams {
-        $$ = yyget_extra(scanner)->onGetGeneric(*$1, *$2);
+        tstr<args> argsLife($2);
+        $$ = yyget_extra(scanner)->onGetGeneric(*$1, *argsLife);
         free($1);
-        delete $2;
   }
 
 //  typeparams:
@@ -411,8 +397,9 @@ defobj-default: DEF NAME NEWLINE INDENT defblock DEDENT {
             free($2);
             }
 defobj-default-generic: DEF NAME typeparams NEWLINE INDENT defblock DEDENT {
-                    $$ = yyget_extra(scanner)->onDefObjGeneric(std::string(*$2), *$3, *$6);
-                    delete $3;
+                    tstr<args> argsLife($3);
+                    $$ = yyget_extra(scanner)->onDefObjGeneric(*$2, *argsLife, *$6);
+                    free($2);
                     }
 //  func:
 deffunc: deffunc-default { $$ = $1; }
@@ -421,8 +408,8 @@ deffunc: deffunc-default { $$ = $1; }
 deffunc-default: NAME list type indentblock {
                 // take bind of exprs instance: because it's on heap. I need to free.
                 tstr<narr> list($2);
-                str type($3);
-                $$ = yyget_extra(scanner)->onFunc(*$1, *list, *type, $4->cast<blockExpr>());
+                str typeLife($3);
+                $$ = yyget_extra(scanner)->onFunc(*$1, *list, *typeLife, $4->cast<blockExpr>());
                 free($1);
              }
 deffunc-deduction: NAME list indentblock {

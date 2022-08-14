@@ -114,8 +114,8 @@ namespace namu {
         narr* onList(node* newExpr);
         narr* onList(narr& list, node* newExpr);
         //          typenames:
-        args* onTypeNames(const getExpr& param);
-        args* onTypeNames(args& params, const getExpr& param);
+        args* onTypeNames(const node& param);
+        args* onTypeNames(args& params, const node& param);
         //          var:
         template <typename T, typename... Args>
         T* onPrimitive(Args... args) {
@@ -126,7 +126,7 @@ namespace namu {
         node* onDefAssign(const std::string& name, node& rhs);
         //          obj:
         obj* onDefObj(const std::string& name, defBlock& blk);
-        node* onDefObjGeneric(const std::string& name, const std::vector<std::string>& paramNames, defBlock& blk);
+        node* onDefObjGeneric(const std::string& name, const args& typeParams, defBlock& blk);
         //          file:
         void onCompilationUnit(obj& subpack, defBlock& blk);
         //          func:
@@ -137,7 +137,8 @@ namespace namu {
         returnExpr* onReturn(node& exp);
         //      run:
         runExpr* onFillFromOfFuncCall(const node& me, runExpr& to);
-        runExpr* onRunExpr(const node& type, const narr& args);
+        runExpr* onRunExpr(const node& type, const narr& a);
+        runExpr* onRunExpr(const node& type, const args& a);
         //      cast:
         asExpr* onAs(const node& me, const node& as);
         //      binary operation:
@@ -156,6 +157,7 @@ namespace namu {
         nbool _onPastePreCtors(obj& it, narr& blk);
         nbool _onInjectObjSubs(obj& it, defBlock& blk);
         nbool _onInjectCtor(obj& it, defBlock& blk);
+        std::vector<std::string> _extractParamTypeNames(const args& types);
 
     private:
         tokenScan* _mode;
