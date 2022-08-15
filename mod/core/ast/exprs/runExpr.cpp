@@ -23,7 +23,10 @@ namespace namu {
         getExpr& get = _subject->cast<getExpr>();
         if(!nul(get))
             get.setMe(*me);
-        return _subject->as<node>()->run(_args);
+        str subject = _subject->as<node>();
+        if(!subject) return NAMU_E("_subject.as<node>() returns null"), str();
+
+        return subject->run(_args);
     }
 
     node& me::getMe() { return *_me; }
