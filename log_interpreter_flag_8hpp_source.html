@@ -76,7 +76,7 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnamu_1_1log_interpreter_flag.html">    7</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1log_interpreter_flag.html">logInterpreterFlag</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1flag.html">flag</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        WRD(CLASS(<a class="code" href="classnamu_1_1log_interpreter_flag.html">logInterpreterFlag</a>, <a class="code" href="classnamu_1_1flag.html">flag</a>))</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1log_interpreter_flag.html">logInterpreterFlag</a>, <a class="code" href="classnamu_1_1flag.html">flag</a>))</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">const</span> nchar* getName()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;-li&quot;</span>; }</div>
@@ -89,7 +89,7 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="stringliteral"></span> </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="stringliteral">    </span><span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">const</span> nchar* _getRegExpr()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;^\\-li$&quot;</span>; }</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        nbool _onTake(<span class="keyword">const</span> args&amp; tray, <a class="code" href="structnamu_1_1cli.html">cli</a>&amp; c, <a class="code" href="classnamu_1_1interpreter.html">interpreter</a>&amp; ip) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        nbool _onTake(<span class="keyword">const</span> flagArgs&amp; tray, <a class="code" href="structnamu_1_1cli.html">cli</a>&amp; c, <a class="code" href="classnamu_1_1interpreter.html">interpreter</a>&amp; ip) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    };</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->

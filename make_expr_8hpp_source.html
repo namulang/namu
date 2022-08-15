@@ -77,14 +77,14 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnamu_1_1make_expr.html">    8</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1make_expr.html">makeExpr</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1expr.html">expr</a> {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        WRD(CLASS(<a class="code" href="classnamu_1_1make_expr.html">makeExpr</a>, <a class="code" href="classnamu_1_1expr.html">expr</a>, <a class="code" href="classnamu_1_1expr_1_1expr_type.html">expr::exprType</a>))</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1make_expr.html">makeExpr</a>, <a class="code" href="classnamu_1_1expr.html">expr</a>, <a class="code" href="classnamu_1_1expr_1_1expr_type.html">expr::exprType</a>))</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <a class="code" href="classnamu_1_1make_expr.html">makeExpr</a>(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; from): _from(from) {}</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">using</span> super::run;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; args)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a)<span class="keyword"> override </span>{</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            <a class="code" href="classnamu_1_1tstr.html">tstr&lt;obj&gt;</a> out(_from-&gt;run());</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <span class="keywordflow">if</span>(!out) <span class="keywordflow">return</span> <a class="code" href="classnamu_1_1tstr.html">str</a>();</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
@@ -102,12 +102,12 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    };</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassnamu_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classnamu_1_1expr_1_1expr_type.html">namu::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:13</div></div>
-<div class="ttc" id="aclassnamu_1_1tucontainable_html"><div class="ttname"><a href="classnamu_1_1tucontainable.html">namu::tucontainable</a></div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:16</div></div>
+<div class="ttc" id="aclassnamu_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classnamu_1_1expr_1_1expr_type.html">namu::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:14</div></div>
 <div class="ttc" id="aclassnamu_1_1node_html_a7954fd1de038089d735bfaed74542f20"><div class="ttname"><a href="classnamu_1_1node.html#a7954fd1de038089d735bfaed74542f20">namu::node::getEval</a></div><div class="ttdeci">virtual const node &amp; getEval() const</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:16</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:17</div></div>
 <div class="ttc" id="aclassnamu_1_1make_expr_html_afc898c74d27816960c15ae668a930dc8"><div class="ttname"><a href="classnamu_1_1make_expr.html#afc898c74d27816960c15ae668a930dc8">namu::makeExpr::getEval</a></div><div class="ttdeci">const node &amp; getEval() const override</div><div class="ttdef"><b>Definition:</b> makeExpr.hpp:22</div></div>
-<div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:10</div></div>
+<div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
+<div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1make_expr_html"><div class="ttname"><a href="classnamu_1_1make_expr.html">namu::makeExpr</a></div><div class="ttdef"><b>Definition:</b> makeExpr.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
 <!-- start footer part -->

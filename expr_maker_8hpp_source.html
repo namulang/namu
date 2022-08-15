@@ -76,7 +76,7 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnamu_1_1expr_maker.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1expr_maker.html">exprMaker</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1type_providable.html">typeProvidable</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1clonable.html">clonable</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        WRD(CLASS(<a class="code" href="classnamu_1_1expr_maker.html">exprMaker</a>))</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1expr_maker.html">exprMaker</a>))</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <a class="code" href="classnamu_1_1expr_maker.html">exprMaker</a>(): _src(<span class="keyword">nullptr</span>), _pos({0, 0}) {}</div>
@@ -111,8 +111,8 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1src.html">src</a>&amp; getSrc()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *_src; }</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        T* make(<span class="keyword">const</span> Args&amp;... args)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            T* ret = <span class="keyword">new</span> T(args...);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        T* make(<span class="keyword">const</span> Args&amp;... <a class="code" href="classnamu_1_1args.html">args</a>)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            T* ret = <span class="keyword">new</span> T(<a class="code" href="classnamu_1_1args.html">args</a>...);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">if</span>(_src)</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                ret-&gt;_setSrc(*_src);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            ret-&gt;_setPos(_pos);</div>
@@ -126,6 +126,7 @@ $(function() {
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassnamu_1_1type_providable_html"><div class="ttname"><a href="classnamu_1_1type_providable.html">namu::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:6</div></div>
+<div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1src_html"><div class="ttname"><a href="classnamu_1_1src.html">namu::src</a></div><div class="ttdoc">src represents src file of namulang source codes.</div><div class="ttdef"><b>Definition:</b> src.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_maker_html"><div class="ttname"><a href="classnamu_1_1expr_maker.html">namu::exprMaker</a></div><div class="ttdef"><b>Definition:</b> exprMaker.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1clonable_html"><div class="ttname"><a href="classnamu_1_1clonable.html">namu::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>

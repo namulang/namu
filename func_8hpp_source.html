@@ -80,25 +80,28 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnarr.html">tnarr&lt;param, strTactic&gt;</a> <a class="code" href="classnamu_1_1tnarr.html">params</a>;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classnamu_1_1func.html">   11</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1func.html">func</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1expr.html">expr</a> {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        WRD(ADT(<a class="code" href="classnamu_1_1func.html">func</a>, <a class="code" href="classnamu_1_1expr.html">expr</a>))</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1func.html">func</a>, <a class="code" href="classnamu_1_1expr.html">expr</a>))</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">const</span> std::string ME = <span class="stringliteral">&quot;me&quot;</span>;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        nbool canRun(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        nbool canRun(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">params</a>&amp; getParams() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getRet() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    };</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnarr.html">tnarr&lt;func&gt;</a> <a class="code" href="classnamu_1_1tnarr.html">funcs</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        nbool _canRun(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    };</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnarr.html">tnarr&lt;func&gt;</a> <a class="code" href="classnamu_1_1tnarr.html">funcs</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassnamu_1_1tucontainable_html"><div class="ttname"><a href="classnamu_1_1tucontainable.html">namu::tucontainable</a></div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:16</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:16</div></div>
-<div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:10</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:17</div></div>
+<div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
+<div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1func_html"><div class="ttname"><a href="classnamu_1_1func.html">namu::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:11</div></div>
 <div class="ttc" id="aclassnamu_1_1tnarr_html"><div class="ttname"><a href="classnamu_1_1tnarr.html">namu::tnarr</a></div><div class="ttdef"><b>Definition:</b> func.hpp:8</div></div>
 <!-- start footer part -->
