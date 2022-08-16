@@ -48,7 +48,7 @@ namespace {
 %%
 
 [%*+-/\(\.\,] { return yyget_extra(yyscanner)->onIgnoreIndent(yytext[0]); }
-[\)] { return yytext[0]; }
+[\)<>] { return yytext[0]; }
 \-\- {
     NAMU_E("DOUBLE_MINUS");
     return DOUBLE_MINUS;
@@ -64,7 +64,7 @@ namespace {
 }
 
 \n {
-    yylloc->colcnt = yylloc->start.col = yylloc->end.col= 0;
+    yylloc->colcnt = yylloc->start.col = yylloc->end.col = 0;
     yyget_extra(yyscanner)->onNewLine();
     return NEWLINE;
 }
