@@ -58,6 +58,8 @@ PAIRX(RHS_IS_NOT_ARITH,         "rhs '%s' is not arithmetic type")
 PAIRX(MAKE_GENERIC_FAIL,        "construction '%s' for generic obj has failed.")
 //  generics:
 PAIRX(SHOULD_TYPE_PARAM_NAME,   "'%s' type parameter wasn't be defined as new name.")
+//  func-call:
+PAIRX(SUB_NOT_EXIST,            "sub-node doesn't exist.")
 
 // func:("verify: arithmeticExpr: lhs & rhs should bind something.");
 //
