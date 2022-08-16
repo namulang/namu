@@ -135,7 +135,7 @@ TEST_F(FAOExprTest, testStringAddSequence) {
     ASSERT_EQ(res->cast<std::string>(), "4low\n");
 }
 
-TEST_F(FAOExprTest, testStringAddBooleanNegative) {
+TEST_F(FAOExprTest, testStringAddBoolean) {
     make().parse(R"SRC(
     Helloworld(age int) int
         return age
@@ -143,7 +143,14 @@ TEST_F(FAOExprTest, testStringAddBooleanNegative) {
     main() str
         return (Helloworld(false) + "low\n" )
     )SRC").shouldParsed(true);
-    shouldVerified(false);
+    shouldVerified(true);
+
+
+    NAMU_E("start run!");
+    namu::str res = run();
+    std::string output = res->cast<std::string>();
+    ASSERT_EQ(output, "0low\n");
+    NAMU_E("end run = %s", output.c_str());
 }
 
 TEST_F(FAOExprTest, testStringAddBoolean2) {

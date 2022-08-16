@@ -416,6 +416,8 @@ namespace namu {
     }
 
     runExpr* me::onRunExpr(const node& trg, const narr& a) {
+        NAMU_DI("tokenEvent: onRunExpr(%s, narr[%d])", trg.getType().getName().c_str(), a.len());
+
         return new runExpr(nulOf<node>(), trg, *new args(a));
     }
     runExpr* me::onRunExpr(const node& trg, const args& a) {

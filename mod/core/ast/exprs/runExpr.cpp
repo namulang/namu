@@ -20,13 +20,15 @@ namespace namu {
         if(!_subject) return NAMU_E("_subject as node == null"), str();
 
         _args.setMe(*me);
-        getExpr& get = _subject->cast<getExpr>();
-        if(!nul(get))
-            get.setMe(*me);
-        str subject = _subject->as<node>();
-        if(!subject) return NAMU_E("_subject.as<node>() returns null"), str();
+        getExpr& cast = _subject->cast<getExpr>();
+        if(!nul(cast))
+            cast.setMe(*me);
+        str sub = _subject->as<node>();
+        if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
 
-        return subject->run(_args);
+        str ret = sub->run(_args);
+        _args.setMe(nulOf<baseObj>());
+        return ret;
     }
 
     node& me::getMe() { return *_me; }
@@ -52,15 +54,6 @@ namespace namu {
 
 
 
-    namespace {
-        args _evalArgs(const args& a) {
-            args ret;
-            for(auto& e : a)
-                ret.add(e.getEval());
-            return ret.setMe(a.getMe());
-        }
-    }
-
     NAMU_VERIFY({
         NAMU_DI("verify: runExpr: is it possible to run?");
 
@@ -68,10 +61,21 @@ namespace namu {
 
         tstr<baseObj> me = it.getMe().as<baseObj>();
         if(!me) return _srcErr(errCode::CANT_CAST_TO_NODE);
+        node& anySub = it.getSubject();
+        if(nul(anySub)) return _srcErr(errCode::SUB_NOT_EXIST);
 
-        str sub = it.getSubject().as<node>();
-        if(!sub) return _srcErr(errCode::CANT_ACCESS, me->getType().getName().c_str(), "sub-node");
-        if(!sub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS);
+        args& a = it.getArgs();
+        a.setMe(*me);
+
+        getExpr& cast = anySub.cast<getExpr>();
+        if(!nul(cast))
+            cast.setMe(*me);
+
+        str derivedSub = anySub.as<node>();
+        if(!derivedSub) return _srcErr(errCode::CANT_ACCESS, me->getType().getName().c_str(), "sub-node");
+        if(!derivedSub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS);
+
+        a.setMe(nulOf<baseObj>());
     })
 
     NAMU_VERIFY({
