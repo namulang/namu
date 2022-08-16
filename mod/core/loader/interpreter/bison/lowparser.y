@@ -371,10 +371,8 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
 typeparams: '<' typenames '>' { $$ = $2; }
 typenames: type {
             $$ = yyget_extra(scanner)->onTypeNames(*$1);
-            free($1);
        } | typenames ',' type {
             $$ = yyget_extra(scanner)->onTypeNames(*$1, *$3);
-            free($3);
        }
 
 //  variable:
