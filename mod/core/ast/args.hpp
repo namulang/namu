@@ -21,6 +21,17 @@ namespace namu {
         }
         baseObj& getMe() const { return *_me; }
 
+        std::string asStr() const {
+            std::string ret;
+            nbool first = true;
+            for(const auto& e : *this) {
+                ret += (first ? "" : ",") + e.getType().getName();
+                first = false;
+            }
+
+            return ret;
+        }
+
     private:
         mutable tstr<baseObj> _me;
     };
