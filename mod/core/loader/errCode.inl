@@ -15,7 +15,7 @@ PAIRX(DUP_VAR,                  "duplicated variable '%s' found")
 
 // obj:
 PAIRX(CANT_CAST_TO_NODE,        "obj can't be cast into node class")
-PAIRX(OBJ_WRONG_ARGS,           "obj can't execute with this argument types")
+PAIRX(OBJ_WRONG_ARGS,           "obj can't execute with this argument types '%s'")
 PAIRX(OBJ_ALREADY_EXIST,        "\'%s\' object already exists at %s")
 
 // func:
