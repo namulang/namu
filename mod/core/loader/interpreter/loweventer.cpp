@@ -301,7 +301,9 @@ namespace namu {
 
         obj& org = *new obj();
         _onInjectObjSubs(org, blk);
-        return new genericObj(org, _extractParamTypeNames(typeParams));
+        node* ret = new genericObj(org, _extractParamTypeNames(typeParams));
+        _onPushName(name, *ret);
+        return ret;
     }
 
     void me::onCompilationUnit(obj& subpack, defBlock& blk) {

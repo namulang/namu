@@ -56,11 +56,12 @@ namespace namu {
 
     NAMU_VERIFY({
         NAMU_DI("verify: runExpr: is it possible to run?");
-
+        if(nul(it.getMe())) return _srcErr(errCode::CANT_CAST_TO_NODE);
         if(nul(it.getMe())) return _srcErr(errCode::CANT_CAST_TO_NODE);
 
         tstr<baseObj> me = it.getMe().as<baseObj>();
         if(!me) return _srcErr(errCode::CANT_CAST_TO_NODE);
+
         node& anySub = it.getSubject();
         if(nul(anySub)) return _srcErr(errCode::SUB_NOT_EXIST);
 
@@ -73,7 +74,7 @@ namespace namu {
 
         str derivedSub = anySub.as<node>();
         if(!derivedSub) return _srcErr(errCode::CANT_ACCESS, me->getType().getName().c_str(), "sub-node");
-        if(!derivedSub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS);
+        if(!derivedSub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS, it.getArgs().asStr().c_str());
 
         a.setMe(nulOf<baseObj>());
     })
