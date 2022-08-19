@@ -590,10 +590,6 @@ def checkDependencies(deps):
         printErr("make is NOT installed!")
         return -1
 
-    if not isWindow() and not shutil.which("dot"):
-        printErr("dot is NOT installed!")
-        return -1
-
     if _extractPythonVersion(cmdstr(python3 + " --version")) < 3.6:
         printErr("requires python over v3.6")
         return -1
