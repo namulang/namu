@@ -24,7 +24,7 @@ namespace namu {
 
     str me::run(const args& a) {
         std::string key = _makeKey(a);
-        if(key.empty()) return nulOf<obj>();
+        if(key.empty()) return NAMU_E("key is empty"), nulOf<obj>();
 
         if(!_cache.count(key))
             _cache.insert({key, _makeGeneric(a)});
@@ -34,12 +34,7 @@ namespace namu {
 
     std::string me::_makeKey(const args& a) const {
         if(a.len() != _paramNames.size()) return NAMU_E("len of args doesn't match to _paramNames"), std::string();
-
-        std::string ret;
-        for(auto& e : a)
-            ret += e.getType().getName();
-
-        return ret;
+        return a.asStr();
     }
 
     /// make a generic object.
