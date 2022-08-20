@@ -129,48 +129,51 @@ $(function() {
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">// ACCEPT:</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">//      accept the visitor and let it can iterate sub elements.</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">//      please check &#39;visitor&#39; class for more info.</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VISIT() \</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">        public: \</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">            void accept(visitor&amp; v) override; \</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">        private:</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#define __NAMU__DECL_DEF_VISIT_0() \</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">            __NAMU__DECL_DEF_VISIT_1(me)</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#define __NAMU__DECL_DEF_VISIT_1(ME) \</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">            void ME::accept(visitor&amp; v) { \</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">                v.visit(*this); \</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">            }</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#define __NAMU__DECL_DEF_VISIT(...) NAMU_OVERLOAD(__NAMU__DECL_DEF_VISIT, __VA_ARGS__)</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">// VERIFY:</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">//      add new verification info to verify the type of specific object.</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#define NAMU_VERIFY_NAME(name) __auto_verify_##name##__</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#define NAMU_VERIFY_2(TYPE, BODY) \</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">    NAMU_INITIATOR(verification, { \</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">        typedef TYPE trait; \</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">        class NAMU_VERIFY_NAME(TYPE) : public tverification&lt;TYPE&gt; { \</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">        protected: \</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">            void _onVerify(trait&amp; it) override BODY \</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">        }; \</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">        verifier::add(new NAMU_VERIFY_NAME(TYPE)()); \</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">    })</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#define NAMU_VERIFY_1(BODY) NAMU_VERIFY_2(me, BODY)</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#define NAMU_VERIFY_3(TYPE, NAME, BODY) \</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">    typedef TYPE trait; \</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">    class NAMU_VERIFY_NAME(TYPE##_##NAME) : public tverification&lt;TYPE&gt; { \</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">    protected: \</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">        void _onVerify(trait&amp; it) override BODY \</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">    }; \</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">    NAMU_INITIATOR(verification, { \</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">        verifier::add(new NAMU_VERIFY_NAME(TYPE##_##NAME)()); \</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">    })</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#define NAMU_VERIFY(...) NAMU_OVERLOAD(NAMU_VERIFY, __VA_ARGS__)</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#define __NAMU__DECL_FRIEND_VERIFY(TYPE, NAME) friend class NAMU_VERIFY_NAME(TYPE##_##NAME);</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VERIFY_3(TYPE, NAME, BODY) NAMU_VERIFY_3(TYPE, NAME, BODY)</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VERIFY_2(TYPE, BODY) NAMU_VERIFY_2(TYPE, BODY)</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VERIFY_1(BODY) NAMU_VERIFY_2(me, BODY)</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VERIFY(...) NAMU_OVERLOAD(__NAMU__DECL_VERIFY, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VISIT_0() __NAMU__DECL_VISIT_1(super)</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VISIT_1(SUPER) \</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">        public: \</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">            using SUPER::accept; \</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">            void accept(const std::string&amp; name, visitor&amp; v) override; \</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">        private:</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VISIT(...) NAMU_OVERLOAD(__NAMU__DECL_VISIT, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#define __NAMU__DECL_DEF_VISIT_0() __NAMU__DECL_DEF_VISIT_1(me)</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#define __NAMU__DECL_DEF_VISIT_1(ME) \</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">            void ME::accept(const std::string&amp; name, visitor&amp; v) { \</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">                v.visit(name, *this); \</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">            }</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#define __NAMU__DECL_DEF_VISIT(...) NAMU_OVERLOAD(__NAMU__DECL_DEF_VISIT, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">// VERIFY:</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">//      add new verification info to verify the type of specific object.</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#define NAMU_VERIFY_NAME(name) __auto_verify_##name##__</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#define NAMU_VERIFY_2(TYPE, BODY) \</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">    NAMU_INITIATOR(verification, { \</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">        typedef TYPE trait; \</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">        class NAMU_VERIFY_NAME(TYPE) : public tverification&lt;TYPE&gt; { \</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">        protected: \</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">            void _onVerify(trait&amp; it) override BODY \</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">        }; \</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">        verifier::add(new NAMU_VERIFY_NAME(TYPE)()); \</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">    })</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#define NAMU_VERIFY_1(BODY) NAMU_VERIFY_2(me, BODY)</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#define NAMU_VERIFY_3(TYPE, NAME, BODY) \</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">    typedef TYPE trait; \</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">    class NAMU_VERIFY_NAME(TYPE##_##NAME) : public tverification&lt;TYPE&gt; { \</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">    protected: \</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">        void _onVerify(trait&amp; it) override BODY \</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">    }; \</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">    NAMU_INITIATOR(verification, { \</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">        verifier::add(new NAMU_VERIFY_NAME(TYPE##_##NAME)()); \</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">    })</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#define NAMU_VERIFY(...) NAMU_OVERLOAD(NAMU_VERIFY, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#define __NAMU__DECL_FRIEND_VERIFY(TYPE, NAME) friend class NAMU_VERIFY_NAME(TYPE##_##NAME);</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VERIFY_3(TYPE, NAME, BODY) NAMU_VERIFY_3(TYPE, NAME, BODY)</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VERIFY_2(TYPE, BODY) NAMU_VERIFY_2(TYPE, BODY)</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VERIFY_1(BODY) NAMU_VERIFY_2(me, BODY)</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VERIFY(...) NAMU_OVERLOAD(__NAMU__DECL_VERIFY, __VA_ARGS__)</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

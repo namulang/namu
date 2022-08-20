@@ -10,5 +10,6 @@ var searchData=
   ['verifiertest_335',['verifierTest',['../structverifier_test.html',1,'']]],
   ['version_336',['version',['../structnamu_1_1build_feature_1_1version.html',1,'namu::buildFeature']]],
   ['versobj_337',['verSobj',['../classnamu_1_1ver_sobj.html',1,'namu']]],
-  ['visitor_338',['visitor',['../classnamu_1_1visitor.html',1,'namu']]]
+  ['visitor_338',['visitor',['../classnamu_1_1visitor.html',1,'namu']]],
+  ['visitortest_339',['visitorTest',['../structvisitor_test.html',1,'']]]
 ];
