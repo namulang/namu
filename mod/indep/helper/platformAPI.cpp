@@ -1,18 +1,23 @@
 #include "platformAPI.hpp"
+#include "nulr.hpp"
 #if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
 #  include <windows.h>
 #elif NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
-#    include <unistd.h>
-#    include <vector>
-#    include <string>
-#    include <algorithm>
-#    include <iostream>
+#   include <unistd.h>
+#   include <vector>
+#   include <string>
+#   include <algorithm>
+#   include <iostream>
+#   include <execinfo.h>
+#   include <cxxabi.h>
+#   include <regex>
 #endif
 #include <time.h>
 
 namespace namu {
 
     NAMU_DEF_ME(platformAPI)
+    constexpr nint PATH_MAX = 256;
     using namespace std;
 
 #if defined(NAMU_BUILD_PLATFORM_IS_LINUX) || defined(NAMU_BUILD_PLATFORM_IS_MAC)
@@ -30,10 +35,10 @@ namespace namu {
     }
 #endif
 
-    const std::string& me::getConsoleFore(consoleColor fore) {
+    const string& me::getConsoleFore(consoleColor fore) {
 #if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), platformAPI::BLACK << 4 | fore);
-        static std::string inner;
+        static string inner;
         return inner;
 #elif NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
         static bool is_terminal_supporting = _isAnsiColorTerminal();
@@ -52,8 +57,8 @@ namespace namu {
 #endif
     }
 
-    const std::string& me::getConsoleBack(consoleColor back) {
-        static std::string inner;
+    const string& me::getConsoleBack(consoleColor back) {
+        static string inner;
 #if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back << 4 | WHITE);
         return inner;
@@ -81,5 +86,89 @@ namespace namu {
         strftime(buffer, 80, strftime_format.c_str(), timeinfo);
 
         return buffer;
+    }
+
+    string me::getExecPath() {
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+        nchar res[PATH_MAX];
+        nuint count = readlink("/proc/self/exe", res, PATH_MAX);
+        return string(res, (count > 0) ? count : 0);
+#else
+        return string();
+#endif
+    }
+
+    string me::exec(const string& cmd) {
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+        array<nchar, 128> buf;
+        string res;
+        shared_ptr<FILE> pipe(popen(cmd.c_str(), "r"), pclose);
+
+        while (!feof(pipe.get())) {
+            if (fgets(buf.data(), 128, pipe.get()) != nullptr) {
+                res += buf.data();
+            }
+        }
+
+        return res;
+#else
+        return "";
+#endif
+    }
+
+    vector<string> me::callstack() {
+        vector<string> ret;
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+        constexpr int SIZE = 100;
+        void* rawCallstacks[SIZE] = {nullptr, };
+
+        int len = backtrace(rawCallstacks, SIZE);
+        char** callstacks = backtrace_symbols(rawCallstacks, len);
+        if(nul(callstacks)) return ret;
+
+        regex re("\\[(.+)\\]");
+        auto path = getExecPath();
+        for (int n=1; n < len ; n++) {
+            string sym = callstacks[n];
+            smatch ms;
+            if (regex_search(sym, ms, re)) {
+                string addr(ms[1]);
+                string cmd = "addr2line -i -e " + path + " -f -p -C " + addr;
+                auto demangled = exec(cmd);
+                if(demangled[0] == '?') continue;
+
+                ret.push_back(demangled.substr(0, demangled.size()-1));
+            }
+        }
+
+        free(callstacks);
+#endif
+        return ret;
+    }
+
+
+    string me::demangle(const nchar* org) {
+#ifndef NAMU_BUILD_PLATFORM_IS_WINDOWS
+        nchar* demangled = nullptr;
+        int status = 0;
+
+        demangled = ::abi::__cxa_demangle(org, 0, 0, &status);
+        string ret(demangled);
+
+        free(demangled);
+        return ret;
+#endif
+        return string(org);
+    }
+
+    string me::filterDemangle(const nchar* org) {
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
+        string raw(org);
+        int n = raw.rfind(" ");
+#else
+        const string& raw = demangle(org);
+        int n = raw.rfind(":");
+#endif
+        return raw.substr(n + 1);
     }
 }
