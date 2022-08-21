@@ -14,20 +14,19 @@ namespace namu {
     }
 
     nbool me::canRun(const args& a) const {
-        return a.len() == 1 && a.begin()->isSub<node>();
+        return !nul(a.getMe());
     }
 
     str me::run(const args& a) {
-        if(!canRun(a))
-            return NAMU_E("argument doesn't match to main func()"), str();
+        if(!canRun(a)) return NAMU_E("arguments doesn't have proper 'me'"), str();
 
-        node& pak = *a.begin();
+        baseObj& pak = a.getMe();
         NAMU_I("run a pack");
         node& main = _findMain(pak, args());
         if(nul(main))
             return NAMU_E("there is 0 or more than 2 main() found."), str();
 
-        if(main.canRun(narr()))
+        if(main.canRun(a))
             return pak.run("main");
 
         /* TODO: str[] args
@@ -38,7 +37,7 @@ namespace namu {
 
     node& me::_findMain(node& pak, const args& a) {
         // TODO: now, only find to main() but I need to find main(argc, argv) case, too.
-        node& ret = pak.sub("main", a);
+        node& ret = pak.sub("main");
         if(nul(ret))
             NAMU_E("could'nt find main().");
 

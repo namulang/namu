@@ -20,12 +20,14 @@ TEST_F(genericsTest, simpleDefineGenerics) {
 TEST_F(genericsTest, simpleUseGenerics) {
     make().parse(R"SRC(
         def object<T>
-            foo(msg T) void
+            foo(msg T) str
                 sys.con.print(msg)
+                return msg
 
-        main() void
+        main() str
             o := object<str>()
-            o.foo("hello generics!")
+            res := o.foo("hello generics!\n")
+            return res
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);

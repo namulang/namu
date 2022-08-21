@@ -13,8 +13,9 @@ namespace namu {
         // node:
         nbicontainer& subs() override;
 
-        nbool canRun(const args& a) const override;
         str run(const args& a) override;
+
+        nbool canRun(const args& a) const override;
 
     private:
         node& _findMain(node& pak, const args& a);
