@@ -1,6 +1,7 @@
 #pragma once
 
 #include "buildFeature.hpp"
+#include <vector>
 
 namespace namu {
 
@@ -20,5 +21,10 @@ namespace namu {
         static const std::string& getConsoleFore(consoleColor fore);
         static const std::string& getConsoleBack(consoleColor back);
         static std::string createNowTime(const std::string& strftime_format);
+        static std::vector<std::string> callstack();
+        static std::string demangle(const nchar* org);
+        static std::string filterDemangle(const nchar* org);
+        static std::string getExecPath();
+        static std::string exec(const std::string& cmd);
     };
 }
