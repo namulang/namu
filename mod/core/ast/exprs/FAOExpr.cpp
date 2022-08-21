@@ -46,7 +46,7 @@ namespace namu {
         if(nul(lhs)) return _srcErr(errCode::LHS_IS_NULL);
         if(nul(rhs)) return _srcErr(errCode::RHS_IS_NULL);
 
-        NAMU_DI("verify: FAOExpr: finding eval of l(r)hs.");
+        NAMU_DI("finding eval of l(r)hs.");
         const node& lEval = lhs.getEval();
         const node& rEval = rhs.getEval();
         if(nul(lEval)) return _srcErr(errCode::LHS_IS_NULL);
@@ -54,6 +54,8 @@ namespace namu {
 
         if(!checkEvalType(lEval)) return _srcErr(errCode::LHS_IS_NOT_ARITH, lEval.getType().getName().c_str());
         if(!checkEvalType(rEval)) return _srcErr(errCode::RHS_IS_NOT_ARITH, rEval.getType().getName().c_str());
+
+        NAMU_DI("...verified: FAOExpr: lhs & rhs should bind something.");
     })
 
 }

@@ -77,10 +77,14 @@ namespace namu {
         if(!derivedSub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS, it.getArgs().asStr().c_str());
 
         a.setMe(nulOf<baseObj>());
+
+        NAMU_DI("...verified: runExpr: is it possible to run?");
     })
 
     NAMU_VERIFY({
         NAMU_DI("verify: runExpr: visit subNodes");
         verify(it.getMe());
+
+        NAMU_DI("...verified: runExpr: visit subNodes");
     })
 }

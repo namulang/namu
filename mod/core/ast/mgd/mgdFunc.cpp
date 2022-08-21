@@ -101,6 +101,8 @@ namespace namu {
         const blockExpr& blk = it.getBlock();
         if(nul(blk) || blk.getStmts().len() <= 0)
             return _err(blk.getPos(), errCode::NO_STMT_IN_FUNC);
+
+        NAMU_DI("...verified: retType exists and stmts exist one at least");
     })
 
     namespace {
@@ -125,5 +127,7 @@ namespace namu {
                 verify(*it._blk);
             }
         }
+
+        NAMU_DI("...verified: mgdFunc: %s iterateBlock[%d]", it.getType().getName().c_str(), it._blk->subs().len());
     })
 }

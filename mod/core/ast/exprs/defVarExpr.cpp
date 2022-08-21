@@ -55,7 +55,7 @@ namespace namu {
 
         // 'check duplication' must be front of 'is %s definable':
         std::string name = it.getName();
-        NAMU_DI("verify: defVarExpr: is %s definable?", name.c_str());
+        NAMU_DI("is %s definable?", name.c_str());
         if(name == "") return _srcErr(errCode::HAS_NO_NAME);
         const node& org = it.getOrigin();
         if(nul(org)) return _srcErr(errCode::NO_ORIGIN, name.c_str());
@@ -67,5 +67,7 @@ namespace namu {
                 .pushLocal(name, eval);
         if(!res)
             NAMU_E("define variable %s is failed.", name.c_str());
+
+        NAMU_DI("...verified: defVarExpr: check duplication");
     })
 }

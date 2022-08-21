@@ -47,6 +47,8 @@ namespace namu {
         if(!ltype.isImpli(rtype))
             return _srcErr(errCode::TYPE_NOT_COMPATIBLE, ltype.getName().c_str(), rtype.getName()
                     .c_str());
+
+        NAMU_DI("...verified: set evalType");
     })
 
     NAMU_VERIFY({
@@ -93,6 +95,8 @@ namespace namu {
         if(!lhs.isSub<getExpr>()/* TODO: && !lhs.isSub<ElementExpr>()*/)
             return _srcErr(errCode::ASSIGN_TO_RVALUE, it.getRight().getType().getName().c_str(),
                     lhs.getType().getName().c_str());
+
+        NAMU_DI("...verified: checks rvalue");
     })
 
     NAMU_VERIFY({
@@ -100,5 +104,7 @@ namespace namu {
 
         verify((node&) it.getLeft());
         verify((node&) it.getRight());
+
+        NAMU_DI("...verified: assignExpr: visit subNodes");
     })
 }

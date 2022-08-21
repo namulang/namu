@@ -60,12 +60,11 @@ namespace namu {
         frameInteract f1(it); {
             int n = 0;
             for(auto& e : it._exprs) {
-                NAMU_DI("verify: blockExpr: iterating sub node[%d]", n++);
+                NAMU_DI("iterating sub node[%d]", n++);
                 verify(e);
             }
-            NAMU_DI("verify: blockExpr: end of iteration");
-
-            NAMU_DI("verify: last stmt should match to ret type");
+            NAMU_DI("end of iteration");
+            NAMU_DI("last stmt should match to ret type");
 
             const narr& stmts = it.getStmts();
             if(nul(stmts) || stmts.len() <= 0) return; // will be catched to another verification.
@@ -88,5 +87,7 @@ namespace namu {
 
             NAMU_DI("block.outFrame()\n");
         }
+
+        NAMU_DI("...verified: blockExpr: it will iterate all subnodes.");
     })
 }

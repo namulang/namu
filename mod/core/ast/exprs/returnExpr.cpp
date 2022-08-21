@@ -52,16 +52,20 @@ namespace namu {
         const ntype& itType = itEval.getType();
         if(nul(itType)) return _srcErr(errCode::EXPR_EVAL_NULL);
         const ntype& fType = f.getRet().getType();
-        NAMU_DI("verify: returnExpr: checks return[%s] == func[%s]", itType.getName().c_str(),
+        NAMU_DI("checks return[%s] == func[%s]", itType.getName().c_str(),
             fType.getName().c_str());
 
         if(!itType.isImpli(fType))
             return _srcErr(errCode::RET_TYPE_NOT_MATCH, itType.getName().c_str(), fType.getName().c_str());
+
+        NAMU_DI("...verified: returnExpr: checks evalType of func is matched to me");
     })
 
     NAMU_VERIFY({
         NAMU_DI("verify: visit sub variable: _ret");
 
         verify(it.getRet());
+
+        NAMU_DI("...verified: visit sub variable: _ret");
     })
 }
