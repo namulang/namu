@@ -34,6 +34,7 @@ namespace namu {
         const nchar* getName() const override;
         nbool dump(const nchar* message) override;
         nbool isInit() const override;
+        void callstack() const;
 
     private:
         //  Logger:
