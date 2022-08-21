@@ -17,6 +17,7 @@ namespace namu {
     void ME::_err(Args... args) {
         getVerifier().getReport().add(err::newErr(args...));
         logFrameInfo(thread::get().getNowFrame());
+        NAMU_CALLSTACK();
     }
     template <typename... Args>
     void ME::_info(Args... args) {
@@ -32,6 +33,7 @@ namespace namu {
     void ME::_srcErr(Args... args) {
         getVerifier().getReport().add(err::newErr(_getIt().getPos(), args...));
         logFrameInfo(thread::get().getNowFrame());
+        NAMU_CALLSTACK();
     }
     template <typename... Args>
     void ME::_srcInfo(Args... args) {

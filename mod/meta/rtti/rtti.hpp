@@ -56,31 +56,6 @@ namespace namu {
         static void* make() { return new T(); }
     };
 
-    struct _nout nameDemangler {
-#ifndef NAMU_BUILD_PLATFORM_IS_WINDOWS
-        static std::string demangle(const nchar* org) {
-            nchar* demangled = nullptr;
-            int status = 0;
-
-            demangled = ::abi::__cxa_demangle(org, 0, 0, &status);
-            std::string ret(demangled);
-
-            free(demangled);
-            return ret;
-        }
-#endif
-        static std::string filterDemangle(const nchar* org) {
-#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
-            std::string raw = std::string(org);
-            int n = raw.rfind(" ");
-#else
-            const std::string& raw = demangle(org);
-            int n = raw.rfind(":");
-#endif
-            return raw.substr(n + 1);
-        }
-    };
-
     /// @remark TClass is a class template using monostate pattern.
     ///         so it duplicates all static variables on each modules and it causes that can't
     ///         check hierarchy properly.
@@ -97,7 +72,7 @@ namespace namu {
     struct tnameGetter {
         static const nchar* getRawName() { return typeid(T).name(); }
         static std::string getName() {
-            std::string ret = nameDemangler::filterDemangle(getRawName());
+            std::string ret = platformAPI::filterDemangle(getRawName());
 
             return ret;
         }

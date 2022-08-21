@@ -159,4 +159,11 @@ namespace namu {
         for(stream* s : _streams)
             s->loadStreamEnable();
     }
+
+    void me::callstack() const {
+        NAMU_E("error found...");
+        std::vector<std::string> cs = platformAPI::callstack();
+        for(const auto& e : cs)
+            NAMU_E("\tat %s", e.c_str());
+    }
 }
