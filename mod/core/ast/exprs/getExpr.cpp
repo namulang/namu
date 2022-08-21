@@ -57,7 +57,7 @@ namespace namu {
             return _srcErr(errCode::CANT_ACCESS, from.getType().getName().c_str(), it._name.c_str());
         }
 
-        NAMU_DI("verify: getExpr: isRunnable: got=%s, it=%s", got->getType().getName().c_str(),
+        NAMU_DI("...verified: getExpr: isRunnable: got=%s, it=%s", got->getType().getName().c_str(),
                 it.getType().getName().c_str());
     })
 
@@ -65,5 +65,7 @@ namespace namu {
         NAMU_DI("verify: getExpr: visit 'from' subnodes");
 
         verify((node&) it.getMe());
+
+        NAMU_DI("...verified: getExpr: visit 'from' subnodes");
     })
 }

@@ -60,5 +60,7 @@ namespace namu {
             if(it.subAll<baseObj>(e.getKey()).len() > 1)
                 return _err(e->getPos(), errCode::DUP_VAR, e.getKey().c_str());
         }
+
+        NAMU_DI("...verified: node: no same variable=%d", it.subs().len());
     })
 }

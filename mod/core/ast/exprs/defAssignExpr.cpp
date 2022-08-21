@@ -34,6 +34,8 @@ namespace namu {
         if(top.getContainer().has(name))
             return _srcErr(errCode::ALREADY_DEFINED_VAR, name.c_str(), it.getEval().getType().getName()
                     .c_str());
+
+        NAMU_DI("...verified: defAssignExpr: duplication of variable.");
     })
 
     NAMU_VERIFY(defAssignExpr, isDefinable, {
@@ -43,7 +45,7 @@ namespace namu {
         if(nul(rhs))
             return _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
 
-        NAMU_DI("verify: defAssignExpr: '%s %s' has defined.",
+        NAMU_DI("'%s %s' has defined.",
                 it.getSubName().c_str(),
                 nul(rhs) ? "name" : rhs.getType().getName().c_str());
 
@@ -64,11 +66,15 @@ namespace namu {
                         rhs.getType().getName().c_str());
             sc.add(it.getSubName(), *new1);
         }
+
+        NAMU_DI("...verified: defAssignExpr: is definable?");
     })
 
     NAMU_VERIFY({
         NAMU_DI("verify: defAssignExpr: visitSubNodes");
 
         verify(it.getRight());
+
+        NAMU_DI("...verified: defAssignExpr: visitSubNodes");
     })
 }

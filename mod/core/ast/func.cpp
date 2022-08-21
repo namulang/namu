@@ -43,5 +43,7 @@ namespace namu {
 
         /*for(const param& p : it.getParams()) {
         }*/
+
+        NAMU_DI("...verified: func: param check");
     })
 }

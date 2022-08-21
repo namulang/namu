@@ -13,6 +13,8 @@ namespace namu {
 
         if(nul(it.getMe())) return _srcErr(errCode::LHS_IS_NULL);
         if(nul(it.getAs())) return _srcErr(errCode::RHS_IS_NULL);
+
+        NAMU_DI("...verified: asExpr: _me & _as aren't null");
     })
 
     NAMU_VERIFY({
@@ -21,6 +23,8 @@ namespace namu {
         if(!it.getMe().is(it.getAs()))
             return _srcErr(errCode::CAST_NOT_AVAILABLE, it.getMe().getType().getName().c_str(),
                     it.getAs().getType().getName().c_str());
+
+        NAMU_DI("...verified: asExpr: checks that me can cast to 'as'");
     })
 
     NAMU_VERIFY({
@@ -28,5 +32,7 @@ namespace namu {
 
         if(it.getAs().isSub<expr>())
             return _srcErr(errCode::EXPR_SHOULDNT_BE_HERE);
+
+        NAMU_DI("...verified: asExpr: rhs shouldn't be expression");
     })
 }
