@@ -54,7 +54,9 @@ struct namuSyntaxTest : public namuTest {
     }
     namu::str run() {
         namu::starter s;
-        return s.run(namu::narr(getSubPack()));
+        namu::args a;
+        a.setMe(getSubPack());
+        return s.run(a);
     }
 
 private:

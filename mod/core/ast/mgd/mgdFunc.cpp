@@ -33,6 +33,7 @@ namespace namu {
 
         // s is from heap space. but freed by _outFrame() of this class.
         scope& s = *_evalArgs(a);
+        if(nul(s)) return ret;
         baseObj& meObj = a.getMe();
         if(nul(meObj)) return NAMU_E("meObj == null"), ret;
 
@@ -54,8 +55,10 @@ namespace namu {
         int n = 0;
         for(const node& e: args) {
             const param& p = ps[n++];
-            str evaluated = e.as(p.getOrigin());
-            if(!evaluated) return nullptr;
+            str evaluated = e.as(p.getOrigin().as<node>());
+            if(!evaluated)
+                return NAMU_E("evaluation of arg[%s] -> param[%s] has been failed.", e.getType().getName().c_str(),
+                        p.getOrigin().getType().getName().c_str()), ret;
 
             ret->add(p.getName(), *evaluated);
         }
