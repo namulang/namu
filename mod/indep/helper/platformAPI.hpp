@@ -26,5 +26,6 @@ namespace namu {
         static std::string filterDemangle(const nchar* org);
         static std::string getExecPath();
         static std::string exec(const std::string& cmd);
+        static nulong getNowMs();
     };
 }

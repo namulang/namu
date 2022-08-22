@@ -11,6 +11,7 @@
 #   include <execinfo.h>
 #   include <cxxabi.h>
 #   include <regex>
+#   include <sys/time.h>
 #endif
 #include <time.h>
 
@@ -88,6 +89,16 @@ namespace namu {
         return buffer;
     }
 
+    nulong me::getNowMs() {
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+        struct timeval tval;
+        gettimeofday(&tval, NULL);
+        return tval.tv_usec / 1000;
+#else
+        return 0L;
+#endif
+    }
+
     string me::getExecPath() {
 #if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
         nchar res[PATH_MAX];
@@ -119,19 +130,24 @@ namespace namu {
     vector<string> me::callstack() {
         vector<string> ret;
 #if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
-        constexpr int SIZE = 100;
-        void* rawCallstacks[SIZE] = {nullptr, };
 
-        int len = backtrace(rawCallstacks, SIZE);
+        constexpr int BT_SIZE = 100;
+        constexpr int CS_SIZE = 3;
+        void* rawCallstacks[BT_SIZE] = {nullptr, };
+
+        int len = backtrace(rawCallstacks, BT_SIZE);
         char** callstacks = backtrace_symbols(rawCallstacks, len);
         if(nul(callstacks)) return ret;
 
         regex re("\\[(.+)\\]");
         auto path = getExecPath();
-        for (int n=1; n < len ; n++) {
+
+        for (int n=0; n < len ; n++) {
             string sym = callstacks[n];
             smatch ms;
-            if (regex_search(sym, ms, re)) {
+
+            if(ret.size() >= CS_SIZE) break;
+            if(regex_search(sym, ms, re)) {
                 string addr(ms[1]);
                 string cmd = "addr2line -i -e " + path + " -f -p -C " + addr;
                 auto demangled = exec(cmd);
