@@ -32,6 +32,6 @@ TEST_F(genericsTest, simpleUseGenerics) {
     str res = run();
     ASSERT_TRUE(res);
     std::string msg = res->cast<std::string>();
-    ASSERT_EQ(msg, "hello generics!");
+    ASSERT_EQ(msg, "hello generics!\n");
     NAMU_I("msg from generics: %s", msg.c_str());
 }

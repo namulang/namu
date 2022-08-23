@@ -49,8 +49,8 @@ namespace namu {
 
         const node& itEval = it.getEval();
         if(nul(itEval)) return _srcErr(errCode::EXPR_EVAL_NULL);
+        NAMU_DI("itEval=%s", itEval.getType().getName().c_str());
         const ntype& itType = itEval.getType();
-        if(nul(itType)) return _srcErr(errCode::EXPR_EVAL_NULL);
         const ntype& fType = f.getRet().getType();
         NAMU_DI("checks return[%s] == func[%s]", itType.getName().c_str(),
             fType.getName().c_str());

@@ -51,6 +51,8 @@ namespace namu {
 
         node& to = it.getTo();
         str new1 = it.isOnDefBlock() ? rhs.as<node>() : rhs.getEval();
+        NAMU_DI("new1[%s]", new1 ? new1->getType().getName().c_str() : "null");
+
         if(nul(to)) {
             frame& fr = thread::get()._getNowFrame();
             scopes& sc = (scopes&) fr.subs();
@@ -67,7 +69,7 @@ namespace namu {
             sc.add(it.getSubName(), *new1);
         }
 
-        NAMU_DI("...verified: defAssignExpr: is definable?");
+        NAMU_DI("...verified: defAssignExpr: is definable? : at %s", nul(to) ? "frame" : "obj");
     })
 
     NAMU_VERIFY({

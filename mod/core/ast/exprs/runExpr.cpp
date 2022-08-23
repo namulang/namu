@@ -15,17 +15,7 @@ namespace namu {
     me::runExpr(const node& meObj, const args& a): _me(meObj), _args(a), _subject(meObj) {}
 
     str me::run(const args& a) {
-        tstr<baseObj> me = _me->as<baseObj>();
-        if(!me) return NAMU_E("me Obj as baseObj == null"), str();
-        if(!_subject) return NAMU_E("_subject as node == null"), str();
-
-        _args.setMe(*me);
-        getExpr& cast = _subject->cast<getExpr>();
-        if(!nul(cast))
-            cast.setMe(*me);
-        str sub = _subject->as<node>();
-        if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
-
+        str sub = _getSub(_args);
         str ret = sub->run(_args);
         _args.setMe(nulOf<baseObj>());
         return ret;
@@ -44,8 +34,28 @@ namespace namu {
         _me.bind(newMe);
     }
 
-    const node& me::getEval() const {
+    str me::_getSub(const args& a) const {
+        tstr<baseObj> me = _me->as<baseObj>();
+        if(!me) return NAMU_E("me Obj as baseObj == null"), str();
+        if(!_subject) return NAMU_E("_subject as node == null"), str();
+
+        if(!nul(a))
+            a.setMe(*me);
+        getExpr& cast = _subject->cast<getExpr>();
+        if(!nul(cast))
+            cast.setMe(*me);
+
         str sub = _subject->as<node>();
+        if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
+        return sub;
+    }
+
+    str me::_getSub() const {
+        return _getSub(nulOf<args>());
+    }
+
+    const node& me::getEval() const {
+        str sub = _getSub();
         if(!sub) return nulOf<node>();
 
         const func& f = sub.cast<func>();
