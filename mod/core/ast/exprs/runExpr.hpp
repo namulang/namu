@@ -28,8 +28,12 @@ namespace namu {
         const args& getArgs() const;
 
     private:
+        str _getSub(const args& a) const;
+        str _getSub() const;
+
+    private:
         str _me;
         args _args;
-        str _subject;
+        mutable str _subject;
     };
 }
