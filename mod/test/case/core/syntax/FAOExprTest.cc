@@ -149,7 +149,7 @@ TEST_F(FAOExprTest, testStringAddBoolean) {
     NAMU_E("start run!");
     namu::str res = run();
     std::string output = res->cast<std::string>();
-    ASSERT_EQ(output, "0low\n");
+    ASSERT_EQ(output, "falselow\n");
     NAMU_E("end run = %s", output.c_str());
 }
 

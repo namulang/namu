@@ -74,6 +74,8 @@ namespace namu {
         node& anySub = it.getSubject();
         if(nul(anySub)) return _srcErr(errCode::SUB_NOT_EXIST);
 
+        NAMU_DI("anySub[%s]", anySub.getType().getName().c_str());
+
         args& a = it.getArgs();
         a.setMe(*me);
 
@@ -83,6 +85,7 @@ namespace namu {
 
         str derivedSub = anySub.as<node>();
         if(!derivedSub) return _srcErr(errCode::CANT_ACCESS, me->getType().getName().c_str(), "sub-node");
+        NAMU_DI("derivedSub[%s]", derivedSub->getType().getName().c_str());
         if(!derivedSub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS, it.getArgs().asStr().c_str());
 
         a.setMe(nulOf<baseObj>());

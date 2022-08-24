@@ -53,7 +53,7 @@ TEST_F(bundlePackTest, withAs) {
 TEST_F(bundlePackTest, defaultDef3) {
     make().parse(R"SRC(
         age int
-        ge int 
+        ge int
 
         main() int
             age = 48268

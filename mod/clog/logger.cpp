@@ -162,8 +162,14 @@ namespace namu {
 
     void me::callstack() const {
         NAMU_E("error found...");
+        if(!_showCallstack) return;
+
         std::vector<std::string> cs = platformAPI::callstack();
         for(const auto& e : cs)
             NAMU_E("\tat %s", e.c_str());
+    }
+
+    void me::setCallstack(nbool show) {
+        _showCallstack = show;
     }
 }
