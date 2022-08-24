@@ -16,6 +16,8 @@ namespace namu {
 
     str me::run(const args& a) {
         str sub = _getSub(_args);
+        if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
+
         str ret = sub->run(_args);
         _args.setMe(nulOf<baseObj>());
         return ret;
@@ -45,9 +47,7 @@ namespace namu {
         if(!nul(cast))
             cast.setMe(*me);
 
-        str sub = _subject->as<node>();
-        if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
-        return sub;
+        return _subject->as<node>();
     }
 
     str me::_getSub() const {
@@ -56,7 +56,7 @@ namespace namu {
 
     const node& me::getEval() const {
         str sub = _getSub();
-        if(!sub) return nulOf<node>();
+        if(!sub) return NAMU_E("_subject.as<node>() returns null"), nulOf<node>();
 
         const func& f = sub.cast<func>();
         return nul(f) ? sub->getEval() : f.getRet();
@@ -66,7 +66,6 @@ namespace namu {
 
     NAMU_VERIFY({
         NAMU_DI("verify: runExpr: is it possible to run?");
-        if(nul(it.getMe())) return _srcErr(errCode::CANT_CAST_TO_NODE);
         if(nul(it.getMe())) return _srcErr(errCode::CANT_CAST_TO_NODE);
 
         tstr<baseObj> me = it.getMe().as<baseObj>();
