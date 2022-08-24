@@ -35,6 +35,7 @@ namespace namu {
         nbool dump(const nchar* message) override;
         nbool isInit() const override;
         void callstack() const;
+        void setCallstack(nbool show);
 
     private:
         //  Logger:
@@ -46,5 +47,6 @@ namespace namu {
 
     private:
         std::vector<stream*> _streams;
+        nbool _showCallstack;
     };
 }

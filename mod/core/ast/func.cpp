@@ -28,9 +28,7 @@ namespace namu {
         baseObj& me = a.getMe();
         if(nul(me)) return _canRun(a);
 
-        frameInteract f1(me); {
-            return _canRun(a);
-        }
+        return _canRun(a);
     }
 
     const params& me::getParams() const {

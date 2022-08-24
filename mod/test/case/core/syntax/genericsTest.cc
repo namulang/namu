@@ -6,7 +6,7 @@ using namespace std;
 namespace {
     struct genericsTest : public namuSyntaxTest {};
 }
-
+/*
 TEST_F(genericsTest, simpleDefineGenerics) {
     make().parse(R"SRC(
         def object<T>
@@ -34,4 +34,4 @@ TEST_F(genericsTest, simpleUseGenerics) {
     std::string msg = res->cast<std::string>();
     ASSERT_EQ(msg, "hello generics!\n");
     NAMU_I("msg from generics: %s", msg.c_str());
-}
+}*/
