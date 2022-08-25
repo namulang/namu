@@ -138,8 +138,10 @@ namespace namu {
         return dump(buf);
     }
 
-    me::logger() : super() {}
-    me::logger(const me& rhs) : super(rhs) {}
+    me::logger() : super(), _showCallstack(true) {}
+    me::logger(const me& rhs) : super(rhs) {
+        _showCallstack = rhs._showCallstack;
+    }
 
     nbool me::isEnable() const {
         for(stream* s : _streams)
