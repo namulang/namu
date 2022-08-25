@@ -37,6 +37,7 @@ namespace namu {
         nbool isInit() const override;
         void callstack() const;
         void setCallstack(nbool show);
+        nbool isShowCallstack() const { return _showCallstack; }
 
     private:
         //  Logger:
