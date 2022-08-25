@@ -14,6 +14,7 @@ namespace namu {
         const stream& operator[](const nchar* message) const;
         stream& operator[](const nchar* message);
 
+    public:
         stream& getStream(nidx n);
         const stream& getStream(nidx n) const;
         const stream& getStream(const nchar* c_message) const;
