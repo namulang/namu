@@ -132,7 +132,7 @@ namespace namu {
 #if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
 
         constexpr int BT_SIZE = 100;
-        constexpr int CS_SIZE = 3;
+        constexpr int CS_SIZE = 10;
         void* rawCallstacks[BT_SIZE] = {nullptr, };
 
         int len = backtrace(rawCallstacks, BT_SIZE);
