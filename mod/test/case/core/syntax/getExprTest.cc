@@ -65,7 +65,7 @@ TEST_F(getExprTest, getSymbolOnPackScope3) {
 }
 
 TEST_F(getExprTest, getInvalidVariableNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         age str
         main() str
             return age1
@@ -84,7 +84,7 @@ TEST_F(getExprTest, getInnerScopeVar) {
 }
 
 TEST_F(getExprTest, getInnerScopeVarNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         main() int
             age int
             age

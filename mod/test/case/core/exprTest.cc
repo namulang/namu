@@ -83,6 +83,8 @@ TEST_F(exprTest, simpleGetExpr) {
 }
 
 TEST_F(exprTest, simpleGetExprNegative) {
+    negative();
+
     getExpr exp(bridge.get(), "main?", narr(*new nStr()));
     setLine(exp, 1, 1);
     errReport rep;
@@ -98,6 +100,7 @@ TEST_F(exprTest, simpleGetExprNegative) {
 }
 
 TEST_F(exprTest, simpleRunExprWithoutMeObjNegative) {
+    negative();
     runExpr exp1(bridge->sub("main"), narr(*new nStr("kniz!")));
     errReport rep;
     verifier veri;
@@ -143,6 +146,7 @@ TEST_F(exprTest, simpleRunExpr) {
 }
 
 TEST_F(exprTest, simpleRunExprNegative) {
+    negative();
     runExpr exp1(bridge->sub("main"), narr());
     setLine(exp1, 1, 1);
     errReport rep;

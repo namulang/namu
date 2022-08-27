@@ -42,27 +42,27 @@ TEST_F(akaTest, defaultDef5) {
 }
 
 TEST_F(akaTest, deducedAllDefNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
     aka console.*
     )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, deducedAllDefNegative2) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         aka console. *
     )SRC").shouldParsed(false);
     shouldVerified(false);
 }
 
 TEST_F(akaTest, deducedAllDefNegative3) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         aka console.
          *
     )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, deducedAllDefNegative4) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         aka console.
     )SRC").shouldParsed(false);
 }

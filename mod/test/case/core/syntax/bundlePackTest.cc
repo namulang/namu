@@ -25,7 +25,7 @@ TEST_F(bundlePackTest, defaultDef2) {
 }
 
 TEST_F(bundlePackTest, withAsNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         Helloworld(age int) int
             return age
 

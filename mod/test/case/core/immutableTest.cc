@@ -117,6 +117,7 @@ TEST_F(immutableTest, testImmutablePositive) {
 }
 
 TEST_F(immutableTest, testImmutableNegative) {
+    negative();
     str r1(new myObj(1));
     str r2 = r1;
     ASSERT_TRUE(r1);
