@@ -324,7 +324,7 @@ TEST_F(asExprTest, asAs) {
 }
 
 TEST_F(asExprTest, asAsNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         foo(age str) void
             main()
         main() void

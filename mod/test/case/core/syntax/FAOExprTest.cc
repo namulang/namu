@@ -48,7 +48,7 @@ TEST_F(FAOExprTest, addWithDefAssign) {
 }
 
 TEST_F(FAOExprTest, addWithDefAssignReversedNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         b := a + 2
         a := 5
         main() int
@@ -63,7 +63,7 @@ TEST_F(FAOExprTest, addWithDefAssignReversedNegative) {
 }
 
 TEST_F(FAOExprTest, addIntAndStrNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         a := "hello" + 12
         main() int
             return a

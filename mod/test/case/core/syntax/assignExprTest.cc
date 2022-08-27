@@ -51,7 +51,7 @@ TEST_F(assignExprTest, assignLocalVariable) {
 }
 
 TEST_F(assignExprTest, assignTypeNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         age int
         main() int
             return age = "wow"

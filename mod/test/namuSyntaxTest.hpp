@@ -42,6 +42,11 @@ struct namuSyntaxTest : public namuTest {
         return *this;
     }
 
+    namuSyntaxTest& negative() {
+        namuTest::negative();
+        return *this;
+    }
+
     namu::nbool shouldParsed(namu::nbool well) {
         namu::nbool ret = _ip.isParsed();
         EXPECT_EQ(ret, well);

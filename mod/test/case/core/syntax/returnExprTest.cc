@@ -22,7 +22,7 @@ TEST_F(returnExprTest, simpleReturnTypeCheckStr) {
 }
 
 TEST_F(returnExprTest, simpleReturnTypeNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         make() int
             return
     )SRC").shouldParsed(true);
@@ -49,7 +49,7 @@ TEST_F(returnExprTest, implicitReturn) {
 
 
 TEST_F(returnExprTest, implicitReturnNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         make() flt
             "wow"
     )SRC").shouldVerified(false);

@@ -72,7 +72,7 @@ TEST_F(parserTest, slotNoOnTrayWithoutMake) {
 TEST_F(parserTest, slotNotSpecifiedButCodeSpecifyPackNegative) {
     // make without name:
     //  slot will be generated. but its name is '{default}'.
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         pack demo
         main() void
             return

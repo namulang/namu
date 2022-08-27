@@ -29,7 +29,7 @@ TEST_F(defObjExprTest, simpleDefineObject2) {
 }
 
 TEST_F(defObjExprTest, simpleDefineObjectNegative) {
-    make().parse(R"SRC(
+    negative().make().parse(R"SRC(
         def A
             foo() void
                 sys.con.print("hello")
