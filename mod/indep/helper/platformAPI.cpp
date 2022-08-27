@@ -13,12 +13,15 @@
 #   include <regex>
 #   include <sys/time.h>
 #endif
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+#   include <mach-o/dyld.h>
+#endif
 #include <time.h>
 
 namespace namu {
 
     NAMU_DEF_ME(platformAPI)
-    constexpr nint PATH_MAX = 256;
+    constexpr nint PATH_MAX_LEN = 256;
     using namespace std;
 
 #if defined(NAMU_BUILD_PLATFORM_IS_LINUX) || defined(NAMU_BUILD_PLATFORM_IS_MAC)
@@ -100,10 +103,15 @@ namespace namu {
     }
 
     string me::getExecPath() {
-#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
-        nchar res[PATH_MAX];
-        nuint count = readlink("/proc/self/exe", res, PATH_MAX);
+        nchar res[PATH_MAX_LEN];
+
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX
+        nuint count = readlink("/proc/self/exe", res, PATH_MAX_LEN);
         return string(res, (count > 0) ? count : 0);
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+        nuint size = PATH_MAX_LEN + 1;
+        _NSGetExecutablePath(res, &size);
+        return string(res, size);
 #else
         return string();
 #endif
@@ -111,15 +119,13 @@ namespace namu {
 
     string me::exec(const string& cmd) {
 #if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
-        array<nchar, 128> buf;
+        nchar buf[128] = {0, };
         string res;
         shared_ptr<FILE> pipe(popen(cmd.c_str(), "r"), pclose);
 
-        while (!feof(pipe.get())) {
-            if (fgets(buf.data(), 128, pipe.get()) != nullptr) {
-                res += buf.data();
-            }
-        }
+        while(!feof(pipe.get()))
+            if(fgets(buf, 128, pipe.get()) != nullptr)
+                res += buf;
 
         return res;
 #else

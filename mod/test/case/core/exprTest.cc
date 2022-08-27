@@ -25,7 +25,7 @@ struct exprTest : public namuTest {
     }
 
     static frames& getFrames() {
-        return thread::get()._getFrames();
+        return namu::thread::get()._getFrames();
     }
 };
 
