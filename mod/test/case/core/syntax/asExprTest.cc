@@ -380,4 +380,20 @@ TEST_F(asExprTest, doubleAs) {
     ASSERT_EQ(ret->cast<int>(), 0);
 }
 
+TEST_F(asExprTest, floatAs) {
+    make().parse(R"SRC(
+        def obj
+            foo() int
+                5
+
+        main() str
+            o := obj()
+            sys.con.print(o.foo() as str)
+            return o.foo() as str
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "5");
+}
+
 // TODO: make a TC for 'as' nonprimitive types

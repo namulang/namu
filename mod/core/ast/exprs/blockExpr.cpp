@@ -41,6 +41,8 @@ namespace namu {
                 ret = e.run();
                 if(fr.isReturned()) break;
             }
+
+            fr.pushReturn(ret);
             return ret;
         }
     }
