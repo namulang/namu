@@ -23,9 +23,9 @@ namespace namu {
     const ases& me::wIntType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            inner.add(new asPrimitive<nFlt, nflt>());
-            inner.add(new asPrimitive<nChar, nchar>());
-            inner.add(new asPrimitive<nBool, nbool>());
+            inner.add(new asPrimitive<nFlt, nint>());
+            inner.add(new asPrimitive<nChar, nint>());
+            inner.add(new asPrimitive<nBool, nint>());
         }
 
         return inner;
