@@ -386,14 +386,14 @@ TEST_F(asExprTest, floatAs) {
             foo() int
                 5
 
-        main() str
+        main() flt
             o := obj()
             sys.con.print(o.foo() as str)
-            return o.foo() as str
+            return o.foo() as flt
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "5");
+    ASSERT_EQ(res.cast<nflt>(), 5.0f);
 }
 
 // TODO: make a TC for 'as' nonprimitive types
