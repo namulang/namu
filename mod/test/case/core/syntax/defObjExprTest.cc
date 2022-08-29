@@ -39,3 +39,19 @@ TEST_F(defObjExprTest, simpleDefineObjectNegative) {
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
+
+TEST_F(defObjExprTest, assignMemberVariable) {
+    make().parse(R"SRC(
+        def obj
+            index := 5
+
+        main() int
+            o := obj()
+            o.index = 2
+            sys.con.print(o.index as str)
+            o.index
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 2);
+}
