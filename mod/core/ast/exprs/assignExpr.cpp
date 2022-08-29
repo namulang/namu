@@ -16,7 +16,10 @@ namespace namu {
         if(nul(cast)) return iter();
         // TODO: elementExpr
 
-        iter ret = cast.getMe().subs().iterate(cast.getSubName());
+        str ased = cast.getMe().as<node>();
+        if(!ased) return NAMU_E("ased == null"), iter();
+
+        iter ret = ased->subs().iterate(cast.getSubName());
         while(ret) {
             if(!nul(ret.getVal<baseObj>()))
                 return ret;
