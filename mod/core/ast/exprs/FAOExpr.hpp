@@ -7,9 +7,11 @@
 
 namespace namu {
 
+    class visitor;
+
     // FAO: Five fundermental Arithmetic Operation.
     class _nout FAOExpr : public expr {
-        NAMU(CLASS(FAOExpr, expr, expr::exprType))
+        NAMU(CLASS(FAOExpr, expr, expr::exprType), VISIT())
 
     public:
         enum Rule {

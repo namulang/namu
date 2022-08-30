@@ -4,8 +4,10 @@
 
 namespace namu {
 
+    class visitor;
+
     class _nout genericObj : public baseObj {
-        NAMU(CLASS(genericObj, baseObj),
+        NAMU(CLASS(genericObj, baseObj), VISIT(),
             FRIEND_VERIFY(genericObj, iterateGenerics))
         typedef std::vector<std::string> strings;
 

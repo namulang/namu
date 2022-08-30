@@ -3,10 +3,11 @@
 #include "../../loader/interpreter/tverification.hpp"
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
+#include "../visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(defVarExpr)
+    NAMU(DEF_ME(defVarExpr), DEF_VISIT())
 
     me::defVarExpr(const std::string& name, const node& org): _org(org), _name(name) {}
     me::defVarExpr(const std::string& name, const node& org, const scope& where): _org(org),

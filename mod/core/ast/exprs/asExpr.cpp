@@ -3,10 +3,11 @@
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
+#include "../visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(asExpr)
+    NAMU(DEF_ME(asExpr), DEF_VISIT())
 
     NAMU_VERIFY({
         NAMU_DI("verify: asExpr: _me & _as aren't null");

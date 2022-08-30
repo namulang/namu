@@ -4,8 +4,10 @@
 
 namespace namu {
 
+    class visitor;
+
     class _nout runExpr : public expr {
-        NAMU(CLASS(runExpr, expr, expr::exprType))
+        NAMU(CLASS(runExpr, expr, expr::exprType), VISIT())
 
     public:
         runExpr(const node& meObj, const node& subject, const args& a);

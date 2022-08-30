@@ -4,10 +4,11 @@
 #include "../../loader/interpreter/tverification.hpp"
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
+#include "../visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(returnExpr)
+    NAMU(DEF_ME(returnExpr), DEF_VISIT())
 
     me::returnExpr(const node& ret): _ret(ret) {}
     me::returnExpr(): _ret(nVoid::singletone()) {}

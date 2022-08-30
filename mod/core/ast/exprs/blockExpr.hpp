@@ -4,8 +4,10 @@
 
 namespace namu {
 
+    class visitor;
+
     class _nout blockExpr : public expr {
-        NAMU(CLASS(blockExpr, expr, expr::exprType),
+        NAMU(CLASS(blockExpr, expr, expr::exprType), VISIT(),
             FRIEND_VERIFY(blockExpr, visitSubNodes))
         friend class mgdFunc;
 

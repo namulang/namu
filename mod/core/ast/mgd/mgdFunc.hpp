@@ -6,9 +6,11 @@
 
 namespace namu {
 
+    class visitor;
+
     typedef tnmap<std::string, node, immutableTactic> scope;
     class _nout mgdFunc : public func {
-        NAMU(CLASS(mgdFunc, func),
+        NAMU(CLASS(mgdFunc, func), VISIT(),
             FRIEND_VERIFY(mgdFunc, subNodes))
 
     public:

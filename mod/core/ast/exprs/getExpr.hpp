@@ -5,8 +5,10 @@
 
 namespace namu {
 
+    class visitor;
+
     class _nout getExpr : public expr {
-        NAMU(CLASS(getExpr, expr, expr::exprType),
+        NAMU(CLASS(getExpr, expr, expr::exprType), VISIT(),
             FRIEND_VERIFY(getExpr, isRunnable))
 
     public:

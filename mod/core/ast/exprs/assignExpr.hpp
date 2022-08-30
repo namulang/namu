@@ -6,8 +6,10 @@
 
 namespace namu {
 
+    class visitor;
+
     class _nout assignExpr : public expr {
-        NAMU(CLASS(assignExpr, expr, expr::exprType),
+        NAMU(CLASS(assignExpr, expr, expr::exprType), VISIT(),
             FRIEND_VERIFY(assignExpr, verifyIter))
         friend class mgdFunc;
         typedef scopes::iter iter;

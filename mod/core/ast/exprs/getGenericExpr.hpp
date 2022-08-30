@@ -4,8 +4,10 @@
 
 namespace namu {
 
+    class visitor;
+
     class _nout getGenericExpr : public getExpr {
-        NAMU(CLASS(getGenericExpr, getExpr, expr::exprType))
+        NAMU(CLASS(getGenericExpr, getExpr, expr::exprType), VISIT())
 
     public:
         getGenericExpr(const std::string& genericName, const args& typeParams):

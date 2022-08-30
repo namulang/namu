@@ -4,10 +4,11 @@
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
 #include "../node.inl"
+#include "../visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(getExpr)
+    NAMU(DEF_ME(getExpr), DEF_VISIT())
 
     const node& me::getMe() const {
         if(!_me)
