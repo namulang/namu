@@ -3,10 +3,11 @@
 #include "../loader/interpreter/tverification.hpp"
 #include "../loader/interpreter/verifier.hpp"
 #include "../frame/frameInteract.hpp"
+#include "visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(func)
+    NAMU(DEF_ME(func), DEF_VISIT())
 
     nbool me::_canRun(const args& a) const {
         const params& ps = getParams();
