@@ -1,8 +1,9 @@
 #include "obj.hpp"
+#include "visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(obj)
+    NAMU(DEF_ME(obj), DEF_VISIT())
 
     me& me::_assign(const me& rhs) {
         _owns = rhs._owns->deepClone();

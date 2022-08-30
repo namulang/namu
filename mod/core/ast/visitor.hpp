@@ -1,3 +1,3 @@
 #pragma once
 
-#include "visitor/astVisitor.hpp"
+#include "visitor/visitor.hpp"

@@ -12,6 +12,7 @@ namespace namu {
 
     class ases;
     class args;
+    class visitor;
 
     /// node provides common API to manipulate its sub nodes.
     class _nout node : public instance, public clonable, public frameInteractable {
@@ -99,6 +100,8 @@ namespace namu {
         /// and also this func requires frames. means that you have to interact frame first before
         /// call this func.
         virtual const node& getEval() const;
+
+        virtual void accept(visitor& v);
 
     protected:
         virtual str _onRunSub(node& sub, const args& a);
