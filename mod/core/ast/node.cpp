@@ -7,10 +7,11 @@
 #include "../loader/interpreter/verifier.hpp"
 #include "params.hpp"
 #include "args.hpp"
+#include "visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(node)
+    NAMU(DEF_ME(node), DEF_VISIT())
 
     node& me::operator[](const std::string& name) const {
         return sub(name);

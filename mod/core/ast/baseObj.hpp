@@ -7,6 +7,7 @@ namespace namu {
 
     class func;
     typedef tnarr<func> funcs;
+    class visitor;
 
     /// baseObj handles frame injection event of all objects.
     class _nout baseObj : public node {

@@ -8,7 +8,7 @@
 
 namespace namu {
 
-    NAMU_DEF_ME(baseObj)
+    NAMU(DEF_ME(baseObj))
 
     me::baseObj() {}
 

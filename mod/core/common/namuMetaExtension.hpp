@@ -55,6 +55,21 @@
         __NAMU__DECL_CLONE(ME)
 #define __NAMU__DECL_CLASS(...) NAMU_OVERLOAD(__NAMU__DECL_CLASS, __VA_ARGS__)
 
+// ACCEPT:
+//      accept the visitor and let it can iterate sub elements.
+//      please check 'visitor' class for more info.
+#define __NAMU__DECL_VISIT() \
+        public: \
+            void accept(visitor& v) override; \
+        private:
+#define __NAMU__DECL_DEF_VISIT_0() \
+            __NAMU__DECL_DEF_VISIT_1(me)
+#define __NAMU__DECL_DEF_VISIT_1(ME) \
+            void ME::accept(visitor& v) { \
+                v.visit(*this); \
+            }
+#define __NAMU__DECL_DEF_VISIT(...) NAMU_OVERLOAD(__NAMU__DECL_DEF_VISIT, __VA_ARGS__)
+
 // VERIFY:
 //      add new verification info to verify the type of specific object.
 #define NAMU_VERIFY_NAME(name) __auto_verify_##name##__
