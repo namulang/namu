@@ -7,9 +7,10 @@ namespace namu {
     class param;
     template <typename T, typename TACTIC> class tnarr;
     typedef tnarr<param, strTactic> params;
+    class visitor;
 
     class _nout func : public expr {
-        NAMU(ADT(func, expr))
+        NAMU(ADT(func, expr), VISIT())
 
     public:
         static inline const std::string ME = "me";

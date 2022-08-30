@@ -1,4 +1,5 @@
 #include "defaultCtor.hpp"
+#include "visitor.hpp"
 
 namespace namu {
 

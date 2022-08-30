@@ -1,8 +1,9 @@
 #include "src.hpp"
+#include "visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(src)
+    NAMU(DEF_ME(src), DEF_VISIT())
 
     me::src(const std::string& fileName): _fileName(fileName) {}
 
