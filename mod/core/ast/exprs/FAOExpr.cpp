@@ -4,10 +4,11 @@
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
 #include "../../builtin/primitive.hpp"
+#include "../visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(FAOExpr)
+    NAMU(DEF_ME(FAOExpr), DEF_VISIT())
 
     namespace {
         str primitives[] = {

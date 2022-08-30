@@ -7,10 +7,11 @@
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/frameInteract.hpp"
+#include "../visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(mgdFunc)
+    NAMU(DEF_ME(mgdFunc), DEF_VISIT())
 
     me::mgdFunc(const params& ps, const node& retType):
             super(), _params(ps), _retType(retType), _blk(new blockExpr()) {}

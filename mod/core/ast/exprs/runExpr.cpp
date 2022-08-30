@@ -5,10 +5,11 @@
 #include "../../frame/thread.hpp"
 #include "../../builtin/primitive/nVoid.hpp"
 #include "getExpr.hpp"
+#include "../visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(runExpr)
+    NAMU(DEF_ME(runExpr), DEF_VISIT())
 
     me::runExpr(const node& meObj, const node& subject, const args& a):
             _me(meObj), _args(a), _subject(subject)  {}

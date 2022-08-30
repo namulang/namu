@@ -5,9 +5,10 @@
 #include "../../builtin/primitive/nVoid.hpp"
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/frameInteract.hpp"
+#include "../visitor.hpp"
 
 namespace namu {
-    NAMU_DEF_ME(blockExpr)
+    NAMU(DEF_ME(blockExpr), DEF_VISIT())
 
     void me::_inFrame(const bicontainable& args) {
         NAMU_DI("%s._onInFrame()", getType().getName().c_str());

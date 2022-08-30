@@ -4,8 +4,10 @@
 
 namespace namu {
 
+    class visitor;
+
     class _nout defaultCtor : public ctor {
-        NAMU(CLASS(defaultCtor, ctor))
+        NAMU(CLASS(defaultCtor, ctor), VISIT())
 
     public:
         defaultCtor(const node& org): super(org) {}

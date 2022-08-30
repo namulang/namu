@@ -1,10 +1,11 @@
 #include "slot.hpp"
 #include "func.hpp"
 #include "../loader/interpreter/tverification.hpp"
+#include "visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(slot)
+    NAMU(DEF_ME(slot), DEF_VISIT())
 
     me::slot(const manifest& manifest): _manifest(manifest) {
         _rel();

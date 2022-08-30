@@ -6,8 +6,10 @@
 
 namespace namu {
 
+    class visitor;
+
     class _nout slot : public node {
-        NAMU(CLASS(slot, node))
+        NAMU(CLASS(slot, node), VISIT())
 
     public:
         slot(const manifest& manifest);

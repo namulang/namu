@@ -3,9 +3,10 @@
 #include "../../loader/interpreter/tverification.hpp"
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
+#include "../visitor.hpp"
 
 namespace namu {
-    NAMU_DEF_ME(defAssignExpr)
+    NAMU(DEF_ME(defAssignExpr), DEF_VISIT())
 
     str me::run(const args& a) {
         str new1 = _rhs->run();

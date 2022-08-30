@@ -6,8 +6,10 @@
 
 namespace namu {
 
+    class visitor;
+
     class _nout defVarExpr : public expr {
-        NAMU(CLASS(defVarExpr, expr, expr::exprType),
+        NAMU(CLASS(defVarExpr, expr, expr::exprType), VISIT(),
             FRIEND_VERIFY(defVarExpr, defineVariable))
         friend class mgdFunc;
 

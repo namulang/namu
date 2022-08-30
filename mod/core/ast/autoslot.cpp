@@ -1,10 +1,11 @@
 #include "autoslot.hpp"
 #include "func.hpp"
 #include "../loader/interpreter/tverification.hpp"
+#include "visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(autoslot)
+    NAMU(DEF_ME(autoslot), DEF_VISIT())
 
     me::autoslot(const manifest& manifest, const packLoadings& loadings): super(manifest),
             _loadings(loadings) { _rel(); }

@@ -7,8 +7,10 @@
 
 namespace namu {
 
+    class visitor;
+
     class _nout autoslot : public slot, public packMakable {
-        NAMU(CLASS(autoslot, slot))
+        NAMU(CLASS(autoslot, slot), VISIT())
 
     public:
         enum state {

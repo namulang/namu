@@ -3,10 +3,11 @@
 #include "../loader/interpreter/tverification.hpp"
 #include "../loader/interpreter/verification.inl"
 #include "../loader/interpreter/verifier.hpp"
+#include "visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(genericObj)
+    NAMU(DEF_ME(genericObj), DEF_VISIT())
 
     nbicontainer& me::subs() {
         static ndumMap inner;

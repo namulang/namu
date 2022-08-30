@@ -4,10 +4,11 @@
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
 #include "../obj.hpp"
+#include "../visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(assignExpr)
+    NAMU(DEF_ME(assignExpr), DEF_VISIT())
 
     me::iter me::_getScopeIterOfLhs() {
         if(!_lhs) return iter();
