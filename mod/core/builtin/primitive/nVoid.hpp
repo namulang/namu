@@ -13,7 +13,7 @@ namespace namu {
         protected:
             const ases& _getImpliAses() const override;
         };
-        NAMU(CLASS(nVoid, primitiveObj<void>, wVoidType))
+        NAMU(CLASS(nVoid, primitiveObj<void>, wVoidType), VISIT())
 
     public:
         nVoid();

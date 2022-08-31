@@ -4,10 +4,11 @@
 #include "nInt.hpp"
 #include "nChar.hpp"
 #include "nBool.hpp"
+#include "../../ast/visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(nFlt)
+    NAMU(DEF_ME(nFlt), DEF_VISIT())
 
     nbool me::wFltType::isImmutable() const { return true; }
 

@@ -15,7 +15,7 @@ namespace namu {
             const ases& _getAses() const override;
         };
 
-        NAMU(CLASS(nBool, primitiveObj, wBoolType))
+        NAMU(CLASS(nBool, primitiveObj, wBoolType), VISIT())
 
     public:
         nBool();

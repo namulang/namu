@@ -1,10 +1,11 @@
 #include "nVoid.hpp"
 #include "../../ast/defaultCtor.hpp"
 #include "../../ast/defaultCopyCtor.hpp"
+#include "../../ast/visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(nVoid)
+    NAMU(DEF_ME(nVoid), DEF_VISIT())
 
     nbool me::wVoidType::isImmutable() const { return true; }
 

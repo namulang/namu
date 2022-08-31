@@ -5,10 +5,11 @@
 #include "nFlt.hpp"
 #include "nChar.hpp"
 #include "nBool.hpp"
+#include "../../ast/visitor.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(nInt)
+    NAMU(DEF_ME(nInt), DEF_VISIT())
 
     dumScope* me::_onMakeCtors() const {
         static nInt inner;
