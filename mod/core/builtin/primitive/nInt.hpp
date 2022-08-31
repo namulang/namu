@@ -14,7 +14,7 @@ namespace namu {
             const ases& _getImpliAses() const override;
             const ases& _getAses() const override;
         };
-        NAMU(CLASS(nInt, primitiveObj, wIntType))
+        NAMU(CLASS(nInt, primitiveObj, wIntType), VISIT())
 
     public:
         nInt();
