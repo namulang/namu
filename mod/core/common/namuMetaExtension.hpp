@@ -58,15 +58,18 @@
 // ACCEPT:
 //      accept the visitor and let it can iterate sub elements.
 //      please check 'visitor' class for more info.
-#define __NAMU__DECL_VISIT() \
+#define __NAMU__DECL_VISIT_0() __NAMU__DECL_VISIT_1(super)
+#define __NAMU__DECL_VISIT_1(SUPER) \
         public: \
-            void accept(visitor& v) override; \
+            using SUPER::accept; \
+            void accept(const std::string& name, visitor& v) override; \
         private:
-#define __NAMU__DECL_DEF_VISIT_0() \
-            __NAMU__DECL_DEF_VISIT_1(me)
+#define __NAMU__DECL_VISIT(...) NAMU_OVERLOAD(__NAMU__DECL_VISIT, __VA_ARGS__)
+
+#define __NAMU__DECL_DEF_VISIT_0() __NAMU__DECL_DEF_VISIT_1(me)
 #define __NAMU__DECL_DEF_VISIT_1(ME) \
-            void ME::accept(visitor& v) { \
-                v.visit(*this); \
+            void ME::accept(const std::string& name, visitor& v) { \
+                v.visit(name, *this); \
             }
 #define __NAMU__DECL_DEF_VISIT(...) NAMU_OVERLOAD(__NAMU__DECL_DEF_VISIT, __VA_ARGS__)
 

@@ -11,3 +11,4 @@
 #include "ast/defaultCtor.hpp"
 #include "ast/defaultCopyCtor.hpp"
 #include "ast/genericObj.hpp"
+#include "ast/visitor.hpp"

@@ -13,9 +13,9 @@ namespace namu {
 
     public:
 #define X(T) \
-        virtual void visit(T& t); \
-        virtual void onEnter(T& t); \
-        virtual void onLeave(T& t);
+        virtual void visit(const std::string& name, T& t); \
+        virtual void onVisit(const std::string& name, T& t); \
+        virtual void onLeave(const std::string& name, T& t);
 #   include "visitee.inl"
 #undef X
 
