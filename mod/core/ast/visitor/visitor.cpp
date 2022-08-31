@@ -1,24 +1,26 @@
 #include "visitor.hpp"
 #include "../../ast.hpp"
+#include "../../builtin/primitive.hpp"
 
 namespace namu {
 
     NAMU_DEF_ME(visitor)
 
 #define X(T) \
-    void me::visit(T& t) { \
-        onEnter(t); \
+    void me::visit(const std::string& name, T& t) { \
+        onVisit(name, t); \
         onTraverse(t); \
-        onLeave(t); \
+        onLeave(name, t); \
     } \
-    void me::onEnter(T& t) {} \
-    void me::onLeave(T& t) {}
+    void me::onVisit(const std::string& name, T& t) {} \
+    void me::onLeave(const std::string& name, T& t) {}
 
 #   include "visitee.inl"
 #undef X
 
     void me::onTraverse(node& t) {
-        for(auto& e : t.subs())
-            e.accept(*this);
+        nbicontainer& subs = t.subs();
+        for(auto e=subs.begin(); e ;++e)
+            e->accept(e.getKey(), *this);
     }
 }
