@@ -53,3 +53,50 @@ TEST_F(visitorTest, iterateManuallyConstructedNodes) {
     ASSERT_TRUE(v.metVal1);
     ASSERT_TRUE(v.metVal2);
 }
+
+TEST_F(visitorTest, visitComplexExpressions) {
+    make().parse(R"SRC(
+        def obj
+            foo() flt
+                5.0
+
+        main() flt
+            o := obj()
+            sys.con.print(o.foo() as str)
+            return o.foo() as flt
+    )SRC").shouldVerified(true);
+
+    node& root = getSubPack();
+    ASSERT_FALSE(nul(root));
+
+    struct myVisitor : public visitor {
+        myVisitor(): metO(0), metAsFlt(0), metFlt5(false) {}
+
+        using visitor::onVisit;
+        void onVisit(const std::string& name, getExpr& got) override {
+            NAMU_DI("subname=%s", got.getSubName().c_str());
+            if(got.getSubName() == "o")
+                metO++;
+        }
+
+        void onVisit(const std::string& name, asExpr& as) override {
+            if(as.getAs().as<node>()->isSub<nFlt>())
+                metAsFlt++;
+        }
+
+        void onVisit(const std::string& name, nFlt& f) override {
+            if(f.get() == 5.0f)
+                metFlt5 = true;
+        }
+
+        nint metO;
+        nint metAsFlt;
+        nbool metFlt5;
+    };
+
+    myVisitor v;
+    v.start(root);
+    ASSERT_EQ(v.metO, 2);
+    ASSERT_EQ(v.metAsFlt, 1);
+    ASSERT_TRUE(v.metFlt5);
+}

@@ -7,7 +7,6 @@ namespace namu {
 #define X(T) class T;
 #   include "visitee.inl"
 #undef X
-
     class visitor {
         NAMU(ME(visitor))
 
@@ -21,6 +20,16 @@ namespace namu {
 
         void start(node& root);
 
-        virtual void onTraverse(node& t);
+        //  traverse:
+        //      generalized-way:
+        virtual void onTraverse(const std::string& name, node& t);
+        //      specific-way:
+        virtual void onTraverse(const std::string& name, getExpr& e);
+        virtual void onTraverse(const std::string& name, frame& f);
+        virtual void onTraverse(const std::string& name, runExpr& e);
+        virtual void onTraverse(const std::string& name, mgdFunc& f);
+        virtual void onTraverse(const std::string& name, blockExpr& b);
+        virtual void onTraverse(const std::string& name, returnExpr& b);
+        virtual void onTraverse(const std::string& name, asExpr& a);
     };
 }
