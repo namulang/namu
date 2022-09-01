@@ -23,4 +23,8 @@ namespace namu {
         for(auto e=subs.begin(); e ;++e)
             e->accept(e.getKey(), *this);
     }
+
+    void me::start(node& root) {
+        root.accept(std::string(""), *this);
+    }
 }
