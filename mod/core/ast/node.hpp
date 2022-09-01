@@ -102,7 +102,6 @@ namespace namu {
         virtual const node& getEval() const;
 
         virtual void accept(const std::string& name, visitor& v);
-        void accept(visitor& v) { accept(std::string(""), v); }
 
     protected:
         virtual str _onRunSub(node& sub, const args& a);

@@ -46,7 +46,7 @@ TEST_F(visitorTest, iterateManuallyConstructedNodes) {
     ASSERT_FALSE(v.metVal1);
     ASSERT_FALSE(v.metVal2);
 
-    o2.accept(v);
+    v.start(o2);
 
     ASSERT_TRUE(v.metFoo1);
     ASSERT_TRUE(v.metFoo2);

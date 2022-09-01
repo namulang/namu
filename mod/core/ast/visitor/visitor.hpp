@@ -19,6 +19,8 @@ namespace namu {
 #   include "visitee.inl"
 #undef X
 
+        void start(node& root);
+
         virtual void onTraverse(node& t);
     };
 }
