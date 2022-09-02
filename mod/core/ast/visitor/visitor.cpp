@@ -91,4 +91,34 @@ namespace namu {
         if(!nul(as))
             as.accept("", *this);
     }
+
+    void me::onTraverse(const std::string& name, assignExpr& a) {
+        NAMU_DI("assignExpr[%s]::onTraverse", name.c_str());
+
+        node& left = (node&) a.getLeft();
+        if(!nul(left))
+            left.accept("", *this);
+        node& right = (node&) a.getRight();
+        if(!nul(right))
+            right.accept("", *this);
+    }
+
+    void me::onTraverse(const std::string& name, defAssignExpr& d) {
+        NAMU_DI("defAssignExpr[%s]::onTraverse", name.c_str());
+
+        node& right = d.getRight();
+        if(!nul(right))
+            right.accept("", *this);
+    }
+
+    void me::onTraverse(const std::string& name, FAOExpr& f) {
+        NAMU_DI("FAOExpr[%s]::onTraverse", name.c_str());
+
+        node& left = (node&) f.getLeft();
+        if(!nul(left))
+            left.accept("", *this);
+        node& right = (node&) f.getRight();
+        if(!nul(right))
+            right.accept("", *this);
+    }
 }
