@@ -123,6 +123,8 @@ TEST_F(visitorTest, visitComplexExpressions2) {
         using visitor::onVisit;
         void onVisit(const std::string& name, FAOExpr& fao) override {
             tstr<nInt> num2 = ((node&) fao.getRight()).as<nInt>();
+            if(!num2) return;
+
             if(num2->cast<nint>() == 2)
                 metInt2 = true;
         }
