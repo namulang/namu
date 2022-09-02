@@ -35,10 +35,6 @@ namespace namu {
 
     void me::onTraverse(const std::string& name, getExpr& e) {
         NAMU_DI("getExpr[%s]::onTraverse", name.c_str());
-
-        node& me = (node&) e.getMe();
-        if(!nul(me))
-            me.accept("", *this);
     }
 
     void me::onTraverse(const std::string& name, frame& f) {

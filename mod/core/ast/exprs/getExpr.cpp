@@ -35,7 +35,9 @@ namespace namu {
 
     str me::_get() const {
         NAMU_DI("_name=%s", _name.c_str());
-        str evalMe = getMe().as<node>();
+        const node& me = getMe();
+        if(nul(me)) return NAMU_E("me == null"), str();
+        str evalMe = me.as<node>();
         if(!evalMe) return NAMU_E("from == null"), str();
 
         std::string argsName = _args ? _args->asStr().c_str() : "{}";
