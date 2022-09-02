@@ -100,3 +100,47 @@ TEST_F(visitorTest, visitComplexExpressions) {
     ASSERT_EQ(v.metAsFlt, 1);
     ASSERT_TRUE(v.metFlt5);
 }
+
+TEST_F(visitorTest, visitComplexExpressions2) {
+    make().parse(R"SRC(
+        def obj
+            foo(a int) flt
+                return 5.0 + a
+
+        main() flt
+            o := obj()
+            ret := o.foo() as flt
+            ret = ret * 2
+            return ret
+    )SRC").shouldVerified(true);
+
+    node& root = getSubPack();
+    ASSERT_FALSE(nul(root));
+
+    struct myVisitor : public visitor {
+        myVisitor(): metInt2(false), metRet(false) {}
+
+        using visitor::onVisit;
+        void onVisit(const std::string& name, FAOExpr& fao) override {
+            tstr<nInt> num2 = ((node&) fao.getRight()).as<nInt>();
+            if(num2->cast<nint>() == 2)
+                metInt2 = true;
+        }
+
+        void onVisit(const std::string& name, assignExpr& a) override {
+            getExpr& leftGet = ((node&) a.getLeft()).cast<getExpr>();
+            if(nul(leftGet)) return;
+
+            if(leftGet.getSubName() != "ret") return;
+            metRet = true;
+        }
+
+        nbool metInt2;
+        nbool metRet;
+    };
+
+    myVisitor v;
+    v.start(root);
+    ASSERT_TRUE(v.metInt2);
+    ASSERT_TRUE(v.metRet);
+}
