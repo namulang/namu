@@ -18,6 +18,10 @@ namespace namu {
 #   include "visitee.inl"
 #undef X
 
+        virtual void visit(const std::string& name, node& t);
+        virtual void onVisit(const std::string& name, node& t);
+        virtual void onLeave(const std::string& name, node& t);
+
         void start(node& root);
 
         //  traverse:

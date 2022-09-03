@@ -6,7 +6,6 @@
 //  if you find new visitee in your repository:
 //  please add new one's X macro at here. and use VISIT and DEF_VISIT to define
 //  accept() func on that type. please refer 'obj' class for your example.
-X(node)
 X(obj)
 X(asExpr)
 X(assignExpr)
