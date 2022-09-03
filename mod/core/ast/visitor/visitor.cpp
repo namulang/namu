@@ -15,11 +15,33 @@ namespace namu {
         onTraverse(name, t); \
         onLeave(name, t); \
     } \
-    void me::onVisit(const std::string& name, T& t) {} \
+    void me::onVisit(const std::string& name, T& t) { onVisit(name, (node&) t); } \
     void me::onLeave(const std::string& name, T& t) {}
 
 #   include "visitee.inl"
 #undef X
+
+    void me::visit(const std::string& name, node& t) {
+        if(nul(t)) return;
+        NAMU_DI("%s[%s].visit()", t.getType().getName().c_str(), name.c_str());
+
+        onVisit(name, t);
+        onTraverse(name, t);
+        onLeave(name, t);
+    }
+    void me::onVisit(const std::string& name, node& t) {}
+    void me::onLeave(const std::string& name, node& t) {}
+
+    void me::visit(const std::string& name, node& t) {
+        if(nul(t)) return;
+        NAMU_DI("%s[%s].visit()", t.getType().getName().c_str(), name.c_str());
+
+        onVisit(name, t);
+        onTraverse(name, t);
+        onLeave(name, t);
+    }
+    void me::onVisit(const std::string& name, node& t) {}
+    void me::onLeave(const std::string& name, node& t) {}
 
     void me::start(node& root) {
         root.accept(std::string(""), *this);
