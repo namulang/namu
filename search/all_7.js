@@ -11,6 +11,7 @@ var searchData=
   ['getsubargs_96',['getSubArgs',['../classnamu_1_1get_expr.html#a57cc85e059169c35565b448a92ec098d',1,'namu::getExpr']]],
   ['getsubpack_97',['getSubPack',['../classnamu_1_1parser.html#aafea6eeddf73ad2c2680b97f29cd7768',1,'namu::parser']]],
   ['getwhere_98',['getWhere',['../classnamu_1_1def_var_expr.html#ae71d3e49350d9c8f0b2859e0c9c4c3ce',1,'namu::defVarExpr']]],
-  ['goals_99',['goals',['../md__home_runner_work_namu_namu_doc_ref_goal__g_o_a_l.html',1,'']]],
-  ['generic_100',['generic',['../md__home_runner_work_namu_namu_doc_ref_syntax_generic.html',1,'']]]
+  ['graphvisitor_99',['graphVisitor',['../classnamu_1_1graph_visitor.html',1,'namu']]],
+  ['goals_100',['goals',['../md__home_runner_work_namu_namu_doc_ref_goal__g_o_a_l.html',1,'']]],
+  ['generic_101',['generic',['../md__home_runner_work_namu_namu_doc_ref_syntax_generic.html',1,'']]]
 ];
