@@ -23,20 +23,20 @@ TEST_F(visitorTest, iterateManuallyConstructedNodes) {
 
         myVisitor(): metFoo1(false), metVal1(false), metFoo2(false), metVal2(false) {}
 
-        void onVisit(const std::string& name, mgdFunc& fun) override {
-            if(name == "foo1")
+        void onVisit(visitInfo i, mgdFunc& fun) override {
+            if(i.name == "foo1")
                 metFoo1 = true;
-            if(name == "foo2") {
+            if(i.name == "foo2") {
                 metFoo2 = true;
                 EXPECT_TRUE(fun.getRet().isSub<nFlt>());
             }
         }
-        void onVisit(const std::string& name, nInt& o) override {
-            if(name == "val1")
+        void onVisit(visitInfo i, nInt& o) override {
+            if(i.name == "val1")
                 metVal1 = true;
         }
-        void onVisit(const std::string& name, nFlt& o) override {
-            if(name == "val2")
+        void onVisit(visitInfo i, nFlt& o) override {
+            if(i.name == "val2")
                 metVal2 = true;
         }
     };
@@ -73,18 +73,18 @@ TEST_F(visitorTest, visitComplexExpressions) {
         myVisitor(): metO(0), metAsFlt(0), metFlt5(false) {}
 
         using visitor::onVisit;
-        void onVisit(const std::string& name, getExpr& got) override {
+        void onVisit(visitInfo i, getExpr& got) override {
             NAMU_DI("subname=%s", got.getSubName().c_str());
             if(got.getSubName() == "o")
                 metO++;
         }
 
-        void onVisit(const std::string& name, asExpr& as) override {
+        void onVisit(visitInfo i, asExpr& as) override {
             if(as.getAs().as<node>()->isSub<nFlt>())
                 metAsFlt++;
         }
 
-        void onVisit(const std::string& name, nFlt& f) override {
+        void onVisit(visitInfo i, nFlt& f) override {
             if(f.get() == 5.0f)
                 metFlt5 = true;
         }
@@ -121,7 +121,7 @@ TEST_F(visitorTest, visitComplexExpressions2) {
         myVisitor(): metInt2(false), metRet(false) {}
 
         using visitor::onVisit;
-        void onVisit(const std::string& name, FAOExpr& fao) override {
+        void onVisit(visitInfo i, FAOExpr& fao) override {
             tstr<nInt> num2 = ((node&) fao.getRight()).as<nInt>();
             if(!num2) return;
 
@@ -129,7 +129,7 @@ TEST_F(visitorTest, visitComplexExpressions2) {
                 metInt2 = true;
         }
 
-        void onVisit(const std::string& name, assignExpr& a) override {
+        void onVisit(visitInfo i, assignExpr& a) override {
             getExpr& leftGet = ((node&) a.getLeft()).cast<getExpr>();
             if(nul(leftGet)) return;
 

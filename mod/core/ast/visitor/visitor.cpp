@@ -8,135 +8,131 @@ namespace namu {
     NAMU_DEF_ME(visitor)
 
 #define X(T) \
-    void me::visit(const std::string& name, T& t) { \
-        if(nul(t)) return; \
-        NAMU_DI("%s[%s].visit()", t.getType().getName().c_str(), name.c_str()); \
-        onVisit(name, t); \
-        onTraverse(name, t); \
-        onLeave(name, t); \
+    void me::visit(visitInfo i, T& me) { \
+        if(nul(me)) return; \
+        NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str()); \
+        onVisit(i, me); \
+        onTraverse(i, me); \
+        onLeave(i, me); \
     } \
-    void me::onVisit(const std::string& name, T& t) { onVisit(name, (node&) t); } \
-    void me::onLeave(const std::string& name, T& t) {}
+    void me::onVisit(visitInfo i, T& me) { onVisit(i, (node&) me); } \
+    void me::onLeave(visitInfo i, T& me) { onLeave(i, (node&) me); }
 
 #   include "visitee.inl"
 #undef X
 
-    void me::visit(const std::string& name, node& t) {
-        if(nul(t)) return;
-        NAMU_DI("%s[%s].visit()", t.getType().getName().c_str(), name.c_str());
+    void me::visit(visitInfo i, node& me) {
+        if(nul(me)) return;
+        NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str());
 
-        onVisit(name, t);
-        onTraverse(name, t);
-        onLeave(name, t);
+        onVisit(i, me);
+        onTraverse(i, me);
+        onLeave(i, me);
     }
-    void me::onVisit(const std::string& name, node& t) {}
-    void me::onLeave(const std::string& name, node& t) {}
-
-    void me::visit(const std::string& name, node& t) {
-        if(nul(t)) return;
-        NAMU_DI("%s[%s].visit()", t.getType().getName().c_str(), name.c_str());
-
-        onVisit(name, t);
-        onTraverse(name, t);
-        onLeave(name, t);
-    }
-    void me::onVisit(const std::string& name, node& t) {}
-    void me::onLeave(const std::string& name, node& t) {}
+    void me::onVisit(visitInfo i, node& me) {}
+    void me::onLeave(visitInfo i, node& me) {}
 
     void me::start(node& root) {
-        root.accept(std::string(""), *this);
+        root.accept(visitInfo {"", nullptr, 0, 1}, *this);
     }
 
-    void me::onTraverse(const std::string& name, node& t) {
-        NAMU_DI("node[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, node& me) {
+        NAMU_DI("node[%s]::onTraverse", i.name.c_str());
 
-        nbicontainer& subs = t.subs();
-        for(auto e=subs.begin(); e ;++e)
-            e->accept(e.getKey(), *this);
+        nbicontainer& subs = me.subs();
+        int n=0;
+        for(auto e=subs.begin(); e ;++e, ++n)
+            e->accept(visitInfo {e.getKey(), &me, n, i.depth+1}, *this);
     }
 
-    void me::onTraverse(const std::string& name, getExpr& e) {
-        NAMU_DI("getExpr[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, getExpr& e) {
+        NAMU_DI("getExpr[%s]::onTraverse", i.name.c_str());
     }
 
-    void me::onTraverse(const std::string& name, frame& f) {
-        NAMU_DI("frame[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, frame& f) {
+        NAMU_DI("frame[%s]::onTraverse", i.name.c_str());
         // do nothing.
     }
 
-    void me::onTraverse(const std::string& name, runExpr& e) {
-        NAMU_DI("runExpr[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, runExpr& e) {
+        NAMU_DI("runExpr[%s]::onTraverse", i.name.c_str());
 
+        int n = 0;
         node& me = e.getMe();
         if(!nul(me))
-            me.accept("", *this);
+            me.accept(visitInfo {"", &e, n++, i.depth+1}, *this);
         node& subject = e.getSubject();
         if(!nul(subject))
-            subject.accept("", *this);
+            subject.accept(visitInfo {"", &e, n++, i.depth+1}, *this);
 
         for(auto& elem : e.getArgs())
-            elem.accept("", *this);
+            elem.accept(visitInfo {"", &e, n++, i.depth+1}, *this);
     }
 
-    void me::onTraverse(const std::string& name, mgdFunc& f) {
-        NAMU_DI("mgdFunc[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, mgdFunc& f) {
+        NAMU_DI("mgdFunc[%s]::onTraverse", i.name.c_str());
 
-        onTraverse("", f.getBlock());
+        onTraverse(i, f.getBlock());
     }
 
-    void me::onTraverse(const std::string& name, blockExpr& b) {
-        NAMU_DI("blockExpr[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, blockExpr& b) {
+        NAMU_DI("blockExpr[%s]::onTraverse", i.name.c_str());
 
+        int n = 0;
         for(auto& stmt : b.getStmts())
-            stmt.accept("", *this);
+            stmt.accept(visitInfo {"", &b, n++, i.depth+1}, *this);
     }
 
-    void me::onTraverse(const std::string& name, returnExpr& b) {
-        NAMU_DI("returnExpr[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, returnExpr& b) {
+        NAMU_DI("returnExpr[%s]::onTraverse", i.name.c_str());
 
+        int n = 0;
         node& ret = b.getRet();
         if(!nul(ret))
-            ret.accept("", *this);
+            ret.accept(visitInfo {"", &b, n++, i.depth+1}, *this);
     }
 
-    void me::onTraverse(const std::string& name, asExpr& a) {
-        NAMU_DI("asExpr[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, asExpr& a) {
+        NAMU_DI("asExpr[%s]::onTraverse", i.name.c_str());
 
+        int n = 0;
         node& me = (node&) a.getMe();
         if(!nul(me))
-            me.accept("", *this);
+            me.accept(visitInfo {"", &a, n++, i.depth+1}, *this);
         node& as = (node&) a.getAs();
         if(!nul(as))
-            as.accept("", *this);
+            as.accept(visitInfo {"", &a, n++, i.depth+1}, *this);
     }
 
-    void me::onTraverse(const std::string& name, assignExpr& a) {
-        NAMU_DI("assignExpr[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, assignExpr& a) {
+        NAMU_DI("assignExpr[%s]::onTraverse", i.name.c_str());
 
+        int n = 0;
         node& left = (node&) a.getLeft();
         if(!nul(left))
-            left.accept("", *this);
+            left.accept(visitInfo {"", &a, n++, i.depth+1}, *this);
         node& right = (node&) a.getRight();
         if(!nul(right))
-            right.accept("", *this);
+            right.accept(visitInfo {"", &a, n++, i.depth+1}, *this);
     }
 
-    void me::onTraverse(const std::string& name, defAssignExpr& d) {
-        NAMU_DI("defAssignExpr[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, defAssignExpr& d) {
+        NAMU_DI("defAssignExpr[%s]::onTraverse", i.name.c_str());
 
         node& right = d.getRight();
         if(!nul(right))
-            right.accept("", *this);
+            right.accept(visitInfo {"", &d, 0, i.depth+1}, *this);
     }
 
-    void me::onTraverse(const std::string& name, FAOExpr& f) {
-        NAMU_DI("FAOExpr[%s]::onTraverse", name.c_str());
+    void me::onTraverse(visitInfo i, FAOExpr& f) {
+        NAMU_DI("FAOExpr[%s]::onTraverse", i.name.c_str());
 
+        int n = 0;
         node& left = (node&) f.getLeft();
         if(!nul(left))
-            left.accept("", *this);
+            left.accept(visitInfo {"", &f, n++, i.depth+1}, *this);
         node& right = (node&) f.getRight();
         if(!nul(right))
-            right.accept("", *this);
+            right.accept(visitInfo {"", &f, n++, i.depth+1}, *this);
     }
 }

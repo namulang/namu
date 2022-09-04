@@ -62,14 +62,14 @@
 #define __NAMU__DECL_VISIT_1(SUPER) \
         public: \
             using SUPER::accept; \
-            void accept(const std::string& name, visitor& v) override; \
+            void accept(visitInfo i, visitor& v) override; \
         private:
 #define __NAMU__DECL_VISIT(...) NAMU_OVERLOAD(__NAMU__DECL_VISIT, __VA_ARGS__)
 
 #define __NAMU__DECL_DEF_VISIT_0() __NAMU__DECL_DEF_VISIT_1(me)
 #define __NAMU__DECL_DEF_VISIT_1(ME) \
-            void ME::accept(const std::string& name, visitor& v) { \
-                v.visit(name, *this); \
+            void ME::accept(visitInfo i, visitor& v) { \
+                v.visit(i, *this); \
             }
 #define __NAMU__DECL_DEF_VISIT(...) NAMU_OVERLOAD(__NAMU__DECL_DEF_VISIT, __VA_ARGS__)
 
