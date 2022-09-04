@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../common.hpp"
+#include "visitInfo.hpp"
 
 namespace namu {
 
@@ -12,31 +12,31 @@ namespace namu {
 
     public:
 #define X(T) \
-        virtual void visit(const std::string& name, T& t); \
-        virtual void onVisit(const std::string& name, T& t); \
-        virtual void onLeave(const std::string& name, T& t);
+        virtual void visit(visitInfo i, T& me); \
+        virtual void onVisit(visitInfo i, T& me); \
+        virtual void onLeave(visitInfo i, T& me);
 #   include "visitee.inl"
 #undef X
 
-        virtual void visit(const std::string& name, node& t);
-        virtual void onVisit(const std::string& name, node& t);
-        virtual void onLeave(const std::string& name, node& t);
+        virtual void visit(visitInfo i, node& me);
+        virtual void onVisit(visitInfo i, node& me);
+        virtual void onLeave(visitInfo i, node& me);
 
-        void start(node& root);
+        virtual void start(node& root);
 
         //  traverse:
         //      generalized-way:
-        virtual void onTraverse(const std::string& name, node& t);
+        virtual void onTraverse(visitInfo i, node& me);
         //      specific-way:
-        virtual void onTraverse(const std::string& name, asExpr& a);
-        virtual void onTraverse(const std::string& name, assignExpr& a);
-        virtual void onTraverse(const std::string& name, blockExpr& b);
-        virtual void onTraverse(const std::string& name, defAssignExpr& d);
-        virtual void onTraverse(const std::string& name, FAOExpr& f);
-        virtual void onTraverse(const std::string& name, getExpr& e);
-        virtual void onTraverse(const std::string& name, returnExpr& b);
-        virtual void onTraverse(const std::string& name, runExpr& e);
-        virtual void onTraverse(const std::string& name, mgdFunc& f);
-        virtual void onTraverse(const std::string& name, frame& f);
+        virtual void onTraverse(visitInfo i, asExpr& a);
+        virtual void onTraverse(visitInfo i, assignExpr& a);
+        virtual void onTraverse(visitInfo i, blockExpr& b);
+        virtual void onTraverse(visitInfo i, defAssignExpr& d);
+        virtual void onTraverse(visitInfo i, FAOExpr& f);
+        virtual void onTraverse(visitInfo i, getExpr& e);
+        virtual void onTraverse(visitInfo i, returnExpr& b);
+        virtual void onTraverse(visitInfo i, runExpr& e);
+        virtual void onTraverse(visitInfo i, mgdFunc& f);
+        virtual void onTraverse(visitInfo i, frame& f);
     };
 }

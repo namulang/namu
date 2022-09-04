@@ -13,6 +13,7 @@ namespace namu {
     class ases;
     class args;
     class visitor;
+    struct visitInfo;
 
     /// node provides common API to manipulate its sub nodes.
     class _nout node : public instance, public clonable, public frameInteractable {
@@ -101,7 +102,7 @@ namespace namu {
         /// call this func.
         virtual const node& getEval() const;
 
-        virtual void accept(const std::string& name, visitor& v);
+        virtual void accept(visitInfo i, visitor& v);
 
     protected:
         virtual str _onRunSub(node& sub, const args& a);
