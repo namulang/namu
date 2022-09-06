@@ -5,9 +5,9 @@ namespace namu {
 
     NAMU(DEF_ME(graphVisitor))
 
-    void me::start(node& root) {
+    void me::start() {
         _parentsLast.push_back(true);
-        super::start(root);
+        super::start();
     }
 
     void me::_drawIndent() {

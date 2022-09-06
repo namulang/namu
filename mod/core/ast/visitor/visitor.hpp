@@ -11,6 +11,20 @@ namespace namu {
         NAMU(ME(visitor))
 
     public:
+        visitor(): _isLog(false) {}
+
+    public:
+        me& setRoot(node& root) {
+            _root.bind(root);
+            return *this;
+        }
+        me& setLog(nbool toShow) {
+            _isLog = toShow;
+            return *this;
+        }
+
+        virtual void start();
+
 #define X(T) \
         virtual void visit(visitInfo i, T& me); \
         virtual void onVisit(visitInfo i, T& me); \
@@ -21,8 +35,6 @@ namespace namu {
         virtual void visit(visitInfo i, node& me);
         virtual void onVisit(visitInfo i, node& me);
         virtual void onLeave(visitInfo i, node& me);
-
-        virtual void start(node& root);
 
         //  traverse:
         //      generalized-way:
@@ -38,5 +50,9 @@ namespace namu {
         virtual void onTraverse(visitInfo i, runExpr& e);
         virtual void onTraverse(visitInfo i, mgdFunc& f);
         virtual void onTraverse(visitInfo i, frame& f);
+
+    private:
+        nbool _isLog;
+        str _root;
     };
 }
