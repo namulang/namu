@@ -39,11 +39,7 @@ namespace namu {
         void _verify(tstr<frame>& info );
         void _preEvaluation(node& eval);
         void _preEvaluation(std::map<string, int>& checker, node& eval);
-
-        void _logStructure(frame& info, const nchar* buf);
-        void _logStructure(std::vector<const char*>& indents, const node& n, const std::string& name, int idx, bool isLast, bool isParentLast) const;
-        void _logStructure(std::vector<const char*>& indents, const narr& blk, int idx, bool isLast, bool isParentLast) const;
-        void _logIndent(const std::vector<const char*>& indents, bool isParentLast) const;
+        void _logStructure(frame& info);
         void _logFrame(const frame& info) const;
         void _preEvalObject(node& eval);
 

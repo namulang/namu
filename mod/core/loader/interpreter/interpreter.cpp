@@ -62,7 +62,7 @@ namespace namu {
         NAMU_DI("======================================");
         //_preEvaluation(_slot->getPack());
 
-        _logStructure(*info, _srcs->get());
+        _logStructure(*info);
 
         return *_slot;
     }
@@ -164,10 +164,9 @@ namespace namu {
              .setFrameInfo(info)
              .verify(_slot->getPack());
         l.loadStreamEnable();
-
     }
 
-    void me::_logStructure(frame& info, const nchar* buf) {
+    void me::_logStructure(frame& info) {
         if(!_isLogStructure) return;
 
         logger& l = logger::get();
@@ -180,61 +179,13 @@ namespace namu {
 
         if(!nul(_pser.getSubPack()) && _slot) {
             std::cout << " - structure:\n";
-            std::vector<const char*> indents;
-            indents.push_back("  ");
-            _logStructure(indents, _pser.getSubPack(), _slot->getManifest().name, 0, true, true);
+            graphVisitor v;
+            v.start(_slot->getPack());
             std::cout << "\n";
         }
 
         l.loadStreamEnable();
         std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
-    }
-
-    void me::_logStructure(std::vector<const char*>& indents, const node& n, const std::string& name, int idx, bool isLast, bool isParentLast) const {
-        if(nul(n)) {
-            NAMU_W("_logStructure(n == null)");
-            return;
-        }
-
-        indents.push_back((isParentLast ? "    " : "┃    "));
-        _logIndent(indents, isParentLast);
-        std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: " << n.getType().getName() << " \"" << name << "\"\n";
-
-        int subN = -1;
-        const bicontainable& subs = n.subs();
-        for(auto e=subs.begin(); e ;++e) {
-            subN++;
-            _logStructure(indents, e.getVal(), e.getKey(), subN, subN == subs.len()-1, isLast);
-        }
-
-        const mgdFunc& f = n.cast<mgdFunc>();
-        if(!nul(f)) {
-            subN++;
-            _logStructure(indents, f.getBlock().getStmts(), subN, subN == subs.len(), isLast);
-        }
-        indents.pop_back();
-    }
-
-    void me::_logStructure(std::vector<const char*>& indents, const narr& blk, int idx, bool isLast, bool isParentLast) const {
-        indents.push_back(isParentLast ? "    " : "┃   ");
-        _logIndent(indents, isParentLast);
-        std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: block \n";
-
-        int subN = -1;
-        for(const auto& stmt: blk) {
-            subN++;
-            const blockExpr& blkExpr = stmt.cast<blockExpr>();
-            if(!nul(blkExpr))
-                _logStructure(indents, blkExpr.getStmts(), subN, subN == blk.len()-1, isLast);
-            else
-                _logStructure(indents, stmt, "", subN, subN == blk.len()-1, isLast);
-        }
-        indents.pop_back();
-    }
-
-    void me::_logIndent(const std::vector<const char*>& indents, bool isParentLast) const {
-        for(int n=0; n < indents.size(); n++)
-            std::cout << indents[n];
     }
 
     void me::_logFrame(const frame& info) const {
