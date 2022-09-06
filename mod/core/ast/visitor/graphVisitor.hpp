@@ -8,7 +8,7 @@ namespace namu {
         NAMU(ME(graphVisitor, visitor))
 
     public:
-        void start(node& root) override;
+        void start() override;
         void onVisit(visitInfo i, node& visitee) override;
         void onLeave(visitInfo i, node& visitee) override;
 

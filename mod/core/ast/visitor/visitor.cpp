@@ -10,7 +10,8 @@ namespace namu {
 #define X(T) \
     void me::visit(visitInfo i, T& me) { \
         if(nul(me)) return; \
-        NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str()); \
+        if(_isLog) \
+            NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str()); \
         onVisit(i, me); \
         onTraverse(i, me); \
         onLeave(i, me); \
@@ -23,7 +24,8 @@ namespace namu {
 
     void me::visit(visitInfo i, node& me) {
         if(nul(me)) return;
-        NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str());
+        if(_isLog)
+            NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str());
 
         onVisit(i, me);
         onTraverse(i, me);
@@ -32,12 +34,15 @@ namespace namu {
     void me::onVisit(visitInfo i, node& me) {}
     void me::onLeave(visitInfo i, node& me) {}
 
-    void me::start(node& root) {
-        root.accept(visitInfo {"", nullptr, 0, 1}, *this);
+    void me::start() {
+        if(!_root) return;
+
+        _root->accept(visitInfo {"", nullptr, 0, 1}, *this);
     }
 
     void me::onTraverse(visitInfo i, node& me) {
-        NAMU_DI("node[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("node[%s]::onTraverse", i.name.c_str());
 
         nbicontainer& subs = me.subs();
         int n=0;
@@ -46,16 +51,19 @@ namespace namu {
     }
 
     void me::onTraverse(visitInfo i, getExpr& e) {
-        NAMU_DI("getExpr[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("getExpr[%s]::onTraverse", i.name.c_str());
     }
 
     void me::onTraverse(visitInfo i, frame& f) {
-        NAMU_DI("frame[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("frame[%s]::onTraverse", i.name.c_str());
         // do nothing.
     }
 
     void me::onTraverse(visitInfo i, runExpr& e) {
-        NAMU_DI("runExpr[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("runExpr[%s]::onTraverse", i.name.c_str());
 
         int n = 0;
         node& me = e.getMe();
@@ -70,13 +78,15 @@ namespace namu {
     }
 
     void me::onTraverse(visitInfo i, mgdFunc& f) {
-        NAMU_DI("mgdFunc[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("mgdFunc[%s]::onTraverse", i.name.c_str());
 
         onTraverse(i, f.getBlock());
     }
 
     void me::onTraverse(visitInfo i, blockExpr& b) {
-        NAMU_DI("blockExpr[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("blockExpr[%s]::onTraverse", i.name.c_str());
 
         int n = 0;
         for(auto& stmt : b.getStmts())
@@ -84,7 +94,8 @@ namespace namu {
     }
 
     void me::onTraverse(visitInfo i, returnExpr& b) {
-        NAMU_DI("returnExpr[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("returnExpr[%s]::onTraverse", i.name.c_str());
 
         int n = 0;
         node& ret = b.getRet();
@@ -93,7 +104,8 @@ namespace namu {
     }
 
     void me::onTraverse(visitInfo i, asExpr& a) {
-        NAMU_DI("asExpr[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("asExpr[%s]::onTraverse", i.name.c_str());
 
         int n = 0;
         node& me = (node&) a.getMe();
@@ -105,7 +117,8 @@ namespace namu {
     }
 
     void me::onTraverse(visitInfo i, assignExpr& a) {
-        NAMU_DI("assignExpr[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("assignExpr[%s]::onTraverse", i.name.c_str());
 
         int n = 0;
         node& left = (node&) a.getLeft();
@@ -117,7 +130,8 @@ namespace namu {
     }
 
     void me::onTraverse(visitInfo i, defAssignExpr& d) {
-        NAMU_DI("defAssignExpr[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("defAssignExpr[%s]::onTraverse", i.name.c_str());
 
         node& right = d.getRight();
         if(!nul(right))
@@ -125,7 +139,8 @@ namespace namu {
     }
 
     void me::onTraverse(visitInfo i, FAOExpr& f) {
-        NAMU_DI("FAOExpr[%s]::onTraverse", i.name.c_str());
+        if(_isLog)
+            NAMU_DI("FAOExpr[%s]::onTraverse", i.name.c_str());
 
         int n = 0;
         node& left = (node&) f.getLeft();

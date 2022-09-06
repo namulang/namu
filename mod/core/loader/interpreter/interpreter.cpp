@@ -179,8 +179,8 @@ namespace namu {
 
         if(!nul(_pser.getSubPack()) && _slot) {
             std::cout << " - structure:\n";
-            graphVisitor v;
-            v.start(_slot->getPack());
+            graphVisitor().setRoot(_slot->getPack())
+                          .start();
             std::cout << "\n";
         }
 
