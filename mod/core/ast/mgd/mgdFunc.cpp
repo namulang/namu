@@ -3,9 +3,6 @@
 #include "../../builtin/container/native/tnchain.inl"
 #include "../../frame/thread.hpp"
 #include "../params.hpp"
-#include "../../loader/interpreter/tverification.hpp"
-#include "../../loader/interpreter/verification.inl"
-#include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/frameInteract.hpp"
 #include "../../visitor/visitor.hpp"
 
@@ -88,47 +85,4 @@ namespace namu {
         fr.popLocal();
         fr.popLocal();
     }
-
-
-
-    NAMU_VERIFY({
-        NAMU_DI("verify: retType exists and stmts exist one at least");
-
-        const node& retType = it.getRet();
-        if(nul(retType)) return _srcErr(errCode::NO_RET_TYPE);
-        if(!retType.isSub(ttype<node>::get()))
-            return _srcErr(errCode::WRONG_RET_TYPE, retType.getType().getName().c_str());
-
-        const blockExpr& blk = it.getBlock();
-        if(nul(blk) || blk.getStmts().len() <= 0)
-            return _err(blk.getPos(), errCode::NO_STMT_IN_FUNC);
-
-        NAMU_DI("...verified: retType exists and stmts exist one at least");
-    })
-
-    namespace {
-        void _prepareArgsAlongParam(const params& ps, scope& s) {
-            for(const auto& p : ps)
-                s.add(p.getName(), p.getOrigin());
-        }
-    }
-
-    // TODO: verify arguments
-
-    NAMU_VERIFY(mgdFunc, subNodes, {
-        NAMU_DI("verify: mgdFunc: %s iterateBlock[%d]", it.getType().getName().c_str(), it._blk->subs().len());
-        scope* s = new scope();
-        _prepareArgsAlongParam(it.getParams(), *s);
-
-        baseObj& meObj = frame::_getMe();
-        if(nul(meObj)) return _srcErr(errCode::FUNC_REDIRECTED_OBJ);
-
-        frameInteract f1(meObj); {
-            frameInteract f2(it, *s); {
-                verify(*it._blk);
-            }
-        }
-
-        NAMU_DI("...verified: mgdFunc: %s iterateBlock[%d]", it.getType().getName().c_str(), it._blk->subs().len());
-    })
 }

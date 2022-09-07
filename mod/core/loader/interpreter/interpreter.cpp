@@ -161,8 +161,9 @@ namespace namu {
 
         // verify:
         _veri.setReport(*_rpt)
-             .setFrameInfo(info)
-             .verify(_slot->getPack());
+             .setErrFrame(*info)
+             .setRoot(_slot->getPack())
+             .start();
         l.loadStreamEnable();
     }
 

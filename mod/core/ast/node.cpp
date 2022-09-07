@@ -2,10 +2,6 @@
 #include "scope.inl"
 #include "../builtin/container/native/tnarr.inl"
 #include "../type/as.hpp"
-#include "../loader/interpreter/tverification.hpp"
-#include "../loader/interpreter/verification.inl"
-#include "../loader/interpreter/verifier.hpp"
-#include "params.hpp"
 #include "args.hpp"
 #include "../visitor/visitor.hpp"
 
@@ -50,18 +46,4 @@ namespace namu {
     str me::_onRunSub(node& sub, const args& a) {
         return sub.run(a);
     }
-
-
-
-    NAMU_VERIFY({ // no same variable.
-        NAMU_DI("verify: node: no same variable=%d", it.subs().len());
-        if(it.isSub<frame>()) return;
-
-        for(auto e=it.subs().begin(); e ;++e) {
-            if(it.subAll<baseObj>(e.getKey()).len() > 1)
-                return _err(e->getPos(), errCode::DUP_VAR, e.getKey().c_str());
-        }
-
-        NAMU_DI("...verified: node: no same variable=%d", it.subs().len());
-    })
 }

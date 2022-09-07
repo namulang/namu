@@ -12,10 +12,8 @@ namespace namu {
     typedef tnarr<frame> frames;
 
     class _nout thread : public node {
-        NAMU(CLASS(thread, node),
-            FRIEND_VERIFY(defAssignExpr, isDefinable),
-            FRIEND_VERIFY(defVarExpr, defineVariable))
-
+        NAMU(CLASS(thread, node))
+        friend class verifier;
         friend class baseObj; // for frames.
         friend class mgdFunc; // for frames.
         friend class blockExpr; // for frames.

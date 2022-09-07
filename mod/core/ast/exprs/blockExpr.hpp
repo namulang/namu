@@ -7,8 +7,8 @@ namespace namu {
     class visitor;
 
     class _nout blockExpr : public expr {
-        NAMU(CLASS(blockExpr, expr, expr::exprType), VISIT(),
-            FRIEND_VERIFY(blockExpr, visitSubNodes))
+        NAMU(CLASS(blockExpr, expr, expr::exprType), VISIT())
+        friend class verifier;
         friend class mgdFunc;
 
     public:

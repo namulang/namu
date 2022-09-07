@@ -1,7 +1,7 @@
 #include "nVoid.hpp"
 #include "../../ast/defaultCtor.hpp"
 #include "../../ast/defaultCopyCtor.hpp"
-#include "../../ast/visitor/visitor.hpp"
+#include "../../visitor/visitor.hpp"
 
 namespace namu {
 

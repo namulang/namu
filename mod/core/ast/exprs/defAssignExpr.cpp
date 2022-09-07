@@ -1,8 +1,5 @@
 #include "defAssignExpr.hpp"
 #include "../../frame/thread.hpp"
-#include "../../loader/interpreter/tverification.hpp"
-#include "../../loader/interpreter/verification.inl"
-#include "../../loader/interpreter/verifier.hpp"
 #include "../../visitor/visitor.hpp"
 
 namespace namu {
@@ -23,61 +20,4 @@ namespace namu {
     }
 
     node& me::getTo() { return *_to; }
-
-
-
-    NAMU_VERIFY({
-        NAMU_DI("verify: defAssignExpr: duplication of variable.");
-
-        const scopes& top = thread::get().getNowFrame().getTop();
-        if(nul(top)) return;
-        const std::string name = it.getSubName();
-        if(top.getContainer().has(name))
-            return _srcErr(errCode::ALREADY_DEFINED_VAR, name.c_str(), it.getEval().getType().getName()
-                    .c_str());
-
-        NAMU_DI("...verified: defAssignExpr: duplication of variable.");
-    })
-
-    NAMU_VERIFY(defAssignExpr, isDefinable, {
-        NAMU_DI("verify: defAssignExpr: is definable?");
-
-        const node& rhs = it.getRight();
-        if(nul(rhs))
-            return _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
-
-        NAMU_DI("'%s %s' has defined.",
-                it.getSubName().c_str(),
-                nul(rhs) ? "name" : rhs.getType().getName().c_str());
-
-        node& to = it.getTo();
-        str new1 = it.isOnDefBlock() ? rhs.as<node>() : rhs.getEval();
-        NAMU_DI("new1[%s]", new1 ? new1->getType().getName().c_str() : "null");
-
-        if(nul(to)) {
-            frame& fr = thread::get()._getNowFrame();
-            scopes& sc = (scopes&) fr.subs();
-            if(sc.getContainer().has(it.getSubName()))
-                return _srcErr(errCode::ALREADY_DEFINED_VAR, it.getSubName().c_str(),
-                        rhs.getType().getName().c_str());
-            fr.pushLocal(it.getSubName(), *new1);
-
-        } else {
-            scopes& sc = (scopes&) to.run()->subs();
-            if(sc.getContainer().has(it.getSubName()))
-                return _srcErr(errCode::ALREADY_DEFINED_VAR, it.getSubName().c_str(),
-                        rhs.getType().getName().c_str());
-            sc.add(it.getSubName(), *new1);
-        }
-
-        NAMU_DI("...verified: defAssignExpr: is definable? : at %s", nul(to) ? "frame" : "obj");
-    })
-
-    NAMU_VERIFY({
-        NAMU_DI("verify: defAssignExpr: visitSubNodes");
-
-        verify(it.getRight());
-
-        NAMU_DI("...verified: defAssignExpr: visitSubNodes");
-    })
 }

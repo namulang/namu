@@ -7,8 +7,8 @@ namespace namu {
     class visitor;
 
     class _nout genericObj : public baseObj {
-        NAMU(CLASS(genericObj, baseObj), VISIT(),
-            FRIEND_VERIFY(genericObj, iterateGenerics))
+        NAMU(CLASS(genericObj, baseObj), VISIT())
+        friend class verifier;
         typedef std::vector<std::string> strings;
 
     public:

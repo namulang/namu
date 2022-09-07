@@ -1,7 +1,6 @@
+#include "func.hpp"
 #include "expr.hpp"
 #include "../builtin/container/native/tnmap.inl"
-#include "../loader/interpreter/tverification.hpp"
-#include "../loader/interpreter/verifier.hpp"
 #include "args.hpp"
 #include "../frame/frame.hpp"
 

@@ -72,34 +72,3 @@
                 v.visit(i, *this); \
             }
 #define __NAMU__DECL_DEF_VISIT(...) NAMU_OVERLOAD(__NAMU__DECL_DEF_VISIT, __VA_ARGS__)
-
-// VERIFY:
-//      add new verification info to verify the type of specific object.
-#define NAMU_VERIFY_NAME(name) __auto_verify_##name##__
-#define NAMU_VERIFY_2(TYPE, BODY) \
-    NAMU_INITIATOR(verification, { \
-        typedef TYPE trait; \
-        class NAMU_VERIFY_NAME(TYPE) : public tverification<TYPE> { \
-        protected: \
-            void _onVerify(trait& it) override BODY \
-        }; \
-        verifier::add(new NAMU_VERIFY_NAME(TYPE)()); \
-    })
-#define NAMU_VERIFY_1(BODY) NAMU_VERIFY_2(me, BODY)
-#define NAMU_VERIFY_3(TYPE, NAME, BODY) \
-    typedef TYPE trait; \
-    class NAMU_VERIFY_NAME(TYPE##_##NAME) : public tverification<TYPE> { \
-    protected: \
-        void _onVerify(trait& it) override BODY \
-    }; \
-    NAMU_INITIATOR(verification, { \
-        verifier::add(new NAMU_VERIFY_NAME(TYPE##_##NAME)()); \
-    })
-#define NAMU_VERIFY(...) NAMU_OVERLOAD(NAMU_VERIFY, __VA_ARGS__)
-
-#define __NAMU__DECL_FRIEND_VERIFY(TYPE, NAME) friend class NAMU_VERIFY_NAME(TYPE##_##NAME);
-
-#define __NAMU__DECL_VERIFY_3(TYPE, NAME, BODY) NAMU_VERIFY_3(TYPE, NAME, BODY)
-#define __NAMU__DECL_VERIFY_2(TYPE, BODY) NAMU_VERIFY_2(TYPE, BODY)
-#define __NAMU__DECL_VERIFY_1(BODY) NAMU_VERIFY_2(me, BODY)
-#define __NAMU__DECL_VERIFY(...) NAMU_OVERLOAD(__NAMU__DECL_VERIFY, __VA_ARGS__)

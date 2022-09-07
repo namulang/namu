@@ -12,9 +12,8 @@ namespace namu {
     class obj;
     class func;
     class _nout frame : public node { // TODO: may be obj, not node.
-        NAMU(CLASS(frame, node),
-            FRIEND_VERIFY(baseObj, subNodes),
-            FRIEND_VERIFY(mgdFunc, subNodes))
+        NAMU(CLASS(frame, node))
+        friend class verifier;
         friend struct ::immutableTest;
         friend struct ::frameTest;
         friend class baseObj;
