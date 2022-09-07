@@ -3,6 +3,7 @@
 #include "../loader/interpreter/tverification.hpp"
 #include "../loader/interpreter/verifier.hpp"
 #include "args.hpp"
+#include "../frame/frame.hpp"
 
 namespace namu {
 

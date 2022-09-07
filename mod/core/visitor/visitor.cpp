@@ -1,7 +1,7 @@
 #include "visitor.hpp"
-#include "../../ast.hpp"
-#include "../../frame/frame.hpp"
-#include "../../builtin/primitive.hpp"
+#include "../ast.hpp"
+#include "../frame/frame.hpp"
+#include "../builtin/primitive.hpp"
 
 namespace namu {
 

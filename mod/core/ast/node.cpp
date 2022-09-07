@@ -7,7 +7,7 @@
 #include "../loader/interpreter/verifier.hpp"
 #include "params.hpp"
 #include "args.hpp"
-#include "visitor.hpp"
+#include "../visitor/visitor.hpp"
 
 namespace namu {
 

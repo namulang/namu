@@ -6,3 +6,4 @@
 #include "type.hpp"
 #include "bridge.hpp"
 #include "loader.hpp"
+#include "visitor.hpp"

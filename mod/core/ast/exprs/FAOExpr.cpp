@@ -4,7 +4,7 @@
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
 #include "../../builtin/primitive.hpp"
-#include "../visitor.hpp"
+#include "../../visitor/visitor.hpp"
 
 namespace namu {
 

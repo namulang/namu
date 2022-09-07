@@ -5,7 +5,7 @@
 #include "../../frame/thread.hpp"
 #include "../../builtin/primitive/nVoid.hpp"
 #include "getExpr.hpp"
-#include "../visitor.hpp"
+#include "../../visitor/visitor.hpp"
 
 namespace namu {
 

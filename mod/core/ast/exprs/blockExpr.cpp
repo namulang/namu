@@ -5,7 +5,7 @@
 #include "../../builtin/primitive/nVoid.hpp"
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/frameInteract.hpp"
-#include "../visitor.hpp"
+#include "../../visitor/visitor.hpp"
 
 namespace namu {
     NAMU(DEF_ME(blockExpr), DEF_VISIT())

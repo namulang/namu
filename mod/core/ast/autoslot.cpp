@@ -1,7 +1,6 @@
 #include "autoslot.hpp"
 #include "func.hpp"
-#include "../loader/interpreter/tverification.hpp"
-#include "visitor.hpp"
+#include "../visitor/visitor.hpp"
 
 namespace namu {
 

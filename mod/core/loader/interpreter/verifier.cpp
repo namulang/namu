@@ -1,5 +1,6 @@
 #include "../../frame/thread.hpp"
 #include "verifier.hpp"
+#include "../../frame/frame.hpp"
 
 namespace namu {
 
@@ -7,7 +8,7 @@ namespace namu {
 
     void me::rel() {
         setReport(dummyErrReport::singletone);
-        _frameInfo = nullptr;
+        _frameInfo.rel();
     }
 
     me::verifier() { rel(); }
@@ -23,32 +24,27 @@ namespace namu {
         return *this;
     }
 
-    me& me::setFrameInfo(tstr<frame>& newInfo) {
-        _frameInfo = &newInfo;
+    me& me::_setFrameInfo(frame& newInfo) {
+        _frameInfo.bind(newInfo);
         return *this;
     }
 
     errReport& me::getReport() { return *_rpt; }
-    tstr<frame>& me::getFrameInfo() { return *_frameInfo; }
+    frame& me::getFrameInfo() { return *_frameInfo; }
 
     void me::verify(node& it) {
-        nmap m;
-        verify(it, it.getType(), m);
+        verify(it, it.getType());
     }
 
-    void me::verify(node& it, bicontainable& tray) {
-        verify(it, it.getType(), tray);
-    }
-
-    void me::verify(node& it, const type& typ, bicontainable& tray) {
+    void me::verify(node& it, const type& typ) {
         if(nul(it)) return;
         if(typ == ttype<adam>::get()) return;
 
-        verify(it, typ.getSuper(), tray);
+        verify(it, typ.getSuper());
 
         verifications& veris = _getVerifications(typ);
         for(auto* elem : veris)
-            elem->_onPrepareVerify(*this, it, tray);
+            elem->_onPrepareVerify(*this, it);
     }
 
     verifications& me::_getVerifications(const type& typ) {
