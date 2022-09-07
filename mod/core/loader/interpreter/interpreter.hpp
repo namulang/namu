@@ -2,7 +2,7 @@
 
 #include "parser.hpp"
 #include "srcSupply.hpp"
-#include "verifier.hpp"
+#include "../../visitor/verifier.hpp"
 
 namespace namu {
 

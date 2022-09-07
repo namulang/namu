@@ -10,8 +10,8 @@ namespace namu {
 
     /// baseObj handles frame injection event of all objects.
     class _nout baseObj : public node {
-        NAMU(ADT(baseObj, node),
-            FRIEND_VERIFY(baseObj, subNodes))
+        NAMU(ADT(baseObj, node))
+        friend class verifier;
         friend class obj;
         friend class defaultMakeCtor;
         friend class loweventer;

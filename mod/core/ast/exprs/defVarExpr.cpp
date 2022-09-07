@@ -1,8 +1,5 @@
 #include "defVarExpr.hpp"
 #include "../../frame/thread.hpp"
-#include "../../loader/interpreter/tverification.hpp"
-#include "../../loader/interpreter/verification.inl"
-#include "../../loader/interpreter/verifier.hpp"
 #include "../../visitor/visitor.hpp"
 
 namespace namu {
@@ -38,37 +35,4 @@ namespace namu {
     const node& me::getEval() const {
         return _org->getEval();
     }
-
-
-
-    NAMU_VERIFY(defVarExpr, defineVariable, {
-        NAMU_DI("verify: defVarExpr: check duplication");
-        const scopes& top = thread::get().getNowFrame().getTop();
-        const node& eval = it.getEval();
-        if(nul(eval)) return _srcErr(errCode::TYPE_NOT_EXIST, it.getName().c_str());
-
-        const ntype& t = eval.getType();
-        const nchar* typeName = nul(t) ? "null" : t.getName().c_str();
-        if(nul(top)) return;
-        if(top.getContainer().has(it.getName()))
-            return _srcErr(errCode::ALREADY_DEFINED_VAR, it.getName().c_str(), typeName);
-
-
-        // 'check duplication' must be front of 'is %s definable':
-        std::string name = it.getName();
-        NAMU_DI("is %s definable?", name.c_str());
-        if(name == "") return _srcErr(errCode::HAS_NO_NAME);
-        const node& org = it.getOrigin();
-        if(nul(org)) return _srcErr(errCode::NO_ORIGIN, name.c_str());
-
-        if(nul(t))
-            _srcErr(errCode::CANT_DEF_VAR, name.c_str(), typeName);
-
-        nbool res = it._where ? it._where->add(name.c_str(), eval) : thread::get()._getNowFrame()
-                .pushLocal(name, eval);
-        if(!res)
-            NAMU_E("define variable %s is failed.", name.c_str());
-
-        NAMU_DI("...verified: defVarExpr: check duplication");
-    })
 }

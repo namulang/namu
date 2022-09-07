@@ -1,9 +1,7 @@
 #include "baseObj.hpp"
 #include "func.hpp"
 #include "../builtin/container/tucontainable.inl"
-#include "../loader/interpreter/tverification.hpp"
 #include "../frame/thread.hpp"
-#include "../loader/interpreter/verifier.hpp"
 #include "args.hpp"
 
 namespace namu {
@@ -43,24 +41,4 @@ namespace namu {
 
         frs.del();
     }
-
-
-
-    NAMU_VERIFY(baseObj, subNodes, {
-        NAMU_DI("verify: baseObj: %s iterateSubNodes. len=%d", it.getType().getName().c_str(),
-                it.subs().len());
-
-        baseObj& prev = frame::_setMe(it);
-
-        for(auto e = it.subs().begin(); e ;++e) {
-            node& val = e.getVal();
-            NAMU_DI("iteration [%s]=%s", e.getKey().c_str(), val.getType()
-                    .getName().c_str());
-            verify(val);
-            NAMU_DI("end of iteration [%s]=%s", e.getKey().c_str(), val.getType()
-                    .getName().c_str());
-        }
-
-        frame::_setMe(prev);
-    })
 }

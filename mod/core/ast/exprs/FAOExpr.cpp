@@ -1,7 +1,4 @@
 #include "FAOExpr.hpp"
-#include "../../loader/interpreter/tverification.hpp"
-#include "../../loader/interpreter/verification.inl"
-#include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
 #include "../../builtin/primitive.hpp"
 #include "../../visitor/visitor.hpp"
@@ -38,25 +35,4 @@ namespace namu {
 
         return lhsEval.reduce(rhsEval);
     }
-
-    NAMU_VERIFY({
-        NAMU_DI("verify: FAOExpr: lhs & rhs should bind something.");
-
-        const node& lhs = it.getLeft();
-        const node& rhs = it.getRight();
-        if(nul(lhs)) return _srcErr(errCode::LHS_IS_NULL);
-        if(nul(rhs)) return _srcErr(errCode::RHS_IS_NULL);
-
-        NAMU_DI("finding eval of l(r)hs.");
-        const node& lEval = lhs.getEval();
-        const node& rEval = rhs.getEval();
-        if(nul(lEval)) return _srcErr(errCode::LHS_IS_NULL);
-        if(nul(rEval)) return _srcErr(errCode::RHS_IS_NULL);
-
-        if(!checkEvalType(lEval)) return _srcErr(errCode::LHS_IS_NOT_ARITH, lEval.getType().getName().c_str());
-        if(!checkEvalType(rEval)) return _srcErr(errCode::RHS_IS_NOT_ARITH, rEval.getType().getName().c_str());
-
-        NAMU_DI("...verified: FAOExpr: lhs & rhs should bind something.");
-    })
-
 }
