@@ -3,7 +3,7 @@
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
-#include "../visitor.hpp"
+#include "../../visitor/visitor.hpp"
 
 namespace namu {
 

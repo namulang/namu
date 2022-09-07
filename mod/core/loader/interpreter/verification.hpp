@@ -18,12 +18,9 @@ namespace namu {
 
     public:
         void verify(node& it);
-        void verify(node& it, bicontainable& tray);
         nbool logFrameInfo(const frame& newFr);
         verifier& getVerifier();
         const verifier& getVerifier() const NAMU_UNCONST_FUNC(getVerifier())
-        bicontainable& getTray();
-        const bicontainable& getTray() const NAMU_UNCONST_FUNC(getTray())
 
     protected:
         template <typename... Args> void _warn(Args... args);
@@ -34,12 +31,11 @@ namespace namu {
         template <typename... Args> void _srcInfo(Args... args);
 
         node& _getIt();
-        virtual void _onPrepareVerify(verifier& veri, node& it, bicontainable& tray) = 0;
+        virtual void _onPrepareVerify(verifier& veri, node& it) = 0;
 
     protected:
         node* _it;
         verifier* _verifier;
-        bicontainable* _tray;
     };
 
     typedef std::vector<verification*> verifications;

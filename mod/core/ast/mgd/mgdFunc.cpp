@@ -7,7 +7,7 @@
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/frameInteract.hpp"
-#include "../visitor.hpp"
+#include "../../visitor/visitor.hpp"
 
 namespace namu {
 

@@ -1,5 +1,5 @@
 #include "graphVisitor.hpp"
-#include "../node.hpp"
+#include "../ast/node.hpp"
 
 namespace namu {
 

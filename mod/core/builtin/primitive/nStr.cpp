@@ -5,7 +5,7 @@
 #include "nInt.hpp"
 #include "nFlt.hpp"
 #include "nChar.hpp"
-#include "../../ast/visitor.hpp"
+#include "../../ast/visitor/visitor.hpp"
 
 namespace namu {
 

@@ -3,7 +3,8 @@
 #include "../loader/interpreter/tverification.hpp"
 #include "../loader/interpreter/verifier.hpp"
 #include "../frame/frameInteract.hpp"
-#include "visitor.hpp"
+#include "../visitor/visitor.hpp"
+#include "../frame/frame.hpp"
 
 namespace namu {
 

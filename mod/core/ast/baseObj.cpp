@@ -52,13 +52,11 @@ namespace namu {
 
         baseObj& prev = frame::_setMe(it);
 
-        nmap tray;
-        tray.add(func::ME, it);
         for(auto e = it.subs().begin(); e ;++e) {
             node& val = e.getVal();
             NAMU_DI("iteration [%s]=%s", e.getKey().c_str(), val.getType()
                     .getName().c_str());
-            verify(val, tray);
+            verify(val);
             NAMU_DI("end of iteration [%s]=%s", e.getKey().c_str(), val.getType()
                     .getName().c_str());
         }

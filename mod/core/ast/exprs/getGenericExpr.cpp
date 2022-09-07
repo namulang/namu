@@ -1,5 +1,5 @@
 #include "getGenericExpr.hpp"
-#include "../visitor.hpp"
+#include "../../visitor/visitor.hpp"
 #include "../node.inl"
 
 namespace namu {

@@ -1,5 +1,5 @@
 #include "defaultCopyCtor.hpp"
-#include "visitor.hpp"
+#include "../visitor/visitor.hpp"
 
 namespace namu {
 

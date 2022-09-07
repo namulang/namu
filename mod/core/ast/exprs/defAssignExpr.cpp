@@ -3,7 +3,7 @@
 #include "../../loader/interpreter/tverification.hpp"
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
-#include "../visitor.hpp"
+#include "../../visitor/visitor.hpp"
 
 namespace namu {
     NAMU(DEF_ME(defAssignExpr), DEF_VISIT())

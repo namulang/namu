@@ -16,10 +16,9 @@ namespace namu {
         }
 
     protected:
-        void _onPrepareVerify(verifier& veri, node& it, bicontainable& tray) override {
+        void _onPrepareVerify(verifier& veri, node& it) override {
             _it = &it;
             _verifier = &veri;
-            _tray = &tray;
 
             _onVerify((T&) it);
         }

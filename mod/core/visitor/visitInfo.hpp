@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../common.hpp"
+#include "../common.hpp"
 
 namespace namu {
     struct visitInfo {
