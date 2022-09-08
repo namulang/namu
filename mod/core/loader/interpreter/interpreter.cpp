@@ -2,6 +2,7 @@
 #include "../../ast/mgd/mgdFunc.hpp"
 #include "../../frame/thread.hpp"
 #include "interpreter.hpp"
+#include "../../visitor/graphVisitor.hpp"
 
 namespace namu {
 
@@ -52,17 +53,16 @@ namespace namu {
         }
 
         _parse();
-        tstr<frame> info;
         if(*_rpt)
             return *_slot;
-        _verify(info);
+        _verify();
 
         NAMU_DI("======================================");
         NAMU_DI("           preEvaluation");
         NAMU_DI("======================================");
         //_preEvaluation(_slot->getPack());
 
-        _logStructure(*info);
+        _logStructure(_veri.getErrFrame());
 
         return *_slot;
     }
@@ -145,7 +145,7 @@ namespace namu {
         l.loadStreamEnable();
     }
 
-    void me::_verify(tstr<frame>& info ) {
+    void me::_verify() {
         logger& l = logger::get();
         l.saveStreamEnable();
         l.setEnable(_isLogInterpreter);
@@ -161,7 +161,6 @@ namespace namu {
 
         // verify:
         _veri.setReport(*_rpt)
-             .setErrFrame(*info)
              .setRoot(_slot->getPack())
              .start();
         l.loadStreamEnable();

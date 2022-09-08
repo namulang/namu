@@ -23,19 +23,19 @@ namespace namu {
     }
 
     template <typename... Args>
-    void ME::_srcWarn(Args... args) {
-        getReport().add(err::newWarn(_getIt().getPos(), args...));
+    void ME::_srcWarn(const point& pos, Args... args) {
+        getReport().add(err::newWarn(pos, args...));
         _leaveErrFrame();
     }
     template <typename... Args>
-    void ME::_srcErr(Args... args) {
-        getReport().add(err::newErr(_getIt().getPos(), args...));
+    void ME::_srcErr(const point& pos, Args... args) {
+        getReport().add(err::newErr(pos, args...));
         _leaveErrFrame();
         NAMU_CALLSTACK();
     }
     template <typename... Args>
-    void ME::_srcInfo(Args... args) {
-        getReport().add(err::newInfo(_getIt().getPos(), args...));
+    void ME::_srcInfo(const point& pos, Args... args) {
+        getReport().add(err::newInfo(pos, args...));
     }
 
 #undef ME

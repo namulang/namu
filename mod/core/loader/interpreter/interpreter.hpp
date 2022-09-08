@@ -36,7 +36,7 @@ namespace namu {
         nbool _isPackExist();
 
         void _parse();
-        void _verify(tstr<frame>& info );
+        void _verify();
         void _preEvaluation(node& eval);
         void _preEvaluation(std::map<string, int>& checker, node& eval);
         void _logStructure(frame& info);

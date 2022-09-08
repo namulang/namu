@@ -9,9 +9,9 @@ namespace namu {
     class visitor;
 
     class _nout defVarExpr : public expr {
-        NAMU(CLASS(defVarExpr, expr, expr::exprType), VISIT(),
-            FRIEND_VERIFY(defVarExpr, defineVariable))
+        NAMU(CLASS(defVarExpr, expr, expr::exprType), VISIT())
         friend class mgdFunc;
+        friend class verifier;
 
     public:
         defVarExpr(const std::string& name, const node& org);

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "visitor.hpp"
+#include "../loader/errReport.hpp"
+#include "../frame/frame.hpp"
 
 struct verifierTest;
 
@@ -30,6 +32,7 @@ namespace namu {
         void onVisit(visitInfo i, asExpr& me) override;
         void onVisit(visitInfo i, assignExpr& me) override;
         void onVisit(visitInfo i, blockExpr& me) override;
+        void onLeave(visitInfo i, blockExpr& me) override;
         void onVisit(visitInfo i, defAssignExpr& me) override;
         void onVisit(visitInfo i, defVarExpr& me) override;
         void onVisit(visitInfo i, FAOExpr& me) override;
@@ -37,8 +40,10 @@ namespace namu {
         void onVisit(visitInfo i, returnExpr& me) override;
         void onVisit(visitInfo i, runExpr& me) override;
         void onVisit(visitInfo i, mgdFunc& me) override;
+        void onLeave(visitInfo i, mgdFunc& me) override;
         void onVisit(visitInfo i, baseObj& me) override;
         void onLeave(visitInfo i, baseObj& me) override;
+        void onVisit(visitInfo i, genericObj& me) override;
 
     private:
         // @param newInfo is not a heap instance.
@@ -47,9 +52,9 @@ namespace namu {
         template <typename... Args> void _warn(Args... args);
         template <typename... Args> void _err(Args... args);
         template <typename... Args> void _info(Args... args);
-        template <typename... Args> void _srcWarn(Args... args);
-        template <typename... Args> void _srcErr(Args... args);
-        template <typename... Args> void _srcInfo(Args... args);
+        template <typename... Args> void _srcWarn(const point& pos, Args... args);
+        template <typename... Args> void _srcErr(const point& pos, Args... args);
+        template <typename... Args> void _srcInfo(const point& pos, Args... args);
 
     private:
         tstr<errReport> _rpt;

@@ -28,9 +28,10 @@ namespace namu {
 
         virtual nbicontainer& subs() override;
 
+        void inFrame(const bicontainable& args) override {}
+        void outFrame() override {}
+
     protected:
-        void _inFrame(const bicontainable& args) override {}
-        void _outFrame() override {}
         str _onRunSub(node& sub, const args& a) override { return str(); }
 
     private:

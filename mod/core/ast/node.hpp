@@ -104,9 +104,10 @@ namespace namu {
 
         virtual void accept(visitInfo i, visitor& v);
 
+        void inFrame(const bicontainable& args) override {}
+        void outFrame() override {}
+
     protected:
         virtual str _onRunSub(node& sub, const args& a);
-        void _inFrame(const bicontainable& args) override {}
-        void _outFrame() override {}
     };
 }

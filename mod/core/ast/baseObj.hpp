@@ -29,9 +29,10 @@ namespace namu {
 
         virtual const baseObj& getOrigin() const = 0;
 
+        void inFrame(const bicontainable& args) override;
+        void outFrame() override;
+
     protected:
-        void _inFrame(const bicontainable& args) override;
-        void _outFrame() override;
         str _onRunSub(node& sub, const args& a) override;
 
     public:

@@ -1,9 +1,6 @@
 #include "returnExpr.hpp"
 #include "../../builtin/primitive/nVoid.hpp"
 #include "../../frame/thread.hpp"
-#include "../../loader/interpreter/tverification.hpp"
-#include "../../loader/interpreter/verification.inl"
-#include "../../loader/interpreter/verifier.hpp"
 #include "../../visitor/visitor.hpp"
 
 namespace namu {
@@ -40,33 +37,4 @@ namespace namu {
 
         return _ret->getEval();
     }
-
-
-    NAMU_VERIFY({
-        NAMU_DI("verify: returnExpr: checks evalType of func is matched to me");
-
-        const func& f = thread::get().getNowFrame().getFunc();
-        if(nul(f)) return _srcErr(errCode::NO_FUNC_INFO);
-
-        const node& itEval = it.getEval();
-        if(nul(itEval)) return _srcErr(errCode::EXPR_EVAL_NULL);
-        NAMU_DI("itEval=%s", itEval.getType().getName().c_str());
-        const ntype& itType = itEval.getType();
-        const ntype& fType = f.getRet().getType();
-        NAMU_DI("checks return[%s] == func[%s]", itType.getName().c_str(),
-            fType.getName().c_str());
-
-        if(!itType.isImpli(fType))
-            return _srcErr(errCode::RET_TYPE_NOT_MATCH, itType.getName().c_str(), fType.getName().c_str());
-
-        NAMU_DI("...verified: returnExpr: checks evalType of func is matched to me");
-    })
-
-    NAMU_VERIFY({
-        NAMU_DI("verify: visit sub variable: _ret");
-
-        verify(it.getRet());
-
-        NAMU_DI("...verified: visit sub variable: _ret");
-    })
 }

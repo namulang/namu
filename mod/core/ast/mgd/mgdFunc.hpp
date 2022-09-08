@@ -37,9 +37,10 @@ namespace namu {
             return _pos;
         }
 
+        void inFrame(const bicontainable& args) override;
+        void outFrame() override;
+
     private:
-        void _inFrame(const bicontainable& args) override;
-        void _outFrame() override;
         scope* _evalArgs(const ucontainable& args);
 
     private:

@@ -181,20 +181,20 @@ TEST_F(nodeTest, ShouldNotSameNameVariableIntoSubs) {
     ASSERT_EQ(c.sub<nInt>("age").get(), 22);
     errReport rpt;
     verifier v;
-    v.setReport(rpt).verify(c);
+    v.setReport(rpt).setRoot(c).start();
     ASSERT_FALSE(rpt);
 
     c.subs().add("age1", new nInt(22));
     ASSERT_EQ(c.subs().len(), 2);
     ASSERT_EQ(c.subAll<nInt>("age1")[0].get(), 22);
 
-    v.verify(c);
+    v.setRoot(c).start();
     ASSERT_FALSE(rpt);
 
     c.subs().add("age", new nInt(23));
     ASSERT_EQ(c.subs().len(), 3);
     ASSERT_EQ(c.subAll<nInt>("age").len(), 2);
-    v.verify(c);
+    v.setRoot(c).start();
     ASSERT_TRUE(rpt);
 }
 

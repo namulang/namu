@@ -7,25 +7,6 @@ namespace namu {
 
     NAMU(DEF_ME(FAOExpr), DEF_VISIT())
 
-    namespace {
-        str primitives[] = {
-            new nInt(),
-            new nFlt(),
-            new nStr(),
-            new nChar(),
-            new nBool(),
-        };
-
-        nbool checkEvalType(const node& eval) {
-            if(nul(eval)) return false;
-            for(str e : primitives)
-                if(eval.isSub(*e))
-                    return true;
-
-            return false;
-        }
-    }
-
     const node& me::getEval() const {
         if(!_lhs || !_rhs) return nulOf<node>();
         const node& lhsEval = _lhs->getEval();

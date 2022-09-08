@@ -1,9 +1,7 @@
 #include "genericObj.hpp"
 #include "../builtin/container/native/tndumMap.hpp"
-#include "../loader/interpreter/tverification.hpp"
-#include "../loader/interpreter/verification.inl"
-#include "../loader/interpreter/verifier.hpp"
 #include "../visitor/visitor.hpp"
+#include "args.hpp"
 
 namespace namu {
 
@@ -49,12 +47,4 @@ namespace namu {
             owns.add(_paramNames[n++], e);
         return ret;
     }
-
-
-
-    NAMU_VERIFY(genericObj, iterateGenerics, {
-        for(auto e : it._cache)
-            if(nul(e.second))
-                _srcErr(MAKE_GENERIC_FAIL, e.first.c_str());
-    })
 }

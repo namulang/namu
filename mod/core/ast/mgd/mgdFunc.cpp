@@ -63,7 +63,7 @@ namespace namu {
         return ret;
     }
 
-    void me::_inFrame(const bicontainable& args) {
+    void me::inFrame(const bicontainable& args) {
         frame& fr = thread::get()._getNowFrame();
         if(nul(fr)) {
             NAMU_E("fr == null");
@@ -76,7 +76,7 @@ namespace namu {
         fr.pushLocal((nbicontainer&) args); // including 'me'
     }
 
-    void me::_outFrame() {
+    void me::outFrame() {
         NAMU_DI("%s._onOutFrame()", getType().getName().c_str());
 
         frame& fr = thread::get()._getNowFrame();

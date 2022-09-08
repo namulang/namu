@@ -7,7 +7,7 @@
 namespace namu {
     NAMU(DEF_ME(blockExpr), DEF_VISIT())
 
-    void me::_inFrame(const bicontainable& args) {
+    void me::inFrame(const bicontainable& args) {
         NAMU_DI("%s._onInFrame()", getType().getName().c_str());
 
         frame& fr = namu::thread::get()._getNowFrame();
@@ -19,7 +19,7 @@ namespace namu {
         fr.pushLocal(new scope());
     }
 
-    void me::_outFrame() {
+    void me::outFrame() {
         NAMU_DI("%s._onOutFrame()", getType().getName().c_str());
 
         frame& fr = namu::thread::get()._getNowFrame();
