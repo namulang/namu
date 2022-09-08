@@ -9,10 +9,8 @@ namespace namu {
     typedef tbicontainable<std::string, node> bicontainable;
 
     class frameInteractable {
-        friend class frameInteract;
-
-    protected:
-        virtual void _inFrame(const bicontainable& args) = 0;
-        virtual void _outFrame() = 0;
+    public:
+        virtual void inFrame(const bicontainable& args) = 0;
+        virtual void outFrame() = 0;
     };
 }

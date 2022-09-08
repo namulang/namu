@@ -1,7 +1,4 @@
 #include "getExpr.hpp"
-#include "../../loader/interpreter/tverification.hpp"
-#include "../../loader/interpreter/verification.inl"
-#include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
 #include "../node.inl"
 #include "../../visitor/visitor.hpp"
@@ -46,29 +43,4 @@ namespace namu {
 
         return str(evalMe->sub(_name, *_args));
     }
-
-
-
-    NAMU_VERIFY(getExpr, isRunnable, {
-        // TODO: I have to check that the evalType has what matched to given _params.
-        // Until then, I rather use as() func and it makes slow emmersively.
-        NAMU_DI("verify: getExpr: isRunnable: %s.%s", it.getType().getName().c_str(), it.getSubName().c_str());
-        if(nul(it.getEval())) return _srcErr(errCode::EVAL_NULL_TYPE);
-        str got = it._get();
-        if(!got) {
-            const node& from = it.getMe();
-            return _srcErr(errCode::CANT_ACCESS, from.getType().getName().c_str(), it._name.c_str());
-        }
-
-        NAMU_DI("...verified: getExpr: isRunnable: got=%s, it=%s", got->getType().getName().c_str(),
-                it.getType().getName().c_str());
-    })
-
-    NAMU_VERIFY({
-        NAMU_DI("verify: getExpr: visit 'from' subnodes");
-
-        verify((node&) it.getMe());
-
-        NAMU_DI("...verified: getExpr: visit 'from' subnodes");
-    })
 }

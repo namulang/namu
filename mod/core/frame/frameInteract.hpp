@@ -8,9 +8,9 @@ namespace namu {
         NAMU(ME(frameInteract))
 
     public:
-        frameInteract(frameInteractable& it, const bicontainable& args): _it(it) { _it._inFrame(args); }
-        frameInteract(frameInteractable& it): _it(it) { _it._inFrame(nulOf<bicontainable>()); }
-        ~frameInteract() { _it._outFrame(); }
+        frameInteract(frameInteractable& it, const bicontainable& args): _it(it) { _it.inFrame(args); }
+        frameInteract(frameInteractable& it): _it(it) { _it.inFrame(nulOf<bicontainable>()); }
+        ~frameInteract() { _it.outFrame(); }
 
     private:
         frameInteractable& _it;

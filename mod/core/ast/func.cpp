@@ -1,7 +1,5 @@
 #include "func.hpp"
 #include "params.hpp"
-#include "../loader/interpreter/tverification.hpp"
-#include "../loader/interpreter/verifier.hpp"
 #include "../frame/frameInteract.hpp"
 #include "../visitor/visitor.hpp"
 #include "../frame/frame.hpp"
@@ -37,13 +35,4 @@ namespace namu {
         static params inner;
         return inner;
     }
-
-    NAMU_VERIFY({
-        NAMU_DI("verify: func: param check");
-
-        /*for(const param& p : it.getParams()) {
-        }*/
-
-        NAMU_DI("...verified: func: param check");
-    })
 }

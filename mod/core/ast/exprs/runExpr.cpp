@@ -1,7 +1,4 @@
 #include "runExpr.hpp"
-#include "../../loader/interpreter/tverification.hpp"
-#include "../../loader/interpreter/verification.inl"
-#include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
 #include "../../builtin/primitive/nVoid.hpp"
 #include "getExpr.hpp"
@@ -62,42 +59,4 @@ namespace namu {
         const func& f = sub.cast<func>();
         return nul(f) ? sub->getEval() : f.getRet();
     }
-
-
-
-    NAMU_VERIFY({
-        NAMU_DI("verify: runExpr: is it possible to run?");
-        if(nul(it.getMe())) return _srcErr(errCode::CANT_CAST_TO_NODE);
-
-        tstr<baseObj> me = it.getMe().as<baseObj>();
-        if(!me) return _srcErr(errCode::CANT_CAST_TO_NODE);
-
-        node& anySub = it.getSubject();
-        if(nul(anySub)) return _srcErr(errCode::SUB_NOT_EXIST);
-
-        NAMU_DI("anySub[%s]", anySub.getType().getName().c_str());
-
-        args& a = it.getArgs();
-        a.setMe(*me);
-
-        getExpr& cast = anySub.cast<getExpr>();
-        if(!nul(cast))
-            cast.setMe(*me);
-
-        str derivedSub = anySub.as<node>();
-        if(!derivedSub) return _srcErr(errCode::CANT_ACCESS, me->getType().getName().c_str(), "sub-node");
-        NAMU_DI("derivedSub[%s]", derivedSub->getType().getName().c_str());
-        if(!derivedSub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS, it.getArgs().asStr().c_str());
-
-        a.setMe(nulOf<baseObj>());
-
-        NAMU_DI("...verified: runExpr: is it possible to run?");
-    })
-
-    NAMU_VERIFY({
-        NAMU_DI("verify: runExpr: visit subNodes");
-        verify(it.getMe());
-
-        NAMU_DI("...verified: runExpr: visit subNodes");
-    })
 }
