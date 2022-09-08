@@ -16,8 +16,8 @@ namespace namu {
         onTraverse(i, me); \
         onLeave(i, me); \
     } \
-    void me::onVisit(visitInfo i, T& me) { onVisit(i, (node&) me); } \
-    void me::onLeave(visitInfo i, T& me) { onLeave(i, (node&) me); }
+    void me::onVisit(visitInfo i, T& me) { onVisit(i, (T::super&) me); } \
+    void me::onLeave(visitInfo i, T& me) { onLeave(i, (T::super&) me); }
 
 #   include "visitee.inl"
 #undef X
