@@ -316,13 +316,15 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, mgdFunc& me) {
+        onVisit(i, (mgdFunc::super&) me);
+
         NAMU_DI("verify: mgdFunc: retType exists and stmts exist one at least");
         const node& retType = me.getRet();
         if(nul(retType)) return _srcErr(me.getPos(), errCode::NO_RET_TYPE);
         if(!retType.isSub(ttype<node>::get()))
             return _srcErr(me.getPos(), errCode::WRONG_RET_TYPE, retType.getType().getName().c_str());
 
-        const blockExpr& blk = me.getBlock();
+        blockExpr& blk = (blockExpr&) me.getBlock();
         if(nul(blk) || blk.getStmts().len() <= 0)
             return _err(blk.getPos(), errCode::NO_STMT_IN_FUNC);
 
@@ -335,6 +337,8 @@ namespace namu {
 
         meObj.inFrame(nulOf<bicontainable>());
         me.inFrame(*s);
+
+        onVisit(i, blk);
     }
     void me::onLeave(visitInfo i, mgdFunc& me) {
         baseObj& meObj = frame::_getMe();
@@ -346,6 +350,8 @@ namespace namu {
         NAMU_DI("verify: baseObj: %s iterateSubNodes. len=%d", me.getType().getName().c_str(),
                 me.subs().len());
         _us.push_back(&frame::_setMe(me));
+
+        onVisit(i, (baseObj::super&) me);
     }
 
     void me::onLeave(visitInfo i, baseObj& me) {
@@ -354,6 +360,8 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, genericObj& me) {
+        onVisit(i, (genericObj::super&) me);
+
         for(auto e : me._cache)
             if(nul(e.second))
                 _srcErr(me.getPos(), errCode::MAKE_GENERIC_FAIL, e.first.c_str());
