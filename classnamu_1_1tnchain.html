@@ -156,8 +156,8 @@ me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getNext</b> ()</t
 <tr class="memitem:aac5ffb8a26abc64ec39b213865829bfb"><td class="memItemLeft" align="right" valign="top"><a id="aac5ffb8a26abc64ec39b213865829bfb"></a>
 const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getNext</b> () const</td></tr>
 <tr class="separator:aac5ffb8a26abc64ec39b213865829bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15bb9f8047d947225758a46dd194fce6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tstr.html">tstr</a>&lt; <a class="el" href="classnamu_1_1instance.html">instance</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1tnchain.html#a15bb9f8047d947225758a46dd194fce6">deepClone</a> () const override</td></tr>
-<tr class="separator:a15bb9f8047d947225758a46dd194fce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b0c82bb0a0376b8900d620831ac90cc"><td class="memItemLeft" align="right" valign="top">me *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1tnchain.html#a0b0c82bb0a0376b8900d620831ac90cc">deepClone</a> () const override</td></tr>
+<tr class="separator:a0b0c82bb0a0376b8900d620831ac90cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnamu_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1instance')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1instance.html">namu::instance</a></td></tr>
 <tr class="memitem:a1dcddb5bb7abb49c7849a34bdc052a95 inherit pub_methods_classnamu_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a1dcddb5bb7abb49c7849a34bdc052a95"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> (<a class="el" href="structnamu_1_1id.html">id</a> newId)</td></tr>
@@ -323,8 +323,8 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
 <tr class="separator:ab2dfdb84d6b3f3a79f900b5fddf21055 inherit pro_static_methods_classnamu_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a15bb9f8047d947225758a46dd194fce6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15bb9f8047d947225758a46dd194fce6">&#9670;&nbsp;</a></span>deepClone()</h2>
+<a id="a0b0c82bb0a0376b8900d620831ac90cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b0c82bb0a0376b8900d620831ac90cc">&#9670;&nbsp;</a></span>deepClone()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -335,7 +335,7 @@ template&lt;typename K , typename V , typename defaultContainer  = tnmap&lt;K, V
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classnamu_1_1tstr.html">tstr</a>&lt;<a class="el" href="classnamu_1_1instance.html">instance</a>&gt; <a class="el" href="classnamu_1_1tnchain.html">namu::tnchain</a>&lt; K, V, defaultContainer &gt;::deepClone </td>
+          <td class="memname">me* <a class="el" href="classnamu_1_1tnchain.html">namu::tnchain</a>&lt; K, V, defaultContainer &gt;::deepClone </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -349,7 +349,7 @@ template&lt;typename K , typename V , typename defaultContainer  = tnmap&lt;K, V
 </div><div class="memdoc">
 <p>returned deep cloned of this object. </p><dl class="section remark"><dt>Remarks</dt><dd>even if the chain has already linked to the another chain instance, only this object will be deep cloned. cloned instance has the same linkage like which the original chain object has. </dd></dl>
 
-<p>Implements <a class="el" href="classnamu_1_1tbicontainable.html">namu::tbicontainable&lt; K, V &gt;</a>.</p>
+<p>Reimplemented from <a class="el" href="classnamu_1_1clonable.html">namu::clonable</a>.</p>
 
 </div>
 </div>
