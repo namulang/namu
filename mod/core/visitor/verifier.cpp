@@ -142,10 +142,11 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, blockExpr& me) {
-        NAMU_DI("verify: blockExpr: it will iterate all subnodes[%d]", me._exprs.len());
-
+        NAMU_DI("verify: blockExpr: it will iterate all subnodes[%d]", me.getStmts().len());
         me.inFrame(nulOf<bicontainable>());
+    }
 
+    void me::onLeave(visitInfo i, blockExpr& me) {
         NAMU_DI("verify: blockExpr: last stmt should match to ret type");
         const narr& stmts = me.getStmts();
         if(nul(stmts) || stmts.len() <= 0) return; // will be catched to another verification.
@@ -165,9 +166,8 @@ namespace namu {
         if(nul(lastType)) return _err(lastStmt.getPos(), NO_RET_TYPE);
         if(!lastType.isSub(retType)) return _err(lastStmt.getPos(), errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
                 retType.getName().c_str());
+
         NAMU_DI("verify: blockExpr: block.outFrame()");
-    }
-    void me::onLeave(visitInfo i, blockExpr& me) {
         me.outFrame();
     }
 
