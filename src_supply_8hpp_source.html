@@ -71,23 +71,21 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../../ast/clonable.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../type/ntype.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnamu_1_1src_supply.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1src_supply.html">srcSupply</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1clonable.html">clonable</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1src_supply.html">srcSupply</a>, <a class="code" href="classnamu_1_1instance.html">instance</a>))</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">virtual</span> nbool next() = 0;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* get() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> ret() = 0;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    };</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;}</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../../type/ntype.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="classnamu_1_1src_supply.html">    6</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1src_supply.html">srcSupply</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1instance.html">instance</a> {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1src_supply.html">srcSupply</a>, <a class="code" href="classnamu_1_1instance.html">instance</a>))</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">virtual</span> nbool next() = 0;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* get() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> ret() = 0;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    };</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassnamu_1_1instance_html"><div class="ttname"><a href="classnamu_1_1instance.html">namu::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
-<div class="ttc" id="aclassnamu_1_1clonable_html"><div class="ttname"><a href="classnamu_1_1clonable.html">namu::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1src_supply_html"><div class="ttname"><a href="classnamu_1_1src_supply.html">namu::srcSupply</a></div><div class="ttdef"><b>Definition:</b> srcSupply.hpp:7</div></div>
+<div class="ttc" id="aclassnamu_1_1instance_html"><div class="ttname"><a href="classnamu_1_1instance.html">namu::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:14</div></div>
+<div class="ttc" id="aclassnamu_1_1src_supply_html"><div class="ttname"><a href="classnamu_1_1src_supply.html">namu::srcSupply</a></div><div class="ttdef"><b>Definition:</b> srcSupply.hpp:6</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -83,10 +83,10 @@ Inheritance diagram for namu::nStr:</div>
 <area href="classnamu_1_1arithmetic_obj.html" alt="namu::arithmeticObj" shape="rect" coords="202,224,394,248"/>
 <area href="classnamu_1_1base_obj.html" title="baseObj handles frame injection event of all objects." alt="namu::baseObj" shape="rect" coords="202,168,394,192"/>
 <area href="classnamu_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="namu::node" shape="rect" coords="202,112,394,136"/>
-<area href="classnamu_1_1instance.html" alt="namu::instance" shape="rect" coords="0,56,192,80"/>
-<area href="classnamu_1_1clonable.html" alt="namu::clonable" shape="rect" coords="202,56,394,80"/>
-<area href="classnamu_1_1frame_interactable.html" alt="namu::frameInteractable" shape="rect" coords="404,56,596,80"/>
+<area href="classnamu_1_1instance.html" alt="namu::instance" shape="rect" coords="101,56,293,80"/>
+<area href="classnamu_1_1frame_interactable.html" alt="namu::frameInteractable" shape="rect" coords="303,56,495,80"/>
 <area href="classnamu_1_1type_providable.html" alt="namu::typeProvidable" shape="rect" coords="0,0,192,24"/>
+<area href="classnamu_1_1clonable.html" alt="namu::clonable" shape="rect" coords="202,0,394,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -317,6 +317,9 @@ virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isHeap</b> (
 <tr class="memitem:a29bbe0e7db3a3877f99e8467bb9f07d6 inherit pub_methods_classnamu_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a29bbe0e7db3a3877f99e8467bb9f07d6"></a>
 const <a class="el" href="classnamu_1_1bind_tag.html">bindTag</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getBindTag</b> () const</td></tr>
 <tr class="separator:a29bbe0e7db3a3877f99e8467bb9f07d6 inherit pub_methods_classnamu_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae961a20a6342af2543f4714aa64d819c inherit pub_methods_classnamu_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="ae961a20a6342af2543f4714aa64d819c"></a>
+<a class="el" href="classnamu_1_1instance.html">instance</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>deepClone</b> () const override</td></tr>
+<tr class="separator:ae961a20a6342af2543f4714aa64d819c inherit pub_methods_classnamu_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnamu_1_1type_providable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1type_providable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1type_providable.html">namu::typeProvidable</a></td></tr>
 <tr class="memitem:a8f2b0ab5367969ad1db9536f674bb66e inherit pub_methods_classnamu_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a8f2b0ab5367969ad1db9536f674bb66e"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const me &amp;rhs) const</td></tr>
@@ -356,9 +359,6 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a1b3d8d988bc1e3dce587d2065d6f7a71 inherit pub_methods_classnamu_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a1b3d8d988bc1e3dce587d2065d6f7a71"></a>
 virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () const =0</td></tr>
 <tr class="separator:a1b3d8d988bc1e3dce587d2065d6f7a71 inherit pub_methods_classnamu_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abecd1e8dda9cd69979ba7349471bebc0 inherit pub_methods_classnamu_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="abecd1e8dda9cd69979ba7349471bebc0"></a>
-virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>deepClone</b> () const</td></tr>
-<tr class="separator:abecd1e8dda9cd69979ba7349471bebc0 inherit pub_methods_classnamu_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classnamu_1_1base_obj"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classnamu_1_1base_obj')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classnamu_1_1base_obj.html">namu::baseObj</a></td></tr>
 <tr class="memitem:a41dbf5be36c7efdd97a9733d44d760d1 inherit pub_static_attribs_classnamu_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a41dbf5be36c7efdd97a9733d44d760d1"></a>
 static const string&#160;</td><td class="memItemRight" valign="bottom"><b>CTOR_NAME</b> = &quot;@ctor&quot;</td></tr>
