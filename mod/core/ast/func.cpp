@@ -8,7 +8,7 @@ namespace namu {
 
     NAMU(DEF_ME(func), DEF_VISIT())
 
-    nbool me::_canRun(const args& a) const {
+    nbool me::canRun(const args& a) const {
         const params& ps = getParams();
         if(a.len() != ps.len()) return false;
 
@@ -22,13 +22,6 @@ namespace namu {
         }
 
         return true;
-    }
-
-    nbool me::canRun(const args& a) const {
-        baseObj& me = a.getMe();
-        if(nul(me)) return _canRun(a);
-
-        return _canRun(a);
     }
 
     const params& me::getParams() const {

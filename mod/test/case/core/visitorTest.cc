@@ -101,6 +101,20 @@ TEST_F(visitorTest, visitComplexExpressions) {
     ASSERT_TRUE(v.metFlt5);
 }
 
+TEST_F(visitorTest, visitComplexExpressions2Negative) {
+    make().negative().parse(R"SRC(
+        def obj
+            foo(a int) flt
+                return 5.0 + a
+
+        main() flt
+            o := obj()
+            ret := o.foo() as flt
+            ret = ret * 2
+            return ret
+    )SRC").shouldVerified(false);
+}
+
 TEST_F(visitorTest, visitComplexExpressions2) {
     make().parse(R"SRC(
         def obj
@@ -109,7 +123,7 @@ TEST_F(visitorTest, visitComplexExpressions2) {
 
         main() flt
             o := obj()
-            ret := o.foo() as flt
+            ret := o.foo(5) as flt
             ret = ret * 2
             return ret
     )SRC").shouldVerified(true);
