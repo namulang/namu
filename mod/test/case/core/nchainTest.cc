@@ -358,6 +358,33 @@ TEST_F(nchainTest, testIfnchainLinkItself) {
     ASSERT_EQ(chn.len(), 2);
 }
 
+TEST_F(nchainTest, testDeepClone) {
+    nchain chn;
+    chn.add("0", new myNode(0));
+    chn.add("1", new myNode(1));
+    nchain chn2;
+    chn2.add("2", new myNode(2));
+    chn2.add("3", new myNode(3));
+    chn.link(chn2);
+
+    ASSERT_EQ(chn["0"].cast<myNode>().number, 0);
+    ASSERT_EQ(chn["1"].cast<myNode>().number, 1);
+    ASSERT_EQ(chn["2"].cast<myNode>().number, 2);
+    ASSERT_EQ(chn["3"].cast<myNode>().number, 3);
+
+    tstr<nchain> it = chn.deepClone(); // deep clone only the chain holds 0, 1
+    nchain& itsChn = *it;
+    ASSERT_EQ(itsChn["0"].cast<myNode>().number, 0);
+    ASSERT_EQ(itsChn["1"].cast<myNode>().number, 1);
+    ASSERT_EQ(itsChn["2"].cast<myNode>().number, 2);
+    ASSERT_EQ(itsChn["3"].cast<myNode>().number, 3);
+
+    ASSERT_NE(&itsChn["0"], &chn["0"]);
+    ASSERT_NE(&itsChn["1"], &chn["1"]);
+    ASSERT_EQ(&itsChn["2"], &chn["2"]);
+    ASSERT_EQ(&itsChn["3"], &chn["3"]);
+}
+
 TEST_F(nchainTest, testShouldLinkOverwritePrevious) {
     tstr<nmap> map1Str(new nmap());
     const bindTag* map1tag = &bindTag::getBindTag(map1Str.getItsId());
@@ -392,7 +419,8 @@ TEST_F(nchainTest, testShouldLinkOverwritePrevious) {
     ASSERT_EQ(map1tag->getStrongCnt(), 0);
     // this overwrites chain containing map1. it's now dangling.
     // chn2(2, 3) --> unknown chain instance holding map2(null)
-    //   |--- X --> unknown chain instance holding map1(0, 1)
+    //   |
+    //   +--- X --> unknown chain instance holding map1(0, 1)
     ASSERT_FALSE(map1Weak.isBind());
 
     ASSERT_EQ(chn2.len(), 2);
