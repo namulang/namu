@@ -59,7 +59,7 @@ namespace namu {
         nbool del(const iter& from, const iter& to) override { return _arr.del(from, to); }
 
         //  etc:
-        tstr<instance> deepClone() const override {
+        tnarr<T>* deepClone() const override {
             return _arr.deepClone();
         }
         void rel() override {

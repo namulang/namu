@@ -47,7 +47,7 @@ namespace namu {
         // etc:
         void rel() override;
 
-        tstr<instance> deepClone() const override;
+        me* deepClone() const override;
 
     protected:
         iteration* _onMakeIteration(ncnt step) const override {

@@ -6,7 +6,7 @@ namespace namu {
     NAMU(DEF_ME(obj), DEF_VISIT())
 
     me& me::_assign(const me& rhs) {
-        _owns = rhs._owns->deepClone();
+        _owns.bind(rhs._owns->deepClone());
         _shares.bind(*rhs._shares);
         _subs.bind(_makeNewSubs());
         _org = rhs._org;

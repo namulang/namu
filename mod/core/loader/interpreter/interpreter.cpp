@@ -161,6 +161,7 @@ namespace namu {
 
         // verify:
         _veri.setReport(*_rpt)
+             .setLog(true)
              .setRoot(_slot->getPack())
              .start();
         l.loadStreamEnable();
