@@ -62,10 +62,10 @@ namespace namu {
         /// @remark even if the chain has already linked to the another chain instance,
         ///         only this object will be deep cloned. cloned instance has the same linkage like
         ///         which the original chain object has.
-        tstr<instance> deepClone() const override {
-            me* ret = wrap(getContainer().deepClone()->template cast<super>());
+        me* deepClone() const override {
+            me* ret = wrap(((super*) getContainer().deepClone())->template cast<super>());
             ret->link(getNext());
-            return tstr<instance>(ret);
+            return ret;
         }
 
         /// wrap given container as the same level to this chain.

@@ -6,18 +6,22 @@ using namespace std;
 namespace {
     struct genericsTest : public namuSyntaxTest {};
 }
-/*
+
 TEST_F(genericsTest, simpleDefineGenerics) {
     make().parse(R"SRC(
         def object<T>
-            T age
+            age T
+
+            foo() void
+                sys.con.print("wow")
 
         main() void
-            sys.con.print("wow")
+            a := object<int>()
+            sys.con.print("age=" + a.age)
     )SRC").shouldVerified(true);
 }
 
-TEST_F(genericsTest, simpleUseGenerics) {
+/*TEST_F(genericsTest, simpleUseGenerics) {
     make().parse(R"SRC(
         def object<T>
             foo(msg T) str

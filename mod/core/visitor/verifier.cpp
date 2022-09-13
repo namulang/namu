@@ -360,10 +360,11 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, genericObj& me) {
-        onVisit(i, (genericObj::super&) me);
-
+        NAMU_DI("verify: genericObj: caches");
         for(auto e : me._cache)
             if(nul(e.second))
                 _srcErr(me.getPos(), errCode::MAKE_GENERIC_FAIL, e.first.c_str());
+
+        onVisit(i, (genericObj::super&) me);
     }
 }

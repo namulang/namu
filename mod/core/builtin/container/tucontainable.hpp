@@ -91,8 +91,6 @@ namespace namu {
         // etc:
         virtual void rel() = 0;
 
-        virtual tstr<instance> deepClone() const = 0;
-
     protected:
         virtual iteration* _onMakeIteration(ncnt step) const = 0;
     };

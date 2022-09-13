@@ -1,6 +1,6 @@
 #include "genericObj.hpp"
 #include "../builtin/container/native/tndumMap.hpp"
-#include "../visitor/visitor.hpp"
+#include "../visitor/generalizer.hpp"
 #include "args.hpp"
 
 namespace namu {
@@ -38,13 +38,17 @@ namespace namu {
 
     /// make a generic object.
     tstr<obj> me::_makeGeneric(const args& a) const {
+        NAMU_DI("_makeGeneric(%s)", a.asStr().c_str());
         if(!_orgObj) return NAMU_E("_orgObj is null"), tstr<obj>();
 
         tstr<obj> ret = _orgObj->clone();
         scope& owns = ret->getOwns();
         ncnt n = 0;
+        generalizer g;
         for(auto& e : a)
-            owns.add(_paramNames[n++], e);
+            g.add(*new param(_paramNames[n++], e));
+
+        g.setRoot(*ret).start();
         return ret;
     }
 }
