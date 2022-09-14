@@ -9,6 +9,7 @@ namespace namu {
     class _nout genericObj : public baseObj {
         NAMU(CLASS(genericObj, baseObj), VISIT())
         friend class verifier;
+        friend class graphVisitor;
         typedef std::vector<std::string> strings;
 
     public:
