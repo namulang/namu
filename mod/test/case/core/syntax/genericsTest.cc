@@ -10,14 +10,12 @@ namespace {
 TEST_F(genericsTest, simpleDefineGenerics) {
     make().parse(R"SRC(
         def object<T>
-            age T
-
             foo() void
-                sys.con.print("wow")
+                sys.con.print(1 as T)
 
         main() void
-            a := object<int>()
-            sys.con.print("age=" + a.age)
+            a := object<str>()
+            a.foo()
     )SRC").shouldVerified(true);
 }
 
