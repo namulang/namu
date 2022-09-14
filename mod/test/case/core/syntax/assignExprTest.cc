@@ -70,6 +70,33 @@ TEST_F(assignExprTest, mysteriousDeath) {
     ASSERT_EQ(res.cast<int>(), 1);
 }
 
+TEST_F(assignExprTest, assignClassNegative) {
+    make().negative().parse(R"SRC(
+        def A
+            foo() void
+                return
+
+        main() void
+            a A
+            a = 5
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(assignExprTest, assignClassNegative2) {
+    make().negative().parse(R"SRC(
+        def A
+            foo() void
+                return
+
+        main() void
+            a := 25
+            b A
+            a = b
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
 // TODO: assignNegative inheritence
 // TODO: assignDotChain: A.B.name
 // TODO: assignComplexDotChain: B[A.foo() + 3].name
