@@ -42,7 +42,6 @@ namespace namu {
         if(!_orgObj) return NAMU_E("_orgObj is null"), tstr<obj>();
 
         tstr<obj> ret = _orgObj->clone();
-        scope& owns = ret->getOwns();
         ncnt n = 0;
         generalizer g;
         for(auto& e : a)
