@@ -26,12 +26,19 @@ namespace namu {
     }
 
     /*void me::onVisit(visitInfo i, assignExpr& me) {
-    }
+    }*/
 
     void me::onVisit(visitInfo i, blockExpr& me) {
+        narr& stmts = me.getStmts();
+        for(int n=0; n < stmts.len() ;n++) {
+            const node& org = _findOrigin(stmts[n]);
+            if(nul(org)) continue;
+
+            stmts.set(n, org);
+        }
     }
 
-    void me::onVisit(visitInfo i, defAssignExpr& me) {
+    /*void me::onVisit(visitInfo i, defAssignExpr& me) {
     }*/
 
     void me::onVisit(visitInfo i, defVarExpr& me) {
@@ -42,24 +49,34 @@ namespace namu {
     }
 
     /*void me::onVisit(visitInfo i, FAOExpr& me) {
-    }
+    }*/
 
-    void me::onVisit(visitInfo i, getExpr& me) {
-    }
+    /*void me::onVisit(visitInfo i, getExpr& me) {
+    }*/
 
-    void me::onVisit(visitInfo i, returnExpr& me) {
+    /*void me::onVisit(visitInfo i, returnExpr& me) {
     }
 
     void me::onVisit(visitInfo i, runExpr& me) {
     }
 
     void me::onVisit(visitInfo i, mgdFunc& me) {
-    }
+    }*/
 
     void me::onVisit(visitInfo i, baseObj& me) {
+        nbicontainer& subs = me.subs();
+        for(auto e=subs.begin(); e ;++e) {
+            const node& org = _findOrigin(e.getVal());
+            if(nul(org)) continue;
+
+            e.setVal(org);
+        }
+
+
+        onVisit(i, (baseObj::super&) me);
     }
 
-    void me::onVisit(visitInfo i, genericObj& me) {
+    /*void me::onVisit(visitInfo i, genericObj& me) {
     }*/
 
 }
