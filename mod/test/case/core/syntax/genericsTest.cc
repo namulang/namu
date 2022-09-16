@@ -8,6 +8,7 @@ namespace {
 }
 
 TEST_F(genericsTest, simpleDefineGenerics) {
+    // as, defObj
     make().parse(R"SRC(
         def object<T>
             foo() str
@@ -21,21 +22,22 @@ TEST_F(genericsTest, simpleDefineGenerics) {
 }
 
 TEST_F(genericsTest, defineGenerics) {
+    // defVar, func
     make().parse(R"SRC(
         def object<e>
             age e
-            foo() str
-                return age + 1 as str
+            foo(num e) e
+                return age + num as e
 
         main() str
             a := object<int>()
-            return a.foo()
+            return a.foo(2) as str
     )SRC").shouldVerified(true);
     str ret = run();
-    ASSERT_EQ(ret.cast<std::string>(), "01");
+    ASSERT_EQ(ret.cast<std::string>(), "2");
 }
 
-TEST_F(genericsTest, defineGenerics1) {
+/*TEST_F(genericsTest, defineGenerics1) {
     make().parse(R"SRC(
         def object<T>
             age T
@@ -46,7 +48,7 @@ TEST_F(genericsTest, defineGenerics1) {
             a := object<int>()
             sys.con.print(a.foo(2) as str)
     )SRC").shouldVerified(true);
-}
+}*/
 
 TEST_F(genericsTest, makeGenericTwice) { // need deepClone()
     make().parse(R"SRC(
