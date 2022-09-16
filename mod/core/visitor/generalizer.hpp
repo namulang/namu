@@ -26,7 +26,8 @@ namespace namu {
         //void onVisit(visitInfo i, getExpr& me) override;
         //void onVisit(visitInfo i, returnExpr& me) override;
         //void onVisit(visitInfo i, runExpr& me) override;
-        //void onVisit(visitInfo i, mgdFunc& me) override;
+        void onVisit(visitInfo i, mgdFunc& me) override;
+        void onVisit(visitInfo i, params& me);
         void onVisit(visitInfo i, baseObj& me) override;
         //void onVisit(visitInfo i, genericObj& me) override;
 

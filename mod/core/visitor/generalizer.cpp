@@ -58,10 +58,27 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, runExpr& me) {
+    }*/
+
+    void me::onVisit(visitInfo i, params& me) {
+        for(int n=0; n < me.len(); n++) {
+            param& p = me[n];
+            const node& org = _findOrigin(p.getOrigin());
+            if(nul(org)) continue;
+
+            p.setOrigin(org);
+        }
     }
 
     void me::onVisit(visitInfo i, mgdFunc& me) {
-    }*/
+        onVisit(i, (params&) me.getParams());
+
+        const node& retOrg = _findOrigin(me.getRet());
+        if(!nul(retOrg))
+            me.setRet(retOrg);
+
+        onVisit(i, (mgdFunc::super&) me);
+    }
 
     void me::onVisit(visitInfo i, baseObj& me) {
         nbicontainer& subs = me.subs();
