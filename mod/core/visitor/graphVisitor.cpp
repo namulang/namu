@@ -63,8 +63,6 @@ namespace namu {
         std::string from;
         const node& me = e.getMe();
         if(nul(me))
-            from = "null";
-        else if(me.isSub<frame>())
             from = "frame";
         else
             from = me.getType().getName();
