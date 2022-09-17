@@ -49,7 +49,9 @@ namespace namu {
 
         const node& getEval() const override;
         const node& getLeft() const { return *_lhs; }
+        void setLeft(const node& new1) { _lhs.bind(new1); }
         const node& getRight() const { return *_rhs; }
+        void setRight(const node& new1) { _rhs.bind(new1); }
 
     private:
         Rule mRule;

@@ -25,6 +25,7 @@ namespace namu {
 
         node& getSubject();
         const node& getSubject() const;
+        void setSubject(const node& new1) { _subject.bind(new1); }
 
         args& getArgs();
         const args& getArgs() const;

@@ -5,9 +5,6 @@ namespace namu {
 
     NAMU(DEF_ME(generalizer))
 
-    /*void me::start() {
-    }*/
-
     const node& me::_findOrigin(const node& toReplace) const {
         const getExpr& cast = toReplace.cast<getExpr>();
         if(nul(cast)) return nulOf<node>();
@@ -25,9 +22,6 @@ namespace namu {
         me.setAs(org);
     }
 
-    /*void me::onVisit(visitInfo i, assignExpr& me) {
-    }*/
-
     void me::onVisit(visitInfo i, blockExpr& me) {
         narr& stmts = me.getStmts();
         for(int n=0; n < stmts.len() ;n++) {
@@ -38,9 +32,6 @@ namespace namu {
         }
     }
 
-    /*void me::onVisit(visitInfo i, defAssignExpr& me) {
-    }*/
-
     void me::onVisit(visitInfo i, defVarExpr& me) {
         const node& org = _findOrigin(me.getOrigin());
         if(nul(org)) return;
@@ -48,17 +39,23 @@ namespace namu {
         me.setOrigin(org);
     }
 
-    /*void me::onVisit(visitInfo i, FAOExpr& me) {
-    }*/
-
-    /*void me::onVisit(visitInfo i, getExpr& me) {
-    }*/
-
-    /*void me::onVisit(visitInfo i, returnExpr& me) {
-    }
-
     void me::onVisit(visitInfo i, runExpr& me) {
-    }*/
+        const node* org = &_findOrigin(me.getMe());
+        if(!nul(org))
+            me.setMe(*org);
+
+        org = &_findOrigin(me.getSubject());
+        if(!nul(org))
+            me.setSubject(*org);
+
+        args& a = me.getArgs();
+        for(int n=0; n < a.len(); n++) {
+            const node& org = _findOrigin(a[n]);
+            if(nul(org)) continue;
+
+            a.set(n, org);
+        }
+    }
 
     void me::onVisit(visitInfo i, params& me) {
         for(int n=0; n < me.len(); n++) {
@@ -92,8 +89,4 @@ namespace namu {
 
         onVisit(i, (baseObj::super&) me);
     }
-
-    /*void me::onVisit(visitInfo i, genericObj& me) {
-    }*/
-
 }
