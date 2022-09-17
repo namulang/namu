@@ -37,23 +37,27 @@ TEST_F(genericsTest, defineGenerics) {
     ASSERT_EQ(ret.cast<std::string>(), "2");
 }
 
-/*TEST_F(genericsTest, defineGenerics1) {
+TEST_F(genericsTest, defineGenerics1) {
     make().parse(R"SRC(
         def object<T>
-            age T
             foo(a T) T
-                return a + age
+                age := T() + T()
+                return a + age + boo()
+            boo() T
+                return T()
 
         main() void
             a := object<int>()
             sys.con.print(a.foo(2) as str)
     )SRC").shouldVerified(true);
-}*/
+    str ret = run();
+    ASSERT_EQ(ret.cast<std::string>(), "2");
+}
 
 TEST_F(genericsTest, makeGenericTwice) { // need deepClone()
     make().parse(R"SRC(
         def object<T>
-            foo() void
+            foo() void 
                 sys.con.print(1 as T)
 
         main() void
@@ -61,6 +65,7 @@ TEST_F(genericsTest, makeGenericTwice) { // need deepClone()
             b := object<flt>() // run 'b.foo()' occurs F/C
             a.foo()
     )SRC").shouldVerified(true);
+    run();
 }
 
 /*TEST_F(genericsTest, simpleUseGenerics) {
