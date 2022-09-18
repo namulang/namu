@@ -57,13 +57,13 @@ TEST_F(genericsTest, defineGenerics1) {
 TEST_F(genericsTest, makeGenericTwice) { // need deepClone()
     make().parse(R"SRC(
         def object<T>
-            foo() void 
+            foo() void
                 sys.con.print(1 as T)
 
         main() void
-            a := object<str>()
+            //a := object<str>()
             b := object<flt>() // run 'b.foo()' occurs F/C
-            a.foo()
+            b.foo()
     )SRC").shouldVerified(true);
     run();
 }
