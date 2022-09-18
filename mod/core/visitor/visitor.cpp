@@ -37,7 +37,7 @@ namespace namu {
     void me::start() {
         if(!_root) return;
 
-        _root->accept(visitInfo {"", nullptr, 0, 1}, *this);
+        _root->accept(visitInfo {"", nullptr, 0, 1, 1}, *this);
     }
 
     void me::onTraverse(visitInfo i, node& me) {
@@ -46,8 +46,9 @@ namespace namu {
 
         nbicontainer& subs = me.subs();
         int n=0;
+        ncnt len = me.subs().len();
         for(auto e=subs.begin(); e ;++e, ++n)
-            e->accept(visitInfo {e.getKey(), &me, n, i.depth+1}, *this);
+            e->accept(visitInfo {e.getKey(), &me, n, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, getExpr& e) {
@@ -67,14 +68,15 @@ namespace namu {
 
         int n = 0;
         node& me = e.getMe();
-        if(!nul(me))
-            me.accept(visitInfo {"", &e, n++, i.depth+1}, *this);
         node& subject = e.getSubject();
+        int len = e.getArgs().len() + (nul(me) ? 0 : 1) + (nul(subject) ? 0 : 1);
+        if(!nul(me))
+            me.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
         if(!nul(subject))
-            subject.accept(visitInfo {"", &e, n++, i.depth+1}, *this);
+            subject.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
 
         for(auto& elem : e.getArgs())
-            elem.accept(visitInfo {"", &e, n++, i.depth+1}, *this);
+            elem.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, mgdFunc& f) {
@@ -89,8 +91,10 @@ namespace namu {
             NAMU_DI("blockExpr[%s]::onTraverse", i.name.c_str());
 
         int n = 0;
-        for(auto& stmt : b.getStmts())
-            stmt.accept(visitInfo {"", &b, n++, i.depth+1}, *this);
+        narr& stmts = b.getStmts();
+        int len = stmts.len();
+        for(auto& stmt : stmts)
+            stmt.accept(visitInfo {"", &b, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, returnExpr& b) {
@@ -100,7 +104,7 @@ namespace namu {
         int n = 0;
         node& ret = b.getRet();
         if(!nul(ret))
-            ret.accept(visitInfo {"", &b, n++, i.depth+1}, *this);
+            ret.accept(visitInfo {"", &b, n++, 1, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, asExpr& a) {
@@ -109,11 +113,12 @@ namespace namu {
 
         int n = 0;
         node& me = (node&) a.getMe();
-        if(!nul(me))
-            me.accept(visitInfo {"", &a, n++, i.depth+1}, *this);
         node& as = (node&) a.getAs();
+        ncnt len = (nul(me) ? 0 : 1) + (nul(as) ? 0 : 1);
+        if(!nul(me))
+            me.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
         if(!nul(as))
-            as.accept(visitInfo {"", &a, n++, i.depth+1}, *this);
+            as.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, assignExpr& a) {
@@ -122,11 +127,12 @@ namespace namu {
 
         int n = 0;
         node& left = (node&) a.getLeft();
-        if(!nul(left))
-            left.accept(visitInfo {"", &a, n++, i.depth+1}, *this);
         node& right = (node&) a.getRight();
+        ncnt len = (nul(left) ? 0 : 1) + (nul(right) ? 0 : 1);
+        if(!nul(left))
+            left.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
         if(!nul(right))
-            right.accept(visitInfo {"", &a, n++, i.depth+1}, *this);
+            right.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, defAssignExpr& d) {
@@ -135,7 +141,7 @@ namespace namu {
 
         node& right = d.getRight();
         if(!nul(right))
-            right.accept(visitInfo {"", &d, 0, i.depth+1}, *this);
+            right.accept(visitInfo {"", &d, 0, 1, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, FAOExpr& f) {
@@ -144,10 +150,11 @@ namespace namu {
 
         int n = 0;
         node& left = (node&) f.getLeft();
-        if(!nul(left))
-            left.accept(visitInfo {"", &f, n++, i.depth+1}, *this);
         node& right = (node&) f.getRight();
+        ncnt len = (nul(left) ? 0 : 1) + (nul(right) ? 0 : 1);
+        if(!nul(left))
+            left.accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
         if(!nul(right))
-            right.accept(visitInfo {"", &f, n++, i.depth+1}, *this);
+            right.accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
     }
 }

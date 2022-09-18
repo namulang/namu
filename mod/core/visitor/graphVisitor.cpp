@@ -26,7 +26,7 @@ namespace namu {
         _onIndent();
         _drawIndent();
 
-        nbool isLast = nul(i.parent) ? true : &i.parent->subs().last().getVal() == &visitee;
+        nbool isLast = nul(i.parent) ? true : i.index >= i.len - 1;
         std::cout << (isLast ? "┗━[" : "┣━[") << i.index << "]: " << visitee.getType().getName() << " \"" << i.name << "\" ";
 
         _parentsLast.push_back(isLast);
@@ -53,8 +53,9 @@ namespace namu {
         onVisit(i, (node&) o);
 
         int n = 0;
+        ncnt len = o._cache.size();
         for(auto e : o._cache)
-            e.second->accept(visitInfo { e.first, &o, n++, i.depth+1}, *this);
+            e.second->accept(visitInfo { e.first, &o, n++, len, i.depth+1}, *this);
     }
 
     void me::onVisit(visitInfo i, getExpr& e) {

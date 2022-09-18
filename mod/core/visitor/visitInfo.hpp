@@ -6,7 +6,8 @@ namespace namu {
     struct visitInfo {
         std::string name;
         node* parent;
-        nint index;
+        nidx index;
+        ncnt len;
         nint depth;
     };
 }
