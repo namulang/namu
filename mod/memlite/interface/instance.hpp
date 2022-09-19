@@ -1,6 +1,7 @@
 #pragma once
 
 #include "id.hpp"
+#include "clonable.hpp"
 #include <map>
 
 struct namuTest;
@@ -10,7 +11,7 @@ namespace namu {
     class bindTag;
     class instancer;
 
-    class _nout instance : public typeProvidable {
+    class _nout instance : public typeProvidable, public clonable {
         NAMU_DECL_ME(instance)
         NAMU_INIT_META(me)
         friend class bindTag;

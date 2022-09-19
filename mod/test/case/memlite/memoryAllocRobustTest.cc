@@ -9,12 +9,20 @@ namespace {
     struct A : public instance {
         NAMU_SINGLETON_GETTER(const type& getType() const, ttype<A>)
 
+        A* clone() const {
+            return new A();
+        }
+
         int age;
     };
 
 
     struct B : public A {
         NAMU_SINGLETON_GETTER(const type& getType() const, ttype<B>)
+
+        B* clone() const {
+            return new B();
+        }
 
         float grade;
     };

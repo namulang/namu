@@ -1,12 +1,11 @@
 #pragma once
 
 #include "../common.hpp"
-#include "clonable.hpp"
 #include "immutableTactic.hpp"
 #include "../type/ntype.hpp"
 
 namespace namu {
-    class _nout param : public instance, public clonable {
+    class _nout param : public instance {
         NAMU(CLASS(param, instance))
 
     public:

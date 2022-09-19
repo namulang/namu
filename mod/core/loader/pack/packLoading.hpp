@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../../builtin/container/native/tnarr.inl"
 #include "../../builtin/container/native/tnchain.inl"
 #include "../../ast/obj.hpp"
@@ -10,7 +11,7 @@ namespace namu {
     struct manifest;
     typedef tnchain<std::string, slot> slotChain;
 
-    class _nout packLoading : public instance, public packMakable, public clonable {
+    class _nout packLoading : public instance, public packMakable {
         NAMU(ADT(packLoading, instance))
 
         typedef nbool (me::*packEvent)(const slotChain&);

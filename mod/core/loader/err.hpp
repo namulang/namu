@@ -11,9 +11,7 @@ namespace namu {
     typedef std::unordered_map<nidx, std::string> msgMap;
 
     struct _nout err : public instance {
-        NAMU(ME(err, instance),
-            TYPE(ntype),
-            INIT_META(me))
+        NAMU(CLASS(err, instance))
 
     public:
         enum type {
@@ -50,9 +48,7 @@ namespace namu {
     };
 
     struct _nout dummyErr : public err {
-        NAMU(ME(dummyErr, err),
-            TYPE(ntype),
-            INIT_META(me))
+        NAMU(CLASS(dummyErr, err))
 
     public:
         dummyErr();
@@ -62,9 +58,7 @@ namespace namu {
     };
 
     struct _nout srcErr : public err {
-        NAMU(ME(srcErr, err),
-            TYPE(ntype),
-            INIT_META(me))
+        NAMU(CLASS(srcErr, err))
 
     public:
         template <typename... Args>

@@ -18,6 +18,10 @@ namespace {
         const type& getType() const override {
             return ttype<A>::get();
         }
+
+        A* clone() const {
+            return new A();
+        }
     };
 
     struct B : public instance {
@@ -34,6 +38,10 @@ namespace {
 
         const type& getType() const override {
             return ttype<B>::get();
+        }
+
+        B* clone() const {
+            return new B();
         }
     };
 
@@ -233,6 +241,9 @@ TEST_F(binderTest, bindStaticVariable) {
         const type& getType() const override {
             return ttype<myInstance>::get();
         };
+        myInstance* clone() const {
+            return new me();
+        }
     };
 
     // this static object of an instance will trigger release of watchcell on its

@@ -1,10 +1,9 @@
 #pragma once
 
-#include "../../ast/clonable.hpp"
 #include "../../type/ntype.hpp"
 
 namespace namu {
-    class _nout srcSupply : public instance, public clonable {
+    class _nout srcSupply : public instance {
         NAMU(ADT(srcSupply, instance))
 
     public:
