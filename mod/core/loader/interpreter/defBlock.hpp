@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    class defBlock : public instance, public clonable {
+    class defBlock : public instance {
         NAMU(CLASS(defBlock, instance))
 
     public:

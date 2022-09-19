@@ -7,7 +7,7 @@
 namespace namu {
 
     struct cli;
-    class flag : public instance, public clonable {
+    class flag : public instance {
         NAMU(ADT(flag, instance))
 
     public:

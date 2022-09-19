@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../../ast/clonable.hpp"
 #include "../../../type/ntype.hpp"
 
 typedef union YYSTYPE YYSTYPE;

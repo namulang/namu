@@ -5,8 +5,9 @@
 namespace namu {
 
     class _nout sobj : public instance {
-        NAMU_DECL_ME(sobj, instance)
-        NAMU_INIT_META(sobj)
+        NAMU(ME(sobj, instance),
+            CLONE(me),
+            INIT_META(sobj))
 
         typedef std::map<std::string, tstr<me>> myMap;
         typedef myMap::iterator iterator;

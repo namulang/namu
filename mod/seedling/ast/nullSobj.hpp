@@ -5,8 +5,9 @@
 namespace namu {
 
     class _nout nullSobj : public sobj {
-        NAMU_DECL_ME(nullSobj, sobj)
-        NAMU_INIT_META(nullSobj)
+        NAMU(ME(nullSobj, sobj),
+            CLONE(me),
+            INIT_META(nullSobj))
 
     public:
         nullSobj();

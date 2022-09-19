@@ -12,6 +12,10 @@ namespace {
         const type& getType() const override {
             return ttype<A>::get();
         }
+
+        A* clone() const override {
+            return new A();
+        }
     };
 
     struct B : public A {
@@ -19,6 +23,10 @@ namespace {
 
         const type& getType() const override {
             return ttype<B>::get();
+        }
+
+        B* clone() const override {
+            return new B();
         }
     };
 
@@ -75,6 +83,10 @@ TEST_F(watcherTest, NestedClassBindTest) {
         const type& getType() const override {
             return ttype<inner>::get();
         }
+
+        inner* clone() const override {
+            return new inner();
+        }
     };
 
     class outer : public instance {
@@ -83,6 +95,10 @@ TEST_F(watcherTest, NestedClassBindTest) {
 
         const type& getType() const override {
             return ttype<outer>::get();
+        }
+
+        outer* clone() const override {
+            return new outer(inner);
         }
 
         inner* inner;

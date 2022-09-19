@@ -5,8 +5,9 @@
 namespace namu {
 
     class _nout termSobj : public sobj {
-        NAMU_DECL_ME(termSobj, sobj)
-        NAMU_INIT_META(termSobj)
+        NAMU(ME(termSobj, sobj),
+            CLONE(me),
+            INIT_META(termSobj))
 
     public:
         termSobj(const std::string& rawVal, const std::string& name = ""): _rawVal(rawVal) {}

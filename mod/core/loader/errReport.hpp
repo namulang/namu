@@ -2,12 +2,11 @@
 
 #include "err.hpp"
 #include "../type/ntype.hpp"
-#include "../ast/clonable.hpp"
 #include "../common.hpp"
 
 namespace namu {
 
-    class _nout errReport : public instance, public clonable {
+    class _nout errReport : public instance {
         NAMU(CLASS(errReport, instance))
 
     public:

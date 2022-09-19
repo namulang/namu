@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    class _nout scopeStack : public instance, clonable {
+    class _nout scopeStack : public instance {
         NAMU(CLASS(scopeStack, instance))
 
     public:

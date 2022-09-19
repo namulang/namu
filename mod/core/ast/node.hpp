@@ -1,6 +1,5 @@
 #pragma once
 
-#include "clonable.hpp"
 #include "validable.hpp"
 #include "../builtin/container/native/tnbicontainer.hpp"
 #include "../builtin/container/native/tnarr.hpp"
@@ -16,7 +15,7 @@ namespace namu {
     struct visitInfo;
 
     /// node provides common API to manipulate its sub nodes.
-    class _nout node : public instance, public clonable, public frameInteractable {
+    class _nout node : public instance, public frameInteractable {
         NAMU(ADT(node, instance))
 
     public:

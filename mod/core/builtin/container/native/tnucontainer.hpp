@@ -5,7 +5,7 @@
 namespace namu {
 
     template <typename T>
-    class tnucontainer : public instance, public tucontainable<T>, public clonable {
+    class tnucontainer : public instance, public tucontainable<T> {
         NAMU(ADT(tnucontainer, instance))
     };
 
