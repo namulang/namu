@@ -47,6 +47,8 @@ namespace namu {
         virtual nbool isHeap() const;
         const bindTag& getBindTag() const;
 
+        instance* deepClone() const override { return (instance*) clone(); }
+
     protected:
         //  instance:
         nbool _setId(id new1);

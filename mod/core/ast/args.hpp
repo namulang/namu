@@ -32,6 +32,10 @@ namespace namu {
             return ret;
         }
 
+        me* deepClone() const override {
+
+        }
+
     private:
         mutable tstr<baseObj> _me;
     };

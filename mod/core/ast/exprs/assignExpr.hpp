@@ -38,6 +38,13 @@ namespace namu {
             return *_rhs;
         }
 
+        me* deepClone() const override {
+            me* ret = clone();
+            if(_lhs) ret->_lhs.bind(_lhs->deepClone());
+            if(_rhs) ret->_rhs.bind(_rhs->deepClone());
+            return ret;
+        }
+
     private:
         iter _getScopeIterOfLhs();
 
