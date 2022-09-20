@@ -46,8 +46,9 @@ namespace namu {
     ///             of course these are based on class bind, user can use loose-check API case by case.
     ///
     class _nout binder : public typeProvidable, public tbindable<instance> {
-        NAMU_DECL_ME(binder, instance)
-        NAMU_INIT_META(me)
+        NAMU(ME(binder, instance),
+            INIT_META(me))
+
         friend class weakTactic;
         friend class strTactic;
         friend class bindTag; // for _get()

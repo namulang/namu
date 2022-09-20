@@ -28,6 +28,11 @@ namespace namu {
         /// @return nullable
         const args& getSubArgs() const;
 
+        me* deepClone() const override {
+            me* ret = clone();
+
+        }
+
     protected:
         virtual str _get() const;
 

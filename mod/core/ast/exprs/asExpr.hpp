@@ -33,6 +33,13 @@ namespace namu {
         const node& getAs() const { return *_as; }
         void setAs(const node& new1) { _as.bind(new1); }
 
+        me* deepClone() const override {
+            me* ret = clone();
+            if(_me) ret->_me.bind(_me->deepClone());
+            if(_as) ret->_as.bind(_as->deepClone());
+            return ret;
+        }
+
     private:
         str _me;
         str _as;

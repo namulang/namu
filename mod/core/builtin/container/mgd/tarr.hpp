@@ -59,8 +59,11 @@ namespace namu {
         nbool del(const iter& from, const iter& to) override { return _arr.del(from, to); }
 
         //  etc:
-        tnarr<T>* deepClone() const override {
-            return _arr.deepClone();
+        me* deepClone() const override {
+            me* ret = clone();
+            tstr<tnarr<T>> cloned = _arr.deepClone();
+            ret->_arr.add(*cloned);
+            return ret;
         }
         void rel() override {
             _arr.rel();
