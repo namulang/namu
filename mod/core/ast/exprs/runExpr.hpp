@@ -30,6 +30,18 @@ namespace namu {
         args& getArgs();
         const args& getArgs() const;
 
+        me* deepClone() const override {
+            NAMU_DI("runExpr: deepClone");
+
+            me* ret = clone();
+            if(_me) ret->_me.bind(_me->deepClone());
+            for(const auto& a : _args)
+                ret->_args.add((node*) a.deepClone());
+            if(_subject) ret->_subject.bind(_subject->deepClone());
+
+            return ret;
+        }
+
     private:
         str _getSub(const args& a) const;
         str _getSub() const;

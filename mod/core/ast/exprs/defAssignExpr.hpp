@@ -32,6 +32,16 @@ namespace namu {
         nbool isOnDefBlock() const { return _isOnDefBlock; }
         node& getTo();
 
+        me* deepClone() const override {
+            NAMU_DW("defAssignExpr: deepClone");
+
+            me* ret = clone();
+            if(_to) ret->_to.bind(_to->deepClone());
+            if(_rhs) ret->_rhs.bind(_rhs->deepClone());
+
+            return ret;
+        }
+
     private:
         str _to;
         str _rhs;

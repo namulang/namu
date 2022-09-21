@@ -30,7 +30,9 @@ namespace namu {
 
         me* deepClone() const override {
             me* ret = clone();
+            if(_args) ret->_args.bind(_args->deepClone());
 
+            return ret;
         }
 
     protected:

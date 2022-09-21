@@ -73,7 +73,7 @@ namespace namu {
     ME* ME::deepClone() const {
         me* ret = new me();
         for(iter e=this->begin(); e ;++e)
-            ret->add(e.getKey(), (V*) e.getVal().clone());
+            ret->add(e.getKey(), (V*) e.getVal().deepClone());
 
         return ret;
     }

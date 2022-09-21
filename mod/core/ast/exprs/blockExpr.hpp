@@ -26,6 +26,17 @@ namespace namu {
         void inFrame(const bicontainable& args) override;
         void outFrame() override;
 
+        me* deepClone() const override {
+            NAMU_DW("blockExpr: deepClone");
+
+            me* ret = clone();
+            ret->_exprs.rel();
+            for(auto e=_exprs.begin(); e ;e++)
+                ret->_exprs.add((node*) e->deepClone());
+
+            return ret;
+        }
+
     private:
         narr _exprs;
     };
