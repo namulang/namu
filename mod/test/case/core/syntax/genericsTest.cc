@@ -12,7 +12,7 @@ TEST_F(genericsTest, simpleDefineGenerics) {
     make().parse(R"SRC(
         def object<T>
             foo() str
-                sys.con.print(1 as T)
+                return sys.con.print(1 as T)
 
         main() str
             a := object<str>()
@@ -54,21 +54,50 @@ TEST_F(genericsTest, defineGenerics1) {
     ASSERT_EQ(ret.cast<std::string>(), "2");
 }
 
-TEST_F(genericsTest, makeGenericTwice) { // need deepClone()
+TEST_F(genericsTest, genericTwice1) {
     make().parse(R"SRC(
         def object<T>
             foo() void
-                sys.con.print(1 as T)
+                sys.con.print("1")
 
         main() void
-            //a := object<str>()
+            a := object<str>()
             b := object<flt>() // run 'b.foo()' occurs F/C
-            b.foo()
     )SRC").shouldVerified(true);
     run();
+    node& object = getSubPack().sub("object");
+    str a = object.run(args( narr {*new nStr()}));
+    ASSERT_TRUE(a);
+    str b = object.run(args( narr {*new nFlt()}));
+    ASSERT_TRUE(b);
+    ASSERT_NE(&a.get(), &b.get());
+
+    node& aFoo = a->sub("foo");
+    ASSERT_FALSE(nul(aFoo));
+    node& bFoo = b->sub("foo");
+    ASSERT_FALSE(nul(bFoo));
+    ASSERT_NE(&aFoo, &bFoo);
 }
 
-/*TEST_F(genericsTest, simpleUseGenerics) {
+TEST_F(genericsTest, genericTwice2) { // need deepClone()
+    make().parse(R"SRC(
+        def object<T>
+            foo(val T) T
+                age := T()
+                sys.con.print((val + age) as T)
+                return val + age
+
+        main() str
+            a := object<int>()
+            b := object<str>() // run 'b.foo()' occurs F/C
+            return b.foo("3.5")
+    )SRC").shouldVerified(true);
+    str ret = run();
+    ASSERT_FALSE(nul(ret));
+    ASSERT_EQ(ret->cast<std::string>(), "3.5");
+}
+
+TEST_F(genericsTest, simpleUseGenerics) {
     make().parse(R"SRC(
         def object<T>
             foo(msg T) str
@@ -85,4 +114,23 @@ TEST_F(genericsTest, makeGenericTwice) { // need deepClone()
     std::string msg = res->cast<std::string>();
     ASSERT_EQ(msg, "hello generics!\n");
     NAMU_I("msg from generics: %s", msg.c_str());
-}*/
+}
+/*
+TEST_F(genericsTest, genericNegative) {
+    make().parse(R"SRC(
+        def object<T>
+            foo(val T) T
+                age := T()
+                sys.con.print((val + age) as T)
+                return val + age
+
+        main() str
+            a := object<int>()
+            b := object<str>() // run 'b.foo()' occurs F/C
+            return b.foo("3.5")
+    )SRC").shouldVerified(true);
+    str ret = run();
+    ASSERT_FALSE(nul(ret));
+    ASSERT_EQ(ret->cast<std::string>(), "3.5");
+}
+*/

@@ -38,10 +38,14 @@ namespace namu {
 
     /// make a generic object.
     tstr<obj> me::_makeGeneric(const args& a) const {
-        NAMU_DI("_makeGeneric(%s)", a.asStr().c_str());
         if(!_orgObj) return NAMU_E("_orgObj is null"), tstr<obj>();
 
-        tstr<obj> ret = _orgObj->clone();
+        NAMU_DI("=========================");
+        NAMU_DI("        make generic     ");
+        NAMU_DI("=========================");
+        tstr<obj> ret = (obj*) _orgObj->deepClone();
+        NAMU_DI("=========================");
+
         ncnt n = 0;
         generalizer g;
         for(auto& e : a)

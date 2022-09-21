@@ -33,7 +33,12 @@ namespace namu {
         }
 
         me* deepClone() const override {
+            me* ret = new me();
+            for(auto e=this->begin(); e ;e++)
+                ret->add((node*) e->clone());
 
+            ret->_me = _me;
+            return ret;
         }
 
     private:

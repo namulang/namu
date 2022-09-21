@@ -30,6 +30,8 @@ namespace namu {
         const point& getPos() const override { return _pos; }
         void setPos(const point& new1) override { _pos = new1; }
 
+        me* deepClone() const override;
+
     private:
         scopes* _makeNewSubs();
 
