@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: namu::tmarshaling&lt; T &gt; Struct Template Reference</title>
+<title>world-doc: namu::tmarshaling&lt; T, isNode &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,28 +66,37 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="structnamu_1_1tmarshaling-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">namu::tmarshaling&lt; T &gt; Struct Template Reference</div>  </div>
+<div class="title">namu::tmarshaling&lt; T, isNode &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for namu::tmarshaling&lt; T &gt;:</div>
+Inheritance diagram for namu::tmarshaling&lt; T, isNode &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="structnamu_1_1tmarshaling.png" usemap="#namu::tmarshaling_3C_20T_20_3E_map" alt=""/>
-  <map id="namu::tmarshaling_3C_20T_20_3E_map" name="namu::tmarshaling_3C_20T_20_3E_map">
-<area href="structnamu_1_1meta_if.html" alt="namu::metaIf" shape="rect" coords="0,0,143,24"/>
+  <img src="structnamu_1_1tmarshaling.png" usemap="#namu::tmarshaling_3C_20T_2C_20isNode_20_3E_map" alt=""/>
+  <map id="namu::tmarshaling_3C_20T_2C_20isNode_20_3E_map" name="namu::tmarshaling_3C_20T_2C_20isNode_20_3E_map">
+<area href="structnamu_1_1meta_if.html" alt="namu::metaIf" shape="rect" coords="0,0,191,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a4d8ac5c2e70347ae169c4721305024c9"><td class="memItemLeft" align="right" valign="top"><a id="a4d8ac5c2e70347ae169c4721305024c9"></a>
-typedef void&#160;</td><td class="memItemRight" valign="bottom"><b>mgdType</b></td></tr>
-<tr class="separator:a4d8ac5c2e70347ae169c4721305024c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a0f4fb55e4fcef473f5ea14632c943032"><td class="memItemLeft" align="right" valign="top"><a id="a0f4fb55e4fcef473f5ea14632c943032"></a>
+static T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>toNative</b> (<a class="el" href="classnamu_1_1node.html">node</a> &amp;it)</td></tr>
+<tr class="separator:a0f4fb55e4fcef473f5ea14632c943032"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a903d110c4682d3ec58105f8122243692"><td class="memTemplParams" colspan="2"><a id="a903d110c4682d3ec58105f8122243692"></a>
+template&lt;typename E &gt; </td></tr>
+<tr class="memitem:a903d110c4682d3ec58105f8122243692"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>toMgd</b> (E &amp;it)</td></tr>
+<tr class="separator:a903d110c4682d3ec58105f8122243692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf8acd1562c9100c19649ed5ab0bac6b"><td class="memItemLeft" align="right" valign="top"><a id="aaf8acd1562c9100c19649ed5ab0bac6b"></a>
+static no&#160;</td><td class="memItemRight" valign="bottom"><b>canMarshal</b> ()</td></tr>
+<tr class="separator:aaf8acd1562c9100c19649ed5ab0bac6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_structnamu_1_1meta_if"><td colspan="2" onclick="javascript:toggleInherit('pub_types_structnamu_1_1meta_if')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="structnamu_1_1meta_if.html">namu::metaIf</a></td></tr>
 <tr class="memitem:ad449d20850121f573fd46a264dba541e inherit pub_types_structnamu_1_1meta_if"><td class="memItemLeft" align="right" valign="top"><a id="ad449d20850121f573fd46a264dba541e"></a>
 typedef short&#160;</td><td class="memItemRight" valign="bottom"><b>yes</b></td></tr>
@@ -95,19 +104,6 @@ typedef short&#160;</td><td class="memItemRight" valign="bottom"><b>yes</b></td>
 <tr class="memitem:a6fcd1156392d656f541b9ac74ddb1b32 inherit pub_types_structnamu_1_1meta_if"><td class="memItemLeft" align="right" valign="top"><a id="a6fcd1156392d656f541b9ac74ddb1b32"></a>
 typedef char&#160;</td><td class="memItemRight" valign="bottom"><b>no</b></td></tr>
 <tr class="separator:a6fcd1156392d656f541b9ac74ddb1b32 inherit pub_types_structnamu_1_1meta_if"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae67a676cd7f19e06a3076594f851057c"><td class="memItemLeft" align="right" valign="top"><a id="ae67a676cd7f19e06a3076594f851057c"></a>
-static T&#160;</td><td class="memItemRight" valign="bottom"><b>toNative</b> (<a class="el" href="classnamu_1_1node.html">node</a> &amp;it)</td></tr>
-<tr class="separator:ae67a676cd7f19e06a3076594f851057c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96994c2c486d24216c7730a0ee57519a"><td class="memTemplParams" colspan="2"><a id="a96994c2c486d24216c7730a0ee57519a"></a>
-template&lt;typename E &gt; </td></tr>
-<tr class="memitem:a96994c2c486d24216c7730a0ee57519a"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>toMgd</b> (E it)</td></tr>
-<tr class="separator:a96994c2c486d24216c7730a0ee57519a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ad0e060d051a9a319f066085d463b3c"><td class="memItemLeft" align="right" valign="top"><a id="a2ad0e060d051a9a319f066085d463b3c"></a>
-static no&#160;</td><td class="memItemRight" valign="bottom"><b>canMarshal</b> ()</td></tr>
-<tr class="separator:a2ad0e060d051a9a319f066085d463b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>/home/runner/work/namu/namu/mod/core/bridge/cpp/marshaling/<a class="el" href="tmarshaling_8hpp_source.html">tmarshaling.hpp</a></li>
