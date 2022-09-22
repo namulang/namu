@@ -2,6 +2,8 @@
 #include "../builtin/container/native/tndumMap.hpp"
 #include "../visitor/generalizer.hpp"
 #include "args.hpp"
+#include "../visitor/verifier.hpp"
+#include "func.hpp"
 
 namespace namu {
 
@@ -26,9 +28,21 @@ namespace namu {
         if(key.empty()) return NAMU_E("key is empty"), nulOf<obj>();
 
         if(!_cache.count(key))
-            _cache.insert({key, _makeGeneric(a)});
+            return NAMU_E("generic not verified"), str();
 
         return _cache[key];
+    }
+
+    void me::defGeneric(verifier& v, const visitInfo& info, const args& a) {
+        std::string key = _makeKey(a);
+        if(key.empty()) {
+            NAMU_E("key is empty");
+            return;
+        }
+
+        tstr<obj> gen = _makeGeneric(a);
+        gen->accept(visitInfo {"", this, 0, (ncnt) _cache.size(), info.depth+1}, v);
+        _cache.insert({key, gen});
     }
 
     std::string me::_makeKey(const args& a) const {
