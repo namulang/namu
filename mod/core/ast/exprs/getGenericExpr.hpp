@@ -5,9 +5,11 @@
 namespace namu {
 
     class visitor;
+    class genericObj;
 
     class _nout getGenericExpr : public getExpr {
         NAMU(CLASS(getGenericExpr, getExpr, expr::exprType), VISIT())
+        friend class verifier;
 
     public:
         getGenericExpr(const std::string& genericName, const args& typeParams):
@@ -16,19 +18,9 @@ namespace namu {
                 super(me, genericName, typeParams) {}
 
     protected:
-        str _get() const override {
-            const args& typs = getSubArgs();
-            const std::string& name = getSubName();
-            if(nul(typs) || !typs.len()) return NAMU_E("_args.len() == 0"), str();
-            NAMU_DI("_name=%s, _args[%d]", getSubName().c_str(), typs.len());
+        genericObj& _getGenericObj() const;
 
-            str evalMe = getMe().isSub<expr>() ? getMe().as<node>() : getMe();
-            if(!evalMe) return NAMU_E("from == null"), str();
-
-            baseObj& generic = evalMe->sub<baseObj>(name);
-            if(nul(generic)) return NAMU_E("generic == null"), str();
-
-            return generic.run(typs);
-        }
+    protected:
+        str _get() const override;
     };
 }

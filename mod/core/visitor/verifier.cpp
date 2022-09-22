@@ -347,24 +347,33 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, baseObj& me) {
-        NAMU_DI("verify: baseObj: %s iterateSubNodes. len=%d", me.getType().getName().c_str(),
-                me.subs().len());
         _us.push_back(&frame::_setMe(me));
+
+        NAMU_DI("verify: baseObj: %s push me[%x] len=%d",
+                me.getType().getName().c_str(), &frame::_getMe(), me.subs().len());
 
         onVisit(i, (baseObj::super&) me);
     }
 
     void me::onLeave(visitInfo i, baseObj& me) {
         frame::_setMe(*_us.back());
+        NAMU_DI("verify: baseObj: pop me[%x]", &frame::_getMe());
         _us.pop_back();
     }
 
     void me::onVisit(visitInfo i, genericObj& me) {
-        NAMU_DI("verify: genericObj: caches");
+        NAMU_DI("verify: genericObj: cache check");
         for(auto e : me._cache)
             if(nul(e.second))
                 _srcErr(me.getPos(), errCode::MAKE_GENERIC_FAIL, e.first.c_str());
+    }
 
-        onVisit(i, (genericObj::super&) me);
+    void me::onVisit(visitInfo i, getGenericExpr& me) {
+        NAMU_DI("verify: getGenericObj: make cache");
+
+        genericObj& genObj = me._getGenericObj();
+        if(nul(genObj)) return _srcErr(me.getPos(), errCode::NOT_EXIST, me.getSubName().c_str());
+
+        genObj.defGeneric(*this, i, me.getSubArgs());
     }
 }

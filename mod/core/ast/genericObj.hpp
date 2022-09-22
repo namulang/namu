@@ -5,6 +5,7 @@
 namespace namu {
 
     class visitor;
+    class verifier;
 
     class _nout genericObj : public baseObj {
         NAMU(CLASS(genericObj, baseObj), VISIT())
@@ -31,6 +32,7 @@ namespace namu {
 
         void inFrame(const bicontainable& args) override {}
         void outFrame() override {}
+        void defGeneric(verifier& v, const visitInfo& info, const args& a);
 
     protected:
         str _onRunSub(node& sub, const args& a) override { return str(); }
