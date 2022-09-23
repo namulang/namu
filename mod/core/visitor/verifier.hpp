@@ -44,6 +44,7 @@ namespace namu {
         void onVisit(visitInfo i, baseObj& me) override;
         void onLeave(visitInfo i, baseObj& me) override;
         void onVisit(visitInfo i, genericObj& me) override;
+        void onLeave(visitInfo i, genericObj& me) override;
         void onVisit(visitInfo i, getGenericExpr& me) override;
 
     private:

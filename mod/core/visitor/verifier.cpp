@@ -368,6 +368,13 @@ namespace namu {
                 _srcErr(me.getPos(), errCode::MAKE_GENERIC_FAIL, e.first.c_str());
     }
 
+    void me::onLeave(visitInfo i, genericObj& me) {
+        NAMU_DI("verify: genericObj: onLeave");
+        // DO NOTHING, BUT LEAVE THIS FUNC:
+        //  if I don't have this func, getGenericExpr::super (=baseObj)'s one will be called.
+        //  and me pointer will be erased too inside the func.
+    }
+
     void me::onVisit(visitInfo i, getGenericExpr& me) {
         NAMU_DI("verify: getGenericObj: make cache");
 
@@ -376,4 +383,5 @@ namespace namu {
 
         genObj.defGeneric(*this, i, me.getSubArgs());
     }
+
 }
