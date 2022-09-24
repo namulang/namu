@@ -11,6 +11,7 @@ namespace namu {
     class _nout verifier : public visitor {
         NAMU(ME(verifier, visitor))
         friend struct ::verifierTest;
+        friend class genericObj;
 
     public:
         verifier();
@@ -25,7 +26,11 @@ namespace namu {
 
         void start() override {
             _us.clear();
+
+            verifier* prev = &_getNow();
+            _setNow(this);
             super::start();
+            _setNow(prev);
         }
 
         void onVisit(visitInfo i, node& me) override;
@@ -45,7 +50,6 @@ namespace namu {
         void onLeave(visitInfo i, baseObj& me) override;
         void onVisit(visitInfo i, genericObj& me) override;
         void onLeave(visitInfo i, genericObj& me) override;
-        void onVisit(visitInfo i, getGenericExpr& me) override;
 
     private:
         // @param newInfo is not a heap instance.
@@ -58,10 +62,15 @@ namespace namu {
         template <typename... Args> void _srcErr(const point& pos, Args... args);
         template <typename... Args> void _srcInfo(const point& pos, Args... args);
 
+        static verifier& _getNow() { return *_now; }
+        static void _setNow(verifier* new1) { _now = new1; }
+
     private:
         tstr<errReport> _rpt;
         tstr<frame> _frame;
         std::vector<baseObj*> _us; // multiple 'me'
+
+        static verifier* _now;
     };
 
 #include "../common/MSVCHack.hpp"

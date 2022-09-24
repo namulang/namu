@@ -28,21 +28,15 @@ namespace namu {
         if(key.empty()) return NAMU_E("key is empty"), nulOf<obj>();
 
         if(!_cache.count(key))
-            return NAMU_E("generic not verified"), str();
+            _cache.insert({key, _defGeneric(key, verifier::_getNow(), a)});
 
         return _cache[key];
     }
 
-    void me::defGeneric(verifier& v, const visitInfo& info, const args& a) {
-        std::string key = _makeKey(a);
-        if(key.empty()) {
-            NAMU_E("key is empty");
-            return;
-        }
-
+    tstr<obj> me::_defGeneric(const std::string& key, verifier& v, const args& a) const {
         tstr<obj> gen = _makeGeneric(a);
-        gen->accept(visitInfo {"", this, 0, (ncnt) _cache.size(), info.depth+1}, v);
-        _cache.insert({key, gen});
+        gen->accept(visitInfo {"", (me*) this, 0, (ncnt) _cache.size(), 1}, v);
+        return gen;
     }
 
     std::string me::_makeKey(const args& a) const {
