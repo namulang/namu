@@ -32,7 +32,6 @@ namespace namu {
 
         void inFrame(const bicontainable& args) override {}
         void outFrame() override {}
-        void defGeneric(verifier& v, const visitInfo& info, const args& a);
 
     protected:
         str _onRunSub(node& sub, const args& a) override { return str(); }
@@ -42,6 +41,7 @@ namespace namu {
 
         /// make a generic object.
         tstr<obj> _makeGeneric(const args& a) const;
+        tstr<obj> _defGeneric(const std::string& key, verifier& v, const args& a) const;
 
     private:
         std::map<std::string, tstr<obj>> _cache;

@@ -31,7 +31,7 @@ namespace namu {
         }
     }
 
-
+    me* me::_now = nullptr;
 
     void me::rel() {
         setReport(dummyErrReport::singletone);
@@ -374,14 +374,4 @@ namespace namu {
         //  if I don't have this func, getGenericExpr::super (=baseObj)'s one will be called.
         //  and me pointer will be erased too inside the func.
     }
-
-    void me::onVisit(visitInfo i, getGenericExpr& me) {
-        NAMU_DI("verify: getGenericObj: make cache");
-
-        genericObj& genObj = me._getGenericObj();
-        if(nul(genObj)) return _srcErr(me.getPos(), errCode::NOT_EXIST, me.getSubName().c_str());
-
-        genObj.defGeneric(*this, i, me.getSubArgs());
-    }
-
 }

@@ -62,7 +62,8 @@ TEST_F(genericsTest, genericTwice1) {
 
         main() void
             a := object<str>()
-            b := object<flt>() // run 'b.foo()' occurs F/C
+            b := object<bool>()
+            c := object<flt>() // run 'b.foo()' occurs F/C
     )SRC").shouldVerified(true);
     run();
     node& object = getSubPack().sub("object");
