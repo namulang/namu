@@ -35,8 +35,11 @@ namespace namu {
 
             me* ret = clone();
             if(_me) ret->_me.bind(_me->deepClone());
+
+            ret->_args.rel();
             for(const auto& a : _args)
                 ret->_args.add((node*) a.deepClone());
+
             if(_subject) ret->_subject.bind(_subject->deepClone());
 
             return ret;
