@@ -80,12 +80,28 @@ TEST_F(genericsTest, genericTwice1) {
     ASSERT_NE(&aFoo, &bFoo);
 }
 
-TEST_F(genericsTest, genericTwice2) { // need deepClone()
-    make().parse(R"SRC(
+TEST_F(genericsTest, genericTwice2Negative) {
+    negative().make().parse(R"SRC(
         def object<T>
             foo(val T) T
                 age := T()
                 sys.con.print((val + age) as T)
+                return val + age
+
+        main() str
+            a := object<int>()
+            b := object<str>() // run 'b.foo()' occurs F/C
+            return b.foo("3.5")
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(genericsTest, genericTwice2) {
+    make().parse(R"SRC(
+        def object<T>
+            foo(val T) T
+                age := T()
+                sys.con.print((val + age) as str)
                 return val + age
 
         main() str
