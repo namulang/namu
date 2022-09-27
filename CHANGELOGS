@@ -1,4 +1,22 @@
 # Changelogs
+## v0.2.3 Mana Update
+released on 09-16 2022
+build#584
+
+### major changes
+* 44e048c4 - core: feat: implement deepClone
+* 1d7ee101 - core: feat: add "generalizer"
+* a34a8a0e - core: feat: add new verifier using visitor
+* 1b811a2e - core: feat: add graphVisitor
+* d5081be2 - core: feat: add visitor
+* f3e7199c - test: feat: negative() func added
+* 37cb7f8c - clog: feat: add NAMU_CALLSTACK()
+* 57057621 - core: feat: add generics feature
+* 72c59be5 - test: refactor: rename namu to core
+* 9bff0b36 - refactor: decide language name, "namu"
+
+
+
 ## v0.2.2 Mana Update
 released on 07-17 2022
 build#520
