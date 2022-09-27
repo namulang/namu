@@ -110,9 +110,8 @@ const <a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;&#160
 <tr class="separator:a2d342970db7a9853ba66643f5a746d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb353e405f868edc0af6aea6a9324162"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1mgd_func.html#adb353e405f868edc0af6aea6a9324162">getRet</a> () const override</td></tr>
 <tr class="separator:adb353e405f868edc0af6aea6a9324162"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3afeef21a3554889b03f2f4eb480757"><td class="memItemLeft" align="right" valign="top"><a id="ac3afeef21a3554889b03f2f4eb480757"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setRet</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;newRet)</td></tr>
-<tr class="separator:ac3afeef21a3554889b03f2f4eb480757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a810cebf387ea8ab7f854abf31aae9744"><td class="memItemLeft" align="right" valign="top">nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1mgd_func.html#a810cebf387ea8ab7f854abf31aae9744">setRet</a> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;newRet) override</td></tr>
+<tr class="separator:a810cebf387ea8ab7f854abf31aae9744"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8395b4166dc1f4944a985f1051b5fb9"><td class="memItemLeft" align="right" valign="top"><a id="aa8395b4166dc1f4944a985f1051b5fb9"></a>
 <a class="el" href="classnamu_1_1tnbicontainer.html">nbicontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>subs</b> () override</td></tr>
 <tr class="separator:aa8395b4166dc1f4944a985f1051b5fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -399,6 +398,35 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
 <dl class="section remark"><dt>Remarks</dt><dd>please don't confuse this to evalType. evaluate means program just read the code and expand or calculate then replace it to the accurate another identifier or variable. so evalType of the func is just the func itself because there is nothing to calculate or run. that's completely different to Return type of the function. if there is a <a class="el" href="classnamu_1_1run_expr.html">runExpr</a> instance, and it takes the func and proper argument, then it can be evaluated and its evalType is the return type of the func. </dd></dl>
 
 <p>Implements <a class="el" href="classnamu_1_1func.html#a9bd5e792678da30a0354d0e425f63c37">namu::func</a>.</p>
+
+</div>
+</div>
+<a id="a810cebf387ea8ab7f854abf31aae9744"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a810cebf387ea8ab7f854abf31aae9744">&#9670;&nbsp;</a></span>setRet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">nbool namu::mgdFunc::setRet </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td>
+          <td class="paramname"><em>newRet</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>whether setting new return-type has been done or not. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classnamu_1_1func.html#ad1c807a8d88398967bc3185f9e2a17f5">namu::func</a>.</p>
 
 </div>
 </div>
