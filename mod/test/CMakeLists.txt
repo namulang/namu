@@ -42,8 +42,6 @@ find_package(Threads REQUIRED)
 target_link_libraries(${moduleName} ${libraries}
     PRIVATE Threads::Threads)
 
-add_subdirectory(bundle)
-
 #       let MSVC follow macro expansion of standard:
 if ((MSVC) AND (MSVC_VERSION GREATER_EQUAL 1914))
     target_compile_options(${moduleName} PUBLIC "/Zc:preprocessor")
