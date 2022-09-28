@@ -2,9 +2,9 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 set(packName "sys")
 set(packOutDir "${NAMU_PACK_OUTPUT_DIRECTORY}/${packName}")
-set(dependencies ${dependencies} core ${pathGtest})
+set(dependencies ${dependencies} core)
 
-set(defCandidates "__${packName}=1")
+set(defCandidates "NAMU_TAG=\"${packName}\"" "__${packName}=1")
 foreach(def ${defCandidates})
     message("\tadd define ${def}")
     set(defines ${defines} -D${def})
@@ -29,8 +29,6 @@ add_library(${packName} SHARED ${sources})
 set_target_properties(${packName} PROPERTIES SUFFIX ".${NAMU_PACK_EXTENSION}")
 set_target_properties(${packName} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${packOutDir}")
 target_link_libraries(${packName} ${dependencies})
-
-add_dependencies(${packName} ${moduleName})
 
 #       let MSVC follow macro expansion of standard:
 if ((MSVC) AND (MSVC_VERSION GREATER_EQUAL 1914))
