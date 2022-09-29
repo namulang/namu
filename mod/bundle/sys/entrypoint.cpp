@@ -28,6 +28,14 @@ struct con {
         std::cin >> ret;
         return ret;
     }
+
+    void walk(con& c) {
+        print("I'm walking!");
+    }
+
+    void walk1(con* c) {
+        print("I'm walking!");
+    }
 };
 
 extern "C" _nout void namu_bridge_cpp_entrypoint(bicontainable* tray) {
@@ -35,5 +43,7 @@ extern "C" _nout void namu_bridge_cpp_entrypoint(bicontainable* tray) {
         ->func("say", &con::say)
         ->func("add", &con::add)
         ->func("print", &con::print)
-        ->func("input", &con::input));
+        ->func("input", &con::input)
+        ->func("walk", &con::walk)
+        ->func("walk1", &con::walk1));
 }

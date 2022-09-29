@@ -5,6 +5,7 @@
 namespace namu {
 
     struct marshalErr {};
+    template <typename T> class tcppBridge;
 
     template <typename tnativeType, typename tmarshalType>
     struct tnormalMarshaling : public metaIf {
@@ -36,18 +37,48 @@ namespace namu {
 
     template <typename T>
     struct tmarshaling : public metaIf {
-        typedef void mgdType;
+        typedef tcppBridge<T> mgdType;
 
-        static T toNative(node& it) {
+        static T& toNative(node& it) {
             throw marshalErr();
         }
 
         template <typename E>
-        static str toMgd(E it) {
-           return str();
+        static str toMgd(E& it) {
+            throw marshalErr();
         }
 
         static no canMarshal();
+    };
+    template <typename T>
+    struct tmarshaling<T&> : public metaIf {
+        typedef tcppBridge<T> mgdType;
+
+        static T& toNative(node& it) {
+            return it.cast<tcppBridge<T>>().get();
+        }
+
+        template <typename E>
+        static str toMgd(E& it) {
+            return new tcppBridge(&it);
+        }
+
+        static yes canMarshal();
+    };
+    template <typename T>
+    struct tmarshaling<T*> : public metaIf {
+        typedef tcppBridge<T> mgdType;
+
+        static T* toNative(node& it) {
+            return &it.cast<tcppBridge<T>>().get();
+        }
+
+        template <typename E>
+        static str toMgd(E* it) {
+            return new tcppBridge(it);
+        }
+
+        static yes canMarshal();
     };
 
     template <> struct _nout tmarshaling<nint> : public tnormalMarshaling<nint, nInt> {};

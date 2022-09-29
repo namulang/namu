@@ -19,7 +19,10 @@ namespace namu {
         template <typename Ret, typename T1, typename...Args>
         friend class tcppBridgeFunc;
 
-    private:
+    public:
+        tcppBridge(): _real(nullptr) {
+            _subs.bind(new scope());
+        }
         tcppBridge(T* real) : _real(real) {
             _subs.bind(new scope());
         }
@@ -39,6 +42,9 @@ namespace namu {
             return this;
         }
 
+        T& get() { return *_real; }
+        const T& get() const { return *_real; }
+
         const obj& getOrigin() const override {
             // if an object doesn't have owned sub nodes it means that all instances of that classes
             // are same and origin simulteneously.
@@ -49,6 +55,6 @@ namespace namu {
 
     private:
         T* _real;
-        tstr<scope> _subs;
+        static inline tstr<scope> _subs;
     };
 }

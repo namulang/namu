@@ -70,3 +70,32 @@ TEST_F(bridgeCPPTest, testHasName) {
     func& say = m["kniz"]["say"].cast<func>();
     ASSERT_FALSE(nul(say));
 }
+
+namespace {
+    struct window {
+        int getX() { return 5; }
+        int getY() { return _y; }
+        void setY(int newY) { _y = newY; }
+
+        int _y;
+    };
+    struct openGL {
+        int init(window* win) {
+            return win->getY() + win->getX();
+        }
+    };
+}
+
+TEST_F(bridgeCPPTest, passObj) {
+    str winBridge(tcppBridge<window>::def()
+            ->func("getX", &window::getX)
+            ->func("getY", &window::getY)
+            ->func("setY", &window::setY));
+    str winOpenGL(tcppBridge<openGL>::def()
+            ->func("init", &openGL::init));
+
+    winBridge->run("setY", args{ narr{*new nInt(20)}});
+    str res = winOpenGL->run("init", args{ narr{*winBridge}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->cast<nint>(), 25);
+}
