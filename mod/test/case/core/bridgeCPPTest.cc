@@ -76,6 +76,11 @@ namespace {
         int getX() { return 5; }
         int getY() { return _y; }
         void setY(int newY) { _y = newY; }
+        window& new1(int newY) {
+            window& ret = *new window();
+            ret._y = newY;
+            return ret;
+        }
 
         int _y;
     };
@@ -98,4 +103,19 @@ TEST_F(bridgeCPPTest, passObj) {
     str res = winOpenGL->run("init", args{ narr{*winBridge}});
     ASSERT_TRUE(res);
     ASSERT_EQ(res->cast<nint>(), 25);
+}
+
+TEST_F(bridgeCPPTest, returnObj) {
+    str winBridge(tcppBridge<window>::def()
+            ->func("getX", &window::getX)
+            ->func("getY", &window::getY)
+            ->func("setY", &window::setY)
+            ->func("new1", &window::new1));
+    str winOpenGL(tcppBridge<openGL>::def()
+            ->func("init", &openGL::init));
+
+    str newWin = winBridge->run("new1", args{ narr{*new nInt(15)}});
+    str res = winOpenGL->run("init", args{ narr{*newWin}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->cast<nint>(), 20);
 }
