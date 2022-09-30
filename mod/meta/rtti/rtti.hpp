@@ -24,6 +24,18 @@ namespace namu {
     struct tifSub {
         static inline constexpr nbool is = std::is_base_of<super, T>::value;
     };
+    template <typename T, typename super>
+    struct tifSub<T&, super> {
+        static inline constexpr nbool is = std::is_base_of<super, T>::value;
+    };
+    template <typename T, typename super>
+    struct tifSub<T, super&> {
+        static inline constexpr nbool is = std::is_base_of<super, T>::value;
+    };
+    template <typename T, typename super>
+    struct tifSub<T&, super&> {
+        static inline constexpr nbool is = std::is_base_of<super, T>::value;
+    };
 
     template <typename T>
     struct taEmptyCan {
