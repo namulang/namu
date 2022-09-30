@@ -119,3 +119,35 @@ TEST_F(bridgeCPPTest, returnObj) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res->cast<nint>(), 20);
 }
+
+namespace {
+    struct windowManager {
+        void add(narr& wins) {
+            _wins.add(wins);
+        }
+        void del(int n) {
+            _wins.del(n);
+        }
+
+        narr _wins;
+    };
+}
+
+TEST_F(bridgeCPPTest, passArray) {
+    str mgrBridge(tcppBridge<windowManager>::def()
+            ->func("add", &windowManager::add)
+            ->func("del", &windowManager::del));
+
+    tstr<tcppBridge<narr>> narrBridge(tcppBridge<narr>::def());
+    narrBridge->get().add(*new nInt(0));
+    narrBridge->get().add(*new nInt(1));
+    narrBridge->get().add(*new nInt(2));
+    mgrBridge->run("add", args{narr{*narrBridge}});
+    mgrBridge->run("del", args{narr{*new nInt(1)}}); // 0, 2 remains.
+
+    const narr& res = mgrBridge->cast<tcppBridge<windowManager>>().get()._wins;
+    ASSERT_FALSE(nul(res));
+    ASSERT_EQ(res.len(), 2);
+    ASSERT_EQ(res[0].cast<nint>(), 0);
+    ASSERT_EQ(res[1].cast<nint>(), 2);
+}
