@@ -138,22 +138,21 @@ TEST_F(arrTest, testIter) {
 TEST_F(arrTest, testContainableAPI) {
     //  initial state:
     tarr<myNode>* arr1 = new tarr<myNode>();
-    tucontainable<myNode>* con = arr1;
-    ASSERT_EQ(con->len(), 0);
+    ASSERT_EQ(arr1->len(), 0);
 
-    auto head = con->begin();
+    auto head = arr1->begin();
     ASSERT_TRUE(head.isEnd());
-    auto tail = con->end();
+    auto tail = arr1->end();
     ASSERT_TRUE(tail.isEnd());
 
-    ASSERT_TRUE(con->add(con->begin(), new myNode(0)));
-    ASSERT_TRUE(con->add(con->end(), new myMyNode(1)));
-    ASSERT_EQ(con->len(), 2);
+    ASSERT_TRUE(arr1->add(arr1->begin(), new myNode(0)));
+    ASSERT_TRUE(arr1->add(arr1->end(), new myMyNode(1)));
+    ASSERT_EQ(arr1->len(), 2);
 
     // add:
     int expectVal = 0;
-    for(auto e=con->begin(); e != con->end() ;e++) {
-        myNode& elem = *e;
+    for(auto e=arr1->begin(); e != arr1->end() ;e++) {
+        myNode& elem = e->cast<myNode>();
         ASSERT_FALSE(nul(elem));
         ASSERT_EQ(elem.number, expectVal++);
     }
@@ -187,88 +186,10 @@ TEST_F(arrTest, testContainableAPI) {
     ASSERT_FALSE(nul(tray));
 
     //  del:
-    ASSERT_TRUE(con->del());
-    ASSERT_EQ(con->len(), 1);
-    ASSERT_EQ(arr1->get(0).number, 0);
-
-    //  add with element:
-    tarr<myNode> arr2;
-    arr2.add(*con);
-    ASSERT_TRUE(arr2.add(new myNode(1)));
-    ASSERT_TRUE(arr2.add(new myMyNode(2)));
-    ASSERT_TRUE(arr2.add(new myNode(3)));
-    ASSERT_EQ(arr2[2].number, 2);
-    ASSERT_EQ(arr2[3].number, 3);
-    ASSERT_EQ(arr2.len(), 4);
-
-    auto e = arr2.begin();
-    e = e + 2;
-    ASSERT_EQ(e.get<myNode>().number, 2);
-    ASSERT_TRUE(arr2.add(e, new myNode(5)));
-    ASSERT_TRUE(arr2.add(2, new myNode(6)));
-
-    ASSERT_EQ(arr2[0].number, 0);
-    ASSERT_EQ(arr2[1].cast<myNode>().number, 1);
-    ASSERT_EQ(arr2[2].number, 6);
-    ASSERT_EQ(arr2[3].cast<myNode>().number, 5);
-    ASSERT_EQ(arr2[4].number, 2);
-    ASSERT_EQ(arr2[5].number, 3);
-
-    ASSERT_EQ(con->len(), 1);
-    tucontainable<myNode>::iter e11 = arr2.iterate(1),
-                                e12 = arr2.iterate(3);
-    con->add(e11, e12);
-    ASSERT_EQ(con->len(), 3);
-    e=arr1->begin();
-    myNode* elem = &e->cast<myNode>();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, 0);
-
-    elem = &(++e)->cast<myNode>();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, 1);
-
-    elem = &(++e)->cast<myNode>();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, 6);
-
-    ASSERT_FALSE(++e);
-
-    ASSERT_TRUE(con->len() > 0);
-    con->rel();
-    ASSERT_TRUE(con->len() == 0);
-
-    con->add(arr2.begin() + 2, arr2.end());
-    auto e2 = arr1->begin();
-    elem = &e2.get();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, 6);
-
-    elem = &(++e2)->cast<myNode>();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, 5);
-
-    elem = &(++e2)->cast<myNode>();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, 2);
-
-    elem = &(++e2)->cast<myNode>();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, 3);
-
-    ASSERT_TRUE(con->del(con->begin() + 1, con->begin() + 3));
-    ASSERT_EQ(con->len(), 2);
-
-    e2 = arr1->begin();
-    elem = &e2->cast<myNode>();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, 6);
-
-    elem = &(++e2)->cast<myNode>();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, 3);
-
-    delete con;
+    ASSERT_TRUE(arr1->del());
+    ASSERT_EQ(arr1->len(), 1);
+    ASSERT_EQ(arr1->get(0).cast<myNode>().number, 0);
+    delete arr1;
 }
 
 TEST_F(arrTest, testDeepClone) {
