@@ -10,7 +10,7 @@ namespace namu {
         NAMU(CLASS(tnarr, tnucontainer<T>))
 
     public:
-        template <typename E> friend class tarr;
+        friend class arr;
         typedef tstr<T, TACTIC> wrap;
         typedef typename super::iter iter;
         typedef typename super::iteration iteration;
