@@ -151,3 +151,29 @@ TEST_F(bridgeCPPTest, passArray) {
     ASSERT_EQ(res[0].cast<nint>(), 0);
     ASSERT_EQ(res[1].cast<nint>(), 2);
 }
+
+namespace {
+    struct myObj : public obj {
+        NAMU(CLASS(myObj, obj))
+
+    public:
+        int age;
+    };
+
+    struct stage {
+        int foo(myObj& o) {
+            return o.age;
+        }
+    };
+}
+
+TEST_F(bridgeCPPTest, passRawObj) {
+    myObj o1;
+    o1.age = 5;
+
+    str stg(tcppBridge<stage>::def()
+        ->func("foo", &stage::foo));
+    str res = stg->run("foo", args{narr{o1}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 5);
+}

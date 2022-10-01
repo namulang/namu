@@ -35,10 +35,8 @@ namespace namu {
         static yes canMarshal();
     };
 
-    template <typename T>
+    template <typename T, nbool isNode = tifSub<T, node>::is>
     struct tmarshaling : public metaIf {
-        typedef tcppBridge<T> mgdType;
-
         static T& toNative(node& it) {
             throw marshalErr();
         }
@@ -51,7 +49,22 @@ namespace namu {
         static no canMarshal();
     };
     template <typename T>
-    struct tmarshaling<T&> : public metaIf {
+    struct tmarshaling<T&, true> : public metaIf {
+        typedef T mgdType;
+
+        static T& toNative(node& it) {
+            return it.cast<T>();
+        }
+
+        template <typename E>
+        static str toMgd(E& it) {
+            return it;
+        }
+
+        static yes canMarshal();
+    };
+    template <typename T>
+    struct tmarshaling<T&, false> : public metaIf {
         typedef tcppBridge<T> mgdType;
 
         static T& toNative(node& it) {
@@ -66,7 +79,7 @@ namespace namu {
         static yes canMarshal();
     };
     template <typename T>
-    struct tmarshaling<T*> : public metaIf {
+    struct tmarshaling<T*, false> : public metaIf {
         typedef tcppBridge<T> mgdType;
 
         static T* toNative(node& it) {
@@ -81,10 +94,10 @@ namespace namu {
         static yes canMarshal();
     };
 
-    template <> struct _nout tmarshaling<nint> : public tnormalMarshaling<nint, nInt> {};
-    template <> struct _nout tmarshaling<std::string> : public tnormalMarshaling<const std::string&, nStr> {};
-    template <> struct _nout tmarshaling<std::string&> : public tnormalMarshaling<const std::string&, nStr> {};
-    template <> struct _nout tmarshaling<const std::string&> : public tnormalMarshaling<const std::string&, nStr> {};
-    template <> struct _nout tmarshaling<const std::string> : public tnormalMarshaling<const std::string&, nStr> {};
-    template <> struct _nout tmarshaling<void> : public tnormalMarshaling<void, nVoid> {};
+    template <> struct _nout tmarshaling<nint, false> : public tnormalMarshaling<nint, nInt> {};
+    template <> struct _nout tmarshaling<std::string, false> : public tnormalMarshaling<const std::string&, nStr> {};
+    template <> struct _nout tmarshaling<std::string&, false> : public tnormalMarshaling<const std::string&, nStr> {};
+    template <> struct _nout tmarshaling<const std::string&, false> : public tnormalMarshaling<const std::string&, nStr> {};
+    template <> struct _nout tmarshaling<const std::string, false> : public tnormalMarshaling<const std::string&, nStr> {};
+    template <> struct _nout tmarshaling<void, false> : public tnormalMarshaling<void, nVoid> {};
 }
