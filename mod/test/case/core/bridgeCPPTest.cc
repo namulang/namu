@@ -188,15 +188,21 @@ namespace {
 
     struct testObj {
         int len;
+        arr _arr;
 
         testObj(): len(0) {}
 
         int updateLen(tarr<myObj> a) {
             len = a.len();
-            int n=0;
-            for(const auto& elem : a)
-                cout << "myObj[" << n << "].age=" << elem.cast<myObj>().age << "\n";
+            _arr = a;
             return len;
+        }
+
+        int sumOfLen() {
+            int ret = 0;
+            for(const auto& elem : _arr)
+                ret += elem.cast<myObj>().age;
+            return ret;
         }
     };
 }
@@ -204,15 +210,20 @@ namespace {
 TEST_F(bridgeCPPTest, passArr) {
 
     arr a(ttype<myObj>::get());
-    a.add(new myObj(0));
     a.add(new myObj(1));
+    a.add(new myObj(2));
     str yourobj(new yourObj());
     ASSERT_EQ(a.add(*yourobj), false);
-    a.add(new myObj(2));
+    a.add(new myObj(3));
 
     str testobj(tcppBridge<testObj>::def()
-        ->func("updateLen", &testObj::updateLen));
+        ->func("updateLen", &testObj::updateLen)
+        ->func("sumOfLen", &testObj::sumOfLen));
     str res = testobj->run("updateLen", args{narr{a}});
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 3);
+
+    res = testobj->run("sumOfLen");
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 6);
 }

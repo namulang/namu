@@ -11,8 +11,8 @@ namespace namu {
         typedef typename tucontainable<node>::iteration iteration;
 
     public:
-        arr(): _arr(new narr()), _type(ttype<node>::get()) {}
-        arr(const type& newType): _arr(new narr()), _type(newType) {}
+        arr(): _arr(new narr()), _type(&ttype<node>::get()) {}
+        arr(const type& newType): _arr(new narr()), _type(&newType) {}
 
     public:
         using tarrayable<node>::operator[];
@@ -36,11 +36,11 @@ namespace namu {
         using tucontainable<node>::set;
         using tarrayable<node>::set;
         nbool set(const iter& at, const node& new1) override {
-            if(!new1.isSub(_type)) return false;
+            if(!new1.isSub(*_type)) return false;
             return _arr->set(at, new1);
         }
         nbool set(nidx n, const node& new1) override {
-            if(!new1.isSub(_type)) return false;
+            if(!new1.isSub(*_type)) return false;
             return _arr->set(n, new1);
         }
 
@@ -48,11 +48,11 @@ namespace namu {
         using tucontainable<node>::add;
         using tarrayable<node>::add;
         nbool add(const iter& at, const node& new1) override {
-            if(!new1.isSub(_type)) return false;
+            if(!new1.isSub(*_type)) return false;
             return _arr->add(at, new1);
         }
         nbool add(nidx n, const node& new1) override {
-            if(!new1.isSub(_type)) return false;
+            if(!new1.isSub(*_type)) return false;
             return _arr->add(n, new1);
         }
         void add(const iter& here, const iter& from, const iter& to) override { _arr->add(here, from, to); }
@@ -82,6 +82,6 @@ namespace namu {
         }
 
         tstr<narr> _arr;
-        const type& _type;
+        const type* _type;
     };
 }
