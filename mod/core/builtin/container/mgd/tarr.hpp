@@ -10,5 +10,6 @@ namespace namu {
 
     public:
         tarr(): super(ttype<T>::get()) {}
+        tarr(arr& rhs): super(rhs) {}
     };
 }

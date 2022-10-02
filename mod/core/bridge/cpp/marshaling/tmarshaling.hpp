@@ -6,6 +6,8 @@ namespace namu {
 
     struct marshalErr {};
     template <typename T> class tcppBridge;
+    template <typename T> class tarr;
+    class arr;
 
     template <typename tnativeType, typename tmarshalType>
     struct tnormalMarshaling : public metaIf {
@@ -90,6 +92,17 @@ namespace namu {
         static str toMgd(E* it) {
             return new tcppBridge(it);
         }
+
+        static yes canMarshal();
+    };
+    template <typename T>
+    struct tmarshaling<tarr<T>, true> : public metaIf {
+        typedef arr mgdType;
+
+        static tarr<T> toNative(node& it);
+
+        template <typename E>
+        static str toMgd(E* it);
 
         static yes canMarshal();
     };

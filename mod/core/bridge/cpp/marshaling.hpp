@@ -1,3 +1,3 @@
 #pragma once
 
-#include "marshaling/tmarshaling.hpp"
+#include "marshaling/tmarshaling.inl"
