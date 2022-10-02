@@ -1,3 +1,4 @@
+#include "../builtin/container/mgd/arr.hpp"
 #include "baseObj.hpp"
 #include "func.hpp"
 #include "../builtin/container/tucontainable.inl"

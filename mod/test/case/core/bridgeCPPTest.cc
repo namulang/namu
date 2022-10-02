@@ -157,6 +157,9 @@ namespace {
         NAMU(CLASS(myObj, obj))
 
     public:
+        myObj(): age(0) {}
+        myObj(int newAge): age(newAge) {}
+
         int age;
     };
 
@@ -176,4 +179,40 @@ TEST_F(bridgeCPPTest, passRawObj) {
     str res = stg->run("foo", args{narr{o1}});
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 5);
+}
+
+namespace {
+    struct yourObj : public obj {
+        NAMU(CLASS(yourObj, obj))
+    };
+
+    struct testObj {
+        int len;
+
+        testObj(): len(0) {}
+
+        int updateLen(tarr<myObj> a) {
+            len = a.len();
+            int n=0;
+            for(const auto& elem : a)
+                cout << "myObj[" << n << "].age=" << elem.cast<myObj>().age << "\n";
+            return len;
+        }
+    };
+}
+
+TEST_F(bridgeCPPTest, passArr) {
+
+    arr a(ttype<myObj>::get());
+    a.add(new myObj(0));
+    a.add(new myObj(1));
+    str yourobj(new yourObj());
+    ASSERT_EQ(a.add(*yourobj), false);
+    a.add(new myObj(2));
+
+    str testobj(tcppBridge<testObj>::def()
+        ->func("updateLen", &testObj::updateLen));
+    str res = testobj->run("updateLen", args{narr{a}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 3);
 }
