@@ -109,10 +109,10 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keywordflow">return</span> *_rhs;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        }</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        me* deepClone()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            me* ret = clone();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">if</span>(_lhs) ret-&gt;_lhs.bind(_lhs-&gt;deepClone());</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordflow">if</span>(_rhs) ret-&gt;_rhs.bind(_rhs-&gt;deepClone());</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        clonable* deepClone()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            me* ret = (me*) clone();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">if</span>(_lhs) ret-&gt;_lhs.bind((node*) _lhs-&gt;deepClone());</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordflow">if</span>(_rhs) ret-&gt;_rhs.bind((node*) _rhs-&gt;deepClone());</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        }</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
