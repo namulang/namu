@@ -55,6 +55,6 @@ namespace namu {
 
     private:
         T* _real;
-        static inline tstr<scope> _subs;
+        tstr<scope> _subs;
     };
 }

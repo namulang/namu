@@ -209,8 +209,8 @@ namespace {
 }
 
 TEST_F(bridgeCPPTest, passArr) {
-
-    arr a(ttype<myObj>::get());
+    myObj obj;
+    arr a(obj);
     a.add(new myObj(1));
     a.add(new myObj(2));
     str yourobj(new yourObj());

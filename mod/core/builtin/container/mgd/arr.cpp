@@ -1,13 +1,13 @@
 #include "arr.hpp"
 #include "../../../visitor/visitor.hpp"
+#include "../../../visitor/generalizer.hpp"
 
 namespace namu {
 
     NAMU(DEF_ME(arr), DEF_VISIT())
 
-    me::arr(): _arr(new narr()), _type(&ttype<node>::get()) {}
-
-    me::arr(const type& newType): _arr(new narr()), _type(&newType) {}
+    me::arr(): _arr(new narr()), _type(new obj()) {}
+    me::arr(const node& newType): _arr(new narr()), _type(newType) {}
 
     node& me::operator[](nidx n) {
         return _arr->operator[](n);
@@ -85,5 +85,22 @@ namespace namu {
 
     me::iteration* me::_onMakeIteration(ncnt step) const {
         return _arr->_onMakeIteration(step);
+    }
+
+    scope& me::_defGeneric(cache& c, const type* key) {
+        tstr<scope> clone = _getOriginScope().deepClone();
+        c.insert({key, clone}); // this avoids infinite loop.
+
+        generalizer g;
+        g.add(*new param(TYPENAME, *_type))
+         .setRoot(*this)
+         .start();
+
+        return *clone;
+    }
+
+    scope& me::_getOriginScope() const {
+        static scope inner;
+        return inner;
     }
 }
