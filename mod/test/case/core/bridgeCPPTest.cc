@@ -16,7 +16,8 @@ namespace {
             return 0;
         }
         bool sayCharPtr(const char* msg) {
-            cout << "Oh, it's charactor pointer. Of course I can say it without problem like '" << msg << "'. were you suprise?\n";
+            cout << "Oh, it's charactor pointer. Of course I can say it without problem like '"
+                 << msg << "'. were you suprise?\n";
             return isRun = true;
         }
 
