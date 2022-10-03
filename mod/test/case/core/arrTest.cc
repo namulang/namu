@@ -11,6 +11,7 @@ namespace {
         NAMU(CLASS(myNode, node))
 
     public:
+        myNode(): number(0) {}
         myNode(int num): number(num) {}
 
         nbicontainer& subs() override { return nulOf<nbicontainer>(); }
@@ -233,4 +234,9 @@ TEST_F(arrTest, testRangeBasedForLoop) {
         expect += arr1[n].cast<myNode>().number;
 
     ASSERT_EQ(sum, expect);
+}
+
+TEST_F(arrTest, testSubs) {
+    tarr<nInt> intArr;
+    ASSERT_NE(intArr.subs().len(), 0);
 }

@@ -9,7 +9,7 @@ namespace namu {
         NAMU(CLASS(tarr, arr))
 
     public:
-        tarr(): super(ttype<T>::get()) {}
+        tarr(): super(*new T()) {}
         tarr(arr& rhs): super(rhs) {}
     };
 }

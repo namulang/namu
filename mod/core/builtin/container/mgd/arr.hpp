@@ -9,10 +9,12 @@ namespace namu {
         NAMU(CLASS(arr, obj), VISIT())
         typedef typename tucontainable<node>::iter iter;
         typedef typename tucontainable<node>::iteration iteration;
+        typedef std::map<const type*, tstr<scope>> cache;
+        static inline const std::string TYPENAME = "T";
 
     public:
         arr();
-        arr(const type& newType);
+        arr(const node& newType);
 
     public:
         using tarrayable<node>::operator[];
@@ -22,7 +24,23 @@ namespace namu {
         tnarr<node>& getNative();
         const tnarr<node>& getNative() const;
 
-        //  len:
+        const node& getElemType() const {
+            return *_type;
+        }
+
+        using super::subs;
+        nbicontainer& subs() override {
+            static cache c;
+            str as = _type->as<node>();
+            const type* key = &as->getType();
+            auto e = c.find(key);
+            if(e != c.end())
+                return e->second.get();
+
+            // this is first try to generalize type T:
+            return _defGeneric(c, key);
+        }
+
         ncnt len() const override;
 
         nbool has(nidx n) const override;
@@ -59,7 +77,11 @@ namespace namu {
         iteration* _onMakeIteration(ncnt step) const override;
 
     private:
+        scope& _defGeneric(cache& c, const type* key);
+        scope& _getOriginScope() const;
+
+    private:
         tstr<narr> _arr;
-        const type* _type;
+        str _type;
     };
 }
