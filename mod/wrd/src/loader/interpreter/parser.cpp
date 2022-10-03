@@ -27,4 +27,10 @@ namespace wrd {
 		rel();
 		return ret;
     }
+
+	void me::rel() {
+		_root.rel();
+		_report = &dummyErrReport::singletone;
+	}
+
 }
