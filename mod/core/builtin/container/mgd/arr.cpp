@@ -101,6 +101,10 @@ namespace namu {
 
     scope& me::_getOriginScope() const {
         static scope inner;
+        if(inner.len() <= 0) {
+            //inner.add(this->func("len", &me::len));
+        }
+
         return inner;
     }
 }

@@ -41,6 +41,11 @@ namespace namu {
             subs().add(name, new tcppBridgeFunc<Ret, T, Args...>(fptr));
             return this;
         }
+        template <typename Ret, typename... Args>
+        me* func(const std::string& name, Ret(T::*fptr)(Args...) const) {
+            subs().add(name, new tcppBridgeFunc<Ret, T, Args...>( (Ret(T::*)(Args...)) fptr));
+            return this;
+        }
 
         T& get() { return *_real; }
         const T& get() const { return *_real; }
