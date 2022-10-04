@@ -239,4 +239,12 @@ TEST_F(arrTest, testRangeBasedForLoop) {
 TEST_F(arrTest, testSubs) {
     tarr<nInt> intArr;
     ASSERT_NE(intArr.subs().len(), 0);
+    intArr.add(new myNode(1));
+
+    str res = intArr.run("len");
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), intArr.len());
+
+    graphVisitor gv;
+    gv.setRoot(intArr).start();
 }

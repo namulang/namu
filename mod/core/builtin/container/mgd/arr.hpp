@@ -6,7 +6,7 @@
 namespace namu {
 
     class arr : public tcppBridge<narr>, public tucontainable<node>, tarrayable<node> {
-        NAMU(CLASS(arr, obj), VISIT())
+        NAMU(CLASS(arr, tcppBridge<narr>), VISIT())
         typedef typename tucontainable<node>::iter iter;
         typedef typename tucontainable<node>::iteration iteration;
         typedef std::map<const type*, tstr<scope>> cache;
@@ -48,6 +48,7 @@ namespace namu {
         //  get:
         using tarrayable<node>::get;
         using tucontainable<node>::get;
+        using super::get;
         node& get(nidx n) override;
 
         //  set:
@@ -78,10 +79,9 @@ namespace namu {
 
     private:
         scope& _defGeneric(cache& c, const type* key);
-        scope& _getOriginScope() const;
+        scope& _getOriginScope();
 
     private:
-        tstr<narr> _arr;
         str _type;
     };
 }

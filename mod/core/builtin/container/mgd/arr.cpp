@@ -1,90 +1,81 @@
 #include "arr.hpp"
 #include "../../../visitor/visitor.hpp"
 #include "../../../visitor/generalizer.hpp"
+#include "../../../bridge/cpp.hpp"
 
 namespace namu {
 
     NAMU(DEF_ME(arr), DEF_VISIT())
 
-    me::arr(): _arr(new narr()), _type(new obj()) {}
-    me::arr(const node& newType): _arr(new narr()), _type(newType) {}
+    me::arr(): super(new narr()), _type(new obj()) {}
+    me::arr(const node& newType): super(new narr()), _type(newType) {}
 
     node& me::operator[](nidx n) {
-        return _arr->operator[](n);
-    }
-
-    tnarr<node>& me::getNative() {
-        return *_arr;
-    }
-
-    const tnarr<node>& me::getNative() const {
-        return *_arr;
+        return get()[n];
     }
 
     ncnt me::len() const {
-        return _arr->len();
+        return get().len();
     }
 
     nbool me::has(nidx n) const {
-        return _arr->has(n);
+        return get().has(n);
     }
 
     node& me::get(nidx n) {
-        return _arr->get(n);
+        return get().get(n);
     }
 
     nbool me::set(const iter& at, const node& new1) {
         if(!new1.isSub(*_type)) return false;
-        return _arr->set(at, new1);
+        return get().set(at, new1);
     }
     nbool me::set(nidx n, const node& new1) {
         if(!new1.isSub(*_type)) return false;
-        return _arr->set(n, new1);
+        return get().set(n, new1);
     }
 
     nbool me::add(const iter& at, const node& new1) {
         if(!new1.isSub(*_type)) return false;
-        return _arr->add(at, new1);
+        return get().add(at, new1);
     }
 
     nbool me::add(nidx n, const node& new1) {
         if(!new1.isSub(*_type)) return false;
-        return _arr->add(n, new1);
+        return get().add(n, new1);
     }
 
     void me::add(const iter& here, const iter& from, const iter& to) {
-        _arr->add(here, from, to);
+        get().add(here, from, to);
     }
 
     //  del:
     nbool me::del(nidx n) {
-        return _arr->del(n);
+        return get().del(n);
     }
 
     nbool me::del(const iter& it) {
-        return _arr->del(it);
+        return get().del(it);
     }
 
     nbool me::del(const iter& from, const iter& to) {
-        return _arr->del(from, to);
+        return get().del(from, to);
     }
 
     //  etc:
     me* me::deepClone() const {
         me* ret = clone();
-        tstr<tnarr<node>> cloned = _arr->deepClone();
-        ret->_arr->add(*cloned);
+        tstr<tnarr<node>> cloned = get().deepClone();
+        ret->get().add(*cloned);
         return ret;
     }
 
     void me::rel() {
-        _arr.rel();
-
-       super::rel();
+       get().rel();
     }
 
     me::iteration* me::_onMakeIteration(ncnt step) const {
-        return _arr->_onMakeIteration(step);
+        return get()._onMakeIteration(step);
     }
 
     scope& me::_defGeneric(cache& c, const type* key) {
@@ -99,10 +90,10 @@ namespace namu {
         return *clone;
     }
 
-    scope& me::_getOriginScope() const {
+    scope& me::_getOriginScope() {
         static scope inner;
         if(inner.len() <= 0) {
-            //inner.add(this->func("len", &me::len));
+            inner.add("len", this->func("len", &narr::len));
         }
 
         return inner;
