@@ -199,7 +199,7 @@ namespace {
             return len;
         }
 
-        int sumOfLen() {
+        int sumOfLen() const {
             int ret = 0;
             for(const auto& elem : _arr)
                 ret += elem.cast<myObj>().age;
