@@ -91,11 +91,12 @@ namespace namu {
     }
 
     scope& me::_getOriginScope() {
-        static scope inner;
-        if(inner.len() <= 0) {
-            inner.add("len", this->func("len", &narr::len));
+        static super* inner = nullptr;
+        if(nul(inner)) {
+            inner = new super();
+            inner->func("len", &narr::len);
         }
 
-        return inner;
+        return inner->subs().cast<scope>();
     }
 }

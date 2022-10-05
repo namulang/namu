@@ -245,6 +245,11 @@ TEST_F(arrTest, testSubs) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), intArr.len());
 
+    nInt int1;
+    arr intArr2(int1);
+    // even if instances of arr are different, they share same subs:
+    ASSERT_EQ(&intArr.sub("len"), &intArr2.sub("len"));
+
     graphVisitor gv;
     gv.setRoot(intArr).start();
 }
