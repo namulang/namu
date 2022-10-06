@@ -1,6 +1,7 @@
 #pragma once
 
 #include "tcppBridgeFunc.hpp"
+#include "marshaling/tmarshaling.hpp"
 #include "../../ast/obj.hpp"
 
 namespace namu {
@@ -16,7 +17,7 @@ namespace namu {
         //  tries to get ttype<T>, it's not derived from ntype so it won't have any 'as()'
         //  func. user can't operate conversion in this way.
         NAMU(CLASS(tcppBridge, obj))
-        template <typename Ret, typename T1, typename...Args>
+        template <typename Ret, typename T1, template <typename, nbool> class Marshaling, typename...Args>
         friend class tcppBridgeFunc;
 
     public:
@@ -38,12 +39,12 @@ namespace namu {
 
         template <typename Ret, typename... Args>
         me* func(const std::string& name, Ret(T::*fptr)(Args...)) {
-            subs().add(name, new tcppBridgeFunc<Ret, T, Args...>(fptr));
+            subs().add(name, new tcppBridgeFunc<Ret, T, tmarshaling, Args...>(fptr));
             return this;
         }
         template <typename Ret, typename... Args>
         me* func(const std::string& name, Ret(T::*fptr)(Args...) const) {
-            subs().add(name, new tcppBridgeFunc<Ret, T, Args...>( (Ret(T::*)(Args...)) fptr));
+            subs().add(name, new tcppBridgeFunc<Ret, T, tmarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
             return this;
         }
 
