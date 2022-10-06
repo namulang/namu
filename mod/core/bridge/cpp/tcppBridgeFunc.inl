@@ -15,7 +15,7 @@ namespace namu {
         static params* inner = nullptr;
         if(nul(inner)) {
             inner = new params();
-            (inner->add(new param("", *new typename Marshaling<Args, tifSub<Args, node>::is>::mgdType())), ...);
+            (inner->add(new param("", Marshaling<Args, tifSub<Args, node>::is>::onAddParam())), ...);
         }
 
         return *inner;

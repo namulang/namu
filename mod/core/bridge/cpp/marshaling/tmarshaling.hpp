@@ -22,6 +22,14 @@ namespace namu {
             return str(new mgdType(it));
         }
 
+        static mgdType& onAddParam() {
+            return *new mgdType();
+        }
+
+        static mgdType& onGetRet() {
+            return *new mgdType();
+        }
+
         static yes canMarshal();
     };
 
@@ -32,6 +40,14 @@ namespace namu {
 
         static str toMgd() {
             return str(new nVoid());
+        }
+
+        static mgdType& onAddParam() {
+            return *new mgdType();
+        }
+
+        static mgdType& onGetRet() {
+            return *new mgdType();
         }
 
         static yes canMarshal();
@@ -45,6 +61,14 @@ namespace namu {
 
         template <typename E>
         static str toMgd(E& it) {
+            throw marshalErr();
+        }
+
+        static T& onAddParam() {
+            throw marshalErr();
+        }
+
+        static T& onGetRet() {
             throw marshalErr();
         }
 
@@ -63,6 +87,14 @@ namespace namu {
             return it;
         }
 
+        static mgdType& onAddParam() {
+            return *new mgdType();
+        }
+
+        static mgdType& onGetRet() {
+            return *new mgdType();
+        }
+
         static yes canMarshal();
     };
     template <typename T>
@@ -76,6 +108,14 @@ namespace namu {
         template <typename E>
         static str toMgd(E& it) {
             return new tcppBridge(&it);
+        }
+
+        static mgdType& onAddParam() {
+            return *new mgdType();
+        }
+
+        static mgdType& onGetRet() {
+            return *new mgdType();
         }
 
         static yes canMarshal();
@@ -93,6 +133,14 @@ namespace namu {
             return new tcppBridge(it);
         }
 
+        static mgdType& onAddParam() {
+            return *new mgdType();
+        }
+
+        static mgdType& onGetRet() {
+            return *new mgdType();
+        }
+
         static yes canMarshal();
     };
     template <typename T>
@@ -103,6 +151,10 @@ namespace namu {
 
         template <typename E>
         static str toMgd(E* it);
+
+        static mgdType& onAddParam();
+
+        static mgdType& onGetRet();
 
         static yes canMarshal();
     };
