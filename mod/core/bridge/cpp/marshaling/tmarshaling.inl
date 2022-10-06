@@ -18,6 +18,16 @@ namespace namu {
         return new arr(*it);
     }
 
+    TEMPL
+    typename ME::mgdType& ME::onAddParam() {
+        return *new mgdType();
+    }
+
+    TEMPL
+    typename ME::mgdType& ME::onGetRet() {
+        return *new mgdType();
+    }
+
 #undef ME
 #undef TEMPL
 

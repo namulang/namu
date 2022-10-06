@@ -1,7 +1,7 @@
 #pragma once
 
 #include "tcppBridgeFunc.hpp"
-#include "marshaling/tmarshaling.hpp"
+#include "marshaling/tgenericMarshaling.hpp"
 #include "../../ast/obj.hpp"
 
 namespace namu {
@@ -45,6 +45,17 @@ namespace namu {
         template <typename Ret, typename... Args>
         me* func(const std::string& name, Ret(T::*fptr)(Args...) const) {
             subs().add(name, new tcppBridgeFunc<Ret, T, tmarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
+            return this;
+        }
+
+        template <typename Ret, typename... Args>
+        me* genericFunc(const std::string& name, Ret(T::*fptr)(Args...)) {
+            subs().add(name, new tcppBridgeFunc<Ret, T, tgenericMarshaling, Args...>(fptr));
+            return this;
+        }
+        template <typename Ret, typename... Args>
+        me* genericFunc(const std::string& name, Ret(T::*fptr)(Args...) const) {
+            subs().add(name, new tcppBridgeFunc<Ret, T, tgenericMarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
             return this;
         }
 

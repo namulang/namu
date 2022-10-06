@@ -29,8 +29,12 @@ namespace namu {
         }
 
         const node& getRet() const override {
-            static typename Marshaling<Ret, tifSub<Ret, node>::is>::mgdType inner;
-            return inner;
+            typedef Marshaling<Ret, tifSub<Ret, node>::is> marshaling;
+            static typename marshaling::mgdType* inner = nullptr;
+            if(nul(inner))
+                inner = &marshaling::onGetRet();
+
+            return *inner;
         }
 
         const params& getParams() const override;
