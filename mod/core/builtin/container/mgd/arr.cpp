@@ -95,6 +95,7 @@ namespace namu {
         if(nul(inner)) {
             inner = new super();
             inner->func("len", &narr::len);
+            inner->genericFunc<nbool, const node&>("add", &narr::add);
         }
 
         return inner->subs().cast<scope>();
