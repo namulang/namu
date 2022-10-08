@@ -67,14 +67,14 @@ namespace namu {
         }
     }
 
-    void me::onVisit(visitInfo i, mgdFunc& me) {
+    void me::onVisit(visitInfo i, func& me) {
         onVisit(i, (params&) me.getParams());
 
         const node& retOrg = _findOrigin(me.getRet());
         if(!nul(retOrg))
             me.setRet(retOrg);
 
-        onVisit(i, (mgdFunc::super&) me);
+        onVisit(i, (func::super&) me);
     }
 
     void me::onVisit(visitInfo i, baseObj& me) {
