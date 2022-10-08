@@ -36,6 +36,9 @@ namespace namu {
         ///         if there is a runExpr instance, and it takes the func and proper argument,
         ///         then it can be evaluated and its evalType is the return type of the func.
         virtual const node& getRet() const = 0;
+
+        /// @return whether setting new return-type has been done or not.
+        virtual nbool setRet(const node& newRet) { return false; }
     };
 
     typedef tnarr<func> funcs;
