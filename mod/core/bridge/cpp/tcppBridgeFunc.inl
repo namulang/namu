@@ -12,13 +12,12 @@ namespace namu {
 
     TEMPL
     const params& ME::getParams() const {
-        static params* inner = nullptr;
-        if(nul(inner)) {
-            inner = new params();
-            (inner->add(new param("", Marshaling<Args, tifSub<Args, node>::is>::onAddParam())), ...);
+        if(!_params) {
+            _params.bind(new params());
+            (_params->add(new param("", Marshaling<Args, tifSub<Args, node>::is>::onAddParam())), ...);
         }
 
-        return *inner;
+        return *_params;
     }
 
 #undef ME
