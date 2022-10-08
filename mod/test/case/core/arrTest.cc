@@ -249,7 +249,20 @@ TEST_F(arrTest, testSubs) {
     arr intArr2(int1);
     // even if instances of arr are different, they share same subs:
     ASSERT_EQ(&intArr.sub("len"), &intArr2.sub("len"));
+}
 
-    graphVisitor gv;
-    gv.setRoot(intArr).start();
+TEST_F(arrTest, genericMarshalingTest) {
+    nInt int1;
+    arr arr1(int1);
+
+    func& f = arr1.sub<func>("add", args{narr{int1}});
+    ASSERT_FALSE(nul(f));
+
+    nFlt flt1;
+    tarr<nFlt> arr2;
+    func& f2 = arr2.sub<func>("add", args{narr{flt1}});
+    ASSERT_FALSE(nul(f2));
+    const param& fltParam = f2.getParams()[0];
+    ASSERT_FALSE(nul(fltParam));
+    ASSERT_TRUE(fltParam.getOrigin().isSub<nFlt>());
 }

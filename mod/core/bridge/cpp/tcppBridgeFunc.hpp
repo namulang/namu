@@ -39,6 +39,14 @@ namespace namu {
 
         const params& getParams() const override;
 
+        me* deepClone() const override {
+            me* ret = (me*) clone();
+            if(_params)
+                ret->_params.bind(_params->deepClone());
+
+            return ret;
+        }
+
     protected:
         virtual str _runNative(args& args) = 0;
 
@@ -62,6 +70,7 @@ namespace namu {
 
     protected:
         fptrType _fptr;
+        mutable tstr<params> _params;
     };
 
     template <typename Ret, typename T, template <typename, nbool> class Marshaling,
