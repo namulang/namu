@@ -22,5 +22,6 @@ namespace namu {
     private:
         std::vector<nbool> _parentsLast;
         std::vector<const char*> _indents;
+        nbool _isStart;
     };
 }
