@@ -8,7 +8,10 @@ namespace namu {
 
     void me::start() {
         _parentsLast.push_back(true);
+        _isStart = false;
         super::start();
+
+        std::cout << "\n";
     }
 
     void me::_drawIndent() {
@@ -22,7 +25,10 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, node& visitee) {
-        std::cout << "\n";
+        if(_isStart)
+            std::cout << "\n";
+        _isStart = true;
+
         _onIndent();
         _drawIndent();
 

@@ -182,7 +182,6 @@ namespace namu {
             std::cout << " - structure:\n";
             graphVisitor().setRoot(_slot->getPack())
                           .start();
-            std::cout << "\n";
         }
 
         l.loadStreamEnable();
