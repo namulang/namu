@@ -94,8 +94,14 @@ namespace namu {
         static super* inner = nullptr;
         if(nul(inner)) {
             inner = new super();
-            inner->func("len", &narr::len);
+            inner->genericFunc("len", &narr::len);
+            inner->genericFunc("rel", &narr::rel);
+            inner->genericFunc<nbool, nidx>("del", &narr::del);
             inner->genericFunc<nbool, const node&>("add", &narr::add);
+            inner->genericFunc<nbool, nidx, const node&>("add", &narr::add);
+            inner->genericFunc<nbool, nidx, const node&>("set", &narr::set);
+            inner->genericFunc<node&, nidx>("get", &narr::get);
+            inner->genericFunc("has", &narr::has);
         }
 
         return inner->subs().cast<scope>();

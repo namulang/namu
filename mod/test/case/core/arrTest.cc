@@ -266,3 +266,49 @@ TEST_F(arrTest, genericMarshalingTest) {
     ASSERT_FALSE(nul(fltParam));
     ASSERT_TRUE(fltParam.getOrigin().isSub<nFlt>());
 }
+
+TEST_F(arrTest, testSimpleBridgedFuncs) {
+    tarr<nInt> arr1;
+    node& it = arr1;
+
+    str res = it.run("add", args{narr{*new nInt(1)}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nbool>(), true);
+    ASSERT_EQ(arr1.len(), 1);
+    res = it.run("len");
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
+TEST_F(arrTest, testSimpleBridgedFuncs2) {
+    tarr<nInt> arr1;
+    node& it = arr1;
+
+    str res = it.run("add", args{narr{*new nInt(1)}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nbool>(), true);
+    res = it.run("add", args{narr{*new nInt(0), *new nInt(2)}});
+
+    ASSERT_EQ(arr1.len(), 2);
+    res = it.run("len");
+    ASSERT_EQ(res.cast<nint>(), 2);
+
+    res = it.run("get", args{narr{*new nInt(0)}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 2);
+    ASSERT_EQ(arr1[0].cast<nint>(), 2);
+
+    res = it.run("set", args{narr{*new nInt(1), *new nInt(2)}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nbool>(), true);
+    ASSERT_EQ(arr1[0].cast<nint>(), arr1[1].cast<nint>());
+
+    res = it.run("has", args{narr{*new nInt(0)}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nbool>(), true);
+    res = it.run("has", args{narr{*new nInt(1)}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nbool>(), true);
+    res = it.run("has", args{narr{*new nInt(2)}});
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nbool>(), false);
+}
