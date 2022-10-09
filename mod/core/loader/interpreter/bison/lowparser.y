@@ -361,6 +361,8 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
     | NAME { // TODO: handle 'as' expr
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
+  } | type '['']' {
+        $$ = yyget_extra(scanner)->onGetArray(*$1);
   } | NAME typeparams {
         tstr<args> argsLife($2);
         $$ = yyget_extra(scanner)->onGetGeneric(*$1, *argsLife);

@@ -1,10 +1,10 @@
-#include "../../namuTest.hpp"
+#include "../../../namuSyntaxTest.hpp"
 #include <chrono>
 
 using namespace namu;
 using namespace std;
 
-struct arrTest : public namuTest {};
+struct arrTest : public namuSyntaxTest {};
 
 namespace {
     class myNode : public node {
@@ -311,4 +311,18 @@ TEST_F(arrTest, testSimpleBridgedFuncs2) {
     res = it.run("has", args{narr{*new nInt(2)}});
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nbool>(), false);
+}
+
+TEST_F(arrTest, testBasicDefSyntax) {
+    make().parse(R"SRC(
+main() void
+    arr int[]
+    aka sys.con c
+    c.print("len=" + arr.len())
+    arr.add(1)
+    arr.add(2.5)
+    c.print("len=" + arr.len())
+    c.print("arr[1]=" + arr.get(1))
+    )SRC").shouldVerified(true);
+    run();
 }
