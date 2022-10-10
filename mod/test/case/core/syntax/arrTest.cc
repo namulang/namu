@@ -322,7 +322,7 @@ main() void
     arr.add(1)
     arr.add(2.5)
     c.print("len=" + arr.len())
-    c.print("arr[1]=" + arr.get(1))
+    c.print("arr[1]=" + arr.get(1) + "\n")
     )SRC").shouldVerified(true);
     run();
 }
