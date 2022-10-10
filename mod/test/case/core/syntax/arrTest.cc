@@ -321,8 +321,12 @@ main() void
     c.print("len=" + arr.len())
     arr.add(1)
     arr.add(2.5)
-    c.print("len=" + arr.len())
-    c.print("arr[1]=" + arr.get(1) + "\n")
+    c.print("len=" + arr.len() + "\n")
+    c.print("arr[0]=" + arr.get(0) + "\n")
+    c.print("arr[1]=" + arr[1] + "\n")
+    return arr[1]
     )SRC").shouldVerified(true);
-    run();
+    str res = run();
+    ASSERT_FALSE(nul(res));
+    ASSERT_EQ(res->cast<nint>(), 2); // 2.5(flt) --> 2(int)
 }
