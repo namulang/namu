@@ -29,12 +29,14 @@ namespace namu {
         }
 
         const node& getRet() const override {
-            typedef Marshaling<Ret, tifSub<Ret, node>::is> marshaling;
-            static typename marshaling::mgdType* inner = nullptr;
-            if(nul(inner))
-                inner = &marshaling::onGetRet();
+            if(!_ret)
+                _ret.bind(Marshaling<Ret, tifSub<Ret, node>::is>::onGetRet());
 
-            return *inner;
+            return *_ret;
+        }
+
+        nbool setRet(const node& newRet) override {
+            return _ret.bind(newRet);
         }
 
         const params& getParams() const override;
@@ -71,6 +73,7 @@ namespace namu {
     protected:
         fptrType _fptr;
         mutable tstr<params> _params;
+        mutable str _ret;
     };
 
     template <typename Ret, typename T, template <typename, nbool> class Marshaling,
