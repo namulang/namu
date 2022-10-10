@@ -112,6 +112,7 @@
 
 // valueless-token:
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS PACK ARROW TAB ASSIGN DEFASSIGN
+%token OPEN_CLOSE_SQUARE_BRACKET
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
@@ -248,6 +249,8 @@ postfix: primary {
      } | func-call {
         $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*new getExpr("me"), $1->cast<runExpr>());
         // $1 is still on heap without binder
+     } | postfix '[' expr ']' {
+        $$ = yyget_extra(scanner)->onGetElem(*$1, *$3);
      }
 
 primary: INTVAL {
@@ -361,7 +364,7 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
     | NAME { // TODO: handle 'as' expr
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
-  } | type '['']' {
+  } | type OPEN_CLOSE_SQUARE_BRACKET {
         $$ = yyget_extra(scanner)->onGetArray(*$1);
   } | NAME typeparams {
         tstr<args> argsLife($2);

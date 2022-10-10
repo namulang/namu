@@ -408,6 +408,13 @@ namespace namu {
         return new arr(elemType);
     }
 
+    node* me::onGetElem(const node& arr, const node& idx) {
+        NAMU_DI("tokenEvent: onGetElem(%s, %s)", arr.getType().getName().c_str(),
+                idx.getType().getName().c_str());
+
+        return new runExpr(arr, *new getExpr(arr, "get"), args{narr{idx}});
+    }
+
     node* me::onGetGeneric(const std::string& genericObjName, const args& typeParams) {
         NAMU_DI("tokenEvent: onGetGeneric(%s, params.len[%d])", genericObjName.c_str(), typeParams.len());
         return new getGenericExpr(genericObjName, typeParams);

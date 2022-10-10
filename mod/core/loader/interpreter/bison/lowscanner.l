@@ -55,6 +55,7 @@ namespace {
 }
 \-> { return ARROW; }
 \+\+ { return DOUBLE_PLUS; }
+\[\] { return OPEN_CLOSE_SQUARE_BRACKET; }
 \= { return ASSIGN; }
 ":=" { return DEFASSIGN; }
 [ ]+ ;
