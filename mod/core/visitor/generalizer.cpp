@@ -89,4 +89,14 @@ namespace namu {
 
         onVisit(i, (baseObj::super&) me);
     }
+
+    void me::onVisit(visitInfo i, FAOExpr& me) {
+        const node* org = &_findOrigin(me.getLeft());
+        if(!nul(org))
+            me.setLeft(*org);
+
+        org = &_findOrigin(me.getRight());
+        if(!nul(org))
+            me.setRight(*org);
+    }
 }
