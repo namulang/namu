@@ -144,7 +144,7 @@
 %type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
 %type <asDefBlock> defblock
 //      value:
-%type <asNode> defvar defvar-exp-no-initial-value defvar-exp-initial-value
+%type <asNode> defvar defvar-exp-no-initial-value defvar-exp-initial-value defarray-initial-value
 //      func:
 %type <asNode> deffunc deffunc-default deffunc-deduction
 %type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
@@ -277,6 +277,7 @@ primary: INTVAL {
 expr-line: defexpr-line { $$ = $1; }
          | expr10 { $$ = $1; }
          | return { $$ = $1; }
+         | defarray-initial-value { $$ = $1; }
 expr-compound: defexpr-compound { $$ = $1; }
              | if {
             $$ = new blockExpr(); // TODO: remove
@@ -392,6 +393,10 @@ defvar-exp-initial-value: NAME DEFASSIGN expr {
                           $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
                           free($1);
                       }
+defarray-initial-value: '{' list-items '}' {
+                        $$ = yyget_extra(scanner)->onDefArray(*$2);
+                    }
+
 //  obj:
 defobj: defobj-default { $$ = $1; }
       | defobj-default-generic { $$ = $1; }
