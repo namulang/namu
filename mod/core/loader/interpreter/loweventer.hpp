@@ -130,6 +130,8 @@ namespace namu {
         //          obj:
         obj* onDefObj(const std::string& name, defBlock& blk);
         node* onDefObjGeneric(const std::string& name, const args& typeParams, defBlock& blk);
+        //          container:
+        node* onDefArray(const narr& items);
         //          file:
         void onCompilationUnit(obj& subpack, defBlock& blk);
         //          func:
@@ -161,6 +163,7 @@ namespace namu {
         nbool _onInjectObjSubs(obj& it, defBlock& blk);
         nbool _onInjectCtor(obj& it, defBlock& blk);
         std::vector<std::string> _extractParamTypeNames(const args& types);
+        const node& _onDefArrayType(const narr& items);
 
     private:
         tokenScan* _mode;

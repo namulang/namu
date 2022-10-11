@@ -315,6 +315,9 @@ TEST_F(arrTest, testSimpleBridgedFuncs2) {
 
 TEST_F(arrTest, testBasicDefSyntax) {
     make().parse(R"SRC(
+getIndex() int
+    return 1
+
 main() void
     arr int[]
     aka sys.con c
@@ -324,9 +327,25 @@ main() void
     c.print("len=" + arr.len() + "\n")
     c.print("arr[0]=" + arr.get(0) + "\n")
     c.print("arr[1]=" + arr[1] + "\n")
-    return arr[1]
+    return arr[
+        getIndex()]
     )SRC").shouldVerified(true);
     str res = run();
-    ASSERT_FALSE(nul(res));
+    ASSERT_TRUE(res);
     ASSERT_EQ(res->cast<nint>(), 2); // 2.5(flt) --> 2(int)
+}
+
+TEST_F(arrTest, testImplicitlyDefSyntax) {
+    make().parse(R"SRC(
+    sum(arr int[]) int
+        return arr[0] + arr[1] + arr[2]
+
+    main() int
+        s := sum({1, 2, 3})
+        sys.con.print("sum = " + s + "\n")
+        return s
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 6);
 }

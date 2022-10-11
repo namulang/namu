@@ -209,6 +209,21 @@ namespace namu {
         );
     }
 
+    node* me::onDefArray(const narr& items) {
+        arr* ret = new arr(_onDefArrayType(items));
+        for(const auto& e : items)
+            ret->add(e);
+        return ret;
+    }
+
+    const node& me::_onDefArrayType(const narr& items) {
+        const node* ret = &items[0];
+        for(int n=1; n < items.len(); n++)
+            ret = &ret->reduce(items[n]);
+
+        return *ret;
+    }
+
     void me::onSrcArea(area& area) {
         _srcArea = &area;
     }
