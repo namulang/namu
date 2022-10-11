@@ -318,7 +318,7 @@ TEST_F(arrTest, testBasicDefSyntax) {
 getIndex() int
     return 1
 
-main() void
+main() int
     arr int[]
     aka sys.con c
     c.print("len=" + arr.len())
@@ -348,4 +348,19 @@ TEST_F(arrTest, testImplicitlyDefSyntax) {
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 6);
+}
+
+TEST_F(arrTest, testImplicitlyDefSyntax2) {
+    make().parse(R"SRC(
+    sum(arr flt[]) flt
+        return arr[0] + arr[2]
+
+    main() int
+        g := {1.5, 3, 5.5}
+        s := sum(g)
+        return s as int
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 7);
 }

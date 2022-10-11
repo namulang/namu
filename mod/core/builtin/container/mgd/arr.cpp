@@ -27,22 +27,28 @@ namespace namu {
     }
 
     nbool me::set(const iter& at, const node& new1) {
-        if(!new1.isSub(*_type)) return false;
-        return get().set(at, new1);
+        str ased = new1.asImpli(*_type);
+        if(!ased) return false;
+        return get().set(at, *ased);
     }
     nbool me::set(nidx n, const node& new1) {
-        if(!new1.isSub(*_type)) return false;
-        return get().set(n, new1);
+        str ased = new1.asImpli(*_type);
+        if(!ased) return false;
+        return get().set(n, *ased);
     }
 
     nbool me::add(const iter& at, const node& new1) {
-        if(!new1.isSub(*_type)) return false;
-        return get().add(at, new1);
+        str ased = new1.asImpli(*_type);
+        if(!ased) return false;
+
+        return get().add(at, *ased);
     }
 
     nbool me::add(nidx n, const node& new1) {
-        if(!new1.isSub(*_type)) return false;
-        return get().add(n, new1);
+        str ased = new1.asImpli(*_type);
+        if(!ased) return false;
+
+        return get().add(n, *ased);
     }
 
     void me::add(const iter& here, const iter& from, const iter& to) {
