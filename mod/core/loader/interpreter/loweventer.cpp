@@ -211,6 +211,8 @@ namespace namu {
 
     node* me::onDefArray(const narr& items) {
         arr* ret = new arr(_onDefArrayType(items));
+        NAMU_DI("tokenEvent: onDefArray(items.len[%d] type[%s])", items.len(), ret->getElemType().getType().getName().c_str());
+
         for(const auto& e : items)
             ret->add(e);
         return ret;
