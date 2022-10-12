@@ -7,7 +7,7 @@ namespace namu {
 #define X(T) class T;
 #   include "visitee.inl"
 #undef X
-    class visitor {
+    class _nout visitor {
         NAMU(ME(visitor))
 
     public:

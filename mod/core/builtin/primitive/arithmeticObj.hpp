@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    class arithmeticObj : public baseObj {
+    class _nout arithmeticObj : public baseObj {
         NAMU(ADT(arithmeticObj, baseObj))
 
     public:

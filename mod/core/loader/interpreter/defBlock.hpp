@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    class defBlock : public instance {
+    class _nout defBlock : public instance {
         NAMU(CLASS(defBlock, instance))
 
     public:

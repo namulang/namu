@@ -20,6 +20,4 @@ namespace namu {
     private:
         node& _findMain(node& pak, const args& a);
     };
-
-#include "../common/MSVCHack.hpp"
 }

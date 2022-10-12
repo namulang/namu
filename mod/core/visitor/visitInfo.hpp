@@ -3,7 +3,7 @@
 #include "../common.hpp"
 
 namespace namu {
-    struct visitInfo {
+    struct _nout visitInfo {
         std::string name;
         node* parent;
         nidx index;

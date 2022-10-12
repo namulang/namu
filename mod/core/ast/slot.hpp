@@ -58,6 +58,4 @@ namespace namu {
     typedef tnmap<std::string, slot> slots;
     typedef tnchain<std::string, slot> slotChain;
     typedef tnbicontainer<std::string, slot> slotContainer;
-
-#include "../common/MSVCHack.hpp"
 }
