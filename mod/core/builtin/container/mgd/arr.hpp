@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    class arr : public tcppBridge<narr>, public tucontainable<node>, tarrayable<node> {
+    class _nout arr : public tcppBridge<narr>, public tucontainable<node>, tarrayable<node> {
         NAMU(CLASS(arr, tcppBridge<narr>), VISIT())
         typedef typename tucontainable<node>::iter iter;
         typedef typename tucontainable<node>::iteration iteration;

@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    class graphVisitor : public visitor {
+    class _nout graphVisitor : public visitor {
         NAMU(ME(graphVisitor, visitor))
 
     public:

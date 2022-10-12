@@ -72,7 +72,4 @@ namespace namu {
 
         static verifier* _now;
     };
-
-#include "../common/MSVCHack.hpp"
-
 }

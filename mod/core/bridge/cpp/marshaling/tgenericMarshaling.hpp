@@ -8,7 +8,7 @@ namespace namu {
     struct tgenericMarshaling : public tmarshaling<T, isNode> {};
 
     template <>
-    struct tgenericMarshaling<node&, true> : public metaIf {
+    struct _nout tgenericMarshaling<node&, true> : public metaIf {
         typedef getExpr mgdType;
 
         static node& toNative(node& it) {
@@ -32,7 +32,7 @@ namespace namu {
     };
 
     template <>
-    struct tgenericMarshaling<node*, true> : public metaIf {
+    struct _nout tgenericMarshaling<node*, true> : public metaIf {
         typedef getExpr mgdType;
 
         static node* toNative(node& it) {
@@ -55,7 +55,7 @@ namespace namu {
         static yes canMarshal();
     };
     template <>
-    struct tgenericMarshaling<const node&, true> : public metaIf {
+    struct _nout tgenericMarshaling<const node&, true> : public metaIf {
         typedef getExpr mgdType;
 
         static node& toNative(node& it) {
@@ -79,7 +79,7 @@ namespace namu {
     };
 
     template <>
-    struct tgenericMarshaling<const node*, true> : public metaIf {
+    struct _nout tgenericMarshaling<const node*, true> : public metaIf {
         typedef getExpr mgdType;
 
         static node* toNative(node& it) {

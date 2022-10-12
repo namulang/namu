@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    class args : public narr {
+    class _nout args : public narr {
         NAMU(CLASS(args, narr))
 
     public:

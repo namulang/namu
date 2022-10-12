@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    class generalizer: public visitor {
+    class _nout generalizer: public visitor {
         NAMU(ME(generalizer, visitor))
 
     public:
