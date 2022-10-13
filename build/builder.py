@@ -347,7 +347,7 @@ def _make():
         else:
             printOkEnd("built.")
         printInfo("please check your bin/{configuration} directory for these output files.")
-        return
+        return res
 
     print("")
     make_option = "-j8 -s"  # j4 -> 4 multithread.
