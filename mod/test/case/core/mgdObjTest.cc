@@ -16,7 +16,7 @@ TEST_F(objTest, testGetOriginPointingThis) {
     ASSERT_FALSE(nul(obj1.getOrigin()));
     ASSERT_EQ(&obj1.getOrigin(), &obj1);
 
-    tstr<obj> copied(obj1.clone());
+    tstr<obj> copied((obj*) obj1.clone());
     ASSERT_TRUE(copied);
     ASSERT_NE(&copied.get(), &obj1);
 }

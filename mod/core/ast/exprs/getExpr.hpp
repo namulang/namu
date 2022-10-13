@@ -28,9 +28,9 @@ namespace namu {
         /// @return nullable
         const args& getSubArgs() const;
 
-        me* deepClone() const override {
-            me* ret = clone();
-            if(_args) ret->_args.bind(_args->deepClone());
+        clonable* deepClone() const override {
+            me* ret = (me*) clone();
+            if(_args) ret->_args.bind((args*) _args->deepClone());
 
             return ret;
         }

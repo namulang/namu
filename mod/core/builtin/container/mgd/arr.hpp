@@ -5,8 +5,13 @@
 
 namespace namu {
 
-    class _nout arr : public tcppBridge<narr>, public tucontainable<node>, tarrayable<node> {
-        NAMU(CLASS(arr, tcppBridge<narr>), VISIT())
+    // another f**king annoying MSVC Hack:
+    //  to avoid C2901 error, I need to declare sort of dllexport(import) things at here.
+    //  spended plenty of hours again to find out the reason. thank you so much.
+    typedef class _nout tcppBridge<narr> __argSuperClass;
+
+    class _nout arr : public __argSuperClass, public tucontainable<node>, tarrayable<node> {
+        NAMU(CLASS(arr, __argSuperClass), VISIT())
         typedef typename tucontainable<node>::iter iter;
         typedef typename tucontainable<node>::iteration iteration;
         typedef std::map<const type*, tstr<scope>> cache;
@@ -71,7 +76,7 @@ namespace namu {
         nbool del(const iter& from, const iter& to) override;
 
         //  etc:
-        me* deepClone() const override;
+        clonable* deepClone() const override;
         void rel() override;
 
     protected:

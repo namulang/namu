@@ -38,10 +38,10 @@ namespace namu {
             return *_rhs;
         }
 
-        me* deepClone() const override {
-            me* ret = clone();
-            if(_lhs) ret->_lhs.bind(_lhs->deepClone());
-            if(_rhs) ret->_rhs.bind(_rhs->deepClone());
+        clonable* deepClone() const override {
+            me* ret = (me*) clone();
+            if(_lhs) ret->_lhs.bind((node*) _lhs->deepClone());
+            if(_rhs) ret->_rhs.bind((node*) _rhs->deepClone());
             return ret;
         }
 

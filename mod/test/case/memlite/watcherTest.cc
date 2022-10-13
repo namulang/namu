@@ -13,7 +13,7 @@ namespace {
             return ttype<A>::get();
         }
 
-        A* clone() const override {
+        clonable* clone() const override {
             return new A();
         }
     };
@@ -25,7 +25,7 @@ namespace {
             return ttype<B>::get();
         }
 
-        B* clone() const override {
+        clonable* clone() const override {
             return new B();
         }
     };
@@ -84,7 +84,7 @@ TEST_F(watcherTest, NestedClassBindTest) {
             return ttype<inner>::get();
         }
 
-        inner* clone() const override {
+        clonable* clone() const override {
             return new inner();
         }
     };
@@ -97,7 +97,7 @@ TEST_F(watcherTest, NestedClassBindTest) {
             return ttype<outer>::get();
         }
 
-        outer* clone() const override {
+        clonable* clone() const override {
             return new outer(inner);
         }
 

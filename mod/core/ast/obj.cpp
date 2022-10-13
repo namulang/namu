@@ -54,12 +54,12 @@ namespace namu {
         return ret;
     }
 
-    me* me::deepClone() const {
+    clonable* me::deepClone() const {
         NAMU_DW("obj: deepClone");
 
-        me* ret = clone();
-        if(_shares) ret->_shares.bind(_shares->deepClone()); // chain's deepClone() clones first container only.
-        ret->_subs.bind(ret->_makeNewSubs());
+        me* ret = (me*) clone();
+        if(_shares) ret->_shares.bind((scopes*) _shares->deepClone()); // chain's deepClone() clones first container only.
+        ret->_subs.bind((scopes*) ret->_makeNewSubs());
         return ret;
     }
 }

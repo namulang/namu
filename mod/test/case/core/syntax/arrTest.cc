@@ -199,7 +199,7 @@ TEST_F(arrTest, testDeepClone) {
     arr1.add(new myNode(2));
     ASSERT_EQ(arr1.len(), 2);
 
-    tstr<narr> arr2wrap(arr1.deepClone());
+    tstr<narr> arr2wrap((narr*) arr1.deepClone());
     ASSERT_TRUE(arr2wrap);
     narr& arr2 = *arr2wrap;
     ASSERT_EQ(arr1.len(), arr2.len());

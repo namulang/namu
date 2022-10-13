@@ -109,7 +109,7 @@ namespace namu {
     }
 
     TEMPL
-    ME* ME::deepClone() const {
+    clonable* ME::deepClone() const {
         me* ret = new me();
         for(auto e=this->begin(); e ;e++)
             ret->add((T*) e->clone());

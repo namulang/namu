@@ -64,7 +64,7 @@ TEST_F(objTest, testCloneOriginObj) {
     scopes* newSubs = new scopes();
     originObj o3(*newSubs);
 
-    tstr<originObj> clone(o3.clone());
+    tstr<originObj> clone((originObj*) o3.clone());
     ASSERT_FALSE(nul(*clone));
 
     ASSERT_EQ(clone->subs().len(), 0);
@@ -82,7 +82,7 @@ TEST_F(objTest, testCloneOriginObj) {
 
 TEST_F(objTest, cloneByRunFunc) {
     nInt a(5);
-    nInt& a1 = *a.clone();
+    nInt& a1 = (nInt&) *a.clone();
     ASSERT_NE(&a, &a1);
     ASSERT_EQ(a.cast<int>(), a1.cast<int>());
 }

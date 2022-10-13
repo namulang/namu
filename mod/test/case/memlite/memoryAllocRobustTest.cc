@@ -9,7 +9,7 @@ namespace {
     struct A : public instance {
         NAMU_SINGLETON_GETTER(const type& getType() const, ttype<A>)
 
-        A* clone() const {
+        clonable* clone() const {
             return new A();
         }
 
@@ -20,7 +20,7 @@ namespace {
     struct B : public A {
         NAMU_SINGLETON_GETTER(const type& getType() const, ttype<B>)
 
-        B* clone() const {
+        clonable* clone() const {
             return new B();
         }
 

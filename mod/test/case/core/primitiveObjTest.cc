@@ -8,7 +8,7 @@ struct primitiveObjTest : public namuTest {};
 TEST_F(primitiveObjTest, testCloneWIntInMgd) {
     nInt origin(1);
 
-    tstr<nInt> inst(origin.clone());
+    tstr<nInt> inst((nInt*) origin.clone());
     ASSERT_TRUE(inst);
     ASSERT_EQ(origin.get(), inst->get());
     ASSERT_NE(&origin, &(*inst));

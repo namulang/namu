@@ -69,9 +69,9 @@ namespace namu {
     }
 
     //  etc:
-    me* me::deepClone() const {
-        me* ret = clone();
-        tstr<tnarr<node>> cloned = get().deepClone();
+    clonable* me::deepClone() const {
+        me* ret = (me*) clone();
+        tstr<tnarr<node>> cloned((tnarr<node>*) get().deepClone());
         ret->get().add(*cloned);
         return ret;
     }

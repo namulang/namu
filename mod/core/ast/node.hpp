@@ -86,6 +86,10 @@ namespace namu {
             return inner;
         }
 
+        clonable* deepClone() const override {
+            return (me*) clone();
+        }
+
         virtual void setPos(const point& new1) {}
 
         /// getType() returns what it is. opposite to it, this returns what this class will
