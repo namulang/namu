@@ -26,6 +26,7 @@ file(GLOB_RECURSE sources
 message("put module to ${NAMU_PACK_OUTPUT_DIRECTORY}")
 
 add_library(${packName} SHARED ${sources})
+set_target_properties(${packName} PROPERTIES PREFIX "")
 set_target_properties(${packName} PROPERTIES SUFFIX ".${NAMU_PACK_EXTENSION}")
 set_target_properties(${packName} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${packOutDir}")
 target_link_libraries(${packName} ${dependencies})
