@@ -17,7 +17,7 @@ namespace namu {
             tstr<obj> out(_from->run());
             if(!out) return str();
 
-            return str(out->getOrigin().clone());
+            return str((node*) out->getOrigin().clone());
         }
         const node& getEval() const override {
             return _from->getEval();

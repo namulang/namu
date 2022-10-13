@@ -7,7 +7,7 @@ namespace namu {
 
     template <typename T, typename TACTIC = strTactic>
     class tnarr : public tnucontainer<T>, public tarrayable<T> {
-        NAMU(CLASS(tnarr, tnucontainer<T>))
+        NAMU(ADT(tnarr, tnucontainer<T>))
 
     public:
         friend class arr;
@@ -65,7 +65,8 @@ namespace namu {
         // etc:
         void rel() override;
 
-        me* deepClone() const override;
+        clonable* clone() const override { return new me(*this); }
+        clonable* deepClone() const override;
 
     protected:
         iteration* _onMakeIteration(ncnt step) const override {

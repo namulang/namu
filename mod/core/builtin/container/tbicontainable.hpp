@@ -8,7 +8,7 @@ namespace namu {
     template <typename K, typename V>
     class tnbicontainer;
     template <typename T, typename TACTIC> class tnarr;
-    typedef tnarr<node, strTactic> narr;
+    typedef class _nout tnarr<node, strTactic> narr;
 
     /// @remark tbicontainable has API treating iter ref and element as its parameter.
     template <typename K, typename V>

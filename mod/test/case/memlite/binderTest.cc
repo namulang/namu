@@ -19,7 +19,7 @@ namespace {
             return ttype<A>::get();
         }
 
-        A* clone() const override {
+        clonable* clone() const override {
             return new A();
         }
     };
@@ -40,7 +40,7 @@ namespace {
             return ttype<B>::get();
         }
 
-        B* clone() const override {
+        clonable* clone() const override {
             return new B();
         }
     };
@@ -241,7 +241,7 @@ TEST_F(binderTest, bindStaticVariable) {
         const type& getType() const override {
             return ttype<myInstance>::get();
         };
-        myInstance* clone() const override {
+        clonable* clone() const override {
             return new me();
         }
     };

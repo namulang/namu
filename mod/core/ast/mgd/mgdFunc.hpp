@@ -41,8 +41,8 @@ namespace namu {
         void inFrame(const bicontainable& args) override;
         void outFrame() override;
 
-        me* deepClone() const override {
-            me* ret = clone();
+        clonable* deepClone() const override {
+            me* ret = (me*) clone();
             // params:
             ret->_params.rel();
             for(auto e=_params.begin(); e ;++e)
@@ -52,9 +52,9 @@ namespace namu {
             for(auto e=_shares.begin(); e ;++e)
                 ret->_shares.add(e.getKey(), (node*) e->deepClone());
             // retType:
-            ret->_retType.bind(_retType->deepClone());
+            ret->_retType.bind((node*) _retType->deepClone());
             // blk:
-            ret->_blk.bind(_blk->deepClone());
+            ret->_blk.bind((blockExpr*) _blk->deepClone());
 
             return ret;
         }

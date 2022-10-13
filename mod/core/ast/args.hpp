@@ -32,7 +32,7 @@ namespace namu {
             return ret;
         }
 
-        me* deepClone() const override {
+        clonable* deepClone() const override {
             me* ret = new me();
             for(auto e=this->begin(); e ;e++)
                 ret->add((node*) e->clone());
