@@ -1,6 +1,6 @@
 def entrypoints
     def cpp
-        path := './libsys.pack'
+        path := './sys.pack'
 
 name := 'sys'
 ver := 0.0.1
