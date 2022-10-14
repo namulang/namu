@@ -12,7 +12,7 @@ namespace namu {
     TEMPL
     T& ME::get() {
         if(!_step) return nulOf<T>();
-        return _step->get().template cast<T>();
+        return (T&) _step->get();
     }
 
 

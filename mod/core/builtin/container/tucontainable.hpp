@@ -35,8 +35,21 @@ namespace namu {
 
         // iter:
         iter begin() const { return iterate(0); }
-        virtual iter end() const { return iterate(len()); }
-        virtual iter last() const { return iterate(len()-1); }
+        virtual iter end() const {
+            // why do you need specifier here?:
+            //  please refer nseq. it requires tucontainable to contain nint as type parameter.
+            //  in this case, we have very similar 'iterate' funcs.
+            //      - iterate(ncnt step)
+            //      - iterate(const nint& it)
+            //
+            //  to avoid ambigious error, I used specifier.
+            static iter (me::*specifier)(ncnt) const = &me::iterate;
+            return (this->*specifier)(len());
+        }
+        virtual iter last() const {
+            static iter (me::*specifier)(ncnt) const = &me::iterate;
+            return (this->*specifier)(len()-1);
+        }
         iter iterate(ncnt step) const { return iter(_onMakeIteration(step)); }
         iter iterate(const T& it) const {
             for(iter e = begin(); e ; ++e)
