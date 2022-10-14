@@ -6,3 +6,4 @@
 #include "native/tndumArr.hpp"
 #include "native/tndumMap.hpp"
 #include "native/tndumChain.hpp"
+#include "native/nseq.hpp"

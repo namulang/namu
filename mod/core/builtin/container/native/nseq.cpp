@@ -16,6 +16,9 @@ namespace namu {
 
     nint& me::get(nidx n) {
         static nint inner;
+        if(n >= len()) n = len() - 1;
+        if(n < 0) n = 0;
+
         return inner = _start + _step * n;
     }
 
