@@ -13,6 +13,10 @@ namespace namu {
 #include "../iter/nseqIteration.hpp"
 
     public:
+        nseq(nint start, nint end): _start(start), _end(end) { _updateStep(); }
+        nseq(nint start, nint end, nint step): _start(start), _end(end), _step(step) {}
+
+    public:
         using tarrayable<nint>::operator[];
         virtual nint& operator[](nidx n) override {
             return get(n);
@@ -53,7 +57,7 @@ namespace namu {
         nbool del(const iter& from, const iter& end) override { return false; }
         nbool del(nidx n) override { return false; }
 
-        void _setStep() {
+        void _updateStep() {
             _step = _end >= _start ? 1 : -1;
         }
 
