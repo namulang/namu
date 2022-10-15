@@ -26,9 +26,6 @@ namespace namu {
         node& operator[](nidx n) override;
 
     public:
-        tnarr<node>& getNative();
-        const tnarr<node>& getNative() const;
-
         const node& getElemType() const {
             return *_type;
         }
