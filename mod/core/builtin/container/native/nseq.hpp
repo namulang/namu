@@ -8,6 +8,7 @@ namespace namu {
 
     class _nout nseq : public tnucontainer<nint>, public tarrayable<nint> {
         NAMU(CLASS(nseq, tnucontainer<nint>))
+        friend class seq;
 
     public:
 #include "../iter/nseqIteration.hpp"
