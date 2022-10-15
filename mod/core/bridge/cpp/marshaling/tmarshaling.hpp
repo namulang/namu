@@ -160,6 +160,8 @@ namespace namu {
     };
 
     template <> struct _nout tmarshaling<nint, false> : public tnormalMarshaling<nint, nInt> {};
+    template <> struct _nout tmarshaling<nint&, false> : public tnormalMarshaling<nint, nInt> {};
+    template <> struct _nout tmarshaling<const nint&, false> : public tnormalMarshaling<nint, nInt> {};
     template <> struct _nout tmarshaling<nbool, false> : public tnormalMarshaling<nbool, nBool> {};
     template <> struct _nout tmarshaling<nflt, false> : public tnormalMarshaling<nflt, nFlt> {};
     template <> struct _nout tmarshaling<nchar, false> : public tnormalMarshaling<nchar, nChar> {};
