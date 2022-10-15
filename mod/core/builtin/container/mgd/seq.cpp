@@ -11,12 +11,15 @@ namespace namu {
     me::seq(nint start, nint end, nint step): super(new nseq(start, end, step)) {}
 
     nbicontainer& me::subs() {
-        nbicontainer& subs = super::subs();
-        if(subs.len() <= 0) {
-            func("len", &nseq::len);
+        static super* inner;
+        if(nul(inner)) {
+            inner = new super();
+            inner->func("len", &nseq::len);
+            inner->func("get", &nseq::get);
+            inner->func("has", &nseq::has);
         }
 
-        return subs;
+        return inner->subs();
     }
 
     me::iteration* me::_onMakeIteration(ncnt step) const {
