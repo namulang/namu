@@ -132,8 +132,23 @@ TEST_F(genericsTest, simpleUseGenerics) {
     ASSERT_EQ(msg, "hello generics!\n");
     NAMU_I("msg from generics: %s", msg.c_str());
 }
-/*
-TEST_F(genericsTest, genericNegative) {
+
+TEST_F(genericsTest, implicitReturnTest) {
+    make().parse(R"SRC(
+        def pakuman<T>
+            foo() T
+                "hello " + "world"
+
+        main() str
+            p := pakuman<str>()
+            p.foo()
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->cast<std::string>(), "hello world");
+}
+
+TEST_F(genericsTest, simpleUseGenerics2) {
     make().parse(R"SRC(
         def object<T>
             foo(val T) T
@@ -142,12 +157,24 @@ TEST_F(genericsTest, genericNegative) {
                 return val + age
 
         main() str
-            a := object<int>()
-            b := object<str>() // run 'b.foo()' occurs F/C
+            b := object<str>()
             return b.foo("3.5")
     )SRC").shouldVerified(true);
     str ret = run();
     ASSERT_FALSE(nul(ret));
     ASSERT_EQ(ret->cast<std::string>(), "3.5");
 }
-*/
+
+TEST_F(genericsTest, genericNegative) {
+    make().negative().parse(R"SRC(
+        def object<T>
+            foo(val T) T
+                age := T()
+                sys.con.print((val + age) as T)
+                return val + age
+
+        main() str
+            b := object<int>() // error at print(int)
+            return b.foo(3.5)
+    )SRC").shouldVerified(false);
+}
