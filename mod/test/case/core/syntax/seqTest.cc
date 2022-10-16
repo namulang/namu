@@ -1,10 +1,9 @@
-#include "../../namuTest.hpp"
-#include <chrono>
+#include "../../../namuSyntaxTest.hpp"
 
 using namespace namu;
 using namespace std;
 
-struct seqTest : public namuTest {};
+struct seqTest : public namuSyntaxTest {};
 
 TEST_F(seqTest, basicBehaviour) {
     nseq s(1, 10);
@@ -62,4 +61,17 @@ TEST_F(seqTest, eachReturnedValueShouldBeDifferent) {
     ASSERT_EQ(ret2->cast<nint>(), s[1]);
 
     ASSERT_EQ(ret->cast<nint>(), s[0]);
+}
+
+TEST_F(seqTest, basicSyntax) {
+    make().parse(R"SRC(
+    main() int
+        seq := 2..4 // [2, 4)
+        sys.con.print("seq.len=" + seq.len() + "\n")
+        sys.con.print("seq[1]=" + seq[1] + "\n")
+        return seq[2]
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->cast<nint>(), 3);
 }

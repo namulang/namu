@@ -240,6 +240,12 @@ namespace namu {
             NAMU_E("verify: defVarExpr: define variable %s is failed.", name.c_str());
     }
 
+    void me::onVisit(visitInfo i, defSeqExpr& me) {
+        NAMU_DI("verify: defSeqExpr: check lhs & rhs");
+        if(nul(me.getStart())) return _srcErr(me.getPos(), errCode::LHS_IS_NULL);
+        if(nul(me.getEnd())) return _srcErr(me.getPos(), errCode::RHS_IS_NULL);
+    }
+
     void me::onVisit(visitInfo i, FAOExpr& me) {
         NAMU_DI("verify: FAOExpr: lhs & rhs should bind something.");
         const node& lhs = me.getLeft();

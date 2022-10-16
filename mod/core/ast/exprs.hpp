@@ -12,3 +12,4 @@
 #include "exprs/FAOExpr.hpp"
 #include "exprs/makeExpr.hpp"
 #include "exprs/getGenericExpr.hpp"
+#include "exprs/defSeqExpr.hpp"
