@@ -72,11 +72,18 @@ TEST_F(returnExprTest, returnLocalVariable) {
     shouldVerified(true);
 }
 
-TEST_F(returnExprTest, returnTypeImplicit) {
-    /* TODO: make().parse(R"SRC(
+TEST_F(returnExprTest, returnTypeImplicitCasting) {
+    make().parse(R"SRC(
         make() int
             return 3.5
     )SRC").shouldParsed(true);
-    shouldVerified(true);*/
+    shouldVerified(true);
 }
 
+TEST_F(returnExprTest, returnVoidNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            return 3
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
