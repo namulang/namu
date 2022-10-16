@@ -75,3 +75,14 @@ TEST_F(seqTest, basicSyntax) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res->cast<nint>(), 3);
 }
+
+TEST_F(seqTest, addSeqElement) {
+    make().parse(R"SRC(
+    main() int
+        seq := 2..4
+        return seq[0] + seq[1]
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->cast<nint>(), 5);
+}
