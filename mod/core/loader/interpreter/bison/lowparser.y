@@ -111,7 +111,7 @@
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE SCAN_MODE_END
 
 // valueless-token:
-%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS PACK ARROW TAB ASSIGN DEFASSIGN
+%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS DOUBLE_DOT PACK ARROW TAB ASSIGN DEFASSIGN
 %token OPEN_CLOSE_SQUARE_BRACKET
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
@@ -145,6 +145,7 @@
 %type <asDefBlock> defblock
 //      value:
 %type <asNode> defvar defvar-exp-no-initial-value defvar-exp-initial-value defarray-initial-value
+%type <asNode> defseq
 //      func:
 %type <asNode> deffunc deffunc-default deffunc-deduction
 %type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
@@ -278,6 +279,8 @@ expr-line: defexpr-line { $$ = $1; }
          | expr10 { $$ = $1; }
          | return { $$ = $1; }
          | defarray-initial-value { $$ = $1; }
+         | defseq { $$ = $1; }
+
 expr-compound: defexpr-compound { $$ = $1; }
              | if {
             $$ = new blockExpr(); // TODO: remove
@@ -287,7 +290,7 @@ expr-compound: defexpr-compound { $$ = $1; }
 expr10: expr9 { $$ = $1; }
       | expr10 ASSIGN expr9 {
         $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
-    }
+    } 
 expr9: expr8 { $$ = $1; }
 expr8: expr7 { $$ = $1; }
 expr7: expr6 { $$ = $1; }
@@ -396,6 +399,9 @@ defvar-exp-initial-value: NAME DEFASSIGN expr {
 defarray-initial-value: '{' list-items '}' {
                         $$ = yyget_extra(scanner)->onDefArray(*$2);
                     }
+defseq: expr10 DOUBLE_DOT expr10 {
+        $$ = yyget_extra(scanner)->onDefSeq(*$1, *$3);
+    }
 
 //  obj:
 defobj: defobj-default { $$ = $1; }

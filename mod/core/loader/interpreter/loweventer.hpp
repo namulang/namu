@@ -132,6 +132,7 @@ namespace namu {
         node* onDefObjGeneric(const std::string& name, const args& typeParams, defBlock& blk);
         //          container:
         node* onDefArray(const narr& items);
+        node* onDefSeq(const node& start, const node& end);
         //          file:
         void onCompilationUnit(obj& subpack, defBlock& blk);
         //          func:

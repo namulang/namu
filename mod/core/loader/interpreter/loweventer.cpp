@@ -226,6 +226,12 @@ namespace namu {
         return *ret;
     }
 
+    node* me::onDefSeq(const node& start, const node& end) {
+        NAMU_DI("tokenEvent: onDefSeq()");
+
+        return new defSeqExpr(start, end);
+    }
+
     void me::onSrcArea(area& area) {
         _srcArea = &area;
     }
