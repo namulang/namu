@@ -164,7 +164,7 @@ namespace namu {
         if(nul(lastEval)) return _err(lastStmt.getPos(), NO_RET_TYPE);
         const ntype& lastType = lastEval.getType(); // to get type of expr, always uses evalType.
         if(nul(lastType)) return _err(lastStmt.getPos(), NO_RET_TYPE);
-        if(!lastType.isSub(retType)) return _err(lastStmt.getPos(), errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
+        if(!lastType.isImpli(retType)) return _err(lastStmt.getPos(), errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
                 retType.getName().c_str());
 
         NAMU_DI("verify: blockExpr: block.outFrame()");
