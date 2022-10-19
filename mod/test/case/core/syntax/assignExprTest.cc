@@ -97,6 +97,62 @@ TEST_F(assignExprTest, assignClassNegative2) {
     shouldVerified(false);
 }
 
+TEST_F(assignExprTest, assignAsParameterNegative) {
+    make().negative().parse(R"SRC(
+        def f
+            foo(a int, b int) int
+                return a + b
+
+        main() void
+            f1 f
+            a = f1.foo(a := 5, 5)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(assignExprTest, assignAsParameterNegative2) {
+    make().negative().parse(R"SRC(
+        def f
+            foo(a int, b int) int
+                return a + b
+
+        main() void
+            f1 f
+            a = f1.foo((a := 5), 5)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(assignExprTest, assignAsParameterNegative3) {
+    make().negative().parse(R"SRC(
+        def f
+            foo(a int, b int) int
+                return a + b
+
+        main() int
+            f1 f
+            a2 := f1.foo((a := 5), 5)
+            a2 = a2 + a
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(assignExprTest, assignAsParameter) {
+    make().parse(R"SRC(
+        def f
+            foo(a int, b int) int
+                return a + b
+
+        main() int
+            f1 f
+            a2 := f1.foo(a := 5, 5)
+            a2 = a2 + a
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 15);
+}
 // TODO: assignNegative inheritence
 // TODO: assignDotChain: A.B.name
 // TODO: assignComplexDotChain: B[A.foo() + 3].name
