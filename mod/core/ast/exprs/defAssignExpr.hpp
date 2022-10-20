@@ -8,6 +8,7 @@ namespace namu {
 
     class visitor;
 
+    /// in fact, defAssign is a stmt, not a expression.
     class _nout defAssignExpr : public expr {
         NAMU(CLASS(defAssignExpr, expr, expr::exprType), VISIT())
         friend class verifier;

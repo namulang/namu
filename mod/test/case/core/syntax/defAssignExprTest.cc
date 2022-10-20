@@ -149,3 +149,43 @@ TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative3) {
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
+
+TEST_F(defAssignExprTest, defAssignAsParameterNegative) {
+    make().negative().parse(R"SRC(
+        def f
+            foo(a int, b int) int
+                return a + b
+
+        main() void
+            f1 f
+            a = f1.foo(a := 5, 5)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(defAssignExprTest, defAssignAsParameterNegative2) {
+    make().negative().parse(R"SRC(
+        def f
+            foo(a int, b int) int
+                return a + b
+
+        main() void
+            f1 f
+            a = f1.foo((a := 5), 5)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(defAssignExprTest, defAssignAsParameterNegative3) {
+    make().negative().parse(R"SRC(
+        def f
+            foo(a int, b int) int
+                return a + b
+
+        main() int
+            f1 f
+            a2 := f1.foo((a := 5), 5)
+            a2 = a2 + a
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
