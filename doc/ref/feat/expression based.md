@@ -25,25 +25,7 @@ lastElem := for e in arr
 lastElem == 20
 ```
 
-## def 도 expression으로 평가된다.
-```namu
-def myObj
-    say() void = null
-
-foo(object myObj) void
-    object.say()    
-
-foo(def helloObj() myObj
-    say() void
-        print("hello world"))
-
-/*
-foo(def helloObj myObj // 이 경우 origin 객체이므로 호출이 불가능하다.
-    say() void
-        print("hello world")
-)
-*/
-```
+## 단, def는 expression으로 평가되지 않는다.
 
 ## expression으로 판정시 반환형은 ret 키워드로 판단한다.
 ```namu
