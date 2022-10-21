@@ -175,3 +175,18 @@ TEST_F(defFuncTest, nameLikeStr) {
     )SRC").shouldParsed(true);
     shouldVerified(true);
 }
+
+TEST_F(defFuncTest, defFuncAtSubPack) {
+    make().parse(R"SRC(
+        foo(msg str[]) str
+            sys.con.print(msg[0])
+            msg[0]
+
+        main() str
+            msgs := {"hello", "world"}
+            foo(msgs)
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "hello");
+}
