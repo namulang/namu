@@ -94,12 +94,12 @@ TEST_F(runExprTest, runWithArgumentNegative) {
     shouldVerified(false);
 }
 
-TEST_F(runExprTest, runWithArgumentNegative2) {
+TEST_F(runExprTest, runWithArgument2) {
     negative().make().parse(R"SRC(
         foo(name str, grade flt) int
             3
         make() flt
             foo("hello", 3.5)
     )SRC").shouldParsed(true);
-    shouldVerified(false);
+    shouldVerified(true);
 }
