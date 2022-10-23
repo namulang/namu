@@ -96,6 +96,62 @@ namespace namu {
         return *clone;
     }
 
+    namespace {
+        typedef tucontainable<node>::iter niter;
+        typedef tcppBridge<niter> __superMgdIter;
+        class _nout mgdIter : public __superMgdIter {
+            NAMU(CLASS(mgdIter, __superMgdIter))
+
+        public:
+            mgdIter(niter* real): super(real) {}
+
+        public:
+            using super::subs;
+            nbicontainer& subs() override {
+                static super* inner = nullptr;
+                if(nul(inner)) {
+                    inner = new super();
+                    inner->func("isEnd", &niter::isEnd);
+                    inner->func("next", &niter::next);
+                }
+
+                return inner->subs();
+            }
+        };
+
+        class iterateFunc : public func {
+            NAMU(CLASS(iterateFunc, func))
+
+        public:
+            const node& getRet() const override {
+                static mgdIter inner(nullptr);
+                return inner;
+            }
+
+            const params& getParams() const override {
+                static params inner;
+                if(inner.len() < 0)
+                    inner.add(new param("step", *new nInt()));
+
+                return inner;
+            }
+
+            str run(const args& a) override {
+                const params& ps = getParams();
+                if(a.len() != ps.len()) return NAMU_W("a.len(%d) != ps.len(%d)", a.len(), ps.len()), str();
+                arr& meObj = a.getMe().cast<arr>();
+                if(nul(meObj)) return NAMU_E("meObj as arr == null"), str();
+
+                str eval = a[0].as(ps[0].getOrigin().as<node>());
+                if(!eval)
+                    return NAMU_E("evaluation of arg[%s] -> param[%s] has been failed", a[0].getType().getName().c_str(), ps[0].getType().getName().c_str()), str();
+
+                nint step = eval->cast<nint>();
+                return new mgdIter(new niter(meObj.get().iterate(step)));
+            }
+        };
+    }
+
     scope& me::_getOriginScope() {
         static super* inner = nullptr;
         if(nul(inner)) {
@@ -108,6 +164,7 @@ namespace namu {
             inner->genericFunc<nbool, nidx, const node&>("set", &narr::set);
             inner->genericFunc<node&, nidx>("get", &narr::get);
             inner->genericFunc("has", &narr::has);
+            inner->subs().add("iterate", new iterateFunc());
         }
 
         return inner->subs().cast<scope>();
