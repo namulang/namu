@@ -113,6 +113,7 @@ namespace namu {
                     inner = new super();
                     inner->func("isEnd", &niter::isEnd);
                     inner->func("next", &niter::next);
+                    inner->func<node&>("get", &niter::get);
                 }
 
                 return inner->subs();
@@ -130,7 +131,7 @@ namespace namu {
 
             const params& getParams() const override {
                 static params inner;
-                if(inner.len() < 0)
+                if(inner.len() <= 0)
                     inner.add(new param("step", *new nInt()));
 
                 return inner;
