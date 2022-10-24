@@ -313,6 +313,34 @@ TEST_F(arrTest, testSimpleBridgedFuncs2) {
     ASSERT_EQ(res.cast<nbool>(), false);
 }
 
+TEST_F(arrTest, testIteratorBridgedFunc) {
+    tarr<nInt> arr1;
+    node& it = arr1;
+
+    arr1.add(new nInt(1));
+
+    str res = it.run("iterate", args{narr{*new nInt(0)}});
+    ASSERT_TRUE(res);
+    ASSERT_NE(res->subs().len(), 0);
+
+    str resOfIter = res->run("isEnd");
+    ASSERT_TRUE(resOfIter);
+    ASSERT_FALSE(resOfIter->cast<nbool>());
+
+    str elem = res->run("get");
+    ASSERT_TRUE(elem);
+    ASSERT_EQ(elem->cast<nint>(), 1);
+    ASSERT_EQ(elem->getType(), arr1.getElemType().getType());
+
+    str step = res->run("next", args{narr{*new nInt(1)}});
+    ASSERT_TRUE(step);
+    ASSERT_EQ(step->cast<nint>(), 0);
+
+    resOfIter = res->run("isEnd");
+    ASSERT_TRUE(resOfIter);
+    ASSERT_TRUE(resOfIter->cast<nbool>());
+}
+
 TEST_F(arrTest, testBasicDefSyntax) {
     make().parse(R"SRC(
 getIndex() int
