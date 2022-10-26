@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../../builtin/primitive.hpp"
+#include "../../../ast/dumNode.hpp"
 
 namespace namu {
 
@@ -73,6 +74,29 @@ namespace namu {
         }
 
         static no canMarshal();
+    };
+    template <>
+    struct tmarshaling<node&, true> : public metaIf {
+        typedef node mgdType;
+
+        static node& toNative(node& it) {
+            return it;
+        }
+
+        template <typename E>
+        static str toMgd(E& it) {
+            return it;
+        }
+
+        static mgdType& onAddParam() {
+            return *new dumNode();
+        }
+
+        static mgdType& onGetRet() {
+            return *new dumNode();
+        }
+
+        static yes canMarshal();
     };
     template <typename T>
     struct tmarshaling<T&, true> : public metaIf {
