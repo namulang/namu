@@ -40,7 +40,9 @@ namespace namu {
 
         frameInteract f1(meObj); {
             frameInteract f2(*this, s); {
-                _blk->run();
+                frameInteract f3(*_blk); {
+                    _blk->run();
+                }
                 ret = thread::get()._getNowFrame().popReturn();
             }
         }

@@ -33,17 +33,15 @@ namespace namu {
     }
 
     str me::run(const args& a) {
-        frameInteract f1(*this); {
-            str ret;
-            frame& fr = namu::thread::get()._getNowFrame();
-            for(auto& e : _exprs) {
-                ret = e.run();
-                if(fr.isReturned()) break;
-            }
-
-            fr.pushReturn(ret);
-            return ret;
+        str ret;
+        frame& fr = namu::thread::get()._getNowFrame();
+        for(auto& e : _exprs) {
+            ret = e.run();
+            if(fr.isReturned()) break;
         }
+
+        fr.pushReturn(ret);
+        return ret;
     }
 
     const node& me::getEval() const {
