@@ -13,3 +13,4 @@
 #include "exprs/makeExpr.hpp"
 #include "exprs/getGenericExpr.hpp"
 #include "exprs/defSeqExpr.hpp"
+#include "exprs/forExpr.hpp"

@@ -75,3 +75,6 @@ PAIRX(RET_TYPE_NOT_MATCH,   "%s return type isn't valid to %s return type of fun
 
 // block:
 PAIRX(BLK_CANT_MAKE_FRAME,  "block statement failed to construct frame structure")
+
+// container:
+PAIRX(ELEM_TYPE_IS_NULL,    "elem type is null")

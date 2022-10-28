@@ -380,4 +380,26 @@ namespace namu {
         //  if I don't have this func, getGenericExpr::super (=baseObj)'s one will be called.
         //  and me pointer will be erased too inside the func.
     }
+
+    void me::onVisit(visitInfo i, forExpr& me) {
+        str container = me._container;
+        arr& con1 = container->cast<arr>();
+        str elemType;
+        if(!nul(con1))
+            elemType = con1.getElemType().as<node>();
+        if(!elemType)
+            return _srcErr(me.getPos(), errCode::ELEM_TYPE_IS_NULL);
+
+        const std::string& name = me.getLocalName();
+        NAMU_DI("verify: forExpr: define iterator '%s %s'", elemType->getType().getName().c_str(),
+                name.c_str());
+
+        me._blk->inFrame(nulOf<bicontainable>());
+        thread::get()._getNowFrame().pushLocal(name, *elemType);
+    }
+
+    void me::onLeave(visitInfo i, forExpr& me) {
+        NAMU_DI("verify: forExpr: onLeave");
+        me._blk->outFrame();
+    }
 }
