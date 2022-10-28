@@ -51,6 +51,8 @@ namespace namu {
         void onLeave(visitInfo i, baseObj& me) override;
         void onVisit(visitInfo i, genericObj& me) override;
         void onLeave(visitInfo i, genericObj& me) override;
+        void onVisit(visitInfo i, forExpr& me) override;
+        void onLeave(visitInfo i, forExpr& me) override;
 
     private:
         // @param newInfo is not a heap instance.

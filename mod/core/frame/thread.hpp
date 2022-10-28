@@ -24,6 +24,7 @@ namespace namu {
         friend class returnExpr;
         friend class runExpr;
         friend class func; // for frames.
+        friend class forExpr;
         friend struct ::exprTest;
 
     private:
