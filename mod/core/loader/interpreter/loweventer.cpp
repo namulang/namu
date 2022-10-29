@@ -529,6 +529,12 @@ namespace namu {
         return new FAOExpr(FAOExpr::MOD, lhs, rhs);
     }
 
+    node* me::onFor(const std::string& iterName, const node& expr, const blockExpr& blk) {
+        NAMU_DI("tokenEvent: onFor(%s, %s)", iterName.c_str(), expr.getType().getName().c_str());
+
+        return new forExpr(iterName, expr, blk);
+    }
+
     node* me::onAkaDefault(const getExpr& dotname, const std::string& newName) {
         NAMU_DI("tokenEvent: onAkaDefault(%s..., %s)", dotname.getSubName().c_str(), newName.c_str());
         return new blockRule(
@@ -538,8 +544,6 @@ namespace namu {
             }
         );
     }
-
-
 
     me::loweventer() { rel(); }
 

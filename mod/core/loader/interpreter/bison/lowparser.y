@@ -116,7 +116,7 @@
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
-%token IF AKA RETURN AS DEF
+%token IF AKA RETURN AS DEF FOR IN
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -135,7 +135,7 @@
 %type <asArgs> typenames typeparams
 //  keyword:
 %type <asNode> return
-%type <asNode> if
+%type <asNode> if for
 %type <asNode> aka aka-default aka-deduced
 %type <asObj> pack
 //  expr:
@@ -282,15 +282,14 @@ expr-line: defexpr-line { $$ = $1; }
          | defseq { $$ = $1; }
 
 expr-compound: defexpr-compound { $$ = $1; }
-             | if {
-            $$ = new blockExpr(); // TODO: remove
-           }
+             | if { $$ = new blockExpr(); } // TODO: remove
+             | for { $$ = $1; }
 
 //  expr-line:
 expr10: expr9 { $$ = $1; }
       | expr10 ASSIGN expr9 {
         $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
-    } 
+    }
 expr9: expr8 { $$ = $1; }
 expr8: expr7 { $$ = $1; }
 expr7: expr6 { $$ = $1; }
@@ -330,6 +329,12 @@ return: RETURN {
 if: IF expr indentblock {
     // TODO:
     }
+
+for: FOR NAME IN expr-line indentblock {
+    $$ = yyget_extra(scanner)->onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
+    free($2);
+ }
+
 aka: aka-default { $$ = $1; }
    | aka-deduced { $$ = $1; }
 aka-default: AKA dotname NAME {
