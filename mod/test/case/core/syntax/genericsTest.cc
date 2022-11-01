@@ -46,7 +46,7 @@ TEST_F(genericsTest, defineGenerics1) {
             boo() T
                 return T()
 
-        main() void
+        main() str
             a := object<int>()
             sys.con.print(a.foo(2) as str)
     )SRC").shouldVerified(true);

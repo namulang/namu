@@ -108,6 +108,8 @@ aka { return AKA; }
 return { return RETURN; }
 as { return AS; }
 def { return DEF; }
+for { return FOR; }
+in { return IN; }
 
 [a-zA-Z0-9_]+ {
     yylval->asStr = new std::string(yytext);
