@@ -90,14 +90,17 @@ Inheritance diagram for namu::expr:</div>
 <area href="classnamu_1_1as_expr.html" alt="namu::asExpr" shape="rect" coords="312,224,458,248"/>
 <area href="classnamu_1_1assign_expr.html" alt="namu::assignExpr" shape="rect" coords="312,280,458,304"/>
 <area href="classnamu_1_1block_expr.html" alt="namu::blockExpr" shape="rect" coords="312,336,458,360"/>
-<area href="classnamu_1_1def_assign_expr.html" alt="namu::defAssignExpr" shape="rect" coords="312,392,458,416"/>
-<area href="classnamu_1_1def_var_expr.html" alt="namu::defVarExpr" shape="rect" coords="312,448,458,472"/>
-<area href="classnamu_1_1_f_a_o_expr.html" alt="namu::FAOExpr" shape="rect" coords="312,504,458,528"/>
-<area href="classnamu_1_1func.html" alt="namu::func" shape="rect" coords="312,560,458,584"/>
-<area href="classnamu_1_1get_expr.html" alt="namu::getExpr" shape="rect" coords="312,616,458,640"/>
-<area href="classnamu_1_1make_expr.html" alt="namu::makeExpr" shape="rect" coords="312,672,458,696"/>
-<area href="classnamu_1_1return_expr.html" alt="namu::returnExpr" shape="rect" coords="312,728,458,752"/>
-<area href="classnamu_1_1run_expr.html" alt="namu::runExpr" shape="rect" coords="312,784,458,808"/>
+<area href="classnamu_1_1def_array_expr.html" alt="namu::defArrayExpr" shape="rect" coords="312,392,458,416"/>
+<area href="classnamu_1_1def_assign_expr.html" title="in fact, defAssign is a stmt, not a expression." alt="namu::defAssignExpr" shape="rect" coords="312,448,458,472"/>
+<area href="classnamu_1_1def_seq_expr.html" alt="namu::defSeqExpr" shape="rect" coords="312,504,458,528"/>
+<area href="classnamu_1_1def_var_expr.html" alt="namu::defVarExpr" shape="rect" coords="312,560,458,584"/>
+<area href="classnamu_1_1_f_a_o_expr.html" alt="namu::FAOExpr" shape="rect" coords="312,616,458,640"/>
+<area href="classnamu_1_1for_expr.html" alt="namu::forExpr" shape="rect" coords="312,672,458,696"/>
+<area href="classnamu_1_1func.html" alt="namu::func" shape="rect" coords="312,728,458,752"/>
+<area href="classnamu_1_1get_expr.html" alt="namu::getExpr" shape="rect" coords="312,784,458,808"/>
+<area href="classnamu_1_1make_expr.html" alt="namu::makeExpr" shape="rect" coords="312,840,458,864"/>
+<area href="classnamu_1_1return_expr.html" alt="namu::returnExpr" shape="rect" coords="312,896,458,920"/>
+<area href="classnamu_1_1run_expr.html" alt="namu::runExpr" shape="rect" coords="312,952,458,976"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -133,8 +136,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setPos</b> (const <a 
 <tr class="memitem:aaa0c5a2ee37ce890854488c85d34ed7c inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="aaa0c5a2ee37ce890854488c85d34ed7c"></a>
 <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const std::string &amp;name) const</td></tr>
 <tr class="separator:aaa0c5a2ee37ce890854488c85d34ed7c inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8428a6d4781228562d90631f7497c69f inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classnamu_1_1tnbicontainer.html">nbicontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1node.html#a8428a6d4781228562d90631f7497c69f">subs</a> () const NAMU_UNCONST_FUNC(subs()) const <a class="el" href="classnamu_1_1node.html">node</a> &amp;reduce(const <a class="el" href="classnamu_1_1node.html">node</a> &amp;r) const</td></tr>
-<tr class="separator:a8428a6d4781228562d90631f7497c69f inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab09403806cf0d8317309add564355e0c inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classnamu_1_1tnbicontainer.html">nbicontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1node.html#ab09403806cf0d8317309add564355e0c">subs</a> () const NAMU_UNCONST_FUNC(subs()) const <a class="el" href="classnamu_1_1node.html">node</a> &amp;deduce(const <a class="el" href="classnamu_1_1node.html">node</a> &amp;r) const</td></tr>
+<tr class="separator:ab09403806cf0d8317309add564355e0c inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a922c2ada48cfb345a438b3cd23a51a inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a8a922c2ada48cfb345a438b3cd23a51a"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8a922c2ada48cfb345a438b3cd23a51a inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (std::function&lt; nbool(const std::string &amp;, const T &amp;)&gt; l) const</td></tr>
