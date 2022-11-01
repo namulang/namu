@@ -19,6 +19,14 @@ namespace namu {
         friend class baseObj;
 
     public:
+        enum retState {
+            NO_RET = 0,
+            RET,
+            RETURN
+        };
+
+    public:
+        frame();
         ~frame() override;
 
         /*/// @return returns tpair<node, itsOwner>. the owner has the container holding the node
@@ -70,9 +78,11 @@ namespace namu {
 
         void rel() override;
 
+        nbool pushRet(const str& toRet);
         nbool pushReturn(const str& toReturn);
-        nbool isReturned() const;
+        retState getRetState() const;
         str popReturn();
+        str popRet();
 
     protected:
         static baseObj& _setMe(baseObj& new1);
@@ -87,5 +97,6 @@ namespace namu {
         tstr<func> _func;
         scopeStack _local;
         str _ret;
+        retState _retState;
     };
 }

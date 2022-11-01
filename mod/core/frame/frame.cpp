@@ -6,6 +6,10 @@ namespace namu {
 
     NAMU_DEF_ME(frame)
 
+    me::frame() {
+        _rel();
+    }
+
     me::~frame() {
         _rel();
     }
@@ -56,7 +60,10 @@ namespace namu {
 
     scopes& me::getTop() { return *_local.getTop(); }
 
-    tstr<scopes> me::popLocal() { return _local.pop(); }
+    tstr<scopes> me::popLocal() {
+        popRet();
+        return _local.pop();
+    }
     // I won't provide API for poping a single node from the scope.
 
     void me::setFunc(func& new1) {
@@ -82,17 +89,34 @@ namespace namu {
         super::rel();
     }
 
-    nbool me::pushReturn(const str& toReturn) { return _ret.bind(*toReturn); }
-    nbool me::isReturned() const { return _ret.isBind(); }
+    nbool me::pushRet(const str& toRet) {
+        if(_retState == RETURN) return true;
+
+        _retState = RET;
+        return _ret.bind(*toRet);
+    }
+    nbool me::pushReturn(const str& toReturn) {
+        _retState = RETURN;
+        return _ret.bind(*toReturn);
+    }
+
+    frame::retState me::getRetState() const { return _retState; }
     str me::popReturn() {
         str ret = _ret;
         _ret.rel();
+        _retState = NO_RET;
         return ret;
+    }
+
+    str me::popRet() {
+        if(_retState == RETURN) return _ret;
+        return popReturn();
     }
 
     void me::_rel() {
         _obj.rel();
         _func.rel();
         _local.rel();
+        popReturn();
     }
 }
