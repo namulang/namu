@@ -52,3 +52,46 @@ TEST_F(forTest, testWhatFromFunc) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 6);
 }
+
+TEST_F(forTest, putAkaMiddleOfLoop) {
+    make().parse(R"SRC(
+        foo() int[]
+            return {1, 2, 3}
+
+        main() int
+            sum := 0
+            for n in foo()
+                sum = sum + n
+                aka sys.con
+                con.print("sum=" + sum + ", n=" + n + "\n")
+
+            return sum
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 6);
+}
+
+TEST_F(forTest, sequenceLoop) {
+    make().parse(R"SRC(
+        main() int
+            sum := 0
+            for n in 2..5
+                sum = sum + n
+                sys.con.print("sum=" + sum + ", n=" + n + "\n")
+
+            return sum
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 9);
+}
+
+TEST_F(forTest, validationCheck) {
+    make().parse(R"SRC(
+        main() str
+            for n in {1, 2, 3}
+                sys.con.print(n)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
