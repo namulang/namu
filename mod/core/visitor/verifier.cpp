@@ -383,11 +383,8 @@ namespace namu {
 
     void me::onVisit(visitInfo i, forExpr& me) {
         str container = me._container;
-        str conAsed = container->as<arr>();
-        arr& con1 = conAsed.cast<arr>();
-        str elemType;
-        if(!nul(con1))
-            elemType = con1.getElemType().as<node>();
+        str conAsed = container->as<node>();
+        str elemType = conAsed->run("getElemType");
         if(!elemType)
             return _srcErr(me.getPos(), errCode::ELEM_TYPE_IS_NULL);
 
