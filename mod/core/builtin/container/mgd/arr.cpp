@@ -151,6 +151,25 @@ namespace namu {
                 return new mgdIter(new niter(meObj.get().iterate(step)));
             }
         };
+
+        class getElemTypeFunc : public func {
+            NAMU(CLASS(getElemTypeFunc, func))
+
+        public:
+            getElemTypeFunc(): _ret(new getExpr("T")) {}
+
+        public:
+            const node& getRet() const override {
+                return *_ret;
+            }
+
+            str run(const args& a) override {
+                return *_ret;
+            }
+
+        private:
+            str _ret;
+        };
     }
 
     scope& me::_getOriginScope() {
@@ -166,6 +185,7 @@ namespace namu {
             inner->genericFunc<node&, nidx>("get", &narr::get);
             inner->genericFunc("has", &narr::has);
             inner->subs().add("iterate", new iterateFunc());
+            inner->subs().add("getElemType", new getElemTypeFunc());
         }
 
         return inner->subs().cast<scope>();
