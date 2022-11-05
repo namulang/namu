@@ -55,3 +55,25 @@ TEST_F(defObjExprTest, assignMemberVariable) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 2);
 }
+
+TEST_F(defObjExprTest, make2Objects) {
+    make().parse(R"SRC(
+        def obj
+            name := ""
+            age int
+
+        main() str
+            o1 := obj()
+            o1.name = "Chales"
+            o1.age = 36
+            o2 obj
+            o2.name = "kniz"
+            o2.age = 22
+
+            return o1.name + o2.name + o1.age + o2.age
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    std::string answer = "Chaleskniz3622";
+    ASSERT_EQ(res.cast<std::string>(), answer);
+}
