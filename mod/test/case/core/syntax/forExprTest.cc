@@ -88,10 +88,38 @@ TEST_F(forTest, sequenceLoop) {
 }
 
 TEST_F(forTest, validationCheck) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main() str
             for n in {1, 2, 3}
                 sys.con.print(n)
     )SRC").shouldParsed(true);
     shouldVerified(false);
+}
+
+TEST_F(forTest, loopObjects) {
+    make().parse(R"SRC(
+        def person
+            name := "unknown"
+            age := 0
+            say() str
+                sys.con.print("I'm " + name + " and " + age + " years old.\n")
+
+        main() str
+            p1 person
+            p2 := person()
+            p3 person
+            p1.name = "Chales"
+            p1.age = 36
+            p2.name = "Mario"
+            p2.age = 45
+            p3.name = "Peach"
+            p3.age = 44
+
+            sum := ""
+            for p in {p1, p2, p3}
+                sum = sum + p.say()
+            return sum
+    )SRC").shouldVerified(true);
+    str ret = run();
+    ASSERT_TRUE(ret);
 }
