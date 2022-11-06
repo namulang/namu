@@ -115,6 +115,8 @@ TEST_F(forTest, loopObjects) {
             p3.name = "Peach"
             p3.age = 44
 
+            p1.say()
+
             sum := ""
             for p in {p1, p2, p3}
                 sum = sum + p.say()
@@ -122,4 +124,8 @@ TEST_F(forTest, loopObjects) {
     )SRC").shouldVerified(true);
     str ret = run();
     ASSERT_TRUE(ret);
+    std::string answer =    "I'm Chales and 36 years old.\n"
+                            "I'm Mario and 45 years old.\n"
+                            "I'm Peach and 44 years old.\n";
+    ASSERT_EQ(ret->cast<std::string>(), answer);
 }
