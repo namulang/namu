@@ -42,12 +42,12 @@ namespace namu {
         return inner;
     }
 
-    const ntype& me::reduce(const ntype& r) const {
-        return reduce(*this, r);
+    const ntype& me::deduce(const ntype& r) const {
+        return deduce(*this, r);
     }
 
-    const ntype& me::reduce(const ntype& l, const ntype& r) {
-        static reducers* inner = nullptr;
+    const ntype& me::deduce(const ntype& l, const ntype& r) {
+        static deducers* inner = nullptr;
         if(nul(inner))
             inner = _makeReducers();
 
@@ -59,14 +59,14 @@ namespace namu {
         if(!nul(ret))
             return *ret;
 
-        return _reduceSuperType(l, r);
+        return _deduceSuperType(l, r);
     }
 
-    me::reducers* me::_makeReducers() {
-        // make reduce table:
+    me::deducers* me::_makeReducers() {
+        // make deduce table:
 #define _X(A) &ttype<A>::get()
 
-        reducers red = {
+        deducers red = {
             {_X(nInt), {
                 {_X(nInt), _X(nInt)},
                 {_X(nFlt), _X(nFlt)}, // if nInt + nFlt ==> nFlt
@@ -106,10 +106,10 @@ namespace namu {
 
 #undef _X
 
-        return new reducers(red);
+        return new deducers(red);
     }
 
-    const ntype& me::_reduceSuperType(const ntype& l, const ntype& r) {
+    const ntype& me::_deduceSuperType(const ntype& l, const ntype& r) {
         //  reducing super type between l & r algorithm:
         if(nul(l) || nul(r)) return nulOf<ntype>();
 

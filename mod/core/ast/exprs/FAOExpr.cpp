@@ -14,6 +14,6 @@ namespace namu {
         const node& rhsEval = _rhs->getEval();
         if(nul(rhsEval)) return nulOf<node>();
 
-        return lhsEval.reduce(rhsEval);
+        return lhsEval.deduce(rhsEval);
     }
 }

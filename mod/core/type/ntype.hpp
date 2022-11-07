@@ -9,8 +9,8 @@ namespace namu {
         NAMU_DECL_ME(ntype, type)
 
     private:
-        typedef std::map<const ntype*, const ntype*> reducer;
-        typedef std::map<const ntype*, reducer> reducers;
+        typedef std::map<const ntype*, const ntype*> deducer;
+        typedef std::map<const ntype*, deducer> deducers;
 
     public:
         // ntype:
@@ -42,16 +42,16 @@ namespace namu {
 
         virtual nbool isImmutable() const;
         /// @return null if it's not relative between l & r.
-        const ntype& reduce(const ntype& r) const;
-        const ntype& reduce(const typeProvidable& r) const {
-            return reduce((const ntype&) r.getType());
+        const ntype& deduce(const ntype& r) const;
+        const ntype& deduce(const typeProvidable& r) const {
+            return deduce((const ntype&) r.getType());
         }
         template <typename T>
-        const ntype& reduce() const {
-            return reduce(ttype<T>::get());
+        const ntype& deduce() const {
+            return deduce(ttype<T>::get());
         }
         /// @return null it it's not relative between l & r.
-        static const ntype& reduce(const ntype& l, const ntype& r);
+        static const ntype& deduce(const ntype& l, const ntype& r);
 
     protected:
         // ntype:
@@ -59,8 +59,8 @@ namespace namu {
         virtual const ases& _getAses() const;
 
     private:
-        static reducers* _makeReducers();
-        static const ntype& _reduceSuperType(const ntype& l, const ntype& r);
+        static deducers* _makeReducers();
+        static const ntype& _deduceSuperType(const ntype& l, const ntype& r);
     };
 
     typedef std::vector<const ntype*> ntypes;
