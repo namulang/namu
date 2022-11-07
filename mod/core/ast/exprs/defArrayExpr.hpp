@@ -9,8 +9,8 @@ namespace namu {
         NAMU(CLASS(defArrayExpr, expr, expr::exprType), VISIT())
 
     public:
+        defArrayExpr(const node& type): _type(type) {}
         defArrayExpr(const narr& elems): _elems(elems) {}
-        defArrayExpr() {}
 
     public:
         using super::run;
@@ -20,7 +20,13 @@ namespace namu {
 
         const narr& getElems() const;
 
+        const node& getArrayType() const;
+
+    private:
+        str _deduceElems() const;
+
     private:
         narr _elems;
+        str _type;
     };
 }

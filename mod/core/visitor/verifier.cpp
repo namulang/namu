@@ -246,6 +246,10 @@ namespace namu {
         if(nul(me.getEnd())) return _srcErr(me.getPos(), errCode::RHS_IS_NULL);
     }
 
+    void me::onVisit(visitInfo i, defArrayExpr& me) {
+        NAMU_DI("verify: defArrayExpr: check all elements");
+    }
+
     void me::onVisit(visitInfo i, FAOExpr& me) {
         NAMU_DI("verify: FAOExpr: lhs & rhs should bind something.");
         const node& lhs = me.getLeft();

@@ -214,14 +214,6 @@ namespace namu {
         return new defArrayExpr(items);
     }
 
-    const node& me::_onDefArrayType(const narr& items) {
-        const node* ret = &items[0];
-        for(int n=1; n < items.len(); n++)
-            ret = &ret->reduce(items[n]);
-
-        return *ret;
-    }
-
     node* me::onDefSeq(const node& start, const node& end) {
         NAMU_DI("tokenEvent: onDefSeq()");
 
