@@ -5,10 +5,10 @@ namespace namu {
     NAMU_DEF_ME(arithmeticObj)
 
 #define _X(FUNC) \
-        const ntype& reduced = getType().reduce(rhs); \
-        nbool normalOrder = getType() == reduced; \
-        const arithmeticObj& winner = getType() == reduced ? *this : rhs; \
-        const arithmeticObj& loser = getType() == reduced ? rhs : *this; \
+        const ntype& deduced = getType().deduce(rhs); \
+        nbool normalOrder = getType() == deduced; \
+        const arithmeticObj& winner = getType() == deduced ? *this : rhs; \
+        const arithmeticObj& loser = getType() == deduced ? rhs : *this; \
 
     tstr<arithmeticObj> me::add(const arithmeticObj& rhs) {
         _X(_add)

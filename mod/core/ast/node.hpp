@@ -26,9 +26,9 @@ namespace namu {
         const nbicontainer& subs() const NAMU_UNCONST_FUNC(subs())
 
         /// @return null if it's not relative between l & r.
-        const node& reduce(const node& r) const {
+        const node& deduce(const node& r) const {
             const ntype& mine = getType();
-            const ntype& res = mine.reduce(r.getType());
+            const ntype& res = mine.deduce(r.getType());
             if(nul(res) || nul(mine)) return nulOf<node>();
 
             return res == mine ? *this : r;

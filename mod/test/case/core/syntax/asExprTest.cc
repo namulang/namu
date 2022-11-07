@@ -347,25 +347,25 @@ TEST_F(asExprTest, AsAllowed) {
     shouldVerified(true);
 }
 
-TEST_F(asExprTest, reduceTest1) {
+TEST_F(asExprTest, deduceTest1) {
     const ntype& it = ttype<nInt>::get();
-    const ntype* res = &it.reduce<nFlt>();
+    const ntype* res = &it.deduce<nFlt>();
     ASSERT_FALSE(nul(res));
     ASSERT_EQ(*res, ttype<nFlt>::get());
 
-    res = &it.reduce<nInt>();
+    res = &it.deduce<nInt>();
     ASSERT_FALSE(nul(res));
     ASSERT_EQ(*res, ttype<nInt>::get());
 
-    res = &it.reduce<nBool>();
+    res = &it.deduce<nBool>();
     ASSERT_FALSE(nul(res));
     ASSERT_EQ(*res, ttype<nInt>::get());
 
-    res = &it.reduce<nChar>();
+    res = &it.deduce<nChar>();
     ASSERT_FALSE(nul(res));
     ASSERT_EQ(*res, ttype<nInt>::get());
 
-    res = &it.reduce<nStr>();
+    res = &it.deduce<nStr>();
     ASSERT_FALSE(nul(res));
     ASSERT_EQ(*res, ttype<nStr>::get());
 }
