@@ -27,6 +27,6 @@ namespace namu {
 
     private:
         narr _elems;
-        str _type;
+        mutable str _type;
     };
 }

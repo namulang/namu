@@ -23,12 +23,16 @@ namespace namu {
     }
 
     str me::_deduceElems() const {
-        ncnt len = items.len();
+        ncnt len = _elems.len();
         if(!len) return nulOf<node>();
 
-        const node* ret = &items[0];
-        for(int n=1; n < len; n++)
-            ret = &ret->deduce(*items[n].as<node>());
+        str ased1 = _elems[0].as<node>();
+        const node* ret = &ased1.get();
+        str ased;
+        for(int n=1; n < len; n++) {
+            ased = _elems[n].as<node>();
+            ret = &ret->deduce(*ased);
+        }
 
         return *ret;
     }
