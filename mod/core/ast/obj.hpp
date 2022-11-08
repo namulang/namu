@@ -22,6 +22,9 @@ namespace namu {
         using super::subs;
         nbicontainer& subs() override;
 
+        using super::run;
+        str run(const args& a) override;
+
         scopes& getShares();
         const scopes& getShares() const NAMU_UNCONST_FUNC(getShares())
         scope& getOwns();
