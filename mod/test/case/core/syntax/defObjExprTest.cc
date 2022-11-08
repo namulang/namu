@@ -66,7 +66,7 @@ TEST_F(defObjExprTest, make2Objects) {
             o1 := obj()
             o1.name = "Chales"
             o1.age = 36
-            o2 obj
+            o2 := obj()
             o2.name = "kniz"
             o2.age = 22
 

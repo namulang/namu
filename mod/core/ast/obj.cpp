@@ -37,6 +37,11 @@ namespace namu {
         return _assign(rhs);
     }
 
+    str me::run(const args& a) {
+        // TODO: make constructor.
+        return (me*) deepClone();
+    }
+
     nbicontainer& me::subs() { return *_subs; }
 
     scopes& me::getShares() { return *_shares; }
