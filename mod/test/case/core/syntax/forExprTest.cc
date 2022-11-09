@@ -4,10 +4,10 @@ using namespace namu;
 using namespace std;
 
 namespace {
-    struct forTest : public namuSyntaxTest {};
+    struct forExprTest : public namuSyntaxTest {};
 }
 
-TEST_F(forTest, simpleTest) {
+TEST_F(forExprTest, simpleTest) {
     make().parse(R"SRC(
         main() int
             sum := 0
@@ -21,7 +21,7 @@ TEST_F(forTest, simpleTest) {
     ASSERT_EQ(res.cast<nint>(), 6);
 }
 
-TEST_F(forTest, simpleTest2) {
+TEST_F(forExprTest, simpleTest2) {
     make().parse(R"SRC(
         main() int
             sum := 0
@@ -35,7 +35,7 @@ TEST_F(forTest, simpleTest2) {
     ASSERT_EQ(res.cast<nint>(), 6);
 }
 
-TEST_F(forTest, testWhatFromFunc) {
+TEST_F(forExprTest, testWhatFromFunc) {
     make().parse(R"SRC(
         foo() int[]
             return {1, 2, 3}
@@ -53,7 +53,7 @@ TEST_F(forTest, testWhatFromFunc) {
     ASSERT_EQ(res.cast<nint>(), 6);
 }
 
-TEST_F(forTest, putAkaMiddleOfLoop) {
+TEST_F(forExprTest, putAkaMiddleOfLoop) {
     make().parse(R"SRC(
         foo() int[]
             return {1, 2, 3}
@@ -72,7 +72,7 @@ TEST_F(forTest, putAkaMiddleOfLoop) {
     ASSERT_EQ(res.cast<nint>(), 6);
 }
 
-TEST_F(forTest, sequenceLoop) {
+TEST_F(forExprTest, sequenceLoop) {
     make().parse(R"SRC(
         main() int
             sum := 0
@@ -87,7 +87,7 @@ TEST_F(forTest, sequenceLoop) {
     ASSERT_EQ(res.cast<nint>(), 9);
 }
 
-TEST_F(forTest, validationCheck) {
+TEST_F(forExprTest, validationCheck) {
     make().negative().parse(R"SRC(
         main() str
             for n in {1, 2, 3}
@@ -96,7 +96,7 @@ TEST_F(forTest, validationCheck) {
     shouldVerified(false);
 }
 
-TEST_F(forTest, loopObjects) {
+TEST_F(forExprTest, loopObjects) {
     make().parse(R"SRC(
         def person
             name := "unknown"
