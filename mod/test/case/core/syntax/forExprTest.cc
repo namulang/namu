@@ -107,7 +107,7 @@ TEST_F(forExprTest, loopObjects) {
         main() str
             p1 person
             p2 := person()
-            p3 person
+            p3 := person()
             p1.name = "Chales"
             p1.age = 36
             p2.name = "Mario"
