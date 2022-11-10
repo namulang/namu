@@ -402,6 +402,8 @@ namespace namu {
 
         me._blk->inFrame(nulOf<bicontainable>());
         thread::get()._getNowFrame().pushLocal(name, *elemType);
+
+        onVisit(i, *me._blk);
     }
 
     void me::onLeave(visitInfo i, forExpr& me) {

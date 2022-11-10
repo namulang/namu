@@ -167,6 +167,10 @@ namespace namu {
                 return *_ret;
             }
 
+            nbool setRet(const node& newRet) override {
+                return _ret.bind(newRet);
+            }
+
         private:
             str _ret;
         };
