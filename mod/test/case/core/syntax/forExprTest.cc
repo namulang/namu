@@ -129,3 +129,31 @@ TEST_F(forExprTest, loopObjects) {
                             "I'm Peach and 44 years old.\n";
     ASSERT_EQ(ret->cast<std::string>(), answer);
 }
+
+TEST_F(forExprTest, loopObjectsNegative) {
+    make().negative().parse(R"SRC(
+        def person
+            name := "unknown"
+            age := 0
+            say() str
+                sys.con.print("I'm " + name + " and " + age + " years old.\n")
+
+        main() str
+            p1 person
+            p2 := person()
+            p3 := person()
+            p1.name = "Chales"
+            p1.age = 36
+            p2.name = "Mario"
+            p2.age = 45
+            p3.name = "Peach"
+            p3.age = 44
+
+            p1.say()
+
+            sum := ""
+            for p in {p1, p2, p3}
+                sum = sum + p.say1()
+            return sum
+    )SRC").shouldVerified(false);
+}

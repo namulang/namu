@@ -392,3 +392,24 @@ TEST_F(arrTest, testImplicitlyDefSyntax2) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 7);
 }
+
+TEST_F(arrTest, arrDeductionFailNegative) {
+    make().negative().parse(R"SRC(
+    def obj
+        name := "kniz"
+
+    main() void
+        arr := {1, 2.5, obj()}
+        sys.con.print(arr.len())
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(arrTest, arrDeductionFailNegative2) {
+    make().negative().parse(R"SRC(
+    def obj
+        name := "kniz"
+
+    main() void
+        arr := {1, 2.5, obj()}
+    )SRC").shouldVerified(false);
+}
