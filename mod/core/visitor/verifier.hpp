@@ -58,6 +58,7 @@ namespace namu {
     private:
         // @param newInfo is not a heap instance.
         void _leaveErrFrame();
+        void _verifyMgdFuncImplicitReturn(mgdFunc& me);
 
         template <typename... Args> void _warn(Args... args);
         template <typename... Args> void _err(Args... args);

@@ -21,6 +21,8 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
 
+        const node& getEval() const override;
+
     private:
         str _container;
         std::string _name;
