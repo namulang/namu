@@ -12,7 +12,7 @@ namespace namu {
         _container(container), _name(localName), _blk(blk) {}
 
     const std::string& me::getLocalName() const { return _name; }
-    const blockExpr& me::getBlock() const { return *_blk; }
+    blockExpr& me::getBlock() { return *_blk; }
     str me::getContainer() { return _container->as<node>(); }
 
     str me::run(const args& a) {

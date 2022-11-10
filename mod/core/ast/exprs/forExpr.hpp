@@ -14,7 +14,8 @@ namespace namu {
 
     public:
         const std::string& getLocalName() const;
-        const blockExpr& getBlock() const;
+        const blockExpr& getBlock() const NAMU_UNCONST_FUNC(getBlock());
+        blockExpr& getBlock();
         str getContainer();
 
         using super::run;
