@@ -65,16 +65,18 @@ PAIRX(SUB_NOT_EXIST,            "sub-node doesn't exist.")
 //
 // if(nul(it.getLeft) || nul(it.getRight()))
 //
-PAIRX(PARAM_HAS_VAL,        "parameter shouldn't have a value")
-PAIRX(FUNC_HAS_NO_NAME,     "a function should have a name")
-PAIRX(WRONG_RET_TYPE,       "%s is not a valid return type")
-PAIRX(NO_RET_TYPE,          "return type is not specified")
-PAIRX(NO_FUNC_INFO,         "function info doesn't exist")
-PAIRX(NO_STMT_IN_FUNC,      "function need to contain more than 1 statement inside")
-PAIRX(RET_TYPE_NOT_MATCH,   "%s return type isn't valid to %s return type of func")
+PAIRX(PARAM_HAS_VAL,            "parameter shouldn't have a value")
+PAIRX(FUNC_HAS_NO_NAME,         "a function should have a name")
+PAIRX(WRONG_RET_TYPE,           "%s is not a valid return type")
+PAIRX(NO_RET_TYPE,              "return type is not specified")
+PAIRX(NO_FUNC_INFO,             "function info doesn't exist")
+PAIRX(NO_STMT_IN_FUNC,          "function need to contain more than 1 statement inside")
+PAIRX(RET_TYPE_NOT_MATCH,       "%s return type isn't valid to %s return type of func")
 
 // block:
-PAIRX(BLK_CANT_MAKE_FRAME,  "block statement failed to construct frame structure")
+PAIRX(BLK_CANT_MAKE_FRAME,      "block statement failed to construct frame structure")
 
 // container:
-PAIRX(ELEM_TYPE_IS_NULL,    "elem type is null")
+PAIRX(ELEM_TYPE_IS_NULL,        "elem type is null")
+PAIRX(ELEM_TYPE_DEDUCED_NULL,   "elem type has been deduced to null")
+PAIRX(ELEM_TYPE_DEDUCED_WRONG,  "elem type has been deduced to %s type")

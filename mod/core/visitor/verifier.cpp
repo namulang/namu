@@ -248,6 +248,10 @@ namespace namu {
 
     void me::onVisit(visitInfo i, defArrayExpr& me) {
         NAMU_DI("verify: defArrayExpr: check all elements");
+        const node& type = me.getArrayType();
+        if(nul(type)) return _srcErr(me.getPos(), errCode::ELEM_TYPE_DEDUCED_NULL);
+        if(type.isSuper<node>() || type.isSuper<obj>())
+            return _srcErr(me.getPos(), errCode::ELEM_TYPE_DEDUCED_WRONG);
     }
 
     void me::onVisit(visitInfo i, FAOExpr& me) {
