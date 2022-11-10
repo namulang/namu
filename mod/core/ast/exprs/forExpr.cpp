@@ -44,4 +44,8 @@ namespace namu {
 
         return ret;
     }
+
+    const node& me::getEval() const {
+        return _blk->getEval();
+    }
 }

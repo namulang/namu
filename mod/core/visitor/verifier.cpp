@@ -143,7 +143,6 @@ namespace namu {
 
     void me::onVisit(visitInfo i, blockExpr& me) {
         NAMU_DI("verify: blockExpr: it will iterate all subnodes[%d]", me.getStmts().len());
-        me.inFrame(nulOf<bicontainable>());
     }
 
     void me::onLeave(visitInfo i, blockExpr& me) {
@@ -151,24 +150,7 @@ namespace namu {
         const narr& stmts = me.getStmts();
         if(nul(stmts) || stmts.len() <= 0) return; // will be catched to another verification.
 
-        const func& f = thread::get().getNowFrame().getFunc();
-        if (nul(f)) return;
-
-        const ntype& retType = f.getRet().getType();
-        const node& lastStmt = *stmts.last();
-        if(!lastStmt.isSub<returnExpr>() && retType == ttype<nVoid>::get()) {
-            NAMU_DI("verify: blockExpr: implicit return won't verify when retType is void.");
-            return;
-        }
-        const node& lastEval = lastStmt.getEval();
-        if(nul(lastEval)) return _err(lastStmt.getPos(), NO_RET_TYPE);
-        const ntype& lastType = lastEval.getType(); // to get type of expr, always uses evalType.
-        if(nul(lastType)) return _err(lastStmt.getPos(), NO_RET_TYPE);
-        if(!lastType.isImpli(retType)) return _err(lastStmt.getPos(), errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
-                retType.getName().c_str());
-
         NAMU_DI("verify: blockExpr: block.outFrame()");
-        me.outFrame();
     }
 
 
@@ -351,10 +333,40 @@ namespace namu {
 
         meObj.inFrame(nulOf<bicontainable>());
         me.inFrame(*s);
-
-        onVisit(i, blk);
+        // !important!:
+        //  frameInteraction to blockstmt should be controlled by its holder, mgdFunc.
+        //  for validation of implicitReturn, I need to postpone frame to be released by blockstmt.
+        //  if I passed the control to blockstmts, it released its own frame before checking
+        //  implicit Return.
+        //
+        //  so, all expressions contains blockstmt need to control in/out frame instead of blockstmt.
+        me.getBlock().inFrame(nulOf<bicontainable>());
     }
+
+    void me::_verifyMgdFuncImplicitReturn(mgdFunc& me) {
+        const ntype& retType = me.getRet().getType();
+        const node& lastStmt = *me.getBlock().getStmts().last();
+        NAMU_DI("verify: mgdFunc: last stmt[%s] should matches to return type[%s]",
+                retType.getName().c_str(), lastStmt.getType().getName().c_str());
+
+        if(!lastStmt.isSub<returnExpr>() && retType == ttype<nVoid>::get()) {
+            NAMU_DI("verify: mgdFunc: implicit return won't verify when retType is void.");
+            return;
+        }
+
+        const node& lastEval = lastStmt.getEval();
+        if(nul(lastEval)) return _err(lastStmt.getPos(), NO_RET_TYPE);
+        const ntype& lastType = lastEval.getType(); // to get type of expr, always uses evalType.
+        if(nul(lastType)) return _err(lastStmt.getPos(), NO_RET_TYPE);
+        if(!lastType.isImpli(retType)) return _err(lastStmt.getPos(), errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
+                retType.getName().c_str());
+    }
+
     void me::onLeave(visitInfo i, mgdFunc& me) {
+        _verifyMgdFuncImplicitReturn(me);
+
+        me.getBlock().outFrame();
+
         baseObj& meObj = frame::_getMe();
         me.outFrame();
         meObj.outFrame();
@@ -402,8 +414,6 @@ namespace namu {
 
         me._blk->inFrame(nulOf<bicontainable>());
         thread::get()._getNowFrame().pushLocal(name, *elemType);
-
-        onVisit(i, *me._blk);
     }
 
     void me::onLeave(visitInfo i, forExpr& me) {
