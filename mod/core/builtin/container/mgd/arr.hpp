@@ -48,8 +48,38 @@ namespace namu {
 
         //  get:
         using tarrayable<node>::get;
-        using tucontainable<node>::get;
         using super::get;
+        template <typename E>
+        E& get(std::function<nbool(const E&)> l) const {
+            for(const node& elem : *this) {
+                const E& cast = elem.template cast<E>();
+                if(!nul(cast) && l(cast)) // elem should be typeProvidable.
+                    return (E&) cast;
+            }
+
+            return nulOf<E>();
+        }
+
+        node& get(std::function<nbool(const node&)> l) const {
+            return this->get<node>(l);
+        }
+
+        template <typename E>
+        tnarr<E, strTactic> getAll(std::function<nbool(const E&)> l) const {
+            tnarr<E> ret;
+            for(const node& elem : *this) {
+                const E& cast = elem.template cast<E>();
+                if(!nul(cast) && l(cast))
+                    ret.add(cast);
+            }
+
+            return ret;
+        }
+
+        narr getAll(std::function<nbool(const node&)> l) const {
+            return this->getAll<node>(l);
+        }
+
         node& get(nidx n) override;
 
         //  set:

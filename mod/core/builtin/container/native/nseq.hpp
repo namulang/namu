@@ -32,7 +32,6 @@ namespace namu {
 
         void rel() override {}
 
-        using tarrayable<nint>::get;
         nint& get(nidx n) override;
 
         nbool has(nidx n) const override;
@@ -42,7 +41,6 @@ namespace namu {
 
     private:
         // these method has been prohibited.
-        using super::getAll;
         using super::add;
         using tarrayable<nint>::add;
         nbool add(const iter& at, const nint& new1) override { return false; }
