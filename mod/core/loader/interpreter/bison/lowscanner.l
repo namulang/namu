@@ -109,7 +109,7 @@ return { return RETURN; }
 as { return AS; }
 def { return DEF; }
 for { return FOR; }
-in { return IN; }
+in { return _IN_; }
 
 [a-zA-Z0-9_]+ {
     yylval->asStr = new std::string(yytext);

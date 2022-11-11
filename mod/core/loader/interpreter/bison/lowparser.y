@@ -116,7 +116,7 @@
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
-%token IF AKA RETURN AS DEF FOR IN
+%token IF AKA RETURN AS DEF FOR _IN_ /* use prefix '_' for windows compatibility.*/
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -330,7 +330,7 @@ if: IF expr indentblock {
     // TODO:
     }
 
-for: FOR NAME IN expr-line indentblock {
+for: FOR NAME _IN_ expr-line indentblock {
     $$ = yyget_extra(scanner)->onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
     free($2);
  }
