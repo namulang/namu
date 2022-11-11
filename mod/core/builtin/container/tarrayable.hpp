@@ -23,13 +23,6 @@ namespace namu {
         // get:
         virtual T& get(nidx n) = 0;
         const T& get(nidx n) const NAMU_UNCONST_FUNC(get(n))
-        template <typename E>
-        E& get(std::function<nbool(const E&)> l) const;
-        T& get(std::function<nbool(const T&)> l) const;
-        template <typename E>
-        tnarr<E, strTactic> getAll(std::function<nbool(const E&)> l) const;
-        narr getAll(std::function<nbool(const T&)> l) const;
-
 
         // set:
         virtual nbool set(nidx n, const T& new1) = 0;

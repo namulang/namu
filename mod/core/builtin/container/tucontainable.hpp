@@ -27,7 +27,10 @@ namespace namu {
 
 
         // iter:
-        iter begin() const { return iterate(0); }
+        iter begin() const {
+            static iter(me:: * specifier)(ncnt) const = &me::iterate;
+            return (this->*specifier)(0);
+        }
         virtual iter end() const {
             // why do you need specifier here?:
             //  please refer nseq. it requires tucontainable to contain nint as type parameter.
@@ -87,9 +90,15 @@ namespace namu {
 
         // del:
         /// delete last element if exists.
-        nbool del() { return del(iterate(len() - 1)); }
+        nbool del() {
+            static iter(me:: * specifier)(ncnt) const = &me::iterate;
+            return del((this->*specifier)(len() - 1));
+        }
         nbool del(const T* it) { return del(*it); }
-        nbool del(const T& it) { return del(iterate(it)); }
+        nbool del(const T& it) {
+            static iter(me:: * specifier)(const T&) const = &me::iterate;
+            return del((this->*specifier)(it));
+        }
         virtual nbool del(const iter& it) = 0;
         virtual nbool del(const iter& from, const iter& end) = 0;
         nbool del(const tucontainable& rhs) { return del(rhs.begin(), rhs.end()); }
