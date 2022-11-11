@@ -70,6 +70,8 @@ namespace namu {
     void me::onVisit(visitInfo i, func& me) {
         onVisit(i, (params&) me.getParams());
 
+        NAMU_E("func.name=%s", i.name.c_str());
+
         const node& retOrg = _findOrigin(me.getRet());
         if(!nul(retOrg))
             me.setRet(retOrg);

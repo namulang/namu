@@ -32,15 +32,14 @@ namespace namu {
 
         using super::subs;
         nbicontainer& subs() override {
-            static cache c;
             str as = _type->as<node>();
             const type* key = &as->getType();
-            auto e = c.find(key);
-            if(e != c.end())
+            auto e = _cache.find(key);
+            if(e != _cache.end())
                 return e->second.get();
 
             // this is first try to generalize type T:
-            return _defGeneric(c, key);
+            return _defGeneric(key);
         }
 
         ncnt len() const override;
@@ -80,10 +79,11 @@ namespace namu {
         iteration* _onMakeIteration(ncnt step) const override;
 
     private:
-        scope& _defGeneric(cache& c, const type* key);
+        scope& _defGeneric(const type* key);
         scope& _getOriginScope();
 
     private:
         str _type;
+        cache _cache;
     };
 }
