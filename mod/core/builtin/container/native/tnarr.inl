@@ -18,6 +18,41 @@ namespace namu {
     }
 
     TEMPL
+    template <typename E>
+    E& ME::get(std::function<nbool(const E&)> l) const {
+        for(const T& elem : *this) {
+            const E& cast = elem.template cast<E>();
+            if(!nul(cast) && l(cast)) // elem should be typeProvidable.
+                return (E&) cast;
+        }
+
+        return nulOf<E>();
+    }
+
+    TEMPL
+    template <typename E>
+    tnarr<E> ME::getAll(std::function<nbool(const E&)> l) const {
+        tnarr<E> ret;
+        for(const T& elem : *this) {
+            const E& cast = elem.template cast<E>();
+            if(!nul(cast) && l(cast))
+                ret.add(cast);
+        }
+
+        return ret;
+    }
+
+    TEMPL
+    T& ME::get(std::function<nbool(const T&)> l) const {
+        return this->get<T>(l);
+    }
+
+    TEMPL
+    narr ME::getAll(std::function<nbool(const T&)> l) const {
+        return this->getAll<T>(l);
+    }
+
+    TEMPL
     nbool ME::set(const iter& at, const T& new1) {
         narrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;

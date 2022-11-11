@@ -25,13 +25,6 @@ namespace namu {
         // len:
         virtual ncnt len() const = 0;
 
-        // get:
-        template <typename E>
-        E& get(std::function<nbool(const E&)> l) const;
-        T& get(std::function<nbool(const T&)> l) const;
-        template <typename E>
-        tnarr<E, strTactic> getAll(std::function<nbool(const E&)> l) const;
-        narr getAll(std::function<nbool(const T&)> l) const;
 
         // iter:
         iter begin() const { return iterate(0); }
