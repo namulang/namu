@@ -156,3 +156,19 @@ TEST_F(forExprTest, loopObjectsNegative) {
             return sum
     )SRC").shouldVerified(false);
 }
+
+TEST_F(forExprTest, useObjectAsContainer) {
+    make().parse(R"SRC(
+        def person
+            name := ""
+
+        main() void
+            p1 := person()
+            p1.name = "Chales"
+            people := {person(), p1}
+
+            for p in people
+                sys.con.print(p.name)
+    )SRC").shouldVerified(true);
+    run();
+}
