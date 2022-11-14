@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../expr.hpp"
-#include "../../builtin/container/native/tnarr.hpp"
+#include "../../builtin/container/mgd/arr.hpp"
 
 namespace namu {
 
@@ -18,15 +18,16 @@ namespace namu {
 
         const node& getEval() const override;
 
-        const narr& getElems() const;
-
         const node& getArrayType() const;
+
+        const arr& getOrigin() const;
 
     private:
         str _deduceElems() const;
 
     private:
+        str _type;
         narr _elems;
-        mutable str _type;
+        mutable tstr<arr> _org;
     };
 }

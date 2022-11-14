@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../../ast.hpp"
 #include "../../../bridge/cpp/tcppBridge.hpp"
 
 namespace namu {
