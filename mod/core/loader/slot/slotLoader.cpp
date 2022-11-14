@@ -1,6 +1,7 @@
 #include "slotLoader.hpp"
 #include "../../frame/thread.hpp"
 #include "../errReport.hpp"
+#include "../../ast/autoslot.hpp"
 
 namespace namu {
 

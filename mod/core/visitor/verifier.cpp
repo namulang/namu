@@ -3,6 +3,7 @@
 #include "../frame/thread.hpp"
 #include "../loader/errReport.hpp"
 #include "../builtin/primitive.hpp"
+#include"../ast.hpp"
 
 namespace namu {
 
@@ -232,7 +233,7 @@ namespace namu {
         NAMU_DI("verify: defArrayExpr: check all elements");
         const node& type = me.getArrayType();
         if(nul(type)) return _srcErr(me.getPos(), errCode::ELEM_TYPE_DEDUCED_NULL);
-        if(type.isSuper<node>() || type.isSuper<obj>())
+        if(type.isSuper<node>())
             return _srcErr(me.getPos(), errCode::ELEM_TYPE_DEDUCED_WRONG, type.getType().getName().c_str());
     }
 

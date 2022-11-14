@@ -12,14 +12,21 @@ namespace namu {
         for(const node& elem : _elems)
             ret.add(*elem.as<node>());
 
-        return ret;
+        return (arr*) getOrigin().deepClone();
     }
 
     const node& me::getArrayType() const {
-        if(!_type)
-            _type = _deduceElems();
+        return getOrigin().getElemType();
+    }
 
-        return *_type;
+    const arr& me::getOrigin() const {
+        if(!_org) {
+            _org.bind(new arr(*_deduceElems()));
+            for(const node& e : _elems)
+                _org->add(e);
+        }
+
+        return *_org;
     }
 
     str me::_deduceElems() const {
@@ -38,11 +45,6 @@ namespace namu {
     }
 
     const node& me::getEval() const {
-        static arr inner;
-        return inner;
-    }
-
-    const narr& me::getElems() const {
-        return _elems;
+        return getOrigin();
     }
 }
