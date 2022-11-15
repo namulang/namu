@@ -112,6 +112,7 @@ namespace namu {
     const ntype& me::_deduceSuperType(const ntype& l, const ntype& r) {
         //  reducing super type between l & r algorithm:
         if(nul(l) || nul(r)) return nulOf<ntype>();
+        if(l == r) return l;
 
         const types& lAncestor = l.getSupers();
         const types& rAncestor = r.getSupers();

@@ -1,5 +1,6 @@
 #include "obj.hpp"
 #include "../visitor/visitor.hpp"
+#include "../type/mgdType.hpp"
 
 namespace namu {
 
@@ -11,6 +12,7 @@ namespace namu {
         _subs.bind(_makeNewSubs());
         _org = rhs._org;
         _pos = rhs._pos;
+        _type = rhs._type;
 
         return *this;
     }
@@ -18,11 +20,25 @@ namespace namu {
     me::obj():
             super(), _shares(new scopes()), _owns(new scope()), _org(this) {
         _subs.bind(_makeNewSubs());
+        _setType(&ttype<obj>::get());
     }
 
     me::obj(const scopes& shares, const scope& owns):
             super(), _shares(shares), _owns(owns), _org(this) {
         _subs.bind(_makeNewSubs());
+        _setType(&ttype<obj>::get());
+    }
+
+    me::obj(mgdType* newType):
+            super(), _shares(new scopes()), _owns(new scope()), _org(this) {
+        _subs.bind(_makeNewSubs());
+        _setType(newType);
+    }
+
+    me::obj(mgdType* newType, const scopes& shares, const scope& owns):
+            super(), _shares(shares), _owns(owns), _org(this) {
+        _subs.bind(_makeNewSubs());
+        _setType(newType);
     }
 
     me::obj(const me& rhs): super(rhs) {
@@ -40,6 +56,14 @@ namespace namu {
     str me::run(const args& a) {
         // TODO: make constructor.
         return (me*) deepClone();
+    }
+
+    const ntype& me::getType() const {
+        return *_type;
+    }
+
+    void me::_setType(const ntype* new1) {
+        _type = (ntype*) new1;
     }
 
     nbicontainer& me::subs() { return *_subs; }

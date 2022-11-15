@@ -12,23 +12,23 @@ namespace namu {
 
     template <typename tnativeType, typename tmarshalType>
     struct tnormalMarshaling : public metaIf {
-        typedef tmarshalType mgdType;
-        typedef tnativeType nativeType;
+        typedef tmarshalType mgd;
+        typedef tnativeType native;
 
-        static nativeType toNative(node& it) {
-            return ((mgdType&) it).get();
+        static native toNative(node& it) {
+            return ((mgd&) it).get();
         }
 
-        static str toMgd(nativeType it) {
-            return str(new mgdType(it));
+        static str toMgd(native it) {
+            return str(new mgd(it));
         }
 
-        static mgdType& onAddParam() {
-            return *new mgdType();
+        static mgd& onAddParam() {
+            return *new mgd();
         }
 
-        static mgdType& onGetRet() {
-            return *new mgdType();
+        static mgd& onGetRet() {
+            return *new mgd();
         }
 
         static yes canMarshal();
@@ -36,19 +36,19 @@ namespace namu {
 
     template <>
     struct _nout tnormalMarshaling<void, nVoid> : public metaIf {
-        typedef nVoid mgdType;
-        typedef void nativeType;
+        typedef nVoid mgd;
+        typedef void native;
 
         static str toMgd() {
             return str(new nVoid());
         }
 
-        static mgdType& onAddParam() {
-            return *new mgdType();
+        static mgd& onAddParam() {
+            return *new mgd();
         }
 
-        static mgdType& onGetRet() {
-            return *new mgdType();
+        static mgd& onGetRet() {
+            return *new mgd();
         }
 
         static yes canMarshal();
@@ -77,7 +77,7 @@ namespace namu {
     };
     template <>
     struct tmarshaling<node&, true> : public metaIf {
-        typedef node mgdType;
+        typedef node mgd;
 
         static node& toNative(node& it) {
             return it;
@@ -88,11 +88,11 @@ namespace namu {
             return it;
         }
 
-        static mgdType& onAddParam() {
+        static mgd& onAddParam() {
             return *new dumNode();
         }
 
-        static mgdType& onGetRet() {
+        static mgd& onGetRet() {
             return *new dumNode();
         }
 
@@ -100,7 +100,7 @@ namespace namu {
     };
     template <typename T>
     struct tmarshaling<T&, true> : public metaIf {
-        typedef T mgdType;
+        typedef T mgd;
 
         static T& toNative(node& it) {
             return it.cast<T>();
@@ -111,19 +111,19 @@ namespace namu {
             return it;
         }
 
-        static mgdType& onAddParam() {
-            return *new mgdType();
+        static mgd& onAddParam() {
+            return *new mgd();
         }
 
-        static mgdType& onGetRet() {
-            return *new mgdType();
+        static mgd& onGetRet() {
+            return *new mgd();
         }
 
         static yes canMarshal();
     };
     template <typename T>
     struct tmarshaling<T&, false> : public metaIf {
-        typedef tcppBridge<T> mgdType;
+        typedef tcppBridge<T> mgd;
 
         static T& toNative(node& it) {
             return it.cast<tcppBridge<T>>().get();
@@ -134,19 +134,19 @@ namespace namu {
             return new tcppBridge(&it);
         }
 
-        static mgdType& onAddParam() {
-            return *new mgdType();
+        static mgd& onAddParam() {
+            return *new mgd();
         }
 
-        static mgdType& onGetRet() {
-            return *new mgdType();
+        static mgd& onGetRet() {
+            return *new mgd();
         }
 
         static yes canMarshal();
     };
     template <typename T>
     struct tmarshaling<T*, false> : public metaIf {
-        typedef tcppBridge<T> mgdType;
+        typedef tcppBridge<T> mgd;
 
         static T* toNative(node& it) {
             return &it.cast<tcppBridge<T>>().get();
@@ -157,28 +157,28 @@ namespace namu {
             return new tcppBridge(it);
         }
 
-        static mgdType& onAddParam() {
-            return *new mgdType();
+        static mgd& onAddParam() {
+            return *new mgd();
         }
 
-        static mgdType& onGetRet() {
-            return *new mgdType();
+        static mgd& onGetRet() {
+            return *new mgd();
         }
 
         static yes canMarshal();
     };
     template <typename T>
     struct tmarshaling<tarr<T>, true> : public metaIf {
-        typedef arr mgdType;
+        typedef arr mgd;
 
         static tarr<T> toNative(node& it);
 
         template <typename E>
         static str toMgd(E* it);
 
-        static mgdType& onAddParam();
+        static mgd& onAddParam();
 
-        static mgdType& onGetRet();
+        static mgd& onGetRet();
 
         static yes canMarshal();
     };

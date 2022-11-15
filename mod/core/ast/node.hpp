@@ -27,11 +27,14 @@ namespace namu {
 
         /// @return null if it's not relative between l & r.
         const node& deduce(const node& r) const {
-            const ntype& mine = getType();
-            const ntype& res = mine.deduce(r.getType());
-            if(nul(res) || nul(mine)) return nulOf<node>();
+            const ntype& ltype = getType();
+            const ntype& rtype = r.getType();
+            const ntype& res = ltype.deduce(rtype);
+            if(nul(res)) return nulOf<node>();
+            if(res == ltype) return *this;
+            if(res == rtype) return r;
 
-            return res == mine ? *this : r;
+            return nulOf<node>();
         }
 
         template <typename T>

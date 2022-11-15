@@ -37,6 +37,8 @@ namespace namu {
         const node* ret = &ased1.get();
         str ased;
         for(int n=1; n < len; n++) {
+            if(!ret)
+                return *new obj();
             ased = _elems[n].as<node>();
             ret = &ret->deduce(*ased);
         }

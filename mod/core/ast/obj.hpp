@@ -5,16 +5,23 @@
 
 namespace namu {
 
+    class mgdType;
     /// obj is a object structured in managed programming environment like 'namu'.
     /// owned sub nodes of a object can only be manipulated through API provided obj.
     /// because native object won't have owned nodes but only shared ones.
     class _nout obj : public baseObj {
-        NAMU(CLASS(obj, baseObj), VISIT())
+        NAMU(ME(obj, baseObj),
+             INIT_META(obj),
+             CLONE(obj),
+             VISIT())
         friend class slot; // for _onRunSub
+        friend class loweventer;
 
     public:
         explicit obj();
         explicit obj(const scopes& shares, const scope& owns);
+        explicit obj(mgdType* newType);
+        explicit obj(mgdType* newType, const scopes& shares, const scope& owns);
         explicit obj(const me& rhs);
 
         me& operator=(const me& rhs);
@@ -34,9 +41,12 @@ namespace namu {
         void setPos(const point& new1) override { _pos = new1; }
 
         clonable* deepClone() const override;
+        typedef ntype metaType;
+        const ntype& getType() const override;
 
     private:
         scopes* _makeNewSubs();
+        void _setType(const ntype* new1);
 
         me& _assign(const me& rhs);
 
@@ -46,6 +56,7 @@ namespace namu {
         tstr<scope> _owns;
         obj* _org;
         point _pos;
+        ntype* _type; // TODO: memory leak
     };
 
 #ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS

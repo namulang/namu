@@ -29,14 +29,26 @@ namespace namu {
         return _onRunSub(found, a);
     }
 
-    nbool me::is(const typeProvidable& to) const { return is(to.getType()); }
+    nbool me::is(const typeProvidable& to) const {
+        if(nul(to)) return false;
+        return is(to.getType());
+    }
     nbool me::is(const type& to) const { return getType().is(to); }
-    str me::as(const typeProvidable& to) const { return as(to.getType()); }
+    str me::as(const typeProvidable& to) const {
+        if(nul(to)) return str();
+        return as(to.getType());
+    }
     str me::as(const type& to) const { return getType().as(*this, to); }
 
-    nbool me::isImpli(const typeProvidable& to) const { return isImpli(to.getType()); }
+    nbool me::isImpli(const typeProvidable& to) const {
+        if(nul(to)) return false;
+        return isImpli(to.getType());
+    }
     nbool me::isImpli(const type& to) const { return getType().isImpli(to); }
-    str me::asImpli(const typeProvidable& to) const { return asImpli(to.getType()); }
+    str me::asImpli(const typeProvidable& to) const {
+        if(nul(to)) return str();
+        return asImpli(to.getType());
+    }
     str me::asImpli(const type& to) const { return getType().asImpli(*this, to); }
 
     const node& me::getEval() const {

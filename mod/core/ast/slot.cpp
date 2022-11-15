@@ -1,6 +1,7 @@
 #include "slot.hpp"
 #include "func.hpp"
-#include "visitor/visitor.hpp"
+#include "../visitor/visitor.hpp"
+#include "../type/mgdType.hpp"
 
 namespace namu {
 
@@ -8,7 +9,7 @@ namespace namu {
 
     me::slot(const manifest& manifest): _manifest(manifest) {
         _rel();
-        _pak.bind(new obj());
+        _pak.bind(new obj(new mgdType(_manifest.name)));
     }
 
     me::slot(const manifest& manifest, const obj& pack): _manifest(manifest) {

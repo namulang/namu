@@ -6,6 +6,7 @@
 #include "../../frame/thread.hpp"
 #include "../../ast/genericObj.hpp"
 #include "delayRule.hpp"
+#include "../../type/mgdType.hpp"
 
 namespace namu {
 
@@ -137,7 +138,7 @@ namespace namu {
             const std::string& name = dotname[n].cast<std::string>();
             obj* sub = &e->sub<obj>(name);
             if(nul(sub))
-                e->subs().add(name, sub = new obj());
+                e->subs().add(name, sub = new obj(new mgdType(name)));
             e = sub;
         }
 
@@ -285,7 +286,7 @@ namespace namu {
     obj* me::onDefObj(const std::string& name, defBlock& blk) {
         NAMU_DI("tokenEvent: onDefObj(%s, defBlock[%x])", name.c_str(), &blk);
 
-        obj& ret = *new obj();
+        obj& ret = *new obj(new mgdType(name));
         _onInjectObjSubs(ret, blk);
         _onPushName(name, ret);
         return &ret;
@@ -310,7 +311,7 @@ namespace namu {
         NAMU_DI("tokenEvent: onDefObjGeneric(%s, type.len[%d], defBlock[%x]", name.c_str(),
                 typeParams.len(), &blk);
 
-        obj& org = *new obj();
+        obj& org = *new obj(new mgdType(name));
         _onInjectObjSubs(org, blk);
         node* ret = new genericObj(org, _extractParamTypeNames(typeParams));
         _onPushName(name, *ret);
