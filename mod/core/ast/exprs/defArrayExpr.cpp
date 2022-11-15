@@ -35,12 +35,15 @@ namespace namu {
 
         str ased1 = _elems[0].as<node>();
         const node* ret = &ased1.get();
+        if(!ret)
+            return *new obj();
         str ased;
+
         for(int n=1; n < len; n++) {
-            if(!ret)
-                return *new obj();
             ased = _elems[n].as<node>();
             ret = &ret->deduce(*ased);
+            if(!ret)
+                return *new obj();
         }
 
         return *ret;
