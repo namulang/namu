@@ -19,13 +19,13 @@ namespace namu {
     }
 
     TEMPL
-    typename ME::mgdType& ME::onAddParam() {
-        return *new mgdType();
+    typename ME::mgd& ME::onAddParam() {
+        return *new mgd();
     }
 
     TEMPL
-    typename ME::mgdType& ME::onGetRet() {
-        return *new mgdType();
+    typename ME::mgd& ME::onGetRet() {
+        return *new mgd();
     }
 
 #undef ME

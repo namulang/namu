@@ -10,8 +10,8 @@ namespace {
         NAMU(CLASS(originObj, obj))
 
     public:
-        originObj(): _subs(*new scopes()) {}
-        originObj(const scopes& subs): _subs(subs) {}
+        originObj(): super(new mgdType("originObj")), _subs(*new scopes()) {}
+        originObj(const scopes& subs): super(new mgdType("originObj")), _subs(subs) {}
         originObj(const me& rhs) {
             _subs = rhs._subs;
         }
@@ -88,11 +88,19 @@ TEST_F(objTest, cloneByRunFunc) {
 }
 
 TEST_F(objTest, addElementIntoOwns) {
-    obj my;
+    obj my(new mgdType("my"));
     ASSERT_EQ(my.subs().len(), 0);
 
     my.subs().add("banana", new nInt(1));
     ASSERT_EQ(my.getShares().len(), 0);
     ASSERT_EQ(my.getOwns().len(), 1);
     ASSERT_EQ(my.getOwns()["banana"].cast<int>(), 1);
+}
+
+TEST_F(objTest, objType) {
+    originObj o1;
+    const type& t = o1.getType();
+    ASSERT_FALSE(nul(t));
+    ASSERT_EQ(t.getName(), "originObj");
+    ASSERT_TRUE(t.getSuper() == ttype<obj>());
 }

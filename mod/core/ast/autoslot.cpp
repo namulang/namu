@@ -1,6 +1,7 @@
 #include "autoslot.hpp"
 #include "func.hpp"
 #include "../visitor/visitor.hpp"
+#include "../type/mgdType.hpp"
 
 namespace namu {
 
@@ -27,8 +28,9 @@ namespace namu {
 
     obj& me::getPack() {
         if(_state == RELEASED) {
-            _pak.bind(new obj());
-            NAMU_I("%s pack is about to interpret lazy.", getManifest().name.c_str());
+            const std::string& name = getManifest().name;
+            _pak.bind(new obj(new mgdType(name)));
+            NAMU_I("%s pack is about to interpret lazy.", name.c_str());
             // TODO: check _rpt error count increased or not.
             //       if increased, then parse() function has been failed.
             parse(*_rpt, _pak->getShares()); // recursive call wasn't allowed.

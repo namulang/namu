@@ -3,6 +3,7 @@
 #include "tcppBridgeFunc.hpp"
 #include "marshaling/tgenericMarshaling.hpp"
 #include "../../ast/obj.hpp"
+#include "../../type/mgdType.hpp"
 
 namespace namu {
 
@@ -21,10 +22,10 @@ namespace namu {
         friend class tcppBridgeFunc;
 
     public:
-        tcppBridge(): _real(nullptr) {
+        tcppBridge(): super(new mgdType(ttype<T>::get().getName())), _real(nullptr) {
             _subs.bind(new scope());
         }
-        tcppBridge(T* real) : _real(real) {
+        tcppBridge(T* real): super(new mgdType(ttype<T>::get().getName())), _real(real) {
             _subs.bind(new scope());
         }
 
