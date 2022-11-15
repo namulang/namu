@@ -151,6 +151,7 @@ namespace namu {
     //  etc:
     clonable* me::deepClone() const {
         me* ret = (me*) clone();
+        ret->rel();
         tstr<tnarr<node>> cloned((tnarr<node>*) get().deepClone());
         ret->get().add(*cloned);
         return ret;

@@ -12,7 +12,7 @@ namespace namu {
         for(const node& elem : _elems)
             ret.add(*elem.as<node>());
 
-        return (arr*) getOrigin().deepClone();
+        return ret;
     }
 
     const node& me::getArrayType() const {
