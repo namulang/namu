@@ -424,3 +424,14 @@ TEST_F(arrTest, arrDeductionFailNegative3) {
         sys.con.print(arr[0].name)
     )SRC").shouldVerified(false);
 }
+
+TEST_F(arrTest, arrDeductionFailNegative4) {
+    make().negative().parse(R"SRC(
+    def obj
+        name := "kniz"
+    def obj2
+        name := "kniz"
+    main() void
+        arr := {obj(), obj2()}
+    )SRC").shouldVerified(false);
+}
