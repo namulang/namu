@@ -172,3 +172,59 @@ TEST_F(forExprTest, useObjectAsContainer) {
     )SRC").shouldVerified(true);
     run();
 }
+
+TEST_F(forExprTest, returnMiddleOfLoop) {
+    make().parse(R"SRC(
+        def person
+            name := ""
+
+        main() str
+            p1 := person()
+            p1.name = "Chales"
+
+            for p in {p1, person()}
+                return p1.name
+            return ""
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "Chales");
+}
+
+TEST_F(forExprTest, returnMiddleOfLoop1) {
+    make().parse(R"SRC(
+        def person
+            name := ""
+
+        main() str
+            p1 := person()
+            p1.name = "Chales"
+
+            res := (for p in {p1, person()}
+                return p1.name
+            )
+            return res + " Lee"
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "Chales");
+}
+
+/*TEST_F(forExprTest, retMiddleOfLoop) {
+    make().parse(R"SRC(
+        def person
+            name := ""
+
+        main() str
+            p1 := person()
+            p1.name = "Chales"
+
+            res := (for p in {p1, person()}
+                ret p1.name
+            )
+            return res + " Lee"
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "Chales Lee");
+}*/
