@@ -1,4 +1,5 @@
 #include "../../common/dep.hpp"
+#include "../../namuSyntaxTest.hpp"
 #include <functional>
 #include <chrono>
 #include <cstdint>
@@ -6,7 +7,7 @@
 using namespace namu;
 using namespace std;
 
-struct speedTest : public ::testing::Test {};
+struct speedTest : namuSyntaxTest {};
 
 namespace  {
     void benchMark(string name, int cnt, function<void(void)> func) {
@@ -118,4 +119,32 @@ TEST_F(speedTest, benchmarkStringCreation) {
         i += reinterpret_cast<std::uintptr_t>(&dum);
     });
     ASSERT_TRUE(i >= 20000);
+}
+
+TEST_F(speedTest, benchmarkSumOfSequence) {
+    NAMU_I("sum 10000 of integer:");
+
+    nint sum = 0;
+    auto start = chrono::steady_clock::now();
+    for(int n=0; n < 10000;n++)
+        sum += n;
+    auto end = chrono::steady_clock::now();
+
+    make().parse(R"SRC(
+        main() int
+            sum := 0
+            for n in 1..10000
+                sum = sum + n
+            return sum
+    )SRC").shouldVerified(true);
+
+    auto start2 = chrono::steady_clock::now();
+    str res = run();
+    auto end2 = chrono::steady_clock::now();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), sum);
+    logger::get().setEnable(true);
+    NAMU_I("native time: %d", (end - start) / chrono::milliseconds(1));
+    NAMU_I("managed time: %d", (end2 - start2) / chrono::milliseconds(1));
+    logger::get().setEnable(false);
 }
