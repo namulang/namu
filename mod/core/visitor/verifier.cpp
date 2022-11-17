@@ -350,7 +350,8 @@ namespace namu {
         NAMU_DI("verify: mgdFunc: last stmt[%s] should matches to return type[%s]",
                 retType.getName().c_str(), lastStmt.getType().getName().c_str());
 
-        if(!lastStmt.isSub<returnExpr>() && retType == ttype<nVoid>::get()) {
+        if(!(lastStmt.isSub<returnExpr>() || lastStmt.isSub<retExpr>()) &&
+            retType == ttype<nVoid>::get()) {
             NAMU_DI("verify: mgdFunc: implicit return won't verify when retType is void.");
             return;
         }
