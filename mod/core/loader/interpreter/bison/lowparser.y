@@ -116,7 +116,7 @@
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
-%token IF AKA RETURN AS DEF FOR _IN_ /* use prefix '_' for windows compatibility.*/
+%token IF AKA RETURN RET AS DEF FOR _IN_ /* use prefix '_' for windows compatibility.*/
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -134,7 +134,7 @@
 %type <asNarr> list list-items
 %type <asArgs> typenames typeparams
 //  keyword:
-%type <asNode> return
+%type <asNode> return ret
 %type <asNode> if for
 %type <asNode> aka aka-default aka-deduced
 %type <asObj> pack
@@ -278,6 +278,7 @@ primary: INTVAL {
 expr-line: defexpr-line { $$ = $1; }
          | expr10 { $$ = $1; }
          | return { $$ = $1; }
+         | ret { $$ = $1; }
          | defarray-initial-value { $$ = $1; }
          | defseq { $$ = $1; }
 
@@ -325,6 +326,12 @@ return: RETURN {
     } | RETURN expr {
         $$ = yyget_extra(scanner)->onReturn(*$2);
     }
+
+ret: RET {
+    $$ = yyget_extra(scanner)->onRet();
+ } | RET expr {
+    $$ = yyget_extra(scanner)->onRet(*$2);
+ }
 
 if: IF expr indentblock {
     // TODO:

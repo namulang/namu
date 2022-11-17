@@ -87,3 +87,28 @@ TEST_F(returnExprTest, returnVoidNegative) {
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
+
+TEST_F(returnExprTest, retLocalVariable) {
+    make().parse(R"SRC(
+        main() int
+            age int
+            ret age
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+}
+
+TEST_F(returnExprTest, retTypeImplicitCasting) {
+    make().parse(R"SRC(
+        make() int
+            ret 3.5
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+}
+
+TEST_F(returnExprTest, retVoidNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            ret 3
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}

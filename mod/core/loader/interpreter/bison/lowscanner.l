@@ -105,6 +105,7 @@ flt { return FLTTYPE; }
 null { return NULTYPE; }
 pack { return PACK; }
 aka { return AKA; }
+ret { return RET; }
 return { return RETURN; }
 as { return AS; }
 def { return DEF; }
