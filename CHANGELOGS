@@ -1,4 +1,40 @@
 # Changelogs
+## v0.2.4 Mana Update
+released on 11-03 2022
+build#623
+
+### major changes
+* 0a38bb00 - core: feat: add 'ret' expr
+* 5cc5b5bc - core: test: add benchmark test for native and managed
+* a246d1db - core: feat: add 'mgdType'
+* 62b45e00 - core: fix: for windows(MSVC) compatible
+* 955ef3e7 - core: feat: verify deduction of array
+* 49caeb95 - core: feat: mock a constructor
+* 75ae332c - core: refactor: rename 'reduce()' to 'deduce()'
+* 0988d703 - core: feat: add 'defArrayExpr'
+* 270738f5 - core: feat: supports seq as a container of 'for' expr
+* d112f02a - core: feat: put getElemTypeFunc and let it be more generic
+* 66b5d3ae - core: feat: add 'forExpr'
+* 02a690df - core: feat: 'iterate' func has been bridged
+* da725997 - core: doc: defAssign is not a expression, but statement.
+* b0829187 - core: fix: return type implicit casting doesn't work
+* 175970dc - core: feat: add syntax for 'seq'
+* a9fb1c9c - core: feat: add seq
+* edee0b95 - core: fix: remove redundant func at mgd containers
+* 9c916c06 - core: feat: improve exception handling for nseq
+* f0104598 - core: feat: add nseq
+* fdeb1350 - core: fix: element of array didn't applied to implicit casting
+* 61ccc8e2 - core: feat: implicitly define an array
+* 3e134b5d - core: feat: add syntax for accessing element of an array
+* f04944ac - core: fix: return type of generic func doesn't change
+* 32c3de8e - core: feat: add syntax for 'definition of array'
+* 1418fe88 - core: feat: implement general marshaling
+* 406488aa - core: feat: add more primitive marshalings
+* 437c4e3d - core: feat: add 'len' to subs of array
+* 4af3ed6c - core: feat: bridge can take const-member function
+* e7273038 - core: feat: add tarr, arr
+* a34f80e9 - bundle: feat: add 'bundle' module
+
 ## v0.2.3 Mana Update
 released on 09-16 2022
 build#584
