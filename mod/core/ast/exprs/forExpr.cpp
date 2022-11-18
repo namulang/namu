@@ -21,7 +21,7 @@ namespace namu {
 
         str ased = _container->as<node>();
         if(!ased) return NAMU_E("ased is null"), str();
-        str iter = ased->run("iterate",args{narr{*new nInt(0)}});
+        str iter = ased->run("iterate", args{narr{*new nInt(0)}});
         if(!iter) return NAMU_E("iter is null"), str();
 
         str ret;
@@ -46,6 +46,13 @@ namespace namu {
     }
 
     const node& me::getEval() const {
-        return _blk->getEval();
+        str ased = _container->as<node>();
+        str elemType = ased->run("getElemType");
+        if(!elemType) return NAMU_E("elemType == null"), nulOf<node>();
+
+        frameInteract f1(*_blk); {
+            thread::get()._getNowFrame().pushLocal(getLocalName(), *elemType);
+            return _blk->getEval();
+        }
     }
 }
