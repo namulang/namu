@@ -245,3 +245,22 @@ TEST_F(forExprTest, retMiddleOfLoopNegative) {
             return res
     )SRC").shouldVerified(false);
 }
+
+TEST_F(forExprTest, evalForExprWithoutRet) {
+    make().negative().parse(R"SRC(
+        def person
+            name := ""
+
+        main() str
+            p1 := person()
+            p1.name = "Chales"
+
+            res := (for p in {p1, person()}
+                p.name
+            )
+            return res
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "");
+}

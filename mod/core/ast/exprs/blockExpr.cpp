@@ -2,7 +2,6 @@
 #include "blockExpr.hpp"
 #include "../../frame/thread.hpp"
 #include "../../builtin/primitive/nVoid.hpp"
-#include "../../frame/frameInteract.hpp"
 #include "../../visitor/visitor.hpp"
 
 namespace namu {

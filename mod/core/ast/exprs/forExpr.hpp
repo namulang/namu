@@ -26,6 +26,6 @@ namespace namu {
     private:
         str _container;
         std::string _name;
-        tstr<blockExpr> _blk;
+        mutable tstr<blockExpr> _blk;
     };
 }
