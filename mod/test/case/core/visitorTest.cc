@@ -109,9 +109,9 @@ TEST_F(visitorTest, visitComplexExpressions2Negative) {
 
         main() flt
             o := obj()
-            ret := o.foo() as flt
-            ret = ret * 2
-            return ret
+            res := o.foo() as flt
+            res = res * 2
+            return res
     )SRC").shouldVerified(false);
 }
 
@@ -123,9 +123,9 @@ TEST_F(visitorTest, visitComplexExpressions2) {
 
         main() flt
             o := obj()
-            ret := o.foo(5) as flt
-            ret = ret * 2
-            return ret
+            res := o.foo(5) as flt
+            res = res * 2
+            return res
     )SRC").shouldVerified(true);
 
     node& root = getSubPack();
@@ -147,7 +147,7 @@ TEST_F(visitorTest, visitComplexExpressions2) {
             getExpr& leftGet = ((node&) a.getLeft()).cast<getExpr>();
             if(nul(leftGet)) return;
 
-            if(leftGet.getSubName() != "ret") return;
+            if(leftGet.getSubName() != "res") return;
             metRet = true;
         }
 
