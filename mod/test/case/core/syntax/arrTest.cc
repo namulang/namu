@@ -435,3 +435,23 @@ TEST_F(arrTest, arrDeductionFailNegative4) {
         arr := {obj(), obj2()}
     )SRC").shouldVerified(false);
 }
+
+TEST_F(arrTest, addFromEmptyArray) {
+    make().parse(R"SRC(
+    def person
+        value str
+    main() str
+        arr person[]
+        for n in 1..20
+            elem := person()
+            elem.value = n as str
+            arr.add(elem)
+
+        aka sys.con c
+        c.print("start...")
+        res := ""
+        for elem in arr
+            res = res + elem.value
+        ret res
+    )SRC").shouldVerified(true);
+}

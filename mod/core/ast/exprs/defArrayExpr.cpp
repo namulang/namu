@@ -21,7 +21,8 @@ namespace namu {
 
     const arr& me::getOrigin() const {
         if(!_org) {
-            _org.bind(new arr(*_deduceElems()));
+            str typ = _type ? _type->as<node>() : *_deduceElems();
+            _org.bind(new arr(*typ));
             for(const node& e : _elems)
                 _org->add(e);
         }
