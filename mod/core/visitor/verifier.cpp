@@ -28,7 +28,7 @@ namespace namu {
         }
         void _prepareArgsAlongParam(const params& ps, scope& s) {
             for(const auto& p : ps)
-                s.add(p.getName(), p.getOrigin());
+                s.add(p.getName(), *p.getOrigin().as<node>());
         }
     }
 
