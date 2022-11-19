@@ -538,7 +538,7 @@ def test(arg):
         res = os.system("./test " + arg)
     if res != 0:
         printErr("test was failed!")
-        ret = res
+        ret = -1
         failedCnt += 1
 
     if failedCnt > 0:
