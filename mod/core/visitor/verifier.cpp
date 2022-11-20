@@ -277,7 +277,8 @@ namespace namu {
         if(nul(myEval)) return _srcErr(me.getPos(), errCode::EXPR_EVAL_NULL);
         NAMU_DI("verify: returnExpr: myEval=%s", myEval.getType().getName().c_str());
         const ntype& myType = myEval.getType();
-        const ntype& fType = f.getRet().getType();
+        str retType = f.getRet().as<node>();
+        const type& fType = retType->getType();
         NAMU_DI("verify: returnExpr: checks return[%s] == func[%s]", myType.getName().c_str(),
             fType.getName().c_str());
 
@@ -345,7 +346,8 @@ namespace namu {
     }
 
     void me::_verifyMgdFuncImplicitReturn(mgdFunc& me) {
-        const ntype& retType = me.getRet().getType();
+        str ret = me.getRet().as<node>();
+        const type& retType = ret->getType();
         const node& lastStmt = *me.getBlock().getStmts().last();
         NAMU_DI("verify: mgdFunc: last stmt[%s] should matches to return type[%s]",
                 retType.getName().c_str(), lastStmt.getType().getName().c_str());
