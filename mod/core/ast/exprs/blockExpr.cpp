@@ -36,10 +36,10 @@ namespace namu {
         frame& fr = namu::thread::get()._getNowFrame();
         for(auto& e : _exprs) {
             ret = e.run();
-            if(fr.getRetState()) break;
+            if(!fr.getRetState().isEmpty()) break;
         }
 
-        fr.pushRet(ret);
+        fr.setRet(frame::BLK_RET, *ret);
         return ret;
     }
 

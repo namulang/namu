@@ -12,7 +12,7 @@ namespace namu {
 
     str me::run(const args& a) {
         str ret = _decideRet(a);
-        thread::get()._getNowFrame().pushRet(ret);
+        thread::get()._getNowFrame().setRet(frame::BLK_RET, *ret);
         return ret;
     }
 
