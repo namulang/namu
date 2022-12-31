@@ -35,7 +35,7 @@ namespace namu {
                 fr.pushLocal(_name, *elem);
 
                 ret = _blk->run();
-                if(fr.getRetState() == frame::RETURN)
+                if(fr.getRetState() == frame::FUNC_RETURN)
                     return ret;
             }
 

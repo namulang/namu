@@ -9,6 +9,62 @@ struct frameTest;
 
 namespace namu {
 
+    class retState : public instance {
+        NAMU(ADT(retState, instance))
+        friend class frame;
+
+    public:
+        // overrides operator==() by 'instance' class.
+
+        virtual nbool isOverwritable(const retState& it) const = 0;
+        virtual nbool isEmpty() const { return false; }
+
+    protected:
+        retState() {}
+    };
+
+    class blkRetState : public retState {
+        NAMU(CLASS(blkRetState, retState))
+        friend class frame;
+
+    public:
+        nbool isOverwritable(const retState& it) const override;
+
+    protected:
+        blkRetState() {}
+    };
+    class blkEmptyRetState : public blkRetState {
+        NAMU(CLASS(blkEmptyRetState, blkRetState))
+        friend class frame;
+
+    public:
+        nbool isEmpty() const override { return true; }
+
+    protected:
+        blkEmptyRetState() {}
+    };
+
+    class funcRetState : public retState {
+        NAMU(CLASS(funcRetState, retState))
+        friend class frame;
+
+    public:
+        nbool isOverwritable(const retState& it) const override;
+
+    protected:
+        funcRetState() {}
+    };
+    class funcEmptyRetState : public funcRetState {
+        NAMU(CLASS(funcEmptyRetState, funcRetState))
+        friend class frame;
+
+    public:
+        virtual nbool isEmpty() const override { return true; }
+
+    protected:
+        funcEmptyRetState() {}
+    };
+
     class obj;
     class func;
     class _nout frame : public node { // TODO: may be obj, not node.
@@ -19,11 +75,10 @@ namespace namu {
         friend class baseObj;
 
     public:
-        enum retState {
-            NO_RET = 0,
-            RET,
-            RETURN
-        };
+        static inline const blkEmptyRetState BLK_EMPTY;
+        static inline const blkRetState BLK_RET;
+        static inline const funcEmptyRetState FUNC_EMPTY;
+        static inline const funcRetState FUNC_RETURN;
 
     public:
         frame();
@@ -78,11 +133,10 @@ namespace namu {
 
         void rel() override;
 
-        nbool pushRet(const str& toRet);
-        nbool pushReturn(const str& toReturn);
-        retState getRetState() const;
-        str popReturn();
-        str popRet();
+        nbool setRet(const retState& new1);
+        nbool setRet(const retState& new1, const node& toRet);
+        const retState& getRetState() const;
+        node& getRet() const { return *_ret; }
 
     protected:
         static baseObj& _setMe(baseObj& new1);
@@ -93,10 +147,10 @@ namespace namu {
         void _rel();
 
     private:
+        tstr<retState> _retState;
         tstr<baseObj> _obj;
         tstr<func> _func;
         scopeStack _local;
-        str _ret;
-        retState _retState;
+        mutable str _ret;
     };
 }

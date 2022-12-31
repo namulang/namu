@@ -4,6 +4,15 @@
 
 namespace namu {
 
+    nbool blkRetState::isOverwritable(const retState& it) const {
+        return true;
+    }
+
+    nbool funcRetState::isOverwritable(const retState& it) const {
+        return isEmpty() || it.isSub<funcRetState>();
+    }
+
+
     NAMU_DEF_ME(frame)
 
     me::frame() {
@@ -61,7 +70,7 @@ namespace namu {
     scopes& me::getTop() { return *_local.getTop(); }
 
     tstr<scopes> me::popLocal() {
-        popRet();
+        setRet(BLK_EMPTY);
         return _local.pop();
     }
     // I won't provide API for poping a single node from the scope.
@@ -89,34 +98,19 @@ namespace namu {
         super::rel();
     }
 
-    nbool me::pushRet(const str& toRet) {
-        if(_retState == RETURN) return true;
+    nbool me::setRet(const retState& new1) { return setRet(new1, nulOf<node>()); }
+    nbool me::setRet(const retState& new1, const node& toRet) {
+        if(_retState && !_retState->isOverwritable(new1)) return true;
 
-        _retState = RET;
-        return _ret.bind(*toRet);
+        _retState.bind(new1);
+        return _ret.bind(toRet);
     }
-    nbool me::pushReturn(const str& toReturn) {
-        _retState = RETURN;
-        return _ret.bind(*toReturn);
-    }
-
-    frame::retState me::getRetState() const { return _retState; }
-    str me::popReturn() {
-        str ret = _ret;
-        _ret.rel();
-        _retState = NO_RET;
-        return ret;
-    }
-
-    str me::popRet() {
-        if(_retState == RETURN) return _ret;
-        return popReturn();
-    }
+    const retState& me::getRetState() const { return *_retState; }
 
     void me::_rel() {
         _obj.rel();
         _func.rel();
         _local.rel();
-        popReturn();
+        setRet(FUNC_EMPTY);
     }
 }

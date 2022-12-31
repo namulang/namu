@@ -43,7 +43,9 @@ namespace namu {
                 frameInteract f3(*_blk); {
                     _blk->run();
                 }
-                ret = thread::get()._getNowFrame().popReturn();
+                frame& fr = thread::get()._getNowFrame();
+                ret.bind(fr.getRet());
+                fr.setRet(frame::FUNC_EMPTY);
             }
         }
         return ret;
