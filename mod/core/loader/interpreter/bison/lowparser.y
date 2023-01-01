@@ -116,7 +116,7 @@
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
-%token IF AKA RETURN RET AS DEF FOR _IN_ /* use prefix '_' for windows compatibility.*/
+%token IF AKA RETURN RET AS DEF FOR BREAK _IN_ /* use prefix '_' for windows compatibility.*/
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -135,7 +135,7 @@
 %type <asArgs> typenames typeparams
 //  keyword:
 %type <asNode> return ret
-%type <asNode> if for
+%type <asNode> if for break
 %type <asNode> aka aka-default aka-deduced
 %type <asObj> pack
 //  expr:
@@ -279,6 +279,7 @@ expr-line: defexpr-line { $$ = $1; }
          | expr10 { $$ = $1; }
          | return { $$ = $1; }
          | ret { $$ = $1; }
+         | break { $$ = $1; }
          | defarray-initial-value { $$ = $1; }
          | defseq { $$ = $1; }
 
@@ -332,6 +333,12 @@ ret: RET {
  } | RET expr {
     $$ = yyget_extra(scanner)->onRet(*$2);
  }
+
+break: BREAK {
+    $$ = yyget_extra(scanner)->onBreak();
+   } | BREAK expr {
+    $$ = yyget_extra(scanner)->onBreak(*$2);
+   }
 
 if: IF expr indentblock {
     // TODO:

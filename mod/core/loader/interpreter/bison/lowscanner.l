@@ -106,6 +106,7 @@ null { return NULTYPE; }
 pack { return PACK; }
 aka { return AKA; }
 ret { return RET; }
+break { return BREAK; }
 return { return RETURN; }
 as { return AS; }
 def { return DEF; }
