@@ -247,7 +247,7 @@ TEST_F(forExprTest, retMiddleOfLoopNegative) {
 }
 
 TEST_F(forExprTest, evalForExprWithoutRet) {
-    make().negative().parse(R"SRC(
+    make().parse(R"SRC(
         def person
             name := ""
 
@@ -263,4 +263,27 @@ TEST_F(forExprTest, evalForExprWithoutRet) {
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<std::string>(), "");
+}
+
+TEST_F(forExprTest, simpleBreakTest) {
+    make().parse(R"SRC(
+        main() int
+            res := (for n in 1..10
+                break 5
+            )
+            return res
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 5);
+}
+
+TEST_F(forExprTest, simpleBreakTestNegative) {
+    make().negative().parse(R"SRC(
+        main() str
+            res := (for n in 1..10
+                break 5
+            )
+            return res
+    )SRC").shouldVerified(false);
 }
