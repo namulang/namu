@@ -60,6 +60,8 @@ PAIRX(MAKE_GENERIC_FAIL,        "construction '%s' for generic obj has failed.")
 PAIRX(SHOULD_TYPE_PARAM_NAME,   "'%s' type parameter wasn't be defined as new name.")
 //  func-call:
 PAIRX(SUB_NOT_EXIST,            "sub-node doesn't exist.")
+//  retState:
+PAIRX(BREAK_OUTSIDE_OF_LOOP,    "use 'break' outside of a loop")
 
 // func:("verify: arithmeticExpr: lhs & rhs should bind something.");
 //

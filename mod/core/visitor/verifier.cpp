@@ -366,6 +366,11 @@ namespace namu {
                 retType.getName().c_str());
     }
 
+    void me::_prepare() {
+        _us.clear();
+        _loopCnt = 0;
+    }
+
     void me::onLeave(visitInfo i, mgdFunc& me) {
         _verifyMgdFuncImplicitReturn(me);
 
@@ -418,10 +423,19 @@ namespace namu {
 
         me._blk->inFrame(nulOf<bicontainable>());
         thread::get()._getNowFrame().pushLocal(name, *elemType);
+
+        _loopCnt++;
     }
 
     void me::onLeave(visitInfo i, forExpr& me) {
         NAMU_DI("verify: forExpr: onLeave");
         me._blk->outFrame();
+
+        _loopCnt--;
+    }
+
+    void me::onVisit(visitInfo i, breakExpr& me) {
+        NAMU_DI("verify: breakExpr: declared inside of loop?");
+        if(_loopCnt <= 0) return _srcErr(me.getPos(), errCode::BREAK_OUTSIDE_OF_LOOP);
     }
 }

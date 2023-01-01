@@ -165,9 +165,9 @@ namespace namu {
         f.getBlock().accept(i, *this);
     }
 
-    void me::onTraverse(visitInfo i, retExpr& r) {
+    void me::onTraverse(visitInfo i, retStateExpr& r) {
         if(_isLog)
-            NAMU_DI("retExpr[%s]::onTraverse", i.name.c_str());
+            NAMU_DI("%s[%s]::onTraverse", r.getType().getName().c_str(), i.name.c_str());
 
         int n = 0;
         node& ret = r.getRet();

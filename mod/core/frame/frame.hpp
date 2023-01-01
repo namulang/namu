@@ -77,6 +77,7 @@ namespace namu {
     public:
         static inline const blkEmptyRetState BLK_EMPTY;
         static inline const blkRetState BLK_RET;
+        static inline const blkRetState BLK_BREAK;
         static inline const funcEmptyRetState FUNC_EMPTY;
         static inline const funcRetState FUNC_RETURN;
 

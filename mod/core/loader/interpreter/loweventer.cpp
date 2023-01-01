@@ -389,6 +389,17 @@ namespace namu {
         return new retExpr(exp);
     }
 
+    breakExpr* me::onBreak() {
+        NAMU_DI("tokenEvent: onBreak()");
+
+        return new breakExpr();
+    }
+    breakExpr* me::onBreak(node& exp) {
+        NAMU_DI("tokenEvent: onBreak(%s)", exp.getType().getName().c_str());
+
+        return new breakExpr(exp);
+    }
+
     narr* me::onPackDotname(const std::string& name) {
         narr* ret = new narr();
         ret->add(new nStr(name));

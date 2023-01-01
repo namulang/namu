@@ -25,7 +25,7 @@ namespace namu {
         frame& getErrFrame();
 
         void start() override {
-            _us.clear();
+            _prepare();
 
             verifier* prev = &_getNow();
             _setNow(this);
@@ -54,8 +54,11 @@ namespace namu {
         void onLeave(visitInfo i, genericObj& me) override;
         void onVisit(visitInfo i, forExpr& me) override;
         void onLeave(visitInfo i, forExpr& me) override;
+        void onVisit(visitInfo i, breakExpr& me) override;
 
     private:
+        void _prepare();
+
         // @param newInfo is not a heap instance.
         void _leaveErrFrame();
         void _verifyMgdFuncImplicitReturn(mgdFunc& me);
@@ -74,6 +77,7 @@ namespace namu {
         tstr<errReport> _rpt;
         tstr<frame> _frame;
         std::vector<baseObj*> _us; // multiple 'me'
+        ncnt _loopCnt;
 
         static verifier* _now;
     };

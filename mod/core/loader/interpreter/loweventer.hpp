@@ -22,6 +22,7 @@ namespace namu {
     class FAOExpr;
     class getExpr;
     class retExpr;
+    class breakExpr;
 
     class _nout loweventer : public tokenScan {
         NAMU(CLASS(loweventer, tokenScan))
@@ -146,6 +147,8 @@ namespace namu {
         returnExpr* onReturn(node& exp);
         retExpr* onRet();
         retExpr* onRet(node& exp);
+        breakExpr* onBreak();
+        breakExpr* onBreak(node& exp);
         //      run:
         runExpr* onFillFromOfFuncCall(const node& me, runExpr& to);
         runExpr* onRunExpr(const node& type, const narr& a);

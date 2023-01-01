@@ -35,8 +35,13 @@ namespace namu {
                 fr.pushLocal(_name, *elem);
 
                 ret = _blk->run();
-                if(fr.getRetState() == frame::FUNC_RETURN)
+                const retState& state = fr.getRetState();
+                if(state  == frame::FUNC_RETURN)
                     return ret;
+                else if(state == frame::BLK_BREAK) {
+                    fr.setRet(frame::BLK_EMPTY);
+                    return ret;
+                }
             }
 
             iter->run("next", args{narr{*new nInt(1)}});
