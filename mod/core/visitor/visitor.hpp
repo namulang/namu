@@ -4,6 +4,7 @@
 
 namespace namu {
 
+    class retStateExpr;
 #define X(T) class T;
 #   include "visitee.inl"
 #undef X
@@ -51,7 +52,7 @@ namespace namu {
         virtual void onTraverse(visitInfo i, mgdFunc& f);
         virtual void onTraverse(visitInfo i, frame& f);
         virtual void onTraverse(visitInfo i, forExpr& f);
-        virtual void onTraverse(visitInfo i, retExpr& r);
+        virtual void onTraverse(visitInfo i, retStateExpr& r);
 
     private:
         nbool _isLog;
