@@ -438,4 +438,9 @@ namespace namu {
         NAMU_DI("verify: breakExpr: declared inside of loop?");
         if(_loopCnt <= 0) return _srcErr(me.getPos(), errCode::BREAK_OUTSIDE_OF_LOOP);
     }
+
+    void me::onVisit(visitInfo i, nextExpr& me) {
+        NAMU_DI("verify: nextExpr: declared inside of loop?");
+        if(_loopCnt <= 0) return _srcErr(me.getPos(), errCode::NEXT_OUTSIDE_OF_LOOP);
+    }
 }

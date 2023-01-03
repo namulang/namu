@@ -6,7 +6,7 @@ namespace namu {
 
     NAMU(DEF_ME(breakExpr), DEF_VISIT())
 
-    const retState& me::onGetRetState() const {
+    const retState& me::_onGetRetState() const {
         return frame::BLK_BREAK;
     }
 }

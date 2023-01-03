@@ -22,7 +22,7 @@ namespace namu {
         const node& getEval() const override;
 
     protected:
-        virtual const retState& onGetRetState() const = 0;
+        virtual const retState& _onGetRetState() const = 0;
 
     private:
         str _decideRet(const args& a);

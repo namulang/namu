@@ -35,19 +35,31 @@ namespace namu {
                 fr.pushLocal(_name, *elem);
 
                 ret = _blk->run();
-                const retState& state = fr.getRetState();
-                if(state  == frame::FUNC_RETURN)
+                if(_postProcess(fr))
                     return ret;
-                else if(state == frame::BLK_BREAK) {
-                    fr.setRet(frame::BLK_EMPTY);
-                    return ret;
-                }
             }
 
             iter->run("next", args{narr{*new nInt(1)}});
         }
 
         return ret;
+    }
+
+    nbool me::_postProcess(frame& fr) {
+        const retState& state = fr.getRetState();
+        if(state == frame::FUNC_RETURN)
+            return true;
+
+        else if(state == frame::BLK_BREAK) {
+            fr.setRet(frame::BLK_EMPTY);
+            return true;
+
+        } else if(state == frame::BLK_NEXT) {
+            fr.setRet(frame::BLK_EMPTY);
+            return false;
+        }
+
+        return false;
     }
 
     const node& me::getEval() const {

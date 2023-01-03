@@ -5,6 +5,7 @@
 
 namespace namu {
 
+    class frame;
     class _nout forExpr : public expr {
         NAMU(CLASS(forExpr, expr, expr::exprType), VISIT())
         friend class verifier;
@@ -22,6 +23,10 @@ namespace namu {
         str run(const args& a) override;
 
         const node& getEval() const override;
+
+    private:
+        /// @return true if exit the loop
+        nbool _postProcess(frame& fr);
 
     private:
         str _container;

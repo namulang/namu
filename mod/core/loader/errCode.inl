@@ -62,6 +62,7 @@ PAIRX(SHOULD_TYPE_PARAM_NAME,   "'%s' type parameter wasn't be defined as new na
 PAIRX(SUB_NOT_EXIST,            "sub-node doesn't exist.")
 //  retState:
 PAIRX(BREAK_OUTSIDE_OF_LOOP,    "use 'break' outside of a loop")
+PAIRX(NEXT_OUTSIDE_OF_LOOP,     "use 'next' outside of a loop")
 
 // func:("verify: arithmeticExpr: lhs & rhs should bind something.");
 //

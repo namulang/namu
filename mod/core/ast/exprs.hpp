@@ -17,3 +17,4 @@
 #include "exprs/defArrayExpr.hpp"
 #include "exprs/retExpr.hpp"
 #include "exprs/breakExpr.hpp"
+#include "exprs/nextExpr.hpp"
