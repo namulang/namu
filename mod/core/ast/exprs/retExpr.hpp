@@ -12,6 +12,6 @@ namespace namu {
         retExpr() {}
 
     protected:
-        const retState& onGetRetState() const override;
+        const retState& _onGetRetState() const override;
     };
 }

@@ -400,6 +400,12 @@ namespace namu {
         return new breakExpr(exp);
     }
 
+    nextExpr* me::onNext() {
+        NAMU_DI("tokenEvent: onNext()");
+
+        return new nextExpr();
+    }
+
     narr* me::onPackDotname(const std::string& name) {
         narr* ret = new narr();
         ret->add(new nStr(name));
