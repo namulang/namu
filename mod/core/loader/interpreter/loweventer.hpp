@@ -24,6 +24,7 @@ namespace namu {
     class retExpr;
     class breakExpr;
     class nextExpr;
+    class ifExpr;
 
     class _nout loweventer : public tokenScan {
         NAMU(CLASS(loweventer, tokenScan))
@@ -163,6 +164,9 @@ namespace namu {
         FAOExpr* onMul(const node& lhs, const node& rhs);
         FAOExpr* onDiv(const node& lhs, const node& rhs);
         FAOExpr* onMod(const node& lhs, const node& rhs);
+        //      if:
+        ifExpr* onIf(const node& condition, const blockExpr& thenBlk);
+        ifExpr* onIf(const node& condition, const blockExpr& thenBlk, const blockExpr& elseBlk);
 
     private:
         nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);

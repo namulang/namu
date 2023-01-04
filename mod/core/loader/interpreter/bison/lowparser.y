@@ -116,7 +116,7 @@
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
-%token IF AKA RETURN RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
+%token IF ELSE AKA RETURN RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -346,8 +346,10 @@ next: NEXT {
    }
 
 if: IF expr indentblock {
-    // TODO:
-    }
+    $$ = yyget_extra(scanner)->onIf(*$2, *$3);
+} | IF expr indentblock ELSE indentblock {
+    $$ = yyget_extra(scanner)->onIf(*$2, *$3, *$5);
+}
 
 for: FOR NAME _IN_ expr-line indentblock {
     $$ = yyget_extra(scanner)->onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
