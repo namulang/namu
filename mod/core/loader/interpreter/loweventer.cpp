@@ -562,6 +562,15 @@ namespace namu {
         );
     }
 
+    ifExpr* me::onIf(const node& condition, const blockExpr& thenBlk) {
+        NAMU_DI("tokenEvent: onIf(then)");
+        return new ifExpr(condition, thenBlk);
+    }
+    ifExpr* me::onIf(const node& condition, const blockExpr& thenBlk, const blockExpr& elseBlk) {
+        NAMU_DI("tokenEvent: onIf(then, else)");
+        return new ifExpr(condition, thenBlk, elseBlk);
+    }
+
     me::loweventer() { rel(); }
 
     tstr<slot>& me::getSlot() { return _slot; }

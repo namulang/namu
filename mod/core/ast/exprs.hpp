@@ -18,3 +18,4 @@
 #include "exprs/retExpr.hpp"
 #include "exprs/breakExpr.hpp"
 #include "exprs/nextExpr.hpp"
+#include "exprs/ifExpr.hpp"

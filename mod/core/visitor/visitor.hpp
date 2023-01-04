@@ -53,6 +53,7 @@ namespace namu {
         virtual void onTraverse(visitInfo i, frame& f);
         virtual void onTraverse(visitInfo i, forExpr& f);
         virtual void onTraverse(visitInfo i, retStateExpr& r);
+        virtual void onTraverse(visitInfo i, ifExpr& f);
 
     private:
         nbool _isLog;

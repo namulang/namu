@@ -174,4 +174,14 @@ namespace namu {
         if(!nul(ret))
             ret.accept(visitInfo {"", &r, n++, 1, i.depth+1}, *this);
     }
+
+    void me::onTraverse(visitInfo i, ifExpr& f) {
+        if(_isLog)
+            NAMU_DI("ifExpr[%s]::onTraverse", i.name.c_str());
+
+        f.getThenBlk().accept(i, *this);
+        blockExpr& elseBlk = f.getElseBlk();
+        if(!nul(elseBlk))
+            elseBlk.accept(i, *this);
+    }
 }

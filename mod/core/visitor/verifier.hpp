@@ -56,6 +56,7 @@ namespace namu {
         void onLeave(visitInfo i, forExpr& me) override;
         void onVisit(visitInfo i, breakExpr& me) override;
         void onVisit(visitInfo i, nextExpr& me) override;
+        void onVisit(visitInfo i, ifExpr& me) override;
 
     private:
         void _prepare();

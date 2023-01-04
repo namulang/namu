@@ -443,4 +443,13 @@ namespace namu {
         NAMU_DI("verify: nextExpr: declared inside of loop?");
         if(_loopCnt <= 0) return _srcErr(me.getPos(), errCode::NEXT_OUTSIDE_OF_LOOP);
     }
+
+    void me::onVisit(visitInfo i, ifExpr& me) {
+        NAMU_DI("verify: ifExpr: condition-expr can be casted into bool?");
+        node& condition = me.getCondition();
+        if(nul(condition))
+            return _srcErr(me.getPos(), errCode::CONDITION_IS_EMPTY);
+        if(!condition.is<nbool>())
+            return _srcErr(me.getPos(), errCode::CONDITION_CANT_CAST_TO_BOOL);
+    }
 }
