@@ -14,7 +14,21 @@ TEST_F(ifTest, simpleNestedTest) {
             if 11
                         22
                         if 22
-                                33)SRC").shouldParsed(true);
+                                33)SRC").shouldVerified(true);
+}
+
+TEST_F(ifTest, simpleIfTest) {
+    make().parse(R"SRC(
+        main() int
+            age := (if false
+                11
+            else
+                22)
+            return age
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 22);
 }
 
 TEST_F(ifTest, NestIfTest) {
@@ -24,5 +38,5 @@ TEST_F(ifTest, NestIfTest) {
            if "hello"
                        "hell  '  o"
                        if 33
-                               "hel'lo")SRC").shouldParsed(true);
+                               "hel'lo")SRC").shouldVerified(true);
 }

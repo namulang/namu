@@ -116,7 +116,7 @@
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
-%token IF ELSE AKA RETURN RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
+%token IF _ELSE_ AKA RETURN RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -347,7 +347,7 @@ next: NEXT {
 
 if: IF expr indentblock {
     $$ = yyget_extra(scanner)->onIf(*$2, *$3);
-} | IF expr indentblock ELSE indentblock {
+} | IF expr indentblock _ELSE_ indentblock {
     $$ = yyget_extra(scanner)->onIf(*$2, *$3, *$5);
 }
 

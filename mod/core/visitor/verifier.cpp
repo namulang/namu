@@ -350,7 +350,7 @@ namespace namu {
         const type& retType = ret->getType();
         const node& lastStmt = *me.getBlock().getStmts().last();
         NAMU_DI("verify: mgdFunc: last stmt[%s] should matches to return type[%s]",
-                retType.getName().c_str(), lastStmt.getType().getName().c_str());
+                lastStmt.getType().getName().c_str(), retType.getName().c_str());
 
         if(!(lastStmt.isSub<returnExpr>() || lastStmt.isSub<retExpr>()) &&
             retType == ttype<nVoid>::get()) {
