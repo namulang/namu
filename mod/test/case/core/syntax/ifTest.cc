@@ -20,6 +20,19 @@ TEST_F(ifTest, simpleNestedTest) {
 TEST_F(ifTest, simpleIfTest) {
     make().parse(R"SRC(
         main() int
+            if true
+                return 11
+            else
+                return 22
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 11);
+}
+
+TEST_F(ifTest, simpleIfAssignTest) {
+    make().parse(R"SRC(
+        main() int
             age := (if false
                 11
             else

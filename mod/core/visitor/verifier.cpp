@@ -449,7 +449,7 @@ namespace namu {
         node& condition = me.getCondition();
         if(nul(condition))
             return _srcErr(me.getPos(), errCode::CONDITION_IS_EMPTY);
-        if(!condition.is<nbool>())
+        if(!condition.is<nBool>())
             return _srcErr(me.getPos(), errCode::CONDITION_CANT_CAST_TO_BOOL);
     }
 }
