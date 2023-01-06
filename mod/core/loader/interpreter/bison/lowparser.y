@@ -285,7 +285,7 @@ expr-line: defexpr-line { $$ = $1; }
          | defseq { $$ = $1; }
 
 expr-compound: defexpr-compound { $$ = $1; }
-             | if { $$ = new blockExpr(); } // TODO: remove
+             | if { $$ = $1; }
              | for { $$ = $1; }
 
 //  expr-line:
