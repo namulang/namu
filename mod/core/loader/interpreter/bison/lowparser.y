@@ -346,9 +346,9 @@ next: NEXT {
    }
 
 if: IF expr indentblock {
-    $$ = yyget_extra(scanner)->onIf(*$2, *$3);
+    $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
 } | IF expr indentblock _ELSE_ indentblock {
-    $$ = yyget_extra(scanner)->onIf(*$2, *$3, *$5);
+    $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>(), $5->cast<blockExpr>());
 }
 
 for: FOR NAME _IN_ expr-line indentblock {

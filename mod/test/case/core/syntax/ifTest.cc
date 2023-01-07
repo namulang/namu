@@ -36,7 +36,8 @@ TEST_F(ifTest, simpleIfAssignTest) {
             age := (if false
                 11
             else
-                22)
+                22
+            )
             return age
     )SRC").shouldVerified(true);
     str res = run();
@@ -44,12 +45,23 @@ TEST_F(ifTest, simpleIfAssignTest) {
     ASSERT_EQ(res.cast<nint>(), 22);
 }
 
+
 TEST_F(ifTest, NestIfTest) {
     make("demo").parse(R"SRC(
+        pack demo
+        foo(abc int) void
+           if "hello"
+                       "hell  '  o"
+                       if 33
+                               "hel'lo")SRC").shouldVerified(true);
+}
+
+TEST_F(ifTest, NestIfTestNegative) {
+    make("demo").negative().parse(R"SRC(
         pack demo
         foo(abc int) int
            if "hello"
                        "hell  '  o"
                        if 33
-                               "hel'lo")SRC").shouldVerified(true);
+                               "hel'lo")SRC").shouldVerified(false);
 }
