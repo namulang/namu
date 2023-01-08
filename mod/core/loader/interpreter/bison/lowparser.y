@@ -145,6 +145,7 @@
 %type <asDefBlock> defblock
 //      value:
 %type <asNode> defvar defvar-exp-no-initial-value defvar-exp-initial-value defarray-initial-value
+%type <asNode> defvar-compound
 %type <asNode> defseq
 //      func:
 %type <asNode> deffunc deffunc-default deffunc-deduction
@@ -375,6 +376,7 @@ defexpr-line: defexpr-line-except-aka { $$ = $1; }
 defexpr-line-except-aka: defvar { $$ = $1; }
 defexpr-compound: deffunc { $$ = $1; }
                 | defobj { $$ = $1; }
+                | defvar-compound { $$ = $1; }
 defstmt: defexpr-line NEWLINE { $$ = $1; }
        | defexpr-compound { $$ = $1; }
 defblock: %empty {
@@ -418,10 +420,16 @@ defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
                              $$ = yyget_extra(scanner)->onDefVar(*$1, *$2);
                              free($1);
                          }
-defvar-exp-initial-value: NAME DEFASSIGN expr {
+defvar-exp-initial-value: NAME DEFASSIGN expr-line {
                           $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
                           free($1);
                       }
+
+defvar-compound: NAME DEFASSIGN expr-compound {
+                $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
+                free($1);
+             }
+
 defarray-initial-value: '{' list-items '}' {
                         $$ = yyget_extra(scanner)->onDefArray(*$2);
                     }

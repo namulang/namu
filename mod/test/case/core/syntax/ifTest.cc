@@ -45,6 +45,19 @@ TEST_F(ifTest, simpleIfAssignTest) {
     ASSERT_EQ(res.cast<nint>(), 22);
 }
 
+TEST_F(ifTest, simpleIfAssignWithoutParenthesisTest) {
+    make().parse(R"SRC(
+        main() int
+            age := if false
+                11
+            else
+                22
+            return age
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 22);
+}
 
 TEST_F(ifTest, NestIfTest) {
     make("demo").parse(R"SRC(

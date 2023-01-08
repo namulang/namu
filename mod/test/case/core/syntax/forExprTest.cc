@@ -210,6 +210,24 @@ TEST_F(forExprTest, returnMiddleOfLoop1) {
     ASSERT_EQ(res.cast<std::string>(), "Chales");
 }
 
+TEST_F(forExprTest, returnMiddleOfLoop1WithoutParenthesis) {
+    make().parse(R"SRC(
+        def person
+            name := ""
+
+        main() str
+            p1 := person()
+            p1.name = "Chales"
+
+            res := for p in {p1, person()}
+                return p1.name
+            return res + " Lee"
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "Chales");
+}
+
 TEST_F(forExprTest, retMiddleOfLoop) {
     make().parse(R"SRC(
         def person
@@ -222,6 +240,24 @@ TEST_F(forExprTest, retMiddleOfLoop) {
             res := (for p in {p1, person()}
                 ret p1.name
             )
+            return res + " Lee"
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "Chales Lee");
+}
+
+TEST_F(forExprTest, retMiddleOfLoopWithoutParenthesis) {
+    make().parse(R"SRC(
+        def person
+            name := ""
+
+        main() str
+            p1 := person()
+            p1.name = "Chales"
+
+            res := for p in {p1, person()}
+                ret p1.name
             return res + " Lee"
     )SRC").shouldVerified(true);
     str res = run();
