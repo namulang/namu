@@ -5,7 +5,6 @@
 #include "../../builtin/primitive.hpp"
 #include "../../frame/thread.hpp"
 #include "../../ast/genericObj.hpp"
-#include "delayRule.hpp"
 #include "../../type/mgdType.hpp"
 
 namespace namu {
@@ -173,12 +172,6 @@ namespace namu {
         if(nul(blk))
             return onSrcErr(errCode::IS_NULL, "blk"), onBlock();
 
-        blockRule& br = stmt.cast<blockRule>();
-        if(!nul(br)) {
-            blk.getStmts().add(br.case1());
-            return &blk;
-        }
-
         blk.getStmts().add(stmt);
         NAMU_DI("tokenEvent: onBlock().len=%d", blk.getStmts().len());
         return &blk;
@@ -194,9 +187,14 @@ namespace namu {
         if(nul(s))
             return onSrcErr(errCode::IS_NULL, "s"), onDefBlock();
 
-        blockRule& br = candidate.cast<blockRule>();
-        if(!nul(br))
-            return &br.case2(s);
+        defVarExpr& defVar = candidate.cast<defVarExpr>();
+        if(!nul(defVar))
+            s.asScope->add(defVar.getName(), defVar.getOrigin());
+        defAssignExpr& defAssign = candidate.cast<defAssignExpr>();
+        if(!nul(defAssign)) {
+            defAssign.setTo(*new getExpr("me"));
+            s.asPreCtor->add(defAssign);
+        }
 
         s.asScope->add(_onPopName(candidate), &candidate);
         return &s;
@@ -204,10 +202,8 @@ namespace namu {
 
     node* me::onDefVar(const std::string& name, const node& origin) {
         NAMU_DI("tokenEvent: onDefVar(%s, %s)", origin.getType().getName().c_str(), name.c_str());
-        return new blockRule(
-            [&, name]() { return new defVarExpr(name, origin); },
-            [&, name](defBlock& blk) -> defBlock& { return blk.asScope->add(name, origin), blk; }
-        );
+
+        return new defVarExpr(name, origin);
     }
 
     node* me::onDefArray(const narr& items) {
@@ -233,10 +229,7 @@ namespace namu {
     params me::_convertParams(const narr& ps) {
         params ret;
         for(auto& p : ps) {
-            blockRule& cast = p.cast<blockRule>();
-            if(nul(cast)) return onSrcErr(errCode::NOT_EXPR, p.getType().getName().c_str()), ret;
-
-            tstr<defVarExpr> defVar(cast.case1()->cast<defVarExpr>());
+            tstr<defVarExpr> defVar(p.cast<defVarExpr>());
             if(!defVar) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
 
             ret.add(new param(defVar->getName(), defVar->getOrigin()));
@@ -497,12 +490,8 @@ namespace namu {
 
     node* me::onDefAssign(const std::string& name, node& rhs) {
         NAMU_DI("tokenEvent: onDefAssign(%s, %s)", name.c_str(), rhs.getType().getName().c_str());
-        return new blockRule(
-            [&, name]() { return new defAssignExpr(name, rhs); },
-            [&, name](defBlock& blk) -> defBlock& {
-                return blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), name, rhs, true)), blk;
-            }
-        );
+
+        return new defAssignExpr(name, rhs);
     }
 
     asExpr* me::onAs(const node& me, const node& as) {
@@ -554,12 +543,8 @@ namespace namu {
 
     node* me::onAkaDefault(const getExpr& dotname, const std::string& newName) {
         NAMU_DI("tokenEvent: onAkaDefault(%s..., %s)", dotname.getSubName().c_str(), newName.c_str());
-        return new blockRule(
-            [&, newName]() { return new defAssignExpr(newName, dotname); },
-            [&, newName](defBlock& blk) -> defBlock& {
-                return blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), newName, dotname, true)), blk;
-            }
-        );
+
+        return new defAssignExpr(newName, dotname);
     }
 
     ifExpr* me::onIf(const node& condition, const blockExpr& thenBlk) {

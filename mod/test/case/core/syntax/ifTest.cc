@@ -59,6 +59,32 @@ TEST_F(ifTest, simpleIfAssignWithoutParenthesisTest) {
     ASSERT_EQ(res.cast<nint>(), 22);
 }
 
+TEST_F(ifTest, simpleReturnIfWithoutParenthesisTest) {
+    make().parse(R"SRC(
+        main() int
+            return if true
+                11
+            else
+                22
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 11);
+}
+
+TEST_F(ifTest, simpleReturnDefAssignWithoutParenthesisTest) {
+    make().parse(R"SRC(
+        main() int
+            return a := if true
+                11
+            else
+                22
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 11);
+}
+
 TEST_F(ifTest, NestIfTest) {
     make("demo").parse(R"SRC(
         pack demo
@@ -77,4 +103,21 @@ TEST_F(ifTest, NestIfTestNegative) {
                        "hell  '  o"
                        if 33
                                "hel'lo")SRC").shouldVerified(false);
+}
+
+TEST_F(ifTest, ifAsArgument) {
+    make().parse(R"SRC(
+        abc(val int, val2 int) int
+            return val + val2
+
+        main() int
+            abc(if false
+                22
+            else
+                11
+            , 5)
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 27);
 }

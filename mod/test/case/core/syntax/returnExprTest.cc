@@ -112,3 +112,13 @@ TEST_F(returnExprTest, retVoidNegative) {
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
+
+TEST_F(returnExprTest, retDefAssign) {
+    make().parse(R"SRC(
+        main() int
+            return a := 5
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 5);
+}
