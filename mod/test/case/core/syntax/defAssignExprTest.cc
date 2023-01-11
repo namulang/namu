@@ -41,7 +41,7 @@ TEST_F(defAssignExprTest, simpleLocalDefAssign) {
 }
 
 TEST_F(defAssignExprTest, testCircularDependencies) {
-    make("holymoly").parse(R"SRC(
+    make("holymoly").negative().parse(R"SRC(
         pack holymoly
 
         a := c
@@ -184,8 +184,21 @@ TEST_F(defAssignExprTest, defAssignAsParameterNegative3) {
 
         main() int
             f1 f
-            a2 := f1.foo((a := 5), 5)
+            a2 = f1.foo(a2 := 5, 5)
+            a2 = a2 + a
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(defAssignExprTest, defAssignAsParameter) {
+    make().parse(R"SRC(
+        def f
+            foo(a int, b int) int
+                return a + b
+
+        main() int
+            f1 f
+            a2 := f1.foo(a := 5, 5)
             a2 = a2 + a
     )SRC").shouldParsed(true);
-    shouldVerified(false);
+    shouldVerified(true);
 }
