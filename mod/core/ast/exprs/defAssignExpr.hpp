@@ -16,10 +16,10 @@ namespace namu {
         typedef scopes::iter iter;
 
     public:
-        defAssignExpr(const std::string& name, const node& rhs, nbool isOnDefBlock = false): _rhs(rhs),
-                _isOnDefBlock(isOnDefBlock), _name(name) {}
-        defAssignExpr(const node& to, const std::string& name, const node& rhs, nbool isOnDefBlock = false):
-                _to(to), _rhs(rhs), _isOnDefBlock(isOnDefBlock), _name(name) {}
+        defAssignExpr(const std::string& name, const node& rhs): _rhs(rhs),
+                _isOnDefBlock(false), _name(name) {}
+        defAssignExpr(const node& to, const std::string& name, const node& rhs):
+                _to(to), _rhs(rhs), _isOnDefBlock(false), _name(name) {}
 
     public:
         using super::run;
@@ -31,6 +31,7 @@ namespace namu {
         node& getRight() { return *_rhs; }
         const node& getTo() const NAMU_UNCONST_FUNC(getTo())
         nbool isOnDefBlock() const { return _isOnDefBlock; }
+        void setOnDefBlock(nbool isOnDefBlock) { _isOnDefBlock = isOnDefBlock; }
         node& getTo();
         void setTo(const node& new1) { _to.bind(new1); }
 

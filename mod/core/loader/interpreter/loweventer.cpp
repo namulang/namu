@@ -188,12 +188,16 @@ namespace namu {
             return onSrcErr(errCode::IS_NULL, "s"), onDefBlock();
 
         defVarExpr& defVar = candidate.cast<defVarExpr>();
-        if(!nul(defVar))
+        if(!nul(defVar)) {
             s.asScope->add(defVar.getName(), defVar.getOrigin());
+            return &s;
+        }
         defAssignExpr& defAssign = candidate.cast<defAssignExpr>();
         if(!nul(defAssign)) {
             defAssign.setTo(*new getExpr("me"));
+            defAssign.setOnDefBlock(true);
             s.asPreCtor->add(defAssign);
+            return &s;
         }
 
         s.asScope->add(_onPopName(candidate), &candidate);
