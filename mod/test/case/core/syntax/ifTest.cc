@@ -119,5 +119,5 @@ TEST_F(ifTest, ifAsArgument) {
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), 27);
+    ASSERT_EQ(res.cast<nint>(), 16);
 }

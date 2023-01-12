@@ -180,6 +180,7 @@ expr: expr-line { $$ = $1; }
     | expr-compound { $$ = $1; }
 
 stmt: expr-line NEWLINE { $$ = $1; }
+    | return { $$ = $1; }
     | expr-compound { $$ = $1; }
 
 block: %empty {
@@ -278,7 +279,6 @@ primary: INTVAL {
 //  structure:
 expr-line: defexpr-line { $$ = $1; }
          | expr10 { $$ = $1; }
-         | return { $$ = $1; }
          | ret { $$ = $1; }
          | break { $$ = $1; }
          | next { $$ = $1; }
@@ -324,9 +324,11 @@ expr1: term { $$ = $1;
    }
 
 // keyword:
-return: RETURN {
+return: RETURN NEWLINE {
         $$ = yyget_extra(scanner)->onReturn();
-    } | RETURN expr {
+    } | RETURN expr-line NEWLINE {
+        $$ = yyget_extra(scanner)->onReturn(*$2);
+    } | RETURN expr-compound {
         $$ = yyget_extra(scanner)->onReturn(*$2);
     }
 
