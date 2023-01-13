@@ -37,11 +37,8 @@ namespace namu {
 
         void _parse();
         void _verify();
-        void _preEvaluation(node& eval);
-        void _preEvaluation(std::map<string, int>& checker, node& eval);
         void _logStructure(frame& info);
         void _logFrame(const frame& info) const;
-        void _preEvalObject(node& eval);
 
     private:
         tstr<errReport> _rpt;

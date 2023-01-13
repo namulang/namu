@@ -174,7 +174,6 @@ namespace namu {
         params _convertParams(const narr& exprs);
         void _onPushName(const std::string& name, node& n);
         std::string _onPopName(node& n);
-        nbool _onPastePreCtors(obj& it, narr& blk);
         nbool _onInjectObjSubs(obj& it, defBlock& blk);
         nbool _onInjectCtor(obj& it, defBlock& blk);
         std::vector<std::string> _extractParamTypeNames(const args& types);

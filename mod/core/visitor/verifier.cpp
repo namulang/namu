@@ -326,7 +326,9 @@ namespace namu {
         if(nul(blk) || blk.getStmts().len() <= 0)
             return _err(blk.getPos(), errCode::NO_STMT_IN_FUNC);
 
-        NAMU_DI("verify: mgdFunc: %s iterateBlock[%d]", me.getType().getName().c_str(), me._blk->subs().len());
+        NAMU_DI("verify: mgdFunc[%s]: %s iterateBlock[%d]", i.name.c_str(),
+                me.getType().getName().c_str(), me._blk->subs().len());
+
         scope* s = new scope();
         _prepareArgsAlongParam(me.getParams(), *s);
 
