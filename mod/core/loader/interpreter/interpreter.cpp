@@ -57,43 +57,9 @@ namespace namu {
             return *_slot;
         _verify();
 
-        NAMU_DI("======================================");
-        NAMU_DI("           preEvaluation");
-        NAMU_DI("======================================");
-        //_preEvaluation(_slot->getPack());
-
         _logStructure(_veri.getErrFrame());
 
         return *_slot;
-    }
-
-    void me::_preEvalObject(node& eval) {
-        obj& cast = eval.cast<obj>();
-        if(nul(cast)) return;
-
-        NAMU_DI("run %s.@preCtor", cast.getType().getName().c_str());
-        cast.run(baseObj::PRECTOR_NAME);
-    }
-
-    void me::_preEvaluation(node& eval) {
-        std::map<string, int> checker;
-
-        _preEvalObject(eval);
-        // double-checking algorithm:
-        //  while iterating and run preCtor, new variable can be added into eval object.
-        //  to handle properly that scenario, I prepared checker and run evalutation twice.
-        _preEvaluation(checker, eval);
-        _preEvaluation(checker, eval);
-    }
-
-    void me::_preEvaluation(std::map<string, int>& checker, node& eval) {
-        for(auto e=eval.subs().begin(); e ;++e) {
-            if(checker.find(e.getKey()) != checker.end())
-                continue;
-
-            checker.insert({e.getKey(), 1});//actually, this value doesn't matter
-            _preEvaluation(*e);
-        }
     }
 
     void me::rel() {
