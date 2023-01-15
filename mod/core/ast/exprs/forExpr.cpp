@@ -16,7 +16,7 @@ namespace namu {
 
     str me::run(const args& a) {
         blockExpr& blk = getBlock();
-        if(!nul(blk) || !_container)
+        if(nul(blk) || !_container)
             return NAMU_E("blk or container is null"), str();
 
         str ased = _container->as<node>();
