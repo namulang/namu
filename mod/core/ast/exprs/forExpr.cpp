@@ -8,15 +8,15 @@ namespace namu {
 
     NAMU(DEF_ME(forExpr), DEF_VISIT())
 
-    me::forExpr(const std::string localName, const node& container, const blockExpr& blk):
-        _container(container), _name(localName), _blk(blk) {}
+    me::forExpr(const std::string& localName, const node& container, const blockExpr& blk):
+        super(blk), _container(container), _name(localName) {}
 
     const std::string& me::getLocalName() const { return _name; }
-    blockExpr& me::getBlock() { return *_blk; }
     str me::getContainer() { return _container->as<node>(); }
 
     str me::run(const args& a) {
-        if(!_blk || !_container)
+        blockExpr& blk = getBlock();
+        if(!nul(blk) || !_container)
             return NAMU_E("blk or container is null"), str();
 
         str ased = _container->as<node>();
@@ -31,10 +31,10 @@ namespace namu {
             if(!elem)
                 return NAMU_E("elem is null"), str();
 
-            frameInteract f1(*_blk); {
+            frameInteract f1(blk); {
                 fr.pushLocal(_name, *elem);
 
-                ret = _blk->run();
+                ret = blk.run();
                 if(_postProcess(fr))
                     return ret;
             }
@@ -45,31 +45,15 @@ namespace namu {
         return ret;
     }
 
-    nbool me::_postProcess(frame& fr) {
-        const retState& state = fr.getRetState();
-        if(state == frame::FUNC_RETURN)
-            return true;
-
-        else if(state == frame::BLK_BREAK) {
-            fr.setRet(frame::BLK_EMPTY);
-            return true;
-
-        } else if(state == frame::BLK_NEXT) {
-            fr.setRet(frame::BLK_EMPTY);
-            return false;
-        }
-
-        return false;
-    }
-
     const node& me::getEval() const {
         str ased = _container->as<node>();
         str elemType = ased->run("getElemType");
         if(!elemType) return NAMU_E("elemType == null"), nulOf<node>();
 
-        frameInteract f1(*_blk); {
+        blockExpr& blk = getBlock();
+        frameInteract f1(blk); {
             thread::get()._getNowFrame().pushLocal(getLocalName(), *elemType);
-            return _blk->getEval();
+            return blk.getEval();
         }
     }
 }

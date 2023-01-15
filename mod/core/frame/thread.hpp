@@ -25,6 +25,7 @@ namespace namu {
         friend class runExpr;
         friend class func; // for frames.
         friend class forExpr;
+        friend class whileExpr;
         friend class retStateExpr;
         friend struct ::exprTest;
 

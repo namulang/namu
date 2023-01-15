@@ -545,6 +545,12 @@ namespace namu {
         return new forExpr(iterName, expr, blk);
     }
 
+    node* me::onWhile(const node& condition, const blockExpr& blk) {
+        NAMU_DI("tokenEvent: onWhile(%s)", condition.getType().getName().c_str());
+
+        return new whileExpr(condition, blk);
+    }
+
     node* me::onAkaDefault(const getExpr& dotname, const std::string& newName) {
         NAMU_DI("tokenEvent: onAkaDefault(%s..., %s)", dotname.getSubName().c_str(), newName.c_str());
 

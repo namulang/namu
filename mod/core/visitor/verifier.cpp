@@ -423,7 +423,7 @@ namespace namu {
         NAMU_DI("verify: forExpr: define iterator '%s %s'", elemType->getType().getName().c_str(),
                 name.c_str());
 
-        me._blk->inFrame(nulOf<bicontainable>());
+        me.getBlock().inFrame(nulOf<bicontainable>());
         thread::get()._getNowFrame().pushLocal(name, *elemType);
 
         _loopCnt++;
@@ -431,7 +431,7 @@ namespace namu {
 
     void me::onLeave(visitInfo i, forExpr& me) {
         NAMU_DI("verify: forExpr: onLeave");
-        me._blk->outFrame();
+        me.getBlock().outFrame();
 
         _loopCnt--;
     }
