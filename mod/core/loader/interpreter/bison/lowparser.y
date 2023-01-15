@@ -117,6 +117,7 @@
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
 %token IF _ELSE_ AKA RETURN RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
+%token _WHILE_
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -135,7 +136,7 @@
 %type <asArgs> typenames typeparams
 //  keyword:
 %type <asNode> return ret
-%type <asNode> if for break next
+%type <asNode> if for break next while
 %type <asNode> aka aka-default aka-deduced
 %type <asObj> pack
 //  expr:
@@ -288,6 +289,8 @@ expr-line: defexpr-line { $$ = $1; }
 expr-compound: defexpr-compound { $$ = $1; }
              | if { $$ = $1; }
              | for { $$ = $1; }
+             | while { $$ = $1; }
+
 
 //  expr-line:
 expr10: expr9 { $$ = $1; }
@@ -348,9 +351,9 @@ next: NEXT {
     $$ = yyget_extra(scanner)->onNext();
    }
 
-if: IF expr indentblock {
+if: IF expr-line indentblock {
     $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
-} | IF expr indentblock _ELSE_ indentblock {
+} | IF expr-line indentblock _ELSE_ indentblock {
     $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>(), $5->cast<blockExpr>());
 }
 
@@ -358,6 +361,10 @@ for: FOR NAME _IN_ expr-line indentblock {
     $$ = yyget_extra(scanner)->onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
     free($2);
  }
+
+while: _WHILE_ expr-line indentblock {
+     $$ = yyget_extra(scanner)->onWhile(*$2, *$3);
+   }
 
 aka: aka-default { $$ = $1; }
    | aka-deduced { $$ = $1; }

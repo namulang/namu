@@ -114,6 +114,7 @@ for { return FOR; }
 next { return NEXT; }
 in { return _IN_; }
 else { return _ELSE_; }
+while { return _WHILE_; }
 
 [a-zA-Z0-9_]+ {
     yylval->asStr = new std::string(yytext);
