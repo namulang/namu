@@ -47,5 +47,12 @@ namespace namu {
             return *this;
             // TODO: throw error
         }
+
+        nbool _eq(const arithmeticObj& rhs) const override { return rhs.asImpli<me>()->get() == get(); }
+        nbool _ne(const arithmeticObj& rhs) const override { return rhs.asImpli<me>()->get() != get(); }
+        nbool _gt(const arithmeticObj& rhs) const override { return rhs.asImpli<me>()->get() > get(); }
+        nbool _lt(const arithmeticObj& rhs) const override { return rhs.asImpli<me>()->get() < get(); }
+        nbool _ge(const arithmeticObj& rhs) const override { return rhs.asImpli<me>()->get() >= get(); }
+        nbool _le(const arithmeticObj& rhs) const override { return rhs.asImpli<me>()->get() <= get(); }
     };
 }

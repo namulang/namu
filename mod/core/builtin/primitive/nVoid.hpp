@@ -39,5 +39,12 @@ namespace namu {
         tstr<arithmeticObj> _mod(const arithmeticObj& rhs, nbool reversed) const override {
             return *this;
         }
+
+        nbool _eq(const arithmeticObj& rhs) const override { return false; }
+        nbool _ne(const arithmeticObj& rhs) const override { return false; }
+        nbool _gt(const arithmeticObj& rhs) const override { return false; }
+        nbool _lt(const arithmeticObj& rhs) const override { return false; }
+        nbool _ge(const arithmeticObj& rhs) const override { return false; }
+        nbool _le(const arithmeticObj& rhs) const override { return false; }
     };
 }
