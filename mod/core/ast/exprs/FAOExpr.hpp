@@ -9,7 +9,7 @@ namespace namu {
 
     class visitor;
 
-    // FAO: Five fundermental Arithmetic Operation.
+    // FAO: Fundermental Arithmetic Operation.
     class _nout FAOExpr : public expr {
         NAMU(CLASS(FAOExpr, expr, expr::exprType), VISIT())
 
@@ -21,6 +21,12 @@ namespace namu {
             MUL,
             DIV,
             MOD,
+            EQ,
+            NE,
+            GT,
+            LT,
+            GE,
+            LE,
             END
         };
 
@@ -29,23 +35,7 @@ namespace namu {
 
     public:
         using super::run;
-        str run(const args& a) override {
-            if(!_lhs || !_rhs) return str();
-
-            tstr<arithmeticObj> lhs(_lhs->run());
-            tstr<arithmeticObj> rhs(_rhs->run());
-            if(!lhs || !rhs) return str();
-
-            switch(mRule) {
-                case ADD: return lhs->add(*rhs);
-                case SUB: return lhs->sub(*rhs);
-                case MUL: return lhs->mul(*rhs);
-                case DIV: return lhs->div(*rhs);
-                case MOD: return lhs->mod(*rhs);
-                default:
-                    return str();
-            }
-        }
+        str run(const args& a) override;
 
         const node& getEval() const override;
         const node& getLeft() const { return *_lhs; }
