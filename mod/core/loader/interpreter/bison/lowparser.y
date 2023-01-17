@@ -112,7 +112,7 @@
 
 // valueless-token:
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS DOUBLE_DOT PACK ARROW TAB ASSIGN DEFASSIGN
-%token OPEN_CLOSE_SQUARE_BRACKET
+%token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
@@ -299,10 +299,27 @@ expr10: expr9 { $$ = $1; }
     }
 expr9: expr8 { $$ = $1; }
 expr8: expr7 { $$ = $1; }
-expr7: expr6 { $$ = $1; }
+expr7: expr6 {
+    $$ = $1;
+   // TODO: uncomment this.
+   //} | expr7 '>' expr6 {
+   // $$ = yyget_extra(scanner)->onGt(*$1, *$3);
+   //} | expr7 '<' expr6 {
+   // $$ = yyget_extra(scanner)->onLt(*$1, *$3);
+   } | expr7 GE expr6 {
+    $$ = yyget_extra(scanner)->onGe(*$1, *$3);
+   } | expr7 LE expr6 {
+    $$ = yyget_extra(scanner)->onLe(*$1, *$3);
+   } | expr7 EQ expr6 {
+    $$ = yyget_extra(scanner)->onEq(*$1, *$3);
+   } | expr7 NE expr6 {
+    $$ = yyget_extra(scanner)->onNe(*$1, *$3);
+   }
+
 expr6: expr5 { $$ = $1; }
 expr5: expr4 { $$ = $1; }
 expr4: expr3 { $$ = $1; }
+
 expr3: expr2 {
     $$ = $1;
    } | expr3 '+' expr2 {

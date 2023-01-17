@@ -58,6 +58,10 @@ namespace {
 \.\. { return DOUBLE_DOT; }
 \[\] { return OPEN_CLOSE_SQUARE_BRACKET; }
 \= { return ASSIGN; }
+">=" { return GE; }
+"<=" { return LE; }
+"==" { return EQ; }
+"!=" { return NE; }
 ":=" { return DEFASSIGN; }
 [ ]+ ;
 \t {

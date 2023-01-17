@@ -539,6 +539,48 @@ namespace namu {
         return new FAOExpr(FAOExpr::MOD, lhs, rhs);
     }
 
+    FAOExpr* me::onGt(const node& lhs, const node& rhs) {
+        NAMU_DI("tokenEvent: onGt(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::GT, lhs, rhs);
+    }
+
+    FAOExpr* me::onLt(const node& lhs, const node& rhs) {
+        NAMU_DI("tokenEvent: onLt(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::LT, lhs, rhs);
+    }
+
+    FAOExpr* me::onGe(const node& lhs, const node& rhs) {
+        NAMU_DI("tokenEvent: onGe(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::GE, lhs, rhs);
+    }
+
+    FAOExpr* me::onLe(const node& lhs, const node& rhs) {
+        NAMU_DI("tokenEvent: onLe(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::LE, lhs, rhs);
+    }
+
+    FAOExpr* me::onEq(const node& lhs, const node& rhs) {
+        NAMU_DI("tokenEvent: onEq(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::EQ, lhs, rhs);
+    }
+
+    FAOExpr* me::onNe(const node& lhs, const node& rhs) {
+        NAMU_DI("tokenEvent: onNe(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::NE, lhs, rhs);
+    }
+
     node* me::onFor(const std::string& iterName, const node& expr, const blockExpr& blk) {
         NAMU_DI("tokenEvent: onFor(%s, %s)", iterName.c_str(), expr.getType().getName().c_str());
 
