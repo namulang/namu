@@ -166,3 +166,63 @@ TEST_F(FAOExprTest, testStringAddBoolean2) {
     namu::str res = run();
     ASSERT_EQ(res->cast<std::string>(), "0low\n");
 }
+
+TEST_F(FAOExprTest, testLogicalBinaryOp) {
+    make().parse(R"SRC(
+        main() bool
+            a := 1
+            b := 3
+            a <= b
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_EQ(res.cast<nbool>(), true);
+}
+
+TEST_F(FAOExprTest, testLogicalBinaryOpWithDifferentType) {
+    make().parse(R"SRC(
+        main() bool
+            a := 1
+            b := 3.5
+            a >= b
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_EQ(res.cast<nbool>(), false);
+}
+
+TEST_F(FAOExprTest, testLogicalBinaryOpFltPrecision) {
+    make().parse(R"SRC(
+        main() bool
+            a := 3.4 + 0.1
+            b := 3.5
+            a == b
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_EQ(res.cast<nbool>(), true);
+}
+
+TEST_F(FAOExprTest, testLogicalBinaryOpStr) {
+    make().parse(R"SRC(
+        main() bool
+            a := "hello"
+            b := "helwo"
+            a >= b
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_EQ(res.cast<nbool>(), false);
+}
+
+TEST_F(FAOExprTest, testLogicalBinaryOpChar) {
+    make().parse(R"SRC(
+        main() bool
+            a := 'l'
+            b := 'w'
+            a >= b
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_EQ(res.cast<nbool>(), false);
+}
