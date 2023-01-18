@@ -8,6 +8,9 @@ namespace namu {
     NAMU(DEF_ME(FAOExpr), DEF_VISIT())
 
     const node& me::getEval() const {
+        static nBool inner;
+        if(isLogicalOp()) return inner;
+
         if(!_lhs || !_rhs) return nulOf<node>();
         const node& lhsEval = _lhs->getEval();
         if(nul(lhsEval)) return nulOf<node>();
@@ -17,6 +20,10 @@ namespace namu {
         return lhsEval.deduce(rhsEval);
     }
 
+    nbool me::isLogicalOp() const {
+        return LOGIC_START <= _rule && _rule < LOGIC_END;
+    }
+
     str me::run(const args& a) {
         if(!_lhs || !_rhs) return str();
 
@@ -24,7 +31,7 @@ namespace namu {
         tstr<arithmeticObj> rhs(_rhs->run());
         if(!lhs || !rhs) return str();
 
-        switch(mRule) {
+        switch(_rule) {
             case ADD: return lhs->add(*rhs);
             case SUB: return lhs->sub(*rhs);
             case MUL: return lhs->mul(*rhs);

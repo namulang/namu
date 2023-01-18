@@ -14,24 +14,28 @@ namespace namu {
         NAMU(CLASS(FAOExpr, expr, expr::exprType), VISIT())
 
     public:
-        enum Rule {
+        enum rule {
             ADD = 0,
             START = ADD,
+            ARITH_START = START,
             SUB,
             MUL,
             DIV,
             MOD,
+            ARITH_END,
             EQ,
+            LOGIC_START = EQ,
             NE,
             GT,
             LT,
             GE,
             LE,
-            END
+            LOGIC_END,
+            END = LOGIC_END
         };
 
     public:
-        FAOExpr(Rule rule, const node& lhs, const node& rhs): mRule(rule), _lhs(str(lhs)), _rhs(str(rhs)) {}
+        FAOExpr(rule rule, const node& lhs, const node& rhs): _rule(rule), _lhs(str(lhs)), _rhs(str(rhs)) {}
 
     public:
         using super::run;
@@ -42,9 +46,10 @@ namespace namu {
         void setLeft(const node& new1) { _lhs.bind(new1); }
         const node& getRight() const { return *_rhs; }
         void setRight(const node& new1) { _rhs.bind(new1); }
+        nbool isLogicalOp() const;
 
     private:
-        Rule mRule;
+        rule _rule;
         str _lhs;
         str _rhs;
     };
