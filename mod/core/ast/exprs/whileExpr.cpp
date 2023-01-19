@@ -1,6 +1,7 @@
 #include "whileExpr.hpp"
 #include "../../visitor/visitor.hpp"
 #include "../../frame/thread.hpp"
+#include "../../frame/frameInteract.hpp"
 
 namespace namu {
 
@@ -9,7 +10,9 @@ namespace namu {
     me::whileExpr(const node& condition, const blockExpr& blk): super(blk), _condition(condition) {}
 
     str me::run(const args& a) {
+        blockExpr& blk = getBlock();
         if(!_condition) return NAMU_E("_condition is null."), str();
+        if(nul(blk)) return NAMU_E("blk is null."), str();
 
         str res;
         frame& fr = thread::get()._getNowFrame();
@@ -20,9 +23,11 @@ namespace namu {
             if(!ased->cast<nbool>())
                 break;
 
-            res = getBlock().run();
-            if(_postProcess(fr))
-                return res;
+            frameInteract f1(blk); {
+                res = blk.run();
+                if(_postProcess(fr))
+                    return res;
+            }
         }
 
         return res;
