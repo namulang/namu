@@ -1,0 +1,18 @@
+pack kniz.example.RSPGame
+
+aka sys.con
+main() void
+
+    while true
+        con.print("(R)ock, (S)cissors, (P)aper! -> ")
+        answer := con.input()
+
+        if answer == "R"
+            con.print("You win!")
+            break
+
+        elif answer == "S"
+                con.print("Draw!")
+
+        elif answer == "P"
+                con.print("You loose >_<")
