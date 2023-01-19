@@ -380,7 +380,7 @@ for: FOR NAME _IN_ expr-line indentblock {
  }
 
 while: _WHILE_ expr-line indentblock {
-     $$ = yyget_extra(scanner)->onWhile(*$2, *$3);
+     $$ = yyget_extra(scanner)->onWhile(*$2, $3->cast<blockExpr>());
    }
 
 aka: aka-default { $$ = $1; }
