@@ -184,7 +184,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOpWithDifferentType) {
         main() bool
             a := 1
             b := 3.5
-            a >= b
+            a > b
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -220,7 +220,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOpChar) {
         main() bool
             a := 'l'
             b := 'w'
-            a >= b
+            a > b
     )SRC").shouldVerified(true);
 
     str res = run();

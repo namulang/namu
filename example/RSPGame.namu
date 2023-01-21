@@ -1,5 +1,3 @@
-pack kniz.example.RSPGame
-
 aka sys.con
 main() void
 
@@ -8,11 +6,11 @@ main() void
         answer := con.input()
 
         if answer == "R"
-            con.print("You win!")
+            con.print("You win!\n")
             break
 
         elif answer == "S"
-                con.print("Draw!")
+            con.print("Draw!\n")
 
         elif answer == "P"
-                con.print("You loose >_<")
+            con.print("You loose >_< \n")
