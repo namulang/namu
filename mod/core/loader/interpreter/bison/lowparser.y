@@ -98,7 +98,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 2
+%expect 7
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -301,11 +301,10 @@ expr9: expr8 { $$ = $1; }
 expr8: expr7 { $$ = $1; }
 expr7: expr6 {
     $$ = $1;
-   // TODO: uncomment this.
-   //} | expr7 '>' expr6 {
-   // $$ = yyget_extra(scanner)->onGt(*$1, *$3);
-   //} | expr7 '<' expr6 {
-   // $$ = yyget_extra(scanner)->onLt(*$1, *$3);
+   } | expr7 '>' expr6 {
+    $$ = yyget_extra(scanner)->onGt(*$1, *$3);
+   } | expr7 '<' expr6 {
+    $$ = yyget_extra(scanner)->onLt(*$1, *$3);
    } | expr7 GE expr6 {
     $$ = yyget_extra(scanner)->onGe(*$1, *$3);
    } | expr7 LE expr6 {
