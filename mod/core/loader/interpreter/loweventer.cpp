@@ -602,18 +602,28 @@ namespace namu {
     ifExpr* me::onIf(const node& condition, const blockExpr& thenBlk) {
         NAMU_DI("tokenEvent: onIf(then)");
 
-        return new ifExpr(condition, thenBlk);
+        ifExpr* ret = new ifExpr(condition, thenBlk);
+        _outerIfStack.push_back(ret);
+
+        return ret;
     }
     ifExpr* me::onElif(ifExpr& ifexpr, const node& elseIfCondition, const blockExpr& thenBlk) {
         NAMU_DI("tokenEvent: onElIf(ifexpr, condition, then)");
+        ifExpr* ret = new ifExpr(elseIfCondition, thenBlk);
 
-        ifexpr.setElseBlk(*new blockExpr(*new ifExpr(elseIfCondition, thenBlk)));
-        return &ifexpr;
+        ifexpr.setElseBlk(*new blockExpr(*ret));
+        return ret;
     }
     ifExpr* me::onElse(ifExpr& ifexpr, const blockExpr& elseBlk) {
         NAMU_DI("tokenEvent: onElse(ifexpr, elseBlk)");
 
         ifexpr.setElseBlk(elseBlk);
+        return onEndOfIf();
+    }
+    ifExpr* me::onEndOfIf() {
+        ifExpr* ret = _outerIfStack.back();
+        _outerIfStack.pop_back();
+        return ret;
     }
 
     me::loweventer() { rel(); }
@@ -646,5 +656,6 @@ namespace namu {
         _dispatcher.rel();
         _indents.clear();
         _srcArea = nullptr;
+        _outerIfStack.clear();
     }
 }

@@ -4,10 +4,10 @@ using namespace namu;
 using namespace std;
 
 namespace {
-    struct ifTest : public namuSyntaxTest {};
+    struct ifExprTest : public namuSyntaxTest {};
 }
 
-TEST_F(ifTest, simpleNestedTest) {
+TEST_F(ifExprTest, simpleNestedTest) {
     make("demo").parse(R"SRC(
         pack demo
         main() void
@@ -17,7 +17,7 @@ TEST_F(ifTest, simpleNestedTest) {
                                 33)SRC").shouldVerified(true);
 }
 
-TEST_F(ifTest, simpleIfTest) {
+TEST_F(ifExprTest, simpleIfTest) {
     make().parse(R"SRC(
         main() int
             if true
@@ -30,7 +30,7 @@ TEST_F(ifTest, simpleIfTest) {
     ASSERT_EQ(res.cast<nint>(), 11);
 }
 
-TEST_F(ifTest, simpleIfAssignTest) {
+TEST_F(ifExprTest, simpleIfAssignTest) {
     make().parse(R"SRC(
         main() int
             age := (if false
@@ -45,7 +45,7 @@ TEST_F(ifTest, simpleIfAssignTest) {
     ASSERT_EQ(res.cast<nint>(), 22);
 }
 
-TEST_F(ifTest, simpleIfAssignWithoutParenthesisTest) {
+TEST_F(ifExprTest, simpleIfAssignWithoutParenthesisTest) {
     make().parse(R"SRC(
         main() int
             age := if false
@@ -59,7 +59,7 @@ TEST_F(ifTest, simpleIfAssignWithoutParenthesisTest) {
     ASSERT_EQ(res.cast<nint>(), 22);
 }
 
-TEST_F(ifTest, simpleReturnIfWithoutParenthesisTest) {
+TEST_F(ifExprTest, simpleReturnIfWithoutParenthesisTest) {
     make().parse(R"SRC(
         main() int
             return if true
@@ -72,7 +72,7 @@ TEST_F(ifTest, simpleReturnIfWithoutParenthesisTest) {
     ASSERT_EQ(res.cast<nint>(), 11);
 }
 
-TEST_F(ifTest, simpleReturnDefAssignWithoutParenthesisTest) {
+TEST_F(ifExprTest, simpleReturnDefAssignWithoutParenthesisTest) {
     make().parse(R"SRC(
         main() int
             return a := if true
@@ -85,7 +85,7 @@ TEST_F(ifTest, simpleReturnDefAssignWithoutParenthesisTest) {
     ASSERT_EQ(res.cast<nint>(), 11);
 }
 
-TEST_F(ifTest, NestIfTest) {
+TEST_F(ifExprTest, NestIfTest) {
     make("demo").parse(R"SRC(
         pack demo
         foo(abc int) void
@@ -95,7 +95,7 @@ TEST_F(ifTest, NestIfTest) {
                                "hel'lo")SRC").shouldVerified(true);
 }
 
-TEST_F(ifTest, NestIfTestNegative) {
+TEST_F(ifExprTest, NestIfTestNegative) {
     make("demo").negative().parse(R"SRC(
         pack demo
         foo(abc int) int
@@ -105,7 +105,7 @@ TEST_F(ifTest, NestIfTestNegative) {
                                "hel'lo")SRC").shouldVerified(false);
 }
 
-TEST_F(ifTest, ifAsArgument) {
+TEST_F(ifExprTest, ifAsArgument) {
     make().parse(R"SRC(
         abc(val int, val2 int) int
             return val + val2
@@ -120,4 +120,56 @@ TEST_F(ifTest, ifAsArgument) {
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 16);
+}
+
+TEST_F(ifExprTest, elif) {
+    make().parse(R"SRC(
+        main() int
+            if 222 < 33
+                0
+            elif 33 > 115
+                1
+            elif 44 < 235
+                2
+            elif 77 < 113
+                3
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 2);
+}
+
+TEST_F(ifExprTest, elif_negative) {
+    make().negative().parse(R"SRC(
+        main() int
+            if 222 < 33
+                0
+            elif 33 > 115
+                1
+            elif 44 < 235
+                2
+            else
+                7
+            elif 77 < 113
+                3
+    )SRC").shouldParsed(false);
+}
+
+TEST_F(ifExprTest, elif2) {
+    make().parse(R"SRC(
+        main() int
+            if 222 < 33
+                0
+            elif 33 > 115
+                1
+            elif 44 >= 235
+                2
+            else
+                3
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 3);
 }
