@@ -16,10 +16,21 @@ namespace namu {
     public:
         const blockExpr& getThenBlk() const NAMU_UNCONST_FUNC(getThenBlk())
         blockExpr& getThenBlk();
+        void setThenBlk(const blockExpr& newThen) {
+            _thenBlk.bind(newThen);
+        }
+
         const blockExpr& getElseBlk() const NAMU_UNCONST_FUNC(getElseBlk())
         blockExpr& getElseBlk();
+        void setElseBlk(const blockExpr& newElse) {
+            _elseBlk.bind(newElse);
+        }
+
         const node& getCondition() const NAMU_UNCONST_FUNC(getCondition())
         node& getCondition();
+        void setCondition(const node& newCondition) {
+            _expr.bind(newCondition);
+        }
 
         using super::run;
         str run(const args& a) override;

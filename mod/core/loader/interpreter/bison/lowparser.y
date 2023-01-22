@@ -117,7 +117,7 @@
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
 %token IF _ELSE_ AKA RETURN RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
-%token _WHILE_
+%token _WHILE_ ELIF
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -136,7 +136,7 @@
 %type <asArgs> typenames typeparams
 //  keyword:
 %type <asNode> return ret
-%type <asNode> if for break next while
+%type <asNode> if ifing for break next while
 %type <asNode> aka aka-default aka-deduced
 %type <asObj> pack
 //  expr:
@@ -367,11 +367,17 @@ next: NEXT {
     $$ = yyget_extra(scanner)->onNext();
    }
 
-if: IF expr-line indentblock {
+ifing: IF expr-line indentblock {
     $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
-} | IF expr-line indentblock _ELSE_ indentblock {
-    $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>(), $5->cast<blockExpr>());
-}
+   } | ifing ELIF expr-line indentblock {
+    $$ = yyget_extra(scanner)->onElif($1->cast<ifExpr>(), *$3, $4->cast<blockExpr>());
+   }
+
+if: ifing { $$ = $1; }
+  | ifing _ELSE_ indentblock {
+    $$ = yyget_extra(scanner)->onElse($1->cast<ifExpr>(), $3->cast<blockExpr>());
+  }
+
 
 for: FOR NAME _IN_ expr-line indentblock {
     $$ = yyget_extra(scanner)->onFor(std::string(*$2), *$4, $5->cast<blockExpr>());

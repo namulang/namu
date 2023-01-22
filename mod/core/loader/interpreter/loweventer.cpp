@@ -601,11 +601,19 @@ namespace namu {
 
     ifExpr* me::onIf(const node& condition, const blockExpr& thenBlk) {
         NAMU_DI("tokenEvent: onIf(then)");
+
         return new ifExpr(condition, thenBlk);
     }
-    ifExpr* me::onIf(const node& condition, const blockExpr& thenBlk, const blockExpr& elseBlk) {
-        NAMU_DI("tokenEvent: onIf(then, else)");
-        return new ifExpr(condition, thenBlk, elseBlk);
+    ifExpr* me::onElif(ifExpr& ifexpr, const node& elseIfCondition, const blockExpr& thenBlk) {
+        NAMU_DI("tokenEvent: onElIf(ifexpr, condition, then)");
+
+        ifexpr.setElseBlk(*new blockExpr(*new ifExpr(elseIfCondition, thenBlk)));
+        return &ifexpr;
+    }
+    ifExpr* me::onElse(ifExpr& ifexpr, const blockExpr& elseBlk) {
+        NAMU_DI("tokenEvent: onElse(ifexpr, elseBlk)");
+
+        ifexpr.setElseBlk(elseBlk);
     }
 
     me::loweventer() { rel(); }

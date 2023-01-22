@@ -175,7 +175,8 @@ namespace namu {
         FAOExpr* onNe(const node& lhs, const node& rhs);
         //      if:
         ifExpr* onIf(const node& condition, const blockExpr& thenBlk);
-        ifExpr* onIf(const node& condition, const blockExpr& thenBlk, const blockExpr& elseBlk);
+        ifExpr* onElif(ifExpr& ifexpr, const node& elseIfCondition, const blockExpr& thenBlk);
+        ifExpr* onElse(ifExpr& ifexpr, const blockExpr& elseBlk);
 
     private:
         nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
