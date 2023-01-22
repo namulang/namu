@@ -177,6 +177,7 @@ namespace namu {
         ifExpr* onIf(const node& condition, const blockExpr& thenBlk);
         ifExpr* onElif(ifExpr& ifexpr, const node& elseIfCondition, const blockExpr& thenBlk);
         ifExpr* onElse(ifExpr& ifexpr, const blockExpr& elseBlk);
+        ifExpr* onEndOfIf();
 
     private:
         nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
@@ -200,5 +201,6 @@ namespace namu {
         area* _srcArea;
         std::vector<nint> _states;
         std::map<node*, std::string> _nameMap;
+        std::vector<ifExpr*> _outerIfStack;
     };
 }

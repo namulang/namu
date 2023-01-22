@@ -373,8 +373,9 @@ ifing: IF expr-line indentblock {
     $$ = yyget_extra(scanner)->onElif($1->cast<ifExpr>(), *$3, $4->cast<blockExpr>());
    }
 
-if: ifing { $$ = $1; }
-  | ifing _ELSE_ indentblock {
+if: ifing {
+    $$ = yyget_extra(scanner)->onEndOfIf();
+} | ifing _ELSE_ indentblock {
     $$ = yyget_extra(scanner)->onElse($1->cast<ifExpr>(), $3->cast<blockExpr>());
   }
 
