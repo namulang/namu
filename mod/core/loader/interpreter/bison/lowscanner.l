@@ -75,7 +75,7 @@ namespace {
     return NEWLINE;
 }
 
-[[:digit:]]+ {
+[-]*[[:digit:]]+ {
     yylval->asInt = atoi(yytext);
     NAMU_DI("scanner: INTVAL=%s", yytext);
     return INTVAL;
