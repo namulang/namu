@@ -195,14 +195,14 @@ term: unary { $$ = $1; }
 
 unary: postfix {
      $$ = $1;
-   } | DOUBLE_PLUS unary { // prefix:
-     $$ = $2; // TODO:
+   } | DOUBLE_PLUS unary {
+     $$ = yyget_extra(scanner)->onUnaryDoublePlus(*$2);
    } | DOUBLE_MINUS unary {
-     $$ = $2; // TODO:
+     $$ = yyget_extra(scanner)->onUnaryDoubleMinus(*$2);
    } | '+' unary {
      $$ = $2;
    } | '-' unary {
-     $$ = $2; // TODO:
+     $$ = yyget_extra(scanner)->onUnaryMinus(*$2);
    }
 
 func-call: type list {

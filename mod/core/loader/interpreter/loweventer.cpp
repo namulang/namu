@@ -504,6 +504,30 @@ namespace namu {
         return new asExpr(me, as);
     }
 
+    FAOExpr* me::onUnaryMinus(const node& it) {
+        NAMU_DI("tokenEvent: onUnaryMinus(%s)", it.getType().getName().c_str());
+
+        return new FAOExpr(FAOExpr::MUL, it, *new nInt(-1));
+    }
+
+    node* me::onUnaryDoublePlus(node& it) {
+        NAMU_DI("tokenEvent: onUnaryDoublePlus(%s)", it.getType().getName().c_str());
+
+        return onAssign(it, *new FAOExpr(FAOExpr::ADD, it, *new nInt(1)));
+    }
+
+    node* me::onUnaryDoubleMinus(node& it) {
+        NAMU_DI("tokenEvent: onUnaryDoubleMinus(%s)", it.getType().getName().c_str());
+
+        return onAssign(it, *new FAOExpr(FAOExpr::SUB, it, *new nInt(1)));
+    }
+
+    FAOExpr* me::onUnaryNot(const node& it) {
+        NAMU_DI("tokenEvent: onUnaryNot(%s)", it.getType().getName().c_str());
+
+        return new FAOExpr(FAOExpr::EQ, it, *new nBool(false));
+    }
+
     FAOExpr* me::onAdd(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onAdd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());

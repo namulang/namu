@@ -159,6 +159,11 @@ namespace namu {
         runExpr* onRunExpr(const node& type, const args& a);
         //      cast:
         asExpr* onAs(const node& me, const node& as);
+        //      unary operation:
+        FAOExpr* onUnaryMinus(const node& it);
+        FAOExpr* onUnaryNot(const node& it);
+        node* onUnaryDoublePlus(node& it);
+        node* onUnaryDoubleMinus(node& it);
         //      binary operation:
         //          arithmetic:
         FAOExpr* onAdd(const node& lhs, const node& rhs);
