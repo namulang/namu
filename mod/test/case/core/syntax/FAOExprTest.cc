@@ -132,6 +132,7 @@ TEST_F(FAOExprTest, testStringAddSequence) {
     )SRC").shouldVerified(true);
 
     namu::str res = run();
+    ASSERT_TRUE(res);
     ASSERT_EQ(res->cast<std::string>(), "4low\n");
 }
 
@@ -164,6 +165,7 @@ TEST_F(FAOExprTest, testStringAddBoolean2) {
     shouldVerified(true);
 
     namu::str res = run();
+    ASSERT_TRUE(res);
     ASSERT_EQ(res->cast<std::string>(), "0low\n");
 }
 
@@ -176,6 +178,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOp) {
     )SRC").shouldVerified(true);
 
     str res = run();
+    ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nbool>(), true);
 }
 
@@ -188,6 +191,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOpWithDifferentType) {
     )SRC").shouldVerified(true);
 
     str res = run();
+    ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nbool>(), false);
 }
 
@@ -200,6 +204,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOpFltPrecision) {
     )SRC").shouldVerified(true);
 
     str res = run();
+    ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nbool>(), true);
 }
 
@@ -212,6 +217,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOpStr) {
     )SRC").shouldVerified(true);
 
     str res = run();
+    ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nbool>(), false);
 }
 
@@ -224,5 +230,42 @@ TEST_F(FAOExprTest, testLogicalBinaryOpChar) {
     )SRC").shouldVerified(true);
 
     str res = run();
+    ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nbool>(), false);
+}
+
+TEST_F(FAOExprTest, testUnaryPrefixOp) {
+    make().parse(R"SRC(
+        main() int
+            a := 3
+            ++a
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 4);
+}
+
+TEST_F(FAOExprTest, testUnaryPrefixOp1) {
+    make().parse(R"SRC(
+        main() int
+            a := 3
+            --a
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 2);
+}
+
+TEST_F(FAOExprTest, testUnaryPrefixOp3) {
+    make().parse(R"SRC(
+        main() int
+            a := 3
+            -a
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), -3);
 }
