@@ -203,6 +203,8 @@ unary: postfix {
      $$ = $2;
    } | '-' unary {
      $$ = yyget_extra(scanner)->onUnaryMinus(*$2);
+   } | '!' unary {
+     $$ = yyget_extra(scanner)->onUnaryNot(*$2);
    }
 
 func-call: type list {

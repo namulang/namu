@@ -246,7 +246,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOp) {
     ASSERT_EQ(res.cast<nint>(), 4);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOp1) {
+TEST_F(FAOExprTest, testUnaryPrefixOp2) {
     make().parse(R"SRC(
         main() int
             a := 3
@@ -268,4 +268,49 @@ TEST_F(FAOExprTest, testUnaryPrefixOp3) {
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), -3);
+}
+
+TEST_F(FAOExprTest, testUnaryPrefixOp4) {
+    make().parse(R"SRC(
+        main() int
+            a := 3
+            if !(a < 3)
+                11
+            else
+                22
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 11);
+}
+
+TEST_F(FAOExprTest, testUnaryPrefixOp5) {
+    make().parse(R"SRC(
+        main() int
+            a := 3
+            if !a
+                22
+            else
+                11
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 11);
+}
+
+TEST_F(FAOExprTest, testUnaryPrefixOp6) {
+    make().parse(R"SRC(
+        main() int
+            a := 0
+            if !a
+                22
+            else
+                11
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 22);
 }
