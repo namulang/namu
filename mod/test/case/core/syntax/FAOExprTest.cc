@@ -304,7 +304,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOp6) {
     make().parse(R"SRC(
         main() int
             a := 0
-            if !a
+            if a == false
                 22
             else
                 11

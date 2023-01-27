@@ -144,7 +144,7 @@ TEST_F(asExprTest, castBool) {
         main() void
             foo(false)
     )SRC").shouldParsed(true);
-    shouldVerified(false);
+    shouldVerified(true);
 
     negative().make().parse(R"SRC(
         foo(age flt) void
@@ -152,7 +152,7 @@ TEST_F(asExprTest, castBool) {
         main() void
             foo(false)
     )SRC").shouldParsed(true);
-    shouldVerified(false);
+    shouldVerified(true);
 }
 
 TEST_F(asExprTest, castBool1) {
@@ -162,7 +162,7 @@ TEST_F(asExprTest, castBool1) {
         main() void
             foo(true)
     )SRC").shouldParsed(true);
-    shouldVerified(false);
+    shouldVerified(true);
 }
 
 TEST_F(asExprTest, castBool2) {
