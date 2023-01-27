@@ -72,10 +72,10 @@ TEST(ntypeTest, allImplicitCastingForPrimitives) {
     ASSERT_FALSE(f.isImpli<nStr>());
 
     // bool:
-    ASSERT_FALSE(b.isImpli<nInt>());
-    ASSERT_FALSE(b.isImpli<nFlt>());
+    ASSERT_TRUE(b.isImpli<nInt>());
+    ASSERT_TRUE(b.isImpli<nFlt>());
     ASSERT_TRUE(b.isImpli<nBool>());
-    ASSERT_FALSE(b.isImpli<nChar>());
+    ASSERT_TRUE(b.isImpli<nChar>());
     ASSERT_FALSE(b.isImpli<nStr>());
 
     // char:
