@@ -162,26 +162,29 @@ namespace namu {
         if(_isLog)
             NAMU_DI("forExpr[%s]::onTraverse", i.name.c_str());
 
-        f.getBlock().accept(i, *this);
+        f.getBlock().accept(visitInfo {"", &f, 0, 1, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, retStateExpr& r) {
         if(_isLog)
             NAMU_DI("%s[%s]::onTraverse", r.getType().getName().c_str(), i.name.c_str());
 
-        int n = 0;
         node& ret = r.getRet();
         if(!nul(ret))
-            ret.accept(visitInfo {"", &r, n++, 1, i.depth+1}, *this);
+            ret.accept(visitInfo {"", &r, 0, 1, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, ifExpr& f) {
         if(_isLog)
             NAMU_DI("ifExpr[%s]::onTraverse", i.name.c_str());
 
-        f.getThenBlk().accept(i, *this);
         blockExpr& elseBlk = f.getElseBlk();
+        int len = !nul(elseBlk) ? 3 : 2;
+
+        f.getCondition().accept(visitInfo {"", &f, 0, len, i.depth+1}, *this);
+
+        f.getThenBlk().accept(visitInfo {"", &f, 1, len, i.depth+1}, *this);
         if(!nul(elseBlk))
-            elseBlk.accept(i, *this);
+            elseBlk.accept(visitInfo {"", &f, 2, len, i.depth+1}, *this);
     }
 }
