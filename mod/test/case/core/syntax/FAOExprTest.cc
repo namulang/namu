@@ -304,7 +304,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOp6) {
     make().parse(R"SRC(
         main() int
             a := 0
-            if a == false
+            if !a
                 22
             else
                 11
@@ -313,4 +313,16 @@ TEST_F(FAOExprTest, testUnaryPrefixOp6) {
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 22);
+}
+
+TEST_F(FAOExprTest, testUnaryPrefixOpNegative) {
+    make().negative().parse(R"SRC(
+        main() int
+            a := "false"
+            if !a
+                22
+            else
+                11
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
 }
