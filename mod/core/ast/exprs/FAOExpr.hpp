@@ -47,6 +47,7 @@ namespace namu {
         const node& getRight() const { return *_rhs; }
         void setRight(const node& new1) { _rhs.bind(new1); }
         nbool isLogicalOp() const;
+        rule getRule() const { return _rule; }
 
     private:
         rule _rule;
