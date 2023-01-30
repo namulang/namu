@@ -187,4 +187,12 @@ namespace namu {
         if(!nul(elseBlk))
             elseBlk.accept(visitInfo {"", &f, 2, len, i.depth+1}, *this);
     }
+
+    void me::onTraverse(visitInfo i, whileExpr& w) {
+        if(_isLog)
+            NAMU_DI("whileExpr[%s]::onTraverse", i.name.c_str());
+
+        w.getCondition().accept(visitInfo {"", &w, 0, 2, i.depth+1}, *this);
+        w.getBlock().accept(visitInfo {"", &w, 1, 2, i.depth+1}, *this);
+    }
 }
