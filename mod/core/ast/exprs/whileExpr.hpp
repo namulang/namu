@@ -12,7 +12,8 @@ namespace namu {
         whileExpr(const node& condition, const blockExpr& blk);
 
     public:
-        const node& getCondition() const { return *_condition; }
+        const node& getCondition() const NAMU_UNCONST_FUNC(getCondition())
+        node& getCondition() { return *_condition; }
 
         using super::run;
         str run(const args& a) override;
