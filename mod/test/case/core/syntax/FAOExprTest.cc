@@ -326,3 +326,54 @@ TEST_F(FAOExprTest, testUnaryPrefixOpNegative) {
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
+
+TEST_F(FAOExprTest, testUnaryPrefixOp7) {
+    make().parse(R"SRC(
+        main() void
+            a := "false"
+            ++a
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "false1");
+}
+
+TEST_F(FAOExprTest, testUnaryPrefixOpNegative3) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "false"
+            --a
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(FAOExprTest, testStringToBoolean) {
+    make().parse(R"SRC(
+        main() int
+            a := "false"
+            if (a as bool) <= 0
+                22
+            else
+                11
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 22);
+}
+
+TEST_F(FAOExprTest, testStringToBooleanNegative) {
+    make().negative().parse(R"SRC(
+        main() int
+            a := "false"
+            if (a as int) <= 0
+                22
+            else
+                11
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+
+    // TODO: but runtime exception?
+}
