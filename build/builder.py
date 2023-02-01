@@ -409,7 +409,7 @@ def rebuild():
     return build(true)
 
 def build(incVer):
-    if checkDependencies(["git", "cmake", "clang", "bison", "flex"]):
+    if checkDependencies(["git", "cmake", "bison", "flex"]):
         printErr("This program needs following softwares to be fully functional.")
         return -1
 
@@ -588,6 +588,10 @@ def checkDependencies(deps):
 
     if not isWindow() and not shutil.which("make"):
         printErr("make is NOT installed!")
+        return -1
+
+    if not isWindow() and not shutil.which("clang"):
+        printErr("clang is NOT installed!")
         return -1
 
     if _extractPythonVersion(cmdstr(python3 + " --version")) < 3.6:
