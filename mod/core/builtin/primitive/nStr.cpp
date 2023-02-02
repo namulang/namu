@@ -17,7 +17,7 @@ namespace namu {
     me::nStr(const nchar* val): super(std::string(val)) {}
     me::nStr(const std::string& val): super(val) {}
 
-    dumScope* me::_onMakeCtors() const {
+    dumScope* me::_onMakeSubs() const {
         static nStr inner;
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));

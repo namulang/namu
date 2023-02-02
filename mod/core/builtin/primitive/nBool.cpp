@@ -16,7 +16,7 @@ namespace namu {
     me::nBool() {}
     me::nBool(nbool val): super(val) {}
 
-    dumScope* me::_onMakeCtors() const {
+    dumScope* me::_onMakeSubs() const {
         static nBool inner;
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));

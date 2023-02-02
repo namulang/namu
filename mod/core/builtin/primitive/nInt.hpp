@@ -21,7 +21,7 @@ namespace namu {
         nInt(nint val);
 
     protected:
-        dumScope* _onMakeCtors() const override;
+        dumScope* _onMakeSubs() const override;
         tstr<arithmeticObj> _add(const arithmeticObj& rhs, nbool reversed) const override {
             return reversed ?
                     new me(rhs.as<me>()->get() + get()):

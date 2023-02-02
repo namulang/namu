@@ -41,7 +41,7 @@ namespace namu {
         nbicontainer& subs() override {
             static tstr<scope> inner;
             if(!inner)
-                inner.bind(_onMakeCtors());
+                inner.bind(_onMakeSubs());
 
             return *inner;
         }
@@ -51,7 +51,7 @@ namespace namu {
             const me& cast = (const me&) rhs;
             return _val == cast._val;
         }
-        virtual dumScope* _onMakeCtors() const = 0;
+        virtual dumScope* _onMakeSubs() const = 0;
 
     private:
         T _val;
@@ -71,7 +71,7 @@ namespace namu {
         nbicontainer& subs() override {
             static tstr<scope> inner;
             if(!inner) {
-                inner.bind(_onMakeCtors());
+                inner.bind(_onMakeSubs());
             }
 
             return *inner;
@@ -81,7 +81,7 @@ namespace namu {
         nbool _onSame(const typeProvidable& rhs) const override {
             return !nul(rhs);
         }
-        virtual dumScope* _onMakeCtors() const = 0;
+        virtual dumScope* _onMakeSubs() const = 0;
 
     private:
         point _pos;

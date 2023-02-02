@@ -21,7 +21,7 @@ namespace namu {
         return inner;
     }
 
-    dumScope* me::_onMakeCtors() const {
+    dumScope* me::_onMakeSubs() const {
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(*this));
         scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(*this));

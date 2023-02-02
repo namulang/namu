@@ -11,7 +11,7 @@ namespace namu {
 
     NAMU(DEF_ME(nInt), DEF_VISIT())
 
-    dumScope* me::_onMakeCtors() const {
+    dumScope* me::_onMakeSubs() const {
         static nInt inner;
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
