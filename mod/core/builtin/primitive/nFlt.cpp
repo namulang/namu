@@ -40,7 +40,7 @@ namespace namu {
     me::nFlt() {}
     me::nFlt(nflt val): super(val) {}
 
-    dumScope* me::_onMakeCtors() const {
+    dumScope* me::_onMakeSubs() const {
         static nFlt inner;
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));

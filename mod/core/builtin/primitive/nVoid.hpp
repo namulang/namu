@@ -22,7 +22,7 @@ namespace namu {
         static me& singletone();
 
     protected:
-        dumScope* _onMakeCtors() const override;
+        dumScope* _onMakeSubs() const override;
 
         tstr<arithmeticObj> _add(const arithmeticObj& rhs, nbool reversed) const override {
             return *this;

@@ -42,7 +42,7 @@ namespace namu {
     me::nChar() {}
     me::nChar(nchar val): super(val) {}
 
-    dumScope* me::_onMakeCtors() const {
+    dumScope* me::_onMakeSubs() const {
         static nChar inner;
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
