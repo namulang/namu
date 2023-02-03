@@ -6,6 +6,31 @@
 
 namespace namu {
 
+    /// APIBridge is a function template for API of primitive types.
+    /// primitiveObj can't be tcppbridge object. it's already obj of namu.
+    /// that's why this kind of func template required.
+    template <typename T, typename Ret>
+    class APIBridge : public func {
+        NAMU(ADT(APIBridge, func))
+
+    public:
+        using super::run;
+        str run(const args& a) override {
+            T& cast = a.getMe().cast<T>();
+            if(nul(cast)) return NAMU_W("cast is null"), str();
+
+            return _onRun(cast, a);
+        }
+
+    protected:
+        virtual str _onRun(T& cast, const args& a) const = 0;
+        const node& getRet() const override { return getEval(); }
+        const node& getEval() const override {
+            static Ret inner;
+            return inner;
+        }
+    };
+
     template <typename T>
     class primitiveObj : public arithmeticObj {
         NAMU(ADT(primitiveObj, arithmeticObj))
