@@ -10,21 +10,35 @@
 namespace namu {
 
     namespace {
-        class lenFunc : public func {
-            NAMU(CLASS(lenFunc, func))
+        class lenFunc : public APIBridge<nStr, nInt> {
+            typedef APIBridge<nStr, nInt> __super__;
+            NAMU(CLASS(lenFunc, __super__))
 
-        public:
-            using super::run;
-            str run(const args& a) override {
-                nStr& cast = a.getMe().cast<nStr>();
-                if(nul(cast)) return NAMU_W("cast is null"), str();
-
+        protected:
+            str _onRun(nStr& cast, const args& a) const override {
                 return str(new nInt(cast.len()));
             }
+        };
 
-            const node& getRet() const override { return getEval(); }
-            const node& getEval() const override {
-                static nInt inner;
+        class getFunc : public APIBridge<nStr, nChar> {
+            typedef APIBridge<nStr, nChar> __super__;
+            NAMU(CLASS(getFunc, __super__))
+
+        protected:
+            str _onRun(nStr& cast, const args& a) const override {
+                if(a.len() != 1) return str();
+
+                nint n = a[0].cast<nint>();
+                return str(new nChar(cast[n]));
+            }
+
+        public:
+            const params& getParams() const override {
+                static params inner;
+                if(inner.len() <= 0) {
+                    inner.add(new param("index", new nInt()));
+                }
+
                 return inner;
             }
         };
@@ -45,6 +59,7 @@ namespace namu {
         scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
 
         scapegoat.add("len", new lenFunc());
+        scapegoat.add("get", new getFunc());
 
         return new dumScope(scapegoat);
     }
