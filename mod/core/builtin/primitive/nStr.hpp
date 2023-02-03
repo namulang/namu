@@ -20,6 +20,11 @@ namespace namu {
         nStr(const nchar* val);
         nStr(const std::string& val);
 
+    public:
+        nchar operator[](nint n) const { return get()[n]; }
+
+        nint len() const { return get().length(); }
+
     protected:
         dumScope* _onMakeSubs() const override;
 

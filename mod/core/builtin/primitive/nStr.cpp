@@ -9,6 +9,27 @@
 
 namespace namu {
 
+    namespace {
+        class lenFunc : public func {
+            NAMU(CLASS(lenFunc, func))
+
+        public:
+            using super::run;
+            str run(const args& a) override {
+                nStr& cast = a.getMe().cast<nStr>();
+                if(nul(cast)) return NAMU_W("cast is null"), str();
+
+                return str(new nInt(cast.len()));
+            }
+
+            const node& getRet() const override { return getEval(); }
+            const node& getEval() const override {
+                static nInt inner;
+                return inner;
+            }
+        };
+    }
+
     NAMU(DEF_ME(nStr), DEF_VISIT())
 
     nbool me::nStrType::isImmutable() const { return true; }
@@ -22,6 +43,9 @@ namespace namu {
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
         scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
+
+        scapegoat.add("len", new lenFunc());
+
         return new dumScope(scapegoat);
     }
 
