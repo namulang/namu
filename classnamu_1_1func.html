@@ -78,22 +78,22 @@ Inheritance diagram for namu::func:</div>
  <div class="center">
   <img src="classnamu_1_1func.png" usemap="#namu::func_map" alt=""/>
   <map id="namu::func_map" name="namu::func_map">
-<area href="classnamu_1_1expr.html" alt="namu::expr" shape="rect" coords="900,168,1250,192"/>
-<area href="classnamu_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="namu::node" shape="rect" coords="900,112,1250,136"/>
-<area href="classnamu_1_1instance.html" alt="namu::instance" shape="rect" coords="720,56,1070,80"/>
-<area href="classnamu_1_1frame_interactable.html" alt="namu::frameInteractable" shape="rect" coords="1080,56,1430,80"/>
-<area href="classnamu_1_1type_providable.html" alt="namu::typeProvidable" shape="rect" coords="540,0,890,24"/>
-<area href="classnamu_1_1clonable.html" alt="namu::clonable" shape="rect" coords="900,0,1250,24"/>
-<area href="classnamu_1_1tcpp_bridge_func_base.html" alt="namu::tcppBridgeFuncBase&lt; Ret, T, Marshaling, Args... &gt;" shape="rect" coords="0,280,350,304"/>
-<area href="classnamu_1_1tcpp_bridge_func_base.html" alt="namu::tcppBridgeFuncBase&lt; void, T, Marshaling, Args... &gt;" shape="rect" coords="360,280,710,304"/>
-<area href="classnamu_1_1_a_p_i_bridge.html" alt="namu::APIBridge&lt; T, Ret &gt;" shape="rect" coords="720,280,1070,304"/>
-<area href="classnamu_1_1ctor.html" alt="namu::ctor" shape="rect" coords="1080,280,1430,304"/>
-<area href="classnamu_1_1mgd_func.html" alt="namu::mgdFunc" shape="rect" coords="1440,280,1790,304"/>
-<area href="classnamu_1_1tcpp_bridge_func_base.html" alt="namu::tcppBridgeFuncBase&lt; Ret, T, Marshaling, Args &gt;" shape="rect" coords="1800,280,2150,304"/>
-<area href="classnamu_1_1tcpp_bridge_func.html" alt="namu::tcppBridgeFunc&lt; Ret, T, Marshaling, Args &gt;" shape="rect" coords="0,336,350,360"/>
-<area href="classnamu_1_1tcpp_bridge_func_3_01void_00_01_t_00_01_marshaling_00_01_args_8_8_8_01_4.html" alt="namu::tcppBridgeFunc&lt; void, T, Marshaling, Args... &gt;" shape="rect" coords="360,336,710,360"/>
-<area href="classnamu_1_1default_copy_ctor.html" alt="namu::defaultCopyCtor" shape="rect" coords="900,336,1250,360"/>
-<area href="classnamu_1_1default_ctor.html" alt="namu::defaultCtor" shape="rect" coords="1260,336,1610,360"/>
+<area href="classnamu_1_1expr.html" alt="namu::expr" shape="rect" coords="942,168,1309,192"/>
+<area href="classnamu_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="namu::node" shape="rect" coords="942,112,1309,136"/>
+<area href="classnamu_1_1instance.html" alt="namu::instance" shape="rect" coords="754,56,1121,80"/>
+<area href="classnamu_1_1frame_interactable.html" alt="namu::frameInteractable" shape="rect" coords="1131,56,1498,80"/>
+<area href="classnamu_1_1type_providable.html" alt="namu::typeProvidable" shape="rect" coords="565,0,932,24"/>
+<area href="classnamu_1_1clonable.html" alt="namu::clonable" shape="rect" coords="942,0,1309,24"/>
+<area href="classnamu_1_1tcpp_bridge_func_base.html" alt="namu::tcppBridgeFuncBase&lt; void, T, S, Marshaling, Args... &gt;" shape="rect" coords="0,280,367,304"/>
+<area href="classnamu_1_1tcpp_bridge_func_base.html" alt="namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args... &gt;" shape="rect" coords="377,280,744,304"/>
+<area href="classnamu_1_1_a_p_i_bridge.html" alt="namu::APIBridge&lt; T, Ret &gt;" shape="rect" coords="754,280,1121,304"/>
+<area href="classnamu_1_1ctor.html" alt="namu::ctor" shape="rect" coords="1131,280,1498,304"/>
+<area href="classnamu_1_1mgd_func.html" alt="namu::mgdFunc" shape="rect" coords="1508,280,1875,304"/>
+<area href="classnamu_1_1tcpp_bridge_func_base.html" alt="namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;" shape="rect" coords="1885,280,2252,304"/>
+<area href="classnamu_1_1tcpp_bridge_func_3_01void_00_01_t_00_01_s_00_01_marshaling_00_01_args_8_8_8_01_4.html" alt="namu::tcppBridgeFunc&lt; void, T, S, Marshaling, Args... &gt;" shape="rect" coords="0,336,367,360"/>
+<area href="classnamu_1_1tcpp_bridge_func.html" alt="namu::tcppBridgeFunc&lt; Ret, T, S, Marshaling, Args &gt;" shape="rect" coords="377,336,744,360"/>
+<area href="classnamu_1_1default_copy_ctor.html" alt="namu::defaultCopyCtor" shape="rect" coords="942,336,1309,360"/>
+<area href="classnamu_1_1default_ctor.html" alt="namu::defaultCtor" shape="rect" coords="1319,336,1686,360"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -349,7 +349,7 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
 <dl class="section return"><dt>Returns</dt><dd>parameters of run() func. parameter is just a type. and I don't care about the value of each parameters. that is the reason why I uses a ref to represents parameter.</dd></dl>
 <p>I need the name and which types should be casted and binded from given arguments are matters. </p>
 
-<p>Reimplemented in <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#ad34f92adfc15d2516d7e4fd33839a4ec">namu::tcppBridgeFuncBase&lt; Ret, T, Marshaling, Args &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#ad34f92adfc15d2516d7e4fd33839a4ec">namu::tcppBridgeFuncBase&lt; Ret, T, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#ad34f92adfc15d2516d7e4fd33839a4ec">namu::tcppBridgeFuncBase&lt; void, T, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1mgd_func.html#a4fb5a9629e06a10c84dcbab1687524ba">namu::mgdFunc</a>, and <a class="el" href="classnamu_1_1default_copy_ctor.html#a27a0a06d614438592b169d4a06fee8b5">namu::defaultCopyCtor</a>.</p>
+<p>Reimplemented in <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a9d6d91e3f664016501000f27d61fb7f7">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a9d6d91e3f664016501000f27d61fb7f7">namu::tcppBridgeFuncBase&lt; void, T, S, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a9d6d91e3f664016501000f27d61fb7f7">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1mgd_func.html#a4fb5a9629e06a10c84dcbab1687524ba">namu::mgdFunc</a>, and <a class="el" href="classnamu_1_1default_copy_ctor.html#a27a0a06d614438592b169d4a06fee8b5">namu::defaultCopyCtor</a>.</p>
 
 </div>
 </div>
@@ -378,7 +378,7 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
 <dl class="section return"><dt>Returns</dt><dd>node which has same type of the func. in namu lang, even type is an object. that's why I return this as a node. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>please don't confuse this to evalType. evaluate means program just read the code and expand or calculate then replace it to the accurate another identifier or variable. so evalType of the func is just the func itself because there is nothing to calculate or run. that's completely different to Return type of the function. if there is a <a class="el" href="classnamu_1_1run_expr.html">runExpr</a> instance, and it takes the func and proper argument, then it can be evaluated and its evalType is the return type of the func. </dd></dl>
 
-<p>Implemented in <a class="el" href="classnamu_1_1_a_p_i_bridge.html#a810c467ff415620aa636ab752129020f">namu::APIBridge&lt; T, Ret &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a7fab983025e83dbc751562144ac59f15">namu::tcppBridgeFuncBase&lt; Ret, T, Marshaling, Args &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a7fab983025e83dbc751562144ac59f15">namu::tcppBridgeFuncBase&lt; Ret, T, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a7fab983025e83dbc751562144ac59f15">namu::tcppBridgeFuncBase&lt; void, T, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1mgd_func.html#adb353e405f868edc0af6aea6a9324162">namu::mgdFunc</a>, and <a class="el" href="classnamu_1_1ctor.html#a1c2896a6edccf3a55b67c8867612bd24">namu::ctor</a>.</p>
+<p>Implemented in <a class="el" href="classnamu_1_1_a_p_i_bridge.html#a810c467ff415620aa636ab752129020f">namu::APIBridge&lt; T, Ret &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#ab0f5ce0cca7427ecd22c4cb8c0e3b63f">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#ab0f5ce0cca7427ecd22c4cb8c0e3b63f">namu::tcppBridgeFuncBase&lt; void, T, S, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#ab0f5ce0cca7427ecd22c4cb8c0e3b63f">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1mgd_func.html#adb353e405f868edc0af6aea6a9324162">namu::mgdFunc</a>, and <a class="el" href="classnamu_1_1ctor.html#a1c2896a6edccf3a55b67c8867612bd24">namu::ctor</a>.</p>
 
 </div>
 </div>
@@ -407,7 +407,7 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>whether setting new return-type has been done or not. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a2c99e454c5bfbfde45f8dc5e966d77fc">namu::tcppBridgeFuncBase&lt; Ret, T, Marshaling, Args &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a2c99e454c5bfbfde45f8dc5e966d77fc">namu::tcppBridgeFuncBase&lt; Ret, T, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a2c99e454c5bfbfde45f8dc5e966d77fc">namu::tcppBridgeFuncBase&lt; void, T, Marshaling, Args... &gt;</a>, and <a class="el" href="classnamu_1_1mgd_func.html#a810cebf387ea8ab7f854abf31aae9744">namu::mgdFunc</a>.</p>
+<p>Reimplemented in <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#aae8c3cd82f9d801455385bfa35ce2ca3">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#aae8c3cd82f9d801455385bfa35ce2ca3">namu::tcppBridgeFuncBase&lt; void, T, S, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#aae8c3cd82f9d801455385bfa35ce2ca3">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args... &gt;</a>, and <a class="el" href="classnamu_1_1mgd_func.html#a810cebf387ea8ab7f854abf31aae9744">namu::mgdFunc</a>.</p>
 
 </div>
 </div>

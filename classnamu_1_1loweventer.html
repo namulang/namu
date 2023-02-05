@@ -205,9 +205,9 @@ template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a4c3e2d527917df745b7de64cd2573f1c"><td class="memItemLeft" align="right" valign="top"><a id="a4c3e2d527917df745b7de64cd2573f1c"></a>
 <a class="el" href="classnamu_1_1node.html">node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onGetElem</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;<a class="el" href="classnamu_1_1arr.html">arr</a>, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;idx)</td></tr>
 <tr class="separator:a4c3e2d527917df745b7de64cd2573f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae70ef1191d34ed6277e7629632a72d6"><td class="memItemLeft" align="right" valign="top"><a id="aae70ef1191d34ed6277e7629632a72d6"></a>
-<a class="el" href="classnamu_1_1node.html">node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onGetArray</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;elemType)</td></tr>
-<tr class="separator:aae70ef1191d34ed6277e7629632a72d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58b088eea4c91449c610c533f5c56ae6"><td class="memItemLeft" align="right" valign="top"><a id="a58b088eea4c91449c610c533f5c56ae6"></a>
+<a class="el" href="classnamu_1_1node.html">node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onGetArray</b> (<a class="el" href="classnamu_1_1node.html">node</a> &amp;elemType)</td></tr>
+<tr class="separator:a58b088eea4c91449c610c533f5c56ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfc030373d2472aaf23fd4fdd1c209fe"><td class="memItemLeft" align="right" valign="top"><a id="acfc030373d2472aaf23fd4fdd1c209fe"></a>
 <a class="el" href="classnamu_1_1node.html">node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onAssign</b> (<a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
 <tr class="separator:acfc030373d2472aaf23fd4fdd1c209fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -281,12 +281,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onCompilationUnit</b>
 <tr class="memitem:aa823bc42e12f38e84c297e1db0d97625"><td class="memItemLeft" align="right" valign="top"><a id="aa823bc42e12f38e84c297e1db0d97625"></a>
 <a class="el" href="classnamu_1_1mgd_func.html">mgdFunc</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onFunc</b> (const std::string &amp;name, const <a class="el" href="classnamu_1_1tnarr.html">narr</a> &amp;<a class="el" href="classnamu_1_1tnarr.html">params</a>, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;evalType, const <a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;blk)</td></tr>
 <tr class="separator:aa823bc42e12f38e84c297e1db0d97625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a831d4fad9e26e8d87af4ccfee80a408c"><td class="memItemLeft" align="right" valign="top"><a id="a831d4fad9e26e8d87af4ccfee80a408c"></a>
-<a class="el" href="classnamu_1_1return_expr.html">returnExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onReturn</b> ()</td></tr>
-<tr class="separator:a831d4fad9e26e8d87af4ccfee80a408c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2c8aefde8047b167776dec39ceef45e"><td class="memItemLeft" align="right" valign="top"><a id="ab2c8aefde8047b167776dec39ceef45e"></a>
-<a class="el" href="classnamu_1_1return_expr.html">returnExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onReturn</b> (<a class="el" href="classnamu_1_1node.html">node</a> &amp;exp)</td></tr>
-<tr class="separator:ab2c8aefde8047b167776dec39ceef45e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fda573d7fed9d10d514f20e7be36ce7"><td class="memItemLeft" align="right" valign="top"><a id="a0fda573d7fed9d10d514f20e7be36ce7"></a>
 <a class="el" href="classnamu_1_1ret_expr.html">retExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onRet</b> ()</td></tr>
 <tr class="separator:a0fda573d7fed9d10d514f20e7be36ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -314,51 +308,63 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onCompilationUnit</b>
 <tr class="memitem:a8bb3c892e55bc74566b4732d8685919c"><td class="memItemLeft" align="right" valign="top"><a id="a8bb3c892e55bc74566b4732d8685919c"></a>
 <a class="el" href="classnamu_1_1as_expr.html">asExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onAs</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;me, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;as)</td></tr>
 <tr class="separator:a8bb3c892e55bc74566b4732d8685919c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade19dc55665ed1b7a17d7a509c2ab390"><td class="memItemLeft" align="right" valign="top"><a id="ade19dc55665ed1b7a17d7a509c2ab390"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onUnaryMinus</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;it)</td></tr>
-<tr class="separator:ade19dc55665ed1b7a17d7a509c2ab390"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac50eb34d3bd4abb139abbba50daf3540"><td class="memItemLeft" align="right" valign="top"><a id="ac50eb34d3bd4abb139abbba50daf3540"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onUnaryNot</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;it)</td></tr>
-<tr class="separator:ac50eb34d3bd4abb139abbba50daf3540"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c6ad100ffc49401b78f049ccb363728"><td class="memItemLeft" align="right" valign="top"><a id="a8c6ad100ffc49401b78f049ccb363728"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onUnaryMinus</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;it)</td></tr>
+<tr class="separator:a8c6ad100ffc49401b78f049ccb363728"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9e647e16e4736254d366390548536f7"><td class="memItemLeft" align="right" valign="top"><a id="aa9e647e16e4736254d366390548536f7"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onUnaryNot</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;it)</td></tr>
+<tr class="separator:aa9e647e16e4736254d366390548536f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52a70290165af5dfb3e2a6ca11fa89d6"><td class="memItemLeft" align="right" valign="top"><a id="a52a70290165af5dfb3e2a6ca11fa89d6"></a>
 <a class="el" href="classnamu_1_1node.html">node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onUnaryDoublePlus</b> (<a class="el" href="classnamu_1_1node.html">node</a> &amp;it)</td></tr>
 <tr class="separator:a52a70290165af5dfb3e2a6ca11fa89d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70a4c80f5749b1b2ee637c4b3b9065cd"><td class="memItemLeft" align="right" valign="top"><a id="a70a4c80f5749b1b2ee637c4b3b9065cd"></a>
 <a class="el" href="classnamu_1_1node.html">node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onUnaryDoubleMinus</b> (<a class="el" href="classnamu_1_1node.html">node</a> &amp;it)</td></tr>
 <tr class="separator:a70a4c80f5749b1b2ee637c4b3b9065cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae07d7f614e3d119c24230d6e6019b30d"><td class="memItemLeft" align="right" valign="top"><a id="ae07d7f614e3d119c24230d6e6019b30d"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onAdd</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:ae07d7f614e3d119c24230d6e6019b30d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32d2cdd1ac31ec8c0dbec52f92f47a66"><td class="memItemLeft" align="right" valign="top"><a id="a32d2cdd1ac31ec8c0dbec52f92f47a66"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onSub</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:a32d2cdd1ac31ec8c0dbec52f92f47a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d858d91d6024b7e86cd316919e5a7fb"><td class="memItemLeft" align="right" valign="top"><a id="a4d858d91d6024b7e86cd316919e5a7fb"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onMul</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:a4d858d91d6024b7e86cd316919e5a7fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04ca758fd2ff3fe57a2ec385760cf18a"><td class="memItemLeft" align="right" valign="top"><a id="a04ca758fd2ff3fe57a2ec385760cf18a"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDiv</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:a04ca758fd2ff3fe57a2ec385760cf18a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5e5d23b626954dae115d0003c7e2ab2"><td class="memItemLeft" align="right" valign="top"><a id="ac5e5d23b626954dae115d0003c7e2ab2"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onMod</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:ac5e5d23b626954dae115d0003c7e2ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef05d068a26104822fc76d7967fe01c1"><td class="memItemLeft" align="right" valign="top"><a id="aef05d068a26104822fc76d7967fe01c1"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onGt</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:aef05d068a26104822fc76d7967fe01c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6723af06bfd83d60e9bd6d3cf2f033f"><td class="memItemLeft" align="right" valign="top"><a id="aa6723af06bfd83d60e9bd6d3cf2f033f"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onGe</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:aa6723af06bfd83d60e9bd6d3cf2f033f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef1b4379ceae58d6ec36f67e16136754"><td class="memItemLeft" align="right" valign="top"><a id="aef1b4379ceae58d6ec36f67e16136754"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onLt</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:aef1b4379ceae58d6ec36f67e16136754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57c89bace5acf8232d677e5161420072"><td class="memItemLeft" align="right" valign="top"><a id="a57c89bace5acf8232d677e5161420072"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onLe</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:a57c89bace5acf8232d677e5161420072"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a755eda1242baa7571688c1914c75afcc"><td class="memItemLeft" align="right" valign="top"><a id="a755eda1242baa7571688c1914c75afcc"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onEq</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:a755eda1242baa7571688c1914c75afcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1d92f8caebc0034e8f7702ee2f4568b"><td class="memItemLeft" align="right" valign="top"><a id="ae1d92f8caebc0034e8f7702ee2f4568b"></a>
-<a class="el" href="classnamu_1_1_f_a_o_expr.html">FAOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onNe</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:ae1d92f8caebc0034e8f7702ee2f4568b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8631049d24d07b15edb6b79de6db4d7d"><td class="memItemLeft" align="right" valign="top"><a id="a8631049d24d07b15edb6b79de6db4d7d"></a>
+<a class="el" href="classnamu_1_1_f_u_o_expr.html">FUOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onUnaryPostfixDoublePlus</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;it)</td></tr>
+<tr class="separator:a8631049d24d07b15edb6b79de6db4d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab03c4df18872316457a67b15ca5145c5"><td class="memItemLeft" align="right" valign="top"><a id="ab03c4df18872316457a67b15ca5145c5"></a>
+<a class="el" href="classnamu_1_1_f_u_o_expr.html">FUOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onUnaryPostfixDoubleMinus</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;it)</td></tr>
+<tr class="separator:ab03c4df18872316457a67b15ca5145c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0ac0f2f1b2e807d957d61e73d02a026"><td class="memItemLeft" align="right" valign="top"><a id="ab0ac0f2f1b2e807d957d61e73d02a026"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onAdd</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:ab0ac0f2f1b2e807d957d61e73d02a026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9d6db4b840479427bcd7f683fc45609"><td class="memItemLeft" align="right" valign="top"><a id="ae9d6db4b840479427bcd7f683fc45609"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onSub</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:ae9d6db4b840479427bcd7f683fc45609"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0aef76a1b4bfd703a573db99dd1e669a"><td class="memItemLeft" align="right" valign="top"><a id="a0aef76a1b4bfd703a573db99dd1e669a"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onMul</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:a0aef76a1b4bfd703a573db99dd1e669a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac112023ab032e71f8f27446228e03d55"><td class="memItemLeft" align="right" valign="top"><a id="ac112023ab032e71f8f27446228e03d55"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDiv</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:ac112023ab032e71f8f27446228e03d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac74b6ef313669838aa9fa449c704bb1"><td class="memItemLeft" align="right" valign="top"><a id="aac74b6ef313669838aa9fa449c704bb1"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onMod</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:aac74b6ef313669838aa9fa449c704bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd5adcf585dee30d83a364964988dbc1"><td class="memItemLeft" align="right" valign="top"><a id="acd5adcf585dee30d83a364964988dbc1"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onGt</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:acd5adcf585dee30d83a364964988dbc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af46c8236992282c433457b39b67ef73d"><td class="memItemLeft" align="right" valign="top"><a id="af46c8236992282c433457b39b67ef73d"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onGe</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:af46c8236992282c433457b39b67ef73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1eda54f7b2bab249c95eac8a4474e08"><td class="memItemLeft" align="right" valign="top"><a id="ac1eda54f7b2bab249c95eac8a4474e08"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onLt</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:ac1eda54f7b2bab249c95eac8a4474e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d39f225f732506e895276e804315179"><td class="memItemLeft" align="right" valign="top"><a id="a6d39f225f732506e895276e804315179"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onLe</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:a6d39f225f732506e895276e804315179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89c1700846090c1ac9642fd58c48c173"><td class="memItemLeft" align="right" valign="top"><a id="a89c1700846090c1ac9642fd58c48c173"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onEq</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:a89c1700846090c1ac9642fd58c48c173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8134a46c6ec548ea91a22763eb341567"><td class="memItemLeft" align="right" valign="top"><a id="a8134a46c6ec548ea91a22763eb341567"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onNe</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:a8134a46c6ec548ea91a22763eb341567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb3c9aed727718a6db207372154879ad"><td class="memItemLeft" align="right" valign="top"><a id="acb3c9aed727718a6db207372154879ad"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onAnd</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:acb3c9aed727718a6db207372154879ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab969c1bc13cc6bb0d2df6e959ebe184c"><td class="memItemLeft" align="right" valign="top"><a id="ab969c1bc13cc6bb0d2df6e959ebe184c"></a>
+<a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onOr</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;lhs, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:ab969c1bc13cc6bb0d2df6e959ebe184c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7835a984e0e167119f8d4aecfa16328"><td class="memItemLeft" align="right" valign="top"><a id="aa7835a984e0e167119f8d4aecfa16328"></a>
 <a class="el" href="classnamu_1_1if_expr.html">ifExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onIf</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;condition, const <a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;thenBlk)</td></tr>
 <tr class="separator:aa7835a984e0e167119f8d4aecfa16328"><td class="memSeparator" colspan="2">&#160;</td></tr>

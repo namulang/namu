@@ -95,7 +95,7 @@ $(function() {
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                <span class="keywordflow">return</span> _finish(ip, -1);</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <a class="code" href="classnamu_1_1starter.html">starter</a> s;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <a class="code" href="classnamu_1_1tstr.html">str</a> res = s.run(<a class="code" href="classnamu_1_1args.html">args</a>(ip.getSlot().getPack()));</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <a class="code" href="classnamu_1_1tstr.html">str</a> res = s.run(<a class="code" href="classnamu_1_1args.html">args</a>((<a class="code" href="classnamu_1_1base_obj.html">baseObj</a>&amp;) ip.getSubPack()));</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keywordflow">if</span>(res &amp;&amp; !rpt) {</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                <span class="keywordflow">return</span> _finish(ip, 0);</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            }</div>
@@ -111,6 +111,7 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    };</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1base_obj_html"><div class="ttname"><a href="classnamu_1_1base_obj.html">namu::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:12</div></div>
 <div class="ttc" id="aclassnamu_1_1err_report_html"><div class="ttname"><a href="classnamu_1_1err_report.html">namu::errReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1interpreter_html"><div class="ttname"><a href="classnamu_1_1interpreter.html">namu::interpreter</a></div><div class="ttdef"><b>Definition:</b> interpreter.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1starter_html"><div class="ttname"><a href="classnamu_1_1starter.html">namu::starter</a></div><div class="ttdef"><b>Definition:</b> starter.hpp:9</div></div>
