@@ -103,6 +103,21 @@ def mv(directory):
             if answer == "y":
                 os.system("git mv " + prevPath + " " + nextPath)
 
+def _cleanParser():
+    global namuDir
+
+    pathDir= namuDir
+    if isWindow():
+        pathDir += "\\mod\\core\\loader\\interpreter\\bison\\"
+    else:
+        pathDir += "/mod/core/loader/interpreter/bison/"
+
+    printInfoEnd("removing generated parser...")
+    os.system("rm " + pathDir + "lowscanner.cpp")
+    os.system("rm " + pathDir + "lowscanner.hpp")
+    os.system("rm " + pathDir + "lowparser.cpp")
+    os.system("rm " + pathDir + "lowparser.hpp")
+
 def _cleanIntermediates():
     printInfoEnd("removing intermediate outputs...")
     if isWindow():
@@ -643,6 +658,7 @@ def clean():
     _clean(cwd)
     _cleanIntermediates()
     _cleanDir(binDir)
+    _cleanParser()
     if isWindow():
         _cleanDir(cwd + "\\mod")
         bisonDir = cwd + "\\..\\mod\\namu\\loader\\interpreter\\bison"
