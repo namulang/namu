@@ -24,7 +24,7 @@ namespace namu {
                 return _finish(ip, -1);
 
             starter s;
-            str res = s.run(args(ip.getSubPack()));
+            str res = s.run(args((baseObj&) ip.getSubPack()));
             if(res && !rpt) {
                 return _finish(ip, 0);
             }
