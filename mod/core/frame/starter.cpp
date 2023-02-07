@@ -39,7 +39,7 @@ namespace namu {
         // TODO: now, only find to main() but I need to find main(argc, argv) case, too.
         node& ret = pak.sub("main");
         if(nul(ret))
-            NAMU_E("could'nt find main().");
+            NAMU_E("couldn't find main().");
 
         return ret;
     }

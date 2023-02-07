@@ -20,7 +20,7 @@ namespace namu {
     public:
         tnarr() {}
         template <typename... Es>
-        tnarr(const Es&... elems) {
+        explicit tnarr(const Es&... elems) {
             static_assert(areBaseOfT<T, Es...>::value, "some of type of args are not base of type 'T'");
             add( { (T*) &elems... } );
         }
