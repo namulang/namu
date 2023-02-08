@@ -301,7 +301,6 @@ TEST_F(forExprTest, evalForExprWithoutRet) {
     ASSERT_EQ(res.cast<std::string>(), "");
 }
 
-/*
 TEST_F(forExprTest, simpleBreakTest) {
     make().parse(R"SRC(
         main() int
@@ -339,4 +338,4 @@ TEST_F(forExprTest, retForExpr) {
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 5);
-}*/
+}
