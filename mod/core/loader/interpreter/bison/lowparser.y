@@ -182,6 +182,9 @@ expr: expr-line { $$ = $1; }
 
 stmt: expr-line NEWLINE { $$ = $1; }
     | return { $$ = $1; }
+    | ret { $$ = $1; }
+    | break { $$ = $1; }
+    | next { $$ = $1; }
     | expr-compound { $$ = $1; }
 
 block: %empty {
@@ -282,9 +285,6 @@ primary: INTVAL {
 //  structure:
 expr-line: defexpr-line { $$ = $1; }
          | expr10 { $$ = $1; }
-         | ret { $$ = $1; }
-         | break { $$ = $1; }
-         | next { $$ = $1; }
          | defarray-initial-value { $$ = $1; }
          | defseq { $$ = $1; }
 
@@ -353,19 +353,23 @@ return: RETURN NEWLINE {
         $$ = yyget_extra(scanner)->onReturn(*$2);
     }
 
-ret: RET {
+ret: RET NEWLINE {
     $$ = yyget_extra(scanner)->onRet();
- } | RET expr {
+ } | RET expr-line NEWLINE {
+    $$ = yyget_extra(scanner)->onRet(*$2);
+ } | RET expr-compound {
     $$ = yyget_extra(scanner)->onRet(*$2);
  }
 
-break: BREAK {
+break: BREAK NEWLINE {
     $$ = yyget_extra(scanner)->onBreak();
-   } | BREAK expr {
+   } | BREAK expr-line NEWLINE {
+    $$ = yyget_extra(scanner)->onBreak(*$2);
+   } | BREAK expr-compound {
     $$ = yyget_extra(scanner)->onBreak(*$2);
    }
 
-next: NEXT {
+next: NEXT NEWLINE {
     $$ = yyget_extra(scanner)->onNext();
    }
 
