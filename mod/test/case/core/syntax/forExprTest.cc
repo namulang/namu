@@ -339,3 +339,19 @@ TEST_F(forExprTest, retForExpr) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 5);
 }
+
+TEST_F(forExprTest, breakIsNotExpressionNegative) {
+    make().negative().parse(R"SRC(
+        main() int
+            for n in 1..5
+                foo(break 3)
+    )SRC").shouldParsed(false);
+}
+
+TEST_F(forExprTest, nextIsNotExpressionNegative) {
+    make().negative().parse(R"SRC(
+        main() int
+            for n in 1..5
+                foo(next)
+    )SRC").shouldParsed(false);
+}
