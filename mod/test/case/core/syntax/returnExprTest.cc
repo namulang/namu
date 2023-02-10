@@ -122,3 +122,13 @@ TEST_F(returnExprTest, retDefAssign) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 5);
 }
+
+TEST_F(returnExprTest, retIsNotExpressionNegative) {
+    make().negative().parse(R"SRC(
+        foo(n int) void
+            return
+
+        main() int
+            foo(ret 3)
+    )SRC").shouldParsed(false);
+}
