@@ -45,7 +45,7 @@ namespace namu {
                 }
                 frame& fr = thread::get()._getNowFrame();
                 ret.bind(fr.getRet());
-                fr.setRet(frame::FUNC_EMPTY);
+                fr.relRet();
             }
         }
         return ret;
