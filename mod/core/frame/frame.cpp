@@ -5,7 +5,7 @@
 namespace namu {
 
     nbool blkRetState::isOverwritable(const retState& it) const {
-        return true;
+        return _isOverwritable;
     }
 
     nbool funcRetState::isOverwritable(const retState& it) const {
@@ -70,7 +70,7 @@ namespace namu {
     scopes& me::getTop() { return *_local.getTop(); }
 
     tstr<scopes> me::popLocal() {
-        setRet(BLK_EMPTY);
+        relRet();
         return _local.pop();
     }
     // I won't provide API for poping a single node from the scope.
@@ -98,6 +98,11 @@ namespace namu {
         super::rel();
     }
 
+    void me::relRet() {
+        _retState.bind(BLK_EMPTY);
+        _ret.rel();
+    }
+
     nbool me::setRet(const retState& new1) { return setRet(new1, nulOf<node>()); }
     nbool me::setRet(const retState& new1, const node& toRet) {
         if(_retState && !_retState->isOverwritable(new1)) return true;
@@ -111,6 +116,6 @@ namespace namu {
         _obj.rel();
         _func.rel();
         _local.rel();
-        setRet(FUNC_EMPTY);
+        relRet();
     }
 }

@@ -12,12 +12,12 @@ namespace namu {
             return true;
 
         if(state == frame::BLK_BREAK) {
-            fr.setRet(frame::BLK_EMPTY);
+            fr.relRet();
             return true;
         }
 
         if(state == frame::BLK_NEXT) {
-            fr.setRet(frame::BLK_EMPTY);
+            fr.relRet();
             return false;
         }
 

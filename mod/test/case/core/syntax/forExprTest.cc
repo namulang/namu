@@ -355,3 +355,28 @@ TEST_F(forExprTest, nextIsNotExpressionNegative) {
                 foo(next)
     )SRC").shouldParsed(false);
 }
+
+TEST_F(forExprTest, breakInsideOfFor) {
+    make().parse(R"SRC(
+        main() int
+            for n in 1..5
+                break 7
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 7);
+}
+
+TEST_F(forExprTest, breakInsideOfIfExpr) {
+    make().parse(R"SRC(
+        main() int
+            for n in 1..5
+                if n == 3
+                    break 7
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 7);
+}

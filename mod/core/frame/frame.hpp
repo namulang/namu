@@ -28,20 +28,16 @@ namespace namu {
         friend class frame;
 
     public:
+        blkRetState(nbool isOverwritable): _isOverwritable(isOverwritable) {}
+
+    public:
         nbool isOverwritable(const retState& it) const override;
 
     protected:
         blkRetState() {}
-    };
-    class blkEmptyRetState : public blkRetState {
-        NAMU(CLASS(blkEmptyRetState, blkRetState))
-        friend class frame;
 
-    public:
-        nbool isEmpty() const override { return true; }
-
-    protected:
-        blkEmptyRetState() {}
+    private:
+        nbool _isOverwritable;
     };
 
     class funcRetState : public retState {
@@ -75,10 +71,10 @@ namespace namu {
         friend class baseObj;
 
     public:
-        static inline const blkEmptyRetState BLK_EMPTY;
-        static inline const blkRetState BLK_RET;
-        static inline const blkRetState BLK_BREAK;
-        static inline const blkRetState BLK_NEXT;
+        static inline const blkRetState BLK_EMPTY = blkRetState(true);
+        static inline const blkRetState BLK_RET = blkRetState(true);
+        static inline const blkRetState BLK_BREAK = blkRetState(false);
+        static inline const blkRetState BLK_NEXT = blkRetState(false);
         static inline const funcEmptyRetState FUNC_EMPTY;
         static inline const funcRetState FUNC_RETURN;
 
@@ -135,6 +131,7 @@ namespace namu {
 
         void rel() override;
 
+        void relRet();
         nbool setRet(const retState& new1);
         nbool setRet(const retState& new1, const node& toRet);
         const retState& getRetState() const;
