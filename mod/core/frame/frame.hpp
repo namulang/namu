@@ -40,6 +40,16 @@ namespace namu {
         nbool _isOverwritable;
     };
 
+    class blkEmptyRetState : public blkRetState {
+        NAMU(CLASS(blkEmptyRetState, blkRetState))
+
+    public:
+        blkEmptyRetState(): super(true) {}
+
+    public:
+        nbool isEmpty() const override { return true; }
+    };
+
     class funcRetState : public retState {
         NAMU(CLASS(funcRetState, retState))
         friend class frame;
@@ -71,7 +81,7 @@ namespace namu {
         friend class baseObj;
 
     public:
-        static inline const blkRetState BLK_EMPTY = blkRetState(true);
+        static inline const blkEmptyRetState BLK_EMPTY;
         static inline const blkRetState BLK_RET = blkRetState(true);
         static inline const blkRetState BLK_BREAK = blkRetState(false);
         static inline const blkRetState BLK_NEXT = blkRetState(false);
