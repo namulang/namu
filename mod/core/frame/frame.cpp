@@ -70,7 +70,8 @@ namespace namu {
     scopes& me::getTop() { return *_local.getTop(); }
 
     tstr<scopes> me::popLocal() {
-        relRet();
+        if(*_retState == BLK_RET)
+            relRet();
         return _local.pop();
     }
     // I won't provide API for poping a single node from the scope.

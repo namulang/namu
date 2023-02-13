@@ -183,7 +183,7 @@ TEST_F(forExprTest, returnMiddleOfLoop) {
             p1.name = "Chales"
 
             for p in {p1, person()}
-                return p1.name
+                return p.name
             return ""
     )SRC").shouldVerified(true);
     str res = run();
