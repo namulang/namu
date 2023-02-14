@@ -380,3 +380,33 @@ TEST_F(forExprTest, breakInsideOfIfExpr) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 7);
 }
+
+TEST_F(forExprTest, breakNestedForLoop) {
+    make().parse(R"SRC(
+        main() int
+            sum := 0
+            for n in 0..7
+                for n2 in 0..4
+                    ++sum
+                    if sum > 15
+                        break
+                if sum > 15
+                    break
+            sum
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 16);
+}
+
+TEST_F(forExprTest, evalOfForLoop) {
+    make().parse(R"SRC(
+        main() int
+            sum := 0
+            for n in 0..8
+                if sum > 3
+                    break "hello"
+                ++sum
+    )SRC").shouldParsed(false);
+}
