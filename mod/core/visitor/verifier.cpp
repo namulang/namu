@@ -102,7 +102,7 @@ namespace namu {
         //  first of all:
         //      in namulang there is no lvalue concept. to involve lvalue concept,
         //      I need to bring new concept or feature like 'const' but I don't want to.
-        //      becuase the direction of this language is a toy lang. DON'T be serious.
+        //      because the direction of this language is a toy lang. DON'T be serious.
         //      but I can't leave something which is going to operate like a lvalue by user.
         //      so I'll emulate the way how lvalue works.
         //
@@ -155,7 +155,7 @@ namespace namu {
     }
 
 
-    void me::onVisit(visitInfo i, defAssignExpr& me) {
+    void me::onLeave(visitInfo i, defAssignExpr& me) {
         NAMU_DI("verify: defAssignExpr: duplication of variable.");
         const scopes& top = thread::get().getNowFrame().getTop();
         if(nul(top)) return;
@@ -176,6 +176,8 @@ namespace namu {
         node& to = me.getTo();
         str new1 = me.isOnDefBlock() ? rhs.as<node>() : rhs.getEval();
         NAMU_DI("verify: defAssignExpr: new1[%s]", new1 ? new1->getType().getName().c_str() : "null");
+        if(!new1)
+            return _srcErr(me.getPos(), errCode::TYPE_NOT_DEDUCED);
 
         if(nul(to)) {
             frame& fr = thread::get()._getNowFrame();
@@ -381,7 +383,7 @@ namespace namu {
 
     void me::_prepare() {
         _us.clear();
-        _loopCnt = 0;
+        _recentLoops.clear();
     }
 
     void me::onLeave(visitInfo i, mgdFunc& me) {
@@ -437,24 +439,29 @@ namespace namu {
         me.getBlock().inFrame(nulOf<bicontainable>());
         thread::get()._getNowFrame().pushLocal(name, *elemType);
 
-        _loopCnt++;
+        _recentLoops.push_back(&me);
     }
 
     void me::onLeave(visitInfo i, forExpr& me) {
         NAMU_DI("verify: forExpr: onLeave");
         me.getBlock().outFrame();
 
-        _loopCnt--;
+
+        _recentLoops.pop_back();
     }
 
     void me::onVisit(visitInfo i, breakExpr& me) {
-        NAMU_DI("verify: breakExpr: declared inside of loop?");
-        if(_loopCnt <= 0) return _srcErr(me.getPos(), errCode::BREAK_OUTSIDE_OF_LOOP);
+        NAMU_DI("verify: breakExpr: declared outside of loop?");
+        if(_recentLoops.size() <= 0) return _srcErr(me.getPos(), errCode::BREAK_OUTSIDE_OF_LOOP);
+
+        loopExpr& recent = *_recentLoops.back();
+        const node& deduced = recent.getEval().deduce(me.getEval());
+        recent.setEval(deduced);
     }
 
     void me::onVisit(visitInfo i, nextExpr& me) {
-        NAMU_DI("verify: nextExpr: declared inside of loop?");
-        if(_loopCnt <= 0) return _srcErr(me.getPos(), errCode::NEXT_OUTSIDE_OF_LOOP);
+        NAMU_DI("verify: nextExpr: declared outside of loop?");
+        if(_recentLoops.size() <= 0) return _srcErr(me.getPos(), errCode::NEXT_OUTSIDE_OF_LOOP);
     }
 
     void me::onVisit(visitInfo i, ifExpr& me) {

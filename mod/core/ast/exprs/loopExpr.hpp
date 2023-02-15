@@ -14,6 +14,8 @@ namespace namu {
 
     public:
         blockExpr& getBlock() const { return *_blk; }
+        const node& getEval() const override { return *_eval; }
+        nbool setEval(const node& new1) const { return _eval.bind(new1); }
 
     protected:
         /// @return true if exit the loop
@@ -21,5 +23,6 @@ namespace namu {
 
     private:
         mutable tstr<blockExpr> _blk;
+        mutable str _eval;
     };
 }

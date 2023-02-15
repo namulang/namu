@@ -46,6 +46,9 @@ namespace namu {
     }
 
     const node& me::getEval() const {
+        const node& nowEval = super::getEval();
+        if(!nul(nowEval)) return nowEval;
+
         str ased = _container->as<node>();
         str elemType = ased->run("getElemType");
         if(!elemType) return NAMU_E("elemType == null"), nulOf<node>();
@@ -53,7 +56,9 @@ namespace namu {
         blockExpr& blk = getBlock();
         frameInteract f1(blk); {
             thread::get()._getNowFrame().pushLocal(getLocalName(), *elemType);
-            return blk.getEval();
+            const node& newEval = blk.getEval();
+            setEval(newEval);
+            return newEval;
         }
     }
 }

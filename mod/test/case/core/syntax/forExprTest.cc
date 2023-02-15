@@ -402,11 +402,26 @@ TEST_F(forExprTest, breakNestedForLoop) {
 
 TEST_F(forExprTest, evalOfForLoop) {
     make().parse(R"SRC(
+        main() str
+            sum := 0
+            for n in 0..8
+                if sum > 3
+                    break "hello"
+                ++sum
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "hello");
+}
+
+TEST_F(forExprTest, evalOfForLoopNegative) {
+    make().negative().parse(R"SRC(
         main() int
             sum := 0
             for n in 0..8
                 if sum > 3
                     break "hello"
                 ++sum
-    )SRC").shouldParsed(false);
+    )SRC").shouldVerified(false);
 }
