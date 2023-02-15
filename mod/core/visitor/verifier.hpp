@@ -8,6 +8,7 @@ struct verifierTest;
 
 namespace namu {
 
+    class loopExpr;
     class _nout verifier : public visitor {
         NAMU(ME(verifier, visitor))
         friend struct ::verifierTest;
@@ -38,7 +39,7 @@ namespace namu {
         void onVisit(visitInfo i, assignExpr& me) override;
         void onVisit(visitInfo i, blockExpr& me) override;
         void onLeave(visitInfo i, blockExpr& me) override;
-        void onVisit(visitInfo i, defAssignExpr& me) override;
+        void onLeave(visitInfo i, defAssignExpr& me) override;
         void onVisit(visitInfo i, defVarExpr& me) override;
         void onVisit(visitInfo i, defSeqExpr& me) override;
         void onVisit(visitInfo i, defArrayExpr& me) override;
@@ -79,7 +80,7 @@ namespace namu {
         tstr<errReport> _rpt;
         tstr<frame> _frame;
         std::vector<baseObj*> _us; // multiple 'me'
-        ncnt _loopCnt;
+        std::vector<loopExpr*> _recentLoops;
 
         static verifier* _now;
     };

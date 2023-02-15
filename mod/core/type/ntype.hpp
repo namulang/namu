@@ -59,7 +59,7 @@ namespace namu {
         virtual const ases& _getAses() const;
 
     private:
-        static deducers* _makeReducers();
+        static deducers* _makeDeducers();
         static const ntype& _deduceSuperType(const ntype& l, const ntype& r);
     };
 

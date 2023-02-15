@@ -49,7 +49,7 @@ namespace namu {
     const ntype& me::deduce(const ntype& l, const ntype& r) {
         static deducers* inner = nullptr;
         if(nul(inner))
-            inner = _makeReducers();
+            inner = _makeDeducers();
 
         const ntype* ret = nullptr;
         try {
@@ -62,7 +62,7 @@ namespace namu {
         return _deduceSuperType(l, r);
     }
 
-    me::deducers* me::_makeReducers() {
+    me::deducers* me::_makeDeducers() {
         // make deduce table:
 #define _X(A) &ttype<A>::get()
 
