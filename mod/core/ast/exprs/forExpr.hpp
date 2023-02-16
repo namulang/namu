@@ -24,5 +24,6 @@ namespace namu {
     private:
         str _container;
         std::string _name;
+        mutable nbool _initEval;
     };
 }
