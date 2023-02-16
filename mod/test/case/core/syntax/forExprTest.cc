@@ -425,3 +425,38 @@ TEST_F(forExprTest, evalOfForLoopNegative) {
                 ++sum
     )SRC").shouldVerified(false);
 }
+
+TEST_F(forExprTest, evalOfForLoopNegative2) {
+    make().negative().parse(R"SRC(
+        def a
+            foo() void
+                return
+
+        main() int
+            sum := 0
+            for n in 0..8
+                if sum > 3
+                    break a()
+                ++sum
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(forExprTest, evalOfForLoop2) {
+    make().negative().parse(R"SRC(
+        def a
+            foo() void
+                return
+
+        main() int
+            sum := 0
+            for n in 0..8
+                if sum > 3
+                    break a()
+                ++sum
+            sum
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 4);
+}

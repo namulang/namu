@@ -9,7 +9,7 @@ namespace namu {
     NAMU(DEF_ME(forExpr), DEF_VISIT())
 
     me::forExpr(const std::string& localName, const node& container, const blockExpr& blk):
-        super(blk), _container(container), _name(localName) {}
+        super(blk), _container(container), _name(localName), _initEval(false) {}
 
     const std::string& me::getLocalName() const { return _name; }
     str me::getContainer() { return _container->as<node>(); }
@@ -47,7 +47,7 @@ namespace namu {
 
     const node& me::getEval() const {
         const node& nowEval = super::getEval();
-        if(!nul(nowEval)) return nowEval;
+        if(_initEval) return nowEval;
 
         str ased = _container->as<node>();
         str elemType = ased->run("getElemType");
@@ -57,7 +57,9 @@ namespace namu {
         frameInteract f1(blk); {
             thread::get()._getNowFrame().pushLocal(getLocalName(), *elemType);
             const node& newEval = blk.getEval();
+
             setEval(newEval);
+            _initEval = true;
             return newEval;
         }
     }
