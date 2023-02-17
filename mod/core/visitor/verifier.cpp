@@ -445,8 +445,16 @@ namespace namu {
     void me::onLeave(visitInfo i, forExpr& me) {
         NAMU_DI("verify: forExpr: onLeave");
         me.getBlock().outFrame();
+        _recentLoops.pop_back();
+    }
 
+    void me::onVisit(visitInfo i, whileExpr& me) {
+        NAMU_DI("verify: whileExpr: onVisit");
+        _recentLoops.push_back(&me);
+    }
 
+    void me::onLeave(visitInfo i, whileExpr& me) {
+        NAMU_DI("verify: whileExpr: onLeave");
         _recentLoops.pop_back();
     }
 

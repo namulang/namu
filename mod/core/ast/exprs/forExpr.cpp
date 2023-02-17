@@ -46,9 +46,9 @@ namespace namu {
     }
 
     const node& me::getEval() const {
-        const node& nowEval = super::getEval();
-        if(_initEval) return nowEval;
+        if(_initEval) return super::getEval();
 
+        _initEval = true;
         str ased = _container->as<node>();
         str elemType = ased->run("getElemType");
         if(!elemType) return NAMU_E("elemType == null"), nulOf<node>();
@@ -59,7 +59,6 @@ namespace namu {
             const node& newEval = blk.getEval();
 
             setEval(newEval);
-            _initEval = true;
             return newEval;
         }
     }

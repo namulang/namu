@@ -22,5 +22,6 @@ namespace namu {
 
     private:
         str _condition;
+        mutable nbool _initEval;
     };
 }
