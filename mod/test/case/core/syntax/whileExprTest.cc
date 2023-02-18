@@ -151,7 +151,7 @@ TEST_F(whileExprTest, evalOfForLoopNegative2) {
 }
 
 TEST_F(whileExprTest, evalOfForLoop2) {
-    make().negative().parse(R"SRC(
+    make().parse(R"SRC(
         def a
             foo() void
                 return
@@ -162,6 +162,23 @@ TEST_F(whileExprTest, evalOfForLoop2) {
             while ++n < 8
                 if sum > 3
                     break a()
+                ++sum
+            sum
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 4);
+}
+
+TEST_F(whileExprTest, evalOfForLoop3) {
+    make().parse(R"SRC(
+        main() int
+            sum := 0
+            n := 0
+            while ++n < 8
+                if sum > 3
+                    break
                 ++sum
             sum
     )SRC").shouldVerified(true);
