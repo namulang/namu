@@ -463,8 +463,11 @@ namespace namu {
         if(_recentLoops.size() <= 0) return _srcErr(me.getPos(), errCode::BREAK_OUTSIDE_OF_LOOP);
 
         loopExpr& recent = *_recentLoops.back();
-        const node& deduced = recent.getEval().deduce(me.getEval());
-        recent.setEval(deduced);
+        const node& recentEval = recent.getEval();
+        if(!nul(recentEval)) {
+            const node& deduced = recent.getEval().deduce(me.getEval());
+            recent.setEval(deduced);
+        }
     }
 
     void me::onVisit(visitInfo i, nextExpr& me) {
