@@ -440,6 +440,22 @@ TEST_F(forExprTest, evalOfForLoopNegative2) {
                 ++sum
     )SRC").shouldVerified(false);
 }
+ 
+TEST_F(forExprTest, evalOfForLoopNegative3) {
+    make().negative().parse(R"SRC(
+        def a
+            foo() void
+                return
+
+        main() int
+            sum := 0
+            answer := for n in 0..8
+                if sum > 11
+                    if true
+                        break "hello"
+                ++sum
+    )SRC").shouldVerified(false);
+}
 
 TEST_F(forExprTest, evalOfForLoop2) {
     make().negative().parse(R"SRC(
@@ -460,3 +476,20 @@ TEST_F(forExprTest, evalOfForLoop2) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 4);
 }
+
+TEST_F(forExprTest, evalOfForLoop3) {
+    make().negative().parse(R"SRC(
+        main() str
+            sum := 0
+            answer := for n in 0..8
+                if sum > 11
+                    if true
+                        break "hello"
+                ++sum
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "8");
+}
+
