@@ -173,3 +173,45 @@ TEST_F(ifExprTest, elif2) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 3);
 }
+
+TEST_F(ifExprTest, evalIfWithStrAndIntNegative) {
+    make().negative().parse(R"SRC(
+        main() int
+            if 23 == 23.0
+                "hello"
+            else
+                22
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(ifExprTest, evalIfWithStrAndInt2) {
+    make().parse(R"SRC(
+        main() str
+            if 23 == 23.0
+                "hello"
+            else
+                22
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "hello");
+}
+
+TEST_F(ifExprTest, evalIfWithStrAndInt3) {
+    make().parse(R"SRC(
+        main() str
+            a := if 23 == 23.0
+                if true
+                    ret false
+                else
+                    ret "hello"
+            else
+                ret 22
+            return a
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "hello");
+}
