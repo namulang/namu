@@ -7,6 +7,7 @@ namespace namu {
 #define _X(FUNC) \
     tstr<arithmeticObj> me::FUNC(const arithmeticObj& rhs) { \
         const ntype& deduced = getType().deduce(rhs); \
+        if(nul(deduced)) return tstr<arithmeticObj>(); \
         nbool normalOrder = getType() == deduced; \
         const arithmeticObj& winner = getType() == deduced ? *this : rhs; \
         const arithmeticObj& loser = getType() == deduced ? rhs : *this; \
