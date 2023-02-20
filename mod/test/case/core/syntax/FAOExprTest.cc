@@ -9,7 +9,6 @@ namespace {
 
 TEST_F(FAOExprTest, simpleAdd) {
     make().parse(R"SRC(
-        a := 5
         b := 2
         main() int
             return a + b
@@ -65,15 +64,13 @@ TEST_F(FAOExprTest, addWithDefAssignReversedNegative) {
 TEST_F(FAOExprTest, addIntAndStrNegative) {
     negative().make().parse(R"SRC(
         a := "hello" + 12
-        main() int
-            return a
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
 
 TEST_F(FAOExprTest, addIntAndStr) {
     make().parse(R"SRC(
-        a := "hello" + 12
+        a := "hello" + 12 as str
         main() int
             return 0
     )SRC").shouldParsed(true);
@@ -128,7 +125,7 @@ TEST_F(FAOExprTest, testStringAddSequence) {
         return age
 
     main() str
-        return Helloworld(4) + "low\n"
+        return Helloworld(4) as str + "low\n"
     )SRC").shouldVerified(true);
 
     namu::str res = run();
@@ -142,7 +139,7 @@ TEST_F(FAOExprTest, testStringAddBoolean) {
         return age
 
     main() str
-        return (Helloworld(false as int) + "low\n" )
+        return (Helloworld(false as int) as str + "low\n" )
     )SRC").shouldParsed(true);
     shouldVerified(true);
 
@@ -160,7 +157,7 @@ TEST_F(FAOExprTest, testStringAddBoolean2) {
         return age
 
     main() str
-        return (Helloworld(false as int) + "low\n" )
+        return (Helloworld(false as int) as str + "low\n" )
     )SRC").shouldParsed(true);
     shouldVerified(true);
 
@@ -327,17 +324,13 @@ TEST_F(FAOExprTest, testUnaryPrefixOpNegative) {
     shouldVerified(false);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOp7) {
-    make().parse(R"SRC(
+TEST_F(FAOExprTest, testUnaryPrefixOpNegative2) {
+    make().negative().parse(R"SRC(
         main() void
             a := "false"
             ++a
     )SRC").shouldParsed(true);
-    shouldVerified(true);
-
-    str res = run();
-    ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "false1");
+    shouldVerified(false);
 }
 
 TEST_F(FAOExprTest, testUnaryPrefixOpNegative3) {

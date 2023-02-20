@@ -12,7 +12,7 @@ TEST_F(forExprTest, simpleTest) {
         main() int
             sum := 0
             for n in {1, 2, 3}
-                sys.con.print("sum=" + sum + ", n=" + n + "\n")
+                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
                 sum = sum + n
             return sum
     )SRC").shouldVerified(true);
@@ -27,7 +27,7 @@ TEST_F(forExprTest, simpleTest2) {
             sum := 0
             for n in {1, 2, 3}
                 sum = sum + n
-                sys.con.print("sum=" + sum + ", n=" + n + "\n")
+                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
             return sum
     )SRC").shouldVerified(true);
     str res = run();
@@ -44,7 +44,7 @@ TEST_F(forExprTest, testWhatFromFunc) {
             sum := 0
             for n in foo()
                 sum = sum + n
-                sys.con.print("sum=" + sum + ", n=" + n + "\n")
+                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
 
             return sum
     )SRC").shouldVerified(true);
@@ -63,7 +63,7 @@ TEST_F(forExprTest, putAkaMiddleOfLoop) {
             for n in foo()
                 sum = sum + n
                 aka sys.con
-                con.print("sum=" + sum + ", n=" + n + "\n")
+                con.print("sum=" + sum as str + ", n=" + n as str + "\n")
 
             return sum
     )SRC").shouldVerified(true);
@@ -78,7 +78,7 @@ TEST_F(forExprTest, sequenceLoop) {
             sum := 0
             for n in 2..5
                 sum = sum + n
-                sys.con.print("sum=" + sum + ", n=" + n + "\n")
+                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
 
             return sum
     )SRC").shouldVerified(true);
@@ -102,7 +102,7 @@ TEST_F(forExprTest, loopObjects) {
             name := "unknown"
             age := 0
             say() str
-                sys.con.print("I'm " + name + " and " + age + " years old.\n")
+                sys.con.print("I'm " + name + " and " + age as str + " years old.\n")
 
         main() str
             p1 person1
@@ -135,7 +135,7 @@ TEST_F(forExprTest, loopObjectsNegative) {
             name := "unknown"
             age := 0
             say() str
-                sys.con.print("I'm " + name + " and " + age + " years old.\n")
+                sys.con.print("I'm " + name + " and " + age as str + " years old.\n")
 
         main() str
             p1 person
@@ -407,7 +407,7 @@ TEST_F(forExprTest, evalOfForLoop) {
             for n in 0..8
                 if sum > 3
                     break "hello"
-                ++sum
+                ++sum as str
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -457,7 +457,7 @@ TEST_F(forExprTest, evalOfForLoopNegative3) {
     )SRC").shouldVerified(false);
 }
 
-TEST_F(forExprTest, evalOfForLoop2) {
+TEST_F(forExprTest, evalOfForLoopNegative4) {
     make().negative().parse(R"SRC(
         def a
             foo() void
@@ -477,7 +477,7 @@ TEST_F(forExprTest, evalOfForLoop2) {
     ASSERT_EQ(res.cast<nint>(), 4);
 }
 
-TEST_F(forExprTest, evalOfForLoop3) {
+TEST_F(forExprTest, evalOfForLoopNegative5) {
     make().negative().parse(R"SRC(
         main() str
             sum := 0
@@ -486,10 +486,37 @@ TEST_F(forExprTest, evalOfForLoop3) {
                     if true
                         break "hello"
                 ++sum
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(forExprTest, evalOfForLoopIntAndBoolIsCompatible) {
+    make().parse(R"SRC(
+        main() int
+            sum := 0
+            answer := for n in 0..8
+                if sum > 11
+                    if true
+                        break false
+                ++sum
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "8");
+    ASSERT_EQ(res.cast<nint>(), 8);
 }
 
+TEST_F(forExprTest, evalOfForLoopIntAndBoolIsCompatible2) {
+    make().parse(R"SRC(
+        main() int
+            sum := 0
+            answer := for n in 0..8
+                if sum > 3
+                    if true
+                        break false
+                ++sum
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 0);
+}

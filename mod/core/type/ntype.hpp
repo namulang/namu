@@ -28,6 +28,9 @@ namespace namu {
         }
         virtual str asImpli(const node& from, const type& to) const;
 
+        /// @return whether this's a custom type.
+        virtual nbool isCustom() const { return false; }
+
         template <typename T>
         nbool is() const {
             return this->is(ttype<T>::get());

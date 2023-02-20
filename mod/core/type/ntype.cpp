@@ -70,35 +70,27 @@ namespace namu {
             {_X(nInt), {
                 {_X(nInt), _X(nInt)},
                 {_X(nFlt), _X(nFlt)}, // if nInt + nFlt ==> nFlt
-                {_X(nStr), _X(nStr)},
                 {_X(nChar), _X(nInt)},
                 {_X(nBool), _X(nInt)}
             }},
             {_X(nFlt), {
                 {_X(nInt), _X(nFlt)},
                 {_X(nFlt), _X(nFlt)},
-                {_X(nStr), _X(nStr)},
                 {_X(nChar), _X(nFlt)},
                 {_X(nBool), _X(nFlt)}
             }},
             {_X(nStr), {
-                {_X(nInt), _X(nStr)},
-                {_X(nFlt), _X(nStr)},
                 {_X(nStr), _X(nStr)},
-                {_X(nChar), _X(nStr)},
-                {_X(nBool), _X(nStr)}
             }},
             {_X(nChar), {
                 {_X(nInt), _X(nInt)},
                 {_X(nFlt), _X(nFlt)},
-                {_X(nStr), _X(nStr)},
                 {_X(nChar), _X(nChar)},
                 {_X(nBool), _X(nChar)}
             }},
             {_X(nBool), {
                 {_X(nInt), _X(nInt)},
                 {_X(nFlt), _X(nFlt)},
-                {_X(nStr), _X(nStr)},
                 {_X(nChar), _X(nInt)},
                 {_X(nBool), _X(nBool)}
             }},
@@ -124,7 +116,7 @@ namespace namu {
         for(int n = minTier; n >= 0 ;n--)
             if(lAncestor[n] == rAncestor[n]) {
                 const ntype& ret = (const ntype&) *lAncestor[n];
-                if(ret.isSuper(ttype<node>::get()))
+                if(!ret.isCustom())
                     break;
                 return ret;
             }
