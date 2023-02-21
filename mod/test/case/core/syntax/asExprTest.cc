@@ -400,4 +400,18 @@ TEST_F(asExprTest, floatAs) {
     ASSERT_EQ(res.cast<nflt>(), 5.0f);
 }
 
+TEST_F(asExprTest, implicitCastBetweenArithmeticTypes) {
+    make().parse(R"SRC(
+        foo(n int) int
+            return n
+        main() int
+            return foo(3.5)
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->getType(), ttype<nInt>::get());
+    ASSERT_EQ(res->cast<nint>(), 3);
+}
+
 // TODO: make a TC for 'as' nonprimitive types
