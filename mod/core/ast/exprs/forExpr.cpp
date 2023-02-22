@@ -36,13 +36,13 @@ namespace namu {
 
                 ret = blk.run();
                 if(_postProcess(fr))
-                    return ret;
+                    return ret->as(getEval());
             }
 
             iter->run("next", args{narr{*new nInt(1)}});
         }
 
-        return ret;
+        return ret->as(getEval());
     }
 
     const node& me::getEval() const {
