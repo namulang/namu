@@ -518,5 +518,6 @@ TEST_F(forExprTest, evalOfForLoopIntAndBoolIsCompatible2) {
 
     str res = run();
     ASSERT_TRUE(res);
+    ASSERT_EQ(res->getType(), ttype<nInt>::get());
     ASSERT_EQ(res.cast<nint>(), 0);
 }
