@@ -27,6 +27,7 @@ namespace namu {
 
         /// @return null if it's not relative between l & r.
         const node& deduce(const node& r) const {
+            if(nul(r)) return nulOf<node>();
             const ntype& ltype = getType();
             const ntype& rtype = r.getType();
             const ntype& res = ltype.deduce(rtype);

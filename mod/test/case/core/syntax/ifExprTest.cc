@@ -184,22 +184,18 @@ TEST_F(ifExprTest, evalIfWithStrAndIntNegative) {
     )SRC").shouldVerified(false);
 }
 
-TEST_F(ifExprTest, evalIfWithStrAndInt2) {
-    make().parse(R"SRC(
+TEST_F(ifExprTest, evalIfWithStrAndIntNegative2) {
+    make().negative().parse(R"SRC(
         main() str
             if 23 == 23.0
                 "hello"
             else
                 22
-    )SRC").shouldVerified(true);
-
-    str res = run();
-    ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "hello");
+    )SRC").shouldVerified(false);
 }
 
-TEST_F(ifExprTest, evalIfWithStrAndInt3) {
-    make().parse(R"SRC(
+TEST_F(ifExprTest, evalIfWithStrAndIntNegative3) {
+    make().negative().parse(R"SRC(
         main() str
             a := if 23 == 23.0
                 if true
@@ -209,9 +205,5 @@ TEST_F(ifExprTest, evalIfWithStrAndInt3) {
             else
                 ret 22
             return a
-    )SRC").shouldVerified(true);
-
-    str res = run();
-    ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "hello");
+    )SRC").shouldVerified(false);
 }

@@ -26,6 +26,7 @@ namespace namu {
 
     const node& me::getEval() const {
         const node& thenEval = _thenBlk->getEval();
+        if(nul(thenEval)) return nulOf<node>();
         if(!_elseBlk)
             return thenEval;
 
