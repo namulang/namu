@@ -15,7 +15,7 @@ TEST_F(whileExprTest, simple) {
             while n <= 3
                 sum = sum + n
                 n = n + 1
-                sys.con.print("sum=" + sum + ", n=" + n + "\n")
+                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
             return sum
     )SRC").shouldVerified(true);
     str res = run();
@@ -31,7 +31,7 @@ TEST_F(whileExprTest, conditionClauseCheckNegative) {
             while n <= foo()
                 sum = sum + n
                 n = n + 1
-                sys.con.print("sum=" + sum + ", n=" + n + "\n")
+                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
             return sum
     )SRC").shouldVerified(false);
 }
@@ -47,7 +47,7 @@ TEST_F(whileExprTest, conditionClauseCheck) {
             while n <= foo()
                 sum = sum + n
                 n = n + 1
-                sys.con.print("sum=" + sum + ", n=" + n + "\n")
+                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
             return sum
     )SRC").shouldVerified(true);
 
@@ -108,18 +108,18 @@ TEST_F(whileExprTest, breakNestedForLoop) {
 
 TEST_F(whileExprTest, evalOfForLoop) {
     make().parse(R"SRC(
-        main() str
+        main() int
             sum := 0
             n := 0
-            while ++n < 8
+            while ++n < 8 // bool vs int -> int wins. so evaluated to nint type.
                 if sum > 3
-                    break "hello"
+                    break false
                 ++sum
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "hello");
+    ASSERT_EQ(res.cast<nint>(), 0);
 }
 
 TEST_F(whileExprTest, evalOfForLoopNegative) {
