@@ -343,20 +343,20 @@ TEST_F(arrTest, testIteratorBridgedFunc) {
 
 TEST_F(arrTest, testBasicDefSyntax) {
     make().parse(R"SRC(
-getIndex() int
-    return 1
+        getIndex() int
+            return 1
 
-main() int
-    arr int[]
-    aka sys.con c
-    c.print("len=" + arr.len())
-    arr.add(1)
-    arr.add(2.5)
-    c.print("len=" + arr.len() + "\n")
-    c.print("arr[0]=" + arr.get(0) + "\n")
-    c.print("arr[1]=" + arr[1] + "\n")
-    return arr[
-        getIndex()]
+        main() int
+            arr int[]
+            aka sys.con c
+            c.print("len=" + arr.len())
+            arr.add(1)
+            arr.add(2.5)
+            c.print("len=" + arr.len() + "\n")
+            c.print("arr[0]=" + arr.get(0) + "\n")
+            c.print("arr[1]=" + arr[1] + "\n")
+            return arr[
+                getIndex()]
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -365,13 +365,13 @@ main() int
 
 TEST_F(arrTest, testImplicitlyDefSyntax) {
     make().parse(R"SRC(
-    sum(arr int[]) int
-        return arr[0] + arr[1] + arr[2]
+        sum(arr int[]) int
+            return arr[0] + arr[1] + arr[2]
 
-    main() int
-        s := sum({1, 2, 3})
-        sys.con.print("sum = " + s + "\n")
-        return s
+        main() int
+            s := sum({1, 2, 3})
+            sys.con.print("sum = " + s + "\n")
+            return s
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -380,13 +380,13 @@ TEST_F(arrTest, testImplicitlyDefSyntax) {
 
 TEST_F(arrTest, testImplicitlyDefSyntax2) {
     make().parse(R"SRC(
-    sum(arr flt[]) flt
-        return arr[0] + arr[2]
+        sum(arr flt[]) flt
+            return arr[0] + arr[2]
 
-    main() int
-        g := {1.5, 3, 5.5}
-        s := sum(g)
-        return s as int
+        main() int
+            g := {1.5, 3, 5.5}
+            s := sum(g)
+            return s as int
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -395,63 +395,63 @@ TEST_F(arrTest, testImplicitlyDefSyntax2) {
 
 TEST_F(arrTest, arrDeductionFailNegative) {
     make().negative().parse(R"SRC(
-    def obj
-        name := "kniz"
+        def obj
+            name := "kniz"
 
-    main() void
-        arr := {1, 2.5, obj()}
-        sys.con.print(arr.len())
+        main() void
+            arr := {1, 2.5, obj()}
+            sys.con.print(arr.len())
     )SRC").shouldVerified(false);
 }
 
 TEST_F(arrTest, arrDeductionFailNegative2) {
     make().negative().parse(R"SRC(
-    def obj
-        name := "kniz"
+        def obj
+            name := "kniz"
 
-    main() void
-        arr := {1, 2.5, obj()}
+        main() void
+            arr := {1, 2.5, obj()}
     )SRC").shouldVerified(false);
 }
 
 TEST_F(arrTest, arrDeductionFailNegative3) {
     make().negative().parse(R"SRC(
-    def obj
-        name := "kniz"
+        def obj
+            name := "kniz"
 
-    main() void
-        arr := {1, 2.5, obj()}
-        sys.con.print(arr[0].name)
+        main() void
+            arr := {1, 2.5, obj()}
+            sys.con.print(arr[0].name)
     )SRC").shouldVerified(false);
 }
 
 TEST_F(arrTest, arrDeductionFailNegative4) {
     make().negative().parse(R"SRC(
-    def obj
-        name := "kniz"
-    def obj2
-        name := "kniz"
-    main() void
-        arr := {obj(), obj2()}
+        def obj
+            name := "kniz"
+        def obj2
+            name := "kniz"
+        main() void
+            arr := {obj(), obj2()}
     )SRC").shouldVerified(false);
 }
 
 TEST_F(arrTest, addFromEmptyArray) {
     make().parse(R"SRC(
-    def person
-        value str
-    main() str
-        arr person[]
-        for n in 1..20
-            elem := person()
-            elem.value = n as str
-            arr.add(elem)
+        def person
+            value str
+        main() str
+            arr person[]
+            for n in 1..20
+                elem := person()
+                elem.value = n as str
+                arr.add(elem)
 
-        aka sys.con c
-        c.print("start...")
-        res := ""
-        for elem in arr
-            res = res + elem.value
-        ret res
+            aka sys.con c
+            c.print("start...")
+            res := ""
+            for elem in arr
+                res = res + elem.value
+            ret res
     )SRC").shouldVerified(true);
 }

@@ -67,8 +67,8 @@ TEST_F(seqTest, basicSyntax) {
     make().parse(R"SRC(
     main() int
         seq := 2..4 // [2, 4)
-        sys.con.print("seq.len=" + seq.len() + "\n")
-        sys.con.print("seq[1]=" + seq[1] + "\n")
+        sys.con.print("seq.len=" + seq.len() as str + "\n")
+        sys.con.print("seq[1]=" + seq[1] as str + "\n")
         return seq[2]
     )SRC").shouldVerified(true);
     str res = run();
