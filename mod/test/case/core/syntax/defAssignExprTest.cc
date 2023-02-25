@@ -81,7 +81,7 @@ TEST_F(defAssignExprTest, testDefAssign1) {
         a := foo() + 5
 
         main() int
-            sys.con.print("a=" + a)
+            sys.con.print("a=" + a as str)
             return 0
     )SRC").shouldVerified(true);
     run();

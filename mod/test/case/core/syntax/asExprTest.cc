@@ -366,8 +366,7 @@ TEST_F(asExprTest, deduceTest1) {
     ASSERT_EQ(*res, ttype<nInt>::get());
 
     res = &it.deduce<nStr>();
-    ASSERT_FALSE(nul(res));
-    ASSERT_EQ(*res, ttype<nStr>::get());
+    ASSERT_TRUE(nul(res));
 }
 
 TEST_F(asExprTest, doubleAs) {

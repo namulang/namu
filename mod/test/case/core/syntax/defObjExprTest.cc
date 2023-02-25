@@ -70,7 +70,7 @@ TEST_F(defObjExprTest, make2Objects) {
             o2.name = "kniz"
             o2.age = 22
 
-            return o1.name + o2.name + o1.age + o2.age
+            return o1.name + o2.name + o1.age as str + o2.age as str
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -92,7 +92,7 @@ TEST_F(defObjExprTest, manipulate2Origin) {
             o2.name = "kniz"
             o2.age = 22
 
-            return o1.name + o2.name + o1.age + o2.age
+            return o1.name + o2.name + o1.age as str + o2.age as str
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
