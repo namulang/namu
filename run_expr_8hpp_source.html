@@ -91,12 +91,12 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classnamu_1_1run_expr.html#a744541a1950cd9ea0778303ca12724b2">   20</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1run_expr.html#a744541a1950cd9ea0778303ca12724b2">getEval</a>() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>&amp; getMe();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getMe() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">void</span> setMe(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; newMe);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getMe() const NAMU_UNCONST_FUNC(getMe())</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">void</span> setMe(const <a class="code" href="classnamu_1_1node.html">node</a>&amp; newMe);</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>&amp; getSubject();</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getSubject() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> setSubject(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; new1) { _subject.bind(new1); }</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        const <a class="code" href="classnamu_1_1node.html">node</a>&amp; getSubject() const;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> setSubject(const <a class="code" href="classnamu_1_1node.html">node</a>&amp; new1) { _subject.bind(new1); }</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classnamu_1_1args.html">args</a>&amp; getArgs();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; getArgs() <span class="keyword">const</span>;</div>
