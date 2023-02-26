@@ -7,7 +7,7 @@ struct starterTest : public namuSyntaxTest {};
 TEST_F(starterTest, simpleStarter) {
     make().parse(R"SRC(
         main() void
-            return
+            ret
     )SRC");
     shouldVerified(true);
 
@@ -19,7 +19,7 @@ TEST_F(starterTest, simpleStarter) {
 TEST_F(starterTest, mainReturnInt) {
     make().parse(R"SRC(
         main() int
-            return 23
+            ret 23
     )SRC").shouldVerified(true);
 
     starter s;
@@ -31,9 +31,9 @@ TEST_F(starterTest, mainReturnInt) {
 TEST_F(starterTest, mainCallFuncAndCheckReturn) {
     make().parse(R"SRC(
         foo() int
-            return 23
+            ret 23
         main() int
-            return foo()
+            ret foo()
     )SRC").shouldVerified(true);
 
     starter s;

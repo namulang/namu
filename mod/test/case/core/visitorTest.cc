@@ -63,7 +63,7 @@ TEST_F(visitorTest, visitComplexExpressions) {
         main() flt
             o := obj()
             sys.con.print(o.foo() as str)
-            return o.foo() as flt
+            ret o.foo() as flt
     )SRC").shouldVerified(true);
 
     node& root = getSubPack();
@@ -105,13 +105,13 @@ TEST_F(visitorTest, visitComplexExpressions2Negative) {
     make().negative().parse(R"SRC(
         def obj
             foo(a int) flt
-                return 5.0 + a
+                ret 5.0 + a
 
         main() flt
             o := obj()
             res := o.foo() as flt
             res = res * 2
-            return res
+            ret res
     )SRC").shouldVerified(false);
 }
 
@@ -119,13 +119,13 @@ TEST_F(visitorTest, visitComplexExpressions2) {
     make().parse(R"SRC(
         def obj
             foo(a int) flt
-                return 5.0 + a
+                ret 5.0 + a
 
         main() flt
             o := obj()
             res := o.foo(5) as flt
             res = res * 2
-            return res
+            ret res
     )SRC").shouldVerified(true);
 
     node& root = getSubPack();

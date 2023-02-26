@@ -11,7 +11,7 @@ TEST_F(FAOExprTest, simpleAdd) {
     make().parse(R"SRC(
         b := 2
         main() int
-            return a + b
+            ret a + b
     )SRC").shouldVerified(true);
 
     nInt& a = getSubPack().sub<nInt>("a");
@@ -32,7 +32,7 @@ TEST_F(FAOExprTest, addWithDefAssign) {
         a := 5
         b := a + 2
         main() int
-            return a + b
+            ret a + b
     )SRC").shouldVerified(true);
 
     nInt& a = getSubPack().sub<nInt>("a");
@@ -51,7 +51,7 @@ TEST_F(FAOExprTest, addWithDefAssignReversedNegative) {
         b := a + 2
         a := 5
         main() int
-            return a + b
+            ret a + b
     )SRC").shouldVerified(false);
 
     nInt& a = getSubPack().sub<nInt>("a");
@@ -72,7 +72,7 @@ TEST_F(FAOExprTest, addIntAndStr) {
     make().parse(R"SRC(
         a := "hello" + 12 as str
         main() int
-            return 0
+            ret 0
     )SRC").shouldParsed(true);
     shouldVerified(true);
 
@@ -86,7 +86,7 @@ TEST_F(FAOExprTest, simpleSub) {
         a := 5
         b := 2
         main() int
-            return a - b
+            ret a - b
     )SRC").shouldVerified(true);
 
     nInt& a = getSubPack().sub<nInt>("a");
@@ -105,7 +105,7 @@ TEST_F(FAOExprTest, modWithDefAssign) {
         a := 10
         b := a / 2
         main() int
-            return a * b % 7
+            ret a * b % 7
     )SRC").shouldVerified(true);
 
     nInt& a = getSubPack().sub<nInt>("a");
@@ -122,10 +122,10 @@ TEST_F(FAOExprTest, modWithDefAssign) {
 TEST_F(FAOExprTest, testStringAddSequence) {
     make().parse(R"SRC(
     Helloworld(age int) int
-        return age
+        ret age
 
     main() str
-        return Helloworld(4) as str + "low\n"
+        ret Helloworld(4) as str + "low\n"
     )SRC").shouldVerified(true);
 
     namu::str res = run();
@@ -136,10 +136,10 @@ TEST_F(FAOExprTest, testStringAddSequence) {
 TEST_F(FAOExprTest, testStringAddBoolean) {
     make().parse(R"SRC(
     Helloworld(age int) int
-        return age
+        ret age
 
     main() str
-        return (Helloworld(false as int) as str + "low\n" )
+        ret (Helloworld(false as int) as str + "low\n" )
     )SRC").shouldParsed(true);
     shouldVerified(true);
 
@@ -154,10 +154,10 @@ TEST_F(FAOExprTest, testStringAddBoolean) {
 TEST_F(FAOExprTest, testStringAddBoolean2) {
     make().parse(R"SRC(
     Helloworld(age int) int
-        return age
+        ret age
 
     main() str
-        return (Helloworld(false as int) as str + "low\n" )
+        ret (Helloworld(false as int) as str + "low\n" )
     )SRC").shouldParsed(true);
     shouldVerified(true);
 

@@ -171,7 +171,7 @@ TEST_F(defFuncTest, wrongParamNegative) {
 TEST_F(defFuncTest, nameLikeStr) {
     make().parse(R"SRC(
         main(str_ str) str
-            return "wow"
+            ret "wow"
     )SRC").shouldParsed(true);
     shouldVerified(true);
 }

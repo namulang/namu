@@ -97,9 +97,9 @@ namespace namu {
             stmt.accept(visitInfo {"", &b, n++, len, i.depth+1}, *this);
     }
 
-    void me::onTraverse(visitInfo i, returnExpr& b) {
+    void me::onTraverse(visitInfo i, retExpr& b) {
         if(_isLog)
-            NAMU_DI("returnExpr[%s]::onTraverse", i.name.c_str());
+            NAMU_DI("retExpr[%s]::onTraverse", i.name.c_str());
 
         int n = 0;
         node& ret = b.getRet();

@@ -21,7 +21,7 @@ namespace namu {
         friend class defAssignExpr;
         friend class assignExpr;
         friend class verifier;
-        friend class returnExpr;
+        friend class retExpr;
         friend class runExpr;
         friend class func; // for frames.
         friend class forExpr;

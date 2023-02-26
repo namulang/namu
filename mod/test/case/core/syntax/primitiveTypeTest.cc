@@ -11,7 +11,7 @@ TEST_F(primitiveTypeTest, strFuncLen) {
     make().parse(R"SRC(
         main() int
             word := "hello"
-            return word.len()
+            ret word.len()
     )SRC").shouldVerified(true);
 
     str res = run();

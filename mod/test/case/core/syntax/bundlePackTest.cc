@@ -27,12 +27,12 @@ TEST_F(bundlePackTest, defaultDef2) {
 TEST_F(bundlePackTest, withAsNegative) {
     negative().make().parse(R"SRC(
         Helloworld(age int) int
-            return age
+            ret age
 
         main() int
             a := Helloworld('g')
             sys.con.print(a as str)
-            return 0
+            ret 0
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -40,12 +40,12 @@ TEST_F(bundlePackTest, withAsNegative) {
 TEST_F(bundlePackTest, withAs) {
     make().parse(R"SRC(
         Helloworld(age int) int
-            return age
+            ret age
 
         main() int
             a := Helloworld('g' as int)
             sys.con.print(a as str)
-            return 0
+            ret 0
     )SRC").shouldVerified(true);
     run();
 }
@@ -60,7 +60,7 @@ TEST_F(bundlePackTest, defaultDef3) {
             ge = age + 3985
             sys.con.print(age as str + " \n")
             sys.con.print(ge as str)
-            return ge
+            ret ge
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);

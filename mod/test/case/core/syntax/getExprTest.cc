@@ -23,7 +23,7 @@ TEST_F(getExprTest, getSymbolOnPackScope1) {
     make().parse(R"SRC(
         age int
         main() int
-            return 0
+            ret 0
     )SRC").shouldVerified(true);
     scope& shares = (scope&) (((scopes&) getSlot().subs()).getNext().getContainer());
     ASSERT_FALSE(nul(shares));
@@ -35,7 +35,7 @@ TEST_F(getExprTest, getSymbolOnPackScope2) {
     make().parse(R"SRC(
         age int
         main() int
-            return age
+            ret age
     )SRC").shouldVerified(true);
     scope& shares = (scope&) (((scopes&) getSlot().subs()).getNext().getContainer());
     ASSERT_FALSE(nul(shares));
@@ -51,7 +51,7 @@ TEST_F(getExprTest, getSymbolOnPackScope3) {
     make().parse(R"SRC(
         age str
         main() int
-            return age
+            ret age
     )SRC").shouldParsed(true);
     shouldVerified(false);
     scope& shares = (scope&) (((scopes&) getSlot().subs()).getNext().getContainer());
@@ -68,7 +68,7 @@ TEST_F(getExprTest, getInvalidVariableNegative) {
     negative().make().parse(R"SRC(
         age str
         main() str
-            return age1
+            ret age1
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }

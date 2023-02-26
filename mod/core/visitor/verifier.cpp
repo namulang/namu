@@ -281,18 +281,18 @@ namespace namu {
                 me.getType().getName().c_str());
     }
 
-    void me::onVisit(visitInfo i, returnExpr& me) {
-        NAMU_DI("verify: returnExpr: checks evalType of func is matched to me");
+    void me::onVisit(visitInfo i, retExpr& me) {
+        NAMU_DI("verify: retExpr: checks evalType of func is matched to me");
         const func& f = thread::get().getNowFrame().getFunc();
         if(nul(f)) return _srcErr(me.getPos(), errCode::NO_FUNC_INFO);
 
         const node& myEval = me.getEval();
         if(nul(myEval)) return _srcErr(me.getPos(), errCode::EXPR_EVAL_NULL);
-        NAMU_DI("verify: returnExpr: myEval=%s", myEval.getType().getName().c_str());
+        NAMU_DI("verify: retExpr: myEval=%s", myEval.getType().getName().c_str());
         const ntype& myType = myEval.getType();
         str retType = f.getRet().as<node>();
         const type& fType = retType->getType();
-        NAMU_DI("verify: returnExpr: checks return[%s] == func[%s]", myType.getName().c_str(),
+        NAMU_DI("verify: retExpr: checks return[%s] == func[%s]", myType.getName().c_str(),
             fType.getName().c_str());
 
         if(!myType.isImpli(fType))
@@ -367,8 +367,7 @@ namespace namu {
         NAMU_DI("verify: mgdFunc: last stmt[%s] should matches to return type[%s]",
                 lastStmt.getType().getName().c_str(), retType.getName().c_str());
 
-        if(!(lastStmt.isSub<returnExpr>() || lastStmt.isSub<retExpr>()) &&
-            retType == ttype<nVoid>::get()) {
+        if(!lastStmt.isSub<retExpr>() && retType == ttype<nVoid>::get()) {
             NAMU_DI("verify: mgdFunc: implicit return won't verify when retType is void.");
             return;
         }

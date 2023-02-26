@@ -12,7 +12,7 @@ TEST_F(commentTest, singleLineComment) {
     make().parse(R"SRC(
         age int // age is age
         main() int // main is also a main
-            return 0
+            ret 0
     )SRC").shouldVerified(true);
 
     scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
@@ -29,7 +29,7 @@ TEST_F(commentTest, multiLineComment) {
         age int /* age is age
         main() int */
         main() flt
-            return 2.5
+            ret 2.5
     )SRC").shouldVerified(true);
     scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
     scope& shares = (scope&) (((scopes&) getSubPack().subs()).getNext().getContainer());
@@ -46,7 +46,7 @@ TEST_F(commentTest, multiLineComment2) {
         main() int
  sdfas   */int
         main() void
-            return
+            ret
     )SRC").shouldVerified(true);
     scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
     scope& shares = (scope&) (((scopes&) getSubPack().subs()).getNext().getContainer());
@@ -62,11 +62,11 @@ TEST_F(commentTest, multiLineComment3) {
         age int /* age is age
         main() int
  sdfas*/main() int
-            return 33
+            ret 33
     )SRC").shouldParsed(false);
 /* above case is same to,
  *
  *      age int main() bool
- *          return false
+ *          ret false
  */
 }

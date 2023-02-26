@@ -372,11 +372,11 @@ TEST_F(asExprTest, deduceTest1) {
 TEST_F(asExprTest, doubleAs) {
     make().parse(R"SRC(
         foo(idx int) int
-           return idx
+           ret idx
 
         main() int
             sys.con.print(foo("54634" as int) as str)
-            return 0
+            ret 0
     )SRC").shouldVerified(true);
     str ret = run();
     ASSERT_TRUE(ret);
@@ -392,7 +392,7 @@ TEST_F(asExprTest, floatAs) {
         main() flt
             o := obj()
             sys.con.print(o.foo() as str)
-            return o.foo() as flt
+            ret o.foo() as flt
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -402,9 +402,9 @@ TEST_F(asExprTest, floatAs) {
 TEST_F(asExprTest, implicitCastBetweenArithmeticTypes) {
     make().parse(R"SRC(
         foo(n int) int
-            return n
+            ret n
         main() int
-            return foo(3.5)
+            ret foo(3.5)
     )SRC").shouldVerified(true);
 
     str res = run();

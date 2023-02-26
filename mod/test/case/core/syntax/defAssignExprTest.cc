@@ -13,7 +13,7 @@ TEST_F(defAssignExprTest, simpleGlobalDefAssign) {
         age int // age is age
         main() int // main is also a main
             age := 5
-            return 0
+            ret 0
     )SRC").shouldVerified(true);
     scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
     scope& shares = (scope&) (((scopes&) getSlot().subs()).getNext().getContainer());
@@ -34,7 +34,7 @@ TEST_F(defAssignExprTest, simpleLocalDefAssign) {
             age = 3
             age := 5
             age = 2
-            return 0
+            ret 0
     )SRC").shouldVerified(true);
     run();
     ASSERT_EQ(getSubPack().sub("age").cast<int>(), 3);
@@ -49,7 +49,7 @@ TEST_F(defAssignExprTest, testCircularDependencies) {
         c := b // type can't be defined.
 
         main() int
-            return 0
+            ret 0
     )SRC").shouldParsed(true);
     shouldVerified(false);
     // however when runs it, it throws an error.
@@ -66,7 +66,7 @@ TEST_F(defAssignExprTest, testNearCircularDependencies) {
         main() int
             sys.con.print(a as str)
             sys.con.print(b as str)
-            return 0
+            ret 0
     )SRC").shouldParsed(true);
     shouldVerified(true);
     // however when runs it, it throws an error.
@@ -76,13 +76,13 @@ TEST_F(defAssignExprTest, testNearCircularDependencies) {
 TEST_F(defAssignExprTest, testDefAssign1) {
     make().parse(R"SRC(
         foo() int
-            return a = 2
+            ret a = 2
 
         a := foo() + 5
 
         main() int
             sys.con.print("a=" + a as str)
-            return 0
+            ret 0
     )SRC").shouldVerified(true);
     run();
 }
@@ -94,7 +94,7 @@ TEST_F(defAssignExprTest, defAssignInObjectRefersInvalidFuncNegative) {
 
         foo() str
             c.print("I'm foo!\n")
-            return 1 // this is invalid function.
+            ret 1 // this is invalid function.
 
         main() void
             c.print("your nickname is " + nickname)
@@ -109,7 +109,7 @@ TEST_F(defAssignExprTest, defAssignInObjectRefersInvalidFuncNegative2) {
 
         foo() str
             c.print("I'm foo!\n")
-            return 1 // this is invalid function.
+            ret 1 // this is invalid function.
 
         main() void
             c.print("your nickname is " + nickname)
@@ -154,7 +154,7 @@ TEST_F(defAssignExprTest, defAssignAsParameterNegative) {
     make().negative().parse(R"SRC(
         def f
             foo(a int, b int) int
-                return a + b
+                ret a + b
 
         main() void
             f1 f
@@ -167,7 +167,7 @@ TEST_F(defAssignExprTest, defAssignAsParameterNegative2) {
     make().negative().parse(R"SRC(
         def f
             foo(a int, b int) int
-                return a + b
+                ret a + b
 
         main() void
             f1 f
@@ -180,7 +180,7 @@ TEST_F(defAssignExprTest, defAssignAsParameterNegative3) {
     make().negative().parse(R"SRC(
         def f
             foo(a int, b int) int
-                return a + b
+                ret a + b
 
         main() int
             f1 f
@@ -193,7 +193,7 @@ TEST_F(defAssignExprTest, defAssignAsParameter) {
     make().parse(R"SRC(
         def f
             foo(a int, b int) int
-                return a + b
+                ret a + b
 
         main() int
             f1 f

@@ -21,9 +21,9 @@ TEST_F(ifExprTest, simpleIfTest) {
     make().parse(R"SRC(
         main() int
             if true
-                return 11
+                ret 11
             else
-                return 22
+                ret 22
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -38,7 +38,7 @@ TEST_F(ifExprTest, simpleIfAssignTest) {
             else
                 22
             )
-            return age
+            ret age
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -52,7 +52,7 @@ TEST_F(ifExprTest, simpleIfAssignWithoutParenthesisTest) {
                 11
             else
                 22
-            return age
+            ret age
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -62,7 +62,7 @@ TEST_F(ifExprTest, simpleIfAssignWithoutParenthesisTest) {
 TEST_F(ifExprTest, simpleReturnIfWithoutParenthesisTest) {
     make().parse(R"SRC(
         main() int
-            return if true
+            ret if true
                 11
             else
                 22
@@ -75,7 +75,7 @@ TEST_F(ifExprTest, simpleReturnIfWithoutParenthesisTest) {
 TEST_F(ifExprTest, simpleReturnDefAssignWithoutParenthesisTest) {
     make().parse(R"SRC(
         main() int
-            return a := if true
+            ret a := if true
                 11
             else
                 22
@@ -108,7 +108,7 @@ TEST_F(ifExprTest, NestIfTestNegative) {
 TEST_F(ifExprTest, ifAsArgument) {
     make().parse(R"SRC(
         abc(val int, val2 int) int
-            return val + val2
+            ret val + val2
 
         main() int
             abc(if false
@@ -199,11 +199,11 @@ TEST_F(ifExprTest, evalIfWithStrAndIntNegative3) {
         main() str
             a := if 23 == 23.0
                 if true
-                    ret false
+                    false
                 else
-                    ret "hello"
+                    "hello"
             else
-                ret 22
-            return a
+                22
+            ret a
     )SRC").shouldVerified(false);
 }

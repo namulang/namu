@@ -35,7 +35,7 @@ TEST_F(parserTest, testHelloWorld) {
 TEST_F(parserTest, slotNoOnTray) {
     make().parse(R"SRC(
         main() void
-            return
+            ret
     )SRC");
     shouldVerified(true);
 
@@ -57,7 +57,7 @@ TEST_F(parserTest, slotNoOnTrayWithoutMake) {
     //  but it should works too.
     parse(R"SRC(
         main() void
-            return
+            ret
     )SRC");
     shouldVerified(true);
 
@@ -75,7 +75,7 @@ TEST_F(parserTest, slotNotSpecifiedButCodeSpecifyPackNegative) {
     negative().make().parse(R"SRC(
         pack demo
         main() void
-            return
+            ret
     )SRC").shouldParsed(false);
 }
 
@@ -85,7 +85,7 @@ TEST_F(parserTest, slotProperlySpecified) {
     make("demo").parse(R"SRC(
         pack demo
         main() void
-            return
+            ret
     )SRC").shouldParsed(true);
     shouldVerified(true);
 }

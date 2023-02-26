@@ -14,7 +14,7 @@ TEST_F(forExprTest, simpleTest) {
             for n in {1, 2, 3}
                 sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
                 sum = sum + n
-            return sum
+            ret sum
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -28,7 +28,7 @@ TEST_F(forExprTest, simpleTest2) {
             for n in {1, 2, 3}
                 sum = sum + n
                 sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
-            return sum
+            ret sum
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -38,7 +38,7 @@ TEST_F(forExprTest, simpleTest2) {
 TEST_F(forExprTest, testWhatFromFunc) {
     make().parse(R"SRC(
         foo() int[]
-            return {1, 2, 3}
+            ret {1, 2, 3}
 
         main() int
             sum := 0
@@ -46,7 +46,7 @@ TEST_F(forExprTest, testWhatFromFunc) {
                 sum = sum + n
                 sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
 
-            return sum
+            ret sum
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -56,7 +56,7 @@ TEST_F(forExprTest, testWhatFromFunc) {
 TEST_F(forExprTest, putAkaMiddleOfLoop) {
     make().parse(R"SRC(
         foo() int[]
-            return {1, 2, 3}
+            ret {1, 2, 3}
 
         main() int
             sum := 0
@@ -65,7 +65,7 @@ TEST_F(forExprTest, putAkaMiddleOfLoop) {
                 aka sys.con
                 con.print("sum=" + sum as str + ", n=" + n as str + "\n")
 
-            return sum
+            ret sum
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -80,7 +80,7 @@ TEST_F(forExprTest, sequenceLoop) {
                 sum = sum + n
                 sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
 
-            return sum
+            ret sum
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -118,7 +118,7 @@ TEST_F(forExprTest, loopObjects) {
             sum := ""
             for p in {p1, p2, p3}
                 sum = sum + p.say()
-            return sum
+            ret sum
     )SRC").shouldVerified(true);
     /*str ret = run();
     ASSERT_TRUE(ret);
@@ -153,7 +153,7 @@ TEST_F(forExprTest, loopObjectsNegative) {
             sum := ""
             for p in {p1, p2, p3}
                 sum = sum + p.say1()
-            return sum
+            ret sum
     )SRC").shouldVerified(false);
 }
 
@@ -183,8 +183,8 @@ TEST_F(forExprTest, returnMiddleOfLoop) {
             p1.name = "Chales"
 
             for p in {p1, person()}
-                return p.name
-            return ""
+                ret p.name
+            ret ""
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -201,9 +201,9 @@ TEST_F(forExprTest, returnMiddleOfLoop1) {
             p1.name = "Chales"
 
             res := (for p in {p1, person()}
-                return p1.name
+                ret p1.name
             )
-            return res + " Lee"
+            ret res + " Lee"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -220,8 +220,8 @@ TEST_F(forExprTest, returnMiddleOfLoop1WithoutParenthesis) {
             p1.name = "Chales"
 
             res := for p in {p1, person()}
-                return p1.name
-            return res + " Lee"
+                ret p1.name
+            ret res + " Lee"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -238,9 +238,9 @@ TEST_F(forExprTest, retMiddleOfLoop) {
             p1.name = "Chales"
 
             res := (for p in {p1, person()}
-                ret p1.name
+                p1.name
             )
-            return res + " Lee"
+            ret res + " Lee"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -257,8 +257,8 @@ TEST_F(forExprTest, retMiddleOfLoopWithoutParenthesis) {
             p1.name = "Chales"
 
             res := for p in {p1, person()}
-                ret p1.name
-            return res + " Lee"
+                p1.name
+            ret res + " Lee"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -276,9 +276,9 @@ TEST_F(forExprTest, retMiddleOfLoopNegative) {
 
             res := 0
             res = (for p in {p1, person()}
-                ret p1.name
+                p1.name
             )
-            return res
+            ret res
     )SRC").shouldVerified(false);
 }
 
@@ -294,7 +294,7 @@ TEST_F(forExprTest, evalForExprWithoutRet) {
             res := (for p in {p1, person()}
                 p.name
             )
-            return res
+            ret res
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -307,7 +307,7 @@ TEST_F(forExprTest, simpleBreakTest) {
             res := (for n in 1..10
                 break 5
             )
-            return res
+            ret res
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -319,7 +319,7 @@ TEST_F(forExprTest, simpleBreakTestWithoutParenthesis) {
         main() int
             res := for n in 1..10
                 break 5
-            return res
+            ret res
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -329,7 +329,7 @@ TEST_F(forExprTest, simpleBreakTestWithoutParenthesis) {
 TEST_F(forExprTest, retForExpr) {
     make().parse(R"SRC(
         main() int
-            ret for n in 1..10
+            for n in 1..10
                 if true
                     5
                 else
@@ -430,7 +430,7 @@ TEST_F(forExprTest, evalOfForLoopNegative2) {
     make().negative().parse(R"SRC(
         def a
             foo() void
-                return
+                ret
 
         main() int
             sum := 0
@@ -445,7 +445,7 @@ TEST_F(forExprTest, evalOfForLoopNegative3) {
     make().negative().parse(R"SRC(
         def a
             foo() void
-                return
+                ret
 
         main() int
             sum := 0
@@ -461,7 +461,7 @@ TEST_F(forExprTest, evalOfForLoopNegative4) {
     make().negative().parse(R"SRC(
         def a
             foo() void
-                return
+                ret
 
         main() int
             sum := 0

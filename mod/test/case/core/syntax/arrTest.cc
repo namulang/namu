@@ -344,7 +344,7 @@ TEST_F(arrTest, testIteratorBridgedFunc) {
 TEST_F(arrTest, testBasicDefSyntax) {
     make().parse(R"SRC(
         getIndex() int
-            return 1
+            ret 1
 
         main() int
             arr int[]
@@ -355,7 +355,7 @@ TEST_F(arrTest, testBasicDefSyntax) {
             c.print("len=" + arr.len() + "\n")
             c.print("arr[0]=" + arr.get(0) + "\n")
             c.print("arr[1]=" + arr[1] + "\n")
-            return arr[
+            ret arr[
                 getIndex()]
     )SRC").shouldVerified(true);
     str res = run();
@@ -366,12 +366,12 @@ TEST_F(arrTest, testBasicDefSyntax) {
 TEST_F(arrTest, testImplicitlyDefSyntax) {
     make().parse(R"SRC(
         sum(arr int[]) int
-            return arr[0] + arr[1] + arr[2]
+            ret arr[0] + arr[1] + arr[2]
 
         main() int
             s := sum({1, 2, 3})
             sys.con.print("sum = " + s + "\n")
-            return s
+            ret s
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -381,12 +381,12 @@ TEST_F(arrTest, testImplicitlyDefSyntax) {
 TEST_F(arrTest, testImplicitlyDefSyntax2) {
     make().parse(R"SRC(
         sum(arr flt[]) flt
-            return arr[0] + arr[2]
+            ret arr[0] + arr[2]
 
         main() int
             g := {1.5, 3, 5.5}
             s := sum(g)
-            return s as int
+            ret s as int
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -452,6 +452,6 @@ TEST_F(arrTest, addFromEmptyArray) {
             res := ""
             for elem in arr
                 res = res + elem.value
-            ret res
+            res
     )SRC").shouldVerified(true);
 }
