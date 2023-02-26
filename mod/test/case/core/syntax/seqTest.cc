@@ -69,7 +69,7 @@ TEST_F(seqTest, basicSyntax) {
         seq := 2..4 // [2, 4)
         sys.con.print("seq.len=" + seq.len() as str + "\n")
         sys.con.print("seq[1]=" + seq[1] as str + "\n")
-        return seq[2]
+        ret seq[2]
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -80,7 +80,7 @@ TEST_F(seqTest, addSeqElement) {
     make().parse(R"SRC(
     main() int
         seq := 2..4
-        return seq[0] + seq[1]
+        ret seq[0] + seq[1]
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);

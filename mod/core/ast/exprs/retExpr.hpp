@@ -1,17 +1,31 @@
 #pragma once
 
-#include "retStateExpr.hpp"
+#include "../expr.hpp"
 
 namespace namu {
 
-    class _nout retExpr : public retStateExpr {
-        NAMU(CLASS(retExpr, retStateExpr, expr::exprType), VISIT())
+    class visitor;
+
+    class _nout retExpr : public expr {
+        NAMU(CLASS(retExpr, expr, expr::exprType), VISIT())
 
     public:
-        retExpr(const node& ret): super(ret) {}
-        retExpr() {}
+        retExpr(const node& ret);
+        retExpr();
 
-    protected:
-        const retState& _onGetRetState() const override;
+    public:
+        using super::run;
+        str run(const args& a) override;
+
+        node& getRet();
+        const node& getRet() const NAMU_UNCONST_FUNC(getRet())
+        nbool canRun(const args& a) const override;
+        const node& getEval() const override;
+
+    private:
+        str _decideRet(const args& a);
+
+    private:
+        str _ret;
     };
 }

@@ -116,7 +116,7 @@
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
-%token IF _ELSE_ AKA RETURN RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
+%token IF _ELSE_ AKA RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
 %token _WHILE_ ELIF
 
 // value-holding-token:
@@ -135,7 +135,7 @@
 %type <asNarr> list list-items
 %type <asArgs> typenames typeparams
 //  keyword:
-%type <asNode> return ret
+%type <asNode> ret
 %type <asNode> if ifing for break next while
 %type <asNode> aka aka-default aka-deduced
 %type <asObj> pack
@@ -181,7 +181,6 @@ expr: expr-line { $$ = $1; }
     | expr-compound { $$ = $1; }
 
 stmt: expr-line NEWLINE { $$ = $1; }
-    | return { $$ = $1; }
     | ret { $$ = $1; }
     | break { $$ = $1; }
     | next { $$ = $1; }
@@ -343,15 +342,6 @@ expr1: term { $$ = $1;
    } | expr1 AS type {
      $$ = yyget_extra(scanner)->onAs(*$1, *$3);
    }
-
-// keyword:
-return: RETURN NEWLINE {
-        $$ = yyget_extra(scanner)->onReturn();
-    } | RETURN expr-line NEWLINE {
-        $$ = yyget_extra(scanner)->onReturn(*$2);
-    } | RETURN expr-compound {
-        $$ = yyget_extra(scanner)->onReturn(*$2);
-    }
 
 ret: RET NEWLINE {
     $$ = yyget_extra(scanner)->onRet();

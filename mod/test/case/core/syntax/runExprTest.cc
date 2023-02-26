@@ -11,7 +11,7 @@ TEST_F(runExprTest, simpleRunCheck) {
     make().parse(R"SRC(
         main() int
             me.main()
-            return 0
+            ret 0
     )SRC").shouldVerified(true);
 }
 
@@ -19,17 +19,17 @@ TEST_F(runExprTest, runWithoutSpecifyingMe) {
     make().parse(R"SRC(
         main() int
             main()
-            return 0
+            ret 0
     )SRC").shouldVerified(true);
 }
 
 TEST_F(runExprTest, runAnotherFunc) {
     make().parse(R"SRC(
         foo() void
-            return
+            ret
         main() void
             foo()
-            return
+            ret
     )SRC").shouldVerified(true);
 }
 
@@ -37,7 +37,7 @@ TEST_F(runExprTest, runNotExistFuncNegative) {
     negative().make().parse(R"SRC(
         main() int
             me.foo()
-            return 0
+            ret 0
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -59,9 +59,9 @@ TEST_F(runExprTest, ArgumentMismatchNegative) {
 TEST_F(runExprTest, runAndReturn2) {
     make().parse(R"SRC(
         foo() flt
-            return 3.5
+            ret 3.5
         main() flt
-            return foo()
+            ret foo()
     )SRC").shouldVerified(true);
 }
 
@@ -77,7 +77,7 @@ TEST_F(runExprTest, runAndReturn3) {
 TEST_F(runExprTest, runWithArgument) {
     make().parse(R"SRC(
         foo(age int, grade flt) flt
-            return grade
+            ret grade
         main() flt
             foo(22, 3.5)
     )SRC").shouldParsed(true);
@@ -87,7 +87,7 @@ TEST_F(runExprTest, runWithArgument) {
 TEST_F(runExprTest, runWithArgumentNegative) {
     negative().make().parse(R"SRC(
         foo(name str, grade flt) str
-            return name
+            ret name
         main() flt
             foo("hello", 3.5)
     )SRC").shouldParsed(true);

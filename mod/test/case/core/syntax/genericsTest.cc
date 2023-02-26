@@ -12,11 +12,11 @@ TEST_F(genericsTest, simpleDefineGenerics) {
     make().parse(R"SRC(
         def object<T>
             foo() str
-                return sys.con.print(1 as T)
+                ret sys.con.print(1 as T)
 
         main() str
             a := object<str>()
-            return a.foo()
+            ret a.foo()
     )SRC").shouldVerified(true);
     ASSERT_EQ(run().cast<std::string>(), "1");
 }
@@ -27,11 +27,11 @@ TEST_F(genericsTest, defineGenerics) {
         def object<e>
             age e
             foo(num e) e
-                return age + num as e
+                ret age + num as e
 
         main() str
             a := object<int>()
-            return a.foo(2) as str
+            ret a.foo(2) as str
     )SRC").shouldVerified(true);
     str ret = run();
     ASSERT_EQ(ret.cast<std::string>(), "2");
@@ -42,9 +42,9 @@ TEST_F(genericsTest, defineGenerics1) {
         def object<T>
             foo(a T) T
                 age := T() + T()
-                return a + age + boo()
+                ret a + age + boo()
             boo() T
-                return T()
+                ret T()
 
         main() str
             a := object<int>()
@@ -86,12 +86,12 @@ TEST_F(genericsTest, genericTwice2Negative) {
             foo(val T) T
                 age := T()
                 sys.con.print((val + age) as T)
-                return val + age
+                ret val + age
 
         main() str
             a := object<int>()
             b := object<str>() // run 'b.foo()' occurs F/C
-            return b.foo("3.5")
+            ret b.foo("3.5")
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -102,12 +102,12 @@ TEST_F(genericsTest, genericTwice2) {
             foo(val T) T
                 age := T()
                 sys.con.print((val + age) as str)
-                return val + age
+                ret val + age
 
         main() str
             a := object<int>()
             b := object<str>() // run 'b.foo()' occurs F/C
-            return b.foo("3.5")
+            ret b.foo("3.5")
     )SRC").shouldVerified(true);
     str ret = run();
     ASSERT_FALSE(nul(ret));
@@ -119,12 +119,12 @@ TEST_F(genericsTest, simpleUseGenerics) {
         def object<T>
             foo(msg T) str
                 sys.con.print(msg)
-                return msg
+                ret msg
 
         main() str
             o := object<str>()
             res := o.foo("hello generics!\n")
-            return res
+            ret res
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -154,11 +154,11 @@ TEST_F(genericsTest, simpleUseGenerics2) {
             foo(val T) T
                 age := T()
                 sys.con.print((val + age) as T)
-                return val + age
+                ret val + age
 
         main() str
             b := object<str>()
-            return b.foo("3.5")
+            ret b.foo("3.5")
     )SRC").shouldVerified(true);
     str ret = run();
     ASSERT_FALSE(nul(ret));
@@ -171,10 +171,10 @@ TEST_F(genericsTest, genericNegative) {
             foo(val T) T
                 age := T()
                 sys.con.print((val + age) as T)
-                return val + age
+                ret val + age
 
         main() str
             b := object<int>() // error at print(int)
-            return b.foo(3.5)
+            ret b.foo(3.5)
     )SRC").shouldVerified(false);
 }

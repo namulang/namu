@@ -15,7 +15,6 @@ namespace namu {
     class expr;
     class mgdFunc;
     class blockExpr;
-    class returnExpr;
     class runExpr;
     class asExpr;
     class addExpr;
@@ -146,8 +145,6 @@ namespace namu {
         mgdFunc* onFunc(const std::string& name, const narr& params, const node& evalType, const blockExpr& blk);
 
         //      return:
-        returnExpr* onReturn();
-        returnExpr* onReturn(node& exp);
         retExpr* onRet();
         retExpr* onRet(node& exp);
         breakExpr* onBreak();

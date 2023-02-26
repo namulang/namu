@@ -8,7 +8,7 @@ set cpo&vim
 
 
 " keyword definitions
-syn keyword synKeyword if def else elif for continue ret return pack import from is
+syn keyword synKeyword if def else elif for continue ret pack from is
 syn keyword synKeyword aka it with on try in
 syn keyword synPretype int int8 int16 int32 int64
 syn keyword synPretype char

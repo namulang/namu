@@ -11,7 +11,7 @@ TEST_F(defVarExprTest, simpleDefineVariable) {
     if(make().parse(R"SRC(
         main() void
             age int
-            return
+            ret
     )SRC").shouldVerified(true)) {
         node& res = getSubPack();
         ASSERT_FALSE(nul(res));
@@ -35,7 +35,7 @@ TEST_F(defVarExprTest, definePackVariableNegative) {
         grade flt
         main() void
             age int
-            return age
+            ret age
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -47,7 +47,7 @@ TEST_F(defVarExprTest, definePackVariable2) {
         grade flt
         main() int
             age int
-            return age
+            ret age
     )SRC").shouldParsed(true);
     shouldVerified(true);
     slot& s = getSlot();

@@ -11,7 +11,7 @@ TEST_F(assignExprTest, simpleAssignPositive) {
     if(make().parse(R"SRC(
         age int
         main() int
-            age = 5 // return age implicitly
+            age = 5 // ret age implicitly
     )SRC").shouldVerified(true)) {
         run();
         node& res = getSubPack();
@@ -38,7 +38,7 @@ TEST_F(assignExprTest, assignLocalVariable) {
             age = 5
 
             age int
-            return age = 3
+            ret age = 3
     )SRC").shouldVerified(true)) {
         run();
         node& res = getSubPack();
@@ -54,7 +54,7 @@ TEST_F(assignExprTest, assignTypeNegative) {
     negative().make().parse(R"SRC(
         age int
         main() int
-            return age = "wow"
+            ret age = "wow"
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -63,7 +63,7 @@ TEST_F(assignExprTest, mysteriousDeath) {
     make().parse(R"SRC(
         age := 0
         main() int
-            return age = age + 1
+            ret age = age + 1
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -74,7 +74,7 @@ TEST_F(assignExprTest, assignClassNegative) {
     make().negative().parse(R"SRC(
         def A
             foo() void
-                return
+                ret
 
         main() void
             a A
@@ -87,7 +87,7 @@ TEST_F(assignExprTest, assignClassNegative2) {
     make().negative().parse(R"SRC(
         def A
             foo() void
-                return
+                ret
 
         main() void
             a := 25

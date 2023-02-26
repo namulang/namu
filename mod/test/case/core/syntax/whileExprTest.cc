@@ -16,7 +16,7 @@ TEST_F(whileExprTest, simple) {
                 sum = sum + n
                 n = n + 1
                 sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
-            return sum
+            ret sum
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -32,14 +32,14 @@ TEST_F(whileExprTest, conditionClauseCheckNegative) {
                 sum = sum + n
                 n = n + 1
                 sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
-            return sum
+            ret sum
     )SRC").shouldVerified(false);
 }
 
 TEST_F(whileExprTest, conditionClauseCheck) {
     make().parse(R"SRC(
         foo() int
-            return 3
+            ret 3
 
         main() int
             sum := 0
@@ -48,7 +48,7 @@ TEST_F(whileExprTest, conditionClauseCheck) {
                 sum = sum + n
                 n = n + 1
                 sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
-            return sum
+            ret sum
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -138,7 +138,7 @@ TEST_F(whileExprTest, evalOfForLoopNegative2) {
     make().negative().parse(R"SRC(
         def a
             foo() void
-                return
+                ret
 
         main() int
             sum := 0
@@ -154,7 +154,7 @@ TEST_F(whileExprTest, evalOfForLoop2) {
     make().parse(R"SRC(
         def a
             foo() void
-                return
+                ret
 
         main() int
             sum := 0

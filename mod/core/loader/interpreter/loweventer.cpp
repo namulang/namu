@@ -364,17 +364,6 @@ namespace namu {
         return true;
     }
 
-    returnExpr* me::onReturn() {
-        NAMU_DI("tokenEvent: onReturn()");
-
-        return new returnExpr();
-    }
-    returnExpr* me::onReturn(node& exp) {
-        NAMU_DI("tokenEvent: onReturn(%s)", exp.getType().getName().c_str());
-
-        return new returnExpr(exp);
-    }
-
     retExpr* me::onRet() {
         NAMU_DI("tokenEvent: onRet()");
 
