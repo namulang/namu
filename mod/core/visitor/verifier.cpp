@@ -255,13 +255,6 @@ namespace namu {
         if(!checkEvalType(lEval)) return _srcErr(me.getPos(), errCode::LHS_IS_NOT_ARITH, lEval.getType().getName().c_str());
         if(!checkEvalType(rEval)) return _srcErr(me.getPos(), errCode::RHS_IS_NOT_ARITH, rEval.getType().getName().c_str());
 
-        NAMU_DI("verify: FAOExpr: is able to do implicit casting?");
-        if(me.getRule() == FAOExpr::ADD &&
-           (lEval.isSub<nStr>() || rEval.isSub<nStr>()))
-            // '+' special case: expect that it's available to put together some primitive type
-            //                   to string.
-            return;
-
         if(!lEval.isImpli(rEval))
             return _srcErr(me.getPos(), errCode::IMPLICIT_CAST_NOT_AVAILABLE,
                     lEval.getType().getName().c_str(), rEval.getType().getName().c_str());
