@@ -370,3 +370,31 @@ TEST_F(FAOExprTest, testStringToBooleanNegative) {
 
     // TODO: but runtime exception?
 }
+
+TEST_F(FAOExprTest, testLogicalAndOp) {
+    make().parse(R"SRC(
+        main() bool
+            ret true && 3 < 27
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nbool>(), true);
+}
+
+TEST_F(FAOExprTest, testLogicalAndOp2) {
+    make().parse(R"SRC(
+        foo() bool
+            false
+
+        main() bool
+            a := 0
+            if (foo() && a = 1)
+                sys.con.print("ok")
+            ret a
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}

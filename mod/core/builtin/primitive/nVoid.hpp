@@ -46,5 +46,7 @@ namespace namu {
         nbool _lt(const arithmeticObj& rhs) const override { return false; }
         nbool _ge(const arithmeticObj& rhs) const override { return false; }
         nbool _le(const arithmeticObj& rhs) const override { return false; }
+        nbool _logicalAnd(const arithmeticObj& rhs) const override { return false; }
+        nbool _logicalOr(const arithmeticObj& rhs) const override { return false; }
     };
 }

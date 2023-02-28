@@ -54,5 +54,7 @@ namespace namu {
         nbool _lt(const arithmeticObj& rhs) const override { return get() < rhs.asImpli<me>()->get(); }
         nbool _ge(const arithmeticObj& rhs) const override { return get() >= rhs.asImpli<me>()->get(); }
         nbool _le(const arithmeticObj& rhs) const override { return get() <= rhs.asImpli<me>()->get(); }
+        nbool _logicalAnd(const arithmeticObj& rhs) const override { return get() && rhs.asImpli<me>()->get(); }
+        nbool _logicalOr(const arithmeticObj& rhs) const override { return get() || rhs.asImpli<me>()->get(); }
     };
 }

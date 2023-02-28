@@ -88,3 +88,6 @@ PAIRX(BLK_CANT_MAKE_FRAME,          "block statement failed to construct frame s
 PAIRX(ELEM_TYPE_IS_NULL,            "elem type is null")
 PAIRX(ELEM_TYPE_DEDUCED_NULL,       "elem type has been deduced to null")
 PAIRX(ELEM_TYPE_DEDUCED_WRONG,      "elem type has been deduced to %s type")
+
+// operator:
+PAIRX(STRING_IS_NOT_LOGICAL,        "string type isn't suitable to logical operators.")

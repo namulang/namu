@@ -168,13 +168,15 @@ namespace namu {
         FAOExpr* onMul(const node& lhs, const node& rhs);
         FAOExpr* onDiv(const node& lhs, const node& rhs);
         FAOExpr* onMod(const node& lhs, const node& rhs);
-        //          local:
+        //          logical:
         FAOExpr* onGt(const node& lhs, const node& rhs);
         FAOExpr* onGe(const node& lhs, const node& rhs);
         FAOExpr* onLt(const node& lhs, const node& rhs);
         FAOExpr* onLe(const node& lhs, const node& rhs);
         FAOExpr* onEq(const node& lhs, const node& rhs);
         FAOExpr* onNe(const node& lhs, const node& rhs);
+        FAOExpr* onAnd(const node& lhs, const node& rhs);
+        FAOExpr* onOr(const node& lhs, const node& rhs);
         //      if:
         ifExpr* onIf(const node& condition, const blockExpr& thenBlk);
         ifExpr* onElif(ifExpr& ifexpr, const node& elseIfCondition, const blockExpr& thenBlk);

@@ -594,6 +594,20 @@ namespace namu {
         return new FAOExpr(FAOExpr::NE, lhs, rhs);
     }
 
+    FAOExpr* me::onAnd(const node& lhs, const node& rhs) {
+        NAMU_DI("tokenEvent: onAnd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::AND, lhs, rhs);
+    }
+
+    FAOExpr* me::onOr(const node& lhs, const node& rhs) {
+        NAMU_DI("tokenEvent: onOr(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::OR, lhs, rhs);
+    }
+
     node* me::onFor(const std::string& iterName, const node& expr, const blockExpr& blk) {
         NAMU_DI("tokenEvent: onFor(%s, %s)", iterName.c_str(), expr.getType().getName().c_str());
 

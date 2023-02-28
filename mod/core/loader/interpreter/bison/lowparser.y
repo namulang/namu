@@ -112,7 +112,7 @@
 
 // valueless-token:
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS DOUBLE_DOT PACK ARROW TAB ASSIGN DEFASSIGN
-%token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE
+%token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE LOGICAL_AND LOGICAL_OR
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
@@ -298,7 +298,15 @@ expr10: expr9 { $$ = $1; }
       | expr10 ASSIGN expr9 {
         $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
     }
-expr9: expr8 { $$ = $1; }
+
+expr9: expr8 {
+    $$ = $1;
+   } | expr9 LOGICAL_OR expr8 {
+    $$ = yyget_extra(scanner)->onOr(*$1, *$3);
+   } | expr9 LOGICAL_AND expr8 {
+    $$ = yyget_extra(scanner)->onAnd(*$1, *$3);
+   }
+
 expr8: expr7 { $$ = $1; }
 expr7: expr6 {
     $$ = $1;

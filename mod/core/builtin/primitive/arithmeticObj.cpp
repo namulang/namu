@@ -25,7 +25,7 @@ namespace namu {
         return _ ## FUNC(rhs); \
     }
 
-    NAMU_EACH(_X, eq, ne, gt, lt, ge, le)
+    NAMU_EACH(_X, eq, ne, gt, lt, ge, le, logicalAnd, logicalOr)
 
 #undef _X
 }
