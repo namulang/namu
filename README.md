@@ -1,8 +1,11 @@
-[![](https://img.shields.io/github/v/release/kniz/worldlang.svg?include_prereleases&label=latest%20release&style=flat-square)](https://github.com/kniz/worldlang/releases)
-![](https://img.shields.io/github/release-date-pre/kniz/worldlang.svg?label=on&style=flat-square)
-[![](https://img.shields.io/github/workflow/status/kniz/worldlang/CI%20for%20master/master?style=flat-square)](https://github.com/kniz/worldlang/actions/workflows/master-ci.yml)
+[![](https://img.shields.io/github/v/release/namulang/namu.svg?include_prereleases&label=latest%20release&style=flat-square)](https://github.com/namulang/namu/releases)
+![](https://img.shields.io/github/release-date-pre/namulang/namu.svg?label=on&style=flat-square)
+[![](https://img.shields.io/github/actions/workflow/status/namulang/namu/ci-master.yml?branch=master?style=flat-square)](https://github.com/kniz/worldlang/actions/workflows/master-ci.yml)
 ![](https://img.shields.io/github/languages/code-size/kniz/worldlang.svg?style=flat-square)
 [![](https://img.shields.io/github/downloads/kniz/worldlang/total.svg?style=flat-square)](https://github.com/kniz/worldlang/releases)
+![Discord](https://img.shields.io/discord/1080131343012339712?style=flat-square)
+![Twitter Follow](https://img.shields.io/twitter/follow/TaehunL06260083?style=social)
+![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCCJLM-x4V9rKAE1BFZzVE8w?style=social)
 
 WORLD, <br/>The new programming language.
 =======================================
