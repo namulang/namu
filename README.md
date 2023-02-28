@@ -1,19 +1,17 @@
 [![](https://img.shields.io/github/v/release/namulang/namu.svg?include_prereleases&label=latest%20release&style=flat-square)](https://github.com/namulang/namu/releases)
 ![](https://img.shields.io/github/release-date-pre/namulang/namu.svg?label=on&style=flat-square)
-[![](https://img.shields.io/github/actions/workflow/status/namulang/namu/ci-master.yml?branch=master?style=flat-square)](https://github.com/kniz/worldlang/actions/workflows/master-ci.yml)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/namulang/namu/ci-master.yml?style=flat-square)
 ![](https://img.shields.io/github/languages/code-size/kniz/worldlang.svg?style=flat-square)
 [![](https://img.shields.io/github/downloads/kniz/worldlang/total.svg?style=flat-square)](https://github.com/kniz/worldlang/releases)
 ![Discord](https://img.shields.io/discord/1080131343012339712?style=flat-square)
-![Twitter Follow](https://img.shields.io/twitter/follow/TaehunL06260083?style=social)
-![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCCJLM-x4V9rKAE1BFZzVE8w?style=social)
 
-WORLD, <br/>The new programming language.
+Namu, <br/>The new programming language.
 =======================================
 
     ! Please be advised that World can't support below features now. we're working in progress.
 
 ### What's this?
-World is a interpreter and visual IDE for new programming language, World language.
+Namu is a interpreter and visual IDE for new programming language, namu language.
 it has following main features.
 
 > * anchor-way development: You can get "so immediately" feedbacks whenever you codes.
@@ -42,26 +40,26 @@ it has following main features.
 > * issue-tracker: github project
 > * unit-test: gtest
 > * road-map: refer http://free-timeline.com/?shared=10593
-> * os: linux, macos, windows + minGW
+> * os: linux, macos, windows + WSL(ubuntu)
 
 
 ### How to Start
 #### Let's Build
 
-Preparing: to build World, following softwares will be needed.
+Preparing: to build 'namu', following softwares will be needed.
             
     python 3.+, cmake, make, and clang
 
-if you're trying on windows, then it's recommended to install minGW and above softwares.
+if you're trying on windows, then it's recommended to use WSL and above softwares.
 
 Then, just enter:
         
     python ./build/builder.py dbg
 
-All script you need for doing something on World is just at builder.py.
+All script you need for doing something on 'namu' is just at builder.py.
 
 For more information, try "builder.py help"
 
-#### Let's make something with World!
+#### Let's make something with Namu!
     
     Oh,... Ummmm. Not yet.
