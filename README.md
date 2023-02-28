@@ -3,7 +3,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/namulang/namu/ci-master.yml?style=flat-square)
 ![](https://img.shields.io/github/languages/code-size/kniz/worldlang.svg?style=flat-square)
 [![](https://img.shields.io/github/downloads/kniz/worldlang/total.svg?style=flat-square)](https://github.com/kniz/worldlang/releases)
-![Discord](https://img.shields.io/discord/1080131343012339712?style=flat-square)
+[![Discord](https://img.shields.io/discord/1080131343012339712?style=flat-square)](https://discord.com/channels/1080131343012339712/)
 
 Namu, <br/>The new programming language.
 =======================================
