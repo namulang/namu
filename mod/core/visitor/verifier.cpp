@@ -258,6 +258,10 @@ namespace namu {
         if(!lEval.isImpli(rEval))
             return _srcErr(me.getPos(), errCode::IMPLICIT_CAST_NOT_AVAILABLE,
                     lEval.getType().getName().c_str(), rEval.getType().getName().c_str());
+
+        auto r = me.getRule();
+        if((r == FAOExpr::AND || r == FAOExpr::OR) && (lEval.isSub<nStr>() || rEval.isSub<nStr>()))
+            return _srcErr(me.getPos(), errCode::STRING_IS_NOT_LOGICAL);
     }
 
     void me::onVisit(visitInfo i, getExpr& me) {

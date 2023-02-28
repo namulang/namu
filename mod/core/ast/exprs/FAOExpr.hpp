@@ -30,6 +30,8 @@ namespace namu {
             LT,
             GE,
             LE,
+            AND,
+            OR,
             LOGIC_END,
             END = LOGIC_END
         };

@@ -63,6 +63,8 @@ namespace {
 "==" { return EQ; }
 "!=" { return NE; }
 ":=" { return DEFASSIGN; }
+"&&" { return LOGICAL_AND; }
+"||" { return LOGICAL_OR; }
 [ ]+ ;
 \t {
     yylloc->start.col = (yylloc->start.col + TAB_WIDTH) & ~(TAB_WIDTH-1);

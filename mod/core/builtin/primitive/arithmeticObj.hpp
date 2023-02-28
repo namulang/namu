@@ -22,6 +22,8 @@ namespace namu {
         virtual nbool lt(const me& rhs) const;
         virtual nbool ge(const me& rhs) const;
         virtual nbool le(const me& rhs) const;
+        virtual nbool logicalAnd(const me& rhs) const;
+        virtual nbool logicalOr(const me& rhs) const;
 
     private:
         virtual tstr<me> _add(const me& rhs, nbool reversed) const = 0;
@@ -36,5 +38,7 @@ namespace namu {
         virtual nbool _lt(const me& rhs) const = 0;
         virtual nbool _ge(const me& rhs) const = 0;
         virtual nbool _le(const me& rhs) const = 0;
+        virtual nbool _logicalAnd(const me& rhs) const = 0;
+        virtual nbool _logicalOr(const me& rhs) const = 0;
     };
 }

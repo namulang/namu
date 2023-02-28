@@ -43,6 +43,8 @@ namespace namu {
             case LT: return str(new nBool(lhs->lt(*rhs)));
             case GE: return str(new nBool(lhs->ge(*rhs)));
             case LE: return str(new nBool(lhs->le(*rhs)));
+            case AND: return str(new nBool(lhs->logicalAnd(*rhs)));
+            case OR: return str(new nBool(lhs->logicalOr(*rhs)));
             default:
                 return str();
         }
