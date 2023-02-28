@@ -8,7 +8,7 @@
 Namu, <br/>The new programming language.
 =======================================
 
-    ! Please be advised that World can't support below features now. we're working in progress.
+    ! Please be advised that 'namu' can't support below features now. we're working in progress.
 
 ### What's this?
 Namu is a interpreter and visual IDE for new programming language, namu language.
@@ -19,7 +19,7 @@ it has following main features.
         you're in debugging at the same time.
 >
 > 
-> * Touch the instances: Basically, in order to make your function or class with World, 
+> * Touch the instances: Basically, in order to make your function or class with 'namu',
         you should write somethings as a text. like other launguages.
         But, because of lack of compling, you always are in a middle of runtime envrionment
         whenever you codes your software. You can see which interactions are made of between
@@ -31,7 +31,7 @@ it has following main features.
         which you want anytime.
 >
 > * Easy to use: we hope who aren't a programmer could join us to make a program with
-        World. its IDE will be served as a classic GAME. 
+        namu. its IDE will be served as a classic GAME. 
         pixel art, particle effects, retro sound fx, RPGistic UI, Worldmap, quest and archivement.
 
 
