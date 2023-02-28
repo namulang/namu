@@ -1,4 +1,46 @@
 # Changelogs
+## v0.2.5 Mana Update
+released on 02-28 2023
+build#654
+
+### major changes
+* ef80970c core: fix: pointed and refer wrong address on release binary
+* 0cc5e5b5 feat: supports wasm build
+* f2809e22 memlite: refactor: improve speed performance for vaults using vector
+* 6d98fcd5 test: feat: add 'verbose' mode
+* 3025b1a9 core: doc: add example 'map.namu'
+* 41471603 core: feat: add '~', '<<', '>>' more bitwise operators
+* 5d11c240 core: feat: add bitwise operators, '|', '&', '^'
+* 45e229a7 core: feat: add '-=', '*=', '/=', '%=' operators
+* 620c4d81 core: feat: add '+=' operator
+* db7da4c1 core: feat: add postfix '++', '--'
+* fe79b1af core: feat: add '||' and '&&' logical binary operators
+* 370aceb8 core: refactor: replace 'return' keyword to 'ret'
+* d71c2aa6 core: fix: when passes argument to func, it won't be implicit casting
+* 49005661 core: fix: when use 'break' without value, it causes app crash
+* 9cd405fe core: fix: to use 'return' inside of for doesn't work
+* c0e43409 core: fix: using 'break' inside of ifexpr doesn't work
+* 304bfdb4 namu: fix: if src code declared to a pack concatnated with dot it won't start.
+* 5e39b732 core: feat: add 'get' func on str
+* 517eb0b0 core: feat: add 'len()' on str
+* 3bdeac6c core: fix: clang isn't necessary on windows
+* d39fc497 core: feat: change concept for boolean implicit casting
+* be19e42c core: feat: add '!' prefix unary operator
+* 36325069 core: feat: add unary prefix operators
+* 67012ffa core: fix: can't parse negative number
+* 519ed930 core: feat: add 'elif' keyword
+* 8f0c327a core: feat: supports '<' and '>' binary operator
+* 2c3807a0 core: fix: whileExpr don't loop properly
+* 1dc9227e doc: add 'RSPGame' example
+* 2343b9db core: feat: add logical boolean binary operators
+* af4067f7 core: feat: add 'while' keyword
+* 861667f8 core: fix: return is not expression
+* c89fc26f core: feat: add 'if & else' keyword
+* aa7f1af6 core: feat: add 'next' keyword
+* 5a65aba7 core: feat: add 'break' keyword
+* 9304922a core: fix: window compatibility for 'add' of arr
+* e755c28f chore: build error not judged to an error
+
 ## v0.2.4 Mana Update
 released on 11-03 2022
 build#623
