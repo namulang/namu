@@ -382,8 +382,8 @@ TEST_F(FAOExprTest, testLogicalAndOp) {
     ASSERT_EQ(res.cast<nbool>(), true);
 }
 
-TEST_F(FAOExprTest, testLogicalAndOp2) {
-    make().parse(R"SRC(
+TEST_F(FAOExprTest, testLogicalAndOpNegative) {
+    make().negative().parse(R"SRC(
         foo() bool
             false
 
@@ -392,9 +392,41 @@ TEST_F(FAOExprTest, testLogicalAndOp2) {
             if (foo() && a = 1)
                 sys.con.print("ok")
             ret a
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(FAOExprTest, testLogicalAndOp2) {
+    make().parse(R"SRC(
+        foo() bool
+            false
+
+        main() bool
+            a := 0
+            if (foo() && (a = 1))
+                sys.con.print("ok")
+            ret a
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), 1);
+    ASSERT_EQ(res->getType(), ttype<nBool>::get());
+    ASSERT_EQ(res.cast<nbool>(), true);
+}
+
+TEST_F(FAOExprTest, testLogicalAndOpShortCircuit) {
+    make().parse(R"SRC(
+        foo() bool
+            true
+
+        main() int
+            a := 0
+            if (foo() || (a = 1))
+                sys.con.print("ok")
+            ret a
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->getType(), ttype<nInt>::get());
+    ASSERT_EQ(res.cast<nint>(), 0);
 }
