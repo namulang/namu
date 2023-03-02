@@ -8,21 +8,21 @@ namespace {
 }
 
 TEST_F(akaTest, defaultDef) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         aka console c
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
 
 TEST_F(akaTest, defaultDef2) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         aka console
         c
     )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, defaultDef3) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         aka sys.console c
     )SRC").shouldParsed(true);
     shouldVerified(false);
@@ -35,7 +35,7 @@ TEST_F(akaTest, defaultDef4) {
 }
 
 TEST_F(akaTest, defaultDef5) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         aka sys.console
     )SRC").shouldParsed(true);
     shouldVerified(false);
@@ -68,7 +68,7 @@ TEST_F(akaTest, deducedAllDefNegative4) {
 }
 
 TEST_F(akaTest, withDefvar) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         aka a int b
     )SRC").shouldParsed(false);
 }
