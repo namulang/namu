@@ -29,25 +29,34 @@ namespace namu {
     const params& me::getParams() const { return _params; }
 
     str me::run(const args& a) {
-        str ret;
-        if(nul(a)) return NAMU_E("a == null"), ret;
+        if(nul(a)) return NAMU_E("a == null"), str();
 
         // s is from heap space. but freed by _outFrame() of this class.
         scope& s = *_evalArgs(a);
-        if(nul(s)) return ret;
+        if(nul(s)) return str();
         baseObj& meObj = a.getMe();
-        if(nul(meObj)) return NAMU_E("meObj == null"), ret;
+        if(nul(meObj)) return NAMU_E("meObj == null"), str();
 
+        str ret;
         frameInteract f1(meObj); {
             frameInteract f2(*this, s); {
                 frameInteract f3(*_blk); {
                     _blk->run();
+                    return _postProcess();
                 }
-                frame& fr = thread::get()._getNowFrame();
-                ret.bind(fr.getRet());
-                fr.relRet();
             }
         }
+    }
+
+    str me::_postProcess() {
+        frame& fr = thread::get()._getNowFrame();
+        node& retVal = fr.getRet();
+
+        str ret;
+        if(!nul(retVal))
+            ret = retVal.as(getRet());
+
+        fr.relRet();
         return ret;
     }
 

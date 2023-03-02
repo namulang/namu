@@ -59,6 +59,8 @@ namespace namu {
             return ret;
         }
 
+        str _postProcess();
+
     private:
         scope* _evalArgs(const ucontainable& args);
 
