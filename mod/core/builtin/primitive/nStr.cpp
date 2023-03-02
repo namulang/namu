@@ -89,7 +89,8 @@ namespace namu {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
                     try {
-                        return str(new nFlt(stof(val)));
+                        nflt converted = stof(val);
+                        return str(new nFlt(converted));
                     } catch (std::invalid_argument& ex) {
                         return str();
                     }
@@ -100,7 +101,8 @@ namespace namu {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
                     try {
-                        return str(new nInt(stoi(val)));
+                        nint converted = stoi(val);
+                        return str(new nInt(converted));
                     } catch (std::invalid_argument& ex) {
                         return str();
                     }
