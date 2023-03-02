@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>operator | namulang</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="operator" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<link rel="canonical" href="http://localhost:4000/guide/syntax/operator.html" />
+<meta property="og:url" content="http://localhost:4000/guide/syntax/operator.html" />
+<meta property="og:site_name" content="namulang" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="operator" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"operator","url":"http://localhost:4000/guide/syntax/operator.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="namulang" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">namulang</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/guide/syntax/aka.html">aka</a><a class="page-link" href="/guide/">quickStart</a><a class="page-link" href="/ref/index.html">ref</a><a class="page-link" href="/guide/HOW-TO-CONTRIBUTE.html">Branch</a><a class="page-link" href="/guide/feat/C-REPL.html">C-REPL</a><a class="page-link" href="/guide/feat/Prototyping%20Inheritance.html">Prototyping inheritance</a><a class="page-link" href="/guide/feat/Type%20deduction.html">Type deduction</a><a class="page-link" href="/guide/feat/chain.html">chain</a><a class="page-link" href="/guide/feat/entrypoint.html">entrypoint</a><a class="page-link" href="/guide/feat/evaluation%20verification.html">평가 검증</a><a class="page-link" href="/guide/feat/exception%20handling.html">Exception handling</a><a class="page-link" href="/guide/feat/expression%20based.html">Expression based</a><a class="page-link" href="/guide/feat/immutable.html">Immutable</a><a class="page-link" href="/guide/feat/interoperability.html">Interoperability</a><a class="page-link" href="/guide/feat/life%20cycle.html">Life cycle</a><a class="page-link" href="/guide/feat/nested%20obj.html">중첩 객체</a><a class="page-link" href="/guide/feat/null%20safety.html">null safety</a><a class="page-link" href="/guide/feat/pack%20import.html">pack import</a><a class="page-link" href="/guide/feat/scope.html">scope</a><a class="page-link" href="/guide/feat/type.html">type</a><a class="page-link" href="/guide/feat/variable-declaration.html">variable declaration</a><a class="page-link" href="/guide/goal/GOAL.html">goals</a><a class="page-link" href="/guide/syntax/blockstmt.html">block stmt</a><a class="page-link" href="/guide/syntax/casting.html">casting</a><a class="page-link" href="/guide/syntax/closure.html">closure</a><a class="page-link" href="/guide/syntax/container.html">container</a><a class="page-link" href="/guide/syntax/continue.html">continue</a><a class="page-link" href="/guide/syntax/def.html">def</a><a class="page-link" href="/guide/syntax/delegator.html">delegator</a><a class="page-link" href="/guide/syntax/expression.html">Expression</a><a class="page-link" href="/guide/syntax/for.html">for</a><a class="page-link" href="/guide/syntax/func.html">func</a><a class="page-link" href="/guide/syntax/generic.html">generic</a><a class="page-link" href="/guide/syntax/if.html">if</a><a class="page-link" href="/guide/syntax/operator.html">operator</a><a class="page-link" href="/guide/syntax/overloading.html">overloading</a><a class="page-link" href="/guide/syntax/pack.html">pack</a><a class="page-link" href="/guide/syntax/property.html">property</a><a class="page-link" href="/guide/syntax/reference.html">reference</a><a class="page-link" href="/guide/syntax/ret.html">ret</a><a class="page-link" href="/guide/syntax/specifier.html">specifier</a><a class="page-link" href="/guide/syntax/switch.html">switch</a><a class="page-link" href="/guide/syntax/variable.html">variable</a><a class="page-link" href="/guide/syntax/void.html">void</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">operator</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="operator">operator</h1>
+
+<h2 id="연산자-우선순위">연산자 우선순위</h2>
+
+<ul>
+  <li>위에 있을 수록, 우선된다.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>연산자operator</th>
+      <th>설명</th>
+      <th>Associativity</th>
+      <th>예제</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>()</td>
+      <td>괄호</td>
+      <td>None</td>
+      <td>(func(val))</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>(), [], ., ++, –, **</td>
+      <td>Postfix(함수호출, 접근 등)</td>
+      <td>right</td>
+      <td>func(35)</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>++, –, **, !, -, ~~</td>
+      <td>Prefix</td>
+      <td>left</td>
+      <td><em>*a // a</em>a</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>as</td>
+      <td>캐스팅</td>
+      <td>None</td>
+      <td>int val</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>*, /, %</td>
+      <td>이항 곱, 나눗셈, 나머지</td>
+      <td>right</td>
+      <td>a % b</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>+, -</td>
+      <td>이항 덧셈, 뺄셈</td>
+      <td>right</td>
+      <td>a - b</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>«, »</td>
+      <td>비트 SHIFT 연산</td>
+      <td>right</td>
+      <td>a « 3</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>&amp;&amp;</td>
+      <td>비트 AND 연산</td>
+      <td>right</td>
+      <td>a &amp;&amp; 0x01</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>^^</td>
+      <td>비트 XOR 연산</td>
+      <td>right</td>
+      <td>a %% 0x01</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>||</td>
+      <td>비트 OR 연산</td>
+      <td>right</td>
+      <td>0x02 || 0x01</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>..</td>
+      <td>범위 연산</td>
+      <td>None</td>
+      <td>0 ~ b</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>&lt;=, &lt;, &gt;, &gt;=, ==, !=, ===, !==</td>
+      <td>비교 연산</td>
+      <td>right</td>
+      <td>a &gt; b</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>&amp;</td>
+      <td>논리 AND 연산</td>
+      <td>right</td>
+      <td>a &amp; b</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>|</td>
+      <td>논리 OR 연산</td>
+      <td>right</td>
+      <td>a</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <td>=, *=, /=, %=, +=, -=</td>
+      <td>할당 연산</td>
+      <td>left</td>
+      <td>a &amp;&amp;= 0x02</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="비교연산자와-참조자-비교-연산자">비교연산자와 참조자 비교 연산자</h2>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a1</span> <span class="o">:=</span> <span class="n">My</span><span class="p">()</span>
+<span class="n">a2</span> <span class="o">:=</span> <span class="n">My</span><span class="p">()</span>
+
+<span class="n">a1</span> <span class="o">==</span> <span class="n">a2</span> <span class="c">// true</span>
+<span class="n">a1</span> <span class="o">===</span> <span class="n">a2</span> <span class="c">// false</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">a1</span> <span class="c">// now a2 reference to what a1 is pointing.</span>
+<span class="n">a1</span> <span class="o">===</span> <span class="n">a2</span> <span class="c">// true</span>
+</code></pre></div></div>
+
+<h2 id="할당연산자는-참조자만-변경한다">할당연산자는 참조자만 변경한다.</h2>
+
+<h2 id="2항-연산자와-comma는-indetation이-무시된다">2항 연산자와 comma는 Indetation이 무시된다.</h2>
+
+<ul>
+  <li>+나 , 같은 경우는 계속해서 이어서 쓰는 경우가 많기 때문에 쉽게 가로로 화면을 벗어난다.</li>
+  <li>namulang은 indentation에 민감하기 때문에 이 경우, 블록문이 시작되는 것으로 오인하게 된다.</li>
+  <li>편의를 위해서 col이 화면을 벗어나지만, 다음에 올 토큰이 반드시 블록문이 될 수 없는 상황인 경우
+Indentation체크를 꺼서 블록문으로 오인되지 않게 한다.</li>
+  <li>2항연산자와 comma는, [, (, {, ‘.’ 가 나오면 다음 token이 나올때까지 indentation이 무시된다.</li>
+  <li>
+    <p>다른 연산자나 keyword 등도 반드시 다음에 올 토큰이 블록문이 될 수 없는 경우가 존재하나,
+모든 keyword가 이에 해당하는 것은 아니다. 그러므로 이것마자 지원하게 될 경우 사용자가 keyword별로
+indentation OFF가 지원되는지 여부를 외워야 하므로, 지원하지 않는 것이다.</p>
+  </li>
+  <li>indentation OFF가 지원되는 경우, 다음에 유의미한 token(= whitespace가 아닌 token)이 올때까지
+모든 token을 무시한다.</li>
+  <li>유의미한 token이 scanner에 인식된 경우부터는 정상동작으로 돌아간다.</li>
+</ul>
+
+<pre><code class="language-namu">a = 2 + 3 + constants.VERY_LONG_NAME_I_DONT_KNOW_ITS_NAME_BUT_VERY_LONG + activity.getFrameManager().getScreenPlay(22, (view, context)
+    view.update(context)
+    view.doSomething(22)
+, 23) // 일반적인 경우
+
+// 위와 같은 코드다.
+a = 2 + 3 + // + 토큰이 나오면 2항연산자이므로 다음 유의미한 token이 나올때까지 공백이 무시된다.
+constants.VERY_LONG_NAME_I_DONT_KNOW_ITS_NAME_BUT_VERY_LONG +
+                  activity.getFrameManager().getScreenPlay(22, // indentation 역시 무시된다.
+                        (view, context) // 블록문이다.
+                view. // . 도 적용된다
+                   update(
+                22,
+        23)
+        // view.doSomething(22) // indentation은 현재 view의 시작점에 맞춰져 있다. 
+        // view.doSomething(22)은 잘못된 indentation level이다.
+
+                view.doSometing(22) // ok
+
+                /*view.doSomething 
+                (22)
+                에러:
+                    '(' 나오면, 그 다음 token까지를 무시하는 것이다.
+                    '(' 나오기 전은 적용되지 않는다. */
+
+                /*view.doSomething(
+                    22
+                )
+                에러: 숫자 뒤에 개행은 무시되지 않는다.*/
+
+                view.doSomething(
+                    22) // ok
+, 23) // ok
+/* comma의 indentation level에 주목하자.
+   ,는 getScreenPlay()의 인자인 것이며, 해당 함수호출의 indentation level은 0 이다.
+   따라서 새로 나오는 comma 또한 indentation level 0에서 출발해야 한다.
+
+</code></pre>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">namulang</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">namulang</li><li><a class="u-email" href="mailto:knizofficial@gmail.com">knizofficial@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/kniz"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">kniz</span></a></li><li><a href="https://www.twitter.com/kniz_net"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">kniz_net</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

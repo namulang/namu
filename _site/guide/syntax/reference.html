@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>reference | namulang</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="reference" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
+<link rel="canonical" href="http://localhost:4000/guide/syntax/reference.html" />
+<meta property="og:url" content="http://localhost:4000/guide/syntax/reference.html" />
+<meta property="og:site_name" content="namulang" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="reference" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"reference","url":"http://localhost:4000/guide/syntax/reference.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="namulang" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">namulang</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/guide/syntax/aka.html">aka</a><a class="page-link" href="/guide/">quickStart</a><a class="page-link" href="/ref/index.html">ref</a><a class="page-link" href="/guide/HOW-TO-CONTRIBUTE.html">Branch</a><a class="page-link" href="/guide/feat/C-REPL.html">C-REPL</a><a class="page-link" href="/guide/feat/Prototyping%20Inheritance.html">Prototyping inheritance</a><a class="page-link" href="/guide/feat/Type%20deduction.html">Type deduction</a><a class="page-link" href="/guide/feat/chain.html">chain</a><a class="page-link" href="/guide/feat/entrypoint.html">entrypoint</a><a class="page-link" href="/guide/feat/evaluation%20verification.html">평가 검증</a><a class="page-link" href="/guide/feat/exception%20handling.html">Exception handling</a><a class="page-link" href="/guide/feat/expression%20based.html">Expression based</a><a class="page-link" href="/guide/feat/immutable.html">Immutable</a><a class="page-link" href="/guide/feat/interoperability.html">Interoperability</a><a class="page-link" href="/guide/feat/life%20cycle.html">Life cycle</a><a class="page-link" href="/guide/feat/nested%20obj.html">중첩 객체</a><a class="page-link" href="/guide/feat/null%20safety.html">null safety</a><a class="page-link" href="/guide/feat/pack%20import.html">pack import</a><a class="page-link" href="/guide/feat/scope.html">scope</a><a class="page-link" href="/guide/feat/type.html">type</a><a class="page-link" href="/guide/feat/variable-declaration.html">variable declaration</a><a class="page-link" href="/guide/goal/GOAL.html">goals</a><a class="page-link" href="/guide/syntax/blockstmt.html">block stmt</a><a class="page-link" href="/guide/syntax/casting.html">casting</a><a class="page-link" href="/guide/syntax/closure.html">closure</a><a class="page-link" href="/guide/syntax/container.html">container</a><a class="page-link" href="/guide/syntax/continue.html">continue</a><a class="page-link" href="/guide/syntax/def.html">def</a><a class="page-link" href="/guide/syntax/delegator.html">delegator</a><a class="page-link" href="/guide/syntax/expression.html">Expression</a><a class="page-link" href="/guide/syntax/for.html">for</a><a class="page-link" href="/guide/syntax/func.html">func</a><a class="page-link" href="/guide/syntax/generic.html">generic</a><a class="page-link" href="/guide/syntax/if.html">if</a><a class="page-link" href="/guide/syntax/operator.html">operator</a><a class="page-link" href="/guide/syntax/overloading.html">overloading</a><a class="page-link" href="/guide/syntax/pack.html">pack</a><a class="page-link" href="/guide/syntax/property.html">property</a><a class="page-link" href="/guide/syntax/reference.html">reference</a><a class="page-link" href="/guide/syntax/ret.html">ret</a><a class="page-link" href="/guide/syntax/specifier.html">specifier</a><a class="page-link" href="/guide/syntax/switch.html">switch</a><a class="page-link" href="/guide/syntax/variable.html">variable</a><a class="page-link" href="/guide/syntax/void.html">void</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">reference</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="reference">reference</h1>
+
+<h2 id="ref-클래스가-담당한다">Ref 클래스가 담당한다.</h2>
+
+<h2 id="strong-바인딩을-표현한다">Strong 바인딩을 표현한다.</h2>
+
+<h2 id="node의-일종이며-proxy로-동작한다">Node의 일종이며 proxy로 동작한다.</h2>
+
+<h2 id="컴파일러는-mutable-변수를-발견하면-이-ref를-member로-등록한다">컴파일러는 mutable 변수를 발견하면 이 Ref를 member로 등록한다.</h2>
+
+<h2 id="컴파일러는-immutable-변수를-발견하면-그-변수를-직접-member로-등록할-수-있다-안해도-동작에는-차이가-없다">컴파일러는 immutable 변수를 발견하면 그 변수를 직접 member로 등록할 수 있다. (안해도 동작에는 차이가 없다)</h2>
+
+<h2 id="ref는-node-타입이면-무엇이든-바인드-할-수-있어야-한다">Ref는 Node 타입이면 무엇이든 바인드 할 수 있어야 한다.</h2>
+
+<h2 id="ref는-gettype이라는-verify용-함수가-있다">Ref는 getType()이라는 verify용 함수가 있다.</h2>
+<ul>
+  <li>TVarRef<T>는 getType()을 고정된 TClass<T>로 반환한다.</T></T></li>
+  <li>GVarRef는 getType()을 변수로 제공한다. 컴파일러가 생성할 수 있도록.</li>
+</ul>
+
+<h2 id="verify는-rtti를-사용하는-것이다">verify는 RTTI를 사용하는 것이다.</h2>
+<ul>
+  <li>바인딩된 객체가 getType()과 자식 혹은 동일한 타입인지를 체크한다.</li>
+</ul>
+
+<h2 id="메소드에-대한-참조자는-funcref-라는-별도의-클래스를-상속받아-사용한다">메소드에 대한 참조자는 FuncRef 라는 별도의 클래스를 상속받아 사용한다.</h2>
+<ul>
+  <li>메소드의 경우에는 상속으로 체크할 수 없고, 인자의 종류와 갯수가 정확히
+일치하는 지를 기준으로 verify 해야 하기 때문이다.’</li>
+  <li>인자의 종류가 정확히 일치해야 한다. 묵시적 변환 같은 것 허용하지 않는다.</li>
+</ul>
+
+<h2 id="ref의-native-환경에서의-역할">ref의 native 환경에서의 역할</h2>
+
+<ul>
+  <li>ref의 존재 의의는 scope에 들어간 mutable 객체의 assign()을 자동으로 지원하기 위해서다.</li>
+  <li>mutable 객체가 scope 밖에 있는 경우는 우리의 관심사가 아니다. scope 안에 있는 것들만이
+scope을 넘나들면서 영향을 끼치기 때문에, scope 안에 있는 케이스만 생각한다.</li>
+  <li>scope에 들어간 참조자 a가 A를 가리키고 있는 상황에서 B를 가리키도록 변경하고자하는 상황은 매우 다발한다.</li>
+  <li>이때 이를 구현하는 방법은 2가지인데,
+    <ul>
+      <li>
+        <ol>
+          <li>a를 포함하는 배열에 접근해서 set(인덱스, b) 를 한다.</li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>a의 ptr를 B로 변경한다.</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>1번의 경우 항상 container의 참조도 같이 가져가야 하기 때문에 효용성이 떨어진다.</li>
+  <li>2번의 경우 말이 ptr로 써놓은 것이지 배열의 원소 자체가 이미 void*처럼 되어있기 때문에
+별다른 처리가 없다면 1번과 다를게 없다.</li>
+  <li>그러나 namu는 container로 tnarr를 쓰고 있으며 이것은 str 바인더를 값으로 갖는 배열이다.</li>
+  <li>때문에 tnarr[인덱스]에 있는 바인더가 내부에 갖는 ptr를 변경하면 목적을 달성할 수 있다.</li>
+  <li>문제는 바인더는 보다 lowlevel 한 layer에 있는 package이기 때문에 node가 아니다.
+그래서 node를 다루는 범용 메소드들에 바인더를 넣는 게 불가능하기 때문에 이를 처리하려면
+바인더용 로직을 수없이 만들어야 해서 로직이 중복된다.</li>
+  <li>다른 해결방법은 node에서 상속받아서 바인더로 delegation 하는 클래스를 만드는 것이고
+이게 바로 ref다.</li>
+  <li>객체의 set은 평가전략과 직결되는 문제로써, by sharing(by object) 를 구현하기 위해서는
+immutable 객체는 객체간에 직접 할당이 되어야하고 mutable 객체는 참조자만 변경되면 된다.</li>
+  <li>
+    <p>이때 모든 mutable 객체를 ref에 감싸서 배열에 넣고, assign()이라는 공통 함수를 node에 구현한다.
+그리고 ref.assign()은 들어있는 타입이 mutable일때 참조자만 변경한다.
+그리고 immutable.assign()은 자신을 주어진 객체로 진짜로 복제한다.</p>
+  </li>
+  <li>ref와 node.assign()으로 1. immutable/mutable에 따른 평가전략 구현과, 2. property의 구현을 위한 API
+2개를 모두 구현할 수 있다.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">namulang</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">namulang</li><li><a class="u-email" href="mailto:knizofficial@gmail.com">knizofficial@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/kniz"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">kniz</span></a></li><li><a href="https://www.twitter.com/kniz_net"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">kniz_net</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
