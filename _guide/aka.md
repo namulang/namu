@@ -1,3 +1,7 @@
+---
+title: aka
+layout: page
+---
 # aka
 
 * 식별자의 별칭을 만들 수 있다.
