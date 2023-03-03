@@ -29,6 +29,19 @@ url: "http://namu.codes" # the base hostname & protocol for your site, e.g. http
 twitter_username: kniz_net
 github_username:  kniz
 
+
+collections:
+  guide: 
+    permalink: "/:collection/:path/"
+    output: true
+
+defaults:
+  scope:
+    path: ""
+    type: posts
+  values:
+    layout: page
+
 # Build settings
 theme: minima
 plugins:
