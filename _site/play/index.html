@@ -3,20 +3,20 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>About | namulang</title>
+<title>Play | namulang</title>
 <meta name="generator" content="Jekyll v3.9.3" />
-<meta property="og:title" content="About" />
+<meta property="og:title" content="Play" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
 <meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description." />
-<link rel="canonical" href="http://localhost:4000/about/" />
-<meta property="og:url" content="http://localhost:4000/about/" />
+<link rel="canonical" href="http://localhost:4000/play/" />
+<meta property="og:url" content="http://localhost:4000/play/" />
 <meta property="og:site_name" content="namulang" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="About" />
+<meta property="twitter:title" content="Play" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"About","name":"namulang","url":"http://localhost:4000/about/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Play","url":"http://localhost:4000/play/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="namulang" /></head>
 <body><header class="site-header" role="banner">
@@ -39,20 +39,53 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">About</h1>
+    <h1 class="post-title">Play</h1>
   </header>
 
   <div class="post-content">
-    <p>This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at <a href="https://jekyllrb.com/">jekyllrb.com</a></p>
+    <html>
+    <head>
+        <style>
+textarea#src {
+    width: 100vw;
+    height:60%;
+    font-family: Retro Gaming;
+    font-size: 30px;
+}
+iframe#namu {
+    width: 100vw;
+    height:40%;
+}
 
-<p>You can find the source code for Minima at GitHub:
-<a href="https://github.com/jekyll">jekyll</a> /
-<a href="https://github.com/jekyll/minima">minima</a></p>
+@font-face {
+    font-family: 'Retro Gaming';
+    font-style: 'normal';
+    font-weight: 400;
+    src: url('Retro Gaming.ttf') format('truetype');
+}
+        </style>
+        <script>
+            function inputTab(textArea) {
+                if (event.key == 'Tab') {
+                    event.preventDefault();
+                    var start = textArea.selectionStart;
+                    var end = textArea.selectionEnd;
 
-<p>You can find the source code for Jekyll at GitHub:
-<a href="https://github.com/jekyll">jekyll</a> /
-<a href="https://github.com/jekyll/jekyll">jekyll</a></p>
+                    textArea.value = textArea.value.substring(0, start) + "\t" + textArea.value.substring(end);
 
+                    // put caret at right position again
+                    textArea.selectionStart = textArea.selectionEnd = start + 1;
+                  }
+            }
+        </script>
+    </head>
+    <body>
+        <script type='text/javascript' src='namu-starter.js'></script>
+        <textarea id='src' onkeydown='inputTab(this)'></textarea>
+        <input type='button' id='runbt' value='run' onclick='runNamuTextArea("namu", "src");'/>
+        <iframe id='namu' scrolling='no' src='./namu.html' />
+    </body>
+</html>
 
   </div>
 
