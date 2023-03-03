@@ -36,7 +36,7 @@ namespace namu {
         frame& fr = namu::thread::get()._getNowFrame();
         for(auto& e : _exprs) {
             ret = e.run();
-            if(!fr.getRetState().isEmpty()) break;
+            if(!fr.getRetState().isOverwritable(frame::BLK_EMPTY)) break;
         }
 
         fr.setRet(frame::BLK_RET, *ret);
