@@ -1,0 +1,18 @@
+body {
+    text-align: center;
+    margin: 0 auto;
+}
+
+textarea#output {
+    background-color: #999;
+    display: none;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+div#playbt {
+    width: 100vw;
+    height: 100vh;
+    background-color:#999;
+}
