@@ -1,0 +1,273 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>delegator - namu</title>
+<meta name="description" content="An amazing website.">
+
+
+  <meta name="author" content="kniz">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="namu">
+<meta property="og:title" content="delegator">
+<meta property="og:url" content="http://localhost:4000/_guide/delegator/">
+
+
+  <meta property="og:description" content="An amazing website.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/_guide/delegator/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "kniz",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="namu Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--page">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          namu
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/guide/">guide</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">about</a>
+            </li><li class="masthead__menu-item">
+              <a href="/play/">play</a>
+            </li><li class="masthead__menu-item">
+              <a href="/ref/">ref</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">news</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      <h1 id="delegator">delegator</h1>
+
+<h2 id="메소드를-정의하면-그것이-곧-delegator로-사용할-수-있다">메소드를 정의하면 그것이 곧 delegator로 사용할 수 있다.</h2>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cb</span><span class="p">(</span><span class="n">msg</span> <span class="n">str</span><span class="p">)</span> <span class="n">void</span> <span class="o">=</span> <span class="n">null</span> <span class="c">// just interface. can't call this function directly.</span>
+<span class="n">cb2</span><span class="p">(</span><span class="n">msg</span> <span class="n">str</span><span class="p">)</span> <span class="n">void</span><span class="o">:</span> <span class="n">ret</span> <span class="c">// returining void. it's accessible.</span>
+<span class="n">foo</span><span class="p">(</span><span class="n">msg</span> <span class="n">str</span><span class="p">,</span> <span class="err">@</span><span class="n">cb</span><span class="p">)</span> <span class="n">void</span>
+    <span class="n">cb</span><span class="p">(</span><span class="n">str</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="func과-nested-func은-delegator를-생성하는-api를-각각-다른-방법으로-제공한다">func과 nested func은 delegator를 생성하는 API를 각각 다른 방법으로 제공한다.</h2>
+<ul>
+  <li>일반 func의 경우 특정한 objscope에 대해서 scope capture를 하면 된다.</li>
+  <li>반면 nested func의 경우 outer func의 localscope 까지 모두 capture가 되어야 한다.
+    <ul>
+      <li>nested func은 outer func 안에 있는 상황이기 때문에, 모든 시나리오에서 이 nested func에 접근하려면 이미 outer func의 S, NS가 scope에 올라간 상황이 된다.</li>
+      <li>nested func은 이 outer func의 scope에 크게 의존하고 있는 특수한 문법이므로 capture가 될때에도 outerscope 위에 자신의 것이 capture가 되어야 한다.</li>
+    </ul>
+  </li>
+  <li>일반 func과 nested func은 모두 delegate() Delegator 를 제공하며, nested Func은 이것을 override 해서 localscope도 capture가 되도록 만든다.</li>
+  <li>implicitCast(type) 혹은 as(type) 에서 func이 들어온 경우에는 현재의 stackframe으로부터 호출자 frame을 [1] 로 추출하여 thisobj로 eval 한 다음에 수행한다.
+    <ul>
+      <li>단순히 stackframe[1] 알고리즘으로는 native 환경에서 주의 깊지 못한 개발자가 잘못 호출하면 stackframe이 엉망이 된 상태에서 호출자 frame을 유추하지 못할 수 있다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="메소드에-접근하는-expr은-delegator로-캐스팅-될-수-있다">메소드에 접근하는 expr은 Delegator로 캐스팅 될 수 있다.</h2>
+<ul>
+  <li>객체를 통해 func에 접근하는 경우:
+```go
+def person
+  sayHello(name str) void
+func := person.sayHello</li>
+</ul>
+
+<p>DeclExpr(“func”, FuncType(sayHello), AccessExpr(AccessExpr(scope, “person”), “sayHello”))</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    * 이 경우 DeclExpr은 AccessExpr(AccessExpr(scope, "person"), "sayHello").cast(FuncType) 을 시도한다.
+    * Func.as() 혹은 Func.implicitCast(funcType) 이 되면서 delegator가 나오게 된다.
+
+* 객체의 명시적인 접근 없는 경우:
+```go
+def person
+    sayHello(name str) void
+    foo() sayHello
+        return sayHello
+
+        ReturnExpr(AccessExpr(scope, "sayHello"))
+        // 구현상으로는 위의 케이스와 동일하게 AccessExpr이 담당하는 걸 알 수 있다.
+</code></pre></div></div>
+
+<h2 id="delegator가-생성될때-scope-캡처가-발생한다">Delegator가 생성될때 scope 캡처가 발생한다.</h2>
+<ul>
+  <li>scope 캡처를 위한 chain 1개와 func에 대한 ref 1개를 갖는다.</li>
+</ul>
+
+<h2 id="메소드에-this는-값으로-접근했을때의-this이다">메소드에 this는 값으로 접근했을때의 this이다.</h2>
+<ul>
+  <li>임의의 객체를 통해서 메소드에 접근하였고 그것이 값으로써 다른 변수의 할당될때 해당 변수는 delegator로 정의된다.</li>
+  <li>delegator로 메소드가 값을 넣을때 delegator는 메소드 접근시 사용한 this를 capture해 놓는다.</li>
+  <li>클로져는 현재의 local scope 까지 capture하므로 delegator에서 구현이 하나 더 추가된 것이다.</li>
+  <li>delegator는 메소드가 호출되기 직전 capture한 scope를 load한다.</li>
+  <li>메소드가 끝나면 scope를 원상복구 시킨다.</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">def</span> <span class="n">person</span>
+    <span class="n">sayHello</span><span class="p">()</span> <span class="n">void</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">out</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">:=</span> <span class="n">person</span><span class="p">()</span>
+
+<span class="n">arr</span> <span class="o">:=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">sayHello</span><span class="p">,</span> <span class="n">person</span><span class="o">.</span><span class="n">sayHello</span><span class="p">]</span>
+<span class="n">arr2</span> <span class="n">person</span><span class="o">.</span><span class="n">sayHello</span><span class="p">[]</span> <span class="c">// 타입으로 접근한 것이므로 this는 무시된다.</span>
+<span class="n">arr2</span> <span class="o">=</span> <span class="n">arr</span>
+
+<span class="k">for</span> <span class="n">fn</span> <span class="n">in</span> <span class="n">arr2</span>
+    <span class="n">fn</span><span class="p">()</span> <span class="c">// 사용시 this를 필요로 하지 않는다.</span>
+</code></pre></div></div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 kniz. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

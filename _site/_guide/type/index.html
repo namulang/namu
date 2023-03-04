@@ -1,0 +1,286 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>type - namu</title>
+<meta name="description" content="An amazing website.">
+
+
+  <meta name="author" content="kniz">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="namu">
+<meta property="og:title" content="type">
+<meta property="og:url" content="http://localhost:4000/_guide/type/">
+
+
+  <meta property="og:description" content="An amazing website.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/_guide/type/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "kniz",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="namu Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--page">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          namu
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/guide/">guide</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">about</a>
+            </li><li class="masthead__menu-item">
+              <a href="/play/">play</a>
+            </li><li class="masthead__menu-item">
+              <a href="/ref/">ref</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">news</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      <h1 id="type">type</h1>
+
+<h2 id="worldlang은-타입이-존재한다">worldlang은 타입이 존재한다.</h2>
+
+<h2 id="type은-worldfrx에-type-ttype-와-같은-컴포넌트로-구현된다">type은 worldfrx에 type, ttype<T> 와 같은 컴포넌트로 구현된다.</T></h2>
+
+<h2 id="type은-monostate다">type은 monostate다.</h2>
+
+<h2 id="type은-c의-rtti를-제공한다">type은 C++의 RTTI를 제공한다.</h2>
+
+<ul>
+  <li>부모 클래스 판단</li>
+  <li>“is” 메소드가 여기서 구현</li>
+</ul>
+
+<h2 id="type은-메소드콜의-인자의-verification에도-사용된다">type은 메소드콜의 인자의 verification에도 사용된다.</h2>
+
+<h2 id="type은-nativetype과-mgdtype-2종류로-상속된다">type은 nativeType과 mgdType 2종류로 상속된다.</h2>
+
+<h2 id="mgdtype은-origin객체를-반환할-수-있다">mgdType은 origin객체를 반환할 수 있다.</h2>
+
+<h2 id="type을-정의하면-그것의-unique-object가-그-type이름에-대신들어간다">type을 정의하면 그것의 unique object가 그 type이름에 대신들어간다.</h2>
+
+<ul>
+  <li>메소드도 마찬가지다.</li>
+</ul>
+
+<h2 id="type에-대고-생성자를-호출하면-unique-obj의-복제가-아니라-type의-복제가-된다">type에 대고 생성자를 호출하면 unique obj의 복제가 아니라 type의 복제가 된다.</h2>
+
+<h2 id="class란-native-type-을-의미하며-meta-모듈에-의해-관리된다">class란 native type 을 의미하며 meta 모듈에 의해 관리된다.</h2>
+
+<h2 id="meta-pack">meta pack</h2>
+
+<ul>
+  <li>별도의 기반 모듈로써 native의 reflection을 담당한다.</li>
+  <li>world에서 제공하는 메타 API의 backend 에 해당한다.</li>
+</ul>
+
+<h3 id="unregister를-지원해야-한다">unregister를 지원해야 한다.</h3>
+
+<ul>
+  <li>C-REPL 지원을 위해서 native 모듈도 붙었다가 떼어졌다가 된다.</li>
+  <li>따라서 native class 정보 또한 시스템에서 제거될 수 있어야 한다.</li>
+</ul>
+
+<h3 id="타입의-연관정보는-모두-meta-모듈에-의존한다">타입의 연관정보는 모두 meta 모듈에 의존한다.</h3>
+
+<h3 id="매크로를-통해서-meta-class를-생성할-수-있어야-한다">매크로를 통해서 meta class를 생성할 수 있어야 한다.</h3>
+
+<ul>
+  <li>이경우 프로그램이 시작하기 전에 자동으로 register를 한다.</li>
+  <li>unregister는 자동으로 할수 없다.</li>
+</ul>
+
+<h3 id="사용자가-정의한-metaclass-객체를-생성등록-할-수도-있어야-한다">사용자가 정의한 metaclass 객체를 생성/등록 할 수도 있어야 한다.</h3>
+
+<ul>
+  <li>상속 기반이 아니라 객체 기반이어야 한다는 것이다.</li>
+  <li>물론 unregister도 가능해야 한다.</li>
+</ul>
+
+<h2 id="빌트인-타입">빌트인 타입</h2>
+
+<ul>
+  <li>인터프리터가 인지하고 있는 타입을 빌트인 타입이라고 한다.</li>
+  <li>빌트인 타입은 다른 타입과 달리 인터프리터 연관된 이점 및 특징을 가진다.</li>
+</ul>
+
+<h3 id="종류">종류</h3>
+<ul>
+  <li>primitive types: int, str, err, node, void, bool, flt</li>
+  <li>containers: arr, list, map</li>
+</ul>
+
+<h3 id="빌트인-타입은-native로-편하게-접근할-수-있는-경로-제공되는-mgd-object이다">빌트인 타입은 native로 편하게 접근할 수 있는 경로 제공되는 mgd object이다.</h3>
+
+<ul>
+  <li>대부분 native 클래스로써 제공될 것이다. 인터프리터는 이 클래스의 객체를 생성하기만 하면 되므로 편리한 접근방법을 제시한 것이다.</li>
+  <li>반면, mgd Object라는 것은 일반적인 mgdObject가 가지는 특성을 그대로 가지고 있으며 world시스템 입장에서 봤을때는 이것인 mgdobject인지 native object 인지 구분이 가선 안된다는 것이다.</li>
+  <li>보통은 Object 클래스에서 상속해 native 클래스를 정의한 뒤, 시스템이 초기화되는 시점에 이 native 클래스들을 초기화화는 queue에 집어넣는 형태로 구현된다.</li>
+  <li>일반 mgdobject와 구분이 가면 안되기 때문에 엄연히 packd path 가 존재해야 한다.</li>
+  <li>속도 최적화를 위해서 완전한 일반 mgd object 기반으로 만들지 않는 것이다.</li>
+</ul>
+
+<h3 id="사용성에-있어서도-mgd-object와-native-object는-차이가-있어서는-안된다">사용성에 있어서도 mgd object와 native object는 차이가 있어서는 안된다.</h3>
+<ul>
+  <li>이를테면 mgd object의 경우 다른 IDE는 source code를 보여주는 창을 띄워줌으로써 해당 타입에 어떠한 메소드들이 있는지를 보게 해준다.</li>
+  <li>이 예를 기준으로 한다면 native object도 소스코드를 보여주지는 못할지언정 마찬가지로 어떠한 메소드가 있는지를 IDE에서 동일하게 리스트로 보여줄 수는 있어야 한다.</li>
+</ul>
+
+<h2 id="typegettype-은-자기-자신이-나와야-한다">Type.getType() 은 자기 자신이 나와야 한다.</h2>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 kniz. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

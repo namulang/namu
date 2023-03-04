@@ -1,0 +1,239 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>null safety - namu</title>
+<meta name="description" content="An amazing website.">
+
+
+  <meta name="author" content="kniz">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="namu">
+<meta property="og:title" content="null safety">
+<meta property="og:url" content="http://localhost:4000/_guide/null%20safety/">
+
+
+  <meta property="og:description" content="An amazing website.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/_guide/null%20safety/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "kniz",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="namu Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--page">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          namu
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/guide/">guide</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">about</a>
+            </li><li class="masthead__menu-item">
+              <a href="/play/">play</a>
+            </li><li class="masthead__menu-item">
+              <a href="/ref/">ref</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">news</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      <h1 id="null-safety">null safety</h1>
+
+<h2 id="exception-handling의-한-종류이다">exception handling의 한 종류이다.</h2>
+
+<h2 id="non-null타입과-nullable-타입을-혼용한다">non null타입과 nullable 타입을 혼용한다.</h2>
+
+<ul>
+  <li>?를 붙이면 nullable, 기본적으로는 non null 이다.</li>
+</ul>
+
+<h2 id="편의를-위해-safe-navigation을-제공한다">편의를 위해 safe navigation을 제공한다.</h2>
+
+<ul>
+  <li>문법: “?.”</li>
+  <li>멤버의 반환에 대해서만 사용이 가능하다.</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">boo</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="err">?</span><span class="o">.</span><span class="n">sayHello</span><span class="p">()</span>
+
+<span class="c">// 2:</span>
+<span class="n">try</span> <span class="n">b</span> <span class="o">:=</span> <span class="n">boo</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+    <span class="n">on</span> <span class="n">nullErr</span><span class="o">:</span> <span class="k">return</span>
+</code></pre></div></div>
+
+<h2 id="ref가-boolean으로-캐스팅이-될때-null-여부-체크-결과를-반환한다">ref가 boolean으로 캐스팅이 될때 null 여부 체크 결과를 반환한다.</h2>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">:=</span> <span class="n">view</span><span class="err">?</span><span class="o">.</span><span class="n">activity</span>
+<span class="n">b</span> <span class="o">:=</span> <span class="n">view</span><span class="err">?</span><span class="o">.</span><span class="n">fragment</span>
+
+<span class="k">if</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span>
+   <span class="o">...</span> 
+</code></pre></div></div>
+
+<h2 id="nullablle-타입에-대해-이-코드라인에서-null-체크가-이루어졌다는걸-컴파일러는-기억해야-한다">nullablle 타입에 대해 이 코드라인에서 null 체크가 이루어졌다는걸 컴파일러는 기억해야 한다.</h2>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">:=</span> <span class="n">view</span><span class="err">?</span><span class="o">.</span><span class="n">fragment</span> <span class="c">// a fragment?</span>
+
+<span class="k">go</span><span class="p">(</span><span class="n">nonnull</span> <span class="n">fragment</span><span class="p">)</span>
+    <span class="n">nonnull</span><span class="o">.</span><span class="n">doSomething</span><span class="p">()</span>
+
+<span class="k">go</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c">// err. a is nullable.</span>
+<span class="k">if</span> <span class="n">a</span>
+    <span class="k">go</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c">// ok. a was nullable. but null checked.</span>
+</code></pre></div></div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 kniz. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

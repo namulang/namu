@@ -1,0 +1,229 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>switch - namu</title>
+<meta name="description" content="An amazing website.">
+
+
+  <meta name="author" content="kniz">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="namu">
+<meta property="og:title" content="switch">
+<meta property="og:url" content="http://localhost:4000/_guide/switch/">
+
+
+  <meta property="og:description" content="An amazing website.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/_guide/switch/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "kniz",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="namu Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--page">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          namu
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/guide/">guide</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">about</a>
+            </li><li class="masthead__menu-item">
+              <a href="/play/">play</a>
+            </li><li class="masthead__menu-item">
+              <a href="/ref/">ref</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">news</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      <h1 id="switch">switch</h1>
+
+<h2 id="요점">요점</h2>
+<ul>
+  <li>2개의 form이 존재한다.</li>
+  <li>primitive 변수와 enum에 대해서만 switch을 사용할 수 있다. 일반 클래스는 지원 하지 않는다.</li>
+</ul>
+
+<h2 id="문법">문법</h2>
+<pre><code class="language-world">switch expr
+    (&lt;number&gt; | &lt;string&gt; | &lt;boolean&gt;) [, (&lt;number&gt; | &lt;string&gt;)]*  &lt;-- #1
+        // if expr.operator==() 로 번역
+    range                                                         &lt;-- #2
+        // range.has(expr) 로 번역
+</code></pre>
+
+<ul>
+  <li>2가지 form을 지원한다.</li>
+  <li>#1 form의 경우 if it == <something> || 과 같은 표현으로 간주한다.
+여기서 switch에 질의되는 expr의 타입은 비교되는 <something> 보다 구체타입이어야 한다는 걸 알 수 있다.
+이것은 == 자체가 이렇게 동작하는 것이다.</something></something></li>
+</ul>
+
+<h2 id="verification">verification</h2>
+<ul>
+  <li>
+    <p>range의 타입과 expr의 타입이 서로 호환가능해야 함.
+  예) 2..3.has(2.5) 는 true다. (float -&gt; int)
+  그러나 2..5.has(“3”) 는 verification err가 되어야 한다.</p>
+  </li>
+  <li>
+    <p>expr의 타입은 op==를 지원하는 타입이어야 한다.</p>
+  </li>
+</ul>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 kniz. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

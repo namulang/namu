@@ -1,0 +1,239 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>for - namu</title>
+<meta name="description" content="An amazing website.">
+
+
+  <meta name="author" content="kniz">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="namu">
+<meta property="og:title" content="for">
+<meta property="og:url" content="http://localhost:4000/_guide/for/">
+
+
+  <meta property="og:description" content="An amazing website.">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/_guide/for/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "kniz",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="namu Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--page">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          namu
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/guide/">guide</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">about</a>
+            </li><li class="masthead__menu-item">
+              <a href="/play/">play</a>
+            </li><li class="masthead__menu-item">
+              <a href="/ref/">ref</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">news</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      <h1 id="for">for</h1>
+
+<h2 id="for문은-2가지로-사용한다">for문은 2가지로 사용한다.</h2>
+<ul>
+  <li>for <booleanexpr> 과 for <iterator> in <collector> 다.</collector></iterator></booleanexpr></li>
+  <li>for문은 var가 true를 의미하면 루프를 지속한다. null은 0을 의미하며 0은 false를 의미한다.</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="o">&lt;</span><span class="n">var</span><span class="o">&gt;</span>
+    <span class="p">...</span>
+<span class="k">for</span> <span class="nb">true</span>
+    <span class="p">...</span>
+<span class="k">for</span> <span class="n">is_success</span>
+    <span class="p">...</span>
+
+<span class="k">for</span> <span class="n">null</span>
+    <span class="p">...</span>
+<span class="k">for</span> <span class="nb">false</span>
+    <span class="p">...</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Obj</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">a</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">null</span>
+</code></pre></div></div>
+
+<h2 id="for-in은-별도의-문법이다">for in은 별도의 문법이다.</h2>
+<ul>
+  <li><var>의 getiterator()를 호출하여 가져온 뒤, 자동으로 next를 호출한다.</var></li>
+</ul>
+
+<h2 id="for-문-condition-부분에-정의한-변수는-최초-1번만-정의되고-다음-부터는-할당으로-간주한다">for 문 condition 부분에 정의한 변수는 최초 1번만 정의되고 다음 부터는 할당으로 간주한다.</h2>
+<pre><code class="language-namu">foo() int
+for isTrue := foo()
+    doSomething()
+</code></pre>
+
+<ul>
+  <li>위의 코드는 사실 다음과 같다.
+    <pre><code class="language-namu">isTrue int
+for isTrue = foo()
+  doSomething()
+</code></pre>
+  </li>
+</ul>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 kniz. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
