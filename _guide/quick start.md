@@ -1,12 +1,12 @@
 ---
-layout: page
+layout: single
 title: quick start
 permalink: /guide/
 ---
 
 # Quick Start in KR 
 
-```namu
+```python
 import sys.cons.
 
 def app
@@ -19,7 +19,7 @@ def app
 
 * 정의시, type은 항상 뒤에 옵니다.
 
-```namu
+```python
 str1 := "message" // 변수의 정의
 str1 = "wow" 
 bool1 := false

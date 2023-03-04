@@ -1,0 +1,12 @@
+# main links
+main:
+  - title: "guide"
+    url: /guide/
+  - title: "about"
+    url: /about/
+  - title: "play"
+    url: /play/
+  - title: "ref"
+    url: /ref/
+  - title: "news"
+    url: /posts/
