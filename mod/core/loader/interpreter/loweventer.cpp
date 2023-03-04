@@ -431,7 +431,7 @@ namespace namu {
     node* me::onGetArray(const node& elemType) {
         NAMU_DI("tokenEvent: onGetArray(%s)", elemType.getType().getName().c_str());
 
-        return new defArrayExpr(elemType);
+        return new arr(elemType);
     }
 
     node* me::onGetElem(const node& arr, const node& idx) {
