@@ -15,6 +15,7 @@ gem "jekyll", ENV["JEKYLL_VERSION"] if ENV["JEKYLL_VERSION"]
 #gem "github-pages", group: :jekyll_plugins
 # If you have any plugins, put them here!
 group :jekyll_plugins do
+  gem "jekyll-include-cache"
   gem "kramdown-parser-gfm"
   gem "jekyll-seo-tag"
   gem "jekyll-feed", "~> 0.12"
@@ -22,7 +23,6 @@ group :jekyll_plugins do
   gem "jekyll-paginate"
   gem "jekyll-sitemap"
   gem "jekyll-gist"
-  gem "jekyll-include-cache"
 end
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
