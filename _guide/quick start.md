@@ -1,5 +1,5 @@
 ---
-layout: guide
+layout: page
 title: quick start
 permalink: /guide/
 ---
