@@ -428,9 +428,8 @@ namespace namu {
         return new getExpr(from, name, args);
     }
 
-    node* me::onGetArray(const node& elemType) {
+    node* me::onGetArray(node& elemType) {
         NAMU_DI("tokenEvent: onGetArray(%s)", elemType.getType().getName().c_str());
-
         return new arr(elemType);
     }
 

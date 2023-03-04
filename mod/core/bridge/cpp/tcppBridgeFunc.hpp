@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    template <typename Ret, typename T, template <typename, nbool> class Marshaling, typename... Args>
+    template <typename Ret, typename T, typename S, template <typename, typename, nbool> class Marshaling, typename... Args>
     class tcppBridgeFuncBase : public func {
         NAMU(ADT(tcppBridgeFuncBase, func))
     protected:
@@ -14,7 +14,7 @@ namespace namu {
     public:
         tcppBridgeFuncBase(fptrType fptr): super(), _fptr(fptr) {}
 
-        static_assert(allTrues<(sizeof(Marshaling<Args, tifSub<Args, node>::is>::canMarshal() ) ==
+        static_assert(allTrues<(sizeof(Marshaling<Args, S, tifSub<Args, node>::is>::canMarshal() ) ==
                 sizeof(metaIf::yes))...>::value,
                 "can't marshal one of this func's parameter ntypes.");
 
@@ -30,7 +30,7 @@ namespace namu {
 
         const node& getRet() const override {
             if(!_ret)
-                _ret.bind(Marshaling<Ret, tifSub<Ret, node>::is>::onGetRet());
+                _ret.bind(Marshaling<Ret, S, tifSub<Ret, node>::is>::onGetRet());
 
             return *_ret;
         }
@@ -76,10 +76,10 @@ namespace namu {
         mutable str _ret;
     };
 
-    template <typename Ret, typename T, template <typename, nbool> class Marshaling,
+    template <typename Ret, typename T, typename S, template <typename, typename, nbool> class Marshaling,
              typename... Args>
-    class tcppBridgeFunc : public tcppBridgeFuncBase<Ret, T, Marshaling, Args...> {
-        typedef tcppBridgeFuncBase<Ret, T, Marshaling, Args...> _super_;
+    class tcppBridgeFunc : public tcppBridgeFuncBase<Ret, T, S, Marshaling, Args...> {
+        typedef tcppBridgeFuncBase<Ret, T, S, Marshaling, Args...> _super_;
         NAMU(CLASS(tcppBridgeFunc, _super_))
 
     public:
@@ -94,10 +94,10 @@ namespace namu {
         str _marshal(args& args, std::index_sequence<index...>);
     };
 
-    template <typename T, template <typename, nbool> class Marshaling,
+    template <typename T, typename S, template <typename, typename, nbool> class Marshaling,
              typename... Args>
-    class tcppBridgeFunc<void, T, Marshaling, Args...> : public tcppBridgeFuncBase<void, T, Marshaling, Args...> {
-        typedef tcppBridgeFuncBase<void, T, Marshaling, Args...> _super_;
+    class tcppBridgeFunc<void, T, S, Marshaling, Args...> : public tcppBridgeFuncBase<void, T, S, Marshaling, Args...> {
+        typedef tcppBridgeFuncBase<void, T, S, Marshaling, Args...> _super_;
         NAMU(CLASS(tcppBridgeFunc, _super_))
 
     public:

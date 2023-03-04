@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../../../bridge/cpp/tcppBridge.hpp"
+#include "../../../bridge/cpp/tgenericCppBridge.hpp"
 
 namespace namu {
 
     // another f**king annoying MSVC Hack:
     //  to avoid C2901 error, I need to declare sort of dllexport(import) things at here.
     //  spended plenty of hours again to find out the reason. thank you so much.
-    typedef class _nout tcppBridge<narr> __argSuperClass;
+    typedef class _nout tgenericCppBridge<narr> __argSuperClass;
 
     class _nout arr : public __argSuperClass, public tucontainable<node>, tarrayable<node> {
         NAMU(CLASS(arr, __argSuperClass), VISIT())
@@ -18,21 +18,16 @@ namespace namu {
 
     public:
         arr();
-        arr(const node& newType);
+        arr(const node& elemType);
 
     public:
         using tarrayable<node>::operator[];
         node& operator[](nidx n) override;
 
     public:
-        const node& getElemType() const {
-            return *_type;
-        }
-
         using super::subs;
         nbicontainer& subs() override {
-            str as = _type->as<node>();
-            const type* key = &as->getType();
+            const type* key = &getElemType().getType();
             auto e = _cache.find(key);
             if(e != _cache.end())
                 return e->second.get();
@@ -112,7 +107,6 @@ namespace namu {
         scope& _getOriginScope();
 
     private:
-        str _type;
         cache _cache;
     };
 }

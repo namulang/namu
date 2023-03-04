@@ -100,7 +100,7 @@ namespace namu {
         node* onGetGeneric(const std::string& genericObjName, const args& typeParams);
         node* onGetElem(const node& arr, const node& idx);
         //      container:
-        node* onGetArray(const node& elemType);
+        node* onGetArray(node& elemType);
         //      assign:
         node* onAssign(node& lhs, node& rhs);
 

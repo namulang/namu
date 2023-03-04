@@ -349,12 +349,12 @@ TEST_F(arrTest, testBasicDefSyntax) {
         main() int
             arr int[]
             aka sys.con c
-            c.print("len=" + arr.len())
+            c.print("len=" + arr.len() as str)
             arr.add(1)
             arr.add(2.5)
-            c.print("len=" + arr.len() + "\n")
-            c.print("arr[0]=" + arr.get(0) + "\n")
-            c.print("arr[1]=" + arr[1] + "\n")
+            c.print("len=" + arr.len() as str + "\n")
+            c.print("arr[0]=" + arr.get(0) as str + "\n")
+            c.print("arr[1]=" + arr[1] as str + "\n")
             ret arr[
                 getIndex()]
     )SRC").shouldVerified(true);
@@ -370,7 +370,7 @@ TEST_F(arrTest, testImplicitlyDefSyntax) {
 
         main() int
             s := sum({1, 2, 3})
-            sys.con.print("sum = " + s + "\n")
+            sys.con.print("sum = " + s as str + "\n")
             ret s
     )SRC").shouldVerified(true);
     str res = run();
