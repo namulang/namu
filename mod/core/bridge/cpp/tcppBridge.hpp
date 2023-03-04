@@ -8,8 +8,11 @@
 namespace namu {
 
     /// bridge object only can shares 'shared' sub nodes.
-    template <typename T>
-    class tcppBridge : public obj {
+    /// @param T represents native class.
+    /// @param S represents whether it's generic obj or not.
+    ///        please fill with genericCppObj if you want to generic.
+    template <typename T, typename S = obj>
+    class tcppBridge : public S {
         // TODO: how to impement 'as()' on bridge obj:
         //  each tcppBridge obj has its unique type object. when it got called 'getType()'
         //  it returns its type object.
@@ -17,8 +20,8 @@ namespace namu {
         //  however, type object is dynamically belongs to this bridge object, when user
         //  tries to get ttype<T>, it's not derived from ntype so it won't have any 'as()'
         //  func. user can't operate conversion in this way.
-        NAMU(CLASS(tcppBridge, obj))
-        template <typename Ret, typename T1, template <typename, nbool> class Marshaling, typename...Args>
+        NAMU(CLASS(tcppBridge, S))
+        template <typename Ret, typename T1, typename S1, template <typename, typename, nbool> class Marshaling, typename...Args>
         friend class tcppBridgeFunc;
 
     public:
@@ -40,23 +43,23 @@ namespace namu {
 
         template <typename Ret, typename... Args>
         me* func(const std::string& name, Ret(T::*fptr)(Args...)) {
-            subs().add(name, new tcppBridgeFunc<Ret, T, tmarshaling, Args...>(fptr));
+            subs().add(name, new tcppBridgeFunc<Ret, T, S, tmarshaling, Args...>(fptr));
             return this;
         }
         template <typename Ret, typename... Args>
         me* func(const std::string& name, Ret(T::*fptr)(Args...) const) {
-            subs().add(name, new tcppBridgeFunc<Ret, T, tmarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
+            subs().add(name, new tcppBridgeFunc<Ret, T, S, tmarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
             return this;
         }
 
         template <typename Ret, typename... Args>
         me* genericFunc(const std::string& name, Ret(T::*fptr)(Args...)) {
-            subs().add(name, new tcppBridgeFunc<Ret, T, tgenericMarshaling, Args...>(fptr));
+            subs().add(name, new tcppBridgeFunc<Ret, T, genericCppObj, tgenericMarshaling, Args...>(fptr));
             return this;
         }
         template <typename Ret, typename... Args>
         me* genericFunc(const std::string& name, Ret(T::*fptr)(Args...) const) {
-            subs().add(name, new tcppBridgeFunc<Ret, T, tgenericMarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
+            subs().add(name, new tcppBridgeFunc<Ret, T, genericCppObj, tgenericMarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
             return this;
         }
 

@@ -4,8 +4,8 @@
 
 namespace namu {
 
-#define TEMPL template <typename T>
-#define ME tmarshaling<tarr<T>, true>
+#define TEMPL template <typename T, typename S>
+#define ME tmarshaling<tarr<T>, S, true>
 
     TEMPL
     tarr<T> ME::toNative(node& it) {

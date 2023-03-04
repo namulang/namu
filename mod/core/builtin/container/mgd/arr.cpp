@@ -75,7 +75,7 @@ namespace namu {
             }
 
             str run(const args& a) override {
-                return *_ret;
+                return _ret ? _ret->as<node>() : *_ret;
             }
 
             nbool setRet(const node& newRet) override {
@@ -87,8 +87,8 @@ namespace namu {
         };
     }
 
-    me::arr(): super(new narr()), _type(new obj()) {}
-    me::arr(const node& newType): super(new narr()), _type(newType) {}
+    me::arr(): super(new narr()) { setElemType(*new obj()); }
+    me::arr(const node& newType): super(new narr()) { setElemType(newType); }
 
     node& me::operator[](nidx n) {
         return get()[n];
@@ -107,25 +107,25 @@ namespace namu {
     }
 
     nbool me::set(const iter& at, const node& new1) {
-        str ased = new1.asImpli(*_type);
+        str ased = new1.asImpli(getElemType());
         if(!ased) return false;
         return get().set(at, *ased);
     }
     nbool me::set(nidx n, const node& new1) {
-        str ased = new1.asImpli(*_type);
+        str ased = new1.asImpli(getElemType());
         if(!ased) return false;
         return get().set(n, *ased);
     }
 
     nbool me::add(const iter& at, const node& new1) {
-        str ased = new1.asImpli(*_type);
+        str ased = new1.asImpli(getElemType());
         if(!ased) return false;
 
         return get().add(at, *ased);
     }
 
     nbool me::add(nidx n, const node& new1) {
-        str ased = new1.asImpli(*_type);
+        str ased = new1.asImpli(getElemType());
         if(!ased) return false;
 
         return get().add(n, *ased);
@@ -172,7 +172,7 @@ namespace namu {
         _cache.insert({key, clone}); // this avoids infinite loop.
 
         generalizer g;
-        g.add(*new param(TYPENAME, *_type))
+        g.add(*new param(TYPENAME, getElemType()))
          .setRoot(*this)
          .start();
 

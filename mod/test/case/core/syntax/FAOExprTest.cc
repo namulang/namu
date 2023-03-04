@@ -9,6 +9,7 @@ namespace {
 
 TEST_F(FAOExprTest, simpleAdd) {
     make().parse(R"SRC(
+        a := 5
         b := 2
         main() int
             ret a + b
