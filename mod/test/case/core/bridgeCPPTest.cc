@@ -218,9 +218,9 @@ TEST_F(bridgeCPPTest, passArr) {
     a.add(new myObj(3));
 
     str testobj(tcppBridge<testObj>::def()
-        ->genericFunc("updateLen", &testObj::updateLen)
-        ->genericFunc("sumOfLen", &testObj::sumOfLen));
-    str res = testobj->run("updateLen", args{arr{a}});
+        ->func("updateLen", &testObj::updateLen)
+        ->func("sumOfLen", &testObj::sumOfLen));
+    str res = testobj->run("updateLen", args{narr{a}});
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 3);
 
