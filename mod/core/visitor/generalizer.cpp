@@ -72,12 +72,11 @@ namespace namu {
 
         const node& retOrg = _findOrigin(me.getRet());
         if(!nul(retOrg)) {
+            me.setRet(retOrg);
             genericCppObj& parent = i.parent->cast<genericCppObj>();
-            if(!nul(parent)) {
-                // TODO: errReport if null.
+            if(!nul(parent))
                 parent.setElemType(retOrg);
-                me.setRet(retOrg);
-            }
+                // TODO: errReport if null.
         }
 
         onVisit(i, (func::super&) me);
