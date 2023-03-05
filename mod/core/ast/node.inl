@@ -27,6 +27,7 @@ namespace namu {
             return sub<T>(name);
 
         return subs().get<T>([&](const std::string& key, const T& val) {
+            NAMU_DI("this=%s[%x]: key=%s name=%s", getType().getName().c_str(), this, key.c_str(), name.c_str());
             return key == name && val.canRun(a);
         });
     }
@@ -54,6 +55,7 @@ namespace namu {
             return subAll<T>(name);
 
         return subs().getAll<T>([&](const std::string& key, const T& val) {
+            NAMU_DI("this=%s[%x]: key=%s name=%s", getType().getName().c_str(), this, key.c_str(), name.c_str());
             return key == name && val.canRun(a);
         });
     }
