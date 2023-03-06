@@ -246,9 +246,9 @@ list: '(' list-items ')' {
 postfix: primary {
        $$ = $1;
      } | postfix DOUBLE_MINUS {
-        $$ = $1; // TODO:
+        $$ = yyget_extra(scanner)->onUnaryPostfixDoubleMinus(*$1);
      } | postfix DOUBLE_PLUS {
-        $$ = $1; // TODO:
+        $$ = yyget_extra(scanner)->onUnaryPostfixDoublePlus(*$1);
      } | postfix '.' NAME {
         $$ = yyget_extra(scanner)->onGet(*$1, *$3);
         free($3);

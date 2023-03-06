@@ -58,5 +58,10 @@ namespace namu {
         nbool _le(const arithmeticObj& rhs) const override { return get() <= rhs.asImpli<me>()->get(); }
         nbool _logicalAnd(const arithmeticObj& rhs) const override { return get() && rhs.asImpli<me>()->get(); }
         nbool _logicalOr(const arithmeticObj& rhs) const override { return get() || rhs.asImpli<me>()->get(); }
+
+        arithmeticObj& _mov(const arithmeticObj& rhs) override {
+            get() = rhs.asImpli<me>()->get();
+            return *this;
+        }
     };
 }

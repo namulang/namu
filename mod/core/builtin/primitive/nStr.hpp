@@ -64,5 +64,10 @@ namespace namu {
             // TODO: throw error
             return false;
         }
+
+        arithmeticObj& _mov(const arithmeticObj& rhs) override {
+            get() = rhs.asImpli<me>()->get();
+            return *this;
+        }
     };
 }
