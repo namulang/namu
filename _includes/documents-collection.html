@@ -8,6 +8,8 @@
   {% assign entries = entries | reverse %}
 {% endif %}
 
+<h2 style="margin-bottom: 1em;">your next journey is ...</h2>
+
 {%- for post in entries -%}
   {%- unless post.hidden -%}
     {% include archive-single.html %}

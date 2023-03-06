@@ -23,7 +23,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="namu">
 <meta property="og:title" content="quick start">
-<meta property="og:url" content="https://namu.codes/guide/quick-start">
+<meta property="og:url" content="http://localhost:4000/guide/quick-start">
 
 
   <meta property="og:description" content="미리 모든 내용을 훑어보죠.">
@@ -32,9 +32,21 @@
 
 
 
+  <meta name="twitter:site" content="@kniz_net">
+  <meta name="twitter:title" content="quick start">
+  <meta name="twitter:description" content="미리 모든 내용을 훑어보죠.">
+  <meta name="twitter:url" content="http://localhost:4000/guide/quick-start">
+
+  
+    <meta name="twitter:card" content="summary">
+    
+  
+
+  
 
 
-  <meta property="article:published_time" content="2023-03-05T13:28:40+09:00">
+
+  <meta property="article:published_time" content="2023-03-06T22:09:12+09:00">
 
 
 
@@ -45,7 +57,7 @@
   
 
 
-<link rel="canonical" href="https://namu.codes/guide/quick-start">
+<link rel="canonical" href="http://localhost:4000/guide/quick-start">
 
 
 
@@ -56,7 +68,7 @@
     
       "@type": "Person",
       "name": "kniz",
-      "url": "https://namu.codes/"
+      "url": "http://localhost:4000/"
     
   }
 </script>
@@ -117,16 +129,21 @@
           
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
-              <a href="/guide/">guide</a>
+              <a href="/posts/">news</a>
             </li><li class="masthead__menu-item">
-              <a href="/about/">about</a>
+              <a href="/guide/">guide</a>
             </li><li class="masthead__menu-item">
               <a href="/play/">play</a>
             </li><li class="masthead__menu-item">
               <a href="/ref/">ref</a>
             </li><li class="masthead__menu-item">
-              <a href="/posts/">news</a>
+              <a href="/about/">about</a>
             </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
         
         <button class="greedy-nav__toggle hidden" type="button">
           <span class="visually-hidden">Toggle menu</span>
@@ -139,8 +156,19 @@
 </div>
 
 
+    <script src="https://unpkg.com/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js"></script>
+    <script>
+      addBackToTop({
+        diameter: 56,
+        backgroundColor: '#11999e',
+        textColor: '#fff'
+      })
+    </script>
+
     <div class="initial-content">
       
+
+
 
 
 
@@ -156,7 +184,7 @@
 
   <div class="author__content">
     <h3 class="author__name p-name" itemprop="name">
-      <a class="u-url" rel="me" href="https://namu.codes/" itemprop="url">kniz</a>
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">kniz</a>
     </h3>
     
       <div class="author__bio p-note" itemprop="description">
@@ -171,28 +199,43 @@
     <ul class="author__urls social-icons">
       
         <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Somewhere</span>
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">suwon, south korea</span>
         </li>
       
 
       
         
           
-        
+            <li><a href="mailto:kniz.official@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">email</span></a></li>
           
         
           
-        
+            <li><a href="https://kniz.github.io/skyline/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fa fa-home" aria-hidden="true"></i><span class="label">home</span></a></li>
           
         
           
+            <li><a href="https://twitter.com/kniz_net" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">twitter</span></a></li>
+          
         
+          
+            <li><a href="https://github.com/kniz" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">github</span></a></li>
+          
+        
+          
+            <li><a href="https://www.youtube.com/channel/UCCJLM-x4V9rKAE1BFZzVE8w" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-youtube" aria-hidden="true"></i><span class="label">youtube</span></a></li>
           
         
       
 
       
 
+      
+        <li>
+          <a href="mailto:kniz.official@gmail.com" rel="me" class="u-email">
+            <meta itemprop="email" content="kniz.official@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
       
 
       
@@ -255,11 +298,36 @@
 
 
 
-  <div class="archive">
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="quick start">
+    <meta itemprop="description" content="미리 모든 내용을 훑어보죠.">
+    <meta itemprop="datePublished" content="2023-03-06T22:09:12+09:00">
     
-      <h1 id="page-title" class="page__title">quick start</h1>
-    
-    <p>미리 모든 내용을 훑어보죠.</p>
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/guide/quick-start" class="u-url" itemprop="url">quick start
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> to next-point...</h4></header>
+              <ul class="toc__menu"><li><a href="#시작하기전에">시작하기전에</a></li><li><a href="#시작은-hello-world-죠">시작은 hello world 죠?</a></li><li><a href="#변수와-표현식">변수와 표현식</a></li><li><a href="#indentation-레벨에-의한-scope-범위">Indentation 레벨에 의한 Scope 범위</a></li><li><a href="#흐름-제어">흐름 제어</a></li><li><a href="#컨테이너">컨테이너</a></li><li><a href="#함수">함수</a></li><li><a href="#객체정의">객체정의</a></li><li><a href="#표현식기반">표현식기반</a></li><li><a href="#프로퍼티">프로퍼티</a></li><li><a href="#closure">closure</a></li><li><a href="#exceptions">exceptions</a></li><li><a href="#all-preserved-keywords">all preserved keywords</a><ul><li><a href="#syntax">syntax</a></li><li><a href="#primitive-types">primitive types</a></li><li><a href="#predeclared-objects">predeclared objects</a></li></ul></li><li><a href="#operators">operators</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>미리 모든 내용을 훑어보죠.</p>
 
 <h2 id="시작하기전에">시작하기전에</h2>
 
@@ -602,13 +670,20 @@
 [] …  () ++ ** – // /</em> */ : =&gt; -&gt; ,</p>
 
 
+        <div style="width:100%; height:6em;"> </div>
 
-<div class="entries-list">
-  
+        
+      </section>
+
+      
+      <div style="margin-top: 2em;" class="entries-list">
+        
 
 
 
 
+
+<h2 style="margin-bottom: 1em;">your next journey is ...</h2>
 
 
 
@@ -651,12 +726,28 @@
   </article>
 </div>
 
-</div>
+      </div>
+    </div>
 
-  </div>
+    
+  </article>
+
+  
+  
 </div>
     </div>
 
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
     
 
     <div id="footer" class="page__footer">
@@ -673,15 +764,11 @@
     
       
         
-      
+          <li><a href="https://github.com/namulang/namu" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> gitHub</a></li>
         
       
         
-      
-        
-      
-        
-      
+          <li><a href="https://twitter.com/kniz_net" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> twitter</a></li>
         
       
     
@@ -702,6 +789,10 @@
 
 
 
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
 
 
 

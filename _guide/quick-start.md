@@ -2,6 +2,8 @@
 layout: guide
 title: quick start
 permalink: /guide/quick-start
+toc: true
+toc_label: "to next-point..."
 ---
 
 미리 모든 내용을 훑어보죠.
