@@ -13,5 +13,18 @@ namespace namu {
     public:
         tgenericCppBridge(): super() {}
         tgenericCppBridge(T* real): super(real) {}
+
+    public:
+        template <typename Ret, typename... Args>
+        me* genericFunc(const std::string& name, Ret(T::*fptr)(Args...)) {
+            this->subs().add(name, new tcppBridgeFunc<Ret, T, genericCppObj, tgenericMarshaling, Args...>(fptr));
+            return this;
+        }
+        template <typename Ret, typename... Args>
+        me* genericFunc(const std::string& name, Ret(T::*fptr)(Args...) const) {
+            this->subs().add(name, new tcppBridgeFunc<Ret, T, genericCppObj, tgenericMarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
+            return this;
+        }
+
     };
 }

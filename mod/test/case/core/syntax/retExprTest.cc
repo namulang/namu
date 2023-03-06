@@ -105,12 +105,12 @@ TEST_F(retExprTest, retTypeImplicitCasting) {
     shouldVerified(true);
 }
 
-TEST_F(retExprTest, retVoidNegative) {
-    make().negative().parse(R"SRC(
+TEST_F(retExprTest, retVoid) {
+    make().parse(R"SRC(
         main() void
             3
     )SRC").shouldParsed(true);
-    shouldVerified(false);
+    shouldVerified(true);
 }
 
 TEST_F(retExprTest, retDefAssign) {
