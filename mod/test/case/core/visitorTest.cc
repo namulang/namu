@@ -135,7 +135,7 @@ TEST_F(visitorTest, visitComplexExpressions2) {
         myVisitor(): metInt2(false), metRet(false) {}
 
         using visitor::onVisit;
-        void onVisit(visitInfo i, FAOExpr& fao) override {
+        void onVisit(visitInfo i, FBOExpr& fao) override {
             tstr<nInt> num2 = ((node&) fao.getRight()).as<nInt>();
             if(!num2) return;
 

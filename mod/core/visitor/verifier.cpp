@@ -239,14 +239,14 @@ namespace namu {
             return _srcErr(me.getPos(), errCode::ELEM_TYPE_DEDUCED_WRONG, type.getType().getName().c_str());
     }
 
-    void me::onVisit(visitInfo i, FAOExpr& me) {
-        NAMU_DI("verify: FAOExpr: lhs & rhs should bind something.");
+    void me::onVisit(visitInfo i, FBOExpr& me) {
+        NAMU_DI("verify: FBOExpr: lhs & rhs should bind something.");
         const node& lhs = me.getLeft();
         const node& rhs = me.getRight();
         if(nul(lhs)) return _srcErr(me.getPos(), errCode::LHS_IS_NULL);
         if(nul(rhs)) return _srcErr(me.getPos(), errCode::RHS_IS_NULL);
 
-        NAMU_DI("verify: FAOExpr: finding eval of l(r)hs.");
+        NAMU_DI("verify: FBOExpr: finding eval of l(r)hs.");
         const node& lEval = lhs.getEval();
         const node& rEval = rhs.getEval();
         if(nul(lEval)) return _srcErr(me.getPos(), errCode::LHS_IS_NULL);
@@ -260,7 +260,7 @@ namespace namu {
                     lEval.getType().getName().c_str(), rEval.getType().getName().c_str());
 
         auto r = me.getRule();
-        if((r == FAOExpr::AND || r == FAOExpr::OR) && (lEval.isSub<nStr>() || rEval.isSub<nStr>()))
+        if((r == FBOExpr::AND || r == FBOExpr::OR) && (lEval.isSub<nStr>() || rEval.isSub<nStr>()))
             return _srcErr(me.getPos(), errCode::STRING_IS_NOT_LOGICAL);
     }
 

@@ -4,10 +4,10 @@ using namespace namu;
 using namespace std;
 
 namespace {
-    struct FAOExprTest : public namuSyntaxTest {};
+    struct FBOExprTest : public namuSyntaxTest {};
 }
 
-TEST_F(FAOExprTest, simpleAdd) {
+TEST_F(FBOExprTest, simpleAdd) {
     make().parse(R"SRC(
         a := 5
         b := 2
@@ -26,7 +26,7 @@ TEST_F(FAOExprTest, simpleAdd) {
     ASSERT_EQ(res->get(), 7);
 }
 
-TEST_F(FAOExprTest, addWithDefAssign) {
+TEST_F(FBOExprTest, addWithDefAssign) {
     make().parse(R"SRC(
         foo() int
             1 + 2
@@ -47,7 +47,7 @@ TEST_F(FAOExprTest, addWithDefAssign) {
     ASSERT_EQ(res->get(), 12);
 }
 
-TEST_F(FAOExprTest, addWithDefAssignReversedNegative) {
+TEST_F(FBOExprTest, addWithDefAssignReversedNegative) {
     negative().make().parse(R"SRC(
         b := a + 2
         a := 5
@@ -62,14 +62,14 @@ TEST_F(FAOExprTest, addWithDefAssignReversedNegative) {
     ASSERT_TRUE(nul(b));
 }
 
-TEST_F(FAOExprTest, addIntAndStrNegative) {
+TEST_F(FBOExprTest, addIntAndStrNegative) {
     negative().make().parse(R"SRC(
         a := "hello" + 12
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
 
-TEST_F(FAOExprTest, addIntAndStr) {
+TEST_F(FBOExprTest, addIntAndStr) {
     make().parse(R"SRC(
         a := "hello" + 12 as str
         main() int
@@ -82,7 +82,7 @@ TEST_F(FAOExprTest, addIntAndStr) {
     ASSERT_EQ(a.get(), std::string("hello12"));
 }
 
-TEST_F(FAOExprTest, simpleSub) {
+TEST_F(FBOExprTest, simpleSub) {
     make().parse(R"SRC(
         a := 5
         b := 2
@@ -101,7 +101,7 @@ TEST_F(FAOExprTest, simpleSub) {
     ASSERT_EQ(res->get(), 3);
 }
 
-TEST_F(FAOExprTest, modWithDefAssign) {
+TEST_F(FBOExprTest, modWithDefAssign) {
     make().parse(R"SRC(
         a := 10
         b := a / 2
@@ -120,7 +120,7 @@ TEST_F(FAOExprTest, modWithDefAssign) {
     ASSERT_EQ(res->get(), 1);
 }
 
-TEST_F(FAOExprTest, testStringAddSequence) {
+TEST_F(FBOExprTest, testStringAddSequence) {
     make().parse(R"SRC(
     Helloworld(age int) int
         ret age
@@ -134,7 +134,7 @@ TEST_F(FAOExprTest, testStringAddSequence) {
     ASSERT_EQ(res->cast<std::string>(), "4low\n");
 }
 
-TEST_F(FAOExprTest, testStringAddBoolean) {
+TEST_F(FBOExprTest, testStringAddBoolean) {
     make().parse(R"SRC(
     Helloworld(age int) int
         ret age
@@ -152,7 +152,7 @@ TEST_F(FAOExprTest, testStringAddBoolean) {
     NAMU_E("end run = %s", output.c_str());
 }
 
-TEST_F(FAOExprTest, testStringAddBoolean2) {
+TEST_F(FBOExprTest, testStringAddBoolean2) {
     make().parse(R"SRC(
     Helloworld(age int) int
         ret age
@@ -167,7 +167,7 @@ TEST_F(FAOExprTest, testStringAddBoolean2) {
     ASSERT_EQ(res->cast<std::string>(), "0low\n");
 }
 
-TEST_F(FAOExprTest, testLogicalBinaryOp) {
+TEST_F(FBOExprTest, testLogicalBinaryOp) {
     make().parse(R"SRC(
         main() bool
             a := 1
@@ -180,7 +180,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOp) {
     ASSERT_EQ(res.cast<nbool>(), true);
 }
 
-TEST_F(FAOExprTest, testLogicalBinaryOpWithDifferentType) {
+TEST_F(FBOExprTest, testLogicalBinaryOpWithDifferentType) {
     make().parse(R"SRC(
         main() bool
             a := 1
@@ -193,7 +193,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOpWithDifferentType) {
     ASSERT_EQ(res.cast<nbool>(), false);
 }
 
-TEST_F(FAOExprTest, testLogicalBinaryOpFltPrecision) {
+TEST_F(FBOExprTest, testLogicalBinaryOpFltPrecision) {
     make().parse(R"SRC(
         main() bool
             a := 3.4 + 0.1
@@ -206,7 +206,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOpFltPrecision) {
     ASSERT_EQ(res.cast<nbool>(), true);
 }
 
-TEST_F(FAOExprTest, testLogicalBinaryOpStr) {
+TEST_F(FBOExprTest, testLogicalBinaryOpStr) {
     make().parse(R"SRC(
         main() bool
             a := "hello"
@@ -219,7 +219,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOpStr) {
     ASSERT_EQ(res.cast<nbool>(), false);
 }
 
-TEST_F(FAOExprTest, testLogicalBinaryOpChar) {
+TEST_F(FBOExprTest, testLogicalBinaryOpChar) {
     make().parse(R"SRC(
         main() bool
             a := 'l'
@@ -232,7 +232,7 @@ TEST_F(FAOExprTest, testLogicalBinaryOpChar) {
     ASSERT_EQ(res.cast<nbool>(), false);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOp) {
+TEST_F(FBOExprTest, testUnaryPrefixOp) {
     make().parse(R"SRC(
         main() int
             a := 3
@@ -244,7 +244,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOp) {
     ASSERT_EQ(res.cast<nint>(), 4);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOp2) {
+TEST_F(FBOExprTest, testUnaryPrefixOp2) {
     make().parse(R"SRC(
         main() int
             a := 3
@@ -256,7 +256,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOp2) {
     ASSERT_EQ(res.cast<nint>(), 2);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOp3) {
+TEST_F(FBOExprTest, testUnaryPrefixOp3) {
     make().parse(R"SRC(
         main() int
             a := 3
@@ -268,7 +268,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOp3) {
     ASSERT_EQ(res.cast<nint>(), -3);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOp4) {
+TEST_F(FBOExprTest, testUnaryPrefixOp4) {
     make().parse(R"SRC(
         main() int
             a := 3
@@ -283,7 +283,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOp4) {
     ASSERT_EQ(res.cast<nint>(), 11);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOp5) {
+TEST_F(FBOExprTest, testUnaryPrefixOp5) {
     make().parse(R"SRC(
         main() int
             a := 3
@@ -298,7 +298,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOp5) {
     ASSERT_EQ(res.cast<nint>(), 11);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOp6) {
+TEST_F(FBOExprTest, testUnaryPrefixOp6) {
     make().parse(R"SRC(
         main() int
             a := 0
@@ -313,7 +313,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOp6) {
     ASSERT_EQ(res.cast<nint>(), 22);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOpNegative) {
+TEST_F(FBOExprTest, testUnaryPrefixOpNegative) {
     make().negative().parse(R"SRC(
         main() int
             a := "false"
@@ -325,7 +325,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOpNegative) {
     shouldVerified(false);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOpNegative2) {
+TEST_F(FBOExprTest, testUnaryPrefixOpNegative2) {
     make().negative().parse(R"SRC(
         main() void
             a := "false"
@@ -334,7 +334,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOpNegative2) {
     shouldVerified(false);
 }
 
-TEST_F(FAOExprTest, testUnaryPrefixOpNegative3) {
+TEST_F(FBOExprTest, testUnaryPrefixOpNegative3) {
     make().negative().parse(R"SRC(
         main() void
             a := "false"
@@ -343,7 +343,7 @@ TEST_F(FAOExprTest, testUnaryPrefixOpNegative3) {
     shouldVerified(false);
 }
 
-TEST_F(FAOExprTest, testStringToBoolean) {
+TEST_F(FBOExprTest, testStringToBoolean) {
     make().parse(R"SRC(
         main() int
             a := "false"
@@ -358,7 +358,7 @@ TEST_F(FAOExprTest, testStringToBoolean) {
     ASSERT_EQ(res.cast<nint>(), 22);
 }
 
-TEST_F(FAOExprTest, testStringToBooleanNegative) {
+TEST_F(FBOExprTest, testStringToBooleanNegative) {
     make().negative().parse(R"SRC(
         main() int
             a := "false"
@@ -372,7 +372,7 @@ TEST_F(FAOExprTest, testStringToBooleanNegative) {
     // TODO: but runtime exception?
 }
 
-TEST_F(FAOExprTest, testLogicalAndOp) {
+TEST_F(FBOExprTest, testLogicalAndOp) {
     make().parse(R"SRC(
         main() bool
             ret true && 3 < 27
@@ -383,7 +383,7 @@ TEST_F(FAOExprTest, testLogicalAndOp) {
     ASSERT_EQ(res.cast<nbool>(), true);
 }
 
-TEST_F(FAOExprTest, testLogicalAndOpNegative) {
+TEST_F(FBOExprTest, testLogicalAndOpNegative) {
     make().negative().parse(R"SRC(
         foo() bool
             false
@@ -396,7 +396,7 @@ TEST_F(FAOExprTest, testLogicalAndOpNegative) {
     )SRC").shouldVerified(false);
 }
 
-TEST_F(FAOExprTest, testLogicalAndOp2) {
+TEST_F(FBOExprTest, testLogicalAndOp2) {
     make().parse(R"SRC(
         foo() bool
             false
@@ -414,7 +414,7 @@ TEST_F(FAOExprTest, testLogicalAndOp2) {
     ASSERT_EQ(res.cast<nbool>(), true);
 }
 
-TEST_F(FAOExprTest, testLogicalAndOpShortCircuit) {
+TEST_F(FBOExprTest, testLogicalAndOpShortCircuit) {
     make().parse(R"SRC(
         main() int
             if true || false

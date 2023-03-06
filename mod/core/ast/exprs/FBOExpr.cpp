@@ -1,11 +1,11 @@
-#include "FAOExpr.hpp"
+#include "FBOExpr.hpp"
 #include "../../frame/thread.hpp"
 #include "../../builtin/primitive.hpp"
 #include "../../visitor/visitor.hpp"
 
 namespace namu {
 
-    NAMU(DEF_ME(FAOExpr), DEF_VISIT())
+    NAMU(DEF_ME(FBOExpr), DEF_VISIT())
 
     const node& me::getEval() const {
         static nBool inner;

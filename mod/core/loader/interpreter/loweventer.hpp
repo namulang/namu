@@ -18,7 +18,7 @@ namespace namu {
     class runExpr;
     class asExpr;
     class addExpr;
-    class FAOExpr;
+    class FBOExpr;
     class getExpr;
     class retExpr;
     class breakExpr;
@@ -157,26 +157,26 @@ namespace namu {
         //      cast:
         asExpr* onAs(const node& me, const node& as);
         //      unary operation:
-        FAOExpr* onUnaryMinus(const node& it);
-        FAOExpr* onUnaryNot(const node& it);
+        FBOExpr* onUnaryMinus(const node& it);
+        FBOExpr* onUnaryNot(const node& it);
         node* onUnaryDoublePlus(node& it);
         node* onUnaryDoubleMinus(node& it);
         //      binary operation:
         //          arithmetic:
-        FAOExpr* onAdd(const node& lhs, const node& rhs);
-        FAOExpr* onSub(const node& lhs, const node& rhs);
-        FAOExpr* onMul(const node& lhs, const node& rhs);
-        FAOExpr* onDiv(const node& lhs, const node& rhs);
-        FAOExpr* onMod(const node& lhs, const node& rhs);
+        FBOExpr* onAdd(const node& lhs, const node& rhs);
+        FBOExpr* onSub(const node& lhs, const node& rhs);
+        FBOExpr* onMul(const node& lhs, const node& rhs);
+        FBOExpr* onDiv(const node& lhs, const node& rhs);
+        FBOExpr* onMod(const node& lhs, const node& rhs);
         //          logical:
-        FAOExpr* onGt(const node& lhs, const node& rhs);
-        FAOExpr* onGe(const node& lhs, const node& rhs);
-        FAOExpr* onLt(const node& lhs, const node& rhs);
-        FAOExpr* onLe(const node& lhs, const node& rhs);
-        FAOExpr* onEq(const node& lhs, const node& rhs);
-        FAOExpr* onNe(const node& lhs, const node& rhs);
-        FAOExpr* onAnd(const node& lhs, const node& rhs);
-        FAOExpr* onOr(const node& lhs, const node& rhs);
+        FBOExpr* onGt(const node& lhs, const node& rhs);
+        FBOExpr* onGe(const node& lhs, const node& rhs);
+        FBOExpr* onLt(const node& lhs, const node& rhs);
+        FBOExpr* onLe(const node& lhs, const node& rhs);
+        FBOExpr* onEq(const node& lhs, const node& rhs);
+        FBOExpr* onNe(const node& lhs, const node& rhs);
+        FBOExpr* onAnd(const node& lhs, const node& rhs);
+        FBOExpr* onOr(const node& lhs, const node& rhs);
         //      if:
         ifExpr* onIf(const node& condition, const blockExpr& thenBlk);
         ifExpr* onElif(ifExpr& ifexpr, const node& elseIfCondition, const blockExpr& thenBlk);
