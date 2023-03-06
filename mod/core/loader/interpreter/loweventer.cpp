@@ -510,6 +510,18 @@ namespace namu {
         return onAssign(it, *new FBOExpr(FBOExpr::SUB, it, *new nInt(1)));
     }
 
+    FUOExpr* me::onUnaryPostfixDoublePlus(const node& it) {
+        NAMU_DI("tokenEvent: onUnaryPostfixDoublePlus(%s)", it.getType().getName().c_str());
+
+        return new FUOExpr(FUOExpr::POSTFIX_DOUBLE_PLUS, it);
+    }
+
+    FUOExpr* me::onUnaryPostfixDoubleMinus(const node& it) {
+        NAMU_DI("tokenEvent: onUnaryPostfixDoubleMinus(%s)", it.getType().getName().c_str());
+
+        return new FUOExpr(FUOExpr::POSTFIX_DOUBLE_MINUS, it);
+    }
+
     FBOExpr* me::onUnaryNot(const node& it) {
         NAMU_DI("tokenEvent: onUnaryNot(%s)", it.getType().getName().c_str());
 

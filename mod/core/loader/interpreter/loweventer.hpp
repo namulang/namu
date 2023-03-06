@@ -24,6 +24,7 @@ namespace namu {
     class breakExpr;
     class nextExpr;
     class ifExpr;
+    class FUOExpr;
 
     class _nout loweventer : public tokenScan {
         NAMU(CLASS(loweventer, tokenScan))
@@ -161,6 +162,8 @@ namespace namu {
         FBOExpr* onUnaryNot(const node& it);
         node* onUnaryDoublePlus(node& it);
         node* onUnaryDoubleMinus(node& it);
+        FUOExpr* onUnaryPostfixDoublePlus(const node& it);
+        FUOExpr* onUnaryPostfixDoubleMinus(const node& it);
         //      binary operation:
         //          arithmetic:
         FBOExpr* onAdd(const node& lhs, const node& rhs);

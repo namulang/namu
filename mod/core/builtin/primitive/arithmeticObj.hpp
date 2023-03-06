@@ -16,14 +16,17 @@ namespace namu {
         tstr<me> div(const me& rhs);
         tstr<me> mod(const me& rhs);
 
-        virtual nbool eq(const me& rhs) const;
-        virtual nbool ne(const me& rhs) const;
-        virtual nbool gt(const me& rhs) const;
-        virtual nbool lt(const me& rhs) const;
-        virtual nbool ge(const me& rhs) const;
-        virtual nbool le(const me& rhs) const;
-        virtual nbool logicalAnd(const me& rhs) const;
-        virtual nbool logicalOr(const me& rhs) const;
+        nbool eq(const me& rhs) const;
+        nbool ne(const me& rhs) const;
+        nbool gt(const me& rhs) const;
+        nbool lt(const me& rhs) const;
+        nbool ge(const me& rhs) const;
+        nbool le(const me& rhs) const;
+        nbool logicalAnd(const me& rhs) const;
+        nbool logicalOr(const me& rhs) const;
+
+        /// same to 'assign'.
+        tstr<me> mov(const me& rhs);
 
     private:
         virtual tstr<me> _add(const me& rhs, nbool reversed) const = 0;
@@ -40,5 +43,7 @@ namespace namu {
         virtual nbool _le(const me& rhs) const = 0;
         virtual nbool _logicalAnd(const me& rhs) const = 0;
         virtual nbool _logicalOr(const me& rhs) const = 0;
+
+        virtual me& _mov(const me& rhs) = 0;
     };
 }

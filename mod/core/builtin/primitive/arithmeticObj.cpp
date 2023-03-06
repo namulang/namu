@@ -28,4 +28,11 @@ namespace namu {
     NAMU_EACH(_X, eq, ne, gt, lt, ge, le, logicalAnd, logicalOr)
 
 #undef _X
+
+    tstr<me> me::mov(const me& rhs) {
+        if(!rhs.isImpli(getType()))
+            return tstr<me>();
+
+        return tstr<me>(_mov(rhs));
+    }
 }

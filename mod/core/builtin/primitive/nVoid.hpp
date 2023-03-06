@@ -48,5 +48,7 @@ namespace namu {
         nbool _le(const arithmeticObj& rhs) const override { return false; }
         nbool _logicalAnd(const arithmeticObj& rhs) const override { return false; }
         nbool _logicalOr(const arithmeticObj& rhs) const override { return false; }
+
+        arithmeticObj& _mov(const arithmeticObj& rhs) override { return *this; }
     };
 }
