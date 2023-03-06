@@ -13,8 +13,20 @@ namespace namu {
 
         str ret((node*)it->deepClone());
         switch(_rule) {
-            case POSTFIX_DOUBLE_PLUS: it->mov(*it->add(nInt(1))); break;
-            case POSTFIX_DOUBLE_MINUS: it->mov(*it->sub(nInt(1))); break;
+            case POSTFIX_DOUBLE_PLUS: {
+                tstr<arithmeticObj> rhs = it->add(nInt(1));
+                if(rhs)
+                    it->mov(*rhs);
+                break;
+            }
+
+            case POSTFIX_DOUBLE_MINUS: {
+                tstr<arithmeticObj> rhs = it->sub(nInt(1));
+                if(rhs)
+                    it->mov(*rhs);
+                break;
+            }
+
             default: ;
         }
 

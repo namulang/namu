@@ -49,10 +49,7 @@ namespace {
 
 [%*+-/\(\.\,\{\[] { return yyget_extra(yyscanner)->onIgnoreIndent(yytext[0]); }
 [\)<>\}\]!] { return yytext[0]; }
-\-\- {
-    NAMU_E("DOUBLE_MINUS");
-    return DOUBLE_MINUS;
-}
+\-\- { return DOUBLE_MINUS; }
 \-> { return ARROW; }
 \+\+ { return DOUBLE_PLUS; }
 \.\. { return DOUBLE_DOT; }
