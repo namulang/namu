@@ -144,9 +144,9 @@ namespace namu {
             right.accept(visitInfo {"", &d, 0, 1, i.depth+1}, *this);
     }
 
-    void me::onTraverse(visitInfo i, FAOExpr& f) {
+    void me::onTraverse(visitInfo i, FBOExpr& f) {
         if(_isLog)
-            NAMU_DI("FAOExpr[%s]::onTraverse", i.name.c_str());
+            NAMU_DI("FBOExpr[%s]::onTraverse", i.name.c_str());
 
         int n = 0;
         node& left = (node&) f.getLeft();

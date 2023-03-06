@@ -9,9 +9,9 @@ namespace namu {
 
     class visitor;
 
-    // FAO: Fundermental Arithmetic Operation.
-    class _nout FAOExpr : public expr {
-        NAMU(CLASS(FAOExpr, expr, expr::exprType), VISIT())
+    // FAO: Fundermental Binary Operation.
+    class _nout FBOExpr : public expr {
+        NAMU(CLASS(FBOExpr, expr, expr::exprType), VISIT())
 
     public:
         enum rule {
@@ -37,7 +37,7 @@ namespace namu {
         };
 
     public:
-        FAOExpr(rule rule, const node& lhs, const node& rhs): _rule(rule), _lhs(str(lhs)), _rhs(str(rhs)) {}
+        FBOExpr(rule rule, const node& lhs, const node& rhs): _rule(rule), _lhs(str(lhs)), _rhs(str(rhs)) {}
 
     public:
         using super::run;

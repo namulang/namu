@@ -492,119 +492,119 @@ namespace namu {
         return new asExpr(me, as);
     }
 
-    FAOExpr* me::onUnaryMinus(const node& it) {
+    FBOExpr* me::onUnaryMinus(const node& it) {
         NAMU_DI("tokenEvent: onUnaryMinus(%s)", it.getType().getName().c_str());
 
-        return new FAOExpr(FAOExpr::MUL, it, *new nInt(-1));
+        return new FBOExpr(FBOExpr::MUL, it, *new nInt(-1));
     }
 
     node* me::onUnaryDoublePlus(node& it) {
         NAMU_DI("tokenEvent: onUnaryDoublePlus(%s)", it.getType().getName().c_str());
 
-        return onAssign(it, *new FAOExpr(FAOExpr::ADD, it, *new nInt(1)));
+        return onAssign(it, *new FBOExpr(FBOExpr::ADD, it, *new nInt(1)));
     }
 
     node* me::onUnaryDoubleMinus(node& it) {
         NAMU_DI("tokenEvent: onUnaryDoubleMinus(%s)", it.getType().getName().c_str());
 
-        return onAssign(it, *new FAOExpr(FAOExpr::SUB, it, *new nInt(1)));
+        return onAssign(it, *new FBOExpr(FBOExpr::SUB, it, *new nInt(1)));
     }
 
-    FAOExpr* me::onUnaryNot(const node& it) {
+    FBOExpr* me::onUnaryNot(const node& it) {
         NAMU_DI("tokenEvent: onUnaryNot(%s)", it.getType().getName().c_str());
 
-        return new FAOExpr(FAOExpr::EQ, it, *new nBool(false));
+        return new FBOExpr(FBOExpr::EQ, it, *new nBool(false));
     }
 
-    FAOExpr* me::onAdd(const node& lhs, const node& rhs) {
+    FBOExpr* me::onAdd(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onAdd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::ADD, lhs, rhs);
+        return new FBOExpr(FBOExpr::ADD, lhs, rhs);
     }
 
-    FAOExpr* me::onSub(const node& lhs, const node& rhs) {
+    FBOExpr* me::onSub(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onSub(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::SUB, lhs, rhs);
+        return new FBOExpr(FBOExpr::SUB, lhs, rhs);
     }
 
-    FAOExpr* me::onMul(const node& lhs, const node& rhs) {
+    FBOExpr* me::onMul(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onMul(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::MUL, lhs, rhs);
+        return new FBOExpr(FBOExpr::MUL, lhs, rhs);
     }
 
-    FAOExpr* me::onDiv(const node& lhs, const node& rhs) {
+    FBOExpr* me::onDiv(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onDiv(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::DIV, lhs, rhs);
+        return new FBOExpr(FBOExpr::DIV, lhs, rhs);
     }
 
-    FAOExpr* me::onMod(const node& lhs, const node& rhs) {
+    FBOExpr* me::onMod(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onMod(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::MOD, lhs, rhs);
+        return new FBOExpr(FBOExpr::MOD, lhs, rhs);
     }
 
-    FAOExpr* me::onGt(const node& lhs, const node& rhs) {
+    FBOExpr* me::onGt(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onGt(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::GT, lhs, rhs);
+        return new FBOExpr(FBOExpr::GT, lhs, rhs);
     }
 
-    FAOExpr* me::onLt(const node& lhs, const node& rhs) {
+    FBOExpr* me::onLt(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onLt(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::LT, lhs, rhs);
+        return new FBOExpr(FBOExpr::LT, lhs, rhs);
     }
 
-    FAOExpr* me::onGe(const node& lhs, const node& rhs) {
+    FBOExpr* me::onGe(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onGe(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::GE, lhs, rhs);
+        return new FBOExpr(FBOExpr::GE, lhs, rhs);
     }
 
-    FAOExpr* me::onLe(const node& lhs, const node& rhs) {
+    FBOExpr* me::onLe(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onLe(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::LE, lhs, rhs);
+        return new FBOExpr(FBOExpr::LE, lhs, rhs);
     }
 
-    FAOExpr* me::onEq(const node& lhs, const node& rhs) {
+    FBOExpr* me::onEq(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onEq(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::EQ, lhs, rhs);
+        return new FBOExpr(FBOExpr::EQ, lhs, rhs);
     }
 
-    FAOExpr* me::onNe(const node& lhs, const node& rhs) {
+    FBOExpr* me::onNe(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onNe(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::NE, lhs, rhs);
+        return new FBOExpr(FBOExpr::NE, lhs, rhs);
     }
 
-    FAOExpr* me::onAnd(const node& lhs, const node& rhs) {
+    FBOExpr* me::onAnd(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onAnd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::AND, lhs, rhs);
+        return new FBOExpr(FBOExpr::AND, lhs, rhs);
     }
 
-    FAOExpr* me::onOr(const node& lhs, const node& rhs) {
+    FBOExpr* me::onOr(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onOr(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FAOExpr(FAOExpr::OR, lhs, rhs);
+        return new FBOExpr(FBOExpr::OR, lhs, rhs);
     }
 
     node* me::onFor(const std::string& iterName, const node& expr, const blockExpr& blk) {

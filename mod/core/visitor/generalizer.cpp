@@ -95,7 +95,7 @@ namespace namu {
         onVisit(i, (baseObj::super&) me);
     }
 
-    void me::onVisit(visitInfo i, FAOExpr& me) {
+    void me::onVisit(visitInfo i, FBOExpr& me) {
         const node* org = &_findOrigin(me.getLeft());
         if(!nul(org))
             me.setLeft(*org);
