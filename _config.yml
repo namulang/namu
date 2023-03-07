@@ -108,7 +108,7 @@ author:
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I am an **amazing** person."
   location         : "suwon, south korea"
-  email            : "kniz.official@gmail.com"
+  email            : #
   links:
     - label: "email"
       icon: "fas fa-fw fa-envelope-square"
@@ -119,9 +119,6 @@ author:
     - label: "twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/kniz_net"
-    - label: "github"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/kniz"
     - label: "youtube"
       icon: "fab fa-fw fa-youtube"
       url: "https://www.youtube.com/channel/UCCJLM-x4V9rKAE1BFZzVE8w"
@@ -132,10 +129,6 @@ footer:
     - label: "gitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/namulang/namu"
-    - label: "twitter"
-      icon: "fab fa-fw fa-instagram"
-      url: "https://twitter.com/kniz_net"
-
 
 # Reading Files
 include:
