@@ -486,6 +486,30 @@ namespace namu {
         return onAssign(lhs, *new FBOExpr(FBOExpr::ADD, lhs, rhs));
     }
 
+    node* me::onSubAssign(node& lhs, node& rhs) {
+        NAMU_DI("tokenEvent: onSubAssign(%s, %s)", lhs.getType().getName().c_str(),
+                rhs.getType().getName().c_str());
+        return onAssign(lhs, *new FBOExpr(FBOExpr::SUB, lhs, rhs));
+    }
+
+    node* me::onMulAssign(node& lhs, node& rhs) {
+        NAMU_DI("tokenEvent: onMulAssign(%s, %s)", lhs.getType().getName().c_str(),
+                rhs.getType().getName().c_str());
+        return onAssign(lhs, *new FBOExpr(FBOExpr::MUL, lhs, rhs));
+    }
+
+    node* me::onDivAssign(node& lhs, node& rhs) {
+        NAMU_DI("tokenEvent: onDivAssign(%s, %s)", lhs.getType().getName().c_str(),
+                rhs.getType().getName().c_str());
+        return onAssign(lhs, *new FBOExpr(FBOExpr::DIV, lhs, rhs));
+    }
+
+    node* me::onModAssign(node& lhs, node& rhs) {
+        NAMU_DI("tokenEvent: onModAssign(%s, %s)", lhs.getType().getName().c_str(),
+                rhs.getType().getName().c_str());
+        return onAssign(lhs, *new FBOExpr(FBOExpr::MOD, lhs, rhs));
+    }
+
     node* me::onDefAssign(const std::string& name, node& rhs) {
         NAMU_DI("tokenEvent: onDefAssign(%s, %s)", name.c_str(), rhs.getType().getName().c_str());
 

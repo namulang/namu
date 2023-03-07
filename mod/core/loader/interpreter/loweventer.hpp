@@ -114,6 +114,10 @@ namespace namu {
         //          assign:
         node* onAssign(node& lhs, node& rhs);
         node* onAddAssign(node& lhs, node& rhs);
+        node* onSubAssign(node& lhs, node& rhs);
+        node* onMulAssign(node& lhs, node& rhs);
+        node* onDivAssign(node& lhs, node& rhs);
+        node* onModAssign(node& lhs, node& rhs);
         //          logical:
         FBOExpr* onGt(const node& lhs, const node& rhs);
         FBOExpr* onGe(const node& lhs, const node& rhs);
