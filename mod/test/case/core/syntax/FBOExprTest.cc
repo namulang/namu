@@ -328,3 +328,51 @@ TEST_F(FBOExprTest, testAddAssign) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 8);
 }
+
+TEST_F(FBOExprTest, testSubAssign) {
+    make().parse(R"SRC(
+        main() int
+            a := 5
+            ret a -= -3
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 8);
+}
+
+TEST_F(FBOExprTest, testMulAssign) {
+    make().parse(R"SRC(
+        main() int
+            a := 5
+            ret a *= 3
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 15);
+}
+
+TEST_F(FBOExprTest, testDivAssign) {
+    make().parse(R"SRC(
+        main() int
+            a := 6
+            ret a /= 3
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 2);
+}
+
+TEST_F(FBOExprTest, testModAssign) {
+    make().parse(R"SRC(
+        main() int
+            a := 5
+            ret a %= 3
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 2);
+}

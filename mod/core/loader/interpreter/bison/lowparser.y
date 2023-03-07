@@ -301,6 +301,14 @@ expr10: expr9 {
         $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
     } | expr10 ADD_ASSIGN expr9 {
         $$ = yyget_extra(scanner)->onAddAssign(*$1, *$3);
+    } | expr10 SUB_ASSIGN expr9 {
+        $$ = yyget_extra(scanner)->onSubAssign(*$1, *$3);
+    } | expr10 MUL_ASSIGN expr9 {
+        $$ = yyget_extra(scanner)->onMulAssign(*$1, *$3);
+    } | expr10 DIV_ASSIGN expr9 {
+        $$ = yyget_extra(scanner)->onDivAssign(*$1, *$3);
+    } | expr10 MOD_ASSIGN expr9 {
+        $$ = yyget_extra(scanner)->onModAssign(*$1, *$3);
     }
 
 expr9: expr8 {
