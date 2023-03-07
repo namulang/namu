@@ -480,6 +480,12 @@ namespace namu {
         return new assignExpr(lhs, rhs);
     }
 
+    node* me::onAddAssign(node& lhs, node& rhs) {
+        NAMU_DI("tokenEvent: onAddAssign(%s, %s)", lhs.getType().getName().c_str(),
+                rhs.getType().getName().c_str());
+        return onAssign(lhs, *new FBOExpr(FBOExpr::ADD, lhs, rhs));
+    }
+
     node* me::onDefAssign(const std::string& name, node& rhs) {
         NAMU_DI("tokenEvent: onDefAssign(%s, %s)", name.c_str(), rhs.getType().getName().c_str());
 
