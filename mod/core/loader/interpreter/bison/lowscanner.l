@@ -47,7 +47,7 @@ namespace {
 /* actual-pattern: */
 %%
 
-[%*+-/\(\.\,\{\[] { return yyget_extra(yyscanner)->onIgnoreIndent(yytext[0]); }
+[%*+-/\(\.\,\{\[\^\|\&] { return yyget_extra(yyscanner)->onIgnoreIndent(yytext[0]); }
 [\)<>\}\]!] { return yytext[0]; }
 \-\- { return DOUBLE_MINUS; }
 \-> { return ARROW; }
@@ -62,6 +62,14 @@ namespace {
 ":=" { return DEFASSIGN; }
 "&&" { return LOGICAL_AND; }
 "||" { return LOGICAL_OR; }
+"+=" { return ADD_ASSIGN; }
+"-=" { return SUB_ASSIGN; }
+"*=" { return MUL_ASSIGN; }
+"/=" { return DIV_ASSIGN; }
+"%=" { return MOD_ASSIGN; }
+"|=" { return OR_ASSIGN; }
+"&=" { return AND_ASSIGN; }
+"^=" { return XOR_ASSIGN; }
 [ ]+ ;
 \t {
     yylloc->start.col = (yylloc->start.col + TAB_WIDTH) & ~(TAB_WIDTH-1);

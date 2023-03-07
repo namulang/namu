@@ -309,10 +309,22 @@ TEST_F(FBOExprTest, testLogicalAndOpShortCircuit) {
             if true || false
                 sys.con.print("ok")
             ret 0
-    )SRC");
+    )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_EQ(res->getType(), ttype<nInt>::get());
     ASSERT_EQ(res.cast<nint>(), 0);
+}
+
+TEST_F(FBOExprTest, testAddAssign) {
+    make().parse(R"SRC(
+        main() int
+            a := 5
+            ret a += 3
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 8);
 }

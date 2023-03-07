@@ -97,13 +97,38 @@ namespace namu {
         node* onGet(const std::string& name, const narr& args);
         node* onGet(node& from, const std::string& name);
         node* onGet(node& from, const std::string& name, const narr& args);
-        //      generic:
+        //      unary operation:
+        FBOExpr* onUnaryMinus(const node& it);
+        FBOExpr* onUnaryNot(const node& it);
+        node* onUnaryDoublePlus(node& it);
+        node* onUnaryDoubleMinus(node& it);
+        FUOExpr* onUnaryPostfixDoublePlus(const node& it);
+        FUOExpr* onUnaryPostfixDoubleMinus(const node& it);
+        //      binary operation:
+        //          arithmetic:
+        FBOExpr* onAdd(const node& lhs, const node& rhs);
+        FBOExpr* onSub(const node& lhs, const node& rhs);
+        FBOExpr* onMul(const node& lhs, const node& rhs);
+        FBOExpr* onDiv(const node& lhs, const node& rhs);
+        FBOExpr* onMod(const node& lhs, const node& rhs);
+        //          assign:
+        node* onAssign(node& lhs, node& rhs);
+        node* onAddAssign(node& lhs, node& rhs);
+        //          logical:
+        FBOExpr* onGt(const node& lhs, const node& rhs);
+        FBOExpr* onGe(const node& lhs, const node& rhs);
+        FBOExpr* onLt(const node& lhs, const node& rhs);
+        FBOExpr* onLe(const node& lhs, const node& rhs);
+        FBOExpr* onEq(const node& lhs, const node& rhs);
+        FBOExpr* onNe(const node& lhs, const node& rhs);
+        FBOExpr* onAnd(const node& lhs, const node& rhs);
+        FBOExpr* onOr(const node& lhs, const node& rhs);
+
+        //  generic:
         node* onGetGeneric(const std::string& genericObjName, const args& typeParams);
         node* onGetElem(const node& arr, const node& idx);
-        //      container:
+        //  container:
         node* onGetArray(node& elemType);
-        //      assign:
-        node* onAssign(node& lhs, node& rhs);
 
         //  keyword:
         obj* onPack(const narr& dotname);
@@ -157,29 +182,6 @@ namespace namu {
         runExpr* onRunExpr(const node& type, const args& a);
         //      cast:
         asExpr* onAs(const node& me, const node& as);
-        //      unary operation:
-        FBOExpr* onUnaryMinus(const node& it);
-        FBOExpr* onUnaryNot(const node& it);
-        node* onUnaryDoublePlus(node& it);
-        node* onUnaryDoubleMinus(node& it);
-        FUOExpr* onUnaryPostfixDoublePlus(const node& it);
-        FUOExpr* onUnaryPostfixDoubleMinus(const node& it);
-        //      binary operation:
-        //          arithmetic:
-        FBOExpr* onAdd(const node& lhs, const node& rhs);
-        FBOExpr* onSub(const node& lhs, const node& rhs);
-        FBOExpr* onMul(const node& lhs, const node& rhs);
-        FBOExpr* onDiv(const node& lhs, const node& rhs);
-        FBOExpr* onMod(const node& lhs, const node& rhs);
-        //          logical:
-        FBOExpr* onGt(const node& lhs, const node& rhs);
-        FBOExpr* onGe(const node& lhs, const node& rhs);
-        FBOExpr* onLt(const node& lhs, const node& rhs);
-        FBOExpr* onLe(const node& lhs, const node& rhs);
-        FBOExpr* onEq(const node& lhs, const node& rhs);
-        FBOExpr* onNe(const node& lhs, const node& rhs);
-        FBOExpr* onAnd(const node& lhs, const node& rhs);
-        FBOExpr* onOr(const node& lhs, const node& rhs);
         //      if:
         ifExpr* onIf(const node& condition, const blockExpr& thenBlk);
         ifExpr* onElif(ifExpr& ifexpr, const node& elseIfCondition, const blockExpr& thenBlk);

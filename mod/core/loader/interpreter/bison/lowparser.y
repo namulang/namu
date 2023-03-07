@@ -113,6 +113,7 @@
 // valueless-token:
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS DOUBLE_DOT PACK ARROW TAB ASSIGN DEFASSIGN
 %token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE LOGICAL_AND LOGICAL_OR
+%token ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN OR_ASSIGN AND_ASSIGN XOR_ASSIGN
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
@@ -294,9 +295,12 @@ expr-compound: defexpr-compound { $$ = $1; }
 
 
 //  expr-line:
-expr10: expr9 { $$ = $1; }
-      | expr10 ASSIGN expr9 {
+expr10: expr9 {
+        $$ = $1;
+    } | expr10 ASSIGN expr9 {
         $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
+    } | expr10 ADD_ASSIGN expr9 {
+        $$ = yyget_extra(scanner)->onAddAssign(*$1, *$3);
     }
 
 expr9: expr8 {
