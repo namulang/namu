@@ -125,13 +125,13 @@ $(function() {
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        }</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;arithmeticObj&gt;</a> _bitwiseAnd(<span class="keyword">const</span> <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a>&amp; rhs, nbool reversed)<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordflow">return</span> reversed ?</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                    <span class="keyword">new</span> me(rhs.as&lt;me&gt;()-&gt;get() &amp; get()):</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                    <span class="keyword">new</span> me(get() &amp; rhs.as&lt;me&gt;()-&gt;get());</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                    <span class="keyword">new</span> me(rhs.as&lt;me&gt;()-&gt;get() &amp;&amp; get()):</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                    <span class="keyword">new</span> me(get() &amp;&amp; rhs.as&lt;me&gt;()-&gt;get());</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        }</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;arithmeticObj&gt;</a> _bitwiseOr(<span class="keyword">const</span> <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a>&amp; rhs, nbool reversed)<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> reversed ?</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                    <span class="keyword">new</span> me(rhs.as&lt;me&gt;()-&gt;get() | get()):</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                    <span class="keyword">new</span> me(get() | rhs.as&lt;me&gt;()-&gt;get());</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                    <span class="keyword">new</span> me(rhs.as&lt;me&gt;()-&gt;get() || get()):</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                    <span class="keyword">new</span> me(get() || rhs.as&lt;me&gt;()-&gt;get());</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        }</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;arithmeticObj&gt;</a> _bitwiseXor(<span class="keyword">const</span> <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a>&amp; rhs, nbool reversed)<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">return</span> reversed ?</div>
