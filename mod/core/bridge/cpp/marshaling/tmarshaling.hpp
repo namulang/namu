@@ -131,7 +131,7 @@ namespace namu {
 
         template <typename E>
         static str toMgd(E& it) {
-            return new tcppBridge(&it);
+            return new mgd(&it);
         }
 
         static mgd& onAddParam() {
@@ -154,7 +154,7 @@ namespace namu {
 
         template <typename E>
         static str toMgd(E* it) {
-            return new tcppBridge(it);
+            return new mgd(it);
         }
 
         static mgd& onAddParam() {
