@@ -320,6 +320,7 @@ expr9: expr8 {
    }
 
 expr8: expr7 { $$ = $1; }
+
 expr7: expr6 {
     $$ = $1;
    } | expr7 '>' expr6 {
@@ -336,9 +337,23 @@ expr7: expr6 {
     $$ = yyget_extra(scanner)->onNe(*$1, *$3);
    }
 
-expr6: expr5 { $$ = $1; }
-expr5: expr4 { $$ = $1; }
-expr4: expr3 { $$ = $1; }
+expr6: expr5 {
+     $$ = $1;
+   } | expr6 '|' expr5 {
+     $$ = yyget_extra(scanner)->onBitwiseOr(*$1, *$3);
+   }
+
+expr5: expr4 {
+    $$ = $1;
+   } | expr5 '^' expr4 {
+    $$ = yyget_extra(scanner)->onBitwiseXor(*$1, *$3);
+   }
+
+expr4: expr3 {
+    $$ = $1;
+   } | expr4 '&' expr3 {
+    $$ = yyget_extra(scanner)->onBitwiseAnd(*$1, *$3);
+   }
 
 expr3: expr2 {
     $$ = $1;
