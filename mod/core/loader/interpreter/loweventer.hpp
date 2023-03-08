@@ -100,6 +100,7 @@ namespace namu {
         //      unary operation:
         FBOExpr* onUnaryMinus(const node& it);
         FBOExpr* onUnaryNot(const node& it);
+        FUOExpr* onUnaryBitwiseNot(const node& it);
         node* onUnaryDoublePlus(node& it);
         node* onUnaryDoubleMinus(node& it);
         FUOExpr* onUnaryPostfixDoublePlus(const node& it);
@@ -115,6 +116,8 @@ namespace namu {
         FBOExpr* onBitwiseAnd(const node& lhs, const node& rhs);
         FBOExpr* onBitwiseXor(const node& lhs, const node& rhs);
         FBOExpr* onBitwiseOr(const node& lhs, const node& rhs);
+        FBOExpr* onLShift(const node& lhs, const node& rhs);
+        FBOExpr* onRShift(const node& lhs, const node& rhs);
         //          assign:
         node* onAssign(node& lhs, node& rhs);
         node* onAddAssign(node& lhs, node& rhs);

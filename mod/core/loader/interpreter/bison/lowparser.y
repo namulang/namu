@@ -112,7 +112,7 @@
 
 // valueless-token:
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS DOUBLE_DOT PACK ARROW TAB ASSIGN DEFASSIGN
-%token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE LOGICAL_AND LOGICAL_OR
+%token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE LOGICAL_AND LOGICAL_OR LSHIFT RSHIFT
 %token ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN OR_ASSIGN AND_ASSIGN XOR_ASSIGN
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
@@ -208,6 +208,8 @@ unary: postfix {
      $$ = yyget_extra(scanner)->onUnaryMinus(*$2);
    } | '!' unary {
      $$ = yyget_extra(scanner)->onUnaryNot(*$2);
+   } | '~' unary {
+     $$ = yyget_extra(scanner)->onUnaryBitwiseNot(*$2);
    }
 
 func-call: type list {
@@ -319,7 +321,13 @@ expr9: expr8 {
     $$ = yyget_extra(scanner)->onAnd(*$1, *$3);
    }
 
-expr8: expr7 { $$ = $1; }
+expr8: expr7 {
+    $$ = $1;
+   } | expr8 LSHIFT expr7 {
+    $$ = yyget_extra(scanner)->onLShift(*$1, *$3);
+   } | expr8 RSHIFT expr7 {
+    $$ = yyget_extra(scanner)->onRShift(*$1, *$3);
+   }
 
 expr7: expr6 {
     $$ = $1;

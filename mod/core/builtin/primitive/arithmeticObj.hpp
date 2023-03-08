@@ -10,14 +10,17 @@ namespace namu {
 
     public:
         const me& getOrigin() const override { return *this; }
-        tstr<me> add(const me& rhs);
-        tstr<me> sub(const me& rhs);
-        tstr<me> mul(const me& rhs);
-        tstr<me> div(const me& rhs);
-        tstr<me> mod(const me& rhs);
-        tstr<me> bitwiseAnd(const me& rhs);
-        tstr<me> bitwiseXor(const me& rhs);
-        tstr<me> bitwiseOr(const me& rhs);
+        tstr<me> add(const me& rhs) const;
+        tstr<me> sub(const me& rhs) const;
+        tstr<me> mul(const me& rhs) const;
+        tstr<me> div(const me& rhs) const;
+        tstr<me> mod(const me& rhs) const;
+        tstr<me> bitwiseAnd(const me& rhs) const;
+        tstr<me> bitwiseXor(const me& rhs) const;
+        tstr<me> bitwiseOr(const me& rhs) const;
+        tstr<me> lshift(const me& rhs) const;
+        tstr<me> rshift(const me& rhs) const;
+        virtual tstr<me> bitwiseNot() const = 0;
 
         nbool eq(const me& rhs) const;
         nbool ne(const me& rhs) const;
@@ -40,6 +43,8 @@ namespace namu {
         virtual tstr<me> _bitwiseAnd(const me& rhs, nbool reversed) const = 0;
         virtual tstr<me> _bitwiseXor(const me& rhs, nbool reversed) const = 0;
         virtual tstr<me> _bitwiseOr(const me& rhs, nbool reversed) const = 0;
+        virtual tstr<me> _lshift(const me& rhs, nbool reversed) const = 0;
+        virtual tstr<me> _rshift(const me& rhs, nbool reversed) const = 0;
 
         virtual nbool _eq(const me& rhs) const = 0;
         virtual nbool _ne(const me& rhs) const = 0;

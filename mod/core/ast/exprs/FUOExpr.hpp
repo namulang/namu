@@ -18,6 +18,7 @@ namespace namu {
             POSTFIX_DOUBLE_PLUS = 0,
             START = POSTFIX_DOUBLE_PLUS,
             POSTFIX_DOUBLE_MINUS,
+            BITWISE_NOT,
             END
         };
 

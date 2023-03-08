@@ -27,6 +27,10 @@ namespace namu {
                 break;
             }
 
+            case BITWISE_NOT:
+                ret = it->bitwiseNot();
+                break;
+
             default: ;
         }
 

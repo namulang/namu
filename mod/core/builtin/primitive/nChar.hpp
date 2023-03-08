@@ -21,6 +21,11 @@ namespace namu {
         nChar();
         nChar(nchar val);
 
+    public:
+        tstr<arithmeticObj> bitwiseNot() const override {
+            return new me(~get());
+        }
+
     protected:
         dumScope* _onMakeSubs() const override;
 
@@ -63,6 +68,16 @@ namespace namu {
             return reversed ?
                     new me(rhs.as<me>()->get() ^ get()):
                     new me(get() ^ rhs.as<me>()->get());
+        }
+        tstr<arithmeticObj> _lshift(const arithmeticObj& rhs, nbool reversed) const override {
+            return reversed ?
+                    new me(rhs.as<me>()->get() << get()):
+                    new me(get() << rhs.as<me>()->get());
+        }
+        tstr<arithmeticObj> _rshift(const arithmeticObj& rhs, nbool reversed) const override {
+            return reversed ?
+                    new me(rhs.as<me>()->get() >> get()):
+                    new me(get() >> rhs.as<me>()->get());
         }
 
         nbool _eq(const arithmeticObj& rhs) const override { return get() == rhs.asImpli<me>()->get(); }

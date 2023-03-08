@@ -5,7 +5,7 @@ namespace namu {
     NAMU_DEF_ME(arithmeticObj)
 
 #define _X(FUNC) \
-    tstr<arithmeticObj> me::FUNC(const arithmeticObj& rhs) { \
+    tstr<arithmeticObj> me::FUNC(const arithmeticObj& rhs) const { \
         const ntype& deduced = getType().deduce(rhs); \
         if(nul(deduced)) return tstr<arithmeticObj>(); \
         nbool normalOrder = getType() == deduced; \
@@ -14,7 +14,7 @@ namespace namu {
         return winner._ ## FUNC(loser, !normalOrder); \
     }
 
-    NAMU_EACH(_X, add, sub, mul, div, mod, bitwiseAnd, bitwiseXor, bitwiseOr)
+    NAMU_EACH(_X, add, sub, mul, div, mod, bitwiseAnd, bitwiseXor, bitwiseOr, rshift, lshift)
 
 #undef _X
 

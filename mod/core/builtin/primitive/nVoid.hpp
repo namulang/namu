@@ -18,6 +18,10 @@ namespace namu {
     public:
         nVoid();
 
+        tstr<arithmeticObj> bitwiseNot() const override {
+            return *this;
+        }
+
     public:
         static me& singletone();
 
@@ -46,6 +50,12 @@ namespace namu {
             return *this;
         }
         tstr<arithmeticObj> _bitwiseOr(const arithmeticObj& rhs, nbool reversed) const override {
+            return *this;
+        }
+        tstr<arithmeticObj> _lshift(const arithmeticObj& rhs, nbool reversed) const override {
+            return *this;
+        }
+        tstr<arithmeticObj> _rshift(const arithmeticObj& rhs, nbool reversed) const override {
             return *this;
         }
 

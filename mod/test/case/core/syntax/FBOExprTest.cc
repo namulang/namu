@@ -415,3 +415,39 @@ TEST_F(FBOExprTest, testBitwiseOperator3) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 49);
 }
+
+TEST_F(FBOExprTest, testBitwiseOperator4) {
+    make().parse(R"SRC(
+        main() int
+            ~60
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), -61);
+}
+
+TEST_F(FBOExprTest, testBitwiseOperator5) {
+    make().parse(R"SRC(
+        main() int
+            a := 60
+            b := 2
+            a << b
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 240);
+}
+
+TEST_F(FBOExprTest, testBitwiseOperator6) {
+    make().parse(R"SRC(
+        main() int
+            a := 60
+            a >> 2
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 15);
+}
