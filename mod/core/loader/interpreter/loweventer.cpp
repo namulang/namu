@@ -558,6 +558,12 @@ namespace namu {
         return new FBOExpr(FBOExpr::EQ, it, *new nBool(false));
     }
 
+    FUOExpr* me::onUnaryBitwiseNot(const node& it) {
+        NAMU_DI("tokenEvent: onUnaryBitwiseNot(%s)", it.getType().getName().c_str());
+
+        return new FUOExpr(FUOExpr::BITWISE_NOT, it);
+    }
+
     FBOExpr* me::onAdd(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onAdd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
@@ -612,6 +618,20 @@ namespace namu {
                 .getName().c_str());
 
         return new FBOExpr(FBOExpr::BITWISE_XOR, lhs, rhs);
+    }
+
+    FBOExpr* me::onLShift(const node& lhs, const node& rhs) {
+        NAMU_DI("tokenEvent: LShift(%s, %s)", lhs.getType().getName().c_str(), rhs.getType()
+                .getName().c_str());
+
+       return new FBOExpr(FBOExpr::LSHIFT, lhs, rhs);
+    }
+
+    FBOExpr* me::onRShift(const node& lhs, const node& rhs) {
+        NAMU_DI("tokenEvent: RShift(%s, %s)", lhs.getType().getName().c_str(), rhs.getType()
+                .getName().c_str());
+
+        return new FBOExpr(FBOExpr::RSHIFT, lhs, rhs);
     }
 
     FBOExpr* me::onGt(const node& lhs, const node& rhs) {

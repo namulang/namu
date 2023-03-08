@@ -25,6 +25,8 @@ namespace namu {
             BITWISE_AND,
             BITWISE_XOR,
             BITWISE_OR,
+            LSHIFT,
+            RSHIFT,
             ARITH_END,
             EQ,
             LOGIC_START = EQ,

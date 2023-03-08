@@ -25,6 +25,11 @@ namespace namu {
 
         nint len() const { return get().length(); }
 
+        tstr<arithmeticObj> bitwiseNot() const override {
+            return *this;
+            // TODO: throw error
+        }
+
     protected:
         dumScope* _onMakeSubs() const override;
 
@@ -58,6 +63,14 @@ namespace namu {
             // TODO: throw error
         }
         tstr<arithmeticObj> _bitwiseOr(const arithmeticObj& rhs, nbool reversed) const override {
+            return *this;
+            // TODO: throw error
+        }
+        tstr<arithmeticObj> _lshift(const arithmeticObj& rhs, nbool reversed) const override {
+            return *this;
+            // TODO: throw error
+        }
+        tstr<arithmeticObj> _rshift(const arithmeticObj& rhs, nbool reversed) const override {
             return *this;
             // TODO: throw error
         }
