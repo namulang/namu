@@ -1,6 +1,6 @@
 ---
 layout: default
-author_profile: true
+journey: true
 ---
 
 
@@ -54,11 +54,6 @@ author_profile: true
 
         {% if page.link %}<div><a href="{{ page.link }}" class="btn btn--primary">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
-
-      {% assign entries_layout = page.entries_layout | default: 'list' %}
-      <div style="margin-top: 2em;" class="entries-{{ entries_layout }}">
-        {% include documents-collection.html collection=page.collection sort_by=page.sort_by sort_order=page.sort_order type=entries_layout %}
-      </div>
     </div>
 
     {% if jekyll.environment == 'production' and site.comments.provider and page.comments %}

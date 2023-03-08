@@ -17,3 +17,9 @@
   {% endif %}
   </div>
 {% endif %}
+
+{% if page.journey or layout.journey %}
+  <div class="sidebar sticky">
+  {% if page.journey or layout.journey %}{% include journey.html %}{% endif %}
+  </div>
+{% endif %}
