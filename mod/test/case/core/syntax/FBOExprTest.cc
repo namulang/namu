@@ -376,3 +376,42 @@ TEST_F(FBOExprTest, testModAssign) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 2);
 }
+
+TEST_F(FBOExprTest, testBitwiseOperator) {
+    make().parse(R"SRC(
+        main() int
+            a := 60
+            b := 13
+            a & b
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 12);
+}
+
+TEST_F(FBOExprTest, testBitwiseOperator2) {
+    make().parse(R"SRC(
+        main() int
+            a := 60
+            b := 13
+            a | b
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 61);
+}
+
+TEST_F(FBOExprTest, testBitwiseOperator3) {
+    make().parse(R"SRC(
+        main() int
+            a := 60
+            b := 13
+            a ^ b
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 49);
+}

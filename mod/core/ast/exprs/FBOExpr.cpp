@@ -36,6 +36,9 @@ namespace namu {
             case MUL: return lhs->mul(*rhs);
             case DIV: return lhs->div(*rhs);
             case MOD: return lhs->mod(*rhs);
+            case BITWISE_AND: return lhs->bitwiseAnd(*rhs);
+            case BITWISE_XOR: return lhs->bitwiseXor(*rhs);
+            case BITWISE_OR: return lhs->bitwiseOr(*rhs);
             case EQ: return str(new nBool(lhs->eq(*rhs)));
             case NE: return str(new nBool(lhs->ne(*rhs)));
             case GT: return str(new nBool(lhs->gt(*rhs)));

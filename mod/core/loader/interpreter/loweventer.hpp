@@ -111,6 +111,10 @@ namespace namu {
         FBOExpr* onMul(const node& lhs, const node& rhs);
         FBOExpr* onDiv(const node& lhs, const node& rhs);
         FBOExpr* onMod(const node& lhs, const node& rhs);
+        //          bitwise:
+        FBOExpr* onBitwiseAnd(const node& lhs, const node& rhs);
+        FBOExpr* onBitwiseXor(const node& lhs, const node& rhs);
+        FBOExpr* onBitwiseOr(const node& lhs, const node& rhs);
         //          assign:
         node* onAssign(node& lhs, node& rhs);
         node* onAddAssign(node& lhs, node& rhs);

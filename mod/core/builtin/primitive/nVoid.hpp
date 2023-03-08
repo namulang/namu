@@ -39,6 +39,15 @@ namespace namu {
         tstr<arithmeticObj> _mod(const arithmeticObj& rhs, nbool reversed) const override {
             return *this;
         }
+        tstr<arithmeticObj> _bitwiseAnd(const arithmeticObj& rhs, nbool reversed) const override {
+            return *this;
+        }
+        tstr<arithmeticObj> _bitwiseXor(const arithmeticObj& rhs, nbool reversed) const override {
+            return *this;
+        }
+        tstr<arithmeticObj> _bitwiseOr(const arithmeticObj& rhs, nbool reversed) const override {
+            return *this;
+        }
 
         nbool _eq(const arithmeticObj& rhs) const override { return false; }
         nbool _ne(const arithmeticObj& rhs) const override { return false; }

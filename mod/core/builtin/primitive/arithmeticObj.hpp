@@ -15,6 +15,9 @@ namespace namu {
         tstr<me> mul(const me& rhs);
         tstr<me> div(const me& rhs);
         tstr<me> mod(const me& rhs);
+        tstr<me> bitwiseAnd(const me& rhs);
+        tstr<me> bitwiseXor(const me& rhs);
+        tstr<me> bitwiseOr(const me& rhs);
 
         nbool eq(const me& rhs) const;
         nbool ne(const me& rhs) const;
@@ -34,6 +37,9 @@ namespace namu {
         virtual tstr<me> _mul(const me& rhs, nbool reversed) const = 0;
         virtual tstr<me> _div(const me& rhs, nbool reversed) const = 0;
         virtual tstr<me> _mod(const me& rhs, nbool reversed) const = 0;
+        virtual tstr<me> _bitwiseAnd(const me& rhs, nbool reversed) const = 0;
+        virtual tstr<me> _bitwiseXor(const me& rhs, nbool reversed) const = 0;
+        virtual tstr<me> _bitwiseOr(const me& rhs, nbool reversed) const = 0;
 
         virtual nbool _eq(const me& rhs) const = 0;
         virtual nbool _ne(const me& rhs) const = 0;

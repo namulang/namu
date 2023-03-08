@@ -14,7 +14,7 @@ namespace namu {
         return winner._ ## FUNC(loser, !normalOrder); \
     }
 
-    NAMU_EACH(_X, add, sub, mul, div, mod)
+    NAMU_EACH(_X, add, sub, mul, div, mod, bitwiseAnd, bitwiseXor, bitwiseOr)
 
 #undef _X
 
