@@ -54,7 +54,11 @@ function runModule() {
 }
 
 window.addEventListener('message', function(msg) {
-    arguments_ = ["namu.html", "-ls", "-lv", "-s", msg.data];
+    var check = parent.document.getElementById('verbose')
+    if(check.checked)
+      arguments_ = ["namu.html", "-ls", "-lv", "-s", msg.data];
+    else
+      arguments_ = ["namu.html", "-s", msg.data];
     runModule();
 });
 window.onerror = function(event) {

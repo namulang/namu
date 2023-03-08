@@ -1,8 +1,3 @@
----
-layout: single
-title: play
-permalink: /play/
----
 <html>
     <head>
         <style>
@@ -43,6 +38,8 @@ iframe#namu {
         <script type='text/javascript' src='namu-starter.js'></script>
         <textarea id='src' onkeydown='inputTab(this)'></textarea>
         <input type='button' id='runbt' value='run' onclick='runNamuTextArea("namu", "src");'/>
+        <input type='checkbox' id='verbose' />
+        <label for='verbose'>verbose mode</label>
         <iframe id='namu' scrolling='no' src='./namu.html' />
     </body>
 </html>

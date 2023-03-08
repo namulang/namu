@@ -20,9 +20,6 @@ var store = [{
     "title": null,
     "excerpt":"소개  ","url": "http://localhost:4000/about/"
   },{
-    "title": "play",
-    "excerpt":"                                                                            ","url": "http://localhost:4000/play/"
-  },{
     "title": null,
     "excerpt":"","url": "http://localhost:4000/"
   },{
