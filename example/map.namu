@@ -1,0 +1,36 @@
+aka sys.con c
+
+update(map char[], x int, y int) char[]
+    pos := y * 5 + x
+    map.set(pos, '*')
+    map
+
+draw(map char[]) void
+    c.print("\n")
+    for n in 0..map.len()
+        c.print(map[n] as str)
+        if (n+1) % 5 == 0
+            c.print("\n")
+
+menu() str
+    c.print("\nwhich direction(w,a,s,d) or quit(q): ")
+    c.input()
+
+main() void
+    x := 2
+    y := 1
+
+    while true
+        map := {'0', '0', '0', '0', '0',  '0', ' ', ' ', ' ', '0',  '0', '0', '0', '0', '0'}
+        draw(update(map, x, y))
+        answer := menu()
+        if answer == "a"
+            x--
+        elif answer == "d"
+            x++
+        elif answer == "w"
+            y--
+        elif answer == "s"
+            y++
+        elif answer == "q"
+            break
