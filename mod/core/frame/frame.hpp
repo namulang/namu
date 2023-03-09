@@ -9,7 +9,7 @@ struct frameTest;
 
 namespace namu {
 
-    class retState : public instance {
+    class _nout retState : public instance {
         NAMU(ADT(retState, instance))
         friend class frame;
 
@@ -23,7 +23,7 @@ namespace namu {
         retState() {}
     };
 
-    class blkRetState : public retState {
+    class _nout blkRetState : public retState {
         NAMU(CLASS(blkRetState, retState))
         friend class frame;
 
@@ -40,7 +40,7 @@ namespace namu {
         nbool _isOverwritable;
     };
 
-    class blkEmptyRetState : public blkRetState {
+    class _nout blkEmptyRetState : public blkRetState {
         NAMU(CLASS(blkEmptyRetState, blkRetState))
 
     public:
@@ -50,7 +50,7 @@ namespace namu {
         nbool isEmpty() const override { return true; }
     };
 
-    class funcRetState : public retState {
+    class _nout funcRetState : public retState {
         NAMU(CLASS(funcRetState, retState))
         friend class frame;
 
@@ -60,7 +60,7 @@ namespace namu {
     protected:
         funcRetState() {}
     };
-    class funcEmptyRetState : public funcRetState {
+    class _nout funcEmptyRetState : public funcRetState {
         NAMU(CLASS(funcEmptyRetState, funcRetState))
         friend class frame;
 
