@@ -1,0 +1,40 @@
+---
+layout: page
+permalink: play/
+---
+
+<link rel="stylesheet" type="text/css" href="index.css" />
+<script>
+    function inputTab(textArea) {
+        if (event.key == 'Tab') {
+            event.preventDefault();
+            var start = textArea.selectionStart;
+            var end = textArea.selectionEnd;
+
+            textArea.value = textArea.value.substring(0, start) + "\t" + textArea.value.substring(end);
+
+            // put caret at right position again
+            textArea.selectionStart = textArea.selectionEnd = start + 1;
+          }
+    }
+</script>
+<script type='text/javascript' src='namu-starter.js'></script>
+<div id="top_pane">
+    <input type='button' id='runbt' value='run' onclick='runNamuTextArea("namu", "src");'/>
+    <input type='checkbox' id='verbose' />
+    <label id='lb_verbose' for='verbose'>verbose mode</label>
+</div>
+<div id="left_pane">
+    <textarea class='scrollbar' id='src' onkeydown='inputTab(this)'>
+pack sample
+
+main() int
+    print("hello!\n")
+    ret 0
+    </textarea>
+</div>
+<div id="right_pane">
+    {% raw %}
+    <iframe scrolling=no id='namu' src='namu.html'> </iframe>
+    {% endraw %}
+</div>
