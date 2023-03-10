@@ -1,6 +1,7 @@
 #pragma once
 
 #include "visitInfo.hpp"
+#include "../loader/errReport.hpp"
 
 namespace namu {
 
@@ -12,7 +13,7 @@ namespace namu {
         NAMU(ME(visitor))
 
     public:
-        visitor(): _isLog(false) {}
+        visitor(): _isLog(false) { me::rel(); }
 
     public:
         me& setRoot(node& root) {
@@ -24,7 +25,12 @@ namespace namu {
             return *this;
         }
 
+        me& setReport(errReport& rpt);
+        errReport& getReport();
+
         virtual void start();
+
+        virtual void rel();
 
 #define X(T) \
         virtual void visit(visitInfo i, T& me); \
@@ -57,6 +63,7 @@ namespace namu {
         virtual void onTraverse(visitInfo i, whileExpr& w);
 
     private:
+        tstr<errReport> _rpt;
         nbool _isLog;
         str _root;
     };
