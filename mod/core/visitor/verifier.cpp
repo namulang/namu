@@ -35,22 +35,20 @@ namespace namu {
     me* me::_now = nullptr;
 
     void me::rel() {
-        setReport(dummyErrReport::singletone);
+        _rel();
+        super::rel();
+    }
+
+    void me::_rel() {
         _frame.rel();
     }
 
     me::verifier() { rel(); }
 
-    me& me::setReport(errReport& rpt) {
-        _rpt.bind(rpt);
-        return *this;
-    }
-
     void me::_leaveErrFrame() {
         _frame.bind(thread::get().getNowFrame());
     }
 
-    errReport& me::getReport() { return *_rpt; }
     frame& me::getErrFrame() { return *_frame; }
 
 

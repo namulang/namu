@@ -74,9 +74,10 @@ namespace namu {
         if(!nul(retOrg)) {
             me.setRet(retOrg);
             genericCppObj& parent = i.parent->cast<genericCppObj>();
-            if(!nul(parent))
+            if(nul(parent))
+                getReport().add(err::newErr(errCode::IS_NULL, "parent"));
+            else
                 parent.setElemType(retOrg);
-                // TODO: errReport if null.
         }
 
         onVisit(i, (func::super&) me);

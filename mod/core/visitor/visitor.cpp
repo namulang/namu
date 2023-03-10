@@ -22,6 +22,17 @@ namespace namu {
 #   include "visitee.inl"
 #undef X
 
+    void me::rel() {
+        setReport(dummyErrReport::singletone);
+    }
+
+    me& me::setReport(errReport& rpt) {
+        _rpt.bind(rpt);
+        return *this;
+    }
+
+    errReport& me::getReport() { return *_rpt; }
+
     void me::visit(visitInfo i, node& me) {
         if(nul(me)) return;
         if(_isLog)

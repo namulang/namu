@@ -1,7 +1,6 @@
 #pragma once
 
 #include "visitor.hpp"
-#include "../loader/errReport.hpp"
 #include "../frame/frame.hpp"
 
 struct verifierTest;
@@ -18,11 +17,8 @@ namespace namu {
         verifier();
 
     public:
-        void rel();
+        void rel() override;
 
-        me& setReport(errReport& rpt);
-
-        errReport& getReport();
         frame& getErrFrame();
 
         void start() override {
@@ -67,6 +63,7 @@ namespace namu {
         // @param newInfo is not a heap instance.
         void _leaveErrFrame();
         void _verifyMgdFuncImplicitReturn(mgdFunc& me);
+        void _rel();
 
         template <typename... Args> void _warn(Args... args);
         template <typename... Args> void _err(Args... args);
@@ -79,7 +76,6 @@ namespace namu {
         static void _setNow(verifier* new1) { _now = new1; }
 
     private:
-        tstr<errReport> _rpt;
         tstr<frame> _frame;
         std::vector<baseObj*> _us; // multiple 'me'
         std::vector<loopExpr*> _recentLoops;
