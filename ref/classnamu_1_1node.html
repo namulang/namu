@@ -215,8 +215,10 @@ virtual const <a class="el" href="structnamu_1_1point.html">point</a> &amp;&#160
 <tr class="memitem:a3ed55bf2bccc45f2a5f489eb27a6a439"><td class="memItemLeft" align="right" valign="top"><a id="a3ed55bf2bccc45f2a5f489eb27a6a439"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setPos</b> (const <a class="el" href="structnamu_1_1point.html">point</a> &amp;new1)</td></tr>
 <tr class="separator:a3ed55bf2bccc45f2a5f489eb27a6a439"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7954fd1de038089d735bfaed74542f20"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1node.html#a7954fd1de038089d735bfaed74542f20">getEval</a> () const</td></tr>
-<tr class="separator:a7954fd1de038089d735bfaed74542f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b957d4e0089e4a2e39f1ba0e3179573"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1node.html#a5b957d4e0089e4a2e39f1ba0e3179573">isComplete</a> () const</td></tr>
+<tr class="separator:a5b957d4e0089e4a2e39f1ba0e3179573"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cd8636fd1a3e4f7548e4025e51398f7"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1node.html#a9cd8636fd1a3e4f7548e4025e51398f7">getEval</a> () const</td></tr>
+<tr class="separator:a9cd8636fd1a3e4f7548e4025e51398f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fb606861bf0f375e00eb2202ebdbeee"><td class="memItemLeft" align="right" valign="top"><a id="a8fb606861bf0f375e00eb2202ebdbeee"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>accept</b> (<a class="el" href="structnamu_1_1visit_info.html">visitInfo</a> i, <a class="el" href="classnamu_1_1visitor.html">visitor</a> &amp;v)</td></tr>
 <tr class="separator:a8fb606861bf0f375e00eb2202ebdbeee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -308,8 +310,8 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>node provides common API to manipulate its sub nodes. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7954fd1de038089d735bfaed74542f20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7954fd1de038089d735bfaed74542f20">&#9670;&nbsp;</a></span>getEval()</h2>
+<a id="a9cd8636fd1a3e4f7548e4025e51398f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cd8636fd1a3e4f7548e4025e51398f7">&#9670;&nbsp;</a></span>getEval()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -318,7 +320,7 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual const <a class="el" href="classnamu_1_1node.html">node</a>&amp; namu::node::getEval </td>
+          <td class="memname">virtual <a class="el" href="classnamu_1_1tstr.html">str</a> namu::node::getEval </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -331,10 +333,38 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
 </table>
 </div><div class="memdoc">
 <p>getType() returns what it is. opposite to it, this returns what this class will represents after evaluation.</p>
-<p>for example, the 'expr' class has derived from this node class. and if an user call the funcs to get type of it, class 'ntype' of 'expr' will be returned. but if that user call the '<a class="el" href="classnamu_1_1node.html#a7954fd1de038089d735bfaed74542f20">getEval()</a>' then the 'expr' object evaluate its terms and returns it as a node from the output. it could be an integer if it was 'addExpr' and all terms are constructed with integers.</p>
+<p>for example, the 'expr' class has derived from this node class. and if an user call the funcs to get type of it, class 'ntype' of 'expr' will be returned. but if that user call the '<a class="el" href="classnamu_1_1node.html#a9cd8636fd1a3e4f7548e4025e51398f7">getEval()</a>' then the 'expr' object evaluate its terms and returns it as a node from the output. it could be an integer if it was 'addExpr' and all terms are constructed with integers.</p>
 <p>and also this func requires frames. means that you have to interact frame first before call this func. </p>
 
-<p>Reimplemented in <a class="el" href="classnamu_1_1_a_p_i_bridge.html#a5c1843613de64da9bc69b267740d74c2">namu::APIBridge&lt; T, Ret &gt;</a>, <a class="el" href="classnamu_1_1slot.html#a141ab5205885f019d21dd8833451c227">namu::slot</a>, <a class="el" href="classnamu_1_1generic_obj.html#aedea7ebacbf8caf67facee4eecd72065">namu::genericObj</a>, <a class="el" href="classnamu_1_1while_expr.html#ac01d5a5c4542ed6d6aa99a670cc4b713">namu::whileExpr</a>, <a class="el" href="classnamu_1_1run_expr.html#a744541a1950cd9ea0778303ca12724b2">namu::runExpr</a>, <a class="el" href="classnamu_1_1ret_state_expr.html#a982e75232879c89751f1d2c0e34538ec">namu::retStateExpr</a>, <a class="el" href="classnamu_1_1ret_expr.html#a49d177d46aed8e23af5dac748b889f5b">namu::retExpr</a>, <a class="el" href="classnamu_1_1make_expr.html#afc898c74d27816960c15ae668a930dc8">namu::makeExpr</a>, <a class="el" href="classnamu_1_1loop_expr.html#ab4f650455b6e387b6c99ea4a45f47c94">namu::loopExpr</a>, <a class="el" href="classnamu_1_1if_expr.html#a60a5be0a2c0815a73684a0c78dfa65cb">namu::ifExpr</a>, <a class="el" href="classnamu_1_1get_expr.html#adb2b7233c339b03108329158b60ee777">namu::getExpr</a>, <a class="el" href="classnamu_1_1_f_u_o_expr.html#a1997c36d25d9c695e2c9b3f42423904d">namu::FUOExpr</a>, <a class="el" href="classnamu_1_1for_expr.html#a039b62918fc5bcfa2420d64e0e3d0fb0">namu::forExpr</a>, <a class="el" href="classnamu_1_1_f_b_o_expr.html#a5cba34afcfe1b4f9a8da77e816562135">namu::FBOExpr</a>, <a class="el" href="classnamu_1_1_f_b_o_expr.html#a5cba34afcfe1b4f9a8da77e816562135">namu::FBOExpr</a>, <a class="el" href="classnamu_1_1def_var_expr.html#a196f4d5763819d5c86db6271a26e7e1a">namu::defVarExpr</a>, <a class="el" href="classnamu_1_1def_seq_expr.html#a696b71afde7424178ae6f499edff4007">namu::defSeqExpr</a>, <a class="el" href="classnamu_1_1def_assign_expr.html#aaccdc7f805e6c4a61c702e84fdec9802">namu::defAssignExpr</a>, <a class="el" href="classnamu_1_1def_array_expr.html#a379ae22fb50ee56691c5f34f6b33e615">namu::defArrayExpr</a>, <a class="el" href="classnamu_1_1block_expr.html#a2ae10cfd2a9d47bf5cfc0b53a91169ea">namu::blockExpr</a>, <a class="el" href="classnamu_1_1assign_expr.html#abe8107eb963e7df624ae367e93927741">namu::assignExpr</a>, <a class="el" href="classnamu_1_1as_expr.html#a36fc4c3d9c160c46ba85fe0e2fc4a04a">namu::asExpr</a>, and <a class="el" href="classnamu_1_1ctor.html#ab8574b94b12c43fd09981cd473e38058">namu::ctor</a>.</p>
+<p>Reimplemented in <a class="el" href="classnamu_1_1_a_p_i_bridge.html#a461455a3fed56e528c769aefd9c90fc5">namu::APIBridge&lt; T, Ret &gt;</a>, <a class="el" href="classnamu_1_1slot.html#a50c34983f46fa9f76580ffaa5baa7c4b">namu::slot</a>, <a class="el" href="classnamu_1_1generic_obj.html#ad69576360f7ddbe312ab8076da409135">namu::genericObj</a>, <a class="el" href="classnamu_1_1while_expr.html#abd3f7be5b9feb751bcd435817632c77f">namu::whileExpr</a>, <a class="el" href="classnamu_1_1run_expr.html#aabf97b7cbfce0036b061912d10d79759">namu::runExpr</a>, <a class="el" href="classnamu_1_1ret_state_expr.html#af391a31f89fcadfaad36390ad6073b07">namu::retStateExpr</a>, <a class="el" href="classnamu_1_1ret_expr.html#a8b6b383b2b0bfa0dd1954e27a85026f5">namu::retExpr</a>, <a class="el" href="classnamu_1_1make_expr.html#a934a524bea0d5bed7fc1fb40332f8755">namu::makeExpr</a>, <a class="el" href="classnamu_1_1loop_expr.html#a58343e9e99e28071a0f1b946e8d7a97a">namu::loopExpr</a>, <a class="el" href="classnamu_1_1if_expr.html#af26f72698dee9b002074401f22f25d6b">namu::ifExpr</a>, <a class="el" href="classnamu_1_1get_expr.html#a1e9b827536d1e5a4f21dbec3d676c7cb">namu::getExpr</a>, <a class="el" href="classnamu_1_1_f_u_o_expr.html#a6b032346458a5f3031cccb1bef65e7b6">namu::FUOExpr</a>, <a class="el" href="classnamu_1_1for_expr.html#a78088f12e0c97d2b259dd3c7288a9a4d">namu::forExpr</a>, <a class="el" href="classnamu_1_1_f_b_o_expr.html#a78df6196d5839ef8353f41fd83887781">namu::FBOExpr</a>, <a class="el" href="classnamu_1_1_f_b_o_expr.html#a78df6196d5839ef8353f41fd83887781">namu::FBOExpr</a>, <a class="el" href="classnamu_1_1def_var_expr.html#a2ddd5dcc38d9649a84b70da0b1bb6e76">namu::defVarExpr</a>, <a class="el" href="classnamu_1_1def_seq_expr.html#afc7a343609da88bbf07b1cc4d83efb4b">namu::defSeqExpr</a>, <a class="el" href="classnamu_1_1def_assign_expr.html#a1e711791c2a1c139a9b1632c04d7df0a">namu::defAssignExpr</a>, <a class="el" href="classnamu_1_1def_array_expr.html#a4f2e36b5a51c5374094470289cb9c461">namu::defArrayExpr</a>, <a class="el" href="classnamu_1_1block_expr.html#a36e323e30ea2c229e953d30f5487fe6f">namu::blockExpr</a>, <a class="el" href="classnamu_1_1assign_expr.html#a1f1c9430d3415e5205a80ec2342ea647">namu::assignExpr</a>, <a class="el" href="classnamu_1_1as_expr.html#abfa263e5fbd2fbc0478c817a3851f455">namu::asExpr</a>, and <a class="el" href="classnamu_1_1ctor.html#ac7c1c34d7801b6f4dc9c8d86b111e330">namu::ctor</a>.</p>
+
+</div>
+</div>
+<a id="a5b957d4e0089e4a2e39f1ba0e3179573"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b957d4e0089e4a2e39f1ba0e3179573">&#9670;&nbsp;</a></span>isComplete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual nbool namu::node::isComplete </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>returns whether this instance is complete or not. if some instance is incomplete, it means that it's not accessible on namulang source codes. </p>
+
+<p>Reimplemented in <a class="el" href="classnamu_1_1obj.html#a4ba4427dd8bf0fb7768c3cb799bdcdcc">namu::obj</a>.</p>
 
 </div>
 </div>

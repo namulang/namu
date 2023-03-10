@@ -217,6 +217,8 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:af4fa73f423a3a8192c32b03e7fbeb7d3 inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="af4fa73f423a3a8192c32b03e7fbeb7d3"></a>
 <a class="el" href="classnamu_1_1clonable.html">clonable</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>deepClone</b> () const override</td></tr>
 <tr class="separator:af4fa73f423a3a8192c32b03e7fbeb7d3 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b957d4e0089e4a2e39f1ba0e3179573 inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1node.html#a5b957d4e0089e4a2e39f1ba0e3179573">isComplete</a> () const</td></tr>
+<tr class="separator:a5b957d4e0089e4a2e39f1ba0e3179573 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fb606861bf0f375e00eb2202ebdbeee inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a8fb606861bf0f375e00eb2202ebdbeee"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>accept</b> (<a class="el" href="structnamu_1_1visit_info.html">visitInfo</a> i, <a class="el" href="classnamu_1_1visitor.html">visitor</a> &amp;v)</td></tr>
 <tr class="separator:a8fb606861bf0f375e00eb2202ebdbeee inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -293,10 +295,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ae16ba0fa0ab1447d886fa5e82bc237ad"><td class="memItemLeft" align="right" valign="top"><a id="ae16ba0fa0ab1447d886fa5e82bc237ad"></a>
 virtual <a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_onRun</b> (T &amp;cast, const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const =0</td></tr>
 <tr class="separator:ae16ba0fa0ab1447d886fa5e82bc237ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a810c467ff415620aa636ab752129020f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1_a_p_i_bridge.html#a810c467ff415620aa636ab752129020f">getRet</a> () const override</td></tr>
-<tr class="separator:a810c467ff415620aa636ab752129020f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c1843613de64da9bc69b267740d74c2"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1_a_p_i_bridge.html#a5c1843613de64da9bc69b267740d74c2">getEval</a> () const override</td></tr>
-<tr class="separator:a5c1843613de64da9bc69b267740d74c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c2ff3be4c12bd185a8ddbec903f80ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1_a_p_i_bridge.html#a6c2ff3be4c12bd185a8ddbec903f80ec">getRet</a> () const override</td></tr>
+<tr class="separator:a6c2ff3be4c12bd185a8ddbec903f80ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a461455a3fed56e528c769aefd9c90fc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1_a_p_i_bridge.html#a461455a3fed56e528c769aefd9c90fc5">getEval</a> () const override</td></tr>
+<tr class="separator:a461455a3fed56e528c769aefd9c90fc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classnamu_1_1expr"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classnamu_1_1expr')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classnamu_1_1expr.html">namu::expr</a></td></tr>
 <tr class="memitem:ab8617cf8be9c506c85ffba245987cfdf inherit pro_methods_classnamu_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="ab8617cf8be9c506c85ffba245987cfdf"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>_setSrc</b> (const <a class="el" href="classnamu_1_1src.html">src</a> &amp;newSrc)</td></tr>
@@ -330,8 +332,8 @@ class namu::APIBridge&lt; T, Ret &gt;</h3>
 
 <p><a class="el" href="classnamu_1_1_a_p_i_bridge.html">APIBridge</a> is a function template for API of primitive types. <a class="el" href="classnamu_1_1primitive_obj.html">primitiveObj</a> can't be tcppbridge object. it's already obj of namu. that's why this kind of func template required. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5c1843613de64da9bc69b267740d74c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c1843613de64da9bc69b267740d74c2">&#9670;&nbsp;</a></span>getEval()</h2>
+<a id="a461455a3fed56e528c769aefd9c90fc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a461455a3fed56e528c769aefd9c90fc5">&#9670;&nbsp;</a></span>getEval()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -342,7 +344,7 @@ template&lt;typename T , typename Ret &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classnamu_1_1node.html">node</a>&amp; <a class="el" href="classnamu_1_1_a_p_i_bridge.html">namu::APIBridge</a>&lt; T, Ret &gt;::getEval </td>
+          <td class="memname"><a class="el" href="classnamu_1_1tstr.html">str</a> <a class="el" href="classnamu_1_1_a_p_i_bridge.html">namu::APIBridge</a>&lt; T, Ret &gt;::getEval </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -355,15 +357,15 @@ template&lt;typename T , typename Ret &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>getType() returns what it is. opposite to it, this returns what this class will represents after evaluation.</p>
-<p>for example, the 'expr' class has derived from this node class. and if an user call the funcs to get type of it, class 'ntype' of 'expr' will be returned. but if that user call the '<a class="el" href="classnamu_1_1_a_p_i_bridge.html#a5c1843613de64da9bc69b267740d74c2">getEval()</a>' then the 'expr' object evaluate its terms and returns it as a node from the output. it could be an integer if it was 'addExpr' and all terms are constructed with integers.</p>
+<p>for example, the 'expr' class has derived from this node class. and if an user call the funcs to get type of it, class 'ntype' of 'expr' will be returned. but if that user call the '<a class="el" href="classnamu_1_1_a_p_i_bridge.html#a461455a3fed56e528c769aefd9c90fc5">getEval()</a>' then the 'expr' object evaluate its terms and returns it as a node from the output. it could be an integer if it was 'addExpr' and all terms are constructed with integers.</p>
 <p>and also this func requires frames. means that you have to interact frame first before call this func. </p>
 
-<p>Reimplemented from <a class="el" href="classnamu_1_1node.html#a7954fd1de038089d735bfaed74542f20">namu::node</a>.</p>
+<p>Reimplemented from <a class="el" href="classnamu_1_1node.html#a9cd8636fd1a3e4f7548e4025e51398f7">namu::node</a>.</p>
 
 </div>
 </div>
-<a id="a810c467ff415620aa636ab752129020f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a810c467ff415620aa636ab752129020f">&#9670;&nbsp;</a></span>getRet()</h2>
+<a id="a6c2ff3be4c12bd185a8ddbec903f80ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c2ff3be4c12bd185a8ddbec903f80ec">&#9670;&nbsp;</a></span>getRet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -374,7 +376,7 @@ template&lt;typename T , typename Ret &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classnamu_1_1node.html">node</a>&amp; <a class="el" href="classnamu_1_1_a_p_i_bridge.html">namu::APIBridge</a>&lt; T, Ret &gt;::getRet </td>
+          <td class="memname"><a class="el" href="classnamu_1_1tstr.html">str</a> <a class="el" href="classnamu_1_1_a_p_i_bridge.html">namu::APIBridge</a>&lt; T, Ret &gt;::getRet </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -389,7 +391,7 @@ template&lt;typename T , typename Ret &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>node which has same type of the func. in namu lang, even type is an object. that's why I return this as a node. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>please don't confuse this to evalType. evaluate means program just read the code and expand or calculate then replace it to the accurate another identifier or variable. so evalType of the func is just the func itself because there is nothing to calculate or run. that's completely different to Return type of the function. if there is a <a class="el" href="classnamu_1_1run_expr.html">runExpr</a> instance, and it takes the func and proper argument, then it can be evaluated and its evalType is the return type of the func. </dd></dl>
 
-<p>Implements <a class="el" href="classnamu_1_1func.html#a9bd5e792678da30a0354d0e425f63c37">namu::func</a>.</p>
+<p>Implements <a class="el" href="classnamu_1_1func.html#ad4ed600a160d10c18cb1e0366aa8fa8a">namu::func</a>.</p>
 
 </div>
 </div>
