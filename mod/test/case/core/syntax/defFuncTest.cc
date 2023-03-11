@@ -9,7 +9,11 @@ namespace {
 
 TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
     if(make().parse(R"SRC(
+        foo(x int, y int) void
+            ret
+
         main() void
+            a := 22
             foo(a, 22)
     )SRC").shouldParsed(true)) {
         node& res = getSubPack();
@@ -22,8 +26,11 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
     }
 
     if(make().parse(R"SRC(
+        foo(x int, y int) void
+            ret
+
         main(argc int, argv str) void
-            foo(a, 22)
+            foo(argc, 22)
     )SRC").shouldParsed(true)) {
         node& res = getSubPack();
         ASSERT_FALSE(nul(res));
@@ -49,25 +56,27 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
 }
 
 TEST_F(defFuncTest, distinguishDefineFuncOrCall2) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main() void
             foo(a, 22)
                 a.doSomething(22)
             foo(a, 22)
     )SRC").shouldParsed(true);
+    shouldVerified(false);
 }
 
 TEST_F(defFuncTest, distinguishDefineFuncOrCall3) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main() void
             foo(a, 22)
                 a.doSomething(22)
             foo(a, 22)
     )SRC").shouldParsed(true);
+    shouldVerified(false);
 }
 
 TEST_F(defFuncTest, distinguishDefineLambdaOrCall) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main() void
             (a, 22) // this is not lambda
     )SRC").shouldParsed(false);

@@ -1,6 +1,7 @@
 #include "frame.hpp"
 #include "../ast/obj.hpp"
 #include "../ast/func.hpp"
+#include "../visitor/visitor.hpp"
 
 namespace namu {
 
@@ -13,7 +14,7 @@ namespace namu {
     }
 
 
-    NAMU_DEF_ME(frame)
+    NAMU(DEF_ME(frame), DEF_VISIT())
 
     me::frame() {
         _rel();
@@ -76,12 +77,16 @@ namespace namu {
     }
     // I won't provide API for poping a single node from the scope.
 
-    void me::setFunc(func& new1) {
-        _func.bind(new1);
+    void me::pushFunc(func& new1) {
+        _funcs.push_back(tstr<func>(new1));
+    }
+
+    void me::popFunc() {
+        _funcs.pop_back();
     }
 
     func& me::getFunc() {
-        return *_func;
+        return *_funcs.back();
     }
 
     // node:
@@ -115,7 +120,7 @@ namespace namu {
 
     void me::_rel() {
         _obj.rel();
-        _func.rel();
+        _funcs.clear();
         _local.rel();
         relRet();
     }

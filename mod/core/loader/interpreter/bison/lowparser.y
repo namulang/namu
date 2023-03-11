@@ -258,7 +258,7 @@ postfix: primary {
      } | postfix '.' func-call {
         $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
      } | func-call {
-        $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*new getExpr("me"), $1->cast<runExpr>());
+        $$ = $1;
         // $1 is still on heap without binder
      } | postfix '[' expr ']' {
         $$ = yyget_extra(scanner)->onGetElem(*$1, *$3);

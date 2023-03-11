@@ -19,7 +19,7 @@ namespace namu {
             _me.bind(me);
             return *this;
         }
-        baseObj& getMe() const { return *_me; }
+        node& getMe() const { return *_me; }
 
         std::string asStr() const {
             std::string ret;
@@ -42,6 +42,6 @@ namespace namu {
         }
 
     private:
-        mutable tstr<baseObj> _me;
+        mutable str _me;
     };
 }

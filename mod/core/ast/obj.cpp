@@ -54,8 +54,10 @@ namespace namu {
     }
 
     str me::run(const args& a) {
-        // TODO: make constructor.
-        return (me*) deepClone();
+        func& found = sub<func>(baseObj::CTOR_NAME, a);
+        if(nul(found)) return NAMU_W("there is no such ctor."), str();
+
+        return run(baseObj::CTOR_NAME, a);
     }
 
     const ntype& me::getType() const {

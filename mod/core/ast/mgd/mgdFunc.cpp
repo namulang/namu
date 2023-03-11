@@ -34,7 +34,7 @@ namespace namu {
         // s is from heap space. but freed by _outFrame() of this class.
         scope& s = *_evalArgs(a);
         if(nul(s)) return str();
-        baseObj& meObj = a.getMe();
+        node& meObj = a.getMe();
         if(nul(meObj)) return NAMU_E("meObj == null"), str();
 
         str ret;
@@ -88,7 +88,7 @@ namespace namu {
 
         NAMU_DI("%s._onInFrame()", getType().getName().c_str());
         fr.pushLocal(subs());
-        fr.setFunc(*this);
+        fr.pushFunc(*this);
         fr.pushLocal((nbicontainer&) args); // including 'me'
     }
 
@@ -97,7 +97,7 @@ namespace namu {
 
         frame& fr = thread::get()._getNowFrame();
         // TODO: is it safe to delete below lines?
-        fr.setFunc(nulOf<func>());
+        fr.popFunc();
         fr.popLocal();
         fr.popLocal();
     }
