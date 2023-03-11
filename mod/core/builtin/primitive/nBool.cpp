@@ -61,5 +61,5 @@ namespace namu {
                 new nInt(get() >> rhs.as<me>()->get());
     }
 
-    tstr<arithmeticObj> me::bitwiseNot() const { return nInt(~get()); }
+    tstr<arithmeticObj> me::bitwiseNot() const { return nInt(!get()); }
 }

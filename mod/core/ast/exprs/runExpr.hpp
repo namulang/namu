@@ -20,7 +20,7 @@ namespace namu {
         const node& getEval() const override;
 
         node& getMe();
-        const node& getMe() const;
+        const node& getMe() const NAMU_UNCONST_FUNC(getMe())
         void setMe(const node& newMe);
 
         node& getSubject();

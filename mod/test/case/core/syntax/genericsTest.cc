@@ -18,7 +18,10 @@ TEST_F(genericsTest, simpleDefineGenerics) {
             a := object<str>()
             ret a.foo()
     )SRC").shouldVerified(true);
-    ASSERT_EQ(run().cast<std::string>(), "1");
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "1");
 }
 
 TEST_F(genericsTest, defineGenerics) {
@@ -33,8 +36,10 @@ TEST_F(genericsTest, defineGenerics) {
             a := object<int>()
             ret a.foo(2) as str
     )SRC").shouldVerified(true);
-    str ret = run();
-    ASSERT_EQ(ret.cast<std::string>(), "2");
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "2");
 }
 
 TEST_F(genericsTest, defineGenerics1) {
@@ -50,8 +55,10 @@ TEST_F(genericsTest, defineGenerics1) {
             a := object<int>()
             sys.con.print(a.foo(2) as str)
     )SRC").shouldVerified(true);
-    str ret = run();
-    ASSERT_EQ(ret.cast<std::string>(), "2");
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "2");
 }
 
 TEST_F(genericsTest, genericTwice1) {
@@ -110,7 +117,7 @@ TEST_F(genericsTest, genericTwice2) {
             ret b.foo("3.5")
     )SRC").shouldVerified(true);
     str ret = run();
-    ASSERT_FALSE(nul(ret));
+    ASSERT_TRUE(ret);
     ASSERT_EQ(ret->cast<std::string>(), "3.5");
 }
 
@@ -161,7 +168,7 @@ TEST_F(genericsTest, simpleUseGenerics2) {
             ret b.foo("3.5")
     )SRC").shouldVerified(true);
     str ret = run();
-    ASSERT_FALSE(nul(ret));
+    ASSERT_TRUE(ret);
     ASSERT_EQ(ret->cast<std::string>(), "3.5");
 }
 

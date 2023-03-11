@@ -20,7 +20,7 @@ namespace namu {
     str me::run(const args& a) {
         if(!canRun(a)) return NAMU_E("arguments doesn't have proper 'me'"), str();
 
-        baseObj& pak = a.getMe();
+        node& pak = a.getMe();
         NAMU_I("run a pack");
         node& main = _findMain(pak, args());
         if(nul(main))

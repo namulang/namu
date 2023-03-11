@@ -76,3 +76,16 @@ TEST_F(callTest, callFuncWithExprInside3) {
                 ))
     )SRC").shouldParsed(true);
 }
+
+TEST_F(callTest, callObjCtor) {
+    make().parse(R"SRC(
+        main() int
+            a := 55
+            a -= 20
+            a(a)
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 35);
+}

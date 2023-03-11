@@ -21,8 +21,11 @@ namespace namu {
         return ret;
     }
 
-    node& me::getMe() { return *_me; }
-    const node& me::getMe() const { return *_me; }
+    node& me::getMe() {
+        if(!_me)
+            return thread::get()._getNowFrame();
+        return *_me;
+    }
 
     const node& me::getSubject() const { return *_subject; }
     node& me::getSubject() { return *_subject; }
@@ -35,8 +38,8 @@ namespace namu {
     }
 
     str me::_getSub(const args& a) const {
-        tstr<baseObj> me = _me->as<baseObj>();
-        if(!me) return NAMU_E("me Obj as baseObj == null"), str();
+        tstr<node> me = getMe().as<node>();
+        if(!me) return NAMU_E("me Obj == null"), str();
         if(!_subject) return NAMU_E("_subject as node == null"), str();
 
         if(!nul(a))

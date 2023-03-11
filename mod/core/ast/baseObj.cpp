@@ -4,6 +4,8 @@
 #include "../builtin/container/tucontainable.inl"
 #include "../frame/thread.hpp"
 #include "args.hpp"
+#include "func.hpp"
+#include "node.inl"
 
 namespace namu {
 
@@ -21,7 +23,7 @@ namespace namu {
     }
 
     nbool me::canRun(const args& a) const {
-        return a.len() <= 0;
+        return !nul(sub<func>(baseObj::CTOR_NAME, a));
     }
 
     void me::inFrame(const bicontainable& args) {

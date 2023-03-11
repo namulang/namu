@@ -74,7 +74,7 @@ namespace namu {
     class obj;
     class func;
     class _nout frame : public node { // TODO: may be obj, not node.
-        NAMU(CLASS(frame, node))
+        NAMU(CLASS(frame, node), VISIT())
         friend class verifier;
         friend struct ::immutableTest;
         friend struct ::frameTest;
@@ -128,7 +128,8 @@ namespace namu {
         // I won't provide API for poping a single node from the scope.
         tstr<scopes> popLocal();
 
-        void setFunc(func& new1);
+        void pushFunc(func& new1);
+        void popFunc();
         func& getFunc();
         const func& getFunc() const NAMU_UNCONST_FUNC(getFunc())
 
@@ -158,7 +159,7 @@ namespace namu {
     private:
         tstr<retState> _retState;
         tstr<baseObj> _obj;
-        tstr<func> _func;
+        std::vector<tstr<func>> _funcs;
         scopeStack _local;
         mutable str _ret;
     };

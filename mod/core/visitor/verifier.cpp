@@ -298,7 +298,7 @@ namespace namu {
         NAMU_DI("verify: runExpr: is it possible to run?");
         if(nul(me.getMe())) return _srcErr(me.getPos(), errCode::CANT_CAST_TO_NODE);
 
-        tstr<baseObj> ased  = me.getMe().as<baseObj>();
+        str ased  = me.getMe().as<node>();
         if(!ased) return _srcErr(me.getPos(), errCode::CANT_CAST_TO_NODE);
 
         node& anySub = me.getSubject();
