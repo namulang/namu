@@ -101,7 +101,7 @@ TEST_F(exprTest, simpleGetExprNegative) {
 
 TEST_F(exprTest, simpleRunExprWithoutMeObjNegative) {
     negative();
-    runExpr exp1(bridge->sub("main"), narr(*new nStr("kniz!")));
+    runExpr exp1(nulOf<node>(), bridge->sub("main"), narr(*new nStr("kniz!")));
     errReport rep;
     verifier veri;
     veri.setReport(rep).setRoot(exp1).start();
