@@ -1,4 +1,4 @@
-{% assign entries = site[include.collection] %}
+{% assign entries = site[include.collection] | where: 'lang', page.lang %}
 
 {% if include.sort_by %}
   {% assign entries = entries | sort: include.sort_by %}

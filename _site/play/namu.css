@@ -1,0 +1,35 @@
+body {
+    text-align: center;
+    margin: 0 auto;
+}
+
+textarea#output {
+    background-color: #999;
+    display: none;
+    width: calc(100vw - 6px);
+    height: 100vh;
+}
+
+div#playbt {
+    width: 100vw;
+    height: 100vh;
+    background-color:#999;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #11999e;
+}
+
+.scrollbar::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}

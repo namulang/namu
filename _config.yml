@@ -223,12 +223,23 @@ defaults:
       author_profile: true
   # _guide
   - scope:
-      path: ""
+      path: "_guide/ko"
       type: guide
     values:
-      layout: single
+      lang: ko
+      layout: guide
       author_profile: false
       share: true
+      permalink: 'guide/ko/:title'
+  - scope:
+      path: "_guide/en"
+      type: guide
+    values:
+      lang: en
+      layout: guide
+      author_profile: false
+      share: true
+      permalink: 'guide/en/:title'
 
 
 # Outputting
