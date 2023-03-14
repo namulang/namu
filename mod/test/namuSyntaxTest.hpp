@@ -61,7 +61,14 @@ struct namuSyntaxTest : public namuTest {
         namu::starter s;
         namu::args a;
         a.setMe(getSubPack());
-        return s.run(a);
+
+        namu::logger& log = namu::logger::get();
+        log.saveStreamEnable();
+        log.setEnable(true);
+
+        namu::str res = s.run(a);
+        log.loadStreamEnable();
+        return res;
     }
 
 private:

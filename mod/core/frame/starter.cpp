@@ -26,8 +26,12 @@ namespace namu {
         if(nul(main))
             return NAMU_E("there is 0 or more than 2 main() found."), str();
 
-        if(main.canRun(a))
-            return pak.run("main");
+        if(main.canRun(a)) {
+            NAMU_DI("============== START ================");
+            str res = pak.run("main");
+            NAMU_DI("=====================================");
+            return res;
+        }
 
         /* TODO: str[] args
         if(main.canRun(narr(k*/
