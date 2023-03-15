@@ -52,7 +52,10 @@ namespace namu {
         NAMU_DI("        make generic     ");
         NAMU_DI("=========================");
         tstr<obj> ret = (obj*) _orgObj->deepClone();
-        NAMU_DI("=========================");
+        // update origin:
+        //  genericObj makes an origin object. but ret->getOrigin() is pointing _orgObj now.
+        //  I need to update it.
+        ret->_setOrigin(&ret.get());
 
         ncnt n = 0;
         generalizer g;
@@ -60,6 +63,7 @@ namespace namu {
             g.add(*new param(_paramNames[n++], e));
 
         g.setRoot(*ret).start();
+        NAMU_DI("=========================");
         return ret;
     }
 }

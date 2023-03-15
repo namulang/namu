@@ -16,6 +16,7 @@ namespace namu {
              VISIT())
         friend class slot; // for _onRunSub
         friend class loweventer;
+        friend class genericObj; // for _setOrigin()
 
     public:
         explicit obj();
@@ -47,6 +48,9 @@ namespace namu {
     private:
         scopes* _makeNewSubs();
         void _setType(const ntype* new1);
+        // update origin pointer of an object.
+        // to modify origin* is very dangerous. only permitted module should do this.
+        void _setOrigin(obj* newOrg);
 
         me& _assign(const me& rhs);
 

@@ -85,6 +85,10 @@ namespace namu {
         return ret;
     }
 
+    void me::_setOrigin(obj* newOrg) {
+        _org = newOrg;
+    }
+
     clonable* me::deepClone() const {
         NAMU_DW("obj: deepClone");
 

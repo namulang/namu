@@ -20,6 +20,9 @@ namespace namu {
             _root.bind(root);
             return *this;
         }
+        node& getRoot() { return *_root; }
+        const node& getRoot() const NAMU_UNCONST_FUNC(getRoot())
+
         me& setLog(nbool toShow) {
             _isLog = toShow;
             return *this;
