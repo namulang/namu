@@ -58,6 +58,8 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, params& me) {
+        NAMU_DI("generic: params[%d]", me.len());
+
         for(int n=0; n < me.len(); n++) {
             param& p = me[n];
             const node& org = _findOrigin(p.getOrigin());
@@ -68,6 +70,8 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, func& me) {
+        NAMU_DI("generic: func[%s, %x]", i.name.c_str(), &me);
+
         onVisit(i, (params&) me.getParams());
 
         const node& retOrg = _findOrigin(me.getRet());
@@ -79,6 +83,10 @@ namespace namu {
             else
                 parent.setElemType(retOrg);
         }
+
+        ctor& cast = me.cast<ctor>();
+        if(!nul(cast))
+            cast._setOrigin(getRoot());
 
         onVisit(i, (func::super&) me);
     }
