@@ -46,7 +46,7 @@
 
 
 
-  <meta property="article:published_time" content="2023-03-14T23:34:02+09:00">
+  <meta property="article:published_time" content="2023-03-15T21:50:21+09:00">
 
 
 
@@ -234,11 +234,13 @@
   </div>
 
 
+  
+  <script type='text/javascript' src='/play/namu-starter.js'></script>
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="quick start">
     <meta itemprop="description" content="미리 모든 내용을 훑어보죠.">
-    <meta itemprop="datePublished" content="2023-03-14T23:34:02+09:00">
+    <meta itemprop="datePublished" content="2023-03-15T21:50:21+09:00">
     
 
     <div class="page__inner-wrap">
@@ -281,6 +283,17 @@
     <span class="nb">print</span><span class="p">(</span><span class="s">"Hello world!"</span><span class="p">)</span>
 </code></pre></div></div>
 
+<div class="embed_holder">
+    <div class="embed_src" id="ta1">
+    
+main() void
+    print("Hello world!")
+
+    </div>
+    <input id="bt1" class="embed_src" type="button" value="▶︎" onclick="runNamuDiv(&quot;1&quot;);" />
+    <iframe class="embed_src" scrolling="no" id="fr1" src="/play/namu.html"></iframe>
+</div>
+
 <h2 id="변수와-표현식">변수와 표현식</h2>
 
 <p>정의시, type은 항상 뒤에 옵니다.</p>
@@ -289,12 +302,23 @@
 <span class="n">str1</span> <span class="o">=</span> <span class="s">"wow"</span> 
 <span class="n">bool1</span> <span class="o">:=</span> <span class="no">false</span>
 <span class="n">flt1</span> <span class="o">:=</span> <span class="m">3.5</span> <span class="o">+</span> <span class="m">3</span>
-<span class="n">char1</span> <span class="o">:=</span> <span class="sc">'c'</span>
 <span class="n">int1</span> <span class="o">:=</span> <span class="m">15</span>
-
-<span class="c">// casts int as 64bit float, after that assign it to variable 'toInt'</span>
-<span class="n">toInt</span> <span class="o">:=</span> <span class="n">int1</span> <span class="n">as</span> <span class="n">flt64</span>
 </code></pre></div></div>
+
+<div class="embed_holder">
+    <div class="embed_src" id="ta2">
+    
+main() void
+    str1 := "message" // 변수의 정의
+    str1 = "wow"
+    bool1 := false
+    flt1 := 3.5 + 3
+    int1 := 15
+
+    </div>
+    <input id="bt2" class="embed_src" type="button" value="▶︎" onclick="runNamuDiv(&quot;2&quot;);" />
+    <iframe class="embed_src" scrolling="no" id="fr2" src="/play/namu.html"></iframe>
+</div>
 
 <h2 id="indentation-레벨에-의한-scope-범위">Indentation 레벨에 의한 Scope 범위</h2>
 

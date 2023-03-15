@@ -55,7 +55,7 @@ function runModule() {
 
 window.addEventListener('message', function(msg) {
     var check = parent.document.getElementById('verbose')
-    if(check.checked)
+    if(check != undefined && check.checked)
       arguments_ = ["namu.html", "-ls", "-lv", "-s", msg.data];
     else
       arguments_ = ["namu.html", "-s", msg.data];

@@ -10,3 +10,9 @@ function runNamuTextArea(iframe, srcId) {
     var src = document.getElementById(srcId);
     runNamuSrc(iframe, src.value);
 }
+function runNamuDiv(postfix) {
+    var src = document.getElementById("ta"+postfix);
+    var play = document.getElementById("bt"+postfix);
+    runNamuSrc("fr"+postfix, src.textContent);
+    play.style.display = 'none';
+}

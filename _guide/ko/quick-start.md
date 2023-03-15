@@ -26,6 +26,10 @@ main() void
     print("Hello world!")
 ```
 
+{% include embed_src.html src='
+main() void
+    print("Hello world!")
+' id='1' %}
 
 ## 변수와 표현식
 
@@ -36,12 +40,17 @@ str1 := "message" // 변수의 정의
 str1 = "wow" 
 bool1 := false
 flt1 := 3.5 + 3
-char1 := 'c'
 int1 := 15
-
-// casts int as 64bit float, after that assign it to variable 'toInt'
-toInt := int1 as flt64
 ```
+
+{% include embed_src.html src='
+main() void
+    str1 := "message" // 변수의 정의
+    str1 = "wow"
+    bool1 := false
+    flt1 := 3.5 + 3
+    int1 := 15
+' id='2' %}
 
 ## Indentation 레벨에 의한 Scope 범위
 
