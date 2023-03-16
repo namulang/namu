@@ -69,6 +69,12 @@ namespace namu {
         }
     }
 
+    void me::onVisit(visitInfo i, ctor& me) {
+        me._setOrigin(getRoot());
+
+        onVisit(i, (func&) me);
+    }
+
     void me::onVisit(visitInfo i, func& me) {
         NAMU_DI("generic: func[%s, %x]", i.name.c_str(), &me);
 
@@ -83,10 +89,6 @@ namespace namu {
             else
                 parent.setElemType(retOrg);
         }
-
-        ctor& cast = me.cast<ctor>();
-        if(!nul(cast))
-            cast._setOrigin(getRoot());
 
         onVisit(i, (func::super&) me);
     }
