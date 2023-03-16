@@ -22,9 +22,10 @@ namespace namu {
     }
 
     dumScope* me::_onMakeSubs() const {
+        static nVoid inner;
         scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(*this));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(*this));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
         return new dumScope(scapegoat);
     }
 }
