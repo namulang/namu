@@ -5,21 +5,19 @@
 namespace namu {
 
     class ctor: public func {
-        NAMU(ADT(ctor, func))
+        NAMU(ADT(ctor, func), VISIT())
         friend class generalizer; // for _setOrigin()
 
     public:
-        ctor(const node& org): _org(org) {}
+        ctor(const node& org);
 
     public:
-        const node& getRet() const override { return _org->getEval(); }
-        const node& getEval() const override { return getRet(); }
-        const node& getOrigin() const { return *_org; }
+        const node& getRet() const override;
+        const node& getEval() const override;
+        const node& getOrigin() const;
 
     private:
-        void _setOrigin(const node& newOrg) {
-            _org.bind(newOrg);
-        }
+        void _setOrigin(const node& newOrg);
 
     private:
         str _org;
