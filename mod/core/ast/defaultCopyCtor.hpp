@@ -10,7 +10,9 @@ namespace namu {
         NAMU(CLASS(defaultCopyCtor, ctor), VISIT())
 
     public:
-        defaultCopyCtor(const node& org): super(org) {}
+        defaultCopyCtor(const node& org): super(org) {
+            _params.add(*new param("rhs", org));
+        }
 
     public:
         using super::run;
@@ -21,8 +23,10 @@ namespace namu {
         }
 
         const params& getParams() const override {
-            static params inner(*new param("rhs", getOrigin()));
-            return inner;
+            return _params;
         }
+
+    public:
+        params _params;
     };
 }
