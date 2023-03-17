@@ -1,3 +1,3 @@
 ---
-layout: archive
+layout: home
 ---
