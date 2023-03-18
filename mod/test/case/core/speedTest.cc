@@ -11,7 +11,6 @@ struct speedTest : namuSyntaxTest {};
 
 namespace  {
     void benchMark(string name, int cnt, function<void(void)> func) {
-        logger::get().setEnable(false);
 
         auto start = chrono::steady_clock::now();
         for(int n=0; n < cnt; n++)
@@ -19,9 +18,7 @@ namespace  {
         auto end = chrono::steady_clock::now();
         auto totalElapsed = end - start;
 
-        logger::get().setEnable(true);
         NAMU_I("[%s]: it took total %d ms.", name.c_str(), totalElapsed / chrono::milliseconds(1));
-        logger::get().setEnable(false);
     }
 
     struct myObj : public obj {
@@ -143,8 +140,6 @@ TEST_F(speedTest, benchmarkSumOfSequence) {
     auto end2 = chrono::steady_clock::now();
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), sum);
-    logger::get().setEnable(true);
     NAMU_I("native time: %d", (end - start) / chrono::milliseconds(1));
     NAMU_I("managed time: %d", (end2 - start2) / chrono::milliseconds(1));
-    logger::get().setEnable(false);
 }

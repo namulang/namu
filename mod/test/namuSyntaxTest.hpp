@@ -33,10 +33,11 @@ struct namuSyntaxTest : public namuTest {
         std::vector<std::string> srcs;
         srcs.push_back(src);
         namu::bufferSrcSupply buf(srcs);
+        namu::nbool isVerbose = namu::logger::get().isEnable();
 
         _ip.setSrcSupply(buf)
-           .setLogInterpreter(true)
-           .setLogStructure(true)
+           .setLogInterpreter(isVerbose)
+           .setLogStructure(isVerbose)
            .setReport(_rpt)
            .interpret();
         return *this;
@@ -62,13 +63,7 @@ struct namuSyntaxTest : public namuTest {
         namu::args a;
         a.setMe(getSubPack());
 
-        namu::logger& log = namu::logger::get();
-        log.saveStreamEnable();
-        log.setEnable(true);
-
-        namu::str res = s.run(a);
-        log.loadStreamEnable();
-        return res;
+        return s.run(a);
     }
 
 private:

@@ -74,13 +74,7 @@ namespace namu {
     void me::log() const {
         if(!_rpt && !*_rpt) return;
 
-        logger& l = logger::get();
-        l.saveStreamEnable();
-        l.setEnable(true);
-
         _rpt->log();
-
-        l.loadStreamEnable();
     }
 
     nbool me::_isPackExist() {
@@ -88,9 +82,6 @@ namespace namu {
     }
 
     void me::_parse() {
-        logger& l = logger::get();
-        l.saveStreamEnable();
-        l.setEnable(_isLogInterpreter);
         while(_srcs->next()) {
             _pser.rel(); // parser can only take 1 src.
 
@@ -108,14 +99,9 @@ namespace namu {
         }
 
         _isParsed = _isPackExist() && !_rpt->hasErr();
-        l.loadStreamEnable();
     }
 
     void me::_verify() {
-        logger& l = logger::get();
-        l.saveStreamEnable();
-        l.setEnable(_isLogInterpreter);
-
         NAMU_DI("======================================");
         NAMU_DI("                verify                ");
         NAMU_DI("======================================");
@@ -130,15 +116,10 @@ namespace namu {
              .setLog(true)
              .setRoot(_slot->getPack())
              .start();
-        l.loadStreamEnable();
     }
 
     void me::_logStructure(frame& info) {
         if(!_isLogStructure) return;
-
-        logger& l = logger::get();
-        l.saveStreamEnable();
-        l.setEnable(true);
 
         std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGREEN) << " - frame:\n";
         _logFrame(info);
@@ -150,7 +131,6 @@ namespace namu {
                           .start();
         }
 
-        l.loadStreamEnable();
         std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
     }
 

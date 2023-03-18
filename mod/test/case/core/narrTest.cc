@@ -21,7 +21,6 @@ namespace {
     };
 
     void benchMarkNArr(int cnt) {
-        logger::get().setEnable(false);
         vector<str> vec;
 
         auto start = chrono::steady_clock::now();
@@ -37,10 +36,7 @@ namespace {
         auto removingElapsed = end - startDeleting;
         auto totalElapsed = end - start;
 
-        logger::get().setEnable(true);
         NAMU_I("[benchMarkNArr]: vector took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
-        logger::get().setEnable(false);
-
 
         narr arr;
         start = chrono::steady_clock::now();
@@ -56,7 +52,6 @@ namespace {
         removingElapsed = end - startDeleting;
         totalElapsed = end - start;
 
-        logger::get().setEnable(true);
         NAMU_I("[benchMarkNArr]: narr took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
     }
 
