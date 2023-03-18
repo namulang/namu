@@ -7,11 +7,15 @@ using namespace namu;
 namespace {
     typedef struct consoleStreamTest : public ::testing::Test {
         void SetUp() {
+            logger& log = logger::get();
+            _isVerbose = log.isEnable();
+            log.setEnable(true);
             delLogFile();
             ASSERT_FALSE(consoleStreamTest::hasLogFile());
         }
         void TearDown() {
             delLogFile();
+            logger::get().setEnable(_isVerbose);
         }
 
         static void delLogFile() {
@@ -39,6 +43,9 @@ namespace {
             struct stat buffer;
             return stat(getLogFilePath(), &buffer) == 0;
         }
+
+    private:
+        nbool _isVerbose;
 
     } thisTest;
 }

@@ -21,7 +21,6 @@ namespace {
     };
 
     void benchMarkNMap(int cnt) {
-        logger::get().setEnable(false);
         map<std::string, str> vec;
 
         auto start = chrono::steady_clock::now();
@@ -37,11 +36,9 @@ namespace {
         auto removingElapsed = end - startDeleting;
         auto totalElapsed = end - start;
 
-        logger::get().setEnable(true);
         NAMU_I("[benchMarkNMap]: map took total %d ms for adding(%dms) & removing(%dms) of %d elems.",
                 totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1),
                 removingElapsed / chrono::milliseconds(1), sz);
-        logger::get().setEnable(false);
 
 
         nmap map1;
@@ -58,7 +55,6 @@ namespace {
         removingElapsed = end - startDeleting;
         totalElapsed = end - start;
 
-        logger::get().setEnable(true);
         NAMU_I("[benchMarkNMap]: nmap took total %d ms for adding(%dms) & removing(%dms) of %d elems.",
                 totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1),
                 removingElapsed / chrono::milliseconds(1), sz);
