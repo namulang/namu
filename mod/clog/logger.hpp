@@ -24,8 +24,6 @@ namespace namu {
 
         /// modify that all of streams are set to enable or not.
         void setEnable(nbool enable) override;
-        void saveStreamEnable() override;
-        void loadStreamEnable() override;
         ncnt getStreamCount() const;
         nbool dumpFormat(const nchar* fmt, ...);
         nbool dumpFormatLog(const nchar* level, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...);
