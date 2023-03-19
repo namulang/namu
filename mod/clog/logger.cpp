@@ -153,14 +153,6 @@ namespace namu {
         for(stream* s : _streams)
             s->setEnable(enable);
     }
-    void me::saveStreamEnable() {
-        for(stream* s : _streams)
-            s->saveStreamEnable();
-    }
-    void me::loadStreamEnable() {
-        for(stream* s : _streams)
-            s->loadStreamEnable();
-    }
 
     void me::callstack() const {
         NAMU_E("error found...");

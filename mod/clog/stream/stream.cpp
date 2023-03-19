@@ -23,7 +23,4 @@ namespace namu {
         _isEnable = false;
         return false;
     }
-
-    void me::saveStreamEnable() { _save = _isEnable; }
-    void me::loadStreamEnable() { _isEnable = _save; }
 }

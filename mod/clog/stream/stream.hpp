@@ -16,8 +16,6 @@ namespace namu {
         nbool isNull() const;
         virtual nbool isEnable() const;
         virtual void setEnable(nbool isEnable);
-        virtual void saveStreamEnable();
-        virtual void loadStreamEnable();
         virtual const nchar* getName() const = 0;
         virtual nbool init();
         virtual nbool isInit() const;
@@ -25,6 +23,5 @@ namespace namu {
 
     private:
         nbool _isEnable;
-        nbool _save;
     };
 }
