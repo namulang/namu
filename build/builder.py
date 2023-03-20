@@ -548,9 +548,9 @@ def test(arg):
     failedCnt = 0
     ret = 0
     if isWindow():
-        res = os.system(".\\test " + arg)
+        res = os.system(".\\test verbose " + arg)
     else:
-        res = os.system("./test " + arg)
+        res = os.system("./test verbose " + arg)
     if res != 0:
         printErr("test was failed!")
         ret = -1
