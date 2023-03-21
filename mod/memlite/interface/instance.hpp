@@ -24,14 +24,14 @@ namespace namu {
         class vault {
 
         public:
-            nbool set(void* rcver, nidx chkN);
-            nidx get(void* rcver);
+            void set(nidx chkN);
+            nidx get();
             ncnt len() const;
             nbool rel();
-            std::map<void*, int>& getVaults();
+            std::vector<int>& getVaults();
 
         private:
-            std::map<void*, int> _vaults;
+            std::vector<int> _vaults;
         };
 
         //  instance:

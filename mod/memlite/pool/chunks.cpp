@@ -20,9 +20,8 @@ namespace namu {
 
     void* me::new1() {
         nidx n = _findCapable();
-        void* ret = _chunks[n]->new1();
-        instance::_vault.set(ret, n);
-        return ret;
+        instance::_vault.set(n);
+        return _chunks[n]->new1();
     }
 
     nbool me::del(void* pt, ncnt sz) {
