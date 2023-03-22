@@ -28,6 +28,7 @@ namespace {
 %option extra-type="namu::loweventer*"
 %option yylineno
 %option nounistd
+%option noyywrap
 
 
 /*  ============================================================================================
@@ -186,11 +187,6 @@ while { return _WHILE_; }
 /*  ============================================================================================
     |                                         EPILOGUE                                         |
     ============================================================================================  */
-
-int yywrap(yyscan_t scanner) {
-    // TODO:
-    return 1;
-}
 
 int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner) {
     namu::loweventer* eventer = yyget_extra(yyscanner);

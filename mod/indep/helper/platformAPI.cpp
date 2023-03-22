@@ -40,7 +40,12 @@ namespace namu {
 #endif
 
     const string& me::getConsoleFore(consoleColor fore) {
-#if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
+#ifdef __EMSCRIPTEN__
+        // TODO: Unreachable code exception raised if we don't handle it.
+        //       find solution not to use this ifdef __EMSCRIPTEN__ block.
+        static string inner = "";
+        return inner;
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), platformAPI::BLACK << 4 | fore);
         static string inner;
         return inner;
@@ -170,7 +175,7 @@ namespace namu {
 
 
     string me::demangle(const nchar* org) {
-#ifndef NAMU_BUILD_PLATFORM_IS_WINDOWS
+#if !defined(NAMU_BUILD_PLATFORM_IS_WINDOWS) && !defined(__EMSCRIPTEN__)
         nchar* demangled = nullptr;
         int status = 0;
 

@@ -47,7 +47,7 @@ endforeach(file)
 foreach(e ${sources})
     message("\tembeding ${e}")
 endforeach(e)
-set(dependencies ${dependencies} indep clog meta memlite seedling)
+set(dependencies ${dependencies} seedling)
 IF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
     set(dependencies ${dependencies} dl) # dynamic linking lib of posix compatiables.
 ENDIF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
@@ -57,7 +57,11 @@ endforeach(e)
 
 
 #  execute:
-add_library(${moduleName} SHARED ${sources})
+IF(EMSCRIPTEN)
+    add_library(${moduleName} ${sources})
+ELSE(EMSCRIPTEN)
+    add_library(${moduleName} SHARED ${sources})
+ENDIF(EMSCRIPTEN)
 set_target_properties(${moduleName} PROPERTIES SUFFIX ".${NAMU_LIBRARY_EXTENSION}")
 target_link_libraries(${moduleName} ${dependencies})
 

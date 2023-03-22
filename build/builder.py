@@ -68,7 +68,9 @@ def branch(command):
     elif command == "rel":
         return relBuild()
     elif command == "dbg":
-        return dbgBuild();
+        return dbgBuild()
+    elif command == "wasm":
+        return wasmBuild()
     elif command == "test":
         arg1 = "" if len(sys.argv) < 3 else sys.argv[2]
         return test(arg1);
@@ -195,6 +197,14 @@ def _publishDoc():
     return 0
 
 config=""
+
+def wasmBuild():
+    global config, cwd
+
+    config="-DCMAKE_BUILD_TYPE=Debug"
+    clean()
+    os.system("emcmake cmake " + config + " " + cwd)
+    os.system("emmake make -j8 -s")
 
 def dbgBuild():
     global config

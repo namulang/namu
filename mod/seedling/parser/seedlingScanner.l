@@ -45,6 +45,7 @@ void changePrevRule() {
 %s tfile
 
 %option nounistd
+%option noyywrap
 
 
 %%
@@ -310,8 +311,4 @@ int goOutdent(char prev)
 
 void yyerror(const char* s) {
     NAMU_E("error #%d: %s, %s", yylineno, s, yytext);
-}
-
-int yywrap() {
-    return 1;
 }
