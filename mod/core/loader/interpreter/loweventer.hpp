@@ -77,7 +77,7 @@ namespace namu {
         void onNewLine();
         nchar onScanUnexpected(const nchar* token);
         void onEndParse();
-        void onSrcArea(area& area);
+        void onSrcArea(const area& area);
 
         //  err:
         template <typename... Args> void onErr(Args... args) { _onRes(err::newErr(args...)); }
@@ -218,7 +218,7 @@ namespace namu {
         tstr<errReport> _report;
         tstr<slot> _slot;
         tstr<obj> _subpack;
-        area* _srcArea;
+        area _srcArea;
         std::vector<nint> _states;
         std::map<node*, std::string> _nameMap;
         std::vector<ifExpr*> _outerIfStack;
