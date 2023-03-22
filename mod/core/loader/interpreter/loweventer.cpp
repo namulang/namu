@@ -104,12 +104,11 @@ namespace namu {
     }
 
     void me::onEndParse() {
-        area& area = *_srcArea;
 #if NAMU_IS_DBG
-        const point& pt = area.start;
+        const point& pt = getArea().start;
         NAMU_DI("tokenEvent: onEndParse(%d,%d)", pt.row, pt.col);
 #endif
-        area.rel();
+        _srcArea.rel();
     }
 
     obj* me::onPack(const narr& dotname) {
@@ -221,8 +220,8 @@ namespace namu {
         return new defSeqExpr(start, end);
     }
 
-    void me::onSrcArea(area& area) {
-        _srcArea = &area;
+    void me::onSrcArea(const area& area) {
+        _srcArea = area;
     }
 
     void me::_onRes(err* new1) {
@@ -743,9 +742,7 @@ namespace namu {
     tokenDispatcher& me::getDispatcher() { return _dispatcher; }
     std::vector<ncnt>& me::getIndents() { return _indents; }
     const area& me::getArea() const {
-        static area dummy {{0, 0}, {0, 1}};
-
-        return _srcArea ? *_srcArea : dummy;
+        return _srcArea;
     }
     nbool me::isInit() const { return _mode; }
 
@@ -764,7 +761,7 @@ namespace namu {
         _isIgnoreWhitespace = false;
         _dispatcher.rel();
         _indents.clear();
-        _srcArea = nullptr;
+        _srcArea.rel();
         _outerIfStack.clear();
     }
 }
