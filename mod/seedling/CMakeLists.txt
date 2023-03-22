@@ -43,7 +43,11 @@ foreach(e ${dependencies})
 endforeach(e)
 
 #  execute:
-add_library(${moduleName} SHARED ${sources})
+IF(EMSCRIPTEN)
+    add_library(${moduleName} ${sources})
+ELSE(EMSCRIPTEN)
+    add_library(${moduleName} SHARED ${sources})
+ENDIF(EMSCRIPTEN)
 set_target_properties(${moduleName} PROPERTIES SUFFIX ".${NAMU_LIBRARY_EXTENSION}")
 target_link_libraries(${moduleName} ${dependencies})
 

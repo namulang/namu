@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 set(moduleName "namu")
-set(dependencies ${dependencies} indep clog meta memlite core seedling)
+set(dependencies ${dependencies} core)
 IF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
     set(dependencies ${dependencies} dl) # dynamic linking lib of posix compatiables.
 ENDIF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
@@ -36,6 +36,10 @@ endforeach(e)
 
 add_executable(${moduleName} ${sources})
 target_link_libraries(${moduleName} ${libraries})
+
+IF(EMSCRIPTEN)
+    set_target_properties(namu PROPERTIES SUFFIX ".html" LINK_FLAGS "-s WASM=1 -std=c++17")
+ENDIF(EMSCRIPTEN)
 
 #       let MSVC follow macro expansion of standard:
 if ((MSVC) AND (MSVC_VERSION GREATER_EQUAL 1914))

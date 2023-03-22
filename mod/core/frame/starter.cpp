@@ -2,6 +2,7 @@
 #include "../ast/func.hpp"
 #include "../ast/scope.inl"
 #include "../ast/slot.hpp"
+#include "../ast/node.inl"
 #include "starter.hpp"
 
 namespace namu {
