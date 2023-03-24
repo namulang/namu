@@ -298,7 +298,7 @@ ul.dropdown-list::before {
   height: var(--list-button-height);
   background-color: var(--button-hover-bg-color);
   transition: all var(--transition-time) linear;
-  transform: translateY(calc(var(--translate-value) - 8px));
+  transform: translateY(calc(var(--translate-value) - 10px));
   border-radius: var(--border-radius);
   pointer-events: none;
 }
