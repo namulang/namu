@@ -12,6 +12,53 @@ a.site-logo {
   width: 40px;
 }
 
+div#main-content {
+  position: relative;
+  top: 30%;
+}
+
+img#main-content-logo {
+  margin-bottom: 20px;
+}
+
+#main-content-header  {
+  background: transparent;
+  text-align: center;
+  color: #F3EDDB;
+}
+
+#main-content-header {
+  font-size: 30px;
+  text-align: center;
+  background: transparent;
+}
+
+#main-content-navi {
+  text-align: center;
+}
+
+#main-content-navi a {
+  padding-left: 20px;
+  padding-right: 20px;
+  text-decoration-line: none;
+  &:focus {
+    @extend %tab-focus;
+  }
+
+  &:visited {
+    color: $link-color-visited;
+  }
+
+  &:hover {
+    color: $link-color-hover;
+    outline: 0;
+  }
+}
+
+a#main-content-download {
+    border-right: 2px solid #8C7765;
+}
+
 div#main-bg {
   background: linear-gradient(#152330, #152330, #152330, #152330, #152330, #152330, #152330, #152330, #152330, #142230, #132230, #112030, #102030, #0e1e30, #0c1c30, #0b1b30, #091a30, #071930, #051830, #041830, #031832, #031937, #031b3e, #031d45, #03204d, #03255a, #032b66, #053677, #094698, #105bbd, #2577dc, #62a4f3, #d0e6ff);
 
