@@ -39,7 +39,7 @@ var store = [{
     "excerpt":"","url": "http://localhost:4000/"
   },{
     "title": null,
-    "excerpt":"                  verbose mode        pack sample  main() int     print(\"hello!\\n\")     ret 0                        ","url": "http://localhost:4000/play/"
+    "excerpt":"                  verbose mode        main() void     print(\"hello!\\n\")                        ","url": "http://localhost:4000/play/"
   },{
     "title": "language",
     "excerpt":"           ","url": "http://localhost:4000/guide/"
