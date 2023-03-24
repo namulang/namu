@@ -330,13 +330,12 @@ window.onresize = function(event) {
 	updateWindow();
 }
 function updateWindow() {
-	var footer = document.getElementById('footer');
-	var masthead = document.getElementById('masthead');
-	var newHeight = window.innerHeight - footer.clientHeight -
-		masthead.clientHeight;
-
-	var main_bg = document.getElementById('main-bg');
-	main_bg.style.height = newHeight + "px";
+	let vh = window.innerHeight * 0.01
+	var vheader = document.getElementById('masthead').clientHeight;
+	var vfooter = document.getElementById('footer').clientHeight;
+	document.documentElement.style.setProperty("--vh", `${vh}px`);
+	document.documentElement.style.setProperty("--vfooter", `${vfooter}px`);
+	document.documentElement.style.setProperty("--vheader", `${vheader}px`);
 }
 window.onload = function(event) {
 	updateWindow();
