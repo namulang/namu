@@ -2,11 +2,11 @@
 main:
   - title: "news"
     url: /posts/
+  - title: "download"
+    url: /download/
   - title: "guide"
     url: /guide/
   - title: "play"
     url: /play/
   - title: "ref"
     url: /ref/
-  - title: "about"
-    url: /about/

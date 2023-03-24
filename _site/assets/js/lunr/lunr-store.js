@@ -32,6 +32,9 @@ var store = [{
     "title": null,
     "excerpt":"소개  ","url": "http://localhost:4000/about/"
   },{
+    "title": "Feature1",
+    "excerpt":"Feature1   feature1…   Feature2   feature2…  ","url": "http://localhost:4000/download/"
+  },{
     "title": null,
     "excerpt":"","url": "http://localhost:4000/"
   },{
