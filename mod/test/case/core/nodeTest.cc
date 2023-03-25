@@ -127,7 +127,7 @@ TEST_F(nodeTest, testManuallyMakeNodeStructure) {
 
     int n=0;
     for(const auto& elem : *chnOffunc)
-        NAMU_DI("[%d]=%s", n++, elem.getType().getName().c_str());
+        NAMU_I("[%d]=%s", n++, elem.getType().getName().c_str());
 
     NAMU_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
     NAMU_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
