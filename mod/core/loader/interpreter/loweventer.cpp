@@ -242,9 +242,8 @@ namespace namu {
     }
 
     mgdFunc* me::onFunc(const std::string& name, const narr& exprs, const node& evalObj, const blockExpr& blk) {
-        const ntype& evalType = evalObj.getType();
         NAMU_DI("tokenEvent: onFunc: %s(...[%x]) %s: blk.len()=%d", name.c_str(), &exprs,
-                evalType.getName().c_str(), blk.getStmts().len());
++                evalObj.getType().getName().c_str(), blk.getStmts().len());
 
         mgdFunc* ret = new mgdFunc(_convertParams(exprs), evalObj, blk);
         _onPushName(name, *ret);
@@ -322,9 +321,9 @@ namespace namu {
         }
 
         _onInjectObjSubs(subpack, blk);
-        int len = (blk.asPreCtor) ? blk.asPreCtor->len() : 0;
         // at this far, subpack must have at least 1 default ctor created just before:
-        NAMU_DI("tokenEvent: onCompilationUnit: run preconstructor(%d lines)", len);
+        NAMU_DI("tokenEvent: onCompilationUnit: run preconstructor(%d lines)",
+                (blk.asPreCtor) ? blk.asPreCtor->len() : 0);
         subpack.run(baseObj::CTOR_NAME); // don't need argument. it's default ctor.
     }
 
