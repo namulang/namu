@@ -10,8 +10,9 @@ namespace namu {
 #define X(T) \
     void me::visit(visitInfo i, T& me) { \
         if(nul(me)) return; \
-        if(_isLog) \
+        if(_isLog) {\
             NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str()); \
+        } \
         onVisit(i, me); \
         onTraverse(i, me); \
         onLeave(i, me); \

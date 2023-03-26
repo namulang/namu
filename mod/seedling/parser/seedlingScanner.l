@@ -296,7 +296,7 @@ int goOutdent(char prev)
     NAMU_DI(" ----- prev=%d nowIndent=%d", prev, nowIndent);
     for (int n=0; n < nowIndent ;n++)
         unput(' ');
-    if (prev != ',' && prev != ')' || top - nowIndent != TAB_WIDTH) {
+    if ((prev != ',' && prev != ')') || top - nowIndent != TAB_WIDTH) {
         NAMU_DI(" ----- dedent and newline!");
         unput('\n');
     } else {
