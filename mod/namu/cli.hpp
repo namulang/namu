@@ -3,6 +3,7 @@
 #include "flag/flags.hpp"
 
 namespace namu {
+
     struct cli {
         const flags& getFlags() const;
 
