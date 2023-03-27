@@ -10,6 +10,7 @@ namespace namu {
             inner.push_back(tstr<flag>(new fileFlag()));
             inner.push_back(tstr<flag>(new logStructureFlag()));
             inner.push_back(tstr<flag>(new logInterpreterFlag()));
+            inner.push_back(tstr<flag>(new bufferSrcFlag()));
         }
 
         return inner;

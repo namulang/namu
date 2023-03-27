@@ -18,6 +18,10 @@ namespace namu {
         virtual nbool take(interpreter& ip, cli& c, flagArgs& a) const;
 
     protected:
+        /// when this flag matched to one of args, the value of returning this func will be
+        /// count of continuous argument of this flag.
+        virtual ncnt _onContinuousArgCount() const { return 0; }
+
         void _delArgs(flagArgs& a, std::vector<int> indices) const {
             // remove del in reverse order.
             for(auto e=indices.rbegin(); e != indices.rend() ;++e)
