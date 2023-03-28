@@ -4,3 +4,4 @@
 #include "flags/helpFlag.hpp"
 #include "flags/logInterpreterFlag.hpp"
 #include "flags/logStructureFlag.hpp"
+#include "flags/bufferSrcFlag.hpp"
