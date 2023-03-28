@@ -11,14 +11,14 @@ namespace namu {
         flagArgs tray;
 
         for(int n=0; n < a.size() ;n++) {
-            if(std::regex_match(a[n], re)) {
-                tray.push_back(a[n]);
-                del.push_back(n);
+            if(!std::regex_match(a[n], re)) continue;
 
-                for(int cn=++n; cn < n + _onContinuousArgCount() ;cn++) {
-                    tray.push_back(a[cn]);
-                    del.push_back(cn);
-                }
+            tray.push_back(a[n]);
+            del.push_back(n);
+
+            for(int cn=++n; cn < n + _onContinuousArgCount() ;cn++) {
+                tray.push_back(a[cn]);
+                del.push_back(cn);
             }
         }
         if(tray.empty()) return false;
