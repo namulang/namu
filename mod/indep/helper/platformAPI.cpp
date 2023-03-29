@@ -68,7 +68,9 @@ namespace namu {
 
     const string& me::getConsoleBack(consoleColor back) {
         static string inner;
-#if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
+#if defined(__EMSCRIPTEN__)
+        return inner;
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back << 4 | WHITE);
         return inner;
 
