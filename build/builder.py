@@ -201,7 +201,7 @@ config=""
 def wasmBuild():
     global config, cwd
 
-    config="-DCMAKE_BUILD_TYPE=Debug"
+    config="-DCMAKE_BUILD_TYPE=Release"
     clean()
     os.system("emcmake cmake " + config + " " + cwd)
     os.system("emmake make -j8 -s")
