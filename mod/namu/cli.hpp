@@ -35,7 +35,12 @@ namespace namu {
 
     private:
         nint _finish(interpreter& ip, nint ret) {
+            stream& strm = logger::get()["consoleStream"];
+            nbool prev = strm.isEnable();
+
+            strm.setEnable(true);
             ip.log();
+            strm.setEnable(prev);
             return ret;
         }
     };
