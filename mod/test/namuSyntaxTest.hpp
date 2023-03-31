@@ -36,7 +36,6 @@ struct namuSyntaxTest : public namuTest {
         namu::nbool isVerbose = namu::logger::get().isEnable();
 
         _ip.setSrcSupply(buf)
-           .setLogInterpreter(isVerbose)
            .setLogStructure(isVerbose)
            .setReport(_rpt)
            .interpret();

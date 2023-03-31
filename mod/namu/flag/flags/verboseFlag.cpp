@@ -1,12 +1,12 @@
-#include "logInterpreterFlag.hpp"
+#include "verboseFlag.hpp"
 #include "../../cli.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(logInterpreterFlag)
+    NAMU_DEF_ME(verboseFlag)
 
     nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip) const {
-        ip.setLogInterpreter(true);
+        logger::get()["consoleStream"].setEnable(true);
         return true;
     }
 }
