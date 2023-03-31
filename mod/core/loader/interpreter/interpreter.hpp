@@ -17,7 +17,6 @@ namespace namu {
         me& setSlot(slot& pak);
         me& setSrcSupply(const srcSupply& supply);
         me& setLogStructure(nbool enable);
-        me& setLogInterpreter(nbool enable);
         nbool isParsed() const;
         nbool isVerified() const;
         node& getSubPack();
@@ -48,6 +47,5 @@ namespace namu {
         tstr<srcSupply> _srcs;
         nbool _isParsed;
         nbool _isLogStructure;
-        nbool _isLogInterpreter;
     };
 }

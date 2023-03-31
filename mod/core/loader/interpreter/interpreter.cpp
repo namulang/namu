@@ -8,7 +8,7 @@ namespace namu {
 
     NAMU_DEF_ME(interpreter)
 
-    me::interpreter(): _isParsed(false), _isLogStructure(false), _isLogInterpreter(false) {}
+    me::interpreter(): _isParsed(false), _isLogStructure(false) {}
 
     me& me::setReport(errReport& report) {
         _rpt.bind(report);
@@ -24,10 +24,6 @@ namespace namu {
     }
     me& me::setLogStructure(nbool enable) {
         _isLogStructure = enable;
-        return *this;
-    }
-    me& me::setLogInterpreter(nbool enable) {
-        _isLogInterpreter = enable;
         return *this;
     }
     nbool me::isParsed() const {
