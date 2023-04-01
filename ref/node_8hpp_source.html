@@ -161,27 +161,28 @@ $(function() {
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="keywordflow">return</span> (me*) clone();</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        }</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> setPos(<span class="keyword">const</span> point&amp; new1) {}</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="classnamu_1_1node.html#a5b957d4e0089e4a2e39f1ba0e3179573">  102</a></span>&#160;        <span class="keyword">virtual</span> nbool <a class="code" href="classnamu_1_1node.html#a5b957d4e0089e4a2e39f1ba0e3179573">isComplete</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="classnamu_1_1node.html#a9cd8636fd1a3e4f7548e4025e51398f7">  115</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnamu_1_1tstr.html">str</a> <a class="code" href="classnamu_1_1node.html#a9cd8636fd1a3e4f7548e4025e51398f7">getEval</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classnamu_1_1node.html#a5b957d4e0089e4a2e39f1ba0e3179573">  100</a></span>&#160;        <span class="keyword">virtual</span> nbool <a class="code" href="classnamu_1_1node.html#a5b957d4e0089e4a2e39f1ba0e3179573">isComplete</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classnamu_1_1node.html#a9cd8636fd1a3e4f7548e4025e51398f7">  113</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnamu_1_1tstr.html">str</a> <a class="code" href="classnamu_1_1node.html#a9cd8636fd1a3e4f7548e4025e51398f7">getEval</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> accept(<a class="code" href="structnamu_1_1visit_info.html">visitInfo</a> i, <a class="code" href="classnamu_1_1visitor.html">visitor</a>&amp; v);</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> accept(<a class="code" href="structnamu_1_1visit_info.html">visitInfo</a> i, <a class="code" href="classnamu_1_1visitor.html">visitor</a>&amp; v);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordtype">void</span> inFrame(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnamu_1_1args.html">args</a>)<span class="keyword"> override </span>{}</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordtype">void</span> outFrame()<span class="keyword"> override </span>{}</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keyword">virtual</span> str _onRunSub(node&amp; sub, <span class="keyword">const</span> args&amp; a);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    };</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;}</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordtype">void</span> inFrame(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnamu_1_1args.html">args</a>)<span class="keyword"> override </span>{}</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordtype">void</span> outFrame()<span class="keyword"> override </span>{}</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keyword">virtual</span> str _onRunSub(node&amp; sub, <span class="keyword">const</span> args&amp; a);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> _setPos(<span class="keyword">const</span> point&amp; new1) {}</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    };</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1frame_interactable_html"><div class="ttname"><a href="classnamu_1_1frame_interactable.html">namu::frameInteractable</a></div><div class="ttdef"><b>Definition:</b> frameInteractable.hpp:11</div></div>
 <div class="ttc" id="aclassnamu_1_1instance_html"><div class="ttname"><a href="classnamu_1_1instance.html">namu::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:14</div></div>
 <div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:18</div></div>
 <div class="ttc" id="aclassnamu_1_1node_html_a2f0b986e1fae7fd99d2c257fbfe607b8"><div class="ttname"><a href="classnamu_1_1node.html#a2f0b986e1fae7fd99d2c257fbfe607b8">namu::node::rel</a></div><div class="ttdeci">virtual void rel()</div><div class="ttdef"><b>Definition:</b> node.hpp:69</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html_a5b957d4e0089e4a2e39f1ba0e3179573"><div class="ttname"><a href="classnamu_1_1node.html#a5b957d4e0089e4a2e39f1ba0e3179573">namu::node::isComplete</a></div><div class="ttdeci">virtual nbool isComplete() const</div><div class="ttdef"><b>Definition:</b> node.hpp:102</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html_a5b957d4e0089e4a2e39f1ba0e3179573"><div class="ttname"><a href="classnamu_1_1node.html#a5b957d4e0089e4a2e39f1ba0e3179573">namu::node::isComplete</a></div><div class="ttdeci">virtual nbool isComplete() const</div><div class="ttdef"><b>Definition:</b> node.hpp:100</div></div>
 <div class="ttc" id="aclassnamu_1_1node_html_a9cd8636fd1a3e4f7548e4025e51398f7"><div class="ttname"><a href="classnamu_1_1node.html#a9cd8636fd1a3e4f7548e4025e51398f7">namu::node::getEval</a></div><div class="ttdeci">virtual str getEval() const</div></div>
 <div class="ttc" id="aclassnamu_1_1node_html_ab09403806cf0d8317309add564355e0c"><div class="ttname"><a href="classnamu_1_1node.html#ab09403806cf0d8317309add564355e0c">namu::node::subs</a></div><div class="ttdeci">const nbicontainer &amp; subs() const NAMU_UNCONST_FUNC(subs()) const node &amp;deduce(const node &amp;r) const</div><div class="ttdef"><b>Definition:</b> node.hpp:26</div></div>
 <div class="ttc" id="aclassnamu_1_1ntype_html"><div class="ttname"><a href="classnamu_1_1ntype.html">namu::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:8</div></div>

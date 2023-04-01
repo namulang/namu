@@ -11,10 +11,9 @@ var searchData=
   ['slotloader_169',['slotLoader',['../classnamu_1_1slot_loader.html',1,'namu']]],
   ['sobj_170',['sobj',['../classnamu_1_1sobj.html',1,'namu']]],
   ['src_171',['src',['../classnamu_1_1src.html',1,'namu']]],
-  ['srcerr_172',['srcErr',['../structnamu_1_1src_err.html',1,'namu']]],
-  ['srcsupply_173',['srcSupply',['../classnamu_1_1src_supply.html',1,'namu']]],
-  ['starter_174',['starter',['../classnamu_1_1starter.html',1,'namu']]],
-  ['stream_175',['stream',['../classnamu_1_1stream.html',1,'namu']]],
-  ['strtactic_176',['strTactic',['../classnamu_1_1str_tactic.html',1,'namu']]],
-  ['subs_177',['subs',['../classnamu_1_1node.html#ab09403806cf0d8317309add564355e0c',1,'namu::node']]]
+  ['srcsupply_172',['srcSupply',['../classnamu_1_1src_supply.html',1,'namu']]],
+  ['starter_173',['starter',['../classnamu_1_1starter.html',1,'namu']]],
+  ['stream_174',['stream',['../classnamu_1_1stream.html',1,'namu']]],
+  ['strtactic_175',['strTactic',['../classnamu_1_1str_tactic.html',1,'namu']]],
+  ['subs_176',['subs',['../classnamu_1_1node.html#ab09403806cf0d8317309add564355e0c',1,'namu::node']]]
 ];
