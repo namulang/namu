@@ -23,6 +23,20 @@ permalink: play/
         bottom.style.setProperty('height', '140px');
 
         runNamuTextArea(frameId, srcId);
+        showCloseButton();
+    }
+
+    function showCloseButton() {
+        const close = document.getElementById('bt-close');
+        close.style.setProperty('display', 'block');
+    }
+
+    function onclickCloseButton() {
+        const close = document.getElementById('bt-close');
+        close.style.setProperty('display', 'hidden');
+
+        var bottom = document.getElementById('bottom_pane');
+        bottom.style.setProperty('height', '0px');
     }
  
     function onchangeSrc(value) {
@@ -73,6 +87,7 @@ main() void
     <textarea class='scrollbar' id='src' onkeydown='inputTab(this)'></textarea>
 </div>
 <div id="bottom_pane">
+    <input type='button' id='bt-close' value='×' onclick='onclickCloseButton();'/>
     {% raw %}
     <iframe scrolling=no id='namu' src='namu.html'> </iframe>
     {% endraw %}

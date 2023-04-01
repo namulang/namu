@@ -41,6 +41,7 @@ div#mid_pane {
 div#bottom_pane {
     width:100%;
     height: 0px;
+    background-color: #204261;
 }
 
 div.search-content {
@@ -102,4 +103,20 @@ select#dd-srcs {
     padding-left: 15px;
     padding-right: 15px;
     margin-right: 20px;
+}
+
+input#bt-close {
+    float: right;
+    display: none;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    margin-top: 5px;
+    background-color: #8C7765;
+    border-radius: 15px;
+    padding-top: 0px;
+}
+
+input#bt-close:hover {
+    background-color: #F3EDDB;
 }
