@@ -70,7 +70,8 @@ def branch(command):
     elif command == "dbg":
         return dbgBuild()
     elif command == "wasm":
-        return wasmBuild()
+        arg3 = None if len(sys.argv) < 3 else sys.argv[2]
+        return wasmBuild(arg3)
     elif command == "test":
         arg1 = "" if len(sys.argv) < 3 else sys.argv[2]
         return test(arg1);
@@ -198,13 +199,17 @@ def _publishDoc():
 
 config=""
 
-def wasmBuild():
-    global config, cwd
+def wasmBuild(arg):
+    global config, cwd, binDir
 
     config="-DCMAKE_BUILD_TYPE=Release"
     clean()
     os.system("emcmake cmake " + config + " " + cwd)
     os.system("emmake make -j8 -s")
+    if arg == "win":
+        os.system("copy " + namuDir + "\\res\\wasm-frontend\\*.* " + binDir);
+    else:
+        os.system("cp " + namuDir + "/res/wasm-frontend/*.* " + binDir);
 
 def dbgBuild():
     global config

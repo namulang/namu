@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <script>
+function onLoadIframe(me) {
+    document.getElementById(me).contentWindow.postMessage('a := 5', '*');
+}
+        </script>
+    </head>
+    <body>
+        <iframe id="me" scrolling='no' src="./namu.html" onload="onLoadIframe('me')" />
+    </body>
+</html>
