@@ -17,20 +17,31 @@ permalink: play/
             textArea.selectionStart = textArea.selectionEnd = start + 4;
           }
     }
+
+    function runScript(frameId, srcId) {
+        var bottom = document.getElementById('bottom_pane');
+        bottom.style.setProperty('height', '140px');
+
+        runNamuTextArea(frameId, srcId);
+    }
 </script>
 <script type='text/javascript' src='namu-starter.js'></script>
 <div id="top_pane">
-    <input type='button' id='runbt' value='run' onclick='runNamuTextArea("namu", "src");'/>
     <input type='checkbox' id='verbose' />
     <label id='lb_verbose' for='verbose'>verbose mode</label>
+    <input type='button' id='runbt' value='▶' onclick='runScript("namu", "src");'/>
 </div>
-<div id="left_pane">
+<div id="mid_pane">
     <textarea class='scrollbar' id='src' onkeydown='inputTab(this)'>
+// Hello. This is Namu:
+// Please edit your code freely and press button in the top right to run.
+// Refer to the 'guide' section for more detailed syntax.
+
 main() void
-    print("hello world!\n")
+    print("hello world!")
     </textarea>
 </div>
-<div id="right_pane">
+<div id="bottom_pane">
     {% raw %}
     <iframe scrolling=no id='namu' src='namu.html'> </iframe>
     {% endraw %}

@@ -2,27 +2,56 @@ textarea#src {
     width: 100%;
     height:100%;
     font-family: Retro Gaming;
-    font-size: 20px;
+    font-size: 15px;
+    background-color: transparent;
     resize: none;
+    color: #8ba88c;
+
+    padding-left: 50px;
+    padding-right: 50px;
+
+    flex: 1 0 auto;
 }
+
+textarea#src:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 iframe#namu {
     width: 100%;
     height:100%;
+    border: 0px solid;
 }
 div#top_pane {
     width: 100%;
     height: 2em;
-    text-align: left;
+    background-color: #152330;
+    text-align: right;
+    padding-right: 20px;
 }
-div#left_pane {
-    float: left;
-    width: 50%;
-    height: calc(100vh - 290px);
+div#mid_pane {
+    width: 100%;
+    background-color: #152330;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
 }
-div#right_pane {
-    float:right;
-    width:50%;
-    height:calc(100vh - 290px);
+
+div#bottom_pane {
+    width:100%;
+    height: 0px;
+}
+
+div.search-content {
+    flex: 0;
+    display: none;
+    height: 0px;
+}
+
+div.initial-content {
+    display: flex;
+    flex-direction: column;
 }
 
 @font-face {
@@ -34,6 +63,7 @@ div#right_pane {
 
 label#lb_verbose {
     display:inline;
+    margin-right: 20px;
 }
 
 .scrollbar::-webkit-scrollbar {
@@ -52,4 +82,14 @@ label#lb_verbose {
 .scrollbar::-webkit-scrollbar-button {
   width: 0;
   height: 0;
+}
+
+input#runbt {
+    border-radius: 1.4rem;
+    background-color: #8C7765;
+    width: 80px;
+}
+
+input#runbt:hover {
+    background-color: #F3EDDB;
 }

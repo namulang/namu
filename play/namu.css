@@ -4,16 +4,30 @@ body {
 }
 
 textarea#output {
-    background-color: #999;
     display: none;
     width: calc(100vw - 6px);
+    background-color: #204261;
+    color: #fff;
     height: 100vh;
+
+    border: 0px solid;
+
+    padding-left: 50px;
+    padding-right: 50px;
+
+    font-size: 15px;
+    font-family: Retro Gaming;
+}
+
+textarea#output:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 div#playbt {
     width: 100vw;
     height: 100vh;
-    background-color:#999;
+    background-color: #204261;
 }
 
 .scrollbar::-webkit-scrollbar {
