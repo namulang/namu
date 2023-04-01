@@ -11,10 +11,10 @@ permalink: play/
             var start = textArea.selectionStart;
             var end = textArea.selectionEnd;
 
-            textArea.value = textArea.value.substring(0, start) + "\t" + textArea.value.substring(end);
+            textArea.value = textArea.value.substring(0, start) + "    " + textArea.value.substring(end);
 
             // put caret at right position again
-            textArea.selectionStart = textArea.selectionEnd = start + 1;
+            textArea.selectionStart = textArea.selectionEnd = start + 4;
           }
     }
 </script>
@@ -27,7 +27,7 @@ permalink: play/
 <div id="left_pane">
     <textarea class='scrollbar' id='src' onkeydown='inputTab(this)'>
 main() void
-    print("hello!\n")
+    print("hello world!\n")
     </textarea>
 </div>
 <div id="right_pane">
