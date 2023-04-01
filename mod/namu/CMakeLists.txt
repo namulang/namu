@@ -38,7 +38,7 @@ add_executable(${moduleName} ${sources})
 target_link_libraries(${moduleName} ${libraries})
 
 IF(EMSCRIPTEN)
-    set_target_properties(namu PROPERTIES SUFFIX ".html" LINK_FLAGS "-s WASM=1 -std=c++17")
+    set_target_properties(namu PROPERTIES SUFFIX ".js" LINK_FLAGS "-s WASM=1 -std=c++17")
 ENDIF(EMSCRIPTEN)
 
 #       let MSVC follow macro expansion of standard:
