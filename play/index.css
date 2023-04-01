@@ -93,3 +93,13 @@ input#runbt {
 input#runbt:hover {
     background-color: #F3EDDB;
 }
+
+select#dd-srcs {
+    border-radius: 1.4rem;
+    background-color: #333740;
+    color: #F3EDDB;
+
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right: 20px;
+}
