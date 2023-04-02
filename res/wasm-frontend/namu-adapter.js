@@ -54,7 +54,8 @@ function runModule() {
 }
 
 window.addEventListener('message', function(msg) {
-    arguments_ = ["namu.html", "-s", msg.data];
+    arguments_ = ["namu.html", "-ls", "-lv", "-s", msg.data];
+    runModule();
 });
 window.onerror = function(event) {
   // TODO: do not warn on ok events like simulating an infinite loop or exitStatus

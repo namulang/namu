@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <style>
+textarea#src {
+    width: 100vw;
+    height:60%;
+    font-family: Pixeled;
+}
+iframe#namu {
+    width: 100vw;
+    height:40%;
+}
+
+@font-face {
+    font-family: 'Pixeled';
+    font-style: 'normal';
+    font-weight: 400;
+    src: url('Pixeled.ttf') format('truetype');
+}
+        </style>
+    </head>
+    <body>
+        <script type='text/javascript' src='namu-starter.js'></script>
+        <textarea id='src'></textarea>
+        <input type='button' id='runbt' value='run' onclick='runNamuTextArea("namu", "src");'/>
+        <iframe id='namu' scrolling='no' src='./namu.html' />
+    </body>
+</html>
