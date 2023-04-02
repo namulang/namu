@@ -1,12 +1,9 @@
 <html>
     <head>
-        <script>
-function onLoadIframe(me) {
-    document.getElementById(me).contentWindow.postMessage('a := 5', '*');
-}
-        </script>
+        <script type='text/javascript' src='namu-starter.js'></script>
     </head>
     <body>
-        <iframe id="me" scrolling='no' src="./namu.html" onload="onLoadIframe('me')" />
+        <input type='button' value='run' onclick='runNamu("me", "main() void\n\ta := 5");' />
+        <iframe id="me" scrolling='no' src="./namu.html" />
     </body>
 </html>
