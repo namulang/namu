@@ -4,7 +4,8 @@
 textarea#src {
     width: 100vw;
     height:60%;
-    font-family: Pixeled;
+    font-family: Retro Gaming;
+    font-size: 30px;
 }
 iframe#namu {
     width: 100vw;
@@ -12,16 +13,30 @@ iframe#namu {
 }
 
 @font-face {
-    font-family: 'Pixeled';
+    font-family: 'Retro Gaming';
     font-style: 'normal';
     font-weight: 400;
-    src: url('Pixeled.ttf') format('truetype');
+    src: url('Retro Gaming.ttf') format('truetype');
 }
         </style>
+        <script>
+            function inputTab(textArea) {
+                if (event.key == 'Tab') {
+                    event.preventDefault();
+                    var start = textArea.selectionStart;
+                    var end = textArea.selectionEnd;
+
+                    textArea.value = textArea.value.substring(0, start) + "\t" + textArea.value.substring(end);
+
+                    // put caret at right position again
+                    textArea.selectionStart = textArea.selectionEnd = start + 1;
+                  }
+            }
+        </script>
     </head>
     <body>
         <script type='text/javascript' src='namu-starter.js'></script>
-        <textarea id='src'></textarea>
+        <textarea id='src' onkeydown='inputTab(this)'></textarea>
         <input type='button' id='runbt' value='run' onclick='runNamuTextArea("namu", "src");'/>
         <iframe id='namu' scrolling='no' src='./namu.html' />
     </body>
