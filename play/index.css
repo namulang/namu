@@ -20,12 +20,11 @@ textarea#src:focus {
 
 iframe#namu {
     width: 100%;
-    height:100%;
+    height:calc(100% - 30px);
     border: 0px solid;
 }
 div#top_pane {
     width: 100%;
-    height: 2em;
     background-color: #152330;
     text-align: right;
     padding-right: 20px;
@@ -119,4 +118,15 @@ input#bt-close {
 
 input#bt-close:hover {
     background-color: #F3EDDB;
+}
+
+div#bottom_pane b {
+    color: #fff;
+}
+
+div#bottom_pane img {
+    margin-left: 20px;
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
 }
