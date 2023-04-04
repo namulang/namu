@@ -134,15 +134,10 @@ def _cleanIntermediates():
     os.system("git config --unset user.email")
     printOk("done.")
 
-def doc():
-    # Idea from Travis Gockel.
+def docDoxygen():
     global cwd, python3, externalDir
 
-    if checkDependencies(["git", "cmake"]):
-        printErr("This program needs following softwares to be fully functional.")
-        return -1
-
-    _checkMCSS();
+    # clean before fetch repo:
     _cleanIntermediates()
     if isWindow():
         os.system("del /s /f /q " + cwd + "\\html")
@@ -152,25 +147,52 @@ def doc():
     # standby gh-pages repo:
     printInfoEnd("cloning gh-pages branch...")
     if isWindow():
-        res = os.system("git clone -b gh-pages --depth 5 https://github.com/kniz/worldlang --single-branch " + cwd + "\\html")
+        res = os.system("git clone -b gh-pages --depth 5 https://github.com/namulang/namu --single-branch " + cwd + "\\html")
     else:
-        res = os.system("git clone -b gh-pages --depth 5 https://github.com/kniz/worldlang --single-branch " + cwd + "/html")
+        res = os.system("git clone -b gh-pages --depth 5 https://github.com/namulang/namu --single-branch " + cwd + "/html")
     if res != 0:
         printErr("fail to clone gh-pages repo.")
         _cleanIntermediates()
         return -1
     printOk("done.")
 
-    # build doxygen + m.css:
+    # clean removed or modified doxygen outputs:
+    if isWindow():
+        os.system("del /s /f /q " + cwd + "\\html\\ref\\*")
+    else:
+        os.system("rm -rf " + cwd + "/html/ref/*")
+
+    # build doxygen:
     printInfoEnd("generating docs using doxygen...")
     if isWindow():
-        res = os.system(python3 + " " + externalDir + "\\m.css\\documentation\\doxygen.py " + cwd + "\\Doxyfile")
+        res = os.system("doxygen " + cwd + "\\Doxyfile")
     else:
-        res = os.system(python3 + " " + externalDir + "/m.css/documentation/doxygen.py " + cwd + "/Doxyfile")
+        res = os.system("doxygen " + cwd + "/Doxyfile")
     if res != 0:
         printErr("fail to run m.css doxy parser.")
         _cleanIntermediates()
         return -1
+
+def docJekyll():
+    global namuDir, cwd, python3, externalDir
+
+    if isWindow():
+        res = os.system("xcopy /E " + namuDir + "\\doc\\guide\\*.* " + cwd + "\\html\\guide")
+        os.chdir(cwd + "\\html\\guide")
+    else:
+        res = os.system("cp -r " + namuDir + "/doc/guide " + cwd + "/html/guide")
+        os.chdir(cwd + "/html/guide")
+
+    os.system("jekyll build")
+    return res
+
+def doc():
+    if checkDependencies(["git", "cmake", "doxygen", "jekyll"]):
+        printErr("This program needs following softwares to be fully functional.")
+        return -1
+
+    docDoxygen()
+    docJekyll()
     return 0
 
 def _publishDoc():
@@ -247,7 +269,7 @@ def isWindow():
 def _createMakefiles():
     global generator
     print("")
-    
+
     printInfoEnd("generating makefiles as " + generator + "...")
 
     res = os.system("cmake . -G \"" + generator + "\" " + config)
@@ -314,7 +336,6 @@ def _injectBuildInfo():
         path = cwd + "\\CMakeLists.txt"
     else:
         path = cwd + "/CMakeLists.txt"
-        
 
     printInfoEnd("updating buildinfo on CMakeLists.txt...")
     global updated
@@ -392,21 +413,9 @@ def _make():
 
     printOk("done")
 
-def _checkMCSS():
-    global externalDir
-    dir = os.path.join(externalDir, "m.css")
-    printInfoEnd("checking m.css repo at " + externalDir + "....")
-    if _hasDir(dir):
-        printOk("repo found. skip cloning it")
-        return
-
-    _makeDir(dir)
-    os.system("git clone https://github.com/mosra/m.css.git " + dir)
-    printOk("cloned")
-
 def _checkGTest():
     global externalDir, generator
-    
+
     dir = os.path.join(externalDir, "googletest")
     printInfoEnd("checking googletest repo at " + externalDir + "...")
     if _hasDir(dir):
@@ -529,7 +538,7 @@ def pub(arg):
     elif arg == 'win':
         if relBuild() != 0:
             printErr("release build failed. but keep publishing.")
-            
+
         printInfoEnd("cleaning redandunt files to package")
         os.chdir(binDir)
         os.system("del /S test\\*")
