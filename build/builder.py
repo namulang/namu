@@ -177,10 +177,10 @@ def docJekyll():
     global namuDir, cwd, python3, externalDir
 
     if isWindow():
-        res = os.system("xcopy /E " + namuDir + "\\doc\\guide\\*.* " + cwd + "\\html\\guide")
+        res = os.system("xcopy /E " + namuDir + "\\doc\\guide\\*.* " + cwd + "\\html")
         os.chdir(cwd + "\\html\\guide")
     else:
-        res = os.system("cp -r " + namuDir + "/doc/guide " + cwd + "/html/guide")
+        res = os.system("cp -r " + namuDir + "/doc/guide " + cwd + "/html")
         os.chdir(cwd + "/html/guide")
 
     os.system("jekyll build")
