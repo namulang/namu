@@ -1,3 +1,9 @@
+---
+layout: page
+title: quickStart
+permalink: /guide/
+---
+
 # Quick Start in KR 
 
 ```namu
