@@ -94,7 +94,7 @@ jobs:
 
     steps:
       - name: install native dependencies.
-        run: sudo apt install doxygen graphviz python3 python3-pip ruby-full
+        run: sudo apt install doxygen graphviz python3 python3-pip ruby rubygems
 
       - name: install python dependencies.
         run: sudo python3 -m pip install --upgrade jinja2 Pygments

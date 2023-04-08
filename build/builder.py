@@ -183,6 +183,7 @@ def docDoxygen():
 def docJekyll():
     global namuDir, cwd, python3, externalDir
 
+    printInfoEnd("copy docs into html/docs...")
     if isWindow():
         res = os.system("mkdir " + cwd + "\\html")
         res = os.system("mkdir " + cwd + "\\html\\_guide")
@@ -194,7 +195,8 @@ def docJekyll():
         os.system("cp -r " + namuDir + "/doc/guide/* " + cwd + "/html/_guide")
         os.chdir(cwd + "/html")
 
-    os.system("jekyll build")
+    printInfoEnd("build with jekyll...")
+    os.system("bundler exec jekyll build")
     return res
 
 def doc():
