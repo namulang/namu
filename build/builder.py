@@ -159,10 +159,10 @@ def docDoxygen():
     # clean removed or modified doxygen outputs:
     if isWindow():
         os.system("del /s /f /q " + cwd + "\\html\\ref\\*")
-        os.system("del /s /f /q " + cwd + "\\html\\guide\\*")
+        os.system("del /s /f /q " + cwd + "\\html\\_guide\\*")
     else:
         os.system("rm -rf " + cwd + "/html/ref/*")
-        os.system("rm -rf " + cwd + "/html/guide/*")
+        os.system("rm -rf " + cwd + "/html/_guide/*")
 
     # build doxygen:
     printInfoEnd("generating docs using doxygen...")
@@ -179,10 +179,10 @@ def docJekyll():
     global namuDir, cwd, python3, externalDir
 
     if isWindow():
-        res = os.system("xcopy /E " + namuDir + "\\doc\\guide " + cwd + "\\html")
+        res = os.system("xcopy /E " + namuDir + "\\doc\\guide\\* " + cwd + "\\html\\_guide")
         os.chdir(cwd + "\\html")
     else:
-        res = os.system("cp -r " + namuDir + "/doc/guide " + cwd + "/html")
+        res = os.system("cp -r " + namuDir + "/doc/guide/*" + cwd + "/html/_guide")
         os.chdir(cwd + "/html")
 
     os.system("jekyll build")
