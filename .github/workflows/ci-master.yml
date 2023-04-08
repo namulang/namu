@@ -103,7 +103,7 @@ jobs:
         run: sudo gem install jekyll bundler
 
       - name: install jekyll plugins.
-        run: sudo bundle install
+        run: bundle install
 
       - name: checkout master codes.
         uses: actions/checkout@v2
