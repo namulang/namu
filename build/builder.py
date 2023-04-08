@@ -134,7 +134,7 @@ def _cleanIntermediates():
     os.system("git config --unset user.email")
     printOk("done.")
 
-def docDoxygen():
+def cleanGhPages():
     global cwd, python3, externalDir
 
     # clean before fetch repo:
@@ -160,9 +160,14 @@ def docDoxygen():
     if isWindow():
         os.system("del /s /f /q " + cwd + "\\html\\ref\\*")
         os.system("del /s /f /q " + cwd + "\\html\\_guide\\*")
+        os.system("del /s /f /q " + cwd + "\\html\\_site\\*")
     else:
         os.system("rm -rf " + cwd + "/html/ref/*")
         os.system("rm -rf " + cwd + "/html/_guide/*")
+        os.system("rm -rf " + cwd + "/html/_site/*")
+
+def docDoxygen():
+    global cwd, python3, externalDir
 
     # build doxygen:
     printInfoEnd("generating docs using doxygen...")
@@ -193,6 +198,7 @@ def doc():
         printErr("This program needs following softwares to be fully functional.")
         return -1
 
+    cleanGhPages()
     docDoxygen()
     docJekyll()
     return 0
