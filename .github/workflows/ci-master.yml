@@ -105,11 +105,6 @@ jobs:
       - name: checkout master codes.
         uses: actions/checkout@v2
 
-      - name: install jekyll plugins.
-        run: |
-          cd ${{github.workspace}}/build/html
-          bundle install
-
       - name: commit docs if it's different to previous commit
         run: |
           export C=clang CXX=clang++ PYTHON=$(which python3)

@@ -196,6 +196,7 @@ def docJekyll():
         os.chdir(cwd + "/html")
 
     printInfoEnd("build with jekyll...")
+    os.system("bundle install")
     os.system("bundler exec jekyll build")
     return res
 
