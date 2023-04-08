@@ -182,7 +182,7 @@ def docJekyll():
         res = os.system("xcopy /E " + namuDir + "\\doc\\guide\\* " + cwd + "\\html\\_guide")
         os.chdir(cwd + "\\html")
     else:
-        res = os.system("cp -r " + namuDir + "/doc/guide/*" + cwd + "/html/_guide")
+        res = os.system("cp -r " + namuDir + "/doc/guide/* " + cwd + "/html/_guide")
         os.chdir(cwd + "/html")
 
     os.system("jekyll build")
