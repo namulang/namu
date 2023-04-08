@@ -159,8 +159,10 @@ def docDoxygen():
     # clean removed or modified doxygen outputs:
     if isWindow():
         os.system("del /s /f /q " + cwd + "\\html\\ref\\*")
+        os.system("del /s /f /q " + cwd + "\\html\\guide\\*")
     else:
         os.system("rm -rf " + cwd + "/html/ref/*")
+        os.system("rm -rf " + cwd + "/html/guide/*")
 
     # build doxygen:
     printInfoEnd("generating docs using doxygen...")
