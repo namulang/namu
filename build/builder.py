@@ -176,38 +176,17 @@ def docDoxygen():
     else:
         res = os.system("doxygen " + cwd + "/Doxyfile")
     if res != 0:
-        printErr("fail to run m.css doxy parser.")
+        printErr("fail to run doxygen.")
         _cleanIntermediates()
         return -1
 
-def docJekyll():
-    global namuDir, cwd, python3, externalDir
-
-    printInfoEnd("copy docs into html/docs...")
-    if isWindow():
-        res = os.system("mkdir " + cwd + "\\html")
-        res = os.system("mkdir " + cwd + "\\html\\_guide")
-        os.system("xcopy /E " + namuDir + "\\doc\\guide\\* " + cwd + "\\html\\_guide")
-        os.chdir(cwd + "\\html")
-    else:
-        res = os.system("mkdir " + cwd + "/html")
-        os.system("mkdir " + cwd + "/html/_guide")
-        os.system("cp -r " + namuDir + "/doc/guide/* " + cwd + "/html/_guide")
-        os.chdir(cwd + "/html")
-
-    printInfoEnd("build with jekyll...")
-    os.system("bundle install")
-    os.system("bundler exec jekyll build")
-    return res
-
 def doc():
-    if checkDependencies(["git", "cmake", "doxygen", "jekyll"]):
+    if checkDependencies(["git", "cmake", "doxygen"]):
         printErr("This program needs following softwares to be fully functional.")
         return -1
 
     cleanGhPages()
     docDoxygen()
-    docJekyll()
     return 0
 
 def _publishDoc():
