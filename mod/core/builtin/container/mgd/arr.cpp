@@ -182,7 +182,7 @@ namespace namu {
     scope& me::_getOriginScope() {
         static super* inner = nullptr;
         if(nul(inner)) {
-            inner = new super();
+            inner = super::def();
             inner->genericFunc("len", &narr::len);
             inner->genericFunc("rel", &narr::rel);
             inner->genericFunc<nbool, nidx>("del", &narr::del);
