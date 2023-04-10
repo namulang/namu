@@ -4,6 +4,7 @@
 #include "marshaling/tgenericMarshaling.hpp"
 #include "../../ast/obj.hpp"
 #include "../../type/mgdType.hpp"
+#include "../../ast/defaultCopyCtor.hpp"
 
 namespace namu {
 
@@ -35,7 +36,9 @@ namespace namu {
     public:
         static me* def() {
             // TODO: need to handle ctor with argument.
-            return new me(new T());
+            me* ret = new me(new T());
+            ret->subs().add(baseObj::CTOR_NAME, new defaultCopyCtor(*ret));
+            return ret;
         }
 
         using super::subs;
@@ -61,7 +64,7 @@ namespace namu {
             return *this;
         }
 
-        // TODO: add defaultCtor, defaultCopyCtor
+        // TODO: add defaultCtor
 
     private:
         T* _real;
