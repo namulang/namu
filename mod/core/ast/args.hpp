@@ -16,7 +16,10 @@ namespace namu {
 
     public:
         const me& setMe(const node& me) const {
-            _me.bind(me);
+            if(nul(me))
+                _me.rel();
+            else
+                _me = me.as<node>();
             return *this;
         }
         node& getMe() const { return *_me; }
