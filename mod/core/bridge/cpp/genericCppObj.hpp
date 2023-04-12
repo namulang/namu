@@ -10,6 +10,9 @@ namespace namu {
     public:
         genericCppObj(): super() {}
         genericCppObj(mgdType* newType): super(newType) {}
+        genericCppObj(const me& rhs): super(rhs) {
+            _type = rhs._type;
+        }
 
     public:
         /// @return single generalized parameter of this object.

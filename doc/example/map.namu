@@ -20,11 +20,11 @@ main() void
     x := 2
     y := 1
 
-    mapOrg := {'0', '0', '0', '0', '0',
+    orgMap := {'0', '0', '0', '0', '0',
                '0', ' ', ' ', ' ', '0',
                '0', '0', '0', '0', '0'}
     while true
-        map := char[](mapOrg)
+        map := orgMap(orgMap)
         draw(update(map, x, y))
         answer := menu()
         if answer == "a"

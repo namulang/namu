@@ -107,6 +107,6 @@ namespace namu {
         scope& _getOriginScope();
 
     private:
-        cache _cache;
+        static inline cache _cache;
     };
 }

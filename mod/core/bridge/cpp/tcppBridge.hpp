@@ -32,6 +32,9 @@ namespace namu {
         tcppBridge(T* real): super(new mgdType(ttype<T>::get().getName())), _real(real) {
             _subs.bind(new scope());
         }
+        tcppBridge(const me& rhs): super(rhs) {
+            _real = nul(rhs._real) ? nullptr : new T(*rhs._real);
+        }
 
     public:
         static me* def() {
