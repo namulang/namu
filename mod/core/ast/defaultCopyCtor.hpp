@@ -19,7 +19,7 @@ namespace namu {
         str run(const args& a) override {
             if (!canRun(a)) return str();
 
-            return str((node*) a.begin()->clone());
+            return str((node*) a.begin()->as<node>()->clone());
         }
 
         const params& getParams() const override {
