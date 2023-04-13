@@ -242,8 +242,8 @@ TEST_F(arrTest, testSubs) {
 
     nInt int1;
     arr intArr2(int1);
-    // even if instances of arr are different, they share same subs:
-    ASSERT_NE(&intArr.sub("len"), &intArr2.sub("len"));
+    // even if instances of arr are different, they share same subs because of same elementType:
+    ASSERT_EQ(&intArr.sub("len"), &intArr2.sub("len"));
 }
 
 TEST_F(arrTest, genericMarshalingTest) {
