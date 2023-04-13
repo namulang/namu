@@ -67,6 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classnamu_1_1type-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">namu::type Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -88,9 +89,9 @@ Inheritance diagram for namu::type:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3729bdfe982764f2922ed7dd4a393aef"><td class="memItemLeft" align="right" valign="top"><a id="a3729bdfe982764f2922ed7dd4a393aef"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const me &amp;rhs) const</td></tr>
-<tr class="separator:a3729bdfe982764f2922ed7dd4a393aef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a406ef90266a20686993f6e639775206e"><td class="memItemLeft" align="right" valign="top"><a id="a406ef90266a20686993f6e639775206e"></a>
+virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const me &amp;rhs) const</td></tr>
+<tr class="separator:a406ef90266a20686993f6e639775206e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac621285f2e2c9565c64f38859213e4a"><td class="memItemLeft" align="right" valign="top"><a id="aac621285f2e2c9565c64f38859213e4a"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const me &amp;rhs) const</td></tr>
 <tr class="separator:aac621285f2e2c9565c64f38859213e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,9 +150,18 @@ nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a 
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:afd56fd20def74fa62c05f21c016b47e2"><td class="memTemplItemLeft" align="right" valign="top">nbool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>isSub</b> () const</td></tr>
 <tr class="separator:afd56fd20def74fa62c05f21c016b47e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc61b26ac37ed5238a5ffb7715af0d3c"><td class="memItemLeft" align="right" valign="top"><a id="acc61b26ac37ed5238a5ffb7715af0d3c"></a>
-const <a class="el" href="classnamu_1_1type.html">type</a> &amp;virtual getStatic() const NAMU_UNCONST_FUNC(_getStatic()) protected types &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getSupers</b> ()=0</td></tr>
-<tr class="separator:acc61b26ac37ed5238a5ffb7715af0d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a041325b9b3870ad3d142279989776d01"><td class="memItemLeft" align="right" valign="top"><a id="a041325b9b3870ad3d142279989776d01"></a>
+const <a class="el" href="classnamu_1_1type.html">type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getStatic</b> () const NAMU_UNCONST_FUNC(_getStatic()) virtual const void *getExtra() const</td></tr>
+<tr class="separator:a041325b9b3870ad3d142279989776d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a17cc1715afa421d18f23bb54f429839e"><td class="memItemLeft" align="right" valign="top"><a id="a17cc1715afa421d18f23bb54f429839e"></a>
+virtual types &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getSubs</b> ()=0</td></tr>
+<tr class="separator:a17cc1715afa421d18f23bb54f429839e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c90ee57c202d2c4673108c665c1814c"><td class="memItemLeft" align="right" valign="top"><a id="a9c90ee57c202d2c4673108c665c1814c"></a>
+virtual types &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getSupers</b> ()=0</td></tr>
+<tr class="separator:a9c90ee57c202d2c4673108c665c1814c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58e94cc671a6ade45618e2d9f9c3077c"><td class="memItemLeft" align="right" valign="top"><a id="a58e94cc671a6ade45618e2d9f9c3077c"></a>
 virtual <a class="el" href="classnamu_1_1type.html">type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getStatic</b> () const =0</td></tr>
 <tr class="separator:a58e94cc671a6ade45618e2d9f9c3077c"><td class="memSeparator" colspan="2">&#160;</td></tr>

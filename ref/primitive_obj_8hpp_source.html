@@ -132,58 +132,63 @@ $(function() {
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">using</span> super::subs;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        nbicontainer&amp; subs()<span class="keyword"> override </span>{</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keyword">static</span> tstr&lt;scope&gt; inner;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">if</span>(!inner)</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                inner.bind(_onMakeSubs());</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">return</span> *inner;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">if</span>(!inner) {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                scope scapegoat;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                _onMakeSubs(scapegoat);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                inner.bind(<span class="keyword">new</span> dumScope(scapegoat));</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            }</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        nbool _onSame(<span class="keyword">const</span> typeProvidable&amp; rhs)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keyword">const</span> me&amp; cast = (<span class="keyword">const</span> me&amp;) rhs;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordflow">return</span> _val == cast._val;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keyword">virtual</span> dumScope* _onMakeSubs() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordtype">void</span> _setPos(<span class="keyword">const</span> point&amp; new1)<span class="keyword"> override </span>{ _pos = new1; }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordflow">return</span> *inner;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        nbool _onSame(<span class="keyword">const</span> typeProvidable&amp; rhs)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keyword">const</span> me&amp; cast = (<span class="keyword">const</span> me&amp;) rhs;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keywordflow">return</span> _val == cast._val;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> _onMakeSubs(scope&amp; tray) <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        T _val;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        point _pos;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    };</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="classnamu_1_1primitive_obj_3_01void_01_4.html">   89</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1primitive_obj.html">primitiveObj</a>&lt;void&gt; : <span class="keyword">public</span> <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a> {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1primitive_obj.html">primitiveObj</a>, <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a>))</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keyword">const</span> super&amp; getOrigin()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keyword">const</span> <a class="code" href="structnamu_1_1point.html">point</a>&amp; getPos()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> _pos; }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">using</span> super::subs;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; subs()<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnamu_1_1tstr.html">tstr&lt;scope&gt;</a> inner;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">if</span>(!inner) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                inner.bind(_onMakeSubs());</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <span class="keywordflow">return</span> *inner;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        nbool _onSame(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type_providable.html">typeProvidable</a>&amp; rhs)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keywordflow">return</span> !nul(rhs);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordtype">void</span> _setPos(<span class="keyword">const</span> point&amp; new1)<span class="keyword"> override </span>{ _pos = new1; }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        T _val;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        point _pos;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    };</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keyword">template</span> &lt;&gt;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classnamu_1_1primitive_obj_3_01void_01_4.html">   92</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1primitive_obj.html">primitiveObj</a>&lt;void&gt; : <span class="keyword">public</span> <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a> {</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1primitive_obj.html">primitiveObj</a>, <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a>))</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">const</span> super&amp; getOrigin()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">const</span> <a class="code" href="structnamu_1_1point.html">point</a>&amp; getPos()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> _pos; }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keyword">using</span> super::subs;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; subs()<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnamu_1_1tstr.html">tstr&lt;scope&gt;</a> inner;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keywordflow">if</span>(!inner) {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                <a class="code" href="classnamu_1_1tnmap.html">scope</a> scapegoat;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                _onMakeSubs(scapegoat);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                inner.bind(<span class="keyword">new</span> <a class="code" href="classnamu_1_1tndum_map.html">dumScope</a>(scapegoat));</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keywordflow">return</span> *inner;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnamu_1_1tndum_map.html">dumScope</a>* _onMakeSubs() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordtype">void</span> _setPos(<span class="keyword">const</span> <a class="code" href="structnamu_1_1point.html">point</a>&amp; new1)<span class="keyword"> override </span>{ _pos = new1; }</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <a class="code" href="structnamu_1_1point.html">point</a> _pos;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    };</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        nbool _onSame(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type_providable.html">typeProvidable</a>&amp; rhs)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keywordflow">return</span> !nul(rhs);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        }</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> _onMakeSubs(<a class="code" href="classnamu_1_1tnmap.html">scope</a>&amp; tray) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordtype">void</span> _setPos(<span class="keyword">const</span> <a class="code" href="structnamu_1_1point.html">point</a>&amp; new1)<span class="keyword"> override </span>{ _pos = new1; }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <a class="code" href="structnamu_1_1point.html">point</a> _pos;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    };</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1_a_p_i_bridge_html"><div class="ttname"><a href="classnamu_1_1_a_p_i_bridge.html">namu::APIBridge</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:13</div></div>
 <div class="ttc" id="aclassnamu_1_1_a_p_i_bridge_html_a461455a3fed56e528c769aefd9c90fc5"><div class="ttname"><a href="classnamu_1_1_a_p_i_bridge.html#a461455a3fed56e528c769aefd9c90fc5">namu::APIBridge::getEval</a></div><div class="ttdeci">str getEval() const override</div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:28</div></div>
 <div class="ttc" id="aclassnamu_1_1_a_p_i_bridge_html_a6c2ff3be4c12bd185a8ddbec903f80ec"><div class="ttname"><a href="classnamu_1_1_a_p_i_bridge.html#a6c2ff3be4c12bd185a8ddbec903f80ec">namu::APIBridge::getRet</a></div><div class="ttdeci">str getRet() const override</div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:27</div></div>
@@ -195,6 +200,7 @@ $(function() {
 <div class="ttc" id="aclassnamu_1_1primitive_obj_html"><div class="ttname"><a href="classnamu_1_1primitive_obj.html">namu::primitiveObj</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:35</div></div>
 <div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1tndum_map_html"><div class="ttname"><a href="classnamu_1_1tndum_map.html">namu::tndumMap</a></div><div class="ttdef"><b>Definition:</b> tndumMap.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1tnmap_html"><div class="ttname"><a href="classnamu_1_1tnmap.html">namu::tnmap</a></div><div class="ttdef"><b>Definition:</b> tnmap.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclassnamu_1_1type_html"><div class="ttname"><a href="classnamu_1_1type.html">namu::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
 <div class="ttc" id="aclassnamu_1_1type_providable_html"><div class="ttname"><a href="classnamu_1_1type_providable.html">namu::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:6</div></div>

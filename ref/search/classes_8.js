@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['helpflag_388',['helpFlag',['../classnamu_1_1help_flag.html',1,'namu']]]
+  ['helpflag_387',['helpFlag',['../classnamu_1_1help_flag.html',1,'namu']]]
 ];

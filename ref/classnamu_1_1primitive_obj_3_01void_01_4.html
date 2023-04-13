@@ -102,6 +102,9 @@ const <a class="el" href="structnamu_1_1point.html">point</a> &amp;&#160;</td><t
 <a class="el" href="classnamu_1_1tnbicontainer.html">nbicontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>subs</b> () override</td></tr>
 <tr class="separator:a30b1b15a6ba8fc80799b435f83710b83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnamu_1_1arithmetic_obj"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1arithmetic_obj')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1arithmetic_obj.html">namu::arithmeticObj</a></td></tr>
+<tr class="memitem:a6ab2ea41a1e67a94525ec59c5b73be20 inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memItemLeft" align="right" valign="top"><a id="a6ab2ea41a1e67a94525ec59c5b73be20"></a>
+<a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) override</td></tr>
+<tr class="separator:a6ab2ea41a1e67a94525ec59c5b73be20 inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e5033263e495b77c3954994e5541a11 inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memItemLeft" align="right" valign="top"><a id="a0e5033263e495b77c3954994e5541a11"></a>
 <a class="el" href="classnamu_1_1tstr.html">tstr</a>&lt; me &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const me &amp;rhs) const</td></tr>
 <tr class="separator:a0e5033263e495b77c3954994e5541a11 inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,9 +167,6 @@ nbool&#160;</td><td class="memItemRight" valign="bottom"><b>logicalOr</b> (const
 <tr class="memdesc:a0888a8ee498908313fa151deb49831af inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="mdescLeft">&#160;</td><td class="mdescRight">same to 'assign'. <br /></td></tr>
 <tr class="separator:a0888a8ee498908313fa151deb49831af inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnamu_1_1base_obj"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1base_obj')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1base_obj.html">namu::baseObj</a></td></tr>
-<tr class="memitem:afe393b54de56426a9ae3abcf34a01939 inherit pub_methods_classnamu_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="afe393b54de56426a9ae3abcf34a01939"></a>
-<a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) override</td></tr>
-<tr class="separator:afe393b54de56426a9ae3abcf34a01939 inherit pub_methods_classnamu_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c42b43f27bc7655dd66ceab187676fd inherit pub_methods_classnamu_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a3c42b43f27bc7655dd66ceab187676fd"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>canRun</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const override</td></tr>
 <tr class="separator:a3c42b43f27bc7655dd66ceab187676fd inherit pub_methods_classnamu_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -356,9 +356,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a828efcbad1bc417d9b022dca5a3086a6"><td class="memItemLeft" align="right" valign="top"><a id="a828efcbad1bc417d9b022dca5a3086a6"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>_onSame</b> (const <a class="el" href="classnamu_1_1type_providable.html">typeProvidable</a> &amp;rhs) const override</td></tr>
 <tr class="separator:a828efcbad1bc417d9b022dca5a3086a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a060071a22513642b6926adc5935f6082"><td class="memItemLeft" align="right" valign="top"><a id="a060071a22513642b6926adc5935f6082"></a>
-virtual <a class="el" href="classnamu_1_1tndum_map.html">dumScope</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeSubs</b> () const =0</td></tr>
-<tr class="separator:a060071a22513642b6926adc5935f6082"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7effbf2a4bebb35bd220b1f33bd5675"><td class="memItemLeft" align="right" valign="top"><a id="ad7effbf2a4bebb35bd220b1f33bd5675"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeSubs</b> (<a class="el" href="classnamu_1_1tnmap.html">scope</a> &amp;tray) const =0</td></tr>
+<tr class="separator:ad7effbf2a4bebb35bd220b1f33bd5675"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classnamu_1_1base_obj"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classnamu_1_1base_obj')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classnamu_1_1base_obj.html">namu::baseObj</a></td></tr>
 <tr class="memitem:ae3c02c749de72c984f1695cadbe00098 inherit pro_methods_classnamu_1_1base_obj"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1base_obj.html#ae3c02c749de72c984f1695cadbe00098">baseObj</a> ()</td></tr>
 <tr class="separator:ae3c02c749de72c984f1695cadbe00098 inherit pro_methods_classnamu_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
