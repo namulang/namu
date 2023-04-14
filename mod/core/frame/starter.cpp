@@ -4,6 +4,7 @@
 #include "../ast/slot.hpp"
 #include "../ast/node.inl"
 #include "starter.hpp"
+#include "thread.hpp"
 
 namespace namu {
 
@@ -28,6 +29,7 @@ namespace namu {
             return NAMU_E("there is 0 or more than 2 main() found."), str();
 
         if(main.canRun(a)) {
+            _prepareFrame(thread::get()._getFrames());
             NAMU_DI("============== START ================");
             str res = pak.run("main");
             NAMU_DI("=====================================");
@@ -38,6 +40,10 @@ namespace namu {
         if(main.canRun(narr(k*/
 
         return NAMU_E("couldn't run main func(). it doesn't match any argument"), str();
+    }
+
+    void me::_prepareFrame(frames& fr) {
+        fr.rel();
     }
 
     node& me::_findMain(node& pak, const args& a) {

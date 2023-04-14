@@ -3,6 +3,7 @@
 #include "../loader/errReport.hpp"
 #include "../ast/node.inl"
 #include "../ast/func.hpp"
+#include "../ast/mgd/printFunc.hpp"
 
 namespace namu {
 
@@ -21,6 +22,9 @@ namespace namu {
 #endif
                 .addPath("pack/")
                 .load();
+
+            _loadBuiltIns(*inner);
+
             NAMU_I("%d system slots has been loaded.", inner->len());
 
 #if NAMU_IS_DBG
@@ -88,5 +92,9 @@ namespace namu {
     thread** me::_get() {
         thread_local static thread* inner = new thread();
         return &inner;
+    }
+
+    void me::_loadBuiltIns(nmap& tray) const {
+        tray.add("print", *new printFunc());
     }
 }

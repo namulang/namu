@@ -6,6 +6,7 @@
 
 namespace namu {
 
+    typedef tnarr<frame> frames;
     class _nout starter : public node {
         NAMU(CLASS(starter, node))
 
@@ -19,5 +20,6 @@ namespace namu {
 
     private:
         node& _findMain(node& pak, const args& a);
+        void _prepareFrame(frames& fr);
     };
 }

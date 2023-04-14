@@ -27,6 +27,7 @@ namespace namu {
         friend class forExpr;
         friend class whileExpr;
         friend class retStateExpr;
+        friend class starter;
         friend struct ::exprTest;
 
     private:
@@ -58,6 +59,7 @@ namespace namu {
 
     private:
         static thread** _get();
+        void _loadBuiltIns(nmap& tray) const;
 
     private:
         frames _frames;
