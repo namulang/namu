@@ -1,0 +1,28 @@
+#include "inputFunc.hpp"
+#include "../../builtin/primitive/nStr.hpp"
+#include <iostream>
+
+namespace namu {
+
+    NAMU(DEF_ME(inputFunc))
+
+    const params& me::getParams() const {
+        static params inner;
+        return inner;
+    }
+
+    const node& me::getRet() const {
+        static nStr inner;
+        return inner;
+    }
+
+    str me::run(const args& a) {
+        const params& ps = getParams();
+        if(a.len() != ps.len())
+            return NAMU_E("length of args(%d) and typs(%d) doesn't match.", a.len(), ps.len()), nullptr;
+
+        nStr* ret = new nStr();
+        std::cin >> ret->get();
+        return str(ret);
+    }
+}

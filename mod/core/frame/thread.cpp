@@ -4,6 +4,7 @@
 #include "../ast/node.inl"
 #include "../ast/func.hpp"
 #include "../ast/mgd/printFunc.hpp"
+#include "../ast/mgd/inputFunc.hpp"
 
 namespace namu {
 
@@ -95,6 +96,7 @@ namespace namu {
     }
 
     void me::_loadBuiltIns(nmap& tray) const {
-        tray.add("print", *new printFunc());
+        tray.add("print", *new printFunc<nStr>());
+        tray.add("input", *new inputFunc());
     }
 }
