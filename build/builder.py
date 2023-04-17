@@ -222,10 +222,6 @@ def wasmBuild(arg):
     clean()
     os.system("emcmake cmake " + config + " " + cwd)
     os.system("emmake make -j8 -s")
-    if arg == "win":
-        os.system("copy " + namuDir + "\\res\\wasm-frontend\\*.* " + binDir);
-    else:
-        os.system("cp " + namuDir + "/res/wasm-frontend/*.* " + binDir);
 
 def dbgBuild():
     global config
