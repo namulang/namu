@@ -35,7 +35,10 @@ namespace namu {
                     continue;
                 }
 
-                const manifest& mani = s.cast<slot>().getManifest();
+                const slot& sl = s.cast<slot>();
+                if(nul(sl)) continue;
+
+                const manifest& mani = sl.getManifest();
                 NAMU_DI(" - %s v%s", mani.name.c_str(), mani.version.c_str());
             }
 #endif
