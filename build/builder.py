@@ -140,9 +140,9 @@ def cleanGhPages():
     # clean before fetch repo:
     _cleanIntermediates()
     if isWindow():
-        os.system("del /s /f /q " + cwd + "\\html")
+        os.system("del /s /f /q " + cwd + "\\html\\ref")
     else:
-        os.system("rm -rf " + cwd + "/html")
+        os.system("rm -rf " + cwd + "/html/ref")
 
     # standby gh-pages repo:
     printInfoEnd("cloning gh-pages branch...")
@@ -159,11 +159,9 @@ def cleanGhPages():
     # clean removed or modified doxygen outputs:
     if isWindow():
         os.system("del /s /f /q " + cwd + "\\html\\ref\\*")
-        os.system("del /s /f /q " + cwd + "\\html\\_guide\\*")
         os.system("del /s /f /q " + cwd + "\\html\\_site\\*")
     else:
         os.system("rm -rf " + cwd + "/html/ref/*")
-        os.system("rm -rf " + cwd + "/html/_guide/*")
         os.system("rm -rf " + cwd + "/html/_site/*")
 
 def docDoxygen():
