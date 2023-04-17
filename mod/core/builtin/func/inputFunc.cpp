@@ -1,5 +1,5 @@
 #include "inputFunc.hpp"
-#include "../../builtin/primitive/nStr.hpp"
+#include "../primitive/nStr.hpp"
 #include <iostream>
 
 namespace namu {

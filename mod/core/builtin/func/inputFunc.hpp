@@ -1,11 +1,11 @@
 #pragma once
 
-#include "mgdFunc.hpp"
+#include "../../ast/func.hpp"
 
 namespace namu {
 
     class _nout inputFunc : public func {
-        NAMU(CLASS(inputFunc, mgdFunc))
+        NAMU(CLASS(inputFunc, func))
 
     public:
         const params& getParams() const override;

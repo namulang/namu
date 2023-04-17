@@ -3,8 +3,7 @@
 #include "../loader/errReport.hpp"
 #include "../ast/node.inl"
 #include "../ast/func.hpp"
-#include "../ast/mgd/printFunc.hpp"
-#include "../ast/mgd/inputFunc.hpp"
+#include "../builtin/func.hpp"
 
 namespace namu {
 

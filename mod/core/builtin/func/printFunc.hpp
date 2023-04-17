@@ -1,12 +1,12 @@
 #pragma once
 
-#include "mgdFunc.hpp"
+#include "../../ast/func.hpp"
 
 namespace namu {
 
     template <typename T>
     class _nout printFunc : public func {
-        NAMU(CLASS(printFunc, mgdFunc))
+        NAMU(CLASS(printFunc, func))
 
     public:
         const params& getParams() const override {
