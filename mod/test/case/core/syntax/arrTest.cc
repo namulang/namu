@@ -450,3 +450,31 @@ TEST_F(arrTest, addFromEmptyArray) {
             res
     )SRC").shouldVerified(true);
 }
+
+TEST_F(arrTest, testDeepCopy) {
+    make().parse(R"SRC(
+        main() int
+            org := {1, 2}
+            copy := org(org)
+            org.set(1, 3)
+            ret copy[1]
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->cast<nint>(), 2);
+}
+
+TEST_F(arrTest, testShallowCopy) {
+    make().parse(R"SRC(
+        main() int
+            org := {1, 2}
+            copy := org
+            org.set(1, 3)
+            ret copy[1]
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->cast<nint>(), 3);
+}
