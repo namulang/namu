@@ -74,4 +74,4 @@ let b:spell_options="contained"
 let &cpo = s:cpo_save
 unlet s:cpo_save
 
-let b:current_syntax = "namu"
+let b:current_syntax = "nm"
