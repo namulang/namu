@@ -352,6 +352,7 @@ namespace namu {
 
         // TODO: ctor need to call superclass's ctor.
         it.getShares().getContainer().add(baseObj::CTOR_NAME, *new defaultCtor(it.getOrigin()));
+        it.getShares().getContainer().add(baseObj::CTOR_NAME, *new defaultCopyCtor(it.getOrigin()));
 
         // add preCtor:
         if(blk.asPreCtor && blk.asPreCtor->len()) {
