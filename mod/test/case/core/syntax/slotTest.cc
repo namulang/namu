@@ -109,7 +109,7 @@ pack demo
     ASSERT_FALSE(nul(getSlot().subs()));
     scope& shares = (scope&) (((scopes&) getSlot().subs()).getNext().getContainer());
     ASSERT_FALSE(nul(shares));
-    ASSERT_EQ(shares.len(), 1);
+    ASSERT_EQ(shares.len(), 2);
     ASSERT_EQ(getSlot().getManifest().name, "demo");
 }
 

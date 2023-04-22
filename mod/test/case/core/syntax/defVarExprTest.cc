@@ -58,7 +58,7 @@ TEST_F(defVarExprTest, definePackVariable2) {
     ASSERT_FALSE(nul(owns));
     ASSERT_FALSE(nul(shares));
     ASSERT_EQ(owns.len(), 3);
-    ASSERT_EQ(shares.len(), 2);
+    ASSERT_EQ(shares.len(), 3);
     ASSERT_EQ(s.subAll<baseObj>().len(), 3);
     ASSERT_EQ(s.subAll<mgdFunc>().len(), 1);
 
