@@ -20,7 +20,7 @@ TEST_F(commentTest, singleLineComment) {
     ASSERT_FALSE(nul(shares));
     ASSERT_FALSE(nul(owns));
     ASSERT_EQ(owns.len(), 1); // 1 for age
-    ASSERT_EQ(shares.len(), 2); // 1 for main() 1 for @ctor
+    ASSERT_EQ(shares.len(), 3); // 1 for main() 2 for @ctor
 }
 
 TEST_F(commentTest, multiLineComment) {
@@ -36,7 +36,7 @@ TEST_F(commentTest, multiLineComment) {
     ASSERT_FALSE(nul(shares));
     ASSERT_FALSE(nul(owns));
     ASSERT_EQ(owns.len(), 1); // 1 for age
-    ASSERT_EQ(shares.len(), 2); // 1 for main() 1 for @ctor
+    ASSERT_EQ(shares.len(), 3); // 1 for main() 2 for @ctor
 }
 
 TEST_F(commentTest, multiLineComment2) {
@@ -53,7 +53,7 @@ TEST_F(commentTest, multiLineComment2) {
     ASSERT_FALSE(nul(shares));
     ASSERT_FALSE(nul(owns));
     ASSERT_EQ(owns.len(), 1); // 1 for age
-    ASSERT_EQ(shares.len(), 2); // 1 for main() 1 for @ctor
+    ASSERT_EQ(shares.len(), 3); // 1 for main() 2 for @ctor
 }
 
 TEST_F(commentTest, multiLineComment3) {

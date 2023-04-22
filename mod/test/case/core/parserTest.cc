@@ -25,9 +25,9 @@ TEST_F(parserTest, testHelloWorld) {
     ASSERT_TRUE(shares.len() == 1);
 
     p.parse(script.c_str());
-    ASSERT_EQ(shares.len(), 3); // @ctor + main + 'hello': @preCtor doesn't exist.
+    ASSERT_EQ(shares.len(), 4); // @ctor*2 + main + 'hello': @preCtor doesn't exist.
     p.parse(script.c_str());
-    ASSERT_EQ(shares.len(), 4); // add func main on every parse() call.
+    ASSERT_EQ(shares.len(), 5); // add func main on every parse() call.
 
     ASSERT_TRUE(shares.get<nStr>("hello") == nStr("hello"));
 }
@@ -45,7 +45,7 @@ TEST_F(parserTest, slotNoOnTray) {
     ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
     scope& shares = (scope&) (((scopes&) getSlot().subs()).getNext().getContainer());
     ASSERT_FALSE(nul(shares));
-    ASSERT_EQ(shares.len(), 2);
+    ASSERT_EQ(shares.len(), 3); // 2 builtin func
     ASSERT_EQ(&getSlot().getPack(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");
     ASSERT_FALSE(nul(f));

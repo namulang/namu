@@ -20,7 +20,7 @@ TEST_F(defAssignExprTest, simpleGlobalDefAssign) {
     ASSERT_FALSE(nul(shares));
     ASSERT_FALSE(nul(owns));
     ASSERT_EQ(owns.len(), 1);
-    ASSERT_EQ(shares.len(), 2);
+    ASSERT_EQ(shares.len(), 3);
 
     run();
     ASSERT_EQ(getSubPack().sub<nInt>("age").cast<int>(), 0);
