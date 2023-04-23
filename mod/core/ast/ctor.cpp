@@ -7,8 +7,8 @@ namespace namu {
 
     me::ctor(const node& org): _org(org) {}
 
-    const node& me::getRet() const { return _org->getEval(); }
-    const node& me::getEval() const { return getRet(); }
+    str me::getRet() const { return _org->getEval(); }
+    str me::getEval() const { return getRet(); }
     const node& me::getOrigin() const { return *_org; }
 
     void me::_setOrigin(const node& newOrg) {

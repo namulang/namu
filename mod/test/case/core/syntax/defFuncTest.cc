@@ -22,7 +22,7 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
         const func& f = res.sub<func>("main", narr());
         ASSERT_FALSE(nul(f));
         ASSERT_EQ(f.getParams().len(), 0);
-        ASSERT_EQ(f.getRet().getType(), ttype<nVoid>());
+        ASSERT_EQ(f.getRet()->getType(), ttype<nVoid>());
     }
 
     if(make().parse(R"SRC(
@@ -40,7 +40,7 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
         const func& f = res.sub<func>("main", narr(nInt(), nStr()));
         ASSERT_FALSE(nul(f));
         ASSERT_EQ(f.getParams().len(), 2);
-        ASSERT_EQ(f.getRet().getType(), ttype<nVoid>());
+        ASSERT_EQ(f.getRet()->getType(), ttype<nVoid>());
 
         const params& ps = f.getParams();
         ASSERT_FALSE(nul(ps));

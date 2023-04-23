@@ -37,7 +37,7 @@ TEST_F(retExprTest, simpleReturnTypeNegative) {
     retExpr& ret = con.begin().get<retExpr>();
     ASSERT_FALSE(nul(ret));
 
-    ASSERT_TRUE(ret.getEval().getType() == ttype<nVoid>());
+    ASSERT_TRUE(ret.getEval()->getType() == ttype<nVoid>());
 }
 
 TEST_F(retExprTest, implicitReturn) {

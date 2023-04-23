@@ -25,7 +25,7 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
 
-        const node& getEval() const override { return _rhs->getEval(); }
+        str getEval() const override { return _rhs->getEval(); }
         const std::string& getSubName() const { return _name; }
         const node& getRight() const { return *_rhs; }
         node& getRight() { return *_rhs; }

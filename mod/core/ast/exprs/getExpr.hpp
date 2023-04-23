@@ -20,7 +20,7 @@ namespace namu {
     public:
         using super::run;
         str run(const args& a) override;
-        const node& getEval() const override;
+        str getEval() const override;
         const node& getMe() const;
         const std::string& getSubName() const;
         void setMe(const node& newMe) { _me.bind(newMe); }

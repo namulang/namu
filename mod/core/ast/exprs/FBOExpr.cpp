@@ -6,17 +6,17 @@ namespace namu {
 
     NAMU(DEF_ME(FBOExpr), DEF_VISIT())
 
-    const node& me::getEval() const {
-        static nBool inner;
+    str me::getEval() const {
+        static str inner(new nBool());
         if(isLogicalOp()) return inner;
 
-        if(!_lhs || !_rhs) return nulOf<node>();
-        const node& lhsEval = _lhs->getEval();
-        if(nul(lhsEval)) return nulOf<node>();
-        const node& rhsEval = _rhs->getEval();
-        if(nul(rhsEval)) return nulOf<node>();
+        if(!_lhs || !_rhs) return str();
+        str lhsEval = _lhs->getEval();
+        if(!lhsEval) return lhsEval;
+        str rhsEval = _rhs->getEval();
+        if(rhsEval) return rhsEval;
 
-        return lhsEval.deduce(rhsEval);
+        return str(lhsEval->deduce(*rhsEval));
     }
 
     nbool me::isLogicalOp() const {

@@ -26,8 +26,8 @@ namespace {
             return _executed;
         }
 
-        const node& getRet() const override {
-            static nVoid inner;
+        str getRet() const override {
+            static str inner(new nVoid());
             return inner;
         }
 

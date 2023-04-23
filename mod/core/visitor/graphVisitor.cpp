@@ -52,7 +52,7 @@ namespace namu {
         for(const param& p : ps)
             msg += "\"" + p.getName() + "\" " + p.getOrigin().getType().getName() +
                     (++n >= ps.len() ? "" : ",");
-        std::cout << "params[" << msg << "] " << "ret[" << fun.getRet().getType().getName() << "]";
+        std::cout << "params[" << msg << "] " << "ret[" << fun.getRet()->getType().getName() << "]";
     }
 
     void me::onVisit(visitInfo i, genericObj& o) {

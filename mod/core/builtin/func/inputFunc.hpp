@@ -10,7 +10,7 @@ namespace namu {
     public:
         const params& getParams() const override;
 
-        const node& getRet() const override;
+        str getRet() const override;
 
         str run(const args& a) override;
     };

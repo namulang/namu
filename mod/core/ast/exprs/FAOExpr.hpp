@@ -43,7 +43,7 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
 
-        const node& getEval() const override;
+        str getEval() const override;
         const node& getLeft() const { return *_lhs; }
         void setLeft(const node& new1) { _lhs.bind(new1); }
         const node& getRight() const { return *_rhs; }

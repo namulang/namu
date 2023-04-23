@@ -32,7 +32,7 @@ namespace namu {
     const scope& me::getWhere() const { return *_where; }
     void me::setWhere(const scope& new1) { _where.bind(new1); }
 
-    const node& me::getEval() const {
+    str me::getEval() const {
         return _org->getEval();
     }
 }

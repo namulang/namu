@@ -12,8 +12,8 @@ namespace namu {
         ctor(const node& org);
 
     public:
-        const node& getRet() const override;
-        const node& getEval() const override;
+        str getRet() const override;
+        str getEval() const override;
         const node& getOrigin() const;
 
     private:

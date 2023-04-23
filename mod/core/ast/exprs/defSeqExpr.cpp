@@ -18,8 +18,8 @@ namespace namu {
         return str(new seq(start->cast<nint>(), end->cast<nint>()));
     }
 
-    const node& me::getEval() const {
-        static seq inner(1, 10);
+    str me::getEval() const {
+        static str inner(new seq(1, 10));
         return inner;
     }
 }

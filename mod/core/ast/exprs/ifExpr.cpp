@@ -24,13 +24,13 @@ namespace namu {
         return str(nVoid::singletone());
     }
 
-    const node& me::getEval() const {
-        const node& thenEval = _thenBlk->getEval();
-        if(nul(thenEval)) return nulOf<node>();
+    str me::getEval() const {
+        str thenEval = _thenBlk->getEval();
+        if(!thenEval) return thenEval;
         if(!_elseBlk)
             return thenEval;
 
-        const node& elseEval = _elseBlk->getEval();
-        return thenEval.deduce(elseEval);
+        str elseEval = _elseBlk->getEval();
+        return str(thenEval->deduce(*elseEval));
     }
 }

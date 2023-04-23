@@ -38,8 +38,8 @@ namespace namu {
             NAMU(CLASS(iterateFunc, func))
 
         public:
-            const node& getRet() const override {
-                static mgdIter inner(nullptr);
+            str getRet() const override {
+                static str inner(new mgdIter(nullptr));
                 return inner;
             }
 
@@ -71,8 +71,8 @@ namespace namu {
             NAMU(CLASS(getElemTypeFunc, func))
 
         public:
-            const node& getRet() const override {
-                static nInt inner;
+            str getRet() const override {
+                static str inner(new nInt());
                 return inner;
             }
 

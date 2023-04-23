@@ -31,9 +31,9 @@ namespace namu {
         return super::canRun(a);
     }
 
-    const node& me::getEval() const {
+    str me::getEval() const {
         if(!_ret)
-            return nulOf<node>();
+            return _ret;
 
         return _ret->getEval();
     }

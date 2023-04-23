@@ -36,29 +36,29 @@ namespace namu {
 
                 ret = blk.run();
                 if(_postProcess(fr))
-                    return ret->as(getEval());
+                    return ret->as(*getEval());
             }
 
             iter->run("next", args{narr{*new nInt(1)}});
         }
 
-        return ret->as(getEval());
+        return ret->as(*getEval());
     }
 
-    const node& me::getEval() const {
+    str me::getEval() const {
         if(_initEval) return super::getEval();
 
         _initEval = true;
         str ased = _container->as<node>();
         str elemType = ased->run("getElemType");
-        if(!elemType) return NAMU_E("elemType == null"), nulOf<node>();
+        if(!elemType) return NAMU_E("elemType == null"), str();
 
         blockExpr& blk = getBlock();
         frameInteract f1(blk); {
             thread::get()._getNowFrame().pushLocal(getLocalName(), *elemType);
-            const node& newEval = blk.getEval();
 
-            setEval(newEval);
+            str newEval = blk.getEval();
+            setEval(*newEval);
             return newEval;
         }
     }

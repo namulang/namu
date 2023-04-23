@@ -21,7 +21,7 @@ namespace namu {
 
     blockExpr& me::getBlock() { return *_blk; }
     const blockExpr& me::getBlock() const { return *_blk; }
-    const node& me::getRet() const { return *_retType; }
+    str me::getRet() const { return _retType; }
 
     nbool me::setRet(const node& newRet) { return _retType.bind(newRet); }
 
@@ -54,7 +54,7 @@ namespace namu {
 
         str ret;
         if(!nul(retVal))
-            ret = retVal.as(getRet());
+            ret = retVal.as(*getRet());
 
         fr.relRet();
         return ret;

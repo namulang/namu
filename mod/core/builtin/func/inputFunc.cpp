@@ -11,8 +11,8 @@ namespace namu {
         return inner;
     }
 
-    const node& me::getRet() const {
-        static nStr inner;
+    str me::getRet() const {
+        static str inner(new nStr());
         return inner;
     }
 

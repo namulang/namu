@@ -29,7 +29,7 @@ namespace namu {
         nbicontainer& subs() override;
 
         nbool isImpli(const type& to) const override {
-            return getEval().isSub(to);
+            return getEval()->isSub(to);
         }
         virtual str asImpli(const type& to) const override {
             me* unconst = const_cast<me*>(this);
