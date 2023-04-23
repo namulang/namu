@@ -28,7 +28,7 @@ namespace namu {
         /// @return null of scope if this variable will be defined to local scope.
         const scope& getWhere() const;
         void setWhere(const scope& new1);
-        const node& getEval() const override;
+        str getEval() const override;
 
     private:
         str _org;

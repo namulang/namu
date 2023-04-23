@@ -80,7 +80,7 @@ namespace namu {
 
         onVisit(i, (params&) me.getParams());
 
-        const node& retOrg = _findOrigin(me.getRet());
+        const node& retOrg = _findOrigin(*me.getRet());
         if(!nul(retOrg)) {
             me.setRet(retOrg);
             genericCppObj& parent = i.parent->cast<genericCppObj>();

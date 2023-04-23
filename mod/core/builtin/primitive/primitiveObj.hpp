@@ -24,9 +24,9 @@ namespace namu {
 
     protected:
         virtual str _onRun(T& cast, const args& a) const = 0;
-        const node& getRet() const override { return getEval(); }
-        const node& getEval() const override {
-            static Ret inner;
+        str getRet() const override { return getEval(); }
+        str getEval() const override {
+            static str inner(new Ret());
             return inner;
         }
     };

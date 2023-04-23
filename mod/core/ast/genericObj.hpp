@@ -24,8 +24,8 @@ namespace namu {
         nbool canRun(const args& a) const override;
         str run(const args& a) override;
 
-        const node& getEval() const override {
-            return *_orgObj;
+        str getEval() const override {
+            return _orgObj;
         }
 
         virtual nbicontainer& subs() override;

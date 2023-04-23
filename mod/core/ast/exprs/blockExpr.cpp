@@ -43,9 +43,9 @@ namespace namu {
         return ret;
     }
 
-    const node& me::getEval() const {
+    str me::getEval() const {
         ncnt len = _exprs.len();
-        if(len <= 0) return nulOf<node>();
+        if(len <= 0) return str();
 
         return _exprs[len-1].getEval();
     }

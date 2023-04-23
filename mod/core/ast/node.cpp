@@ -51,8 +51,8 @@ namespace namu {
     }
     str me::asImpli(const type& to) const { return getType().asImpli(*this, to); }
 
-    const node& me::getEval() const {
-        return *this;
+    str me::getEval() const {
+        return str(this);
     }
 
     str me::_onRunSub(node& sub, const args& a) {

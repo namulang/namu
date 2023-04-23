@@ -50,7 +50,7 @@ namespace namu {
         return *ret;
     }
 
-    const node& me::getEval() const {
-        return getOrigin();
+    str me::getEval() const {
+        return str(getOrigin());
     }
 }

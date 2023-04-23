@@ -13,10 +13,10 @@ namespace namu {
         return *_me;
     }
 
-    const node& me::getEval() const {
+    str me::getEval() const {
         str got = _get();
         if(!got)
-            return nulOf<node>();
+            return got;
         return got->getEval();
     }
 

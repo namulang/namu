@@ -27,19 +27,19 @@ namespace namu {
             frameInteract f1(blk); {
                 res = blk.run();
                 if(_postProcess(fr))
-                    return res->as(getEval());
+                    return res->as(*getEval());
             }
         }
 
-        return res->as(getEval());
+        return res->as(*getEval());
     }
 
-    const node& me::getEval() const {
+    str me::getEval() const {
         if(_initEval) return super::getEval();
 
         _initEval = true;
-        const node& newEval = getBlock().getEval();
-        setEval(newEval);
+        str newEval = getBlock().getEval();
+        setEval(*newEval);
         return newEval;
     }
 }

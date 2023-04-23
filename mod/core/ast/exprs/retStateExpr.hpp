@@ -19,7 +19,7 @@ namespace namu {
         node& getRet();
         const node& getRet() const NAMU_UNCONST_FUNC(getRet())
         nbool canRun(const args& a) const override;
-        const node& getEval() const override;
+        str getEval() const override;
 
     protected:
         virtual const retState& _onGetRetState() const = 0;

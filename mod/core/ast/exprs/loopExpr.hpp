@@ -14,7 +14,7 @@ namespace namu {
 
     public:
         blockExpr& getBlock() const { return *_blk; }
-        const node& getEval() const override { return *_eval; }
+        str getEval() const override { return _eval; }
         nbool setEval(const node& new1) const { return _eval.bind(new1); }
 
     protected:

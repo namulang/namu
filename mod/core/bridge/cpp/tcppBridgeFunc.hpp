@@ -28,11 +28,11 @@ namespace namu {
             return _runNative(evaluated);
         }
 
-        const node& getRet() const override {
+        str getRet() const override {
             if(!_ret)
                 _ret.bind(Marshaling<Ret, S, tifSub<Ret, node>::is>::onGetRet());
 
-            return *_ret;
+            return _ret;
         }
 
         nbool setRet(const node& newRet) override {

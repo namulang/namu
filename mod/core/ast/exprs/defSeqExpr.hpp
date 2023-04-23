@@ -18,7 +18,7 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
 
-        const node& getEval() const override;
+        str getEval() const override;
 
         const node& getStart() const { return *_start; }
         const node& getEnd() const { return *_end; }

@@ -22,7 +22,7 @@ namespace namu {
     public:
         blockExpr& getBlock();
         const blockExpr& getBlock() const;
-        const node& getRet() const override;
+        str getRet() const override;
         nbool setRet(const node& newRet) override;
         nbicontainer& subs() override;
         const params& getParams() const override;

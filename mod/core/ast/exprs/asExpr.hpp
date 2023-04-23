@@ -28,7 +28,7 @@ namespace namu {
             return str(eval->as(*_as));
         }
 
-        const node& getEval() const override { return getAs(); }
+        str getEval() const override { return _as; }
         const node& getMe() const { return *_me; }
         const node& getAs() const { return *_as; }
         void setAs(const node& new1) { _as.bind(new1); }

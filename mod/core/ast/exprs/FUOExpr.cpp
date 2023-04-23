@@ -37,7 +37,7 @@ namespace namu {
         return ret;
     }
 
-    const node& me::getEval() const {
-        return *_it;
+    str me::getEval() const {
+        return _it;
     }
 }

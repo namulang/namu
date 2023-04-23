@@ -19,7 +19,7 @@ namespace namu {
 
             return str((node*) out->getOrigin().clone());
         }
-        const node& getEval() const override {
+        str getEval() const override {
             return _from->getEval();
         }
         const node& getFrom() const {

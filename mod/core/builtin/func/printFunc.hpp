@@ -14,8 +14,8 @@ namespace namu {
             return inner;
         }
 
-        const node& getRet() const override {
-            static T inner;
+        str getRet() const override {
+            static str inner(new T());
             return inner;
         }
 

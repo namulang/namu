@@ -17,7 +17,7 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
 
-        const node& getEval() const override;
+        str getEval() const override;
 
         node& getMe();
         const node& getMe() const NAMU_UNCONST_FUNC(getMe())

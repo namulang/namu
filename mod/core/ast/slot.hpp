@@ -33,7 +33,7 @@ namespace namu {
         using super::run;
         str run(const args& a) override { return getPack().run(a); }
 
-        const node& getEval() const override { return getPack().getEval(); }
+        str getEval() const override { return getPack().getEval(); }
 
     protected:
         virtual nbool _invalidate();

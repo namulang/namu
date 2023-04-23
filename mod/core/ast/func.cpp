@@ -14,10 +14,10 @@ namespace namu {
 
         int n = 0;
         for(const auto& e : a) {
-            const node& t = e.getEval();
+            str t = e.getEval();
             str p = ps[n++].getOrigin().as<node>();
-            if(nul(t)) return NAMU_W("t == null"), false;
-            if(!t.isImpli(*p))
+            if(!t) return NAMU_W("t == null"), false;
+            if(!t->isImpli(*p))
                 return false;
         }
 

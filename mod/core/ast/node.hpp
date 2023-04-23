@@ -107,7 +107,7 @@ namespace namu {
         ///
         /// and also this func requires frames. means that you have to interact frame first before
         /// call this func.
-        virtual const node& getEval() const;
+        virtual str getEval() const;
 
         virtual void accept(visitInfo i, visitor& v);
 

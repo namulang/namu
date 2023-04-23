@@ -59,8 +59,8 @@ namespace {
             return getBlock().cast<myBlock>()._res;
         }
 
-        const node& getRet() const override {
-            static nVoid inner;
+        str getRet() const override {
+            static str inner(new nVoid());
             return inner;
         }
 

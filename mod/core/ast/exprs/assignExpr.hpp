@@ -26,7 +26,7 @@ namespace namu {
             e.setVal(*ret);
             return ret;
         }
-        const node& getEval() const override {
+        str getEval() const override {
             return _rhs->getEval();
         }
 
