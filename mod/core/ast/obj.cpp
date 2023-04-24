@@ -13,30 +13,33 @@ namespace namu {
         _org = rhs._org;
         _pos = rhs._pos;
         _type = rhs._type;
+        // complete attribute is unique:
+        //  all unique attributes looses when instance got cloned.
+        _isComplete = true;
 
         return *this;
     }
 
     me::obj():
-            super(), _shares(new scopes()), _owns(new scope()), _org(this) {
+            super(), _shares(new scopes()), _owns(new scope()), _org(this), _isComplete(true) {
         _subs.bind(_makeNewSubs());
         _setType(&ttype<obj>::get());
     }
 
     me::obj(const scopes& shares, const scope& owns):
-            super(), _shares(shares), _owns(owns), _org(this) {
+            super(), _shares(shares), _owns(owns), _org(this), _isComplete(true) {
         _subs.bind(_makeNewSubs());
         _setType(&ttype<obj>::get());
     }
 
     me::obj(mgdType* newType):
-            super(), _shares(new scopes()), _owns(new scope()), _org(this) {
+            super(), _shares(new scopes()), _owns(new scope()), _org(this), _isComplete(true) {
         _subs.bind(_makeNewSubs());
         _setType(newType);
     }
 
     me::obj(mgdType* newType, const scopes& shares, const scope& owns):
-            super(), _shares(shares), _owns(owns), _org(this) {
+            super(), _shares(shares), _owns(owns), _org(this), _isComplete(true) {
         _subs.bind(_makeNewSubs());
         _setType(newType);
     }

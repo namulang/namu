@@ -44,6 +44,7 @@ namespace namu {
         clonable* deepClone() const override;
         typedef ntype metaType;
         const ntype& getType() const override;
+        nbool isComplete() const override { return _isComplete; }
 
     private:
         scopes* _makeNewSubs();
@@ -54,6 +55,8 @@ namespace namu {
 
         me& _assign(const me& rhs);
 
+        void _setComplete(nbool isComplete) { _isComplete = isComplete; }
+
     private:
         tstr<scopes> _subs;
         tstr<scopes> _shares;
@@ -61,6 +64,7 @@ namespace namu {
         obj* _org;
         point _pos;
         ntype* _type; // TODO: memory leak
+        nbool _isComplete;
     };
 
 #ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS

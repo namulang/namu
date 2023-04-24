@@ -60,6 +60,15 @@ namespace namu {
         if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
 
         const func& f = sub.cast<func>();
-        return nul(f) ? sub->getEval() : f.getRet();
+        str ret = nul(f) ? sub->getEval() : f.getRet();
+        // clone returning value when eval this:
+        //  think about following code:
+        //      def a
+        //          ...
+        //      b := a()
+        // because getEval() funcs returns the origin object always,
+        // if I don't clone anything here, it'll return origin object of 'a'.
+        // then when verify defAssignExpr it'll be judged to compile error.
+        return str((node*) ret->clone());
     }
 }

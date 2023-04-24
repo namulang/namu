@@ -55,7 +55,7 @@ namespace namu {
 
         blockExpr& blk = getBlock();
         frameInteract f1(blk); {
-            thread::get()._getNowFrame().pushLocal(getLocalName(), *elemType);
+            thread::get()._getNowFrame().pushLocal(getLocalName(), (node*) elemType->clone());
 
             str newEval = blk.getEval();
             setEval(*newEval);

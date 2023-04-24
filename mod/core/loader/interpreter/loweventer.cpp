@@ -282,6 +282,7 @@ namespace namu {
         NAMU_DI("tokenEvent: onDefObj(%s, defBlock[%x])", name.c_str(), &blk);
 
         obj& ret = *new obj(new mgdType(name));
+        ret._setComplete(false);
         _onInjectObjSubs(ret, blk);
         _onPushName(name, ret);
         return &ret;
@@ -307,6 +308,7 @@ namespace namu {
                 typeParams.len(), &blk);
 
         obj& org = *new obj(new mgdType(name));
+        org._setComplete(false);
         _onInjectObjSubs(org, blk);
         node* ret = new genericObj(org, _extractParamTypeNames(typeParams));
         _onPushName(name, *ret);
