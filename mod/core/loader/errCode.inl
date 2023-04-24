@@ -12,6 +12,7 @@ PAIRX(EVAL_NULL_TYPE,               "this expr evaluated as nulled type")
 PAIRX(CANT_ACCESS,                  "%s tried to access '%s' but nothing exist")
 PAIRX(NOT_EXIST,                    "%s not exist")
 PAIRX(DUP_VAR,                      "duplicated variable '%s' found")
+PAIRX(ACCESS_TO_INCOMPLETE,         "accesses to incomplete object")
 
 // obj:
 PAIRX(CANT_CAST_TO_NODE,            "obj can't be cast into node class")

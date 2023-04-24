@@ -176,6 +176,8 @@ namespace namu {
         NAMU_DI("verify: defAssignExpr: new1[%s]", new1 ? new1->getType().getName().c_str() : "null");
         if(!new1)
             return _srcErr(me.getPos(), errCode::TYPE_NOT_DEDUCED);
+        if(!new1->isComplete())
+            return _srcErr(me.getPos(), errCode::ACCESS_TO_INCOMPLETE);
 
         if(nul(to)) {
             frame& fr = thread::get()._getNowFrame();
@@ -274,6 +276,11 @@ namespace namu {
         }
         NAMU_DI("verify: getExpr: isRunnable: got=%s, me=%s", got->getType().getName().c_str(),
                 me.getType().getName().c_str());
+
+        NAMU_DI("verify: getExpr: accesses to incomplete 'me' object");
+        str asedMe = me.getMe().as<node>();
+        if(asedMe && !asedMe->isComplete())
+            return _srcErr(me.getPos(), errCode::ACCESS_TO_INCOMPLETE);
     }
 
     void me::onVisit(visitInfo i, retExpr& me) {
@@ -431,7 +438,7 @@ namespace namu {
                 name.c_str());
 
         me.getBlock().inFrame(nulOf<bicontainable>());
-        thread::get()._getNowFrame().pushLocal(name, *elemType);
+        thread::get()._getNowFrame().pushLocal(name, (node*) elemType->clone());
 
         _recentLoops.push_back(&me);
     }

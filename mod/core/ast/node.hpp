@@ -96,6 +96,8 @@ namespace namu {
 
         virtual void setPos(const point& new1) {}
 
+        virtual nbool isComplete() const { return true; }
+
         /// getType() returns what it is. opposite to it, this returns what this class will
         /// represents after evaluation.
         ///
