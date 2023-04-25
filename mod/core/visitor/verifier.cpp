@@ -219,8 +219,8 @@ namespace namu {
         if(nul(t))
             _srcErr(me.getPos(), errCode::CANT_DEF_VAR, name.c_str(), typeName);
 
-        nbool res = me._where ? me._where->add(name.c_str(), *eval) : thread::get()._getNowFrame()
-                .pushLocal(name, *eval);
+        nbool res = me._where ? me._where->add(name.c_str(), (node*) eval->clone()) : thread::get()._getNowFrame()
+                .pushLocal(name, (node*) eval->clone());
         if(!res)
             NAMU_E("verify: defVarExpr: define variable %s is failed.", name.c_str());
     }
