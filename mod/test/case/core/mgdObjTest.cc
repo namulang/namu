@@ -1,9 +1,9 @@
-#include "../../namuTest.hpp"
+#include "../../namuSyntaxTest.hpp"
 
 using namespace namu;
 using namespace std;
 
-struct objTest : public namuTest {};
+struct mgdObjTest : public namuSyntaxTest {};
 
 namespace {
     struct myObj : public obj {
@@ -11,7 +11,7 @@ namespace {
     };
 }
 
-TEST_F(objTest, testGetOriginPointingThis) {
+TEST_F(mgdObjTest, testGetOriginPointingThis) {
     myObj obj1;
     ASSERT_FALSE(nul(obj1.getOrigin()));
     ASSERT_EQ(&obj1.getOrigin(), &obj1);
@@ -19,4 +19,43 @@ TEST_F(objTest, testGetOriginPointingThis) {
     tstr<obj> copied((obj*) obj1.clone());
     ASSERT_TRUE(copied);
     ASSERT_NE(&copied.get(), &obj1);
+}
+
+TEST_F(mgdObjTest, testAccessCompleteObject) {
+    make().parse(R"SRC(
+        def a
+            age := 3
+        main() int
+            b := a()
+            b.age = 7
+            c := b()
+            ret c.age
+    )SRC").shouldVerified(true);
+
+    str ret = run();
+    ASSERT_TRUE(ret);
+    ASSERT_EQ(ret.cast<nint>(), 3);
+}
+
+TEST_F(mgdObjTest, testAccessInCompleteObjectNegative) {
+    make().negative().parse(R"SRC(
+        def a
+            age := 3
+        main() int
+            b := a
+            b.age = 7
+            c := b()
+            ret c.age
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(mgdObjTest, testAccessInCompleteObjectNegative2) {
+    make().negative().parse(R"SRC(
+        def a
+            age := 3
+        main() str
+            b := a()
+            b.age = 7
+            ret b.age as str + a.age as str
+    )SRC").shouldVerified(false);
 }
