@@ -177,6 +177,7 @@ while { return _WHILE_; }
 <stateComment>"*/" {
     BEGIN(yyget_extra(yyscanner)->popState());
 }
+<stateComment>\n {}
 <stateComment>. {}
 
 . {
