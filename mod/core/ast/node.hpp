@@ -96,6 +96,9 @@ namespace namu {
 
         virtual void setPos(const point& new1) {}
 
+        /// returns whether this instance is complete or not.
+        /// if some instance is incomplete, it means that it's not accessible on namulang source
+        /// codes.
         virtual nbool isComplete() const { return true; }
 
         /// getType() returns what it is. opposite to it, this returns what this class will
