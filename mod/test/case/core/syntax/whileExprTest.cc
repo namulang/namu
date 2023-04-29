@@ -15,7 +15,7 @@ TEST_F(whileExprTest, simple) {
             while n <= 3
                 sum = sum + n
                 n = n + 1
-                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
+                print("sum=" + sum as str + ", n=" + n as str + "\n")
             ret sum
     )SRC").shouldVerified(true);
     str res = run();
@@ -31,7 +31,7 @@ TEST_F(whileExprTest, conditionClauseCheckNegative) {
             while n <= foo()
                 sum = sum + n
                 n = n + 1
-                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
+                print("sum=" + sum as str + ", n=" + n as str + "\n")
             ret sum
     )SRC").shouldVerified(false);
 }
@@ -47,7 +47,7 @@ TEST_F(whileExprTest, conditionClauseCheck) {
             while n <= foo()
                 sum = sum + n
                 n = n + 1
-                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
+                print("sum=" + sum as str + ", n=" + n as str + "\n")
             ret sum
     )SRC").shouldVerified(true);
 

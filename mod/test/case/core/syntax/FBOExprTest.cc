@@ -280,7 +280,7 @@ TEST_F(FBOExprTest, testLogicalAndOpNegative) {
         main() bool
             a := 0
             if (foo() && a = 1)
-                sys.con.print("ok")
+                print("ok")
             ret a
     )SRC").shouldVerified(false);
 }
@@ -293,7 +293,7 @@ TEST_F(FBOExprTest, testLogicalAndOp2) {
         main() bool
             a := 0
             if (foo() && (a = 1))
-                sys.con.print("ok")
+                print("ok")
             ret a
     )SRC").shouldVerified(true);
 
@@ -307,7 +307,7 @@ TEST_F(FBOExprTest, testLogicalAndOpShortCircuit) {
     make().parse(R"SRC(
         main() int
             if true || false
-                sys.con.print("ok")
+                print("ok")
             ret 0
     )SRC").shouldVerified(true);
 

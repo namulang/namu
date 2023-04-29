@@ -375,7 +375,7 @@ TEST_F(asExprTest, doubleAs) {
            ret idx
 
         main() int
-            sys.con.print(foo("54634" as int) as str)
+            print(foo("54634" as int) as str)
             ret 0
     )SRC").shouldVerified(true);
     str ret = run();
@@ -391,7 +391,7 @@ TEST_F(asExprTest, floatAs) {
 
         main() flt
             o := obj()
-            sys.con.print(o.foo() as str)
+            print(o.foo() as str)
             ret o.foo() as flt
     )SRC").shouldVerified(true);
     str res = run();

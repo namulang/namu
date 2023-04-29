@@ -11,7 +11,7 @@ TEST_F(defObjExprTest, simpleDefineObject) {
     make().parse(R"SRC(
         def A
             foo() void
-                sys.con.print("hello")
+                print("hello")
     )SRC").shouldVerified(true);
     run();
 }
@@ -20,7 +20,7 @@ TEST_F(defObjExprTest, simpleDefineObject2) {
     make().parse(R"SRC(
         def A
             foo() void
-                sys.con.print("hello")
+                print("hello")
         main() void
             a A
             a.foo()
@@ -32,7 +32,7 @@ TEST_F(defObjExprTest, simpleDefineObjectNegative) {
     negative().make().parse(R"SRC(
         def A
             foo() void
-                sys.con.print("hello")
+                print("hello")
         main() void
             a B
             a.foo()
@@ -48,7 +48,7 @@ TEST_F(defObjExprTest, assignMemberVariable) {
         main() int
             o := obj()
             o.index = 2
-            sys.con.print(o.index as str)
+            print(o.index as str)
             o.index
     )SRC").shouldVerified(true);
     str res = run();

@@ -12,7 +12,7 @@ TEST_F(forExprTest, simpleTest) {
         main() int
             sum := 0
             for n in {1, 2, 3}
-                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
+                print("sum=" + sum as str + ", n=" + n as str + "\n")
                 sum = sum + n
             ret sum
     )SRC").shouldVerified(true);
@@ -27,7 +27,7 @@ TEST_F(forExprTest, simpleTest2) {
             sum := 0
             for n in {1, 2, 3}
                 sum = sum + n
-                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
+                print("sum=" + sum as str + ", n=" + n as str + "\n")
             ret sum
     )SRC").shouldVerified(true);
     str res = run();
@@ -44,7 +44,7 @@ TEST_F(forExprTest, testWhatFromFunc) {
             sum := 0
             for n in foo()
                 sum = sum + n
-                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
+                print("sum=" + sum as str + ", n=" + n as str + "\n")
 
             ret sum
     )SRC").shouldVerified(true);
@@ -62,8 +62,7 @@ TEST_F(forExprTest, putAkaMiddleOfLoop) {
             sum := 0
             for n in foo()
                 sum = sum + n
-                aka sys.con
-                con.print("sum=" + sum as str + ", n=" + n as str + "\n")
+                print("sum=" + sum as str + ", n=" + n as str + "\n")
 
             ret sum
     )SRC").shouldVerified(true);
@@ -78,7 +77,7 @@ TEST_F(forExprTest, sequenceLoop) {
             sum := 0
             for n in 2..5
                 sum = sum + n
-                sys.con.print("sum=" + sum as str + ", n=" + n as str + "\n")
+                print("sum=" + sum as str + ", n=" + n as str + "\n")
 
             ret sum
     )SRC").shouldVerified(true);
@@ -91,7 +90,7 @@ TEST_F(forExprTest, validationCheck) {
     make().negative().parse(R"SRC(
         main() str
             for n in {1, 2, 3}
-                sys.con.print(n)
+                print(n)
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -102,7 +101,7 @@ TEST_F(forExprTest, loopObjects) {
             name := "unknown"
             age := 0
             say() str
-                sys.con.print("I'm " + name + " and " + age as str + " years old.\n")
+                print("I'm " + name + " and " + age as str + " years old.\n")
 
         main() str
             p1 person1
@@ -135,7 +134,7 @@ TEST_F(forExprTest, loopObjectsNegative) {
             name := "unknown"
             age := 0
             say() str
-                sys.con.print("I'm " + name + " and " + age as str + " years old.\n")
+                print("I'm " + name + " and " + age as str + " years old.\n")
 
         main() str
             p1 person
@@ -168,7 +167,7 @@ TEST_F(forExprTest, useObjectAsContainer) {
             people := {person(), p1}
 
             for p in people
-                sys.con.print(p.name)
+                print(p.name)
     )SRC").shouldVerified(true);
     run();
 }

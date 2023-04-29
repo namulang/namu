@@ -1,16 +1,15 @@
-aka sys.con
 main() void
 
     while true
-        con.print("(R)ock, (S)cissors, (P)aper! -> ")
+        print("(R)ock, (S)cissors, (P)aper! -> ")
         answer := con.input()
 
         if answer == "R"
-            con.print("You win!\n")
+            print("You win!\n")
             break
 
         elif answer == "S"
-            con.print("Draw!\n")
+            print("Draw!\n")
 
         elif answer == "P"
-            con.print("You loose >_< \n")
+            print("You loose >_< \n")

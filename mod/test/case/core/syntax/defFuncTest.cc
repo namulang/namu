@@ -188,7 +188,7 @@ TEST_F(defFuncTest, nameLikeStr) {
 TEST_F(defFuncTest, defFuncAtSubPack) {
     make().parse(R"SRC(
         foo(msg str[]) str
-            sys.con.print(msg[0])
+            print(msg[0])
             msg[0]
 
         main() str
