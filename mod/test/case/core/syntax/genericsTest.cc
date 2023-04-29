@@ -12,7 +12,7 @@ TEST_F(genericsTest, simpleDefineGenerics) {
     make().parse(R"SRC(
         def object<T>
             foo() str
-                ret sys.con.print(1 as T)
+                ret print(1 as T)
 
         main() str
             a := object<str>()
@@ -53,7 +53,7 @@ TEST_F(genericsTest, defineGenerics1) {
 
         main() str
             a := object<int>()
-            sys.con.print(a.foo(2) as str)
+            print(a.foo(2) as str)
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -65,7 +65,7 @@ TEST_F(genericsTest, genericTwice1) {
     make().parse(R"SRC(
         def object<T>
             foo() void
-                sys.con.print("1")
+                print("1")
 
         main() void
             a := object<str>()
@@ -92,7 +92,7 @@ TEST_F(genericsTest, genericTwice2Negative) {
         def object<T>
             foo(val T) T
                 age := T()
-                sys.con.print((val + age) as T)
+                print((val + age) as T)
                 ret val + age
 
         main() str
@@ -108,7 +108,7 @@ TEST_F(genericsTest, genericTwice2) {
         def object<T>
             foo(val T) T
                 age := T()
-                sys.con.print((val + age) as str)
+                print((val + age) as str)
                 ret val + age
 
         main() str
@@ -125,7 +125,7 @@ TEST_F(genericsTest, simpleUseGenerics) {
     make().parse(R"SRC(
         def object<T>
             foo(msg T) str
-                sys.con.print(msg)
+                print(msg)
                 ret msg
 
         main() str
@@ -160,7 +160,7 @@ TEST_F(genericsTest, simpleUseGenerics2) {
         def object<T>
             foo(val T) T
                 age := T()
-                sys.con.print((val + age) as T)
+                print((val + age) as T)
                 ret val + age
 
         main() str
@@ -177,7 +177,7 @@ TEST_F(genericsTest, genericNegative) {
         def object<T>
             foo(val T) T
                 age := T()
-                sys.con.print((val + age) as T)
+                print((val + age) as T)
                 ret val + age
 
         main() str

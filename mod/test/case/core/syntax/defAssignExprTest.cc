@@ -64,8 +64,8 @@ TEST_F(defAssignExprTest, testNearCircularDependencies) {
         b := a
 
         main() int
-            sys.con.print(a as str)
-            sys.con.print(b as str)
+            print(a as str)
+            print(b as str)
             ret 0
     )SRC").shouldParsed(true);
     shouldVerified(true);
@@ -81,7 +81,7 @@ TEST_F(defAssignExprTest, testDefAssign1) {
         a := foo() + 5
 
         main() int
-            sys.con.print("a=" + a as str)
+            print("a=" + a as str)
             ret 0
     )SRC").shouldVerified(true);
     run();
@@ -89,30 +89,28 @@ TEST_F(defAssignExprTest, testDefAssign1) {
 
 TEST_F(defAssignExprTest, defAssignInObjectRefersInvalidFuncNegative) {
     negative().make().parse(R"SRC(
-        aka sys.con c
         nickname := foo()
 
         foo() str
-            c.print("I'm foo!\n")
+            print("I'm foo!\n")
             ret 1 // this is invalid function.
 
         main() void
-            c.print("your nickname is " + nickname)
+            print("your nickname is " + nickname)
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
 
 TEST_F(defAssignExprTest, defAssignInObjectRefersInvalidFuncNegative2) {
     negative().make().parse(R"SRC(
-        aka sys.con c
         nickname := boo() // refers the func that doesn't exist.
 
         foo() str
-            c.print("I'm foo!\n")
+            print("I'm foo!\n")
             ret 1 // this is invalid function.
 
         main() void
-            c.print("your nickname is " + nickname)
+            print("your nickname is " + nickname)
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -123,7 +121,7 @@ TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative) {
         con := con.add(1, 2)
 
         main() void
-            sys.con.print("res=" + con)
+            print("res=" + con)
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -134,7 +132,7 @@ TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative2) {
         con := con.add(1, 2)
 
         main() void
-            sys.con.print("res=" + con)
+            print("res=" + con)
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -145,7 +143,7 @@ TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative3) {
         con := con.add(1, 2)
 
         main() void
-            sys.con.print("res=" + con.add(1, 2))
+            print("res=" + con.add(1, 2))
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }

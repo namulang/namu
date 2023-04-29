@@ -343,13 +343,12 @@ TEST_F(arrTest, testBasicDefSyntax) {
 
         main() int
             arr int[]
-            aka sys.con c
-            c.print("len=" + arr.len() as str)
+            print("len=" + arr.len() as str)
             arr.add(1)
             arr.add(2.5)
-            c.print("len=" + arr.len() as str + "\n")
-            c.print("arr[0]=" + arr.get(0) as str + "\n")
-            c.print("arr[1]=" + arr[1] as str + "\n")
+            print("len=" + arr.len() as str + "\n")
+            print("arr[0]=" + arr.get(0) as str + "\n")
+            print("arr[1]=" + arr[1] as str + "\n")
             ret arr[
                 getIndex()]
     )SRC").shouldVerified(true);
@@ -365,7 +364,7 @@ TEST_F(arrTest, testImplicitlyDefSyntax) {
 
         main() int
             s := sum({1, 2, 3})
-            sys.con.print("sum = " + s as str + "\n")
+            print("sum = " + s as str + "\n")
             ret s
     )SRC").shouldVerified(true);
     str res = run();
@@ -395,7 +394,7 @@ TEST_F(arrTest, arrDeductionFailNegative) {
 
         main() void
             arr := {1, 2.5, obj()}
-            sys.con.print(arr.len())
+            print(arr.len())
     )SRC").shouldVerified(false);
 }
 
@@ -416,7 +415,7 @@ TEST_F(arrTest, arrDeductionFailNegative3) {
 
         main() void
             arr := {1, 2.5, obj()}
-            sys.con.print(arr[0].name)
+            print(arr[0].name)
     )SRC").shouldVerified(false);
 }
 
@@ -442,8 +441,7 @@ TEST_F(arrTest, addFromEmptyArray) {
                 elem.value = n as str
                 arr.add(elem)
 
-            aka sys.con c
-            c.print("start...")
+            print("start...")
             res := ""
             for elem in arr
                 res = res + elem.value

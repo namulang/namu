@@ -62,7 +62,7 @@ TEST_F(visitorTest, visitComplexExpressions) {
 
         main() flt
             o := obj()
-            sys.con.print(o.foo() as str)
+            print(o.foo() as str)
             ret o.foo() as flt
     )SRC").shouldVerified(true);
 
