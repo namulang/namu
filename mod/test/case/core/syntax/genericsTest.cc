@@ -185,3 +185,18 @@ TEST_F(genericsTest, genericNegative) {
             ret b.foo(3.5)
     )SRC").shouldVerified(false);
 }
+
+TEST_F(genericsTest, genericParameter2) {
+    make().parse(R"SRC(
+        def obj<T1, T2>
+            foo(v1 T1, v2 T2) str
+                ret "v1=" + v1 as str + ", v2=" + v2 as str
+
+        main() str
+            ret obj<int, str>().foo(3, "hello")
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "v1=3, v2=hello");
+}
