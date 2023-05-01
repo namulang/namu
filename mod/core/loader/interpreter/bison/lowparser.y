@@ -98,7 +98,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 7
+%expect 9
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -141,7 +141,7 @@
 %type <asNode> aka aka-default aka-deduced
 %type <asObj> pack
 //  expr:
-%type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
+%type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10 assign-compound assign-line
 %type <asNode> type
 %type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
 %type <asDefBlock> defblock
@@ -287,20 +287,28 @@ primary: INTVAL {
 //  structure:
 expr-line: defexpr-line { $$ = $1; }
          | expr10 { $$ = $1; }
+         | assign-line { $$ = $1; }
          | defarray-initial-value { $$ = $1; }
          | defseq { $$ = $1; }
 
 expr-compound: defexpr-compound { $$ = $1; }
              | if { $$ = $1; }
+             | assign-compound { $$ = $1; }
              | for { $$ = $1; }
              | while { $$ = $1; }
+
+assign-line: expr10 ASSIGN expr10 {
+            $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
+         }
+assign-compound: expr10 ASSIGN expr-compound {
+                $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
+             }
+
 
 
 //  expr-line:
 expr10: expr9 {
         $$ = $1;
-    } | expr10 ASSIGN expr9 {
-        $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
     } | expr10 ADD_ASSIGN expr9 {
         $$ = yyget_extra(scanner)->onAddAssign(*$1, *$3);
     } | expr10 SUB_ASSIGN expr9 {
