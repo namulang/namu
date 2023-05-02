@@ -207,3 +207,40 @@ TEST_F(ifExprTest, evalIfWithStrAndIntNegative3) {
             ret a
     )SRC").shouldVerified(false);
 }
+
+TEST_F(ifExprTest, evalIfWithStrAndInt) {
+    make().parse(R"SRC(
+        main() str
+            a := if 23 == 23.0
+                if true
+                    "true"
+                else
+                    "never"
+            else
+                "false"
+            ret a
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "true");
+}
+
+TEST_F(ifExprTest, testAssignWithCompoundExpr) {
+    make().parse(R"SRC(
+        main() str
+            a := "initial"
+            a = if 23 == 23.0
+                if true
+                    "true"
+                else
+                    "never"
+            else
+                "false"
+            ret a
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "true");
+}
