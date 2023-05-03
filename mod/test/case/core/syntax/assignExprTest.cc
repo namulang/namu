@@ -96,6 +96,34 @@ TEST_F(assignExprTest, assignClassNegative2) {
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
+
+TEST_F(assignExprTest, assignAssignedValue) {
+    make().parse(R"SRC(
+        main() int
+            a1 int
+            a1 = a2 := 55
+            ret a1
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 55);
+}
+
+TEST_F(assignExprTest, assignAssignedValue2) {
+    make().parse(R"SRC(
+        main() int
+            a1 int
+            a2 int
+            a1 = a2 = 55
+            ret a1
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 55);
+}
+
 // TODO: assignNegative inheritence
 // TODO: assignDotChain: A.B.name
 // TODO: assignComplexDotChain: B[A.foo() + 3].name

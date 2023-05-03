@@ -200,3 +200,17 @@ TEST_F(defAssignExprTest, defAssignAsParameter) {
     )SRC").shouldParsed(true);
     shouldVerified(true);
 }
+
+TEST_F(defAssignExprTest, defAssignDefAssignedValue) {
+    make().parse(R"SRC(
+        def a
+            age int
+        main() int
+            a1 := a2 := a()
+            ret a1.age
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 0);
+}
