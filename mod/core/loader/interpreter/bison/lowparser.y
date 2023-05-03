@@ -98,7 +98,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 9
+%expect 7
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -297,7 +297,7 @@ expr-compound: defexpr-compound { $$ = $1; }
              | for { $$ = $1; }
              | while { $$ = $1; }
 
-assign-line: expr10 ASSIGN expr10 {
+assign-line: expr10 ASSIGN expr-line {
             $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
          }
 assign-compound: expr10 ASSIGN expr-compound {
