@@ -13,7 +13,7 @@ namespace namu {
     me::runExpr(const node& meObj, const args& a): _me(meObj), _args(a), _subject(meObj) {}
 
     str me::run(const args& a) {
-        str sub = _getSub(_args);
+        str sub = _getSub(getMe().as<node>(), _args);
         if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
 
         str ret = sub->run(_args);
@@ -37,7 +37,7 @@ namespace namu {
         _me.bind(newMe);
     }
 
-    str me::_getSub(const args& a) const {
+    str me::_getSub(str me, const args& a) const {
         tstr<node> me = getMe().as<node>();
         if(!me) return NAMU_E("me Obj == null"), str();
         if(!_subject) return NAMU_E("_subject as node == null"), str();
@@ -51,12 +51,8 @@ namespace namu {
         return _subject->as<node>();
     }
 
-    str me::_getSub() const {
-        return _getSub(nulOf<args>());
-    }
-
     str me::getEval() const {
-        str sub = _getSub();
+        str sub = _getSub(getMe().getEval(), nulOf<args>());
         if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
 
         const func& f = sub.cast<func>();

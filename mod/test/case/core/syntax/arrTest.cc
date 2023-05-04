@@ -476,3 +476,30 @@ TEST_F(arrTest, testShallowCopy) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res->cast<nint>(), 3);
 }
+
+TEST_F(arrTest, test2DArray) {
+    make().parse(R"SRC(
+        main() int
+            arr := {{0, 1}, {1, 2}}
+            ret arr[0][1]
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
+TEST_F(arrTest, test2DArray2) {
+    make().parse(R"SRC(
+        main() int
+            arr := {{0, 1}, {1, 2}}
+            arr3 int[][]
+            arr3 = arr
+            arr[1].set(1, 4)
+            arr3[1][1]
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 4);
+}
