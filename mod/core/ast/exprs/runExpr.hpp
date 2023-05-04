@@ -46,8 +46,7 @@ namespace namu {
         }
 
     private:
-        str _getSub(const args& a) const;
-        str _getSub() const;
+        str _getSub(str me, const args& a) const;
 
     private:
         str _me;
