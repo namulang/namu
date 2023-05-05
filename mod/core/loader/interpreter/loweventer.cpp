@@ -147,8 +147,6 @@ namespace namu {
     obj* me::onPack() {
         NAMU_DI("tokenEvent: onPack()");
 
-        onWarn(errCode::NO_PACK);
-
         slot* newSlot = &_slot.get();
         if(nul(newSlot))
             _slot.bind(newSlot = new slot(manifest()));
