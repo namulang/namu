@@ -78,9 +78,10 @@ Inheritance diagram for namu::visitor:</div>
  <div class="center">
   <img src="classnamu_1_1visitor.png" usemap="#namu::visitor_map" alt=""/>
   <map id="namu::visitor_map" name="namu::visitor_map">
-<area href="classnamu_1_1generalizer.html" alt="namu::generalizer" shape="rect" coords="0,56,117,80"/>
-<area href="classnamu_1_1graph_visitor.html" alt="namu::graphVisitor" shape="rect" coords="127,56,244,80"/>
-<area href="classnamu_1_1verifier.html" alt="namu::verifier" shape="rect" coords="254,56,371,80"/>
+<area href="classnamu_1_1generalizer.html" alt="namu::generalizer" shape="rect" coords="0,56,121,80"/>
+<area href="classnamu_1_1graph_visitor.html" alt="namu::graphVisitor" shape="rect" coords="131,56,252,80"/>
+<area href="classnamu_1_1pre_evaluator.html" alt="namu::preEvaluator" shape="rect" coords="262,56,383,80"/>
+<area href="classnamu_1_1verifier.html" alt="namu::verifier" shape="rect" coords="393,56,514,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -95,6 +96,9 @@ me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>setRoot</b> (<a c
 <tr class="memitem:a01286bc05be31ab7af12baff9139d080"><td class="memItemLeft" align="right" valign="top"><a id="a01286bc05be31ab7af12baff9139d080"></a>
 const <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getRoot</b> () const NAMU_UNCONST_FUNC(getRoot()) me &amp;setLog(nbool toShow)</td></tr>
 <tr class="separator:a01286bc05be31ab7af12baff9139d080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69a5443b0cfb096fb146466e530c1920"><td class="memItemLeft" align="right" valign="top"><a id="a69a5443b0cfb096fb146466e530c1920"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isLog</b> () const</td></tr>
+<tr class="separator:a69a5443b0cfb096fb146466e530c1920"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ac85aae589c30b60621e3d42a4e1c53"><td class="memItemLeft" align="right" valign="top"><a id="a5ac85aae589c30b60621e3d42a4e1c53"></a>
 me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>setReport</b> (<a class="el" href="classnamu_1_1err_report.html">errReport</a> &amp;rpt)</td></tr>
 <tr class="separator:a5ac85aae589c30b60621e3d42a4e1c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,6 +135,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onTraverse</b
 <tr class="memitem:a1a136fc658d94d8bcd55236d50877050"><td class="memItemLeft" align="right" valign="top"><a id="a1a136fc658d94d8bcd55236d50877050"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onTraverse</b> (<a class="el" href="structnamu_1_1visit_info.html">visitInfo</a> i, <a class="el" href="classnamu_1_1def_assign_expr.html">defAssignExpr</a> &amp;d)</td></tr>
 <tr class="separator:a1a136fc658d94d8bcd55236d50877050"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4e48286f782beccf2f7ee022b87111b"><td class="memItemLeft" align="right" valign="top"><a id="ab4e48286f782beccf2f7ee022b87111b"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onTraverse</b> (<a class="el" href="structnamu_1_1visit_info.html">visitInfo</a> i, <a class="el" href="classnamu_1_1def_var_expr.html">defVarExpr</a> &amp;d)</td></tr>
+<tr class="separator:ab4e48286f782beccf2f7ee022b87111b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7bb15d1109473713a23bc0d6415051f3"><td class="memItemLeft" align="right" valign="top"><a id="a7bb15d1109473713a23bc0d6415051f3"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onTraverse</b> (<a class="el" href="structnamu_1_1visit_info.html">visitInfo</a> i, <a class="el" href="classnamu_1_1_f_b_o_expr.html">FBOExpr</a> &amp;f)</td></tr>
 <tr class="separator:a7bb15d1109473713a23bc0d6415051f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,6 +168,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onTraverse</b
 <tr class="memitem:ab97085294d29b7a57a208b4d1c943a99"><td class="memItemLeft" align="right" valign="top"><a id="ab97085294d29b7a57a208b4d1c943a99"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onTraverse</b> (<a class="el" href="structnamu_1_1visit_info.html">visitInfo</a> i, <a class="el" href="classnamu_1_1while_expr.html">whileExpr</a> &amp;w)</td></tr>
 <tr class="separator:ab97085294d29b7a57a208b4d1c943a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac58d635e05b13a68a9c814f2312a86f2"><td class="memItemLeft" align="right" valign="top"><a id="ac58d635e05b13a68a9c814f2312a86f2"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onTraverse</b> (<a class="el" href="structnamu_1_1visit_info.html">visitInfo</a> i, <a class="el" href="classnamu_1_1def_array_expr.html">defArrayExpr</a> &amp;d)</td></tr>
+<tr class="separator:ac58d635e05b13a68a9c814f2312a86f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7157a0caefffb878f00a9bb9c7935a26"><td class="memItemLeft" align="right" valign="top"><a id="a7157a0caefffb878f00a9bb9c7935a26"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onTraverse</b> (<a class="el" href="structnamu_1_1visit_info.html">visitInfo</a> i, <a class="el" href="classnamu_1_1generic_obj.html">genericObj</a> &amp;g)</td></tr>
+<tr class="separator:a7157a0caefffb878f00a9bb9c7935a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/runner/work/namu/namu/mod/core/visitor/<a class="el" href="visitor_2visitor_8hpp_source.html">visitor.hpp</a></li>

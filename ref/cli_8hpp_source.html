@@ -79,53 +79,63 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        <span class="keyword">const</span> flags&amp; getFlags() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        nbool run(flagArgs&amp; a) {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;            <a class="code" href="classnamu_1_1interpreter.html">interpreter</a> ip;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; op : getFlags()) {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                op-&gt;take(ip, *<span class="keyword">this</span>, a);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                <span class="keywordflow">if</span>(a.size() &lt;= 0)</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            }</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <a class="code" href="classnamu_1_1err_report.html">errReport</a> rpt;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            ip.setReport(rpt)</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;              .interpret();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <span class="keywordflow">if</span>(!ip.isVerified())</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                <span class="keywordflow">return</span> _finish(ip, -1);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <a class="code" href="classnamu_1_1starter.html">starter</a> s;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <a class="code" href="classnamu_1_1tstr.html">str</a> res = s.run(<a class="code" href="classnamu_1_1args.html">args</a>((<a class="code" href="classnamu_1_1base_obj.html">baseObj</a>&amp;) ip.getSubPack()));</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#ifdef __EMSCRIPTEN__</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="comment">// I don&#39;t know the detail reason but if user doesn&#39;t put &#39;\n&#39; at the</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="comment">// end, the line won&#39;t be printed.</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">if</span>(res &amp;&amp; !rpt) {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                <span class="keywordflow">return</span> _finish(ip, 0);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">return</span> _finish(ip, -1);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        nint _finish(<a class="code" href="classnamu_1_1interpreter.html">interpreter</a>&amp; ip, nint ret) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <a class="code" href="classnamu_1_1stream.html">stream</a>&amp; strm = logger::get()[<span class="stringliteral">&quot;consoleStream&quot;</span>];</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            nbool prev = strm.isEnable();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            strm.setEnable(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            ip.log();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            strm.setEnable(prev);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    };</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;            _res = -1;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;            <a class="code" href="classnamu_1_1interpreter.html">interpreter</a> ip;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; op : getFlags()) {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                op-&gt;take(ip, *<span class="keyword">this</span>, a);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                <span class="keywordflow">if</span>(a.size() &lt;= 0)</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            }</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            <a class="code" href="classnamu_1_1err_report.html">errReport</a> rpt;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            ip.setReport(rpt)</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;              .interpret();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">if</span>(!ip.isVerified())</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                <span class="keywordflow">return</span> _finish(ip);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <a class="code" href="classnamu_1_1starter.html">starter</a> s;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <a class="code" href="classnamu_1_1tstr.html">str</a> res = s.run(<a class="code" href="classnamu_1_1args.html">args</a>((<a class="code" href="classnamu_1_1base_obj.html">baseObj</a>&amp;) ip.getSubPack()));</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            _res = 0;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordflow">if</span>(res &amp;&amp; res-&gt;isSub&lt;<a class="code" href="classnamu_1_1n_int.html">nInt</a>&gt;())</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                _res = res-&gt;cast&lt;nint&gt;();</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifdef __EMSCRIPTEN__</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="comment">// I don&#39;t know the detail reason but if user doesn&#39;t put &#39;\n&#39; at the</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="comment">// end, the line won&#39;t be printed.</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">if</span>(rpt) <span class="comment">// has an err</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                _res = -1;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordflow">return</span> _finish(ip);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        nint getRes()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">return</span> _res;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        nint _finish(<a class="code" href="classnamu_1_1interpreter.html">interpreter</a>&amp; ip) {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <a class="code" href="classnamu_1_1stream.html">stream</a>&amp; strm = logger::get()[<span class="stringliteral">&quot;consoleStream&quot;</span>];</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            nbool prev = strm.isEnable();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            strm.setEnable(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            ip.log();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            strm.setEnable(prev);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordflow">return</span> _res;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        nint _res;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    };</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1base_obj_html"><div class="ttname"><a href="classnamu_1_1base_obj.html">namu::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:12</div></div>
 <div class="ttc" id="aclassnamu_1_1err_report_html"><div class="ttname"><a href="classnamu_1_1err_report.html">namu::errReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1interpreter_html"><div class="ttname"><a href="classnamu_1_1interpreter.html">namu::interpreter</a></div><div class="ttdef"><b>Definition:</b> interpreter.hpp:9</div></div>
+<div class="ttc" id="aclassnamu_1_1n_int_html"><div class="ttname"><a href="classnamu_1_1n_int.html">namu::nInt</a></div><div class="ttdef"><b>Definition:</b> nInt.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1starter_html"><div class="ttname"><a href="classnamu_1_1starter.html">namu::starter</a></div><div class="ttdef"><b>Definition:</b> starter.hpp:10</div></div>
 <div class="ttc" id="aclassnamu_1_1stream_html"><div class="ttname"><a href="classnamu_1_1stream.html">namu::stream</a></div><div class="ttdef"><b>Definition:</b> stream.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
