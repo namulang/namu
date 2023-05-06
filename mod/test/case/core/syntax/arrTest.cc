@@ -396,6 +396,10 @@ TEST_F(arrTest, arrDeductionFailNegative) {
             arr := {1, 2.5, obj()}
             print(arr.len())
     )SRC").shouldVerified(false);
+
+    errReport& errs = getReport();
+    ASSERT_TRUE(errs);
+    ASSERT_EQ(errs[0].pos.row, 5);
 }
 
 TEST_F(arrTest, arrDeductionFailNegative2) {

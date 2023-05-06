@@ -65,12 +65,12 @@ namespace namu {
         void _verifyMgdFuncImplicitReturn(mgdFunc& me);
         void _rel();
 
-        template <typename... Args> void _warn(Args... args);
         template <typename... Args> void _err(Args... args);
+        template <typename... Args> void _err(const point& pos, errCode code, Args... args);
+        template <typename... Args> void _warn(Args... args);
+        template <typename... Args> void _warn(const point& pos, errCode code, Args... args);
         template <typename... Args> void _info(Args... args);
-        template <typename... Args> void _srcWarn(const point& pos, Args... args);
-        template <typename... Args> void _srcErr(const point& pos, Args... args);
-        template <typename... Args> void _srcInfo(const point& pos, Args... args);
+        template <typename... Args> void _info(const point& pos, errCode code, Args... args);
 
         static verifier& _getNow() { return *_now; }
         static void _setNow(verifier* new1) { _now = new1; }

@@ -56,32 +56,27 @@ namespace namu {
     err* me::newErr(int code, ...) {
         _EXPAND_VA(new err(err::ERR, code, args));
     }
-    err* me::newErr(const point& src, int code, ...) {
-        _EXPAND_VA(new srcErr(err::ERR, src, code, args));
+    err* me::newErr(const point& pos, int code, ...) {
+        _EXPAND_VA(new err(err::ERR, pos, code, args));
     }
     err* me::newWarn(int code, ...) {
         _EXPAND_VA(new err(err::WARN, code, args));
     }
-    err* me::newWarn(const point& src, int code, ...) {
-        _EXPAND_VA(new srcErr(err::WARN, src, code, args));
+    err* me::newWarn(const point& pos, int code, ...) {
+        _EXPAND_VA(new err(err::WARN, pos, code, args));
     }
     err* me::newInfo(int code, ...) {
         _EXPAND_VA(new err(err::INFO, code, args));
     }
-    err* me::newInfo(const point& src, int code, ...) {
-        _EXPAND_VA(new srcErr(err::INFO, src, code, args));
+    err* me::newInfo(const point& pos, int code, ...) {
+        _EXPAND_VA(new err(err::INFO, pos, code, args));
     }
 
 #undef _EXPAND_VA
 
-    me::err(err::type t, nint newCode, ...): super(), fType(t), code((errCode) newCode) {
-        va_list args;
-        va_start(args, newCode);
+    me::err(err::type t, nint newCode): super(), fType(t), code((errCode) newCode) {}
 
-        msg = _format(getErrMsg(code), args);
-        va_end(args);
-    }
-    me::err(err::type t, int newCode, va_list args): super(), fType(t), code((errCode) newCode) {
+    me::err(err::type t, nint newCode, va_list args): super(), fType(t), code((errCode) newCode) {
         msg = _format(getErrMsg(code), args);
     }
 
@@ -91,21 +86,30 @@ namespace namu {
         switch(fType) {
             case ERR:
                 std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTRED);
-                log.dumpFormat("err%d(%s)", code, getErrName(code).c_str());
+                if(pos.isOrigin())
+                    log.dumpFormat("err%d(%s)", code, getErrName(code).c_str());
+                else
+                    log.dumpFormat("err%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
                 std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
                 log.dumpFormat(": %s\n", msg.c_str());
                 break;
 
             case WARN:
                 std::cout << platformAPI::getConsoleFore(platformAPI::YELLOW);
-                log.dumpFormat("warn%d(%s)", code, getErrName(code).c_str());
+                if(pos.isOrigin())
+                    log.dumpFormat("warn%d(%s)", code, getErrName(code).c_str());
+                else
+                    log.dumpFormat("warn%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
                 std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
                 log.dumpFormat(": %s\n", msg.c_str());
                 break;
 
             case INFO:
                 std::cout << platformAPI::getConsoleFore(platformAPI::BLUE);
-                log.dumpFormat("info%d(%s)", code, getErrName(code).c_str());
+                if(pos.isOrigin())
+                    log.dumpFormat("info%d(%s)", code, getErrName(code).c_str());
+                else
+                    log.dumpFormat("info%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
                 std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
                 log.dumpFormat(": %s\n", msg.c_str());
                 break;
@@ -119,12 +123,4 @@ namespace namu {
 
     dummyErr::dummyErr(): super(err::ERR, 0) {}
     void dummyErr::log() const {}
-
-    void srcErr::log() const {
-        switch(fType) {
-            case ERR: NAMU_E("%d:%d: err(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
-            case WARN: NAMU_W(":%d:%d: warn(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
-            case INFO: NAMU_I(":%d:%d: info(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
-        }
-    }
 }
