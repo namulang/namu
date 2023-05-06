@@ -38,7 +38,6 @@ namespace namu {
     }
 
     str me::_getSub(str me, const args& a) const {
-        tstr<node> me = getMe().as<node>();
         if(!me) return NAMU_E("me Obj == null"), str();
         if(!_subject) return NAMU_E("_subject as node == null"), str();
 

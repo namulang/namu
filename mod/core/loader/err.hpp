@@ -10,6 +10,7 @@ namespace namu {
 
     typedef std::unordered_map<nidx, std::string> msgMap;
 
+    class pos;
     struct _nout err : public instance {
         NAMU(CLASS(err, instance))
 
@@ -21,8 +22,11 @@ namespace namu {
         };
 
     public:
-        err(err::type t, nint newCode, ...);
-        err(err::type t, int newCode, va_list args);
+        err(err::type t, nint newCode);
+        err(err::type t, nint newCode, va_list args);
+        err(err::type t, const point& ps, nint newCode, va_list args): super(), fType(t), code((errCode) newCode), pos(ps) {
+            msg = _format(getErrMsg(code), args);
+        }
 
     public:
         virtual void log() const;
@@ -41,6 +45,7 @@ namespace namu {
         err::type fType;
         errCode code;
         std::string msg;
+        point pos;
         static constexpr nint BASE_TEST_CODE = 99999990; // not to be duplicated.
 
     private:
@@ -55,19 +60,5 @@ namespace namu {
 
     public:
         void log() const override;
-    };
-
-    struct _nout srcErr : public err {
-        NAMU(CLASS(srcErr, err))
-
-    public:
-        template <typename... Args>
-        srcErr(err::type t, const point& ps, int code, Args... args): super(t, code, args...), pos(ps) {}
-
-    public:
-        void log() const override;
-
-    public:
-        point pos;
     };
 }

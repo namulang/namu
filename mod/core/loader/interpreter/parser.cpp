@@ -30,7 +30,7 @@ namespace namu {
 
         YY_BUFFER_STATE bufState = yy_scan_string((nchar*) script, scanner); // +2 is for space of END_OF_BUFFER, nullptr.
         if(!bufState) {
-            _eventer.getReport()->add(new err(err::ERR, errCode::IS_NULL, "bufState")).log();
+            _eventer.getReport()->add(err::newErr(errCode::IS_NULL, "bufState")).log();
             return tstr<obj>();
         }
         yy_switch_to_buffer(bufState, scanner);
@@ -42,7 +42,7 @@ namespace namu {
 
         int res = yyparse(scanner);
         if(res) {
-            _eventer.getReport()->add(new err(err::WARN, errCode::PARSING_HAS_ERR, res)).log();
+            _eventer.getReport()->add(err::newWarn(errCode::PARSING_HAS_ERR, res)).log();
             return tstr<obj>();
         }
 
