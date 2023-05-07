@@ -161,7 +161,7 @@ namespace namu {
 
     blockExpr* me::onBlock() {
         NAMU_DI("tokenEvent: onBlock()");
-        return new blockExpr();
+        return _maker.make<blockExpr>();
     }
 
     blockExpr* me::onBlock(blockExpr& blk, node& stmt) {
@@ -220,6 +220,7 @@ namespace namu {
 
     void me::onSrcArea(const area& area) {
         _srcArea = area;
+        _maker.setRow(_srcArea.start.row).setCol(_srcArea.start.col);
     }
 
     void me::_onRes(err* new1) {
@@ -763,5 +764,7 @@ namespace namu {
         _indents.clear();
         _srcArea.rel();
         _outerIfStack.clear();
+        _maker.rel();
+        _maker.setSrc(*new src("__filename__"));
     }
 }

@@ -11,7 +11,10 @@ namespace namu {
 
     str me::run(const args& a) { return str(); }
 
-    nbicontainer& me::subs() { return _subs; }
+    nbicontainer& me::subs() {
+        static nchain inner;
+        return inner;
+    }
 
     const std::string& me::getFileName() const { return _fileName; }
 }

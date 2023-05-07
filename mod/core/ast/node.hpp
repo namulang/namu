@@ -94,8 +94,6 @@ namespace namu {
             return (me*) clone();
         }
 
-        virtual void setPos(const point& new1) {}
-
         /// returns whether this instance is complete or not.
         /// if some instance is incomplete, it means that it's not accessible on namulang source
         /// codes.
@@ -121,5 +119,8 @@ namespace namu {
 
     protected:
         virtual str _onRunSub(node& sub, const args& a);
+
+    private:
+        virtual void _setPos(const point& new1) {}
     };
 }

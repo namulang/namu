@@ -8,7 +8,7 @@ namespace namu {
         NAMU(CLASS(exprMaker))
 
     public:
-        exprMaker(): _src(nullptr), _pos({0, 0}) {}
+        exprMaker() {}
         exprMaker(const src& s, ncnt row, ncnt col) {
             setSrc(s);
             setCol(row);
@@ -32,8 +32,13 @@ namespace namu {
         }
 
         me& setSrc(const src& s) {
-            _src = &s;
+            _src.bind(s);
             return *this;
+        }
+
+        void rel() {
+            _src.rel();
+            _pos.rel();
         }
 
         const point& getPos() const { return _pos; }
@@ -49,7 +54,7 @@ namespace namu {
         }
 
     private:
-        const src* _src;
+        tstr<src> _src;
         point _pos;
     };
 }

@@ -222,5 +222,6 @@ namespace namu {
         std::vector<nint> _states;
         std::map<node*, std::string> _nameMap;
         std::vector<ifExpr*> _outerIfStack;
+        exprMaker _maker;
     };
 }
