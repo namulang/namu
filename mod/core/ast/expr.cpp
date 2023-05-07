@@ -21,7 +21,7 @@ namespace namu {
         _src.bind(newSrc);
     }
 
-    void me::setPos(const point& newPos) {
+    void me::_setPos(const point& newPos) {
         _pos = newPos;
     }
 }

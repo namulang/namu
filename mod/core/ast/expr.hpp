@@ -44,8 +44,9 @@ namespace namu {
         const point& getPos() const override;
         void setPos(const point& newPos) override;
 
-    protected:
+    private:
         void _setSrc(const src& newSrc);
+        void _setPos(const point& newPos) override;
 
     protected:
         tstr<src> _src;

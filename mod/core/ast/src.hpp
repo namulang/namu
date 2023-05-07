@@ -22,7 +22,6 @@ namespace namu {
 
     private:
         std::string _fileName;
-        nchain _subs;
     };
 
     template <typename T, typename WRP> class tnarr;

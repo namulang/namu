@@ -30,10 +30,6 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
 
-        void setPos(const point& new1) override {
-            _pos = new1;
-        }
-
         const point& getPos() const override {
             return _pos;
         }
@@ -63,6 +59,10 @@ namespace namu {
 
     private:
         scope* _evalArgs(const ucontainable& args);
+
+        void _setPos(const point& new1) override {
+            _pos = new1;
+        }
 
     private:
         params _params;

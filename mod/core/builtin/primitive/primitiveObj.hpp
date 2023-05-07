@@ -52,7 +52,6 @@ namespace namu {
         const T& get() const { return _val; }
 
         const point& getPos() const override { return _pos; }
-        void setPos(const point& new1) override { _pos = new1; }
 
         using super::cast;
         void* cast(const type& to) override {
@@ -79,6 +78,9 @@ namespace namu {
         virtual dumScope* _onMakeSubs() const = 0;
 
     private:
+        void _setPos(const point& new1) override { _pos = new1; }
+
+    private:
         T _val;
         point _pos;
     };
@@ -90,7 +92,6 @@ namespace namu {
     public:
         const super& getOrigin() const override { return *this; }
         const point& getPos() const override { return _pos; }
-        void setPos(const point& new1) override { _pos = new1; }
 
         using super::subs;
         nbicontainer& subs() override {
@@ -107,6 +108,9 @@ namespace namu {
             return !nul(rhs);
         }
         virtual dumScope* _onMakeSubs() const = 0;
+
+    private:
+        void _setPos(const point& new1) override { _pos = new1; }
 
     private:
         point _pos;
