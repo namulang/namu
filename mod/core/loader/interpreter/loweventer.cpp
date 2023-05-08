@@ -191,7 +191,7 @@ namespace namu {
         }
         defAssignExpr& defAssign = candidate.cast<defAssignExpr>();
         if(!nul(defAssign)) {
-            defAssign.setTo(*new getExpr("me"));
+            defAssign.setTo(*_maker.make<getExpr>("me"));
             defAssign.setOnDefBlock(true);
             s.asPreCtor->add(defAssign);
             return &s;
@@ -204,18 +204,18 @@ namespace namu {
     node* me::onDefVar(const std::string& name, const node& origin) {
         NAMU_DI("tokenEvent: onDefVar(%s, %s)", origin.getType().getName().c_str(), name.c_str());
 
-        return new defVarExpr(name, origin);
+        return _maker.make<defVarExpr>(name, origin);
     }
 
     node* me::onDefArray(const narr& items) {
         NAMU_DI("tokenEvent: onDefArray(items.len[%d])", items.len());
-        return new defArrayExpr(items);
+        return _maker.make<defArrayExpr>(items);
     }
 
     node* me::onDefSeq(const node& start, const node& end) {
         NAMU_DI("tokenEvent: onDefSeq()");
 
-        return new defSeqExpr(start, end);
+        return _maker.make<defSeqExpr>(start, end);
     }
 
     void me::onSrcArea(const area& area) {
@@ -242,7 +242,7 @@ namespace namu {
 
     mgdFunc* me::onFunc(const std::string& name, const narr& exprs, const node& evalObj, const blockExpr& blk) {
         NAMU_DI("tokenEvent: onFunc: %s(...[%x]) %s: blk.len()=%d", name.c_str(), &exprs,
-+                evalObj.getType().getName().c_str(), blk.getStmts().len());
+                evalObj.getType().getName().c_str(), blk.getStmts().len());
 
         mgdFunc* ret = new mgdFunc(_convertParams(exprs), evalObj, blk);
         _onPushName(name, *ret);

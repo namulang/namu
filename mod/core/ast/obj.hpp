@@ -17,6 +17,7 @@ namespace namu {
         friend class slot; // for _onRunSub
         friend class loweventer;
         friend class genericObj; // for _setOrigin()
+        friend class exprMaker;
 
     public:
         explicit obj();
@@ -56,9 +57,11 @@ namespace namu {
 
         void _setComplete(nbool isComplete) { _isComplete = isComplete; }
 
+        void _setSrc(const src& newSrc) { _src.bind(newSrc); }
         void _setPos(const point& new1) override { _pos = new1; }
 
     private:
+        tstr<src> _src;
         tstr<scopes> _subs;
         tstr<scopes> _shares;
         tstr<scope> _owns;
