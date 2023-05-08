@@ -11,6 +11,7 @@ namespace namu {
         NAMU(CLASS(genericObj, baseObj), VISIT())
         friend class verifier;
         friend class graphVisitor;
+        friend class exprMaker;
         typedef std::vector<std::string> strings;
 
     public:
@@ -42,10 +43,14 @@ namespace namu {
         /// make a generic object.
         tstr<obj> _makeGeneric(const args& a) const;
         tstr<obj> _defGeneric(const std::string& key, verifier& v, const args& a) const;
+        void _setSrc(const src& newSrc) { _src.bind(newSrc); }
+        void _setPos(const point& new1) override { _pos = new1; }
 
     private:
         std::map<std::string, tstr<obj>> _cache;
         tstr<obj> _orgObj;
         strings _paramNames;
+        tstr<src> _src;
+        point _pos;
     };
 }

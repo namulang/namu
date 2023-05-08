@@ -12,6 +12,7 @@ namespace namu {
     class _nout mgdFunc : public func {
         NAMU(CLASS(mgdFunc, func), VISIT())
         friend class verifier;
+        friend class exprMaker;
 
     public:
         explicit mgdFunc(const params& ps, const node& retType);

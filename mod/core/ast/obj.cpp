@@ -13,6 +13,7 @@ namespace namu {
         _org = rhs._org;
         _pos = rhs._pos;
         _type = rhs._type;
+        _src = rhs._src;
         // complete attribute is unique:
         //  all unique attributes looses when instance got cloned.
         _isComplete = true;
