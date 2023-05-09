@@ -399,7 +399,7 @@ TEST_F(arrTest, arrDeductionFailNegative) {
 
     errReport& errs = getReport();
     ASSERT_TRUE(errs);
-    ASSERT_EQ(errs[0].pos.row, 5);
+    ASSERT_EQ(errs[0].pos.row, 6);
 }
 
 TEST_F(arrTest, arrDeductionFailNegative2) {

@@ -9,6 +9,7 @@
 #include "../../ast/slot.hpp"
 #include "../../ast/params.hpp"
 #include "defBlock.hpp"
+#include "../../ast/exprs/exprMaker.hpp"
 
 namespace namu {
 
@@ -198,6 +199,8 @@ namespace namu {
         ifExpr* onElif(ifExpr& ifexpr, const node& elseIfCondition, const blockExpr& thenBlk);
         ifExpr* onElse(ifExpr& ifexpr, const blockExpr& elseBlk);
         ifExpr* onEndOfIf();
+
+        void onParseErr(const std::string& msg, const nchar* symbolName);
 
     private:
         nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);

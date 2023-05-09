@@ -7,6 +7,12 @@ namespace namu {
         nbool isOrigin() const { return row == 0 && col == 0; }
         void rel() { row = col = 0; }
 
+        point& operator++() {
+            ++row;
+            ++col;
+            return *this;
+        }
+
     public:
         ncnt row;
         ncnt col;
@@ -16,6 +22,12 @@ namespace namu {
         void rel() {
             start.rel();
             end.rel();
+        }
+
+        area& operator++() {
+            ++start;
+            ++end;
+            return *this;
         }
 
     public:

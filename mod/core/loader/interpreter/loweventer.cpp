@@ -220,6 +220,9 @@ namespace namu {
 
     void me::onSrcArea(const area& area) {
         _srcArea = area;
+        ++_srcArea;
+        NAMU_DI("tokenEvent: onSrcArea(%d, %d) -> (%d, %d)", area.start.row, area.start.col,
+                _srcArea.start.row, _srcArea.start.col);
         _maker.setRow(_srcArea.start.row).setCol(_srcArea.start.col);
     }
 
@@ -244,7 +247,7 @@ namespace namu {
         NAMU_DI("tokenEvent: onFunc: %s(...[%x]) %s: blk.len()=%d", name.c_str(), &exprs,
                 evalObj.getType().getName().c_str(), blk.getStmts().len());
 
-        mgdFunc* ret = new mgdFunc(_convertParams(exprs), evalObj, blk);
+        mgdFunc* ret = _maker.make<mgdFunc>(_convertParams(exprs), evalObj, blk);
         _onPushName(name, *ret);
         return ret;
     }
@@ -280,7 +283,7 @@ namespace namu {
     obj* me::onDefObj(const std::string& name, defBlock& blk) {
         NAMU_DI("tokenEvent: onDefObj(%s, defBlock[%x])", name.c_str(), &blk);
 
-        obj& ret = *new obj(new mgdType(name));
+        obj& ret = *_maker.make<obj>(new mgdType(name));
         ret._setComplete(false);
         _onInjectObjSubs(ret, blk);
         _onPushName(name, ret);
@@ -306,10 +309,10 @@ namespace namu {
         NAMU_DI("tokenEvent: onDefObjGeneric(%s, type.len[%d], defBlock[%x]", name.c_str(),
                 typeParams.len(), &blk);
 
-        obj& org = *new obj(new mgdType(name));
+        obj& org = *_maker.make<obj>(new mgdType(name));
         org._setComplete(false);
         _onInjectObjSubs(org, blk);
-        node* ret = new genericObj(org, _extractParamTypeNames(typeParams));
+        node* ret = _maker.make<genericObj>(org, _extractParamTypeNames(typeParams));
         _onPushName(name, *ret);
         return ret;
     }
@@ -352,12 +355,12 @@ namespace namu {
         if(hasCtor) return false;
 
         // TODO: ctor need to call superclass's ctor.
-        it.getShares().getContainer().add(baseObj::CTOR_NAME, *new defaultCtor(it.getOrigin()));
-        it.getShares().getContainer().add(baseObj::CTOR_NAME, *new defaultCopyCtor(it.getOrigin()));
+        it.getShares().getContainer().add(baseObj::CTOR_NAME, *_maker.make<defaultCtor>(it.getOrigin()));
+        it.getShares().getContainer().add(baseObj::CTOR_NAME, *_maker.make<defaultCopyCtor>(it.getOrigin()));
 
         // add preCtor:
         if(blk.asPreCtor && blk.asPreCtor->len()) {
-            mgdFunc* preCtor = new mgdFunc(params(), new nVoid());
+            mgdFunc* preCtor = _maker.make<mgdFunc>(params(), new nVoid());
             preCtor->getBlock().getStmts().add(*blk.asPreCtor);
             it.subs().add(baseObj::PRECTOR_NAME, preCtor);
         }
@@ -367,29 +370,29 @@ namespace namu {
     retExpr* me::onRet() {
         NAMU_DI("tokenEvent: onRet()");
 
-        return new retExpr();
+        return _maker.make<retExpr>();
     }
     retExpr* me::onRet(node& exp) {
         NAMU_DI("tokenEvent: onRet(%s)", exp.getType().getName().c_str());
 
-        return new retExpr(exp);
+        return _maker.make<retExpr>(exp);
     }
 
     breakExpr* me::onBreak() {
         NAMU_DI("tokenEvent: onBreak()");
 
-        return new breakExpr();
+        return _maker.make<breakExpr>();
     }
     breakExpr* me::onBreak(node& exp) {
         NAMU_DI("tokenEvent: onBreak(%s)", exp.getType().getName().c_str());
 
-        return new breakExpr(exp);
+        return _maker.make<breakExpr>(exp);
     }
 
     nextExpr* me::onNext() {
         NAMU_DI("tokenEvent: onNext()");
 
-        return new nextExpr();
+        return _maker.make<nextExpr>();
     }
 
     narr* me::onPackDotname(const std::string& name) {
@@ -407,25 +410,25 @@ namespace namu {
         return &name;
     }
     getExpr* me::onDotname(const std::string& name) {
-        return new getExpr(name);
+        return _maker.make<getExpr>(name);
     }
 
     node* me::onGet(const std::string& name) {
         NAMU_DI("tokenEvent: onGet(%s)", name.c_str());
-        return new getExpr(name);
+        return _maker.make<getExpr>(name);
     }
     node* me::onGet(const std::string& name, const narr& args) {
         NAMU_DI("tokenEvent: onGet(%s, %d)", name.c_str(), args.len());
-        return new getExpr(name, args);
+        return _maker.make<getExpr>(name, args);
     }
     node* me::onGet(node& from, const std::string& name) {
         NAMU_DI("tokenEvent: onGet(%s, %s)", from.getType().getName().c_str(), name.c_str());
-        return new getExpr(from, name);
+        return _maker.make<getExpr>(from, name);
     }
     node* me::onGet(node& from, const std::string& name, const narr& args) {
         NAMU_DI("tokenEvent: onGet(%s, %s, %d)", from.getType().getName().c_str(), name.c_str(),
                 args.len());
-        return new getExpr(from, name, args);
+        return _maker.make<getExpr>(from, name, args);
     }
 
     node* me::onGetArray(node& elemType) {
@@ -437,12 +440,12 @@ namespace namu {
         NAMU_DI("tokenEvent: onGetElem(%s, %s)", arr.getType().getName().c_str(),
                 idx.getType().getName().c_str());
 
-        return new runExpr(arr, *new getExpr(arr, "get"), args{narr{idx}});
+        return _maker.make<runExpr>(arr, *_maker.make<getExpr>(arr, "get"), args{narr{idx}});
     }
 
     node* me::onGetGeneric(const std::string& genericObjName, const args& typeParams) {
         NAMU_DI("tokenEvent: onGetGeneric(%s, params.len[%d])", genericObjName.c_str(), typeParams.len());
-        return new getGenericExpr(genericObjName, typeParams);
+        return _maker.make<getGenericExpr>(genericObjName, typeParams);
     }
 
     void me::_onPushName(const std::string& name, node& n) {
@@ -458,12 +461,12 @@ namespace namu {
     runExpr* me::onRunExpr(const node& trg, const narr& a) {
         NAMU_DI("tokenEvent: onRunExpr(%s, narr[%d])", trg.getType().getName().c_str(), a.len());
 
-        return new runExpr(nulOf<node>(), trg, *new args(a));
+        return _maker.make<runExpr>(nulOf<node>(), trg, *new args(a));
     }
     runExpr* me::onRunExpr(const node& trg, const args& a) {
         NAMU_DI("tokenEvent: onRunExpr(%s, args[%d])", trg.getType().getName().c_str(), a.len());
 
-        return new runExpr(nulOf<node>(), trg, a);
+        return _maker.make<runExpr>(nulOf<node>(), trg, a);
     }
 
     // @param from  can be expr. so I need to evaluate it through 'as()'.
@@ -477,248 +480,248 @@ namespace namu {
     node* me::onAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return new assignExpr(lhs, rhs);
+        return _maker.make<assignExpr>(lhs, rhs);
     }
 
     node* me::onAddAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onAddAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return onAssign(lhs, *new FBOExpr(FBOExpr::ADD, lhs, rhs));
+        return onAssign(lhs, *_maker.make<FBOExpr>(FBOExpr::ADD, lhs, rhs));
     }
 
     node* me::onSubAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onSubAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return onAssign(lhs, *new FBOExpr(FBOExpr::SUB, lhs, rhs));
+        return onAssign(lhs, *_maker.make<FBOExpr>(FBOExpr::SUB, lhs, rhs));
     }
 
     node* me::onMulAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onMulAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return onAssign(lhs, *new FBOExpr(FBOExpr::MUL, lhs, rhs));
+        return onAssign(lhs, *_maker.make<FBOExpr>(FBOExpr::MUL, lhs, rhs));
     }
 
     node* me::onDivAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onDivAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return onAssign(lhs, *new FBOExpr(FBOExpr::DIV, lhs, rhs));
+        return onAssign(lhs, *_maker.make<FBOExpr>(FBOExpr::DIV, lhs, rhs));
     }
 
     node* me::onModAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onModAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return onAssign(lhs, *new FBOExpr(FBOExpr::MOD, lhs, rhs));
+        return onAssign(lhs, *_maker.make<FBOExpr>(FBOExpr::MOD, lhs, rhs));
     }
 
     node* me::onDefAssign(const std::string& name, node& rhs) {
         NAMU_DI("tokenEvent: onDefAssign(%s, %s)", name.c_str(), rhs.getType().getName().c_str());
 
-        return new defAssignExpr(name, rhs);
+        return _maker.make<defAssignExpr>(name, rhs);
     }
 
     asExpr* me::onAs(const node& me, const node& as) {
         NAMU_DI("tokenEvent: onAs(%s, %s)", me.getType().getName().c_str(), as.getType().getName().c_str());
 
-        return new asExpr(me, as);
+        return _maker.make<asExpr>(me, as);
     }
 
     FBOExpr* me::onUnaryMinus(const node& it) {
         NAMU_DI("tokenEvent: onUnaryMinus(%s)", it.getType().getName().c_str());
 
-        return new FBOExpr(FBOExpr::MUL, it, *new nInt(-1));
+        return _maker.make<FBOExpr>(FBOExpr::MUL, it, *new nInt(-1));
     }
 
     node* me::onUnaryDoublePlus(node& it) {
         NAMU_DI("tokenEvent: onUnaryDoublePlus(%s)", it.getType().getName().c_str());
 
-        return onAssign(it, *new FBOExpr(FBOExpr::ADD, it, *new nInt(1)));
+        return onAssign(it, *_maker.make<FBOExpr>(FBOExpr::ADD, it, *new nInt(1)));
     }
 
     node* me::onUnaryDoubleMinus(node& it) {
         NAMU_DI("tokenEvent: onUnaryDoubleMinus(%s)", it.getType().getName().c_str());
 
-        return onAssign(it, *new FBOExpr(FBOExpr::SUB, it, *new nInt(1)));
+        return onAssign(it, *_maker.make<FBOExpr>(FBOExpr::SUB, it, *new nInt(1)));
     }
 
     FUOExpr* me::onUnaryPostfixDoublePlus(const node& it) {
         NAMU_DI("tokenEvent: onUnaryPostfixDoublePlus(%s)", it.getType().getName().c_str());
 
-        return new FUOExpr(FUOExpr::POSTFIX_DOUBLE_PLUS, it);
+        return _maker.make<FUOExpr>(FUOExpr::POSTFIX_DOUBLE_PLUS, it);
     }
 
     FUOExpr* me::onUnaryPostfixDoubleMinus(const node& it) {
         NAMU_DI("tokenEvent: onUnaryPostfixDoubleMinus(%s)", it.getType().getName().c_str());
 
-        return new FUOExpr(FUOExpr::POSTFIX_DOUBLE_MINUS, it);
+        return _maker.make<FUOExpr>(FUOExpr::POSTFIX_DOUBLE_MINUS, it);
     }
 
     FBOExpr* me::onUnaryNot(const node& it) {
         NAMU_DI("tokenEvent: onUnaryNot(%s)", it.getType().getName().c_str());
 
-        return new FBOExpr(FBOExpr::EQ, it, *new nBool(false));
+        return _maker.make<FBOExpr>(FBOExpr::EQ, it, *new nBool(false));
     }
 
     FUOExpr* me::onUnaryBitwiseNot(const node& it) {
         NAMU_DI("tokenEvent: onUnaryBitwiseNot(%s)", it.getType().getName().c_str());
 
-        return new FUOExpr(FUOExpr::BITWISE_NOT, it);
+        return _maker.make<FUOExpr>(FUOExpr::BITWISE_NOT, it);
     }
 
     FBOExpr* me::onAdd(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onAdd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::ADD, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::ADD, lhs, rhs);
     }
 
     FBOExpr* me::onSub(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onSub(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::SUB, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::SUB, lhs, rhs);
     }
 
     FBOExpr* me::onMul(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onMul(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::MUL, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::MUL, lhs, rhs);
     }
 
     FBOExpr* me::onDiv(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onDiv(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::DIV, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::DIV, lhs, rhs);
     }
 
     FBOExpr* me::onMod(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onMod(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::MOD, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::MOD, lhs, rhs);
     }
 
     FBOExpr* me::onBitwiseAnd(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onBitwiseAnd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType()
                 .getName().c_str());
 
-        return new FBOExpr(FBOExpr::BITWISE_AND, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::BITWISE_AND, lhs, rhs);
     }
 
     FBOExpr* me::onBitwiseOr(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onBitwiseOr(%s, %s)", lhs.getType().getName().c_str(), rhs.getType()
                 .getName().c_str());
 
-        return new FBOExpr(FBOExpr::BITWISE_OR, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::BITWISE_OR, lhs, rhs);
     }
 
     FBOExpr* me::onBitwiseXor(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onBitwiseXor(%s, %s)", lhs.getType().getName().c_str(), rhs.getType()
                 .getName().c_str());
 
-        return new FBOExpr(FBOExpr::BITWISE_XOR, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::BITWISE_XOR, lhs, rhs);
     }
 
     FBOExpr* me::onLShift(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: LShift(%s, %s)", lhs.getType().getName().c_str(), rhs.getType()
                 .getName().c_str());
 
-       return new FBOExpr(FBOExpr::LSHIFT, lhs, rhs);
+       return _maker.make<FBOExpr>(FBOExpr::LSHIFT, lhs, rhs);
     }
 
     FBOExpr* me::onRShift(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: RShift(%s, %s)", lhs.getType().getName().c_str(), rhs.getType()
                 .getName().c_str());
 
-        return new FBOExpr(FBOExpr::RSHIFT, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::RSHIFT, lhs, rhs);
     }
 
     FBOExpr* me::onGt(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onGt(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::GT, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::GT, lhs, rhs);
     }
 
     FBOExpr* me::onLt(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onLt(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::LT, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::LT, lhs, rhs);
     }
 
     FBOExpr* me::onGe(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onGe(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::GE, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::GE, lhs, rhs);
     }
 
     FBOExpr* me::onLe(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onLe(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::LE, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::LE, lhs, rhs);
     }
 
     FBOExpr* me::onEq(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onEq(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::EQ, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::EQ, lhs, rhs);
     }
 
     FBOExpr* me::onNe(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onNe(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::NE, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::NE, lhs, rhs);
     }
 
     FBOExpr* me::onAnd(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onAnd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::AND, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::AND, lhs, rhs);
     }
 
     FBOExpr* me::onOr(const node& lhs, const node& rhs) {
         NAMU_DI("tokenEvent: onOr(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new FBOExpr(FBOExpr::OR, lhs, rhs);
+        return _maker.make<FBOExpr>(FBOExpr::OR, lhs, rhs);
     }
 
     node* me::onFor(const std::string& iterName, const node& expr, const blockExpr& blk) {
         NAMU_DI("tokenEvent: onFor(%s, %s)", iterName.c_str(), expr.getType().getName().c_str());
 
-        return new forExpr(iterName, expr, blk);
+        return _maker.make<forExpr>(iterName, expr, blk);
     }
 
     node* me::onWhile(const node& condition, const blockExpr& blk) {
         NAMU_DI("tokenEvent: onWhile(%s)", condition.getType().getName().c_str());
 
-        return new whileExpr(condition, blk);
+        return _maker.make<whileExpr>(condition, blk);
     }
 
     node* me::onAkaDefault(const getExpr& dotname, const std::string& newName) {
         NAMU_DI("tokenEvent: onAkaDefault(%s..., %s)", dotname.getSubName().c_str(), newName.c_str());
 
-        return new defAssignExpr(newName, dotname);
+        return _maker.make<defAssignExpr>(newName, dotname);
     }
 
     ifExpr* me::onIf(const node& condition, const blockExpr& thenBlk) {
         NAMU_DI("tokenEvent: onIf(then)");
 
-        ifExpr* ret = new ifExpr(condition, thenBlk);
+        ifExpr* ret = _maker.make<ifExpr>(condition, thenBlk);
         _outerIfStack.push_back(ret);
 
         return ret;
     }
     ifExpr* me::onElif(ifExpr& ifexpr, const node& elseIfCondition, const blockExpr& thenBlk) {
         NAMU_DI("tokenEvent: onElIf(ifexpr, condition, then)");
-        ifExpr* ret = new ifExpr(elseIfCondition, thenBlk);
+        ifExpr* ret = _maker.make<ifExpr>(elseIfCondition, thenBlk);
 
         ifexpr.setElseBlk(*new blockExpr(*ret));
         return ret;
@@ -733,6 +736,10 @@ namespace namu {
         ifExpr* ret = _outerIfStack.back();
         _outerIfStack.pop_back();
         return ret;
+    }
+
+    void me::onParseErr(const std::string& msg, const nchar* symbolName) {
+        onErr(_srcArea.start, errCode::SYNTAX_ERR, msg.c_str(), symbolName);
     }
 
     me::loweventer() { rel(); }

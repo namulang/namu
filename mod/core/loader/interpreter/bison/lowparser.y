@@ -12,7 +12,7 @@
     #define YYLLOC_DEFAULT(Current, Rhs, N) \
         do { \
           if(N) { \
-              (Current).start = YYRHSLOC (Rhs, 1).start ; \
+              (Current).start = YYRHSLOC (Rhs, 1).start; \
               (Current).end = YYRHSLOC (Rhs, N).end; \
           } else { \
               (Current).start.row = (Current).end.row = YYRHSLOC (Rhs, 0).end.row; \
@@ -596,10 +596,11 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     auto* eventer = yyget_extra(scanner);
     yysymbol_kind_t symbol = yypcontext_token(ctx);
 
-    if(symbol != YYSYMBOL_YYUNDEF)
-        // this's similar to call 'onSrcErr', but loweventer._srcArea is invalid.
-        // so I can't use it now.
-        eventer->onErr(yypcontext_location(ctx)->start, errCode::SYNTAX_ERR, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol));
+    if(symbol != YYSYMBOL_YYUNDEF) {
+        yyget_extra(scanner)->onSrcArea(*yypcontext_location(ctx));
+        yyget_extra(scanner)->onParseErr(traceErr(ctx, scanner), yysymbol_name(symbol));
+    }
+
     _onEndParse(scanner);
     return 0;
 }
