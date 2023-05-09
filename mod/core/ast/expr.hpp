@@ -42,7 +42,6 @@ namespace namu {
         nbool canRun(const args& a) const override;
         const src& getSrc() const;
         const point& getPos() const override;
-        void setPos(const point& newPos) override;
 
     private:
         void _setSrc(const src& newSrc);
