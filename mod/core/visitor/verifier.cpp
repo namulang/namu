@@ -175,7 +175,7 @@ namespace namu {
         str new1 = me.isOnDefBlock() ? rhs.as<node>() : rhs.getEval();
         NAMU_DI("verify: defAssignExpr: new1[%s]", new1 ? new1->getType().getName().c_str() : "null");
         if(!new1)
-            return _err(me.getPos(), errCode::TYPE_NOT_DEDUCED);
+            return _err(me.getPos(), errCode::RHS_NOT_EVALUATED);
         if(!new1->isComplete())
             return _err(me.getPos(), errCode::ACCESS_TO_INCOMPLETE);
 
@@ -272,11 +272,11 @@ namespace namu {
         // TODO: I have to check that the evalType has what matched to given _params.
         // Until then, I rather use as() func and it makes slow emmersively.
         NAMU_DI("verify: getExpr: isRunnable: %s.%s", me.getType().getName().c_str(), me.getSubName().c_str());
-        if(!me.getEval()) return _err(me.getPos(), errCode::EVAL_NULL_TYPE);
+        if(!me.getEval()) return _err(me.getPos(), errCode::WHAT_IS_THIS_IDENTIFIER, me.getSubName().c_str());
         str got = me._get();
         if(!got) {
             const node& from = me.getMe();
-            return _err(me.getPos(), errCode::CANT_ACCESS, from.getType().getName().c_str(), me._name.c_str());
+            return _err(me.getPos(), errCode::CANT_ACCESS, me._name.c_str(), from.getType().getName().c_str());
         }
         NAMU_DI("verify: getExpr: isRunnable: got=%s, me=%s", got->getType().getName().c_str(),
                 me.getType().getName().c_str());
@@ -307,13 +307,13 @@ namespace namu {
 
     void me::onVisit(visitInfo i, runExpr& me) {
         NAMU_DI("verify: runExpr: is it possible to run?");
-        if(nul(me.getMe())) return _err(me.getPos(), errCode::CANT_CAST_TO_NODE);
+        if(nul(me.getMe())) return _err(me.getPos(), errCode::DONT_KNOW_ME);
 
         str ased = me.getMe().getEval();
-        if(!ased) return _err(me.getPos(), errCode::CANT_CAST_TO_NODE);
+        if(!ased) return _err(me.getPos(), errCode::DONT_KNOW_ME);
 
         node& anySub = me.getSubject();
-        if(nul(anySub)) return _err(me.getPos(), errCode::SUB_NOT_EXIST);
+        if(nul(anySub)) return _err(me.getPos(), errCode::FUNC_NOT_EXIST);
 
         NAMU_DI("verify: runExpr: anySub[%s]", anySub.getType().getName().c_str());
 

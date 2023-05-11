@@ -2,7 +2,7 @@ main() void
 
     while true
         print("(R)ock, (S)cissors, (P)aper! -> ")
-        answer := con.input()
+        answer := input()
 
         if answer == "R"
             print("You win!\n")
