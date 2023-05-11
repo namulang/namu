@@ -8,8 +8,7 @@ PAIRX(NO_ROW_INFO,                  "this expr doesn't have row info")
 PAIRX(NO_COL_INFO,                  "this expr doesn't have col info")
 
 // node:
-PAIRX(EVAL_NULL_TYPE,               "this expr evaluated as nulled type")
-PAIRX(CANT_ACCESS,                  "%s tried to access '%s' but nothing exist")
+PAIRX(CANT_ACCESS,                  "there is no '%s' in '%s'")
 PAIRX(NOT_EXIST,                    "%s not exist")
 PAIRX(DUP_VAR,                      "duplicated variable '%s' found")
 PAIRX(ACCESS_TO_INCOMPLETE,         "accesses to incomplete object")
@@ -62,13 +61,18 @@ PAIRX(MAKE_GENERIC_FAIL,            "construction '%s' for generic obj has faile
 //  generics:
 PAIRX(SHOULD_TYPE_PARAM_NAME,       "'%s' type parameter wasn't be defined as new name.")
 //  func-call:
-PAIRX(SUB_NOT_EXIST,                "sub-node doesn't exist.")
+PAIRX(FUNC_NOT_EXIST,               "this func doesn't exist.")
+PAIRX(DONT_KNOW_ME,                 "I don't know what the 'me' object is to call this func.")
 //  retState:
 PAIRX(BREAK_OUTSIDE_OF_LOOP,        "use 'break' outside of a loop")
 PAIRX(NEXT_OUTSIDE_OF_LOOP,         "use 'next' outside of a loop")
 //  if:
 PAIRX(CONDITION_IS_EMPTY,           "condition expression is empty")
 PAIRX(CONDITION_CANT_CAST_TO_BOOL,  "condition expression can't cast to bool type.")
+//  getExpr:
+PAIRX(WHAT_IS_THIS_IDENTIFIER,      "I don't know what '%s' is.")
+//  defAssign:
+PAIRX(RHS_NOT_EVALUATED,            "I can't define a new variable here because there is a problem with the expression on the right.")
 
 // func:("verify: arithmeticExpr: lhs & rhs should bind something.");
 //
