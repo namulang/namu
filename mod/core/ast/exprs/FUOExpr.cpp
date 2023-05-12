@@ -38,6 +38,6 @@ namespace namu {
     }
 
     str me::getEval() const {
-        return _it;
+        return _it->getEval();
     }
 }

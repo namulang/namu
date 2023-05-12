@@ -520,3 +520,16 @@ TEST_F(forExprTest, evalOfForLoopIntAndBoolIsCompatible2) {
     ASSERT_EQ(res->getType(), ttype<nInt>::get());
     ASSERT_EQ(res.cast<nint>(), 0);
 }
+
+TEST_F(forExprTest, defAssignWhatLoops) {
+    make().parse(R"SRC(
+        main() int
+            a := for n in 0..2
+                n++
+            ret a
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->cast<nint>(), 1);
+}
