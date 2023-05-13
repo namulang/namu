@@ -1,6 +1,9 @@
 #include "inputFunc.hpp"
 #include "../primitive/nStr.hpp"
 #include <iostream>
+#ifdef __EMSCRIPTEN__
+#   include <emscripten/emscripten.h>
+#endif
 
 namespace namu {
 
@@ -22,7 +25,13 @@ namespace namu {
             return NAMU_E("length of args(%d) and typs(%d) doesn't match.", a.len(), ps.len()), nullptr;
 
         nStr* ret = new nStr();
+
+#ifdef __EMSCRIPTEN__
+        ret->get() = emscripten_run_script_string("prompt('input:');");
+#else
         std::cin >> ret->get();
+#endif
+
         return str(ret);
     }
 }
