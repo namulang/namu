@@ -26,6 +26,12 @@ namespace namu {
 
             starter s;
             str res = s.run(args((baseObj&) ip.getSubPack()));
+
+#ifdef __EMSCRIPTEN__
+            // I don't know the detail reason but if user doesn't put '\n' at the
+            // end, the line won't be printed.
+            std::cout << "\n";
+#endif
             if(res && !rpt) {
                 return _finish(ip, 0);
             }
