@@ -33,6 +33,12 @@ namespace namu {
             _eventer.getReport()->add(err::newErr(errCode::IS_NULL, "bufState")).log();
             return tstr<obj>();
         }
+
+        // fix Flex Bug here:
+        //  when yy_scan_string get called, it returns bufState after malloc it.
+        //  but some variables wasn't initialized. yy_bs_lineno(used to calculate
+        //  current cursor position) is one of them.
+        bufState->yy_bs_lineno = bufState->yy_bs_column = 0;
         yy_switch_to_buffer(bufState, scanner);
 
 #if YYDEBUG
