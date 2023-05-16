@@ -78,7 +78,7 @@ PAIRX(RHS_NOT_EVALUATED,            "I can't define a new variable here because 
 //
 // if(nul(it.getLeft) || nul(it.getRight()))
 //
-PAIRX(PARAM_HAS_VAL,                "parameter shouldn't have a value")
+PAIRX(PARAM_HAS_VAL,                "parameter must take a form of '<name> <type>'")
 PAIRX(FUNC_HAS_NO_NAME,             "a function should have a name")
 PAIRX(WRONG_RET_TYPE,               "%s is not a valid return type")
 PAIRX(NO_RET_TYPE,                  "return type is not specified")
