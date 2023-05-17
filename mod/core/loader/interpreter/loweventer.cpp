@@ -247,7 +247,8 @@ namespace namu {
         NAMU_DI("tokenEvent: onFunc: %s(...[%x]) %s: blk.len()=%d", name.c_str(), &exprs,
                 evalObj.getType().getName().c_str(), blk.getStmts().len());
 
-        mgdFunc* ret = _maker.make<mgdFunc>(_convertParams(exprs), evalObj, blk);
+        tstr<narr> exprsWrapper(exprs);
+        mgdFunc* ret = _maker.make<mgdFunc>(_convertParams(*exprsWrapper), evalObj, blk);
         _onPushName(name, *ret);
         return ret;
     }

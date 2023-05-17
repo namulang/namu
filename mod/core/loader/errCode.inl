@@ -43,6 +43,7 @@ PAIRX(ALREADY_DEFINED_VAR,          "variable '%s %s' was already defined in thi
 PAIRX(HAS_NO_NAME,                  "variable should have a name")
 PAIRX(NO_ORIGIN,                    "there is no origin %s object")
 PAIRX(TYPE_NOT_EXIST,               "when defines variable '%s', couldn't find the type of it.")
+PAIRX(DONT_HAVE_CTOR,               "%s's type doesn't have a constructor without parameter.")
 PAIRX(TYPE_NOT_DEDUCED,             "type can't be deduced into meaningful one.")
 //  assign:
 PAIRX(TYPE_NOT_COMPATIBLE,          "rhs type '%s' is not compatible to lhs '%s' of this assigment")

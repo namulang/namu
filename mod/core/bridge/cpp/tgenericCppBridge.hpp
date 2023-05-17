@@ -16,8 +16,9 @@ namespace namu {
 
     public:
         static me* def() {
-            // TODO: need to handle ctor with argument.
             me* ret = new me(new T());
+            // TODO: need to handle ctor with argument.
+            ret->subs().add(baseObj::CTOR_NAME, new defaultCtor(*ret));
             ret->subs().add(baseObj::CTOR_NAME, new defaultCopyCtor(*ret));
             return ret;
         }

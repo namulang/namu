@@ -18,7 +18,8 @@ namespace namu {
             return org;
         }
 
-        nbool res = _where ? _where->add(name, *org) : thread::get()._getNowFrame().pushLocal(name, *org);
+        nbool res = _where ? _where->add(name, *org->run()) :
+            thread::get()._getNowFrame().pushLocal(name, *org->run());
         if(!res)
             NAMU_E("define variable %s is failed.", name.c_str());
 
