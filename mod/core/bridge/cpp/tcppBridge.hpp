@@ -5,6 +5,7 @@
 #include "../../ast/obj.hpp"
 #include "../../type/mgdType.hpp"
 #include "../../ast/defaultCopyCtor.hpp"
+#include "../../ast/defaultCtor.hpp"
 
 namespace namu {
 
@@ -38,8 +39,9 @@ namespace namu {
 
     public:
         static me* def() {
-            // TODO: need to handle ctor with argument.
             me* ret = new me(new T());
+            // TODO: need to handle ctor with argument properly.
+            ret->subs().add(baseObj::CTOR_NAME, new defaultCtor(*ret));
             ret->subs().add(baseObj::CTOR_NAME, new defaultCopyCtor(*ret));
             return ret;
         }

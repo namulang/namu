@@ -96,6 +96,6 @@ TEST_F(defObjExprTest, manipulate2Origin) {
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    std::string answer = "knizkniz2222";
+    std::string answer = "Chaleskniz3622";
     ASSERT_EQ(res.cast<std::string>(), answer);
 }

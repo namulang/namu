@@ -223,10 +223,14 @@ namespace namu {
 
         // when you define variable, I need to clone it:
         //  if don't, it may be incomplete object.
-        nbool res = me._where ? me._where->add(name.c_str(), (node*) eval->clone()) : thread::get()._getNowFrame()
-                .pushLocal(name, (node*) eval->clone());
-        if(!res)
-            NAMU_E("verify: defVarExpr: define variable %s is failed.", name.c_str());
+        if(!eval->canRun(args()))
+            _err(me.getPos(), errCode::DONT_HAVE_CTOR, name.c_str());
+        else {
+            nbool res = me._where ? me._where->add(name.c_str(), (node*) eval->clone()) : thread::get()._getNowFrame()
+                    .pushLocal(name, (node*) eval->clone());
+            if(!res)
+                NAMU_E("verify: defVarExpr: define variable %s is failed.", name.c_str());
+        }
     }
 
     void me::onVisit(visitInfo i, defSeqExpr& me) {

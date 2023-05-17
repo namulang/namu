@@ -74,3 +74,6 @@ TEST_F(defVarExprTest, definePackVariable2) {
     ASSERT_FALSE(nul(grade));
     ASSERT_EQ(grade.get(), 0.0f);
 }
+
+/* TODO: TEST_F(defVarExprTest, defineVarWithoutCtorNegative) {
+}*/
