@@ -99,3 +99,37 @@ TEST_F(defObjExprTest, manipulate2Origin) {
     std::string answer = "Chaleskniz3622";
     ASSERT_EQ(res.cast<std::string>(), answer);
 }
+
+TEST_F(defObjExprTest, objAsParameter) {
+    make().parse(R"SRC(
+        def person
+            name := "default"
+
+        foo(p person) str
+            p.name
+
+        main() str
+            foo(person())
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "default");
+}
+
+TEST_F(defObjExprTest, incompleteObjNegative) {
+    make().parse(R"SRC(
+        def person
+            name := "default"
+
+        foo(p person) str
+            p.name
+
+        main() str
+            foo(person)
+    )SRC").shouldVerified(false);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "default");
+}
