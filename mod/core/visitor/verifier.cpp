@@ -28,7 +28,7 @@ namespace namu {
         }
         void _prepareArgsAlongParam(const params& ps, scope& s) {
             for(const auto& p : ps)
-                s.add(p.getName(), *p.getOrigin().as<node>());
+                s.add(p.getName(), *(node*) p.getOrigin().as<node>()->clone());
         }
     }
 
@@ -352,21 +352,26 @@ namespace namu {
         NAMU_DI("verify: mgdFunc[%s]: %s iterateBlock[%d]", i.name.c_str(),
                 me.getType().getName().c_str(), me._blk->subs().len());
 
+        // sequence of adding frame matters:
+        //  object scope is first:
+        baseObj& meObj = frame::_getMe();
+        if(nul(meObj)) return _err(me.getPos(), errCode::FUNC_REDIRECTED_OBJ);
+        meObj.inFrame(nulOf<bicontainable>());
+
+        //  parameters of func is second:
         scope* s = new scope();
         _prepareArgsAlongParam(me.getParams(), *s);
 
-        baseObj& meObj = frame::_getMe();
-        if(nul(meObj)) return _err(me.getPos(), errCode::FUNC_REDIRECTED_OBJ);
-
-        meObj.inFrame(nulOf<bicontainable>());
+        //  function's subs are third:
         me.inFrame(*s);
-        // !important!:
-        //  frameInteraction to blockstmt should be controlled by its holder, mgdFunc.
-        //  for validation of implicitReturn, I need to postpone frame to be released by blockstmt.
-        //  if I passed the control to blockstmts, it released its own frame before checking
-        //  implicit Return.
+        //  !important!:
+        //      frameInteraction to blockstmt should be controlled by its holder, mgdFunc.
+        //      for validation of implicitReturn, I need to postpone frame to be released by blockstmt.
+        //      if I passed the control to blockstmts, it released its own frame before checking
+        //      implicit Return.
         //
-        //  so, all expressions contains blockstmt need to control in/out frame instead of blockstmt.
+        //      so, all expressions contains blockstmt need to control in/out frame instead of blockstmt.
+        //  function block's are last:
         me.getBlock().inFrame(nulOf<bicontainable>());
     }
 
