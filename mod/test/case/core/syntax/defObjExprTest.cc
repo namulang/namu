@@ -118,7 +118,7 @@ TEST_F(defObjExprTest, objAsParameter) {
 }
 
 TEST_F(defObjExprTest, incompleteObjNegative) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         def person
             name := "default"
 
@@ -128,8 +128,17 @@ TEST_F(defObjExprTest, incompleteObjNegative) {
         main() str
             foo(person)
     )SRC").shouldVerified(false);
+}
 
-    str res = run();
-    ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "default");
+TEST_F(defObjExprTest, incompleteObjNegative2) {
+    make().negative().parse(R"SRC(
+        def person
+            name := "default"
+
+        foo(p person) str
+            p.name
+
+        main() str
+            ret person.name
+    )SRC").shouldVerified(false);
 }
