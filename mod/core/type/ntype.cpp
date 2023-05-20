@@ -51,13 +51,12 @@ namespace namu {
         if(nul(inner))
             inner = _makeDeducers();
 
-        const ntype* ret = nullptr;
-        try {
-            ret = inner->at(&l).at(&r);
-        } catch(std::out_of_range& ex) {}
+        if(inner->find(&l) != inner->end()) {
+            deducer& dd = inner->at(&l);
 
-        if(!nul(ret))
-            return *ret;
+            if(dd.find(&r) != dd.end())
+                return *dd.at(&r);
+        }
 
         return _deduceSuperType(l, r);
     }
