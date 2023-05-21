@@ -8,14 +8,11 @@ namespace namu {
 
     nbool me::_postProcess(frame& fr) const {
         const retState& state = fr.getRetState();
-        if(state == frame::FUNC_RETURN)
-            return true;
-
+        if(state == frame::FUNC_RETURN) return true;
         if(state == frame::BLK_BREAK) {
             fr.relRet();
             return true;
         }
-
         if(state == frame::BLK_NEXT) {
             fr.relRet();
             return false;
