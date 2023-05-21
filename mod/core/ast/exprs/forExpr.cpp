@@ -42,7 +42,7 @@ namespace namu {
             iter->run("next", args{narr{*new nInt(1)}});
         }
 
-        return ret->as(*getEval());
+        return ret ? ret->as(*getEval()) : ret;
     }
 
     str me::getEval() const {

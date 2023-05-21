@@ -507,3 +507,22 @@ TEST_F(arrTest, test2DArray2) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 4);
 }
+
+TEST_F(arrTest, test2DArray3) {
+    make().parse(R"SRC(
+        foo(m char[]) void
+            for n in 0..m.len()
+                print(m[n] as str)
+            print("\n")
+
+        main() int
+            msgs := {{'h', 'e', 'l', 'l', 'o'}, {'w', 'o', 'r', 'l', 'd'}}
+            for n in 0..msgs.len()
+                foo(msgs[n])
+            ret 0
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 0);
+}
