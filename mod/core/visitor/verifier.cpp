@@ -178,6 +178,8 @@ namespace namu {
             return _err(me.getPos(), errCode::RHS_NOT_EVALUATED);
         if(!new1->isComplete())
             return _err(me.getPos(), errCode::ACCESS_TO_INCOMPLETE);
+        if(new1->isSub<nVoid>())
+            return _err(me.getPos(), errCode::VOID_CANT_DEFINED);
 
         // when you define variable, I need to clone it:
         //  if don't, it may be incomplete object.

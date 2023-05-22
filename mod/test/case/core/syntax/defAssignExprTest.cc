@@ -214,3 +214,22 @@ TEST_F(defAssignExprTest, defAssignDefAssignedValue) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 0);
 }
+
+TEST_F(defAssignExprTest, defAssignVoidNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := void()
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(defAssignExprTest, defAssignVoidNegative2) {
+    make().negative().parse(R"SRC(
+        foo() void
+            ret
+
+        main() void
+            a := for n in 0..1
+                foo()
+            ret a
+    )SRC").shouldVerified(false);
+}
