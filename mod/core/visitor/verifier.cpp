@@ -204,7 +204,10 @@ namespace namu {
         NAMU_DI("verify: defVarExpr: check duplication");
         const scopes& top = thread::get().getNowFrame().getTop();
         str eval = me.getEval();
-        if(!eval) return _err(me.getPos(), errCode::TYPE_NOT_EXIST, me.getName().c_str());
+        if(!eval)
+            return _err(me.getPos(), errCode::TYPE_NOT_EXIST, me.getName().c_str());
+        if(eval->isSub<nVoid>())
+            return _err(me.getPos(), errCode::VOID_CANT_DEFINED);
 
         const ntype& t = eval->getType();
         const nchar* typeName = nul(t) ? "null" : t.getName().c_str();

@@ -75,5 +75,25 @@ TEST_F(defVarExprTest, definePackVariable2) {
     ASSERT_EQ(grade.get(), 0.0f);
 }
 
+TEST_F(defVarExprTest, defVarVoidNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            a void
+            ret a
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(defVarExprTest, passingVoidIsOk) {
+    make().parse(R"SRC(
+        foo() void
+            ret
+        main() void
+            ret foo() // <-- ok
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_TRUE(res->isSub<nVoid>());
+}
 /* TODO: TEST_F(defVarExprTest, defineVarWithoutCtorNegative) {
 }*/
