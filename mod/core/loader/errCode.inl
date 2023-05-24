@@ -87,6 +87,7 @@ PAIRX(NO_RET_TYPE,                  "return type is not specified")
 PAIRX(NO_FUNC_INFO,                 "function info doesn't exist")
 PAIRX(NO_STMT_IN_FUNC,              "function need to contain more than 1 statement inside")
 PAIRX(RET_TYPE_NOT_MATCH,           "%s return type isn't valid to %s return type of func")
+PAIRX(PARAM_NOT_VOID,               "parameter '%s' shouldn't be a void type")
 
 // block:
 PAIRX(BLK_CANT_MAKE_FRAME,          "block statement failed to construct frame structure")

@@ -26,10 +26,6 @@ namespace namu {
 
             return false;
         }
-        void _prepareArgsAlongParam(const params& ps, scope& s) {
-            for(const auto& p : ps)
-                s.add(p.getName(), *(node*) p.getOrigin().as<node>()->clone());
-        }
     }
 
     me* me::_now = nullptr;
@@ -365,7 +361,13 @@ namespace namu {
 
         //  parameters of func is second:
         scope* s = new scope();
-        _prepareArgsAlongParam(me.getParams(), *s);
+        for(const auto& p : me.getParams()) {
+            if(p.getOrigin().isSub<nVoid>()) {
+                _err(me.getPos(), errCode::PARAM_NOT_VOID, p.getName().c_str());
+                continue;
+            }
+            s->add(p.getName(), *(node*) p.getOrigin().as<node>()->clone());
+        }
 
         //  function's subs are third:
         me.inFrame(*s);
