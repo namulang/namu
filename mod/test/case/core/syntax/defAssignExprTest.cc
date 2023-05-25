@@ -233,3 +233,25 @@ TEST_F(defAssignExprTest, defAssignVoidNegative2) {
             ret a
     )SRC").shouldVerified(false);
 }
+
+TEST_F(defAssignExprTest, defAssignIfWithoutElseNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := if true
+                "hello"
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(defAssignExprTest, defAssignIfWithElse) {
+    make().parse(R"SRC(
+        main() str
+            a := if true
+                "hello"
+            else
+                "world"
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<std::string>(), "hello");
+}

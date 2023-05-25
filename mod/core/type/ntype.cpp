@@ -120,6 +120,8 @@ namespace namu {
                 return ret;
             }
 
-        return nulOf<ntype>();
+        // there is no null in namulang:
+        //  returns void if no valid casting found.
+        return ttype<nVoid>::get();
     }
 }
