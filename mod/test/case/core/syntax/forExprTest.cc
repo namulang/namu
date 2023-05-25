@@ -369,10 +369,37 @@ TEST_F(forExprTest, breakInsideOfFor) {
 
 TEST_F(forExprTest, breakInsideOfIfExpr) {
     make().parse(R"SRC(
+        main() void
+            for n in 1..5
+                if n == 3
+                    break 7
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_TRUE(res->isSub<nVoid>());
+}
+
+TEST_F(forExprTest, breakInsideOfIfExprNegative) {
+    make().negative().parse(R"SRC(
+        main() int
+            // this stmt returns what forExpr evaluated.
+            // but its type is void. because ifExpr doesn't have else
+            // block.
+            for n in 1..5
+                if n == 3
+                    break 7
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(forExprTest, breakInsideOfIfExpr2) {
+    make().parse(R"SRC(
         main() int
             for n in 1..5
                 if n == 3
                     break 7
+                else
+                    n
     )SRC").shouldVerified(true);
 
     str res = run();

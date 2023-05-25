@@ -28,7 +28,7 @@ namespace namu {
         str thenEval = _thenBlk->getEval();
         if(!thenEval) return thenEval;
         if(!_elseBlk)
-            return thenEval;
+            return str(nVoid::singletone());
 
         str elseEval = _elseBlk->getEval();
         return str(thenEval->deduce(*elseEval));

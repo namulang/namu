@@ -1,5 +1,6 @@
 #include "ases.hpp"
 #include "../../ast/node.hpp"
+#include "../../builtin/primitive/nVoid.hpp"
 
 namespace namu {
 
@@ -12,7 +13,9 @@ namespace namu {
         for(auto e : _casts)
             if(e->is(fromType, to))
                 return e->as(from, to);
-        return str();
+        // there is no null in namulang:
+        //  returns void if no valid casting found.
+        return str(nVoid::singletone());
     }
 
     void me::add(const asable& newCast) {
