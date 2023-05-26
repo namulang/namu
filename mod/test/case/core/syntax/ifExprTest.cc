@@ -133,6 +133,8 @@ TEST_F(ifExprTest, elif) {
                 2
             elif 77 < 113
                 3
+            else
+                7
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -140,7 +142,7 @@ TEST_F(ifExprTest, elif) {
     ASSERT_EQ(res.cast<nint>(), 2);
 }
 
-TEST_F(ifExprTest, elif_negative) {
+TEST_F(ifExprTest, elifNegative) {
     make().negative().parse(R"SRC(
         main() int
             if 222 < 33
@@ -154,6 +156,23 @@ TEST_F(ifExprTest, elif_negative) {
             elif 77 < 113
                 3
     )SRC").shouldParsed(false);
+}
+
+TEST_F(ifExprTest, elifNegative2) {
+    make().negative().parse(R"SRC(
+        main() int
+            if 222 < 33
+                0
+            elif 33 > 115
+                1
+            elif 44 < 235
+                2
+            elif 77 < 113
+                3
+            // there is no else block. so ifExpr eventually will be evaluated
+            // to the void.
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
 }
 
 TEST_F(ifExprTest, elif2) {

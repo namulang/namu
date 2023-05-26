@@ -76,6 +76,8 @@ TEST_F(whileExprTest, breakInsideOfIfExpr) {
             while n < 5
                 if ++n == 3
                     break 7
+                else
+                    n
     )SRC").shouldVerified(true);
 
     str res = run();

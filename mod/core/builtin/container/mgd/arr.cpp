@@ -108,25 +108,26 @@ namespace namu {
 
     nbool me::set(const iter& at, const node& new1) {
         str ased = new1.asImpli(getElemType());
-        if(!ased) return false;
+        if(ased->isSub<nVoid>()) return false;
+
         return get().set(at, *ased);
     }
     nbool me::set(nidx n, const node& new1) {
         str ased = new1.asImpli(getElemType());
-        if(!ased) return false;
+        if(ased->isSub<nVoid>()) return false;
         return get().set(n, *ased);
     }
 
     nbool me::add(const iter& at, const node& new1) {
         str ased = new1.asImpli(getElemType());
-        if(!ased) return false;
+        if(ased->isSub<nVoid>()) return false;
 
         return get().add(at, *ased);
     }
 
     nbool me::add(nidx n, const node& new1) {
         str ased = new1.asImpli(getElemType());
-        if(!ased) return false;
+        if(ased->isSub<nVoid>()) return false;
 
         return get().add(n, *ased);
     }
