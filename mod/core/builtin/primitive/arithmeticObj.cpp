@@ -1,4 +1,5 @@
 #include "arithmeticObj.hpp"
+#include "nVoid.hpp"
 
 namespace namu {
 
@@ -7,7 +8,7 @@ namespace namu {
 #define _X(FUNC) \
     tstr<arithmeticObj> me::FUNC(const arithmeticObj& rhs) const { \
         const ntype& deduced = getType().deduce(rhs); \
-        if(nul(deduced)) return tstr<arithmeticObj>(); \
+        if(deduced.isSub<nVoid>()) return tstr<arithmeticObj>(nVoid::singletone()); \
         nbool normalOrder = getType() == deduced; \
         const arithmeticObj& winner = getType() == deduced ? *this : rhs; \
         const arithmeticObj& loser = getType() == deduced ? rhs : *this; \
