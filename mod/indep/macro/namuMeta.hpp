@@ -3,9 +3,8 @@
 #include "overload.hpp"
 #include "forEach.hpp"
 
-// world universal DECL macro:
-//  NAMU_DECL is generalized API used to describe the metadata of
-//  class in namu.
+// namu universal DECL macro:
+//  NAMU_DECL is generalized API used to describe the metadata of class in namu.
 //  NAMU_DECL can be used to define detailed metadata about a class by chaining sub-command sets.
 //  with NAMU macro, I can clarify that those INIT_META, VISIT are should be after of NAMU macro.
 //  and limit the scope of availbility.

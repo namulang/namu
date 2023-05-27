@@ -5,14 +5,8 @@
 namespace namu {
 
     struct callstackZone {
-        callstackZone(nbool toShow) {
-            logger& log = logger::get();
-            prev = log.isShowCallstack();
-            log.setCallstack(toShow);
-        }
-        ~callstackZone() {
-            logger::get().setCallstack(prev);
-        }
+        callstackZone(nbool toShow);
+        ~callstackZone();
 
         nbool prev;
     };

@@ -19,7 +19,7 @@
 #define _CONCAT(x, y)    x##y
 #define NAMU_CONCAT(x, y)    _CONCAT(x, y)
 
-//    why delaying comma expressoin?:
+//    why delaying comma expression?:
 //        it can causes delimiter issue on expanding macros for template parameters.
 #define _COMMA() ,
 #define NAMU_COMMA() NAMU_DELAY(_COMMA)()
