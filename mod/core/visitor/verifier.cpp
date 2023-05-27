@@ -246,6 +246,8 @@ namespace namu {
         if(nul(type)) return _err(me.getPos(), errCode::ELEM_TYPE_DEDUCED_NULL);
         if(type.isSuper<obj>())
             return _err(me.getPos(), errCode::ELEM_TYPE_DEDUCED_WRONG, type.getType().getName().c_str());
+        if(type.isSub<nVoid>())
+            return _err(me.getPos(), errCode::ELEM_TYPE_NOT_VOID);
     }
 
     void me::onVisit(visitInfo i, FBOExpr& me) {
