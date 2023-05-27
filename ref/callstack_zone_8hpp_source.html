@@ -76,19 +76,13 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="structnamu_1_1callstack_zone.html">    7</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1callstack_zone.html">callstackZone</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        <a class="code" href="structnamu_1_1callstack_zone.html">callstackZone</a>(nbool toShow) {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;            <a class="code" href="classnamu_1_1logger.html">logger</a>&amp; log = logger::get();</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;            prev = log.isShowCallstack();</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;            log.setCallstack(toShow);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        }</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        ~<a class="code" href="structnamu_1_1callstack_zone.html">callstackZone</a>() {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            logger::get().setCallstack(prev);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        }</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        nbool prev;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    };</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1logger_html"><div class="ttname"><a href="classnamu_1_1logger.html">namu::logger</a></div><div class="ttdef"><b>Definition:</b> logger.hpp:7</div></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        <a class="code" href="structnamu_1_1callstack_zone.html">callstackZone</a>(nbool toShow);</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        ~<a class="code" href="structnamu_1_1callstack_zone.html">callstackZone</a>();</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        nbool prev;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    };</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
 <div class="ttc" id="astructnamu_1_1callstack_zone_html"><div class="ttname"><a href="structnamu_1_1callstack_zone.html">namu::callstackZone</a></div><div class="ttdef"><b>Definition:</b> callstackZone.hpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
