@@ -414,4 +414,13 @@ TEST_F(asExprTest, implicitCastBetweenArithmeticTypes) {
     ASSERT_EQ(res->cast<nint>(), 3);
 }
 
+TEST_F(asExprTest, castToVoidNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := 0
+            a as void
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
 // TODO: make a TC for 'as' nonprimitive types
