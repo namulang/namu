@@ -54,6 +54,7 @@ PAIRX(LHS_IS_NULL,                  "lhs of the expression is null")
 PAIRX(RHS_IS_NULL,                  "rhs of the expression is null")
 PAIRX(EXPR_SHOULDNT_BE_HERE,        "expression shouldn't be here")
 PAIRX(IMPLICIT_CAST_NOT_AVAILABLE,  "couldn't implicit cast %s type as %s")
+PAIRX(VOID_NOT_CAST,                "casting to the void type isn't allowed")
 //  arithmetic operation:
 PAIRX(LHS_IS_NOT_ARITH,             "lhs '%s' is not arithmetic type")
 PAIRX(RHS_IS_NOT_ARITH,             "rhs '%s' is not arithmetic type")

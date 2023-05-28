@@ -63,6 +63,7 @@ namespace namu {
         NAMU_DI("verify: asExpr: _me & _as aren't null");
         if(nul(me.getMe())) return _err(me.getPos(), errCode::LHS_IS_NULL);
         if(nul(me.getAs())) return _err(me.getPos(), errCode::RHS_IS_NULL);
+        if(me.getAs().isSub<nVoid>()) return _err(me.getPos(), errCode::VOID_NOT_CAST);
 
         NAMU_DI("verify: asExpr: checks that me can cast to 'as'");
         if(!me.getMe().is(me.getAs()))
