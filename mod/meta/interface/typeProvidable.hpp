@@ -13,9 +13,7 @@ namespace namu {
     public:
         virtual const type& getType() const = 0;
         nbool isSub(const type& it) const;
-        nbool isSub(const typeProvidable& it) const {
-            return isSub(it.getType());
-        }
+        nbool isSub(const typeProvidable& it) const;
         nbool isSuper(const type& it) const;
         template <typename T> nbool isSub() const { return getType().isSub<T>(); }
         template <typename T> nbool isSuper() const { return getType().isSuper<T>(); }

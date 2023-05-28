@@ -33,15 +33,15 @@ namespace namu {
 
     nbool me::init() {
         // pre:
-        //  Caution for not refering metaclass and binding inside of this:
+        //  caution for not refering metaclass and binding inside of this:
         //  while this func is called, a structuring for metaclass doesn't finished.
         //  so if you call funcs using metaclass (in)directly, that calling makes
         //  crash or infinite loop.
         //  please you make sure not to use those APIs.
         //
-        // Object class should not initialize explicitly:
-        //  or me makes recursive call. Because if we make a instance of TType<Object>,
-        //  it triggers Type::init inside of it.
+        // object class should not be initialized explicitly:
+        //  or it makes recursive call. because if we make a instance of ttype<object>,
+        //  it triggers type::init inside of it.
         if(isInit()) return false;
 
         // main:
@@ -53,8 +53,8 @@ namespace namu {
         //      will leds us to here, however nothing serius happen because init flag was set
         //      to true.
         _setInit(true);
-        //  get Supers info from Super:
-        //      at this point TType<Super> is instantiated, and "Super" also is all of this
+        //  get supers info from super:
+        //      at this point ttype<super> is instantiated, and "super" also is all of this
         //      sequences.
         type& super = const_cast<type&>(getSuper());
         super.init();
@@ -73,16 +73,16 @@ namespace namu {
     }
 
     nbool me::rel() {
-        // TODO:
         _setInit(false);
         return true;
     }
 
     nbool me::isSuper(const type& it) const {
         //  checking class hierarchy algorithm:
-        //        Use the "Tier" of the class hierarchy info to check it.
-        //        "Tier" means that how this class are inherited far from the Root class, that is, Object.
-        //        So, if the "this" is a super of given object "it", its "tier"th super class
+        //        use the "tier" of the class hierarchy info to check it.
+        //        "tier" means that how this class are inherited far from the Root class, that is,
+        //        object.
+        //        so, if the "this" is a super of given object "it", its "tier"th super class
         //        would must be the class of "this".
         if(nul(it)) return false;
         const types& its = it.getSupers();
@@ -98,11 +98,17 @@ namespace namu {
         return *this == target; // operator== is virtual func.
     }
 
+    nbool me::isSub(const type& it) const {
+        return it.isSuper(*this);
+    }
+
+    const void* me::getExtra() const {
+        return nullptr;
+    }
+
     nbool me::_logInitOk(nbool res) {
-        if(!res) {
-            NAMU_E("couldn't init meta of %s class.", getName().c_str());
-            return res;
-        }
+        if(!res)
+            return NAMU_E("couldn't init meta of %s class.", getName().c_str()), res;
 
         return res;
     }

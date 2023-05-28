@@ -3,19 +3,7 @@
 #include "../common.hpp"
 
 namespace namu {
-    /// @remark type returning Ttype<type> as result of getType()
-    ///         because this func always returns metaclass no matter of what me type is,
-    ///         users need to care about getting meta of metaclass on calling getType().
-    ///         for example,
-    ///             Thing& thing1 = ...; // let's assume that got from outside.
-    ///             Object obj;
-    ///
-    ///             nbool compare = obj.isSub(thing1.getType()); // user intend to get class of Thing.
-    ///             // however, value 'compare' will definitely be false if
-    ///             // thing was actually a retrived one by calling Thing.getType() before.
-    ///
-    ///             // because type::getType() will return Ttype<Ttype<T> >,
-    ///             // that stmt will be translated that checks object vs Ttype<T>.
+    /// @remark type returning ttype<type> as result of getType()
     class _nout type {
         NAMU_DECL_ME(type)
 
@@ -54,11 +42,11 @@ namespace namu {
 
         nbool isSuper(const type& it) const;
         template <typename T> nbool isSuper() const;
-        nbool isSub(const type& it) const { return it.isSuper(*this); }
+        nbool isSub(const type& it) const;
         template <typename T> nbool isSub() const;
         const type& getStatic() const NAMU_UNCONST_FUNC(_getStatic())
 
-        virtual const void* getExtra() const { return nullptr; }
+        virtual const void* getExtra() const;
 
     protected:
         //  type:
