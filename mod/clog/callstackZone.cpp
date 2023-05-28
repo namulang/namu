@@ -1,8 +1,9 @@
 #include "callstackZone.hpp"
 
-NAMU(DEF_ME(callstackZone)
-
 namespace namu {
+
+    NAMU(DEF_ME(callstackZone))
+
     me::callstackZone(nbool toShow) {
         logger& log = logger::get();
         prev = log.isShowCallstack();
