@@ -45,6 +45,7 @@ PAIRX(NO_ORIGIN,                    "there is no origin %s object")
 PAIRX(TYPE_NOT_EXIST,               "when defines variable '%s', couldn't find the type of it.")
 PAIRX(DONT_HAVE_CTOR,               "%s's type doesn't have a constructor without parameter.")
 PAIRX(TYPE_NOT_DEDUCED,             "type can't be deduced into meaningful one.")
+PAIRX(NO_VOID_CONTAINER,            "you can't make a void container")
 //  assign:
 PAIRX(TYPE_NOT_COMPATIBLE,          "rhs type '%s' is not compatible to lhs '%s' of this assigment")
 PAIRX(ASSIGN_TO_RVALUE,             "you can't assign %s to this unamed %s. please define it first")
@@ -94,10 +95,11 @@ PAIRX(PARAM_NOT_VOID,               "parameter '%s' shouldn't be a void type")
 PAIRX(BLK_CANT_MAKE_FRAME,          "block statement failed to construct frame structure")
 
 // container:
-PAIRX(ELEM_TYPE_IS_NULL,            "elem type is null")
+PAIRX(ELEM_TYPE_IS_NULL,            "there is no elem type")
 PAIRX(ELEM_TYPE_DEDUCED_NULL,       "elem type has been deduced to null")
 PAIRX(ELEM_TYPE_DEDUCED_WRONG,      "elem type has been deduced to %s type")
 PAIRX(ELEM_TYPE_NOT_VOID,           "elem type shouldn't be the void type")
+PAIRX(CONTAINER_IS_NULL,            "there is no container")
 
 // operator:
 PAIRX(STRING_IS_NOT_LOGICAL,        "string type isn't suitable to logical operators.")

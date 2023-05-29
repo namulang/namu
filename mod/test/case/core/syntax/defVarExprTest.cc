@@ -95,5 +95,13 @@ TEST_F(defVarExprTest, passingVoidIsOk) {
     ASSERT_TRUE(res);
     ASSERT_TRUE(res->isSub<nVoid>());
 }
+
+TEST_F(defVarExprTest, defVoidContainerNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            a void[]
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
 /* TODO: TEST_F(defVarExprTest, defineVarWithoutCtorNegative) {
 }*/

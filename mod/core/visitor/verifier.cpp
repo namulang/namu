@@ -206,6 +206,12 @@ namespace namu {
         if(eval->isSub<nVoid>())
             return _err(me.getPos(), errCode::VOID_CANT_DEFINED);
 
+        NAMU_DI("verify: defVarExpr: check whether make a void container.");
+        genericCppObj& mgdContainer = eval->cast<genericCppObj>();
+        if(!nul(mgdContainer))
+            if(mgdContainer.getElemType().isSub<nVoid>())
+                return _err(me.getPos(), errCode::NO_VOID_CONTAINER);
+
         const ntype& t = eval->getType();
         const nchar* typeName = nul(t) ? "null" : t.getName().c_str();
         if(nul(top)) return;
@@ -452,6 +458,8 @@ namespace namu {
     void me::onVisit(visitInfo i, forExpr& me) {
         str container = me._container;
         str conAsed = container->as<node>();
+        if(!conAsed)
+            return _err(me.getPos(), errCode::CONTAINER_IS_NULL);
         str elemType = conAsed->run("getElemType");
         if(!elemType)
             return _err(me.getPos(), errCode::ELEM_TYPE_IS_NULL);
