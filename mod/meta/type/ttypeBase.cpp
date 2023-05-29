@@ -6,16 +6,27 @@ namespace namu {
 #define SUPER type
 
     ME::ttypeBase() { this->init(); }
-    nbool ME::isTemplate() const { return false; }
-    nbool ME::isAbstract() const { return true; }
+
+    nbool ME::isTemplate() const {
+        return false;
+    }
+
+    nbool ME::isAbstract() const {
+        return true;
+    }
 
     const std::string& ME::getName() const {
         static const std::string inner = "void";
         return inner;
     }
 
-    void* ME::make() const { return nullptr; }
-    ncnt ME::size() const { return 0; }
+    void* ME::make() const {
+        return nullptr;
+    }
+
+    ncnt ME::size() const {
+        return 0;
+    }
 
     const type& ME::getSuper() const {
         return ttype<typename tadaptiveSuper<void>::super>::get();
@@ -46,7 +57,9 @@ namespace namu {
         return inner;
     }
 
-    type& ME::_getStatic() const { return const_cast<ME&>(get()); }
+    type& ME::_getStatic() const {
+        return const_cast<ME&>(get());
+    }
 
     ME::ttypeBase(nbool) {}
 

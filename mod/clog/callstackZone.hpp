@@ -8,6 +8,7 @@ namespace namu {
         callstackZone(nbool toShow);
         ~callstackZone();
 
+    public:
         nbool prev;
     };
 }

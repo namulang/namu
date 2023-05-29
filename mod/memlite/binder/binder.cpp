@@ -11,6 +11,9 @@ namespace namu {
     binder::binder(const me& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
     binder::~binder() { me::rel(); }
 
+    instance* me::operator->() { return &get(); }
+    instance& me::operator*() { return get(); }
+
     me& me::operator=(const me& rhs) {
         if(this == &rhs) return *this;
 

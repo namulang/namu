@@ -7,7 +7,9 @@ namespace namu {
 
     me::consoleStream(): super(false) {}
 
-    const char* me::getName() const { return "consoleStream"; }
+    const char* me::getName() const {
+        return "consoleStream";
+    }
 
     nbool me::dump(const char* message) {
         using std::cout;

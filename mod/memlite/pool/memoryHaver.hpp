@@ -12,6 +12,7 @@ namespace namu {
     public:
         virtual ~memoryHaver() {}
 
+    public:
         virtual nbool has(const instance& it) const = 0;
         virtual ncnt len() const = 0;
         virtual ncnt size() const = 0;

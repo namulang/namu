@@ -6,9 +6,11 @@ namespace namu {
     typedef std::string string;
 
     me::fileLogStream() {}
-    me::fileLogStream(const string& new_path) : stream(), _path(new_path) {}
+    me::fileLogStream(const string& new_path): stream(), _path(new_path) {}
 
-    const char* me::getName() const { return "fileLogStream"; }
+    const char* me::getName() const {
+        return "fileLogStream";
+    }
 
     nbool me::setPath(const string& new_path) {
         rel();
@@ -16,7 +18,9 @@ namespace namu {
         return false;
     }
 
-    const string& me::getPath() const { return _path; }
+    const string& me::getPath() const {
+        return _path;
+    }
 
     nbool me::dump(const char* message) {
         if(!isInit()) return true;

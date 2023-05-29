@@ -40,9 +40,11 @@ namespace namu {
         instance(const me& rhs);
         virtual ~instance();
 
+    public:
         void* operator new(size_t sz);
         void operator delete(void* pt, size_t sz);
 
+    public:
         virtual id getId() const;
         virtual nbool isHeap() const;
         const bindTag& getBindTag() const;

@@ -13,12 +13,13 @@ namespace namu {
         pool();
         virtual ~pool();
 
+    public:
         chunks& operator[](nidx n);
         chunks& operator[](const instance& inst);
         const chunks& operator[](nidx n) const NAMU_UNCONST_FUNC(operator[](n))
         const chunks& operator[](const instance& inst) const NAMU_UNCONST_FUNC(operator[](inst))
 
-
+    public:
         chunks& get(const instance& inst);
         chunks& get(nidx n);
         const chunks& get(const instance& inst) const NAMU_UNCONST_FUNC(get(inst))

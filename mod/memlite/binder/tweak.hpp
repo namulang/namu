@@ -20,12 +20,14 @@ namespace namu {
         tweak(const me& rhs);
         explicit tweak(const binder& rhs);
 
+    public:
         T* operator->();
         T& operator*();
         const T* operator->() const NAMU_UNCONST_FUNC(operator->())
         const T& operator*() const NAMU_UNCONST_FUNC(operator*())
         me& operator=(const binder& rhs);
 
+    public:
         using super::get;
         T& get();
         const T& get() const NAMU_UNCONST_FUNC(get())

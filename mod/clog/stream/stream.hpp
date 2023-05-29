@@ -11,6 +11,7 @@ namespace namu {
         stream(nbool isEnable = true);
         virtual ~stream();
 
+    public:
         /// @return true means an error.
         virtual nbool dump(const nchar* message);
         nbool isNull() const;

@@ -15,11 +15,13 @@ namespace namu {
         //  watcher:
         watcher();
 
+    public:
         watchCell& operator[](nidx n);
         watchCell& operator[](id newId);
         const watchCell& operator[](nidx n) const NAMU_UNCONST_FUNC(operator[](n))
         const watchCell& operator[](id newId) const NAMU_UNCONST_FUNC(operator[](newId))
 
+    public:
         watchCell& get(nidx n);
         watchCell& get(id newId);
         const watchCell& get(nidx n) const NAMU_UNCONST_FUNC(get(n));

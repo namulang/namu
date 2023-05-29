@@ -6,10 +6,17 @@ namespace namu {
 
     me::watcher() : chunk(sizeof(watchCell), false) {}
 
-    watchCell& me::operator[](nidx n) { return get(n); }
-    watchCell& me::operator[](id newId) { return get(newId); }
+    watchCell& me::operator[](nidx n) {
+        return get(n);
+    }
 
-    watchCell& me::get(nidx n) { return *(watchCell*)_get(n); }
+    watchCell& me::operator[](id newId) {
+        return get(newId);
+    }
+
+    watchCell& me::get(nidx n) {
+        return *(watchCell*)_get(n);
+    }
 
     watchCell& me::get(id newId) {
         watchCell& got = get(newId.tagN);

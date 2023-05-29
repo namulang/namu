@@ -6,18 +6,25 @@ namespace namu {
 
     me::chunk(ncnt blksize, ncnt sz)
         : super(blksize), _head(0), _len(0), _sz(0), _heap(0) {
-            _resize(sz);
-        }
-    me::~chunk() { me::rel(); }
-    ncnt me::len() const { return _len; }
-    ncnt me::size() const { return _sz; }
+        _resize(sz);
+    }
+
+    me::~chunk() {
+        me::rel();
+    }
+
+    ncnt me::len() const {
+        return _len;
+    }
+
+    ncnt me::size() const {
+        return _sz;
+    }
 
     nbool me::_resize(ncnt newSz) {
-        //  pre:
         if(newSz < MIN_SZ) newSz = MIN_SZ;
         if(newSz == _sz) return false;
 
-        //  main:
         nuchar* new1 = (nuchar*) _allocHeap(newSz);
         // considered if user resize far smaller rather than what it had.
         ncnt min = _sz < newSz ? _sz : newSz;
@@ -32,7 +39,8 @@ namespace namu {
 
     void* me::new1() {
         if(_len >= _sz)
-            return NAMU_E("new1() failed. chunk was full. you should have not called this in this situtation."), nullptr;
+            return NAMU_E("new1() failed. chunk was full. you should have not called this in this situtation."),
+                   nullptr;
 
         nidx* ret = (nidx*)_get(_head);
         if(nul(ret))
@@ -50,7 +58,8 @@ namespace namu {
         _head = ((nuchar*)used - _heap) / _getRealBlkSize();
         _len--;
         if(_head < 0)
-            return NAMU_E("chunk corrupted! used(%x) apparently wasn't on heap(%x).", used, _heap), false;
+            return NAMU_E("chunk corrupted! used(%x) apparently wasn't on heap(%x).", used, _heap),
+                   false;
         return true;
     }
 

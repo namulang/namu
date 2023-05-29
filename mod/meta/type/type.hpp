@@ -10,9 +10,11 @@ namespace namu {
     public:
         virtual ~type() {}
 
+    public:
         virtual nbool operator==(const me& rhs) const;
         nbool operator!=(const me& rhs) const;
 
+    public:
         virtual nbool isTemplate() const = 0;
         virtual nbool isAbstract() const = 0;
         virtual const std::string& getName() const = 0;

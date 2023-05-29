@@ -7,7 +7,9 @@ namespace namu {
         return getName() == rhs.getName();
     }
 
-    nbool me::operator!=(const me& rhs) const { return !operator==(rhs); }
+    nbool me::operator!=(const me& rhs) const {
+        return !operator==(rhs);
+    }
 
     const types& me::getLeafs() const {
         types* leafs = *_onGetLeafs();
