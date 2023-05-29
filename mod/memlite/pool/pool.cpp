@@ -8,10 +8,21 @@ namespace namu {
     me::pool() {}
     me::~pool() { rel(); }
 
-    chunks& me::operator[](nidx n) { return get(n); }
-    chunks& me::operator[](const instance& inst) { return get(inst); }
-    chunks& me::get(const instance& inst) { return get(inst.getType().size()); }
-    chunks& me::get(nidx n) { return *(chunks*)_get(n); }
+    chunks& me::operator[](nidx n) {
+        return get(n);
+    }
+
+    chunks& me::operator[](const instance& inst) {
+        return get(inst);
+    }
+
+    chunks& me::get(const instance& inst) {
+        return get(inst.getType().size());
+    }
+
+    chunks& me::get(nidx n) {
+        return *(chunks*)_get(n);
+    }
 
     nbool me::has(const instance& it) const {
         const chunks& got = get(it.getType().size());
@@ -21,8 +32,13 @@ namespace namu {
         return got.has(it);
     }
 
-    ncnt me::size() const { return _chunks.capacity(); }
-    ncnt me::len() const { return _chunks.size(); }
+    ncnt me::size() const {
+        return _chunks.capacity();
+    }
+
+    ncnt me::len() const {
+        return _chunks.size();
+    }
 
     nbool me::rel() {
         for(chunks* e : _chunks) {

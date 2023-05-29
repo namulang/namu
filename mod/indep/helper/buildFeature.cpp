@@ -6,17 +6,41 @@ namespace namu {
 
     NAMU_DEF_ME(buildFeature)
 
-    nint me::date::getYear() { return NAMU_BUILD_DATE_YEAR; }
-    nint me::date::getMonth() { return NAMU_BUILD_DATE_MONTH; }
-    nint me::date::getDay() { return NAMU_BUILD_DATE_DAY; }
+    nint me::date::getYear() {
+        return NAMU_BUILD_DATE_YEAR;
+    }
 
-    nint me::time::getHour() { return NAMU_BUILD_TIME_HOUR; }
-    nint me::time::getMin() { return NAMU_BUILD_TIME_MINUTE; }
-    nint me::time::getSec() { return NAMU_BUILD_TIME_SECOND; }
+    nint me::date::getMonth() {
+        return NAMU_BUILD_DATE_MONTH;
+    }
 
-    nint me::version::getMajor() { return NAMU_BUILD_VERSION_MAJOR; }
-    nint me::version::getMinor() { return NAMU_BUILD_VERSION_MINOR; }
-    nint me::version::getFix() { return NAMU_BUILD_VERSION_FIX; }
+    nint me::date::getDay() {
+        return NAMU_BUILD_DATE_DAY;
+    }
+
+    nint me::time::getHour() {
+        return NAMU_BUILD_TIME_HOUR;
+    }
+
+    nint me::time::getMin() {
+        return NAMU_BUILD_TIME_MINUTE;
+    }
+
+    nint me::time::getSec() {
+        return NAMU_BUILD_TIME_SECOND;
+    }
+
+    nint me::version::getMajor() {
+        return NAMU_BUILD_VERSION_MAJOR;
+    }
+
+    nint me::version::getMinor() {
+        return NAMU_BUILD_VERSION_MINOR;
+    }
+
+    nint me::version::getFix() {
+        return NAMU_BUILD_VERSION_FIX;
+    }
 
     me::platformType me::platform::get() {
         static platformType inner = PLATFORM_TYPE_START;

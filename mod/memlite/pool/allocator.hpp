@@ -12,6 +12,7 @@ namespace namu {
         //  allocator:
         explicit allocator(ncnt blksize = 1);
 
+    public:
         virtual void* new1() = 0;
         virtual nbool del(void* used, ncnt sz) = 0;
         ncnt getBlkSize() const;

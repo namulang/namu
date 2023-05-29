@@ -61,7 +61,6 @@ namespace namu {
         nbool _completeId(instance& it);
         nbool _sync(id new1);
 
-
     private:
         instance* _pt;
         ncnt _strong;

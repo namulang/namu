@@ -16,8 +16,8 @@ namespace namu {
 
     TEMPL
     nbool ME::bind(const T& it) {
-        // type checking before binding only is required to Bind class.
-        // Derived classes from this doesn't need it. because its type is specified.
+        // type checking before binding only is required to bind class.
+        // derived classes from this doesn't need it. because its type is specified.
         // prevent wrong type providing by compiler.
         return canBind(it);
     }

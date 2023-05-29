@@ -6,8 +6,9 @@ namespace namu {
 
     NAMU_DEF_ME(bindTag)
 
-    me::bindTag() : _pt(NULL), _strong(0) {}
-    me::bindTag(id newId) : _pt(NULL), _strong(0), _id(newId) {}
+    me::bindTag(): _pt(NULL), _strong(0) {}
+    me::bindTag(id newId): _pt(NULL), _strong(0), _id(newId) {}
+
     me::~bindTag() {
         _id.serial = 0;
     }
@@ -19,7 +20,9 @@ namespace namu {
         return instancer::get().getPool()[*_pt][*_pt];
     }
 
-    ncnt me::getStrongCnt() const { return _strong; }
+    ncnt me::getStrongCnt() const {
+        return _strong;
+    }
 
     void me::rel() {
         if(_pt && _id.isHeap())
@@ -29,10 +32,21 @@ namespace namu {
         _strong = 0;
     }
 
-    nbool me::isBind() const { return _pt; }
-    const type& me::getBindable() const { return ttype<instance>::get(); }
-    nbool me::canBind(const type& type) const { return type.isSub(getBindable()); }
-    id me::getId() const { return _id; }
+    nbool me::isBind() const {
+        return _pt;
+    }
+
+    const type& me::getBindable() const {
+        return ttype<instance>::get();
+    }
+
+    nbool me::canBind(const type& type) const {
+        return type.isSub(getBindable());
+    }
+
+    id me::getId() const {
+        return _id;
+    }
 
     nbool me::_onStrong(ncnt vote) {
         if(!_id.isHeap()) return false;
@@ -47,7 +61,9 @@ namespace namu {
         return true;
     }
 
-    instance& me::get() { return *_pt; }
+    instance& me::get() {
+        return *_pt;
+    }
 
     nbool me::bind(const instance& it) {
         rel();
@@ -75,8 +91,13 @@ namespace namu {
         return const_cast<bindTag&>(NAMU_GETS(instancer::get().getWatcher()[newId], blk));
     }
 
-    instance* me::operator->() { return &get(); }
-    instance& me::operator*() { return get(); }
+    instance* me::operator->() {
+        return &get();
+    }
+
+    instance& me::operator*() {
+        return get();
+    }
 
     const type& me::getType() const {
         return ttype<bindTag>::get();

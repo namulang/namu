@@ -13,11 +13,14 @@ namespace namu {
         //  chunk:
         static constexpr ncnt MIN_SZ = 20;
 
+    public:
         explicit chunk(ncnt blockSz=1, ncnt sz=MIN_SZ);
         ~chunk();
 
+    public:
         void* operator[](nidx n) { return get(n); }
 
+    public:
         void* get(nidx n) { return _get(n); }
 
         //  allocator:

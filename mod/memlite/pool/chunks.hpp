@@ -13,11 +13,13 @@ namespace namu {
         explicit chunks(ncnt blkbyte = 0);
         virtual ~chunks();
 
+    public:
         chunk& operator[](nidx n);
         const chunk& operator[](nidx n) const NAMU_UNCONST_FUNC(operator[](n))
         chunk& operator[](const instance& inst);
         const chunk& operator[](const instance& inst) const NAMU_UNCONST_FUNC(operator[](inst))
 
+    public:
         //  chunks:
         chunk& get(nidx n);
         chunk& get(const instance& it);

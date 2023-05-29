@@ -13,6 +13,7 @@ namespace namu {
         fileLogStream();
         explicit fileLogStream(const std::string& new_path);
 
+    public:
         nbool setPath(const std::string& new_path);
         const std::string& getPath() const;
         //  stream:

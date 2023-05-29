@@ -6,17 +6,38 @@ namespace namu {
     NAMU_DEF_ME(chunks, allocator)
 
     me::chunks(ncnt blkbyte) : super(blkbyte), _s(0) {}
-    me::~chunks() { _rel(); }
 
-    chunk& me::operator[](nidx n) { return get(n); }
-    chunk& me::operator[](const instance& inst) { return get(inst); }
+    me::~chunks() {
+        _rel();
+    }
 
-    chunk& me::get(nidx n) { return *(chunk*)_get(n); }
-    chunk& me::get(const instance& it) { return *(chunk*)_get(it.getId().chkN); }
+    chunk& me::operator[](nidx n) {
+        return get(n);
+    }
 
-    nbool me::rel() { return _rel(); }
-    ncnt me::len() const { return _chunks.size(); }
-    ncnt me::size() const { return len(); }
+    chunk& me::operator[](const instance& inst) {
+        return get(inst);
+    }
+
+    chunk& me::get(nidx n) {
+        return *(chunk*)_get(n);
+    }
+
+    chunk& me::get(const instance& it) {
+        return *(chunk*)_get(it.getId().chkN);
+    }
+
+    nbool me::rel() {
+        return _rel();
+    }
+
+    ncnt me::len() const {
+        return _chunks.size();
+    }
+
+    ncnt me::size() const {
+        return len();
+    }
 
     void* me::new1() {
         nidx n = _findCapable();

@@ -20,6 +20,7 @@ namespace namu {
     public:
         ttypeBase();
 
+    public:
         nbool isTemplate() const override;
         nbool isAbstract() const override;
         const std::string& getName() const override;
@@ -49,6 +50,7 @@ namespace namu {
     public:
         ttypeBase();
 
+    public:
         nbool isTemplate() const override;
         nbool isAbstract() const override;
 
