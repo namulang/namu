@@ -53,10 +53,6 @@ void yyerror(const char* s);
 
 %%
 
-// trhsexpr과 tlhsexpr:
-//  tlhsexpr은 할당이 가능한 변수. lvalue.
-//  trhsexpr은 값을 나타내는 모든 표현식.
-//  따라서 범주상으로 보았을때 trhsexpr 은 tlhsexpr을 포함한다. 더 크다는 얘기다.
 trhsexpr    : tbool {
                 $$ = new termSobj($1);
                 NAMU_DI("trhsexpr(%x) <-- %s", $$, $1 ? "true" : "false");

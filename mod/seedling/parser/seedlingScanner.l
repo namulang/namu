@@ -139,10 +139,10 @@ true|false {
 }
 
 <INITIAL>\' {
-    changeRule("DQUOTING", DQUOTING); // maximum parsing을 하기 때문에 state 관리를 해줘야 한다.
+    changeRule("DQUOTING", DQUOTING);
 }
 
-    <DQUOTING>[^\'\n]*\' { // DQUOTING 상태일때, <" 를 제외한 문자> + "가 붙는 경우
+    <DQUOTING>[^\'\n]*\' {
         changeRule("INITIAL", INITIAL);
         string parsed = string(yytext, strlen(yytext)-1);
         yylval.strVal = strdup(parsed.c_str());

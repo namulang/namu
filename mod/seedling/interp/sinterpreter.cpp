@@ -15,9 +15,11 @@ namespace namu {
         yy_delete_buffer(buffer);
         return ret;
     }
+
     tstr<sobj> me::interp(const std::string& script) {
         return interp(script.c_str());
     }
+
     tstr<sobj> me::interpFile(const nchar* path) {
         yyin = fopen(path, "r");
         yyrestart(yyin);
@@ -34,6 +36,7 @@ namespace namu {
         NAMU_I("%s seedling file interpreted.", fileName.c_str());
         return ret;
     }
+
     tstr<sobj> me::interpFile(const std::string& path) {
         return interpFile(path.c_str());
     }
