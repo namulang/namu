@@ -427,10 +427,15 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, baseObj& me) {
-        _us.push_back(&frame::_setMe(me));
-
         NAMU_DI("verify: baseObj: %s push me[%x] len=%d",
                 me.getType().getName().c_str(), &frame::_getMe(), me.subs().len());
+        _us.push_back(&frame::_setMe(me));
+
+        NAMU_DI("verify: baseObj: iterate all subs and checks void type variable");
+        for(const node& elem : me.subs())
+            if(elem.isSub<nVoid>())
+                // don't finsh and return. i need to check all subs by calling super::onVisit().
+                _err(elem.getPos(), errCode::VOID_CANT_DEFINED);
 
         onVisit(i, (baseObj::super&) me);
     }

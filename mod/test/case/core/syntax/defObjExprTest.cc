@@ -142,3 +142,17 @@ TEST_F(defObjExprTest, incompleteObjNegative2) {
             ret person.name
     )SRC").shouldVerified(false);
 }
+
+TEST_F(defObjExprTest, defVarWithVoidNegative) {
+    make().negative().parse(R"SRC(
+        def person
+            n void
+        main() void
+            ret
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+
+    errReport& rpt = getReport();
+    ASSERT_TRUE(rpt);
+    ASSERT_EQ(rpt[0].pos.row, 2);
+}
