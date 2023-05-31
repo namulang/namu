@@ -186,7 +186,9 @@ namespace namu {
 
         defVarExpr& defVar = candidate.cast<defVarExpr>();
         if(!nul(defVar)) {
-            s.asScope->add(defVar.getName(), defVar.getOrigin());
+            node* clone = (node*) defVar.getOrigin().clone();
+            clone->_setPos(defVar.getPos());
+            s.asScope->add(defVar.getName(), *clone);
             return &s;
         }
         defAssignExpr& defAssign = candidate.cast<defAssignExpr>();
