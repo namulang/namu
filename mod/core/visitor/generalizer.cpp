@@ -79,7 +79,11 @@ namespace namu {
         //  getRoot() func holds a local variable.
         //
         //  but ctor usually lives longer than local variable. I make it be on the heap.
-        me._setOrigin(*(node*) getRoot().clone());
+        baseObj& cast = getRoot().cast<baseObj>();
+        if(nul(cast))
+            getReport().add(err::newErr(errCode::MAKE_GENERIC_FAIL, i.name.c_str()));
+        else
+            me._setOrigin(*(node*) cast.getOrigin().clone());
 
         onVisit(i, (func&) me);
     }

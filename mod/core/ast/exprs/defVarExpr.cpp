@@ -11,17 +11,16 @@ namespace namu {
             _name(name), _where(where) {}
 
     str me::run(const args& a) {
-        const std::string& name = _name;
         str org = _org->as<node>();
         if(!org) {
             NAMU_E("getting origin by %s returns null", _name.c_str());
             return org;
         }
 
-        nbool res = _where ? _where->add(name, *org->run()) :
-            thread::get()._getNowFrame().pushLocal(name, *org->run());
+        nbool res = _where ? _where->add(_name, *org->run()) :
+            thread::get()._getNowFrame().pushLocal(_name, *org->run());
         if(!res)
-            NAMU_E("define variable %s is failed.", name.c_str());
+            NAMU_E("define variable %s is failed.", _name.c_str());
 
         return org;
     }

@@ -99,6 +99,12 @@ namespace namu {
         clonable* deepClone() const override;
         void rel() override;
 
+        const obj& getOrigin() const override {
+            if(!_org)
+                _org.bind(new me(getElemType()));
+            return *_org;
+        }
+
     protected:
         iteration* _onMakeIteration(ncnt step) const override;
 
