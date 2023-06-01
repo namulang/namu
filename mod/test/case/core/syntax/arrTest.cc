@@ -526,3 +526,15 @@ TEST_F(arrTest, test2DArray3) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 0);
 }
+
+TEST_F(arrTest, testCallCtor) {
+    make().parse(R"SRC(
+        main() int
+            a := {1, 2, 3}
+            a().len()
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 0);
+}

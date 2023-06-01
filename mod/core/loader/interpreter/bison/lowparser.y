@@ -593,7 +593,6 @@ static std::string traceErr(const yypcontext_t* ctx, yyscan_t scanner) {
 // when bison claims that it can't parse any further, this func will be called.
 // it means that error recovery has been failed already.
 static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
-    auto* eventer = yyget_extra(scanner);
     yysymbol_kind_t symbol = yypcontext_token(ctx);
 
     if(symbol != YYSYMBOL_YYUNDEF) {
