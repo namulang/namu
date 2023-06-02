@@ -12,7 +12,6 @@ namespace namu {
     /// bridge object only can shares 'shared' sub nodes.
     /// @param T represents native class.
     /// @param S represents whether it's generic obj or not.
-    ///        please fill with genericCppObj if you want to generic.
     template <typename T, typename S = obj>
     class tcppBridge : public S {
         // TODO: how to impement 'as()' on bridge obj:

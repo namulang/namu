@@ -16,7 +16,7 @@ namespace namu {
     }
 
     const node& me::getArrayType() const {
-        return getOrigin().getElemType();
+        return getOrigin().getType().getBean();
     }
 
     const arr& me::getOrigin() const {

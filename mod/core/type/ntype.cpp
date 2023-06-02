@@ -6,6 +6,22 @@ namespace namu {
 
     NAMU_DEF_ME(ntype)
 
+    nbool me::operator==(const type& rhs) const {
+        if(!super::operator==(rhs)) return false;
+
+        const ntype& cast = dynamic_cast<const ntype&>(rhs);
+        if(nul(cast)) return false;
+        // if there is no specified bean type, don't bean type check:
+        //  mostly, bean type should specified. except for binder. so if I return false
+        //  in this case,
+        //      tstr<arr> wrap(new tarr<nInt>())
+        //  above code doesn't work.
+        if(nul(cast.getBean())) return true;
+        if(nul(getBean())) return true;
+
+        return getBean().getType() == cast.getBean().getType();
+    }
+
     nbool me::isImpli(const type& to) const {
         return _getImpliAses().is(*this, to);
     }

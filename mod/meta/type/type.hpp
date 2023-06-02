@@ -22,7 +22,7 @@ namespace namu {
     public:
         virtual ~type() {}
 
-        nbool operator==(const me& rhs) const;
+        virtual nbool operator==(const me& rhs) const;
         nbool operator!=(const me& rhs) const;
 
         virtual nbool isTemplate() const = 0;
@@ -57,6 +57,8 @@ namespace namu {
         nbool isSub(const type& it) const { return it.isSuper(*this); }
         template <typename T> nbool isSub() const;
         const type& getStatic() const NAMU_UNCONST_FUNC(_getStatic())
+
+        virtual const void* getExtra() const { return nullptr; }
 
     protected:
         //  type:

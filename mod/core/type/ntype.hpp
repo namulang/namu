@@ -13,6 +13,25 @@ namespace namu {
         typedef std::map<const ntype*, deducer> deducers;
 
     public:
+        ntype(): _bean(nullptr) {}
+        ntype(const me& rhs): _bean(nullptr) {
+            setBean(rhs.getBean());
+        }
+
+        ~ntype() override {
+            setBean(nulOf<node>());
+        }
+
+    public:
+        nbool operator==(const type& rhs) const override;
+        me& operator=(const me& rhs) {
+            if(this == &rhs) return *this;
+
+            setBean(rhs.getBean());
+            return *this;
+        }
+
+    public:
         // ntype:
         /// whether variable 'it' can be a subtype of T
         template <typename T>
@@ -56,6 +75,23 @@ namespace namu {
         /// @return null it it's not relative between l & r.
         static const ntype& deduce(const ntype& l, const ntype& r);
 
+        virtual const node& getBean() const {
+            if(nul(_bean)) return nulOf<node>();
+
+            return **_bean;
+        }
+        nbool setBean(const node& newBean) {
+            if(nul(newBean)) {
+                if(_bean)
+                    delete _bean;
+                _bean = nullptr;
+                return true;
+            }
+            if(nul(_bean))
+                _bean = new str();
+            return _bean->bind(newBean);
+        }
+
     protected:
         // ntype:
         virtual const ases& _getImpliAses() const;
@@ -64,6 +100,9 @@ namespace namu {
     private:
         static deducers* _makeDeducers();
         static const ntype& _deduceSuperType(const ntype& l, const ntype& r);
+
+    private:
+        str* _bean;
     };
 
     typedef std::vector<const ntype*> ntypes;
