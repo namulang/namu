@@ -7,14 +7,24 @@ namespace namu {
     // another f**king annoying MSVC Hack:
     //  to avoid C2901 error, I need to declare sort of dllexport(import) things at here.
     //  spended plenty of hours again to find out the reason. thank you so much.
-    typedef class _nout tgenericCppBridge<narr> __argSuperClass;
+    typedef class _nout tgenericCppBridge<narr> __arrSuperClass;
 
-    class _nout arr : public __argSuperClass, public tucontainable<node>, tarrayable<node> {
-        NAMU(CLASS(arr, __argSuperClass), VISIT())
+    class _nout arr : public __arrSuperClass, public tucontainable<node>, tarrayable<node> {
+        // arr uses instance variable 'ntype':
+        //  ntype contains beanType as 'const type*' instance variable. so user should be
+        //  careful when calling ttype<arr>. because it will also return ntype instance
+        //  as a consequences, but it won't contain beanType.
+        //
+        //  the most appropriate getter for ntype of arr is to call getType() of instance
+        //  to arr.
+        NAMU(ME(arr, __arrSuperClass),
+             INIT_META(arr),
+             CLONE(arr),
+             VISIT())
+        typedef ntype metaType; // for ttype<T>
         typedef typename tucontainable<node>::iter iter;
         typedef typename tucontainable<node>::iteration iteration;
         typedef std::map<const type*, tstr<scope>> cache;
-        static inline const std::string TYPENAME = "T";
 
     public:
         arr();
@@ -25,9 +35,13 @@ namespace namu {
         node& operator[](nidx n) override;
 
     public:
+        const ntype& getType() const override {
+            return _type;
+        }
+
         using super::subs;
         nbicontainer& subs() override {
-            const type* key = &getElemType().getType();
+            const type* key = &getType().getBean().getType();
             auto e = _cache.find(key);
             if(e != _cache.end())
                 return e->second.get();
@@ -101,7 +115,7 @@ namespace namu {
 
         const obj& getOrigin() const override {
             if(!_org)
-                _org.bind(new me(getElemType()));
+                _org.bind(new me(getType().getBean()));
             return *_org;
         }
 
@@ -114,5 +128,7 @@ namespace namu {
 
     private:
         static inline cache _cache;
+        mutable tstr<obj> _org;
+        ttype<arr> _type;
     };
 }

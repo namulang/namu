@@ -6,7 +6,9 @@ namespace namu {
 
     template <typename T>
     class tarr : public arr {
-        NAMU(CLASS(tarr, arr))
+        NAMU(ME(tarr, arr),
+             INIT_META(tarr),
+             CLONE(tarr))
 
     public:
         tarr(): super(*new T()) {}

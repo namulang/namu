@@ -325,7 +325,7 @@ TEST_F(arrTest, testIteratorBridgedFunc) {
     str elem = res->run("get");
     ASSERT_TRUE(elem);
     ASSERT_EQ(elem->cast<nint>(), 1);
-    ASSERT_EQ(elem->getType(), arr1.getElemType().getType());
+    ASSERT_EQ(elem->getType(), arr1.getType().getBean().getType());
 
     str step = res->run("next", args{narr{*new nInt(1)}});
     ASSERT_TRUE(step);
@@ -537,4 +537,16 @@ TEST_F(arrTest, testCallCtor) {
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 0);
+}
+
+TEST_F(arrTest, addDifferentElemTypeNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            map := {{"hello", "world"}, {"I'm", "kniz"}}
+            f int[]
+            f.add(1)
+            f.add(2)
+            map.add(f)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
 }

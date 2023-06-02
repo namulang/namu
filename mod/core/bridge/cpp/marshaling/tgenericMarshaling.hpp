@@ -2,14 +2,14 @@
 
 #include "tmarshaling.hpp"
 #include "../../../ast/exprs/getExpr.hpp"
-#include "../genericCppObj.hpp"
+#include "../../../ast/obj.hpp"
 
 namespace namu {
     template <typename T, typename S, nbool isNode = tifSub<T, node>::is>
     struct tgenericMarshaling : public tmarshaling<T, S, isNode> {};
 
     template <>
-    struct _nout tgenericMarshaling<node&, genericCppObj, true> : public metaIf {
+    struct _nout tgenericMarshaling<node&, obj, true> : public metaIf {
         typedef getExpr mgdType;
 
         static node& toNative(node& it) {
@@ -33,7 +33,7 @@ namespace namu {
     };
 
     template <>
-    struct _nout tgenericMarshaling<node*, genericCppObj, true> : public metaIf {
+    struct _nout tgenericMarshaling<node*, obj, true> : public metaIf {
         typedef getExpr mgdType;
 
         static node* toNative(node& it) {
@@ -56,7 +56,7 @@ namespace namu {
         static yes canMarshal();
     };
     template <>
-    struct _nout tgenericMarshaling<const node&, genericCppObj, true> : public metaIf {
+    struct _nout tgenericMarshaling<const node&, obj, true> : public metaIf {
         typedef getExpr mgdType;
 
         static node& toNative(node& it) {
@@ -80,7 +80,7 @@ namespace namu {
     };
 
     template <>
-    struct _nout tgenericMarshaling<const node*, genericCppObj, true> : public metaIf {
+    struct _nout tgenericMarshaling<const node*, obj, true> : public metaIf {
         typedef getExpr mgdType;
 
         static node* toNative(node& it) {

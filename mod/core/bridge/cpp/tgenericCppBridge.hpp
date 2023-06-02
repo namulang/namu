@@ -1,13 +1,13 @@
 #pragma once
 
 #include "tcppBridge.hpp"
-#include "genericCppObj.hpp"
+#include "../../ast/obj.hpp"
 
 namespace namu {
 
     template <typename T>
-    class tgenericCppBridge : public tcppBridge<T, genericCppObj> {
-        typedef tcppBridge<T, genericCppObj> __super__;
+    class tgenericCppBridge : public tcppBridge<T, obj> {
+        typedef tcppBridge<T, obj> __super__;
         NAMU(CLASS(tgenericCppBridge, __super__))
 
     public:
@@ -25,12 +25,12 @@ namespace namu {
 
         template <typename Ret, typename... Args>
         me* genericFunc(const std::string& name, Ret(T::*fptr)(Args...)) {
-            this->subs().add(name, new tcppBridgeFunc<Ret, T, genericCppObj, tgenericMarshaling, Args...>(fptr));
+            this->subs().add(name, new tcppBridgeFunc<Ret, T, obj, tgenericMarshaling, Args...>(fptr));
             return this;
         }
         template <typename Ret, typename... Args>
         me* genericFunc(const std::string& name, Ret(T::*fptr)(Args...) const) {
-            this->subs().add(name, new tcppBridgeFunc<Ret, T, genericCppObj, tgenericMarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
+            this->subs().add(name, new tcppBridgeFunc<Ret, T, obj, tgenericMarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
             return this;
         }
 

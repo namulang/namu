@@ -8,8 +8,11 @@ namespace namu {
     NAMU(DEF_ME(arr), DEF_VISIT())
 
     namespace {
+        static inline const std::string TYPENAME = "T";
+
         typedef tucontainable<node>::iter niter;
         typedef tcppBridge<niter> __superMgdIter;
+
         class _nout mgdIter : public __superMgdIter {
             NAMU(CLASS(mgdIter, __superMgdIter))
 
@@ -67,7 +70,7 @@ namespace namu {
             NAMU(CLASS(getElemTypeFunc, func))
 
         public:
-            getElemTypeFunc(): _ret(new getExpr("T")) {}
+            getElemTypeFunc(): _ret(new getExpr(TYPENAME)) {}
 
         public:
             str getRet() const override {
@@ -87,8 +90,8 @@ namespace namu {
         };
     }
 
-    me::arr(): super(new narr()) { setElemType(*new obj()); }
-    me::arr(const node& newType): super(new narr()) { setElemType(newType); }
+    me::arr(): super(new narr()) { _type.setBean(*new obj()); }
+    me::arr(const node& newType): super(new narr()) { _type.setBean(newType); }
 
     node& me::operator[](nidx n) {
         return get()[n];
@@ -107,26 +110,26 @@ namespace namu {
     }
 
     nbool me::set(const iter& at, const node& new1) {
-        str ased = new1.asImpli(getElemType());
+        str ased = new1.asImpli(getType().getBean());
         if(ased->isSub<nVoid>()) return false;
 
         return get().set(at, *ased);
     }
     nbool me::set(nidx n, const node& new1) {
-        str ased = new1.asImpli(getElemType());
+        str ased = new1.asImpli(getType().getBean());
         if(ased->isSub<nVoid>()) return false;
         return get().set(n, *ased);
     }
 
     nbool me::add(const iter& at, const node& new1) {
-        str ased = new1.asImpli(getElemType());
+        str ased = new1.asImpli(getType().getBean());
         if(ased->isSub<nVoid>()) return false;
 
         return get().add(at, *ased);
     }
 
     nbool me::add(nidx n, const node& new1) {
-        str ased = new1.asImpli(getElemType());
+        str ased = new1.asImpli(getType().getBean());
         if(ased->isSub<nVoid>()) return false;
 
         return get().add(n, *ased);
@@ -173,7 +176,7 @@ namespace namu {
         _cache.insert({key, clone}); // this avoids infinite loop.
 
         generalizer g;
-        g.add(*new param(TYPENAME, getElemType()))
+        g.add(*new param(TYPENAME, getType().getBean()))
          .setRoot(*this)
          .start();
 

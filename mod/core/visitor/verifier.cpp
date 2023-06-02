@@ -207,9 +207,9 @@ namespace namu {
             return _err(me.getPos(), errCode::VOID_CANT_DEFINED);
 
         NAMU_DI("verify: defVarExpr: check whether make a void container.");
-        genericCppObj& mgdContainer = eval->cast<genericCppObj>();
-        if(!nul(mgdContainer))
-            if(mgdContainer.getElemType().isSub<nVoid>())
+        const node& bean = eval->getType().getBean();
+        if(!nul(bean))
+            if(bean.isSub<nVoid>())
                 return _err(me.getPos(), errCode::NO_VOID_CONTAINER);
 
         const ntype& t = eval->getType();

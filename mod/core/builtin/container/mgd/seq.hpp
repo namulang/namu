@@ -12,7 +12,20 @@ namespace namu {
     typedef class _nout tcppBridge<nseq> __seqSuperClass;
 
     class _nout seq : public __seqSuperClass, public tucontainable<nint>, tarrayable<nint> {
-        NAMU(CLASS(seq, __seqSuperClass), VISIT())
+        // seq uses wrapType:
+        //  wrapType contains beanType as 'const type*' instance variable. so user should be
+        //  careful when calling ttype<arr>. because it will also return wrapType instance
+        //  as a consequences, but it won't contain beanType.
+        //
+        //  the most appropriate getter for wrapType of arr is to call getType() of instance
+        //  to arr.
+        NAMU(ME(seq, __seqSuperClass),
+             INIT_META(seq),
+             CLONE(seq),
+             VISIT())
+
+    public:
+        typedef ntype metaType; // for ttype<T>
         typedef typename tucontainable<nint>::iter iter;
         typedef typename tucontainable<nint>::iteration iteration;
 
@@ -25,9 +38,14 @@ namespace namu {
         nint& operator[](nidx n) override { return get()[n]; }
 
     public:
-        const node& getElemType() const {
-            static nInt inner;
-            return inner;
+        const ntype& getType() const override {
+            static ntype* inner = nullptr;
+            if(nul(inner)) {
+                inner = new ttype<seq>();
+                inner->setBean(*new nInt());
+            }
+
+            return *inner;
         }
 
         using super::subs;
