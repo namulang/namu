@@ -102,48 +102,28 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">using</span> super::run;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">const</span> <a class="code" href="structnamu_1_1point.html">point</a>&amp; getPos()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">return</span> _pos;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">using</span> super::inFrame;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">void</span> inFrame(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnamu_1_1args.html">args</a>) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">void</span> outFrame() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">const</span> <a class="code" href="structnamu_1_1point.html">point</a>&amp; getPos() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">using</span> super::inFrame;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordtype">void</span> inFrame(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnamu_1_1args.html">args</a>) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> outFrame() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="classnamu_1_1clonable.html">clonable</a>* deepClone() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classnamu_1_1clonable.html">clonable</a>* deepClone()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            me* ret = (me*) clone();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="comment">// params:</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            ret-&gt;_params.rel();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">auto</span> e=_params.begin(); e ;++e)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                ret-&gt;_params.add((<a class="code" href="classnamu_1_1param.html">param</a>*) e-&gt;deepClone());</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="comment">// shares:</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            ret-&gt;_shares.rel();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">auto</span> e=_shares.begin(); e ;++e)</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                ret-&gt;_shares.add(e.getKey(), (<a class="code" href="classnamu_1_1node.html">node</a>*) e-&gt;deepClone());</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="comment">// retType:</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            ret-&gt;_retType.bind((<a class="code" href="classnamu_1_1node.html">node</a>*) _retType-&gt;deepClone());</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="comment">// blk:</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            ret-&gt;_blk.bind((<a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>*) _blk-&gt;deepClone());</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        str _postProcess();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        scope* _evalArgs(<span class="keyword">const</span> ucontainable&amp; args);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> _setPos(<span class="keyword">const</span> point&amp; new1)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            _pos = new1;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        params _params;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        nmap _shares;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        str _retType;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        tstr&lt;blockExpr&gt; _blk;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    };</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="classnamu_1_1tnmap.html">scope</a>* _evalArgs(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; <a class="code" href="classnamu_1_1args.html">args</a>);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">void</span> _setPos(<span class="keyword">const</span> <a class="code" href="structnamu_1_1point.html">point</a>&amp; new1) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _postProcess();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="classnamu_1_1tnarr.html">params</a> _params;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <a class="code" href="classnamu_1_1tnmap.html">nmap</a> _shares;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _retType;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;blockExpr&gt;</a> _blk;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    };</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1block_expr_html"><div class="ttname"><a href="classnamu_1_1block_expr.html">namu::blockExpr</a></div><div class="ttdef"><b>Definition:</b> blockExpr.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1clonable_html"><div class="ttname"><a href="classnamu_1_1clonable.html">namu::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
@@ -154,11 +134,12 @@ $(function() {
 <div class="ttc" id="aclassnamu_1_1mgd_func_html_a810cebf387ea8ab7f854abf31aae9744"><div class="ttname"><a href="classnamu_1_1mgd_func.html#a810cebf387ea8ab7f854abf31aae9744">namu::mgdFunc::setRet</a></div><div class="ttdeci">nbool setRet(const node &amp;newRet) override</div></div>
 <div class="ttc" id="aclassnamu_1_1mgd_func_html_ac19329ae8fc48ad8190fe86339d55202"><div class="ttname"><a href="classnamu_1_1mgd_func.html#ac19329ae8fc48ad8190fe86339d55202">namu::mgdFunc::getRet</a></div><div class="ttdeci">str getRet() const override</div></div>
 <div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:18</div></div>
-<div class="ttc" id="aclassnamu_1_1param_html"><div class="ttname"><a href="classnamu_1_1param.html">namu::param</a></div><div class="ttdef"><b>Definition:</b> param.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1tbicontainable_html"><div class="ttname"><a href="classnamu_1_1tbicontainable.html">namu::tbicontainable</a></div><div class="ttdef"><b>Definition:</b> tbicontainable.hpp:15</div></div>
 <div class="ttc" id="aclassnamu_1_1tnarr_html"><div class="ttname"><a href="classnamu_1_1tnarr.html">namu::tnarr&lt; param, strTactic &gt;</a></div></div>
 <div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1tnmap_html"><div class="ttname"><a href="classnamu_1_1tnmap.html">namu::tnmap</a></div><div class="ttdef"><b>Definition:</b> tnmap.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
+<div class="ttc" id="aclassnamu_1_1tucontainable_html"><div class="ttname"><a href="classnamu_1_1tucontainable.html">namu::tucontainable&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclassnamu_1_1verifier_html"><div class="ttname"><a href="classnamu_1_1verifier.html">namu::verifier</a></div><div class="ttdef"><b>Definition:</b> verifier.hpp:13</div></div>
 <div class="ttc" id="astructnamu_1_1point_html"><div class="ttname"><a href="structnamu_1_1point.html">namu::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>
 </div><!-- fragment --></div><!-- contents -->

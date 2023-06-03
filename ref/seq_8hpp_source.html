@@ -106,65 +106,55 @@ $(function() {
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tarrayable.html">tarrayable&lt;nint&gt;::operator</a>[];</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        nint&amp; operator[](nidx n)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> get()[n]; }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        nint&amp; operator[](nidx n) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1ntype.html">ntype</a>&amp; getType()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnamu_1_1ntype.html">ntype</a>* inner = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">if</span>(nul(inner)) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                inner = <span class="keyword">new</span> <a class="code" href="classnamu_1_1ttype.html">ttype&lt;seq&gt;</a>();</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                inner-&gt;getBeans().add(*<span class="keyword">new</span> <a class="code" href="classnamu_1_1n_int.html">nInt</a>());</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            }</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1ntype.html">ntype</a>&amp; getType() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">using</span> super::subs;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; subs() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        ncnt len() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">return</span> *inner;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">using</span> super::subs;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; subs() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        ncnt len()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> get().len(); }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        nbool has(nidx n)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> get().has(n); }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        nbool has(nidx n) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="comment">//  get:</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tarrayable.html">tarrayable&lt;nint&gt;::get</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">using</span> super::get;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        nint&amp; get(nidx n) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="comment">//  etc:</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordtype">void</span> rel() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="comment">//  get:</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tarrayable.html">tarrayable&lt;nint&gt;::get</a>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">using</span> super::get;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        nint&amp; get(nidx n)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> get().get(n); }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="comment">//  etc:</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">void</span> rel()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> get().rel(); }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(ncnt step) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="comment">// these method has been prohibited.</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="comment">//  set:</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tucontainable.html">tucontainable&lt;nint&gt;::set</a>;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tarrayable.html">tarrayable&lt;nint&gt;::set</a>;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        nbool set(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; at, <span class="keyword">const</span> nint&amp; new1)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        nbool set(nidx n, <span class="keyword">const</span> nint&amp; new1)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="comment">//  add:</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tucontainable.html">tucontainable&lt;nint&gt;::add</a>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tarrayable.html">tarrayable&lt;nint&gt;::add</a>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        nbool add(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; at, <span class="keyword">const</span> nint&amp; new1)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        nbool add(nidx n, <span class="keyword">const</span> nint&amp; new1)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordtype">void</span> add(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; here, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; to)<span class="keyword"> override </span>{}</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="comment">//  del:</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tucontainable.html">tucontainable&lt;nint&gt;::del</a>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        nbool del(nidx n)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        nbool del(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; it)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        nbool del(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; to)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    };</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(ncnt step) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="comment">// these method has been prohibited.</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="comment">//  set:</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tucontainable.html">tucontainable&lt;nint&gt;::set</a>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tarrayable.html">tarrayable&lt;nint&gt;::set</a>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        nbool set(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; at, <span class="keyword">const</span> nint&amp; new1) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        nbool set(nidx n, <span class="keyword">const</span> nint&amp; new1) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="comment">//  add:</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tucontainable.html">tucontainable&lt;nint&gt;::add</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tarrayable.html">tarrayable&lt;nint&gt;::add</a>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        nbool add(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; at, <span class="keyword">const</span> nint&amp; new1) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        nbool add(nidx n, <span class="keyword">const</span> nint&amp; new1) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">void</span> add(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; here, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; to) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="comment">//  del:</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1tucontainable.html">tucontainable&lt;nint&gt;::del</a>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        nbool del(nidx n) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        nbool del(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; it) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        nbool del(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; to) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    };</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
 <div class="ttc" id="aclassiteration_html"><div class="ttname"><a href="classiteration.html">iteration</a></div><div class="ttdef"><b>Definition:</b> biteration.hpp:4</div></div>
-<div class="ttc" id="aclassnamu_1_1n_int_html"><div class="ttname"><a href="classnamu_1_1n_int.html">namu::nInt</a></div><div class="ttdef"><b>Definition:</b> nInt.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1ntype_html"><div class="ttname"><a href="classnamu_1_1ntype.html">namu::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:12</div></div>
 <div class="ttc" id="aclassnamu_1_1seq_html"><div class="ttname"><a href="classnamu_1_1seq.html">namu::seq</a></div><div class="ttdef"><b>Definition:</b> seq.hpp:14</div></div>
 <div class="ttc" id="aclassnamu_1_1tarrayable_html"><div class="ttname"><a href="classnamu_1_1tarrayable.html">namu::tarrayable</a></div><div class="ttdef"><b>Definition:</b> tarrayable.hpp:10</div></div>
 <div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1ttype_html"><div class="ttname"><a href="classnamu_1_1ttype.html">namu::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:15</div></div>
 <div class="ttc" id="aclassnamu_1_1tucontainable_html"><div class="ttname"><a href="classnamu_1_1tucontainable.html">namu::tucontainable</a></div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
