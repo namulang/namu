@@ -341,7 +341,8 @@ namespace namu {
         str derivedSub = anySub.as<node>();
         if(!derivedSub) return _err(me.getPos(), errCode::CANT_ACCESS, ased->getType().getName().c_str(), "sub-node");
         NAMU_DI("verify: runExpr: derivedSub[%s]", derivedSub->getType().getName().c_str());
-        if(!derivedSub->canRun(me.getArgs())) return _err(me.getPos(), errCode::OBJ_WRONG_ARGS, me.getArgs().asStr().c_str());
+        if(!derivedSub->canRun(me.getArgs()))
+            return _err(me.getPos(), errCode::OBJ_WRONG_ARGS, me.getArgs().asStr().c_str());
 
         a.setMe(nulOf<baseObj>());
     }
