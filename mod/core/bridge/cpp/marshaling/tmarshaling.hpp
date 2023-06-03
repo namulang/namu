@@ -66,7 +66,7 @@ namespace namu {
         }
 
         static T& onAddParam() {
-            throw marshalErr();
+            return *new T();
         }
 
         static T& onGetRet() {

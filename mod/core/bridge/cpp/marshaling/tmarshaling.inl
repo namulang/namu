@@ -20,7 +20,7 @@ namespace namu {
 
     TEMPL
     typename ME::mgd& ME::onAddParam() {
-        return *new mgd();
+        return *new mgd(tmarshaling<T, S>::onAddParam());
     }
 
     TEMPL
