@@ -14,14 +14,14 @@ TEST_F(genericsTest, simpleDefineGenerics) {
             foo() str
                 ret print(1 as T)
 
-        main() str
+        main() int
             a := object<str>()
-            ret a.foo()
+            ret a.foo() == "1"
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "1");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(genericsTest, defineGenerics) {
@@ -32,14 +32,14 @@ TEST_F(genericsTest, defineGenerics) {
             foo(num e) e
                 ret age + num as e
 
-        main() str
+        main() int
             a := object<int>()
-            ret a.foo(2) as str
+            ret a.foo(2) as str == "2"
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "2");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(genericsTest, defineGenerics1) {
@@ -51,14 +51,14 @@ TEST_F(genericsTest, defineGenerics1) {
             boo() T
                 ret T()
 
-        main() str
+        main() int
             a := object<int>()
-            print(a.foo(2) as str)
+            print(a.foo(2) as str) == "2"
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "2");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(genericsTest, genericTwice1) {
@@ -95,10 +95,10 @@ TEST_F(genericsTest, genericTwice2Negative) {
                 print((val + age) as T)
                 ret val + age
 
-        main() str
+        main() int
             a := object<int>()
             b := object<str>() // run 'b.foo()' occurs F/C
-            ret b.foo("3.5")
+            ret b.foo("3.5") == "3.5"
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -111,14 +111,14 @@ TEST_F(genericsTest, genericTwice2) {
                 print((val + age) as str)
                 ret val + age
 
-        main() str
+        main() int
             a := object<int>()
             b := object<str>() // run 'b.foo()' occurs F/C
-            ret b.foo("3.5")
+            ret b.foo("3.5") == "3.5"
     )SRC").shouldVerified(true);
     str ret = run();
     ASSERT_TRUE(ret);
-    ASSERT_EQ(ret->cast<std::string>(), "3.5");
+    ASSERT_EQ(ret->cast<nint>(), 1);
 }
 
 TEST_F(genericsTest, simpleUseGenerics) {
@@ -128,16 +128,15 @@ TEST_F(genericsTest, simpleUseGenerics) {
                 print(msg)
                 ret msg
 
-        main() str
+        main() int
             o := object<str>()
             res := o.foo("hello generics!\n")
-            ret res
+            ret res == "hello generics!\n"
     )SRC").shouldVerified(true);
+
     str res = run();
     ASSERT_TRUE(res);
-    std::string msg = res->cast<std::string>();
-    ASSERT_EQ(msg, "hello generics!\n");
-    NAMU_I("msg from generics: %s", msg.c_str());
+    ASSERT_EQ(res->cast<nint>(), 1);
 }
 
 TEST_F(genericsTest, implicitReturnTest) {
@@ -146,13 +145,13 @@ TEST_F(genericsTest, implicitReturnTest) {
             foo() T
                 "hello " + "world"
 
-        main() str
+        main() int
             p := pakuman<str>()
-            p.foo()
+            p.foo() == "hello world"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res->cast<std::string>(), "hello world");
+    ASSERT_EQ(res->cast<nint>(), 1);
 }
 
 TEST_F(genericsTest, simpleUseGenerics2) {
@@ -163,13 +162,14 @@ TEST_F(genericsTest, simpleUseGenerics2) {
                 print((val + age) as T)
                 ret val + age
 
-        main() str
+        main() int
             b := object<str>()
-            ret b.foo("3.5")
+            ret b.foo("3.5") == "3.5"
     )SRC").shouldVerified(true);
+
     str ret = run();
     ASSERT_TRUE(ret);
-    ASSERT_EQ(ret->cast<std::string>(), "3.5");
+    ASSERT_EQ(ret->cast<nint>(), 1);
 }
 
 TEST_F(genericsTest, genericNegative) {
@@ -180,7 +180,7 @@ TEST_F(genericsTest, genericNegative) {
                 print((val + age) as T)
                 ret val + age
 
-        main() str
+        main() int
             b := object<int>() // error at print(int)
             ret b.foo(3.5)
     )SRC").shouldVerified(false);
@@ -192,11 +192,11 @@ TEST_F(genericsTest, genericParameter2) {
             foo(v1 T1, v2 T2) str
                 ret "v1=" + v1 as str + ", v2=" + v2 as str
 
-        main() str
-            ret obj<int, str>().foo(3, "hello")
+        main() int
+            ret obj<int, str>().foo(3, "hello") == "v1=3, v2=hello"
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "v1=3, v2=hello");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }

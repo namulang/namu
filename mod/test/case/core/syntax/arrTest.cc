@@ -438,7 +438,7 @@ TEST_F(arrTest, addFromEmptyArray) {
     make().parse(R"SRC(
         def person
             value str
-        main() str
+        main() int
             arr person[]
             for n in 1..20
                 elem := person()
@@ -449,7 +449,7 @@ TEST_F(arrTest, addFromEmptyArray) {
             res := ""
             for elem in arr
                 res = res + elem.value
-            res
+            res.len()
     )SRC").shouldVerified(true);
 }
 

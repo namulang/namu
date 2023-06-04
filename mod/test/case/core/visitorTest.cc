@@ -60,10 +60,10 @@ TEST_F(visitorTest, visitComplexExpressions) {
             foo() flt
                 5.0
 
-        main() flt
+        main() int
             o := obj()
             print(o.foo() as str)
-            ret o.foo() as flt
+            ret o.foo() as int
     )SRC").shouldVerified(true);
 
     node& root = getSubPack();
@@ -80,7 +80,7 @@ TEST_F(visitorTest, visitComplexExpressions) {
         }
 
         void onVisit(visitInfo i, asExpr& as) override {
-            if(as.getAs().as<node>()->isSub<nFlt>())
+            if(as.getAs().as<node>()->isSub<nInt>())
                 metAsFlt++;
         }
 
@@ -104,12 +104,12 @@ TEST_F(visitorTest, visitComplexExpressions) {
 TEST_F(visitorTest, visitComplexExpressions2Negative) {
     make().negative().parse(R"SRC(
         def obj
-            foo(a int) flt
+            foo(a int) int
                 ret 5.0 + a
 
-        main() flt
+        main() int
             o := obj()
-            res := o.foo() as flt
+            res := o.foo() as int
             res = res * 2
             ret res
     )SRC").shouldVerified(false);
@@ -118,12 +118,12 @@ TEST_F(visitorTest, visitComplexExpressions2Negative) {
 TEST_F(visitorTest, visitComplexExpressions2) {
     make().parse(R"SRC(
         def obj
-            foo(a int) flt
+            foo(a int) int
                 ret 5.0 + a
 
-        main() flt
+        main() int
             o := obj()
-            res := o.foo(5) as flt
+            res := o.foo(5) as int
             res = res * 2
             ret res
     )SRC").shouldVerified(true);

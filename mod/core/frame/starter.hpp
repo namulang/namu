@@ -11,6 +11,9 @@ namespace namu {
         NAMU(CLASS(starter, node))
 
     public:
+        static inline const std::string MAIN = "main";
+
+    public:
         // node:
         nbicontainer& subs() override;
 

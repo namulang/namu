@@ -60,8 +60,8 @@ TEST_F(runExprTest, runAndReturn2) {
     make().parse(R"SRC(
         foo() flt
             ret 3.5
-        main() flt
-            ret foo()
+        main() int
+            ret foo() == 3.5
     )SRC").shouldVerified(true);
 }
 
@@ -69,8 +69,8 @@ TEST_F(runExprTest, runAndReturn3) {
     make().parse(R"SRC(
         foo() flt
             3.5
-        main() flt
-            foo()
+        main() int
+            foo() == 3.5
     )SRC").shouldVerified(true);
 }
 
@@ -78,8 +78,8 @@ TEST_F(runExprTest, runWithArgument) {
     make().parse(R"SRC(
         foo(age int, grade flt) flt
             ret grade
-        main() flt
-            foo(22, 3.5)
+        main() int
+            foo(22, 3.5) == 3.5
     )SRC").shouldParsed(true);
     shouldVerified(true);
 }
@@ -88,7 +88,7 @@ TEST_F(runExprTest, runWithArgumentNegative) {
     negative().make().parse(R"SRC(
         foo(name str, grade flt) str
             ret name
-        main() flt
+        main() int
             foo("hello", 3.5)
     )SRC").shouldParsed(true);
     shouldVerified(false);
@@ -98,7 +98,7 @@ TEST_F(runExprTest, runWithArgument2) {
     negative().make().parse(R"SRC(
         foo(name str, grade flt) int
             3
-        make() flt
+        make() int
             foo("hello", 3.5)
     )SRC").shouldParsed(true);
     shouldVerified(true);

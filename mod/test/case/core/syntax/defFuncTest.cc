@@ -179,8 +179,8 @@ TEST_F(defFuncTest, wrongParamNegative) {
 
 TEST_F(defFuncTest, nameLikeStr) {
     make().parse(R"SRC(
-        main(str_ str) str
-            ret "wow"
+        main(str_ str) int
+            ret "wow".len()
     )SRC").shouldParsed(true);
     shouldVerified(true);
 }
@@ -191,11 +191,11 @@ TEST_F(defFuncTest, defFuncAtSubPack) {
             print(msg[0])
             msg[0]
 
-        main() str
+        main() int
             msgs := {"hello", "world"}
-            foo(msgs)
+            foo(msgs) == "hello"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "hello");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }

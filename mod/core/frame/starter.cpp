@@ -31,7 +31,7 @@ namespace namu {
         if(main.canRun(a)) {
             _prepareFrame(thread::get()._getFrames());
             NAMU_DI("============== START ================");
-            str res = pak.run("main");
+            str res = pak.run(MAIN);
             NAMU_DI("=====================================");
             return res;
         }
@@ -48,7 +48,7 @@ namespace namu {
 
     node& me::_findMain(node& pak, const args& a) {
         // TODO: now, only find to main() but I need to find main(argc, argv) case, too.
-        node& ret = pak.sub("main");
+        node& ret = pak.sub(MAIN);
         if(nul(ret))
             NAMU_E("couldn't find main().");
 

@@ -244,14 +244,15 @@ TEST_F(defAssignExprTest, defAssignIfWithoutElseNegative) {
 
 TEST_F(defAssignExprTest, defAssignIfWithElse) {
     make().parse(R"SRC(
-        main() str
+        main() int
             a := if true
                 "hello"
             else
                 "world"
+            ret a == "hello"
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "hello");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }

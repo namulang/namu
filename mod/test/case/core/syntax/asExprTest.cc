@@ -390,14 +390,14 @@ TEST_F(asExprTest, floatAs) {
             foo() int
                 5
 
-        main() flt
+        main() int
             o := obj()
             print(o.foo() as str)
-            ret o.foo() as flt
+            ret (o.foo() as flt) == 5.0
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nflt>(), 5.0f);
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(asExprTest, implicitCastBetweenArithmeticTypes) {

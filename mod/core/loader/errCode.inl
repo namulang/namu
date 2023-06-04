@@ -21,6 +21,7 @@ PAIRX(OBJ_ALREADY_EXIST,            "\'%s\' object already exists at %s")
 // func:
 PAIRX(FUNC_DONT_HAVE_ME,            "parameters of func not included 'me'")
 PAIRX(FUNC_REDIRECTED_OBJ,          "all funcs should be redirected by object")
+PAIRX(MAIN_FUNC_RET_TYPE,           "\'main\' func return type should be int or void")
 
 // parser:
 PAIRX(SYNTAX_ERR,                   "syntax error %s expected, but %s found")
