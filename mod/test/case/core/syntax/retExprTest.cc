@@ -16,8 +16,8 @@ TEST_F(retExprTest, simpleReturnTypeCheck) {
 
 TEST_F(retExprTest, simpleReturnTypeCheckStr) {
     make().parse(R"SRC(
-        main() str
-            ret "wow"
+        main() int
+            ret "wow" == "wow"
     )SRC").shouldVerified(true);
 }
 

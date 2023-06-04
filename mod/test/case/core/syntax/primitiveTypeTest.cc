@@ -21,11 +21,11 @@ TEST_F(primitiveTypeTest, strFuncLen) {
 
 TEST_F(primitiveTypeTest, strFuncGet) {
     make().parse(R"SRC(
-        main() char
-            "hello"[2]
+        main() int
+            "hello"[2] == 'l'
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nchar>(), nStr("hello")[2]);
+    ASSERT_EQ(res.cast<nint>(), 1);
 }

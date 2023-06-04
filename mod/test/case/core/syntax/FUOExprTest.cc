@@ -170,13 +170,13 @@ TEST_F(FUOExprTest, testUnaryPostfixDoubleMinus2) {
 
 TEST_F(FUOExprTest, testUnaryPostfixDoubleMinus3) {
     make().parse(R"SRC(
-        main() str
+        main() int
             a := "hello"
             a--
-            ret a
+            ret a == "hello"
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "hello");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }

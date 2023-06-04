@@ -28,8 +28,8 @@ TEST_F(commentTest, multiLineComment) {
     make().parse(R"SRC(
         age int /* age is age
         main() int */
-        main() flt
-            ret 2.5
+        main() int
+            ret 2
     )SRC").shouldVerified(true);
     scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
     scope& shares = (scope&) (((scopes&) getSubPack().subs()).getNext().getContainer());

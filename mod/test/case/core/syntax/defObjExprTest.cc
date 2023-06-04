@@ -62,7 +62,7 @@ TEST_F(defObjExprTest, make2Objects) {
             name := ""
             age int
 
-        main() str
+        main() int
             o1 := obj()
             o1.name = "Chales"
             o1.age = 36
@@ -70,12 +70,11 @@ TEST_F(defObjExprTest, make2Objects) {
             o2.name = "kniz"
             o2.age = 22
 
-            ret o1.name + o2.name + o1.age as str + o2.age as str
+            (o1.name + o2.name + o1.age as str + o2.age as str) == "Chaleskniz3622"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    std::string answer = "Chaleskniz3622";
-    ASSERT_EQ(res.cast<std::string>(), answer);
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(defObjExprTest, manipulate2Origin) {
@@ -84,7 +83,7 @@ TEST_F(defObjExprTest, manipulate2Origin) {
             name := ""
             age int
 
-        main() str
+        main() int
             o1 obj
             o1.name = "Chales"
             o1.age = 36
@@ -92,12 +91,11 @@ TEST_F(defObjExprTest, manipulate2Origin) {
             o2.name = "kniz"
             o2.age = 22
 
-            ret o1.name + o2.name + o1.age as str + o2.age as str
+            ret (o1.name + o2.name + o1.age as str + o2.age as str) == "Chaleskniz3622"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    std::string answer = "Chaleskniz3622";
-    ASSERT_EQ(res.cast<std::string>(), answer);
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(defObjExprTest, objAsParameter) {
@@ -108,13 +106,13 @@ TEST_F(defObjExprTest, objAsParameter) {
         foo(p person) str
             p.name
 
-        main() str
-            foo(person())
+        main() int
+            foo(person()) == "default"
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "default");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(defObjExprTest, incompleteObjNegative) {
@@ -125,8 +123,8 @@ TEST_F(defObjExprTest, incompleteObjNegative) {
         foo(p person) str
             p.name
 
-        main() str
-            foo(person)
+        main() int
+            foo(person).len()
     )SRC").shouldVerified(false);
 }
 
@@ -138,8 +136,8 @@ TEST_F(defObjExprTest, incompleteObjNegative2) {
         foo(p person) str
             p.name
 
-        main() str
-            ret person.name
+        main() int
+            ret person.name.len()
     )SRC").shouldVerified(false);
 }
 

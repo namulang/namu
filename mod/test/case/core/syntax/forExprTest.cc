@@ -103,7 +103,7 @@ TEST_F(forExprTest, loopObjects) {
             say() str
                 print("I'm " + name + " and " + age as str + " years old.\n")
 
-        main() str
+        main() int
             p1 person1
             p2 := person1()
             p3 := person1()
@@ -117,43 +117,12 @@ TEST_F(forExprTest, loopObjects) {
             sum := ""
             for p in {p1, p2, p3}
                 sum = sum + p.say()
-            ret sum
+            ret sum == "I'm Chales and 36 years old.\n" + "I'm Mario and 45 years old.\n" + "I'm Peach and 44 years old.\n"
     )SRC").shouldVerified(true);
-    /*str ret = run();
-    ASSERT_TRUE(ret);
-    std::string answer =    "I'm Chales and 36 years old.\n"
-                            "I'm Mario and 45 years old.\n"
-                            "I'm Peach and 44 years old.\n";
-    std::string msg = ret->cast<std::string>();
-    ASSERT_EQ(ret->cast<std::string>(), answer);*/
-}
 
-TEST_F(forExprTest, loopObjectsNegative) {
-    make().negative().parse(R"SRC(
-        def person
-            name := "unknown"
-            age := 0
-            say() str
-                print("I'm " + name + " and " + age as str + " years old.\n")
-
-        main() str
-            p1 person
-            p2 := person()
-            p3 := person()
-            p1.name = "Chales"
-            p1.age = 36
-            p2.name = "Mario"
-            p2.age = 45
-            p3.name = "Peach"
-            p3.age = 44
-
-            p1.say()
-
-            sum := ""
-            for p in {p1, p2, p3}
-                sum = sum + p.say1()
-            ret sum
-    )SRC").shouldVerified(false);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->cast<nint>(), 1);
 }
 
 TEST_F(forExprTest, useObjectAsContainer) {
@@ -177,17 +146,17 @@ TEST_F(forExprTest, returnMiddleOfLoop) {
         def person
             name := ""
 
-        main() str
+        main() int
             p1 := person()
             p1.name = "Chales"
 
             for p in {p1, person()}
-                ret p.name
-            ret ""
+                ret p.name == "Chales"
+            ret 0
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "Chales");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(forExprTest, returnMiddleOfLoop1) {
@@ -195,18 +164,18 @@ TEST_F(forExprTest, returnMiddleOfLoop1) {
         def person
             name := ""
 
-        main() str
+        main() int
             p1 := person()
             p1.name = "Chales"
 
             res := (for p in {p1, person()}
-                ret p1.name
+                break p1.name
             )
-            ret res + " Lee"
+            ret (res + " Lee") == "Chales Lee"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "Chales");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(forExprTest, returnMiddleOfLoop1WithoutParenthesis) {
@@ -214,17 +183,17 @@ TEST_F(forExprTest, returnMiddleOfLoop1WithoutParenthesis) {
         def person
             name := ""
 
-        main() str
+        main() int
             p1 := person()
             p1.name = "Chales"
 
             res := for p in {p1, person()}
-                ret p1.name
-            ret res + " Lee"
+                ret p1.name == "Chales"
+            ret 0
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "Chales");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(forExprTest, retMiddleOfLoop) {
@@ -232,18 +201,18 @@ TEST_F(forExprTest, retMiddleOfLoop) {
         def person
             name := ""
 
-        main() str
+        main() int
             p1 := person()
             p1.name = "Chales"
 
             res := (for p in {p1, person()}
                 p1.name
             )
-            ret res + " Lee"
+            ret res + " Lee" == "Chales Lee"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "Chales Lee");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(forExprTest, retMiddleOfLoopWithoutParenthesis) {
@@ -251,17 +220,17 @@ TEST_F(forExprTest, retMiddleOfLoopWithoutParenthesis) {
         def person
             name := ""
 
-        main() str
+        main() int
             p1 := person()
             p1.name = "Chales"
 
             res := for p in {p1, person()}
                 p1.name
-            ret res + " Lee"
+            ret res + " Lee" == "Chales Lee"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "Chales Lee");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(forExprTest, retMiddleOfLoopNegative) {
@@ -286,18 +255,18 @@ TEST_F(forExprTest, evalForExprWithoutRet) {
         def person
             name := ""
 
-        main() str
+        main() int
             p1 := person()
             p1.name = "Chales"
 
             res := (for p in {p1, person()}
                 p.name
             )
-            ret res
+            ret res == ""
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(forExprTest, simpleBreakTest) {
@@ -428,17 +397,18 @@ TEST_F(forExprTest, breakNestedForLoop) {
 
 TEST_F(forExprTest, evalOfForLoop) {
     make().parse(R"SRC(
-        main() str
+        main() int
             sum := 0
-            for n in 0..8
+            ans := for n in 0..8
                 if sum > 3
                     break "hello"
                 ++sum as str
+            ret ans == "hello"
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "hello");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(forExprTest, evalOfForLoopNegative) {

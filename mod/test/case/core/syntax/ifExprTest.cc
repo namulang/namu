@@ -205,7 +205,7 @@ TEST_F(ifExprTest, evalIfWithStrAndIntNegative) {
 
 TEST_F(ifExprTest, evalIfWithStrAndIntNegative2) {
     make().negative().parse(R"SRC(
-        main() str
+        main() int
             if 23 == 23.0
                 "hello"
             else
@@ -215,7 +215,7 @@ TEST_F(ifExprTest, evalIfWithStrAndIntNegative2) {
 
 TEST_F(ifExprTest, evalIfWithStrAndIntNegative3) {
     make().negative().parse(R"SRC(
-        main() str
+        main() int
             a := if 23 == 23.0
                 if true
                     false
@@ -229,7 +229,7 @@ TEST_F(ifExprTest, evalIfWithStrAndIntNegative3) {
 
 TEST_F(ifExprTest, evalIfWithStrAndInt) {
     make().parse(R"SRC(
-        main() str
+        main() int
             a := if 23 == 23.0
                 if true
                     "true"
@@ -237,17 +237,17 @@ TEST_F(ifExprTest, evalIfWithStrAndInt) {
                     "never"
             else
                 "false"
-            ret a
+            ret a == "true"
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "true");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(ifExprTest, testAssignWithCompoundExpr) {
     make().parse(R"SRC(
-        main() str
+        main() int
             a := "initial"
             a = if 23 == 23.0
                 if true
@@ -256,10 +256,10 @@ TEST_F(ifExprTest, testAssignWithCompoundExpr) {
                     "never"
             else
                 "false"
-            ret a
+            ret a == "true"
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<std::string>(), "true");
+    ASSERT_EQ(res.cast<nint>(), 1);
 }

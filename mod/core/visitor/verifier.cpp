@@ -3,7 +3,8 @@
 #include "../frame/thread.hpp"
 #include "../loader/errReport.hpp"
 #include "../builtin/primitive.hpp"
-#include"../ast.hpp"
+#include "../ast.hpp"
+#include "../frame/starter.hpp"
 
 namespace namu {
 
@@ -349,6 +350,13 @@ namespace namu {
 
     void me::onVisit(visitInfo i, mgdFunc& me) {
         onVisit(i, (mgdFunc::super&) me);
+
+        NAMU_DI("verify: mgdFunc: main func return type should be int or void");
+        if(i.name == starter::MAIN) {
+            str ret = me.getRet();
+            if(!ret->isSub<nInt>() && !ret->isSub<nVoid>())
+                _err(me.getPos(), errCode::MAIN_FUNC_RET_TYPE);
+        }
 
         NAMU_DI("verify: mgdFunc: retType exists and stmts exist one at least");
         str retType = me.getRet();

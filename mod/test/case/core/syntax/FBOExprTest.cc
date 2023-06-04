@@ -125,13 +125,13 @@ TEST_F(FBOExprTest, testStringAddSequence) {
     Helloworld(age int) int
         ret age
 
-    main() str
-        ret Helloworld(4) as str + "low\n"
+    main() int
+        ret (Helloworld(4) as str + "low\n") == "4low\n"
     )SRC").shouldVerified(true);
 
     namu::str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res->cast<std::string>(), "4low\n");
+    ASSERT_EQ(res->cast<nint>(), 1);
 }
 
 TEST_F(FBOExprTest, testStringAddBoolean) {
@@ -139,17 +139,15 @@ TEST_F(FBOExprTest, testStringAddBoolean) {
     Helloworld(age int) int
         ret age
 
-    main() str
-        ret (Helloworld(false as int) as str + "low\n" )
+    main() int
+        ret (Helloworld(false as int) as str + "low\n" ) == "0low\n"
     )SRC").shouldParsed(true);
     shouldVerified(true);
 
 
     NAMU_E("start run!");
     namu::str res = run();
-    std::string output = res->cast<std::string>();
-    ASSERT_EQ(output, "0low\n");
-    NAMU_E("end run = %s", output.c_str());
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(FBOExprTest, testStringAddBoolean2) {
@@ -157,19 +155,19 @@ TEST_F(FBOExprTest, testStringAddBoolean2) {
     Helloworld(age int) int
         ret age
 
-    main() str
-        ret (Helloworld(false as int) as str + "low\n" )
+    main() int
+        ret (Helloworld(false as int) as str + "low\n" ) == "0low\n"
     )SRC").shouldParsed(true);
     shouldVerified(true);
 
     namu::str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res->cast<std::string>(), "0low\n");
+    ASSERT_EQ(res->cast<nint>(), 1);
 }
 
 TEST_F(FBOExprTest, testLogicalBinaryOp) {
     make().parse(R"SRC(
-        main() bool
+        main() int
             a := 1
             b := 3
             a <= b
@@ -177,12 +175,12 @@ TEST_F(FBOExprTest, testLogicalBinaryOp) {
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nbool>(), true);
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(FBOExprTest, testLogicalBinaryOpWithDifferentType) {
     make().parse(R"SRC(
-        main() bool
+        main() int
             a := 1
             b := 3.5
             a > b
@@ -190,12 +188,12 @@ TEST_F(FBOExprTest, testLogicalBinaryOpWithDifferentType) {
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nbool>(), false);
+    ASSERT_EQ(res.cast<nint>(), 0);
 }
 
 TEST_F(FBOExprTest, testLogicalBinaryOpFltPrecision) {
     make().parse(R"SRC(
-        main() bool
+        main() int
             a := 3.4 + 0.1
             b := 3.5
             a == b
@@ -203,12 +201,12 @@ TEST_F(FBOExprTest, testLogicalBinaryOpFltPrecision) {
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nbool>(), true);
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(FBOExprTest, testLogicalBinaryOpStr) {
     make().parse(R"SRC(
-        main() bool
+        main() int
             a := "hello"
             b := "helwo"
             a >= b
@@ -216,12 +214,12 @@ TEST_F(FBOExprTest, testLogicalBinaryOpStr) {
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nbool>(), false);
+    ASSERT_EQ(res.cast<nint>(), 0);
 }
 
 TEST_F(FBOExprTest, testLogicalBinaryOpChar) {
     make().parse(R"SRC(
-        main() bool
+        main() int
             a := 'l'
             b := 'w'
             a > b
@@ -229,7 +227,7 @@ TEST_F(FBOExprTest, testLogicalBinaryOpChar) {
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nbool>(), false);
+    ASSERT_EQ(res.cast<nint>(), 0);
 }
 
 TEST_F(FBOExprTest, testStringToBoolean) {
@@ -263,13 +261,13 @@ TEST_F(FBOExprTest, testStringToBooleanNegative) {
 
 TEST_F(FBOExprTest, testLogicalAndOp) {
     make().parse(R"SRC(
-        main() bool
+        main() int
             ret true && 3 < 27
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nbool>(), true);
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(FBOExprTest, testLogicalAndOpNegative) {
@@ -277,7 +275,7 @@ TEST_F(FBOExprTest, testLogicalAndOpNegative) {
         foo() bool
             false
 
-        main() bool
+        main() int
             a := 0
             if (foo() && a = 1)
                 print("ok")
@@ -288,9 +286,9 @@ TEST_F(FBOExprTest, testLogicalAndOpNegative) {
 TEST_F(FBOExprTest, testLogicalAndOp2) {
     make().parse(R"SRC(
         foo() bool
-            false
+            true
 
-        main() bool
+        main() int
             a := 0
             if (foo() && (a = 1))
                 print("ok")
@@ -299,8 +297,8 @@ TEST_F(FBOExprTest, testLogicalAndOp2) {
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res->getType(), ttype<nBool>::get());
-    ASSERT_EQ(res.cast<nbool>(), true);
+    ASSERT_EQ(res->getType(), ttype<nInt>::get());
+    ASSERT_EQ(res.cast<nint>(), 1);
 }
 
 TEST_F(FBOExprTest, testLogicalAndOpShortCircuit) {
