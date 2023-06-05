@@ -281,14 +281,13 @@ primary: INTVAL {
      } | NAME {
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
-     }
+     } | defarray-initial-value { $$ = $1; }
 
 // expr:
 //  structure:
 expr-line: defexpr-line { $$ = $1; }
          | expr10 { $$ = $1; }
          | assign-line { $$ = $1; }
-         | defarray-initial-value { $$ = $1; }
          | defseq { $$ = $1; }
 
 expr-compound: defexpr-compound { $$ = $1; }

@@ -550,3 +550,14 @@ TEST_F(arrTest, addDifferentElemTypeNegative) {
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
+
+TEST_F(arrTest, namelessArr) {
+    make().parse(R"SRC(
+        main() int
+            {"hello", "world"}.len()
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 2);
+}
