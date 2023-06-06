@@ -561,3 +561,22 @@ TEST_F(arrTest, namelessArr) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 2);
 }
+
+TEST_F(arrTest, accessElementOnce) {
+    make().parse(R"SRC(
+        def p
+            cnt := 0
+            arr := {"h", "e"}
+            foo() str[]
+                cnt++
+                arr
+        main() int
+            p1 p
+            p1.foo()[1]
+            p1.cnt
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1); // shouldn't be 2.
+}
