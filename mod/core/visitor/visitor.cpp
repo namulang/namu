@@ -66,6 +66,16 @@ namespace namu {
     void me::onTraverse(visitInfo i, getExpr& e) {
         if(_isLog)
             NAMU_DI("getExpr[%s]::onTraverse", i.name.c_str());
+
+        // check me: --> skip
+
+        // check arguments:
+        const args& args = e.getSubArgs();
+        if(!nul(args)) {
+            int n = 0;
+            for(auto& elem : e.getSubArgs())
+                elem.accept(visitInfo {"", &e, n++, args.len(), i.depth+1}, *this);
+        }
     }
 
     void me::onTraverse(visitInfo i, frame& f) {
