@@ -29,7 +29,7 @@ namespace namu {
 #ifdef __EMSCRIPTEN__
         ret->get() = emscripten_run_script_string("prompt('input:');");
 #else
-        std::cin >> ret->get();
+        std::getline(std::cin, ret->get());
 #endif
 
         return str(ret);
