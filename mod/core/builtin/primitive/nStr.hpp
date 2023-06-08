@@ -30,6 +30,11 @@ namespace namu {
             // TODO: throw error
         }
 
+        /// @param end is exclusive.
+        tstr<nStr> substr(nint start, nint end) {
+            return tstr<nStr>(new nStr(get().substr(start, end - start)));
+        }
+
     protected:
         dumScope* _onMakeSubs() const override;
 

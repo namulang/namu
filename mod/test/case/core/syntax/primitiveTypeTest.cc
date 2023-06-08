@@ -22,7 +22,7 @@ TEST_F(primitiveTypeTest, strFuncLen) {
 TEST_F(primitiveTypeTest, strFuncGet) {
     make().parse(R"SRC(
         main() int
-            "hello"[2] == 'l'
+            "hello"[2] == "l"
     )SRC").shouldVerified(true);
 
     str res = run();
