@@ -20,8 +20,8 @@ namespace namu {
             }
         };
 
-        class getFunc : public APIBridge<nStr, nChar> {
-            typedef APIBridge<nStr, nChar> __super__;
+        class getFunc : public APIBridge<nStr, nStr> {
+            typedef APIBridge<nStr, nStr> __super__;
             NAMU(CLASS(getFunc, __super__))
 
         protected:
@@ -29,7 +29,7 @@ namespace namu {
                 if(a.len() != 1) return str();
 
                 nint n = a[0].cast<nint>();
-                return str(new nChar(cast[n]));
+                return cast.substr(n, n + 1);
             }
 
         public:
