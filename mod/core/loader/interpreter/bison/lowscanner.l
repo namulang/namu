@@ -114,7 +114,7 @@ void { return VOIDTYPE; }
 int { return INTTYPE; }
 str { return STRTYPE; }
 bool { return BOOLTYPE; }
-char { return CHARTYPE; }
+byte { return BYTETYPE; }
 flt { return FLTTYPE; }
 null { return NULTYPE; }
 pack { return PACK; }
@@ -136,13 +136,7 @@ while { return _WHILE_; }
     return NAME;
 }
 
-\'([^\r\f\n\'])\' {
-    yylval->asChar = yytext[1];
-    NAMU_DI("scanner: CHARVAR='%c'", yytext[0]);
-    return CHARVAR;
-}
-
-\"([^\r\f\n\"\\]*)\" {
+\'([^\r\f\n\"\\]*)\' {
     yylval->asStr = new std::string(yytext + 1, yyleng - 2);
     NAMU_DI("scanner: STRVAL=\"%s\"", yylval->asStr->c_str());
     return STRVAL;

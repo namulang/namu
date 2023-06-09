@@ -4,7 +4,7 @@
 #include "nBool.hpp"
 #include "nInt.hpp"
 #include "nFlt.hpp"
-#include "nChar.hpp"
+#include "nByte.hpp"
 #include "../../visitor/visitor.hpp"
 
 namespace namu {
@@ -109,12 +109,12 @@ namespace namu {
                 }
             };
             inner.add(new asInt());
-            struct asChar : public tas<nChar> {
+            struct asChar : public tas<nByte> {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
                     if (val.length() > 1) return str();
 
-                    return str(new nChar(val.at(0)));
+                    return str(new nByte(val.at(0)));
                 }
             };
             inner.add(new asChar());

@@ -3,7 +3,7 @@
 #include "../../ast/defaultCtor.hpp"
 #include "../../ast/defaultCopyCtor.hpp"
 #include "nFlt.hpp"
-#include "nChar.hpp"
+#include "nByte.hpp"
 #include "nBool.hpp"
 #include "../../visitor/visitor.hpp"
 
@@ -25,7 +25,7 @@ namespace namu {
         static ases inner;
         if(inner.len() <= 0) {
             inner.add(new asPrimitive<nFlt, nint>());
-            inner.add(new asPrimitive<nChar, nint>());
+            inner.add(new asPrimitive<nByte, nint>());
             inner.add(new asPrimitive<nBool, nint>());
         }
 

@@ -188,7 +188,7 @@ namespace namu {
     template <typename S> struct _nout tmarshaling<const nint&, S, false> : public tnormalMarshaling<nint, S, nInt> {};
     template <typename S> struct _nout tmarshaling<nbool, S, false> : public tnormalMarshaling<nbool, S, nBool> {};
     template <typename S> struct _nout tmarshaling<nflt, S, false> : public tnormalMarshaling<nflt, S, nFlt> {};
-    template <typename S> struct _nout tmarshaling<nchar, S, false> : public tnormalMarshaling<nchar, S, nChar> {};
+    template <typename S> struct _nout tmarshaling<nchar, S, false> : public tnormalMarshaling<nchar, S, nByte> {};
     template <typename S> struct _nout tmarshaling<std::string, S, false> : public tnormalMarshaling<const std::string&, S, nStr> {};
     template <typename S> struct _nout tmarshaling<std::string&, S, false> : public tnormalMarshaling<const std::string&, S, nStr> {};
     template <typename S> struct _nout tmarshaling<const std::string&, S, false> : public tnormalMarshaling<const std::string&, S, nStr> {};

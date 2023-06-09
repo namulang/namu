@@ -5,4 +5,4 @@
 #include "primitive/nStr.hpp"
 #include "primitive/nVoid.hpp"
 #include "primitive/nBool.hpp"
-#include "primitive/nChar.hpp"
+#include "primitive/nByte.hpp"

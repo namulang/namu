@@ -77,7 +77,7 @@
     ============================================================================================  */
 
 %union {
-    char asChar;
+    namu::nuchar asByte;
     int asInt;
     std::string* asStr;
     bool asBool;
@@ -115,13 +115,13 @@
 %token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE LOGICAL_AND LOGICAL_OR LSHIFT RSHIFT
 %token ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN OR_ASSIGN AND_ASSIGN XOR_ASSIGN
 //  primitive-type:
-%token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
+%token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE BYTETYPE
 //  reserved-keyword:
 %token IF _ELSE_ AKA RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
 %token _WHILE_ ELIF
 
 // value-holding-token:
-%token <asChar> CHARVAR
+%token <asByte> BYTEVAL
 %token <asInt> INTVAL
 %token <asFlt> FLTVAL
 %token <asBool> BOOLVAL
@@ -273,8 +273,8 @@ primary: INTVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nFlt>($1);
      } | BOOLVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nBool>($1);
-     } | CHARVAR {
-       $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
+     } | BYTEVAL {
+       $$ = yyget_extra(scanner)->onPrimitive<nByte>($1);
      } | '(' expr ')' {
         // TODO: list should contain 1 element.
         $$ = $2;
@@ -467,7 +467,7 @@ defblock: %empty {
 //  type:
 type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
     | INTTYPE { $$ = yyget_extra(scanner)->onPrimitive<nInt>(); }
-    | CHARTYPE { $$ = yyget_extra(scanner)->onPrimitive<nChar>(); }
+    | BYTETYPE { $$ = yyget_extra(scanner)->onPrimitive<nByte>(); }
     | STRTYPE { $$ = yyget_extra(scanner)->onPrimitive<nStr>(); }
     | BOOLTYPE { $$ = yyget_extra(scanner)->onPrimitive<nBool>(); }
     | FLTTYPE { $$ = yyget_extra(scanner)->onPrimitive<nFlt>(); }

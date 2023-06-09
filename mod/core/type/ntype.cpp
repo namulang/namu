@@ -85,28 +85,28 @@ namespace namu {
             {_X(nInt), {
                 {_X(nInt), _X(nInt)},
                 {_X(nFlt), _X(nFlt)}, // if nInt + nFlt ==> nFlt
-                {_X(nChar), _X(nInt)},
+                {_X(nByte), _X(nInt)},
                 {_X(nBool), _X(nInt)}
             }},
             {_X(nFlt), {
                 {_X(nInt), _X(nFlt)},
                 {_X(nFlt), _X(nFlt)},
-                {_X(nChar), _X(nFlt)},
+                {_X(nByte), _X(nFlt)},
                 {_X(nBool), _X(nFlt)}
             }},
             {_X(nStr), {
                 {_X(nStr), _X(nStr)},
             }},
-            {_X(nChar), {
+            {_X(nByte), {
                 {_X(nInt), _X(nInt)},
                 {_X(nFlt), _X(nFlt)},
-                {_X(nChar), _X(nChar)},
-                {_X(nBool), _X(nChar)}
+                {_X(nByte), _X(nByte)},
+                {_X(nBool), _X(nByte)}
             }},
             {_X(nBool), {
                 {_X(nInt), _X(nInt)},
                 {_X(nFlt), _X(nFlt)},
-                {_X(nChar), _X(nInt)},
+                {_X(nByte), _X(nInt)},
                 {_X(nBool), _X(nBool)}
             }},
         };
