@@ -510,7 +510,7 @@ TEST_F(arrTest, test2DArray2) {
 
 TEST_F(arrTest, test2DArray3) {
     make().parse(R"SRC(
-        foo(m char[]) void
+        foo(m byte[]) void
             for n in 0..m.len()
                 print(m[n] as str)
             print("\n")

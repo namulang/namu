@@ -4,9 +4,9 @@
 
 namespace namu {
 
-    class _nout nChar : public primitiveObj<nchar> {
+    class _nout nByte : public primitiveObj<nchar> {
 
-        class _nout wCharType : public ntype {
+        class _nout nByteType : public ntype {
         public:
             nbool isImmutable() const override;
 
@@ -15,11 +15,11 @@ namespace namu {
             const ases& _getAses() const override;
         };
 
-        NAMU(CLASS(nChar, primitiveObj, wCharType), VISIT())
+        NAMU(CLASS(nByte, primitiveObj, nByteType), VISIT())
 
     public:
-        nChar();
-        nChar(nchar val);
+        nByte();
+        nByte(nchar val);
 
     public:
         tstr<arithmeticObj> bitwiseNot() const override {

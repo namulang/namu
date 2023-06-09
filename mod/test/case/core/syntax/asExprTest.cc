@@ -36,7 +36,7 @@ TEST_F(asExprTest, castInt2) {
 
 TEST_F(asExprTest, castInt3) {
     make().parse(R"SRC(
-        foo(age char) void
+        foo(age byte) void
             main()
         main() void
             foo(23)
@@ -69,7 +69,7 @@ TEST_F(asExprTest, castFlt) {
     )SRC").shouldVerified(true);
 
     make().parse(R"SRC(
-        foo(age char) void
+        foo(age byte) void
             main()
         main() void
             foo(23.0)
@@ -91,14 +91,14 @@ TEST_F(asExprTest, castFlt) {
     shouldVerified(false);
 }
 
-TEST_F(asExprTest, castChar) {
-    // implicit casting of char:
+TEST_F(asExprTest, castByte) {
+    // implicit casting of byte:
     //  -> nbool
     negative().make().parse(R"SRC(
         foo(age int) void
             main()
         main() void
-            foo('a')
+            foo(byte(233)
     )SRC").shouldParsed(true);
     shouldVerified(false);
 
@@ -119,9 +119,9 @@ TEST_F(asExprTest, castChar) {
     shouldVerified(false);
 }
 
-TEST_F(asExprTest, castCharPositive) {
+TEST_F(asExprTest, castBytePositive) {
     make().parse(R"SRC(
-        foo(age char) void
+        foo(age byte) void
             main()
         main() void
             foo('a')
@@ -157,7 +157,7 @@ TEST_F(asExprTest, castBool) {
 
 TEST_F(asExprTest, castBool1) {
     negative().make().parse(R"SRC(
-        foo(age char) void
+        foo(age byte) void
             main()
         main() void
             foo(true)
@@ -202,7 +202,7 @@ TEST_F(asExprTest, castStrNegative) {
     shouldVerified(false);
 
     negative().make().parse(R"SRC(
-        foo(age char) void
+        foo(age byte) void
             main()
         main() void
             foo("wow")
@@ -281,10 +281,10 @@ TEST_F(asExprTest, simpleAsInt3) {
 
 TEST_F(asExprTest, simpleAsInt4) {
     make().parse(R"SRC(
-        foo(age char) void
+        foo(age byte) void
             main()
         main() void
-            foo(23 as char)
+            foo(23 as byte)
     )SRC").shouldVerified(true);
 }
 
@@ -361,7 +361,7 @@ TEST_F(asExprTest, deduceTest1) {
     ASSERT_FALSE(nul(res));
     ASSERT_EQ(*res, ttype<nInt>::get());
 
-    res = &it.deduce<nChar>();
+    res = &it.deduce<nByte>();
     ASSERT_FALSE(nul(res));
     ASSERT_EQ(*res, ttype<nInt>::get());
 

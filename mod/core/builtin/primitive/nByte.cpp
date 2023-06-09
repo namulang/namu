@@ -1,4 +1,4 @@
-#include "nChar.hpp"
+#include "nByte.hpp"
 #include "../../ast/defaultCtor.hpp"
 #include "../../ast/defaultCopyCtor.hpp"
 #include "nInt.hpp"
@@ -8,11 +8,11 @@
 
 namespace namu {
 
-    NAMU(DEF_ME(nChar), DEF_VISIT())
+    NAMU(DEF_ME(nByte), DEF_VISIT())
 
-    nbool me::wCharType::isImmutable() const { return true; }
+    nbool me::nByteType::isImmutable() const { return true; }
 
-    const ases& me::wCharType::_getImpliAses() const {
+    const ases& me::nByteType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
             inner.add(new asPrimitive<nBool, nchar>());
@@ -21,7 +21,7 @@ namespace namu {
         return inner;
     }
 
-    const ases& me::wCharType::_getAses() const {
+    const ases& me::nByteType::_getAses() const {
         static ases inner;
         if(inner.len() <= 0) {
             inner.add(new asPrimitive<nInt, nchar>());
@@ -39,11 +39,11 @@ namespace namu {
         return inner;
     }
 
-    me::nChar() {}
-    me::nChar(nchar val): super(val) {}
+    me::nByte() {}
+    me::nByte(nchar val): super(val) {}
 
     dumScope* me::_onMakeSubs() const {
-        static nChar inner;
+        static nByte inner;
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
         scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));

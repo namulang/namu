@@ -15,7 +15,7 @@ namespace namu {
             new nInt(),
             new nFlt(),
             new nStr(),
-            new nChar(),
+            new nByte(),
             new nBool(),
         };
 
