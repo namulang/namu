@@ -86,7 +86,7 @@ namespace {
 }
 
 [-]*[[:digit:]]+ {
-    yylval->asInt = atoi(yytext);
+    yylval->asInt = std::stoi(yytext, nullptr, 0);
     NAMU_DI("scanner: INTVAL=%s", yytext);
     return INTVAL;
 }
@@ -129,6 +129,12 @@ in { return _IN_; }
 else { return _ELSE_; }
 elif { return ELIF; }
 while { return _WHILE_; }
+
+0x[0-9a-fA-F]+ {
+    yylval->asInt = std::stoi(yytext, nullptr, 0);
+    NAMU_DI("scanner: INTVAL=%s(%d)", yytext, yylval->asInt);
+    return INTVAL;
+}
 
 [a-zA-Z0-9_]+ {
     yylval->asStr = new std::string(yytext);
