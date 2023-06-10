@@ -124,7 +124,7 @@ TEST_F(asExprTest, castBytePositive) {
         foo(age byte) void
             main()
         main() void
-            foo('a')
+            foo(0xff)
     )SRC").shouldVerified(true);
 
     make().parse(R"SRC(

@@ -15,7 +15,8 @@ namespace namu {
     const ases& me::nByteType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            inner.add(new asPrimitive<nBool, nchar>());
+            inner.add(new asPrimitive<nBool, nuchar>());
+            inner.add(new asPrimitive<nInt, nuchar>());
         }
 
         return inner;
@@ -24,12 +25,11 @@ namespace namu {
     const ases& me::nByteType::_getAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            inner.add(new asPrimitive<nInt, nchar>());
-            inner.add(new asPrimitive<nFlt, nchar>());
+            inner.add(new asPrimitive<nFlt, nuchar>());
             struct asStr : public tas<nStr> {
                 str as(const node& me, const type& to) const override {
                     std::string val;
-                    val.push_back(me.cast<nchar>());
+                    val.push_back(me.cast<nuchar>());
                     return str(new nStr(val));
                 }
             };
@@ -40,7 +40,7 @@ namespace namu {
     }
 
     me::nByte() {}
-    me::nByte(nchar val): super(val) {}
+    me::nByte(nuchar val): super(val) {}
 
     dumScope* me::_onMakeSubs() const {
         static nByte inner;

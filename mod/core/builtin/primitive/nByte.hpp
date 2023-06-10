@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    class _nout nByte : public primitiveObj<nchar> {
+    class _nout nByte : public primitiveObj<nuchar> {
 
         class _nout nByteType : public ntype {
         public:
@@ -19,7 +19,7 @@ namespace namu {
 
     public:
         nByte();
-        nByte(nchar val);
+        nByte(nuchar val);
 
     public:
         tstr<arithmeticObj> bitwiseNot() const override {

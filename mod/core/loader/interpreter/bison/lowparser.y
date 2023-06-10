@@ -77,7 +77,6 @@
     ============================================================================================  */
 
 %union {
-    namu::nuchar asByte;
     int asInt;
     std::string* asStr;
     bool asBool;
@@ -121,7 +120,6 @@
 %token _WHILE_ ELIF
 
 // value-holding-token:
-%token <asByte> BYTEVAL
 %token <asInt> INTVAL
 %token <asFlt> FLTVAL
 %token <asBool> BOOLVAL
@@ -273,8 +271,6 @@ primary: INTVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nFlt>($1);
      } | BOOLVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nBool>($1);
-     } | BYTEVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<nByte>($1);
      } | '(' expr ')' {
         // TODO: list should contain 1 element.
         $$ = $2;
