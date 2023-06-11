@@ -54,3 +54,36 @@ TEST_F(literalExprTest, octalValue2) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 15);
 }
+
+TEST_F(literalExprTest, useCtor) {
+    make().parse(R"SRC(
+        main() int
+            0xff as byte
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 255);
+}
+
+TEST_F(literalExprTest, useCtor1) {
+    make().parse(R"SRC(
+        main() int
+            0xff as flt
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 255);
+}
+
+TEST_F(literalExprTest, useCtor2) {
+    make().parse(R"SRC(
+        main() int
+            "0xff" as int
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 255);
+}

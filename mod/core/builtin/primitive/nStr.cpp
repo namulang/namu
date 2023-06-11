@@ -109,15 +109,15 @@ namespace namu {
                 }
             };
             inner.add(new asInt());
-            struct asChar : public tas<nByte> {
+            struct asByte : public tas<nByte> {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
                     if (val.length() > 1) return str();
 
-                    return str(new nByte(val.at(0)));
+                    return str(new nByte(std::stoi(val, nullptr, 0)));
                 }
             };
-            inner.add(new asChar());
+            inner.add(new asByte());
         }
 
         return inner;
