@@ -91,35 +91,37 @@ TEST_F(asExprTest, castFlt) {
     shouldVerified(false);
 }
 
-TEST_F(asExprTest, castByte) {
+TEST_F(asExprTest, castByteNegative) {
     // implicit casting of byte:
     //  -> nbool
     negative().make().parse(R"SRC(
         foo(age int) void
             main()
         main() void
-            foo(byte(233)
-    )SRC").shouldParsed(true);
-    shouldVerified(false);
+            foo(233 as byte)
+    )SRC").shouldVerified(true);
+}
 
+TEST_F(asExprTest, castByteNegative2) {
     negative().make().parse(R"SRC(
         foo(age flt) void
             main()
         main() void
-            foo('a')
-    )SRC").shouldParsed(true);
-    shouldVerified(false);
+            foo(0xff)
+    )SRC").shouldVerified(true);
+}
 
+TEST_F(asExprTest, castByteNegative3) {
     negative().make().parse(R"SRC(
         foo(age str) void
             main()
         main() void
-            foo('a')
+            foo(0xff as byte)
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
 
-TEST_F(asExprTest, castBytePositive) {
+TEST_F(asExprTest, castByte3) {
     make().parse(R"SRC(
         foo(age byte) void
             main()
@@ -131,7 +133,7 @@ TEST_F(asExprTest, castBytePositive) {
         foo(age bool) void
             main()
         main() void
-            foo('a')
+            foo(0xff as byte)
     )SRC").shouldVerified(true);
 }
 

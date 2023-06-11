@@ -75,7 +75,8 @@ TEST_F(opTest, exprAddFuncCall3) {
         pack demo
         main() void
             2 + 3*27 + 44 - foo('a12') * 27/34*43 - a.foo(b.boo(c.goo()))
-    )SRC").shouldParsed(false);
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
 }
 
 TEST_F(opTest, IgnoreWhitespaceAfterBinaryOpAndComma) {

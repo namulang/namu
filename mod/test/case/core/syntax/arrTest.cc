@@ -516,7 +516,7 @@ TEST_F(arrTest, test2DArray3) {
             print("\n")
 
         main() int
-            msgs := {{'h', 'e', 'l', 'l', 'o'}, {'w', 'o', 'r', 'l', 'd'}}
+            msgs := {{0 as byte, 1 as byte, 2 as byte, 3 as byte, 4 as byte}, {5 as byte, 6 as byte, 7 as byte, 8 as byte, 9 as byte}}
             for n in 0..msgs.len()
                 foo(msgs[n])
             ret 0

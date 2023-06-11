@@ -54,7 +54,7 @@ TEST(ntypeTest, allImplicitCastingForPrimitives) {
     nInt i;
     nFlt f;
     nBool b;
-    nByte c;
+    nByte by;
     nStr s;
 
     // int:
@@ -78,12 +78,12 @@ TEST(ntypeTest, allImplicitCastingForPrimitives) {
     ASSERT_TRUE(b.isImpli<nByte>());
     ASSERT_FALSE(b.isImpli<nStr>());
 
-    // char:
-    ASSERT_FALSE(c.isImpli<nInt>());
-    ASSERT_FALSE(c.isImpli<nFlt>());
-    ASSERT_TRUE(c.isImpli<nBool>());
-    ASSERT_TRUE(c.isImpli<nByte>());
-    ASSERT_FALSE(c.isImpli<nStr>());
+    // byte:
+    ASSERT_TRUE(by.isImpli<nInt>());
+    ASSERT_FALSE(by.isImpli<nFlt>());
+    ASSERT_TRUE(by.isImpli<nBool>());
+    ASSERT_TRUE(by.isImpli<nByte>());
+    ASSERT_FALSE(by.isImpli<nStr>());
 
     // str:
     ASSERT_FALSE(s.isImpli<nInt>());
