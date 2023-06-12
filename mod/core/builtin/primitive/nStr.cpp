@@ -52,16 +52,12 @@ namespace namu {
     me::nStr(const nchar* val): super(std::string(val)) {}
     me::nStr(const std::string& val): super(val) {}
 
-    dumScope* me::_onMakeSubs() const {
+    void me::_onMakeSubs(scope& tray) const {
         static nStr inner;
-        scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
-
-        scapegoat.add("len", new lenFunc());
-        scapegoat.add("get", new getFunc());
-
-        return new dumScope(scapegoat);
+        tray.add(baseObj::CTOR_NAME, new defaultCtor(inner));
+        tray.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
+        tray.add("len", new lenFunc());
+        tray.add("get", new getFunc());
     }
 
     const ases& me::nStrType::_getAses() const {
@@ -77,7 +73,7 @@ namespace namu {
                         else if(val == "true")
                             boolean = "true";
                         else
-                            boolean = stoi(val) == 0;
+                            boolean = stoi(val, nullptr, 0) == 0;
                         return str(new nBool(boolean));
                     } catch (std::invalid_argument& ex) {
                         return str();
@@ -101,7 +97,7 @@ namespace namu {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
                     try {
-                        nint converted = stoi(val);
+                        nint converted = stoi(val, nullptr, 0);
                         return str(new nInt(converted));
                     } catch (std::invalid_argument& ex) {
                         return str();

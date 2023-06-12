@@ -9,8 +9,12 @@ namespace namu {
         NAMU(ADT(arithmeticObj, baseObj))
 
     public:
+        using super::run;
+        str run(const args& a) override;
+
         const me& getOrigin() const override { return *this; }
         tstr<me> add(const me& rhs) const;
+        using super::sub;
         tstr<me> sub(const me& rhs) const;
         tstr<me> mul(const me& rhs) const;
         tstr<me> div(const me& rhs) const;

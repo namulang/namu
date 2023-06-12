@@ -55,7 +55,7 @@ TEST_F(literalExprTest, octalValue2) {
     ASSERT_EQ(res.cast<nint>(), 15);
 }
 
-TEST_F(literalExprTest, useCtor) {
+TEST_F(literalExprTest, byteAsInt) {
     make().parse(R"SRC(
         main() int
             0xff as byte
@@ -66,7 +66,7 @@ TEST_F(literalExprTest, useCtor) {
     ASSERT_EQ(res.cast<nint>(), 255);
 }
 
-TEST_F(literalExprTest, useCtor1) {
+TEST_F(literalExprTest, byteAsInt1) {
     make().parse(R"SRC(
         main() int
             0xff as flt
@@ -77,7 +77,7 @@ TEST_F(literalExprTest, useCtor1) {
     ASSERT_EQ(res.cast<nint>(), 255);
 }
 
-TEST_F(literalExprTest, useCtor2) {
+TEST_F(literalExprTest, byteAsInt2) {
     make().parse(R"SRC(
         main() int
             "0xff" as int
@@ -86,4 +86,48 @@ TEST_F(literalExprTest, useCtor2) {
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 255);
+}
+
+TEST_F(literalExprTest, byteAsInt3) {
+    make().parse(R"SRC(
+        main() int
+            "0x00" as int
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 0);
+}
+
+TEST_F(literalExprTest, byteAsInt4) {
+    make().parse(R"SRC(
+        main() int
+            "00" as int
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 0);
+}
+
+TEST_F(literalExprTest, useCtor) {
+    make().parse(R"SRC(
+        main() int
+            byte(0xff)
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 255);
+}
+
+TEST_F(literalExprTest, useCtor1) {
+    make().parse(R"SRC(
+        main() int
+            byte(0x100)
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 0);
 }
