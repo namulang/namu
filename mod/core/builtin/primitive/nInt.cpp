@@ -11,12 +11,10 @@ namespace namu {
 
     NAMU(DEF_ME(nInt), DEF_VISIT())
 
-    dumScope* me::_onMakeSubs() const {
+    void me::_onMakeSubs(scope& tray) const {
         static nInt inner;
-        scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
-        return new dumScope(scapegoat);
+        tray.add(baseObj::CTOR_NAME, new defaultCtor(inner));
+        tray.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
     }
 
     nbool me::wIntType::isImmutable() const { return true; }

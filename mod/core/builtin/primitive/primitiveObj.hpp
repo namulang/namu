@@ -64,8 +64,11 @@ namespace namu {
         using super::subs;
         nbicontainer& subs() override {
             static tstr<scope> inner;
-            if(!inner)
-                inner.bind(_onMakeSubs());
+            if(!inner) {
+                scope scapegoat;
+                _onMakeSubs(scapegoat);
+                inner.bind(new dumScope(scapegoat));
+            }
 
             return *inner;
         }
@@ -75,7 +78,7 @@ namespace namu {
             const me& cast = (const me&) rhs;
             return _val == cast._val;
         }
-        virtual dumScope* _onMakeSubs() const = 0;
+        virtual void _onMakeSubs(scope& tray) const = 0;
 
     private:
         void _setPos(const point& new1) override { _pos = new1; }
@@ -97,7 +100,9 @@ namespace namu {
         nbicontainer& subs() override {
             static tstr<scope> inner;
             if(!inner) {
-                inner.bind(_onMakeSubs());
+                scope scapegoat;
+                _onMakeSubs(scapegoat);
+                inner.bind(new dumScope(scapegoat));
             }
 
             return *inner;
@@ -107,7 +112,7 @@ namespace namu {
         nbool _onSame(const typeProvidable& rhs) const override {
             return !nul(rhs);
         }
-        virtual dumScope* _onMakeSubs() const = 0;
+        virtual void _onMakeSubs(scope& tray) const = 0;
 
     private:
         void _setPos(const point& new1) override { _pos = new1; }

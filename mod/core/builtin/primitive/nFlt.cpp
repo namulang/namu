@@ -40,11 +40,9 @@ namespace namu {
     me::nFlt() {}
     me::nFlt(nflt val): super(val) {}
 
-    dumScope* me::_onMakeSubs() const {
+    void me::_onMakeSubs(scope& tray) const {
         static nFlt inner;
-        scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
-        return new dumScope(scapegoat);
+        tray.add(baseObj::CTOR_NAME, new defaultCtor(inner));
+        tray.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
     }
 }

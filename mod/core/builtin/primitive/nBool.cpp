@@ -16,12 +16,10 @@ namespace namu {
     me::nBool() {}
     me::nBool(nbool val): super(val) {}
 
-    dumScope* me::_onMakeSubs() const {
+    void me::_onMakeSubs(scope& tray) const {
         static nBool inner;
-        scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
-        return new dumScope(scapegoat);
+        tray.add(baseObj::CTOR_NAME, new defaultCtor(inner));
+        tray.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
     }
 
     const ases& me::wBoolType::_getImpliAses() const {

@@ -25,7 +25,7 @@ namespace namu {
         tstr<arithmeticObj> bitwiseNot() const override;
 
     protected:
-        dumScope* _onMakeSubs() const override;
+        void _onMakeSubs(scope& tray) const override;
 
         tstr<arithmeticObj> _add(const arithmeticObj& rhs, nbool reversed) const override {
             return reversed ?
