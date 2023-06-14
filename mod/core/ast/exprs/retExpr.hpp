@@ -23,9 +23,6 @@ namespace namu {
         str getEval() const override;
 
     private:
-        str _decideRet(const args& a);
-
-    private:
         str _ret;
     };
 }

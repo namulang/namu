@@ -70,20 +70,14 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, ctor& me) {
-        // why do you clone to getRoot()?:
-        //  generalizer can be called when there is no proper value against given
-        //  parameterized type.
-        //  however, it doesn't guarantee that getRoot() is always on the heap.
-        //
-        //  that is, when user make local variable of arr class and call subs() of it,
-        //  getRoot() func holds a local variable.
-        //
-        //  but ctor usually lives longer than local variable. I make it be on the heap.
         baseObj& cast = getRoot().cast<baseObj>();
         if(nul(cast))
             getReport().add(err::newErr(errCode::MAKE_GENERIC_FAIL, i.name.c_str()));
-        else
-            me._setOrigin(*(node*) cast.getOrigin().clone());
+        else {
+            if(i.parent && i.parent == &cast)
+                // if this ctor belongs to root object(== generic obj):
+                me._setOrigin(*(node*) cast.getOrigin().clone());
+        }
 
         onVisit(i, (func&) me);
     }

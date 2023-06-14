@@ -8,7 +8,7 @@ namespace namu {
 
     str me::run(const args& a) {
         if(!_it) return str();
-        tstr<arithmeticObj> it(_it->run());
+        tstr<arithmeticObj> it(_it->as<node>());
         if(!it) return str();
 
         str ret((node*)it->deepClone());

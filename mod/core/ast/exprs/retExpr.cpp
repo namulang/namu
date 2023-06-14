@@ -11,19 +11,15 @@ namespace namu {
     me::retExpr(): _ret(nVoid::singletone()) {}
 
     str me::run(const args& a) {
-        str ret = _decideRet(a);
+        if(!_ret) return str(nVoid::singletone());
+        if(_ret->isSub<baseObj>()) return _ret; // case: obj
+
+        str ret = _ret->as<node>(); // case: expr
         thread::get()._getNowFrame().setRet(frame::FUNC_RETURN, *ret);
         return ret;
     }
 
     node& me::getRet() { return *_ret; }
-
-    str me::_decideRet(const args& a) {
-        if(!_ret) return str(nVoid::singletone());
-        if(_ret->isSub<baseObj>()) return _ret; // case: obj
-
-        return _ret->run(a); // case: expr
-    }
 
     nbool me::canRun(const args& a) const {
         if(_ret)

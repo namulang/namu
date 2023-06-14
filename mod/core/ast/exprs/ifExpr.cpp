@@ -15,7 +15,7 @@ namespace namu {
     node& me::getCondition() { return *_expr; }
 
     str me::run(const args& a) {
-        str res = _expr->run(a);
+        str res = _expr->as<node>();
         if(res.cast<nbool>())
             return _thenBlk->run();
         else if(_elseBlk)

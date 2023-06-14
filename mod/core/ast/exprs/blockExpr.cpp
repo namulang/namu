@@ -35,7 +35,7 @@ namespace namu {
         str ret;
         frame& fr = namu::thread::get()._getNowFrame();
         for(auto& e : _exprs) {
-            ret = e.run();
+            ret = e.as<node>(); // if e is expr, it runs(). if not, it returns itself.
             if(!fr.getRetState().isOverwritable(frame::BLK_EMPTY)) break;
         }
 

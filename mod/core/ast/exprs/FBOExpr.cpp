@@ -26,8 +26,8 @@ namespace namu {
     str me::run(const args& a) {
         if(!_lhs || !_rhs) return str();
 
-        tstr<arithmeticObj> lhs(_lhs->run());
-        tstr<arithmeticObj> rhs(_rhs->run());
+        tstr<arithmeticObj> lhs(_lhs->as<arithmeticObj>());
+        tstr<arithmeticObj> rhs(_rhs->as<arithmeticObj>());
         if(!lhs || !rhs) return str();
 
         switch(_rule) {
