@@ -22,7 +22,7 @@ namespace namu {
         str run(const args& a) override {
             iter e = _getScopeIterOfLhs(); // e exists. verified.
 
-            str ret = _rhs->run();
+            str ret = _rhs->as<node>();
             e.setVal(*ret);
             return ret;
         }

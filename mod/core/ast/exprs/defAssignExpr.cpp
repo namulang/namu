@@ -6,7 +6,7 @@ namespace namu {
     NAMU(DEF_ME(defAssignExpr), DEF_VISIT())
 
     str me::run(const args& a) {
-        str new1 = _rhs->run();
+        str new1 = _rhs->as<node>();
         if(!new1)
             return NAMU_E("new1 is null"), str();
 

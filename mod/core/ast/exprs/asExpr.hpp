@@ -22,7 +22,7 @@ namespace namu {
         str run(const args& a) override {
             if(!_me || !_as) return str();
 
-            str eval = _me->run();
+            str eval = _me->as<node>();
             if(!eval) return NAMU_E("!eval.isBind()"), str();
 
             return str(eval->as(*_as));
