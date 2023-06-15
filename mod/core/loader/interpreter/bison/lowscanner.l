@@ -142,7 +142,7 @@ while { return _WHILE_; }
     return NAME;
 }
 
-\'([^\r\f\n\"\\]*)\' {
+\'([^\r\f\n\'\\]*)\' {
     yylval->asStr = new std::string(yytext + 1, yyleng - 2);
     NAMU_DI("scanner: STRVAL=\"%s\"", yylval->asStr->c_str());
     return STRVAL;
