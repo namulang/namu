@@ -30,7 +30,7 @@ TEST_F(bundlePackTest, withAsNegative) {
             ret age
 
         main() int
-            a := Helloworld('g')
+            a := Helloworld("g")
             print(a as str)
             ret 0
     )SRC").shouldParsed(true);

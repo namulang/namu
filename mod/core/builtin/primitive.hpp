@@ -6,3 +6,4 @@
 #include "primitive/nVoid.hpp"
 #include "primitive/nBool.hpp"
 #include "primitive/nByte.hpp"
+#include "primitive/nChar.hpp"

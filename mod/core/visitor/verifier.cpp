@@ -16,6 +16,7 @@ namespace namu {
             new nFlt(),
             new nStr(),
             new nByte(),
+            new nChar(),
             new nBool(),
         };
 
@@ -274,7 +275,7 @@ namespace namu {
         if(!checkEvalType(*lEval)) return _err(me.getPos(), errCode::LHS_IS_NOT_ARITH, lEval->getType().getName().c_str());
         if(!checkEvalType(*rEval)) return _err(me.getPos(), errCode::RHS_IS_NOT_ARITH, rEval->getType().getName().c_str());
 
-        if(!lEval->isImpli(*rEval))
+        if(nul(lEval->deduce(*rEval)))
             return _err(me.getPos(), errCode::IMPLICIT_CAST_NOT_AVAILABLE,
                     lEval->getType().getName().c_str(), rEval->getType().getName().c_str());
 

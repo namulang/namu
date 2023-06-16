@@ -4,6 +4,7 @@
 #include "nBool.hpp"
 #include "nInt.hpp"
 #include "nFlt.hpp"
+#include "nChar.hpp"
 #include "nByte.hpp"
 #include "../../visitor/visitor.hpp"
 
@@ -16,11 +17,11 @@ namespace namu {
 
         protected:
             str _onRun(nStr& cast, const args& a) const override {
-                return str(new nInt(cast.len()));
+                return new nInt(cast.len());
             }
         };
 
-        class getFunc : public APIBridge<nStr, nStr> {
+        class getFunc : public APIBridge<nStr, nChar> {
             typedef APIBridge<nStr, nStr> __super__;
             NAMU(CLASS(getFunc, __super__))
 
@@ -29,7 +30,7 @@ namespace namu {
                 if(a.len() != 1) return str();
 
                 nint n = a[0].cast<nint>();
-                return cast.substr(n, n + 1);
+                return new nChar(cast[n]);
             }
 
         public:
@@ -108,12 +109,21 @@ namespace namu {
             struct asByte : public tas<nByte> {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
-                    if (val.length() > 1) return str();
+                    if(val.length() <= 0) return str();
 
-                    return str(new nByte(std::stoi(val, nullptr, 0)));
+                    return new nByte(val[0]);
                 }
             };
             inner.add(new asByte());
+            struct asChar : public tas<nChar> {
+                str as(const node& me, const type& to) const override {
+                    const std::string& val = me.cast<std::string>();
+                    if(val.length() <= 0) return str();
+
+                    return new nChar(val[0]);
+                }
+            };
+            inner.add(new asChar());
         }
 
         return inner;

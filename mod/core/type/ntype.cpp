@@ -96,18 +96,25 @@ namespace namu {
             }},
             {_X(nStr), {
                 {_X(nStr), _X(nStr)},
+                {_X(nChar), _X(nStr)},
             }},
             {_X(nByte), {
                 {_X(nInt), _X(nInt)},
-                {_X(nFlt), _X(nFlt)},
                 {_X(nByte), _X(nByte)},
                 {_X(nBool), _X(nByte)}
             }},
             {_X(nBool), {
                 {_X(nInt), _X(nInt)},
                 {_X(nFlt), _X(nFlt)},
-                {_X(nByte), _X(nInt)},
+                {_X(nByte), _X(nByte)},
                 {_X(nBool), _X(nBool)}
+            }},
+            {_X(nChar), {
+                {_X(nChar), _X(nChar)},
+                {_X(nBool), _X(nChar)},
+                {_X(nByte), _X(nChar)},
+                {_X(nInt), _X(nChar)},
+                {_X(nStr), _X(nStr)},
             }},
         };
 
