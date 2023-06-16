@@ -4,6 +4,7 @@
 #include "nInt.hpp"
 #include "nFlt.hpp"
 #include "nBool.hpp"
+#include "nChar.hpp"
 #include "../../visitor/visitor.hpp"
 
 namespace namu {
@@ -26,11 +27,10 @@ namespace namu {
         static ases inner;
         if(inner.len() <= 0) {
             inner.add(new asPrimitive<nFlt, nuchar>());
+            inner.add(new asPrimitive<nChar, nuchar>());
             struct asStr : public tas<nStr> {
                 str as(const node& me, const type& to) const override {
-                    std::string val;
-                    val.push_back(me.cast<nuchar>());
-                    return str(new nStr(val));
+                    return str(new nStr(std::to_string(me.cast<nuchar>())));
                 }
             };
             inner.add(new asStr());

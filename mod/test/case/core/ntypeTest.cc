@@ -54,6 +54,7 @@ TEST(ntypeTest, allImplicitCastingForPrimitives) {
     nInt i;
     nFlt f;
     nBool b;
+    nChar c;
     nByte by;
     nStr s;
 
@@ -63,6 +64,7 @@ TEST(ntypeTest, allImplicitCastingForPrimitives) {
     ASSERT_TRUE(i.isImpli<nBool>());
     ASSERT_TRUE(i.isImpli<nByte>());
     ASSERT_FALSE(i.isImpli<nStr>());
+    ASSERT_FALSE(i.isImpli<nChar>());
 
     // float:
     ASSERT_TRUE(f.isImpli<nInt>());
@@ -70,6 +72,7 @@ TEST(ntypeTest, allImplicitCastingForPrimitives) {
     ASSERT_TRUE(f.isImpli<nBool>());
     ASSERT_TRUE(f.isImpli<nByte>());
     ASSERT_FALSE(f.isImpli<nStr>());
+    ASSERT_FALSE(f.isImpli<nChar>());
 
     // bool:
     ASSERT_TRUE(b.isImpli<nInt>());
@@ -77,6 +80,7 @@ TEST(ntypeTest, allImplicitCastingForPrimitives) {
     ASSERT_TRUE(b.isImpli<nBool>());
     ASSERT_TRUE(b.isImpli<nByte>());
     ASSERT_FALSE(b.isImpli<nStr>());
+    ASSERT_FALSE(b.isImpli<nChar>());
 
     // byte:
     ASSERT_TRUE(by.isImpli<nInt>());
@@ -84,11 +88,21 @@ TEST(ntypeTest, allImplicitCastingForPrimitives) {
     ASSERT_TRUE(by.isImpli<nBool>());
     ASSERT_TRUE(by.isImpli<nByte>());
     ASSERT_FALSE(by.isImpli<nStr>());
+    ASSERT_FALSE(by.isImpli<nChar>());
 
     // str:
     ASSERT_FALSE(s.isImpli<nInt>());
     ASSERT_FALSE(s.isImpli<nFlt>());
     ASSERT_FALSE(s.isImpli<nBool>());
     ASSERT_FALSE(s.isImpli<nByte>());
+    ASSERT_FALSE(s.isImpli<nChar>());
     ASSERT_TRUE(s.isImpli<nStr>());
+
+    // char:
+    ASSERT_TRUE(c.isImpli<nInt>());
+    ASSERT_FALSE(c.isImpli<nFlt>());
+    ASSERT_TRUE(c.isImpli<nBool>());
+    ASSERT_TRUE(c.isImpli<nByte>());
+    ASSERT_TRUE(c.isImpli<nChar>());
+    ASSERT_TRUE(c.isImpli<nStr>());
 }

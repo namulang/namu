@@ -5,6 +5,7 @@
 #include "nFlt.hpp"
 #include "nByte.hpp"
 #include "nStr.hpp"
+#include "nChar.hpp"
 #include "../../visitor/visitor.hpp"
 
 namespace namu {
@@ -36,6 +37,7 @@ namespace namu {
     const ases& me::wBoolType::_getAses() const {
         static ases inner;
         if(inner.len() <= 0) {
+            inner.add(new asPrimitive<nChar, nbool>());
             struct asStr : public tas<nStr> {
                 str as(const node& me, const type& to) const override {
                     return str(new nStr(me.cast<nbool>() ? "true" : "false"));

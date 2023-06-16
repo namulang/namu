@@ -4,6 +4,7 @@
 #include "../../ast/defaultCopyCtor.hpp"
 #include "nFlt.hpp"
 #include "nByte.hpp"
+#include "nChar.hpp"
 #include "nBool.hpp"
 #include "../../visitor/visitor.hpp"
 
@@ -33,14 +34,10 @@ namespace namu {
     const ases& me::wIntType::_getAses() const {
         static ases inner;
         if(inner.len() <= 0) {
+            inner.add(new asPrimitive<nChar, nint>());
             struct asStr : public tas<nStr> {
                 str as(const node& me, const type& to) const override {
-                    nint val = me.cast<nint>();
-                    NAMU_E("------------val=%d", val);
-                    nStr* ret = new nStr(std::to_string(me.cast<nint>()));
-                    NAMU_E("------------ret=%s", ret->get().c_str());
-
-                    return str(ret);
+                    return new nStr(std::to_string(me.cast<nint>()));
                 }
             };
             inner.add(new asStr());
