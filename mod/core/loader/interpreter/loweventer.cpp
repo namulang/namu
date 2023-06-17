@@ -443,7 +443,8 @@ namespace namu {
         NAMU_DI("tokenEvent: onGetElem(%s, %s)", arr.getType().getName().c_str(),
                 idx.getType().getName().c_str());
 
-        return _maker.make<runExpr>(arr, *_maker.make<getExpr>(arr, "get"), args{narr{idx}});
+        return _maker.make<runExpr>(arr, *_maker.make<getExpr>(arr, "get", *new args{narr{idx}}),
+                args{narr{idx}});
     }
 
     node* me::onGetGeneric(const std::string& genericObjName, const args& typeParams) {

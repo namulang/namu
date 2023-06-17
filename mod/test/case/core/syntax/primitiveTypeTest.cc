@@ -64,3 +64,14 @@ TEST_F(primitiveTypeTest, byteConversion) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 1);
 }
+
+TEST_F(primitiveTypeTest, strGetSeq) {
+    make().parse(R"SRC(
+        main() int
+            "hello world"[2..4] == "ll"
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}

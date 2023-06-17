@@ -7,6 +7,7 @@
 #include "nChar.hpp"
 #include "nByte.hpp"
 #include "../../visitor/visitor.hpp"
+#include "../container/mgd/seq.hpp"
 
 namespace namu {
 
@@ -43,6 +44,33 @@ namespace namu {
                 return inner;
             }
         };
+
+        class getSeqFunc : public APIBridge<nStr, nStr> {
+            typedef APIBridge<nStr, nStr> __super__;
+            NAMU(CLASS(getSeqFunc, __super__))
+
+        protected:
+            str _onRun(nStr& cast, const args& a) const override {
+                if(a.len() != 1) return str();
+
+                tstr<seq> s = a[0].as<seq>();
+                if(!s) return str();
+
+                nint start = (*s)[0];
+                nint end = (*s)[s->len()-1] + 1;
+                return cast.substr(start, end);
+            }
+
+        public:
+            const params& getParams() const override {
+                static params inner;
+                if(inner.len() <= 0) {
+                    inner.add(new param("index", new seq(0, 1)));
+                }
+
+                return inner;
+            }
+        };
     }
 
     NAMU(DEF_ME(nStr), DEF_VISIT())
@@ -59,6 +87,7 @@ namespace namu {
         tray.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
         tray.add("len", new lenFunc());
         tray.add("get", new getFunc());
+        tray.add("get", new getSeqFunc());
     }
 
     const ases& me::nStrType::_getAses() const {
