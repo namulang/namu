@@ -25,9 +25,9 @@ namespace namu {
                 static super* inner = nullptr;
                 if(nul(inner)) {
                     inner = new super();
-                    inner->func("isEnd", &niter::isEnd);
-                    inner->func("next", &niter::next);
-                    inner->func<nint&>("get", &niter::get);
+                    inner->func("isEnd", &niter::isEnd)
+                          .func("next", &niter::next)
+                          .func<nint&>("get", &niter::get);
                 }
 
                 return inner->subs();
@@ -86,9 +86,9 @@ namespace namu {
         static super* inner;
         if(nul(inner)) {
             inner = new super();
-            inner->func("len", &nseq::len);
-            inner->func("get", &nseq::get);
-            inner->func("has", &nseq::has);
+            inner->func("len", &nseq::len)
+                  .func("get", &nseq::get)
+                  .func("has", &nseq::has);
             inner->subs().add("iterate", new iterateFunc());
             inner->subs().add("getElemType", new getElemTypeFunc());
         }

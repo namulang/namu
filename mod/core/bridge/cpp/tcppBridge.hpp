@@ -37,26 +37,26 @@ namespace namu {
         }
 
     public:
-        static me* def() {
+        static me& def() {
             me* ret = new me(new T());
             // TODO: need to handle ctor with argument properly.
             ret->subs().add(baseObj::CTOR_NAME, new defaultCtor(*ret));
             ret->subs().add(baseObj::CTOR_NAME, new defaultCopyCtor(*ret));
-            return ret;
+            return *ret;
         }
 
         using super::subs;
         nbicontainer& subs() override { return *_subs; }
 
         template <typename Ret, typename... Args>
-        me* func(const std::string& name, Ret(T::*fptr)(Args...)) {
+        me& func(const std::string& name, Ret(T::*fptr)(Args...)) {
             subs().add(name, new tcppBridgeFunc<Ret, T, S, tmarshaling, Args...>(fptr));
-            return this;
+            return *this;
         }
         template <typename Ret, typename... Args>
-        me* func(const std::string& name, Ret(T::*fptr)(Args...) const) {
+        me& func(const std::string& name, Ret(T::*fptr)(Args...) const) {
             subs().add(name, new tcppBridgeFunc<Ret, T, S, tmarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
-            return this;
+            return *this;
         }
 
         T& get() { return *_real; }

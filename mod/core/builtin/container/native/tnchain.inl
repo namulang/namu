@@ -70,7 +70,7 @@ namespace namu {
 
     TEMPL
     nbool ME::del(const iter& at) {
-        const me& owner = at.getContainer().template cast<me>();
+        const me& owner = (const me&) at.getContainer();
 
         for(tstr<me> e(this); e ;e.bind(e->getNext()))
             if(&e.get() == &owner)
@@ -80,8 +80,8 @@ namespace namu {
 
     TEMPL
     nbool ME::del(const iter& from, const iter& last) {
-        const me* fromChain = &from.getContainer().template cast<me>();
-        const me* lastChain = &last.getContainer().template cast<me>();
+        const me* fromChain = (const me*) &from.getContainer();
+        const me* lastChain = (const me*) &last.getContainer();
         if(nul(lastChain)) return NAMU_W("iterator 'end' owned by null chain instance."), false;
         const me* endChain = &lastChain->getNext(); // now, endChain can be null but it's okay.
 

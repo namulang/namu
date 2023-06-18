@@ -1,10 +1,12 @@
 #pragma once
 
 #include "primitiveObj.hpp"
+#include "nChar.hpp"
+#include "../container/tucontainable.hpp"
 
 namespace namu {
 
-    class _nout nStr : public primitiveObj<std::string> {
+    class _nout nStr : public primitiveObj<std::string>, public tucontainable<nChar> {
 
         struct _nout nStrType : public ntype {
         public:
@@ -15,6 +17,58 @@ namespace namu {
         };
         NAMU(CLASS(nStr, primitiveObj, nStrType), VISIT())
 
+        class bridgeIteration : public iteration {
+            NAMU(CLASS(bridgeIteration, iteration));
+
+        public:
+            bridgeIteration(nStr& own, nidx n): _own(own), _n(n) {}
+
+            nbool isEnd() const override {
+                return _own.has(_n);
+            }
+
+            ncnt next(ncnt step) override {
+                if(step <= 0) return 0;
+                if(isEnd()) return 0;
+
+                int len = _own.len(),
+                    lastN = len - 1;
+                int toLast = lastN - _n;
+
+                _n += step;
+                if(_n > lastN) {
+                    _n = len;
+                    step = toLast;
+                }
+                return step;
+            }
+
+            nChar& get() override {
+                if(isEnd()) return nulOf<nChar>();
+                _val.get() = _own[_n];
+                return _val;
+            }
+
+            using super::getContainer;
+            tucontainable<nChar>& getContainer() override {
+                return _own;
+            }
+
+        protected:
+            nbool _onSame(const typeProvidable& rhs) const override {
+                const me& cast = (const me&) rhs;
+                return isFrom(cast.getContainer()) && _n == cast._n;
+            }
+
+        private:
+            nStr& _own;
+            nChar _val;
+            nidx _n;
+        };
+
+        typedef typename tucontainable<nChar>::iter iter;
+        typedef typename tucontainable<nChar>::iteration iteration;
+
     public:
         nStr();
         nStr(const nchar* val);
@@ -23,7 +77,7 @@ namespace namu {
     public:
         nchar operator[](nint n) const { return get()[n]; }
 
-        nint len() const { return get().length(); }
+        nint len() const override { return get().length(); }
 
         tstr<arithmeticObj> bitwiseNot() const override {
             return *this;
@@ -35,7 +89,26 @@ namespace namu {
             return tstr<nStr>(new nStr(get().substr(start, end - start)));
         }
 
+        nbool has(nidx n) const {
+            return 0 <= n && n < get().size();
+        }
+
+        using super::get;
+        nchar get(nidx n) const {
+            return get()[n];
+        }
+
+        void add(const iter& here, const iter& from, const iter& to) override {}
+        nbool add(const iter& at, const nChar& new1) override { return false; /* nStr is immutable*/ }
+        nbool set(const iter& at, const nChar& new1) override { return false; }
+        nbool del(const iter& at) override { return false; }
+        nbool del(const iter& from, const iter& end) override { return false; }
+        void rel() override {}
+
+
     protected:
+        iteration* _onMakeIteration(ncnt step) const override;
+
         void _onMakeSubs(scope& tray) const override;
 
         tstr<arithmeticObj> _add(const arithmeticObj& rhs, nbool reversed) const override {

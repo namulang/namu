@@ -19,6 +19,6 @@ public:
     virtual void setVal(const V& newVal) = 0;
     void setVal(const V* newVal) { return setVal(*newVal); }
     virtual nbool isFrom(const tbicontainable& it) const = 0;
-    virtual tnbicontainer<K, V>& getContainer() = 0;
-    const tnbicontainer<K, V>& getContainer() const NAMU_UNCONST_FUNC(getContainer())
+    virtual tbicontainable<K, V>& getContainer() = 0;
+    const tbicontainable<K, V>& getContainer() const NAMU_UNCONST_FUNC(getContainer())
 };

@@ -8,6 +8,7 @@
 #include "nByte.hpp"
 #include "../../visitor/visitor.hpp"
 #include "../container/mgd/seq.hpp"
+#include "../../bridge/cpp.hpp"
 
 namespace namu {
 
@@ -71,6 +72,62 @@ namespace namu {
                 return inner;
             }
         };
+
+        typedef tucontainable<nChar>::iter niter;
+        typedef tcppBridge<niter> __superMgdIter;
+        class _nout mgdIter : public __superMgdIter {
+            NAMU(CLASS(mgdIter, __superMgdIter))
+
+        public:
+            mgdIter(niter* real): super(real) {}
+
+        public:
+            using super::subs;
+            nbicontainer& subs() override {
+                static super* inner = nullptr;
+                if(nul(inner)) {
+                    inner = new super();
+                    inner->func("isEnd", &niter::isEnd)
+                          .func("next", &niter::next)
+                          .func<nChar&>("get", &niter::get);
+                }
+
+                return inner->subs();
+            }
+        };
+
+        class iterateFunc : public func {
+            NAMU(CLASS(iterateFunc, func))
+
+        public:
+            str getRet() const override {
+                static str inner(new mgdIter(nullptr));
+                return inner;
+            }
+
+            const params& getParams() const override {
+                static params inner;
+                if(inner.len() <= 0)
+                    inner.add(new param("step", *new nInt()));
+                return inner;
+            }
+
+            str run(const args& a) override {
+                const params& ps = getParams();
+                if(a.len() != ps.len()) return NAMU_W("a.len(%d) != ps.len(%d)", a.len(), ps.len()), str();
+                nStr& me = a.getMe().cast<nStr>();
+                if(nul(me)) return NAMU_E("me as nStr == null"), str();
+
+                str eval = a[0].as(ps[0].getOrigin().as<node>());
+                if(!eval)
+                    return NAMU_E("evaluation of arg[%s] -> param[%s] has been failed",
+                            a[0].getType().getName().c_str(), ps[0].getType().getName().c_str()),
+                           str();
+
+                nint step = eval->cast<nint>();
+                return new mgdIter(new niter(me.iterate(step)));
+            }
+        };
     }
 
     NAMU(DEF_ME(nStr), DEF_VISIT())
@@ -88,6 +145,10 @@ namespace namu {
         tray.add("len", new lenFunc());
         tray.add("get", new getFunc());
         tray.add("get", new getSeqFunc());
+    }
+
+    me::iteration* me::_onMakeIteration(ncnt step) const {
+        return new bridgeIteration((me&) *this, step);
     }
 
     const ases& me::nStrType::_getAses() const {

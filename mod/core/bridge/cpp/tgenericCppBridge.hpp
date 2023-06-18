@@ -15,23 +15,23 @@ namespace namu {
         tgenericCppBridge(T* real): super(real) {}
 
     public:
-        static me* def() {
+        static me& def() {
             me* ret = new me(new T());
             // TODO: need to handle ctor with argument.
             ret->subs().add(baseObj::CTOR_NAME, new defaultCtor(*ret));
             ret->subs().add(baseObj::CTOR_NAME, new defaultCopyCtor(*ret));
-            return ret;
+            return *ret;
         }
 
         template <typename Ret, typename... Args>
-        me* genericFunc(const std::string& name, Ret(T::*fptr)(Args...)) {
+        me& genericFunc(const std::string& name, Ret(T::*fptr)(Args...)) {
             this->subs().add(name, new tcppBridgeFunc<Ret, T, obj, tgenericMarshaling, Args...>(fptr));
-            return this;
+            return *this;
         }
         template <typename Ret, typename... Args>
-        me* genericFunc(const std::string& name, Ret(T::*fptr)(Args...) const) {
+        me& genericFunc(const std::string& name, Ret(T::*fptr)(Args...) const) {
             this->subs().add(name, new tcppBridgeFunc<Ret, T, obj, tgenericMarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
-            return this;
+            return *this;
         }
 
     };

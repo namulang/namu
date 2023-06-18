@@ -74,11 +74,11 @@ public:
     using iterable::setVal;
     void setVal(const V& new1) override;
 
-    tnbicontainer<K, V>& getContainer() override {
-        if(!_step) return nulOf<tnbicontainer<K, V> >();
+    tbicontainable<K, V>& getContainer() override {
+        if(!_step) return nulOf<tbicontainable<K, V> >();
         return _step->getContainer();
     }
-    const tnbicontainer<K, V>& getContainer() const NAMU_UNCONST_FUNC(getContainer());
+    const tbicontainable<K, V>& getContainer() const NAMU_UNCONST_FUNC(getContainer());
 
 private:
     me& _assign(const me& rhs) {
