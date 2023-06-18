@@ -32,7 +32,7 @@ struct exprTest : public namuTest {
 void exprTest::SetUp() {
     namuTest::SetUp();
     bridge.bind(tcppBridge<helloWorld>::def()
-        ->func("main", &helloWorld::main));
+        .func("main", &helloWorld::main));
 }
 
 void exprTest::TearDown() {

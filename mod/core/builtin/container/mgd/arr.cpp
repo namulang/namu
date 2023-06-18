@@ -25,9 +25,9 @@ namespace namu {
                 static super* inner = nullptr;
                 if(nul(inner)) {
                     inner = new super();
-                    inner->func("isEnd", &niter::isEnd);
-                    inner->func("next", &niter::next);
-                    inner->func<node&>("get", &niter::get);
+                    inner->func("isEnd", &niter::isEnd)
+                          .func("next", &niter::next)
+                          .func<node&>("get", &niter::get);
                 }
 
                 return inner->subs();
@@ -59,7 +59,9 @@ namespace namu {
 
                 str eval = a[0].as(ps[0].getOrigin().as<node>());
                 if(!eval)
-                    return NAMU_E("evaluation of arg[%s] -> param[%s] has been failed", a[0].getType().getName().c_str(), ps[0].getType().getName().c_str()), str();
+                    return NAMU_E("evaluation of arg[%s] -> param[%s] has been failed",
+                            a[0].getType().getName().c_str(), ps[0].getType().getName().c_str()),
+                           str();
 
                 nint step = eval->cast<nint>();
                 return new mgdIter(new niter(meObj.get().iterate(step)));
@@ -186,15 +188,15 @@ namespace namu {
     scope& me::_getOriginScope() {
         static super* inner = nullptr;
         if(nul(inner)) {
-            inner = super::def();
-            inner->genericFunc("len", &narr::len);
-            inner->genericFunc("rel", &narr::rel);
-            inner->genericFunc<nbool, nidx>("del", &narr::del);
-            inner->genericFunc<nbool, const node&>("add", &tucontainable<node>::add);
-            inner->genericFunc<nbool, nidx, const node&>("add", &narr::add);
-            inner->genericFunc<nbool, nidx, const node&>("set", &narr::set);
-            inner->genericFunc<node&, nidx>("get", &narr::get);
-            inner->genericFunc("has", &narr::has);
+            inner = &super::def();
+            inner->genericFunc("len", &narr::len)
+                  .genericFunc("rel", &narr::rel)
+                  .genericFunc<nbool, nidx>("del", &narr::del)
+                  .genericFunc<nbool, const node&>("add", &tucontainable<node>::add)
+                  .genericFunc<nbool, nidx, const node&>("add", &narr::add)
+                  .genericFunc<nbool, nidx, const node&>("set", &narr::set)
+                  .genericFunc<node&, nidx>("get", &narr::get)
+                  .genericFunc("has", &narr::has);
             inner->subs().add("iterate", new iterateFunc());
         }
 

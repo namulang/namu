@@ -66,11 +66,11 @@ public:
         return get().template cast<E>();
     }
 
-    tnucontainer<T>& getContainer() override {
+    tucontainable<T>& getContainer() override {
         if(!_step) return nulOf<tnucontainer<T>>();
         return _step->getContainer();
     }
-    const tnucontainer<T>& getContainer() const NAMU_UNCONST_FUNC(getContainer());
+    const tucontainable<T>& getContainer() const NAMU_UNCONST_FUNC(getContainer());
 
 private:
     me& _assign(const me& rhs) {

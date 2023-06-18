@@ -16,6 +16,6 @@ public:
     virtual T& get() = 0;
     const T& get() const NAMU_UNCONST_FUNC(get())
     virtual nbool isFrom(const tucontainable& it) const = 0;
-    virtual tnucontainer<T>& getContainer() = 0;
-    const tnucontainer<T>& getContainer() const NAMU_UNCONST_FUNC(getContainer())
+    virtual tucontainable<T>& getContainer() = 0;
+    const tucontainable<T>& getContainer() const NAMU_UNCONST_FUNC(getContainer())
 };

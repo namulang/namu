@@ -33,9 +33,9 @@ public:
     }
 
     using super::getContainer;
-    _super_& getContainer() override {
-        if(!_ownIter) return nulOf<_super_>();
-        return _ownIter->template cast<_super_>();
+    tbicontainable<K, V>& getContainer() override {
+        if(!_ownIter) return nulOf<tbicontainable<K, V>>();
+        return *_ownIter;
     }
 
     const K& getKey() const override {
