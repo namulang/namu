@@ -74,7 +74,58 @@ namespace namu {
         };
 
         typedef tucontainable<nChar>::iter niter;
+        typedef tucontainable<nChar>::iteration iteration;
         typedef tcppBridge<niter> __superMgdIter;
+
+        class bridgeIteration : public iteration {
+            NAMU(CLASS(bridgeIteration, iteration));
+
+        public:
+            bridgeIteration(nStr& own, nidx n): _own(own), _val(new nChar()), _n(n) {}
+
+            nbool isEnd() const override {
+                return !_own.has(_n);
+            }
+
+            ncnt next(ncnt step) override {
+                if(step <= 0) return 0;
+                if(isEnd()) return 0;
+
+                int len = _own.len(),
+                    lastN = len - 1;
+                int toLast = lastN - _n;
+
+                _n += step;
+                if(_n > lastN) {
+                    _n = len;
+                    step = toLast;
+                }
+                return step;
+            }
+
+            nChar& get() override {
+                if(isEnd()) return nulOf<nChar>();
+                _val->get() = _own[_n];
+                return *_val;
+            }
+
+            using super::getContainer;
+            tucontainable<nChar>& getContainer() override {
+                return _own;
+            }
+
+        protected:
+            nbool _onSame(const typeProvidable& rhs) const override {
+                const me& cast = (const me&) rhs;
+                return isFrom(cast.getContainer()) && _n == cast._n;
+            }
+
+        private:
+            nStr& _own;
+            tstr<nChar> _val;
+            nidx _n;
+        };
+
         class _nout mgdIter : public __superMgdIter {
             NAMU(CLASS(mgdIter, __superMgdIter))
 
@@ -128,6 +179,20 @@ namespace namu {
                 return new mgdIter(new niter(me.iterate(step)));
             }
         };
+
+        class getElemType : public func {
+            NAMU(CLASS(getElemType, func))
+
+        public:
+            str getRet() const override {
+                static str inner(new nChar());
+                return inner;
+            }
+
+            str run(const args& a) override {
+                return getRet();
+            }
+        };
     }
 
     NAMU(DEF_ME(nStr), DEF_VISIT())
@@ -145,6 +210,8 @@ namespace namu {
         tray.add("len", new lenFunc());
         tray.add("get", new getFunc());
         tray.add("get", new getSeqFunc());
+        tray.add("iterate", new iterateFunc());
+        tray.add("getElemType", new getElemType());
     }
 
     me::iteration* me::_onMakeIteration(ncnt step) const {
