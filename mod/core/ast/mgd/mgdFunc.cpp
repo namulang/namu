@@ -69,7 +69,7 @@ namespace namu {
         int n = 0;
         for(const node& e: args) {
             const param& p = ps[n++];
-            str evaluated = e.as(*p.getOrigin().as<node>());
+            str evaluated = e.asImpli(*p.getOrigin().as<node>());
             if(!evaluated)
                 return NAMU_E("evaluation of arg[%s] -> param[%s] has been failed.", e.getType().getName().c_str(),
                         p.getOrigin().getType().getName().c_str()), ret;
