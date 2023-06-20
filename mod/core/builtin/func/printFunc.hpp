@@ -25,7 +25,7 @@ namespace namu {
                 return NAMU_E("length of args(%d) and typs(%d) doesn't match.", a.len(), ps.len()), nullptr;
 
             const node& org = ps[0].getOrigin();
-            tstr<T> evaluated = a[0].as(*org.as<T>());
+            tstr<T> evaluated = a[0].asImpli(*org.as<T>());
             if(!evaluated)
                 return NAMU_E("evaluation of arg[%s] -> param[%s] has been failed.", a[0].getType().getName().c_str(),
                         org.getType().getName().c_str()), str();

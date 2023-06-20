@@ -27,11 +27,11 @@ namespace namu {
             frameInteract f1(blk); {
                 res = blk.run();
                 if(_postProcess(fr))
-                    return res->as(*getEval());
+                    return res->asImpli(*getEval());
             }
         }
 
-        return res->as(*getEval());
+        return res->asImpli(*getEval());
     }
 
     str me::getEval() const {
