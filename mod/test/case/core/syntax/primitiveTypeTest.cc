@@ -75,3 +75,17 @@ TEST_F(primitiveTypeTest, strGetSeq) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 1);
 }
+
+TEST_F(primitiveTypeTest, strIter) {
+    make().parse(R"SRC(
+        main() int
+            ans := ""
+            for c in "hello"
+                ans += c
+            ret ans == "hello"
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
