@@ -7,7 +7,7 @@ namespace {
     struct assignExprTest : public namuSyntaxTest {};
 }
 
-TEST_F(assignExprTest, simpleAssignPositive) {
+TEST_F(assignExprTest, simpleAssign) {
     if(make().parse(R"SRC(
         age int
         main() int
@@ -21,6 +21,29 @@ TEST_F(assignExprTest, simpleAssignPositive) {
         ASSERT_FALSE(nul(o));
         ASSERT_EQ(o.cast<nint>(), 5);
     }
+}
+
+TEST_F(assignExprTest, simpleAssign1) {
+    make().parse(R"SRC(
+        main() int
+            ans := ""
+            ans += 'l'
+            ans == "l"
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
+TEST_F(assignExprTest, simpleAssignNegative) {
+    make().negative().parse(R"SRC(
+        main() int
+            ans := '0'
+            ans += "l"
+            ret ans == "l"
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
 }
 
 TEST_F(assignExprTest, simpleAssignReturn) {

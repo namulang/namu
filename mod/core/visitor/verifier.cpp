@@ -91,8 +91,8 @@ namespace namu {
         if(!rightEval) return _err(me.getPos(), errCode::RHS_IS_NULL);
         const ntype& rtype = rightEval->getType();
         if(nul(rtype)) return _err(me.getPos(), errCode::RHS_IS_NULL);
-        if(!ltype.isImpli(rtype))
-            return _err(me.getPos(), errCode::TYPE_NOT_COMPATIBLE, ltype.getName().c_str(), rtype.getName()
+        if(!rtype.isImpli(ltype))
+            return _err(me.getPos(), errCode::TYPE_NOT_COMPATIBLE, rtype.getName().c_str(), ltype.getName()
                     .c_str());
 
         // verify rvalue and lvalue:
