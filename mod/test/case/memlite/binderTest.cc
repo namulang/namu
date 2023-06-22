@@ -45,6 +45,36 @@ namespace {
         }
     };
 
+    struct offering : public instance {
+        const type& getType() const override {
+            return ttype<offering>::get();
+        }
+
+        clonable* clone() const override {
+            return new offering();
+        }
+
+        A a;
+    };
+
+    struct shell : public instance {
+        shell(offering* newO): o(newO) {}
+        ~shell() {
+            if(!nul(o))
+                delete o;
+        }
+
+        const type& getType() const override {
+            return ttype<shell>::get();
+        }
+
+        clonable* clone() const override {
+            return new shell(nullptr);
+        }
+
+        offering* o;
+    };
+
     void integrity(int cnt) {
         std::vector<tstr<A>> tray;
         std::vector<id> ids;
@@ -264,4 +294,14 @@ TEST_F(binderTest, testTacticIsImmutable) {
     ASSERT_EQ(&getTactic(strA), &strTactic::singletone);
     strA1 = weakA;
     ASSERT_EQ(&getTactic(strA), &strTactic::singletone);
+}
+
+TEST_F(binderTest, memberVariableShouldntHaveBindtag) {
+    // call sequence of below line:
+    //  1. (new) of 'shell'
+    //  2. (new) of 'offering'
+    //  3. ctor of 'offering'
+    //  4. ctor of 'A'
+    tstr<shell> ptr(new shell(new offering()));
+    ASSERT_FALSE(ptr->o->a.isHeap());
 }

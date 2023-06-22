@@ -25,7 +25,6 @@ namespace {
         }
         std::vector<void*> ptrs;
     };
-
 }
 
 TEST_F(chunksTest, initialStateTest) {
