@@ -8,16 +8,16 @@ namespace namu {
     NAMU_DEF_ME(instance)
     me::vault instance::_vault;
 
-    me::instance() { _id.chkN = _vault.get(); }
+    me::instance() { _id.chkN = _vault.get(this); }
     me::instance(id newId): _id(newId) {} // no binding required.
     me::instance(const me& rhs) {
-        _id.chkN = _vault.get(); // _id is only belonged to the instance. not able to be copied.
+        _id.chkN = _vault.get(this); // _id is only belonged to the instance. not able to be copied.
     }
     me::~instance() { _getMgr().rel(*this); }
 
     ncnt me::vault::len() const { return _vaults.size(); }
 
-    std::vector<int>& me::vault::getVaults() {
+    std::map<void*, int>& me::vault::getVaults() {
         return _vaults;
     }
 
@@ -46,17 +46,18 @@ namespace namu {
 
     instancer& me::_getMgr() { return instancer::get(); }
 
-    void me::vault::set(nidx chkN) {
-        _vaults.push_back(chkN);
+    void me::vault::set(void* ptr, nidx chkN) {
+        if(nul(ptr)) return;
+
+        _vaults[ptr] = chkN;
     }
 
-    nidx me::vault::get() {
-        if (_vaults.size() <= 0)
-            return NAMU_INDEX_ERROR;
-
-        auto res = _vaults.back();
-        _vaults.pop_back();
-        return res;
+    nidx me::vault::get(void* ptr) {
+        auto e = _vaults.find(ptr);
+        nidx ret = e == _vaults.end() ? NAMU_INDEX_ERROR : _vaults[ptr];
+        if(ret > NAMU_INDEX_ERROR)
+            _vaults.erase(ptr);
+        return ret;
     }
 
     nbool me::vault::rel() {

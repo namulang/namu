@@ -81,7 +81,7 @@ namespace namu {
             NAMU(CLASS(bridgeIteration, iteration));
 
         public:
-            bridgeIteration(nStr& own, nidx n): _own(own), _val(new nChar()), _n(n) {}
+            bridgeIteration(nStr& own, nidx n): _own(own), _n(n) {}
 
             nbool isEnd() const override {
                 return !_own.has(_n);
@@ -105,8 +105,8 @@ namespace namu {
 
             nChar& get() override {
                 if(isEnd()) return nulOf<nChar>();
-                _val->get() = _own[_n];
-                return *_val;
+                _val.get() = _own[_n];
+                return _val;
             }
 
             using super::getContainer;
@@ -122,7 +122,7 @@ namespace namu {
 
         private:
             nStr& _own;
-            tstr<nChar> _val;
+            nChar _val;
             nidx _n;
         };
 
