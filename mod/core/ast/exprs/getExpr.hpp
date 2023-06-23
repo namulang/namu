@@ -10,6 +10,7 @@ namespace namu {
     class _nout getExpr : public expr {
         NAMU(CLASS(getExpr, expr, expr::exprType), VISIT())
         friend class verifier;
+        friend class loweventer;
 
     public:
         getExpr(const std::string& name): _name(name) {}
@@ -37,6 +38,7 @@ namespace namu {
 
     protected:
         virtual str _get() const;
+        args& _getSubArgs() { return *_args; }
 
     private:
         str _me;

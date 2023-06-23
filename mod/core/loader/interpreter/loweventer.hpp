@@ -203,11 +203,15 @@ namespace namu {
         void onParseErr(const std::string& msg, const nchar* symbolName);
 
     private:
+        node* _onSetElem(runExpr& lhs, const node& rhs);
+
         nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         void _onRes(err* new1);
         params _convertParams(const narr& exprs);
+
         void _onPushName(const std::string& name, node& n);
         std::string _onPopName(node& n);
+
         nbool _onInjectObjSubs(obj& it, defBlock& blk);
         nbool _onInjectCtor(obj& it, defBlock& blk);
         std::vector<std::string> _extractParamTypeNames(const args& types);

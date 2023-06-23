@@ -580,3 +580,48 @@ TEST_F(arrTest, accessElementOnce) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 1); // shouldn't be 2.
 }
+
+TEST_F(arrTest, setElemConversion) {
+    make().parse(R"SRC(
+        main() int
+            arr := {'a', 'c'}
+            arr[1] = 'd'
+            arr[1] == 'd'
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
+TEST_F(arrTest, setElemConversionNegative) {
+    make().negative().parse(R"SRC(
+        foo() int
+            3
+        main() int
+            arr := {'a', 'c'}
+            arr[1] = foo()
+            arr[1] == 'd'
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
+TEST_F(arrTest, setElemConversion1) {
+    make().parse(R"SRC(
+        foo() int
+            0
+        boo() char
+            'c'
+        main() int
+            arr := {'a', 'c'}
+            arr[foo()] = (boo() + 1) as char
+            arr[0] == 'd'
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
