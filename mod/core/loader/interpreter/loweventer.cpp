@@ -513,21 +513,19 @@ namespace namu {
         //      runExpr
         //          |-[0]: getExpr: "arr" from 'frame'
         //          |-[1]: getExpr: "set" from [0]
-        //          |       |-[0]: nInt
-        //          |       |-[1]: rhs.getEval()
         //          |-[2]: nInt: 0 // --> this was runExpr[2] of lhs.
         //          |-[3]: nInt: 1 (rhs)
         //
         //  conclusion:
         //      1. rename 'get' of 'lhs[1].getExpr.getSubName to 'set'.
-        //      2. add 'rhs.getEval()' into subArgs() of (1).
+        //      2. unbind subArgs of (1).
         //      3. lhs.getArgs().add(rhs).
         NAMU_DI("tokenEvent:: _onSetElem(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
 
         getExpr& subject = lhs.getSubject().cast<getExpr>();
         subject._name = "set";
-        subject._getSubArgs().add(*rhs.getEval());
+        subject._args.rel();
         lhs.getArgs().add(rhs);
 
         return &lhs;

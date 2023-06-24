@@ -38,7 +38,6 @@ namespace namu {
 
     protected:
         virtual str _get() const;
-        args& _getSubArgs() { return *_args; }
 
     private:
         str _me;

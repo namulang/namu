@@ -602,11 +602,7 @@ TEST_F(arrTest, setElemConversionNegative) {
             arr := {'a', 'c'}
             arr[1] = foo()
             arr[1] == 'd'
-    )SRC").shouldVerified(true);
-
-    str res = run();
-    ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), 1);
+    )SRC").shouldVerified(false);
 }
 
 TEST_F(arrTest, setElemConversion1) {
