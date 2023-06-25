@@ -621,3 +621,37 @@ TEST_F(arrTest, setElemConversion1) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 1);
 }
+
+TEST_F(arrTest, setElemAddAssignConversion) {
+    make().parse(R"SRC(
+        foo() int
+            0
+        boo() int
+            1
+        main() int
+            arr := {1, 2}
+            arr[foo()] += boo()
+            arr[0] == 2
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
+TEST_F(arrTest, setElemAddAssignConversion2) {
+    make().parse(R"SRC(
+        foo() int
+            1
+        boo() int
+            3
+        main() int
+            arr := {6, 9}
+            arr[foo() - 1] /= boo()
+            arr[0] == 2
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}

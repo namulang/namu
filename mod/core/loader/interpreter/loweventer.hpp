@@ -10,6 +10,7 @@
 #include "../../ast/params.hpp"
 #include "defBlock.hpp"
 #include "../../ast/exprs/exprMaker.hpp"
+#include "../../ast/exprs/FBOExpr.hpp"
 
 namespace namu {
 
@@ -19,7 +20,6 @@ namespace namu {
     class runExpr;
     class asExpr;
     class addExpr;
-    class FBOExpr;
     class getExpr;
     class retExpr;
     class breakExpr;
@@ -204,6 +204,8 @@ namespace namu {
 
     private:
         node* _onSetElem(runExpr& lhs, const node& rhs);
+        node* _onAssignElem(FBOExpr::rule type, node& lhs, node& rhs);
+        node* _onConvertAssignElem(runExpr& lhs, node& rhs);
 
         nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         void _onRes(err* new1);

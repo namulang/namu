@@ -484,7 +484,7 @@ namespace namu {
     node* me::onAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        // onSetElem branch:
+        // _onSetElem branch:
         //  if user code is 'arr[0] = 1', then it will be interpreted to 'arr.set(0, 1)'
         runExpr& cast = lhs.cast<runExpr>();
         if(!nul(cast)) {
@@ -531,34 +531,89 @@ namespace namu {
         return &lhs;
     }
 
+    node* me::_onAssignElem(FBOExpr::rule type, node& lhs, node& rhs) {
+        NAMU_DI("tokenEvent: onFBOAssign(%s, %s)", lhs.getType().getName().c_str(),
+                rhs.getType().getName().c_str());
+
+        // _onConvertAssignElem branch:
+        //  if user code is 'arr[0] = 1', then it will be interpreted to 'arr.set(0, 1)'
+        runExpr& cast = lhs.cast<runExpr>();
+        if(!nul(cast)) {
+            getExpr& subject = cast.getSubject().cast<getExpr>();
+            if(!nul(subject))
+                if(subject.getSubName() == "get")
+                    return _onConvertAssignElem(cast, *_maker.make<FBOExpr>(type, lhs, rhs));
+        }
+        return onAssign(lhs, *_maker.make<FBOExpr>(type, *(node*) lhs.clone(), rhs));
+    }
+
+    node* me::_onConvertAssignElem(runExpr& lhs, node& rhs) {
+        // if user code is 'arr[0] += 1' then it will be interpreted to 'arr.set(0, arr.get(0) + 1)
+        // for instance,
+        // AST: before
+        //  lhs: arr.get(0)
+        //      runExpr
+        //          |-[0]: getExpr: "arr" from 'frame'
+        //          |-[1]: getExpr: "get" from [0]
+        //          |-[2]: nInt: 0
+        //  rhs: 1
+        //      nInt: 1
+        //
+        // after: arr.set(0, arr.get(0) + 1)
+        //  runExpr
+        //      |-[0]: getExpr: "arr" from 'frame
+        //      |-[1]: getExpr: "set" from [0]
+        //      |-[2]: nInt: 0
+        //      |-[3]: FBOExpr(ADD) (rhs of this func)
+        //              |-[0]: runExpr (lhs of this func)
+        //              |         |-[0]: getExpr: "arr" from 'frame'
+        //              |         |-[1]: getExpr: "get" from [0]
+        //              |         |-[2]: nInt: 0
+        //              |-[1]: nInt: 1
+        //
+        // conclusion:
+        //  1. deep clone lhs and set its[1].subName to 'set'
+        //  2. (1).getArgs.add(rhs)
+        NAMU_DI("tokenEvent: _onConvertAssignElem(%s, %s)", lhs.getType().getName().c_str(),
+                rhs.getType().getName().c_str());
+
+        runExpr& setter = *(runExpr*) lhs.clone();
+        getExpr& newSubj = *(getExpr*) setter.getSubject().clone();
+        newSubj._name = "set";
+        newSubj._args.rel();
+        setter._subject.bind(newSubj);
+        setter.getArgs().add(rhs);
+        return &setter;
+    }
+
     node* me::onAddAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onAddAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return onAssign(lhs, *_maker.make<FBOExpr>(FBOExpr::ADD, *(node*) lhs.clone(), rhs));
+        return _onAssignElem(FBOExpr::ADD, lhs, rhs);
     }
 
     node* me::onSubAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onSubAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return onAssign(lhs, *_maker.make<FBOExpr>(FBOExpr::SUB, lhs, rhs));
+        return _onAssignElem(FBOExpr::SUB, lhs, rhs);
     }
 
     node* me::onMulAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onMulAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return onAssign(lhs, *_maker.make<FBOExpr>(FBOExpr::MUL, lhs, rhs));
+        return _onAssignElem(FBOExpr::MUL, lhs, rhs);
     }
 
     node* me::onDivAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onDivAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return onAssign(lhs, *_maker.make<FBOExpr>(FBOExpr::DIV, lhs, rhs));
+        return _onAssignElem(FBOExpr::DIV, lhs, rhs);
     }
 
     node* me::onModAssign(node& lhs, node& rhs) {
         NAMU_DI("tokenEvent: onModAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
-        return onAssign(lhs, *_maker.make<FBOExpr>(FBOExpr::MOD, lhs, rhs));
+        return _onAssignElem(FBOExpr::MOD, lhs, rhs);
     }
 
     node* me::onDefAssign(const std::string& name, node& rhs) {

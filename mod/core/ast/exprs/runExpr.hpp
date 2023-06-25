@@ -8,6 +8,7 @@ namespace namu {
 
     class _nout runExpr : public expr {
         NAMU(CLASS(runExpr, expr, expr::exprType), VISIT())
+        friend class loweventer;
 
     public:
         runExpr(const node& meObj, const node& subject, const args& a);
