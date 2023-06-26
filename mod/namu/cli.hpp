@@ -8,6 +8,7 @@ namespace namu {
         const flags& getFlags() const;
 
         nbool run(flagArgs& a) {
+            _res = -1;
             interpreter ip;
 
             for(const auto& op : getFlags()) {
@@ -22,32 +23,42 @@ namespace namu {
               .interpret();
 
             if(!ip.isVerified())
-                return _finish(ip, -1);
+                return _finish(ip);
 
             starter s;
             str res = s.run(args((baseObj&) ip.getSubPack()));
+            _res = 0;
+            if(res->isSub<nInt>())
+                _res = res->cast<nint>();
 
 #ifdef __EMSCRIPTEN__
             // I don't know the detail reason but if user doesn't put '\n' at the
             // end, the line won't be printed.
             std::cout << "\n";
 #endif
-            if(res && !rpt) {
-                return _finish(ip, 0);
-            }
+            if(res && !rpt)
+                return _finish(ip);
 
-            return _finish(ip, -1);
+            _res = -1;
+            return _finish(ip);
+        }
+
+        nint getRes() const {
+            return _res;
         }
 
     private:
-        nint _finish(interpreter& ip, nint ret) {
+        nint _finish(interpreter& ip) {
             stream& strm = logger::get()["consoleStream"];
             nbool prev = strm.isEnable();
 
             strm.setEnable(true);
             ip.log();
             strm.setEnable(prev);
-            return ret;
+            return _res;
         }
+
+    private:
+        nint _res;
     };
 }
