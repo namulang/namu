@@ -256,3 +256,24 @@ TEST_F(defAssignExprTest, defAssignIfWithElse) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 1);
 }
+
+TEST_F(defAssignExprTest, defAssignEvalOfSetElemConversion) {
+    make().parse(R"SRC(
+        foo() int
+            0
+        boo() int
+            1
+        main() int
+            arr := {1, 2}
+            val := arr[foo()] -= boo()
+            val == true
+            // why val is bool type?:
+            //  because of 'setElemConversion', arr[foo()] -= boo() will translate to,
+            //      arr.set(foo(), arr.get(foo()) - boo())
+            //  . and set() returns 'true' as boolean  when its job successed.
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), true);
+}
