@@ -472,7 +472,7 @@ namespace namu {
 
     void me::onVisit(visitInfo i, forExpr& me) {
         str container = me._container;
-        str conAsed = container->as<node>();
+        str conAsed = container->getEval();
         if(!conAsed)
             return _err(me.getPos(), errCode::CONTAINER_IS_NULL);
         str elemType = conAsed->run("getElemType");

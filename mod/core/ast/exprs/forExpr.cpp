@@ -49,7 +49,7 @@ namespace namu {
         if(_initEval) return super::getEval();
 
         _initEval = true;
-        str ased = _container->as<node>();
+        str ased = _container->getEval();
         str elemType = ased->run("getElemType");
         if(!elemType) return NAMU_E("elemType == null"), str();
 
