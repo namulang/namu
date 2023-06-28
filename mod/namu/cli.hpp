@@ -28,7 +28,7 @@ namespace namu {
             starter s;
             str res = s.run(args((baseObj&) ip.getSubPack()));
             _res = 0;
-            if(res->isSub<nInt>())
+            if(res && res->isSub<nInt>())
                 _res = res->cast<nint>();
 
 #ifdef __EMSCRIPTEN__
@@ -36,10 +36,8 @@ namespace namu {
             // end, the line won't be printed.
             std::cout << "\n";
 #endif
-            if(res && !rpt)
-                return _finish(ip);
-
-            _res = -1;
+            if(rpt) // has an err
+                _res = -1;
             return _finish(ip);
         }
 
