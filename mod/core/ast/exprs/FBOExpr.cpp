@@ -14,7 +14,7 @@ namespace namu {
         str lhsEval = _lhs->getEval();
         if(!lhsEval) return lhsEval;
         str rhsEval = _rhs->getEval();
-        if(rhsEval) return rhsEval;
+        if(!rhsEval) return rhsEval;
 
         return str(lhsEval->deduce(*rhsEval));
     }
