@@ -184,7 +184,12 @@ namespace namu {
         if(_isLog)
             NAMU_DI("forExpr[%s]::onTraverse", i.name.c_str());
 
-        f.getBlock().accept(visitInfo {"", &f, 0, 1, i.depth+1}, *this);
+        node& con = *f.getContainer();
+        ncnt len = nul(con) ? 1 : 2;
+        ncnt n = 0;
+        if(!nul(con))
+            con.accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
+        f.getBlock().accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, retStateExpr& r) {

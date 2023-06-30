@@ -16,7 +16,7 @@ namespace namu {
         str rhsEval = _rhs->getEval();
         if(!rhsEval) return rhsEval;
 
-        return str(lhsEval->deduce(*rhsEval));
+        return lhsEval->deduce(*rhsEval);
     }
 
     nbool me::isLogicalOp() const {

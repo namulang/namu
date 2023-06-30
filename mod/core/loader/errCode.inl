@@ -47,6 +47,8 @@ PAIRX(TYPE_NOT_EXIST,               "when defines variable '%s', couldn't find t
 PAIRX(DONT_HAVE_CTOR,               "%s's type doesn't have a constructor without parameter.")
 PAIRX(TYPE_NOT_DEDUCED,             "type can't be deduced into meaningful one.")
 PAIRX(NO_VOID_CONTAINER,            "you can't make a void container")
+//  defSeq:
+PAIRX(SEQ_SHOULD_INT_COMPATIBLE,    "start and end of a sequence should be sort of an int.")
 //  assign:
 PAIRX(TYPE_NOT_COMPATIBLE,          "rhs type '%s' is not compatible to lhs '%s' of this assigment")
 PAIRX(ASSIGN_TO_RVALUE,             "you can't assign %s to this unamed %s. please define it first")

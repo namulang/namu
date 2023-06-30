@@ -31,8 +31,10 @@ namespace namu {
             str _onRun(nStr& cast, const args& a) const override {
                 if(a.len() != 1) return str();
 
-                nint n = a[0].cast<nint>();
-                return new nChar(cast[n]);
+                tstr<nInt> idx = a[0].as<nInt>();
+                if(!idx)
+                    return str();
+                return new nChar(cast[idx->get()]);
             }
 
         public:

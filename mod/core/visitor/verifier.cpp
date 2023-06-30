@@ -247,6 +247,10 @@ namespace namu {
         NAMU_DI("verify: defSeqExpr: check lhs & rhs");
         if(nul(me.getStart())) return _err(me.getPos(), errCode::LHS_IS_NULL);
         if(nul(me.getEnd())) return _err(me.getPos(), errCode::RHS_IS_NULL);
+
+        NAMU_DI("verify: defSeqExpr: lhs & rhs is sort of Int?");
+        if(!me.getStart().isImpli<nInt>()) return _err(me.getPos(), errCode::SEQ_SHOULD_INT_COMPATIBLE);
+        if(!me.getEnd().isImpli<nInt>()) return _err(me.getPos(), errCode::SEQ_SHOULD_INT_COMPATIBLE);
     }
 
     void me::onVisit(visitInfo i, defArrayExpr& me) {
