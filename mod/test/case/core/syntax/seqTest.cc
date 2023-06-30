@@ -86,3 +86,12 @@ TEST_F(seqTest, addSeqElement) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res->cast<nint>(), 5);
 }
+
+TEST_F(seqTest, verifyStartEndNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            out := "kniz awesome"
+            for n in 0..out
+                print(out[n])
+    )SRC").shouldVerified(false);
+}
