@@ -425,4 +425,30 @@ TEST_F(asExprTest, castToVoidNegative) {
     shouldVerified(false);
 }
 
+TEST_F(asExprTest, castStrToIntIsParsing) {
+    make().parse(R"SRC(
+        main() int
+            out := "01010"
+            ans := "hello"[2] + out[2] as str as int // 'l' + 0 == 'l'
+            ans == 'l'
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
+TEST_F(asExprTest, castCharToIntIsNotParsing) {
+    make().parse(R"SRC(
+        main() int
+            out := "01010"
+            ans := "00000"[2] + out[2] as int // 'l' + 49('0')
+            ans as int == 96
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
 // TODO: make a TC for 'as' nonprimitive types
