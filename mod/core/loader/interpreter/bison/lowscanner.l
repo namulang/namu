@@ -12,6 +12,7 @@
 #endif
 namespace {
     static constexpr int TAB_WIDTH = 4;
+    char unescape(const std::string& seq);
 }
 
 #define YY_DECL int yylexOrigin(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner)
@@ -19,6 +20,7 @@ namespace {
                        yylloc->start.col = yylloc->colcnt; yylloc->end.col = yylloc->colcnt+yyleng-1; \
                        yylloc->colcnt += yyleng;
 }
+
 
 /*  ============================================================================================
     |                                      FLEX DEFINITIONS                                    |
@@ -143,9 +145,30 @@ while { return _WHILE_; }
     return NAME;
 }
 
-\'([^\r\f\n\'])\' {
+\'([^\r\f\n\'\\])\' {
     yylval->asChar = yytext[1];
     NAMU_DI("scanner: CHARVAL=\'%c\'", yytext[1]);
+    return CHARVAL;
+}
+
+\'\\([^\r\f\n0-9])\' {
+    std::string str(yytext);
+    yylval->asChar = unescape(str.substr(1, str.size()-2));
+    NAMU_DI("scanner: CHARVAL=%c", yylval->asChar);
+    return CHARVAL;
+}
+
+\'\\([0-9]+)\' {
+    std::string str(yytext);
+    yylval->asChar = unescape(str.substr(1, str.size()-2));
+    NAMU_DI("scanner: CHARVAL=%c", yylval->asChar);
+    return CHARVAL;
+}
+
+\'\\0x([0-9a-fA-F]+)\' {
+    std::string str(yytext);
+    yylval->asChar = unescape(str.substr(1, str.size()-2));
+    NAMU_DI("scanner: CHARVAL=%c", yylval->asChar);
     return CHARVAL;
 }
 
@@ -209,4 +232,27 @@ int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner) {
           tok == SCAN_MODE_NORMAL);
 
     return tok;
+}
+
+namespace {
+    char unescape(const std::string& seq) {
+        if(seq.size() < 2) return '\0';
+
+        switch(seq[1]) {
+            case 'r': return '\r';
+            case 'n': return '\n';
+            case 't': return '\t';
+            case 'f': return '\f';
+            case 'a': return '\a';
+            case 'v': return '\v';
+            case 'b': return '\b';
+            // decimal:
+            case '1': case '2': case '3': case '4': case '5':
+            case '6': case '7': case '8': case '9': case '0':
+                return (char) std::stoi(seq.substr(1), nullptr, 0);
+
+            default:
+                return seq[1];
+        }
+    }
 }
