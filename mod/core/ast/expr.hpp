@@ -33,7 +33,10 @@ namespace namu {
         }
         virtual str asImpli(const type& to) const override {
             me* unconst = const_cast<me*>(this);
-            return str((unconst->run()->asImpli(to)));
+            str run = unconst->run();
+            if(!run)
+                return run;
+            return run->asImpli(to);
         }
 
         /// run of expr class get treated like 'evaluate' in namu.

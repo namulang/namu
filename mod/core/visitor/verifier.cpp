@@ -73,8 +73,8 @@ namespace namu {
                     me.getAs().getType().getName().c_str());
 
         NAMU_DI("verify: asExpr: rhs shouldn't be expression");
-        if(me.getAs().isSub<expr>())
-            return _err(me.getPos(), errCode::EXPR_SHOULDNT_BE_HERE);
+        if(!me.getAs().asImpli<node>())
+            return _err(me.getPos(), errCode::CAST_TO_UNKNOWN);
     }
 
     void me::onVisit(visitInfo i, assignExpr& me) {

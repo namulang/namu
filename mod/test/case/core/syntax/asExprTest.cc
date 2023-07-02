@@ -451,4 +451,23 @@ TEST_F(asExprTest, castCharToIntIsNotParsing) {
     ASSERT_EQ(res.cast<nint>(), 1);
 }
 
+TEST_F(asExprTest, castToObject) {
+    make().parse(R"SRC(
+        def A
+            age := 0
+        main() void
+            a := A()
+            a as A
+    )SRC").shouldVerified(true);
+}
+
+TEST_F(asExprTest, castToObjectNegative) {
+    make().negative().parse(R"SRC(
+        def A
+            age := 0
+        main() void
+            a := 'r'
+            a as A
+    )SRC").shouldVerified(true);
+}
 // TODO: make a TC for 'as' nonprimitive types
