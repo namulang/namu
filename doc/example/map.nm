@@ -1,20 +1,18 @@
-aka sys.con c
-
 update(map char[], x int, y int) char[]
     pos := y * 5 + x
     map.set(pos, '*')
     map
 
 draw(map char[]) void
-    c.print("\n")
+    print("\n")
     for n in 0..map.len()
-        c.print(map[n] as str)
+        print(map[n] as str)
         if (n+1) % 5 == 0
-            c.print("\n")
+            print("\n")
 
 menu() str
-    c.print("\nwhich direction(w,a,s,d) or quit(q): ")
-    c.input()
+    print("\nwhich direction(w,a,s,d) or quit(q): ")
+    input()
 
 main() void
     x := 2
