@@ -54,7 +54,7 @@ namespace namu {
 
         str ret;
         if(!nul(retVal))
-            ret = retVal.as(*getRet());
+            ret = retVal.as(*getRet()->as<node>());
 
         fr.relRet();
         return ret;
