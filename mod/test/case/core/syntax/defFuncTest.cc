@@ -199,3 +199,19 @@ TEST_F(defFuncTest, defFuncAtSubPack) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 1);
 }
+
+TEST_F(defFuncTest, defFuncReturnClass) {
+    make().parse(R"SRC(
+        foo() A
+            A()
+        def A
+            age := 0
+        main() int
+            a := 'r'
+            foo().age
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 0);
+}
