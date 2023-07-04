@@ -37,7 +37,7 @@ namespace namu {
         }
 
     protected:
-        virtual str _get() const;
+        virtual str _get(nbool evalMode) const;
 
     private:
         str _me;

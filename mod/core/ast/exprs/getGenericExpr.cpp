@@ -7,7 +7,7 @@ namespace namu {
 
     NAMU(DEF_ME(getGenericExpr), DEF_VISIT())
 
-    str me::_get() const {
+    str me::_get(nbool evalMode) const {
         genericObj& generic = _getGenericObj();
         if(nul(generic)) return NAMU_E("generic == null"), str();
 

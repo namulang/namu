@@ -293,7 +293,7 @@ namespace namu {
         // Until then, I rather use as() func and it makes slow emmersively.
         NAMU_DI("verify: getExpr: isRunnable: %s.%s", me.getType().getName().c_str(), me.getSubName().c_str());
         if(!me.getEval()) return _err(me.getPos(), errCode::WHAT_IS_THIS_IDENTIFIER, me.getSubName().c_str());
-        str got = me._get();
+        str got = me._get(true);
         if(!got) {
             const node& from = me.getMe();
             return _err(me.getPos(), errCode::CANT_ACCESS, me._name.c_str(), from.getType().getName().c_str());
