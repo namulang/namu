@@ -22,30 +22,30 @@ namespace namu {
     }
 
     me::obj():
-            super(), _shares(new scopes()), _owns(new scope()), _org(this), _isComplete(true) {
+            super(), _shares(new scopes()), _owns(new scope()), _org(this), _type(nullptr),
+            _isComplete(true) {
         _subs.bind(_makeNewSubs());
-        _setType(&ttype<obj>::get());
     }
 
     me::obj(const scopes& shares, const scope& owns):
-            super(), _shares(shares), _owns(owns), _org(this), _isComplete(true) {
+            super(), _shares(shares), _owns(owns), _org(this), _type(nullptr), _isComplete(true) {
         _subs.bind(_makeNewSubs());
-        _setType(&ttype<obj>::get());
     }
 
     me::obj(mgdType* newType):
-            super(), _shares(new scopes()), _owns(new scope()), _org(this), _isComplete(true) {
+            super(), _shares(new scopes()), _owns(new scope()), _org(this), _type(nullptr),
+            _isComplete(true) {
         _subs.bind(_makeNewSubs());
         _setType(newType);
     }
 
     me::obj(mgdType* newType, const scopes& shares, const scope& owns):
-            super(), _shares(shares), _owns(owns), _org(this), _isComplete(true) {
+            super(), _shares(shares), _owns(owns), _org(this), _type(nullptr), _isComplete(true) {
         _subs.bind(_makeNewSubs());
         _setType(newType);
     }
 
-    me::obj(const me& rhs): super(rhs) {
+    me::obj(const me& rhs): super(rhs), _type(nullptr) {
         _assign(rhs);
     }
 
@@ -65,11 +65,13 @@ namespace namu {
     }
 
     const ntype& me::getType() const {
+        if(nul(_type))
+            return ttype<obj>::get();
         return *_type;
     }
 
-    void me::_setType(const ntype* new1) {
-        _type = (ntype*) new1;
+    void me::_setType(const mgdType* new1) {
+        _type = new1;
     }
 
     nbicontainer& me::subs() { return *_subs; }

@@ -200,3 +200,13 @@ TEST_F(genericsTest, genericParameter2) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 1);
 }
+
+TEST_F(genericsTest, assignDifferentParameterizedTypeNegative) {
+    make().negative().parse(R"SRC(
+        def A<T>
+            age T
+        main() void
+            a A<int>
+            a = A<flt>()
+    )SRC").shouldVerified(false);
+}

@@ -4,6 +4,7 @@
 #include "args.hpp"
 #include "../visitor/verifier.hpp"
 #include "func.hpp"
+#include "../type/mgdType.hpp"
 
 namespace namu {
 
@@ -56,6 +57,12 @@ namespace namu {
         //  genericObj makes an origin object. but ret->getOrigin() is pointing _orgObj now.
         //  I need to update it.
         ret->_setOrigin(&ret.get());
+        // clone type:
+        if(ret->_type) {
+            mgdType* newType = new mgdType(*ret->_type);
+            newType->getBeans() = a;
+            ret->_setType(newType);
+        }
 
         ncnt n = 0;
         generalizer g;
