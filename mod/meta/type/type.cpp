@@ -4,11 +4,7 @@ namespace namu {
     NAMU_DEF_ME(type)
 
     nbool me::operator==(const me& rhs) const {
-#if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
         return getName() == rhs.getName();
-#else
-        return &getName() == &rhs.getName();
-#endif
     }
 
     nbool me::operator!=(const me& rhs) const { return !operator==(rhs); }

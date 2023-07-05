@@ -312,7 +312,7 @@ namespace namu {
         NAMU_DI("tokenEvent: onDefObjGeneric(%s, type.len[%d], defBlock[%x]", name.c_str(),
                 typeParams.len(), &blk);
 
-        obj& org = *_maker.make<obj>(new mgdType(name));
+        obj& org = *_maker.make<obj>(new mgdType(name, typeParams));
         org._setComplete(false);
         _onInjectObjSubs(org, blk);
         node* ret = _maker.make<genericObj>(org, _extractParamTypeNames(typeParams));

@@ -6,6 +6,7 @@
 namespace namu {
 
     class mgdType;
+
     /// obj is a object structured in managed programming environment like 'namu'.
     /// owned sub nodes of a object can only be manipulated through API provided obj.
     /// because native object won't have owned nodes but only shared ones.
@@ -16,7 +17,7 @@ namespace namu {
              VISIT())
         friend class slot; // for _onRunSub
         friend class loweventer;
-        friend class genericObj; // for _setOrigin()
+        friend class genericObj; // for _setOrigin(), _setType
         friend class exprMaker;
 
     public:
@@ -48,7 +49,7 @@ namespace namu {
 
     private:
         scopes* _makeNewSubs();
-        void _setType(const ntype* new1);
+        void _setType(const mgdType* new1);
         // update origin pointer of an object.
         // to modify origin* is very dangerous. only permitted module should do this.
         void _setOrigin(obj* newOrg);
@@ -67,7 +68,7 @@ namespace namu {
         tstr<scope> _owns;
         obj* _org;
         point _pos;
-        ntype* _type; // TODO: memory leak
+        const mgdType* _type; // TODO: memory leak
         nbool _isComplete;
     };
 

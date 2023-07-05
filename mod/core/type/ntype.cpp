@@ -16,10 +16,14 @@ namespace namu {
         //  in this case,
         //      tstr<arr> wrap(new tarr<nInt>())
         //  above code doesn't work.
-        if(nul(cast.getBean())) return true;
-        if(nul(getBean())) return true;
+        if(nul(_beans) || !_beans->len()) return true;
+        if(nul(cast._beans)) return false;
+        if(_beans->len() != cast._beans->len()) return false;
 
-        return getBean().getType() == cast.getBean().getType();
+        for(int n=0; n < _beans->len() ;n++)
+            if((*_beans)[n].getType() != (*cast._beans)[n].getType())
+                return false;
+        return true;
     }
 
     nbool me::isImpli(const type& to) const {
@@ -149,5 +153,23 @@ namespace namu {
         // there is no null in namulang:
         //  returns void if no valid casting found.
         return ttype<nVoid>::get();
+    }
+
+    me& me::_assign(const me& rhs) {
+        if(_beans)
+            delete _beans;
+        _beans = !nul(rhs._beans) ? (narr*) rhs._beans->clone() : nullptr;
+        return *this;
+    }
+
+    narr& me::getBeans() {
+        if(nul(_beans))
+            _beans = new narr();
+        return *_beans;
+    }
+
+    me::~ntype() {
+        if(_beans)
+            delete _beans;
     }
 }

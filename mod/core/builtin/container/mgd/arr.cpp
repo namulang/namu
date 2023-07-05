@@ -92,8 +92,8 @@ namespace namu {
         };
     }
 
-    me::arr(): super(new narr()) { _type.setBean(*new obj()); }
-    me::arr(const node& newType): super(new narr()) { _type.setBean(newType); }
+    me::arr(): super(new narr()) { _type.getBeans().add(*new obj()); }
+    me::arr(const node& newType): super(new narr()) { _type.getBeans().add(newType); }
 
     node& me::operator[](nidx n) {
         return get()[n];
@@ -112,26 +112,26 @@ namespace namu {
     }
 
     nbool me::set(const iter& at, const node& new1) {
-        str ased = new1.asImpli(getType().getBean());
+        str ased = new1.asImpli(getType().getBeans()[0]);
         if(ased->isSub<nVoid>()) return false;
 
         return get().set(at, *ased);
     }
     nbool me::set(nidx n, const node& new1) {
-        str ased = new1.asImpli(getType().getBean());
+        str ased = new1.asImpli(getType().getBeans()[0]);
         if(ased->isSub<nVoid>()) return false;
         return get().set(n, *ased);
     }
 
     nbool me::add(const iter& at, const node& new1) {
-        str ased = new1.asImpli(getType().getBean());
+        str ased = new1.asImpli(getType().getBeans()[0]);
         if(ased->isSub<nVoid>()) return false;
 
         return get().add(at, *ased);
     }
 
     nbool me::add(nidx n, const node& new1) {
-        str ased = new1.asImpli(getType().getBean());
+        str ased = new1.asImpli(getType().getBeans()[0]);
         if(ased->isSub<nVoid>()) return false;
 
         return get().add(n, *ased);
@@ -178,7 +178,7 @@ namespace namu {
         _cache.insert({key, clone}); // this avoids infinite loop.
 
         generalizer g;
-        g.add(*new param(TYPENAME, getType().getBean()))
+        g.add(*new param(TYPENAME, getType().getBeans()[0]))
          .setRoot(*this)
          .start();
 

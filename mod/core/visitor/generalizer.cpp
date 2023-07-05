@@ -92,10 +92,6 @@ namespace namu {
             me.setRet(retOrg);
             if(nul(i.parent))
                 getReport().add(err::newErr(errCode::IS_NULL, "parent"));
-            else {
-                ntype& t = (ntype&) i.parent->getType();
-                t.setBean(retOrg);
-            }
         }
 
         onVisit(i, (func::super&) me);

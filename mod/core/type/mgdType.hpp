@@ -5,12 +5,18 @@
 
 namespace namu {
 
+    class node;
+    template <typename T, typename TACTIC> class tnarr;
+    typedef tnarr<node, strTactic> narr;
+
     class _nout mgdType : public ttype<obj> {
         NAMU_DECL_ME(mgdType, ttype<obj>)
 
     public:
         mgdType(const std::string& name): _name(name) { _initSupers(ttype<obj>::get()); }
         mgdType(const std::string& name, const mgdType& super): _name(name) { _initSupers(super); }
+        mgdType(const std::string& name, const narr& bean);
+        mgdType(const std::string& name, const mgdType& super, const narr& bean);
 
     public:
         const type& getSuper() const override { return *_supers[_supers.size()-1]; }

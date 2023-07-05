@@ -42,7 +42,7 @@ namespace namu {
             static ntype* inner = nullptr;
             if(nul(inner)) {
                 inner = new ttype<seq>();
-                inner->setBean(*new nInt());
+                inner->getBeans().add(*new nInt());
             }
 
             return *inner;

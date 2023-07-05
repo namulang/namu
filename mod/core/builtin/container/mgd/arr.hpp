@@ -41,7 +41,7 @@ namespace namu {
 
         using super::subs;
         nbicontainer& subs() override {
-            const type* key = &getType().getBean().getType();
+            const type* key = &getType().getBeans()[0].getType();
             auto e = _cache.find(key);
             if(e != _cache.end())
                 return e->second.get();
@@ -115,7 +115,7 @@ namespace namu {
 
         const obj& getOrigin() const override {
             if(!_org)
-                _org.bind(new me(getType().getBean()));
+                _org.bind(new me(getType().getBeans()[0]));
             return *_org;
         }
 
