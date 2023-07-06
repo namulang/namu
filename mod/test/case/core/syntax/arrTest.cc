@@ -656,3 +656,34 @@ TEST_F(arrTest, setElemAddAssignConversion2) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 1);
 }
+
+TEST_F(arrTest, setFieldOfElemAfterGetIt) {
+    make().parse(R"SRC(
+        def A
+            age int
+        main() int
+            a A[]
+            a.add(A())
+            a[0].age = 22
+            ret a[0].age == 22
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
+TEST_F(arrTest, setFieldOfElemAfterGetIt1) {
+    make().parse(R"SRC(
+        def A
+            age int
+        main() int
+            a A[]
+            a.add(A())
+            a[0].age = 22
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 22);
+}
