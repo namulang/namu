@@ -55,7 +55,7 @@ namespace namu {
         if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
 
         const func& f = sub.cast<func>();
-        str ret = nul(f) ? sub->getEval() : f.getRet();
+        str ret = nul(f) ? sub->getEval() : f.getRet()->getEval();
         // clone returning value when eval this:
         //  think about following code:
         //      def a
