@@ -78,10 +78,6 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, assignExpr& me) {
-        NAMU_DI("verify: assignExpr: set iter");
-        if(!me._getScopeIterOfLhs())
-            _err(me.getPos(), errCode::NOT_EXIST, me.getType().getName().c_str());
-
         NAMU_DI("verify: assignExpr: set evalType");
         str leftEval = me.getLeft().getEval();
         if(!leftEval) return _err(me.getPos(), errCode::LHS_IS_NULL);
