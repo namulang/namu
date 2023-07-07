@@ -22,6 +22,9 @@ namespace namu {
     str me::run(const args& a) {
         if(!canRun(a)) return NAMU_E("arguments doesn't have proper 'me'"), str();
 
+        // TODO: don't use static variable '_cache':
+        //  instead, put cache onto origin object, and if arr instance is origin, remove the cache.
+        arr::_cache.clear();
         node& pak = a.getMe();
         NAMU_I("run a pack");
         node& main = _findMain(pak, args());

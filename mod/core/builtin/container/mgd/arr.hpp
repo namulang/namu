@@ -25,6 +25,7 @@ namespace namu {
         typedef typename tucontainable<node>::iter iter;
         typedef typename tucontainable<node>::iteration iteration;
         typedef std::map<const type*, tstr<scope>> cache;
+        friend class starter; // for _cache
 
     public:
         arr();
