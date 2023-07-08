@@ -32,19 +32,19 @@ namespace namu {
 
     str me::_deduceElems() const {
         ncnt len = _elems.len();
-        if(!len) return nulOf<node>();
+        if(!len) return nVoid::singletone();
 
-        str ased1 = _elems[0].as<node>();
+        str ased1 = _elems[0].getEval();
         const node* ret = &ased1.get();
         if(!ret)
-            return *new obj();
+            return nVoid::singletone();
         str ased;
 
         for(int n=1; n < len; n++) {
             ased = _elems[n].as<node>();
             ret = &ret->deduce(*ased);
             if(!ret)
-                return *new obj();
+                return nVoid::singletone();
         }
 
         return *ret;
