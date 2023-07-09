@@ -53,4 +53,8 @@ namespace namu {
     str me::getEval() const {
         return str(getOrigin());
     }
+
+    narr& me::getElems() {
+        return _elems;
+    }
 }
