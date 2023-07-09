@@ -64,6 +64,7 @@ namespace namu {
         virtual void onTraverse(visitInfo i, retStateExpr& r);
         virtual void onTraverse(visitInfo i, ifExpr& f);
         virtual void onTraverse(visitInfo i, whileExpr& w);
+        virtual void onTraverse(visitInfo i, defArrayExpr& d);
 
     private:
         tstr<errReport> _rpt;

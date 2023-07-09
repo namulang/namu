@@ -222,4 +222,15 @@ namespace namu {
         w.getCondition().accept(visitInfo {"", &w, 0, 2, i.depth+1}, *this);
         w.getBlock().accept(visitInfo {"", &w, 1, 2, i.depth+1}, *this);
     }
+
+    void me::onTraverse(visitInfo i, defArrayExpr& d) {
+        if(_isLog)
+            NAMU_DI("defArrayExpr[%s]::onTraverse", i.name.c_str());
+
+        narr& elems = d.getElems();
+        int len = elems.len(),
+            n = 0;
+        for(node& e : elems)
+            e.accept(visitInfo {"", &d, n++, len, i.depth+1}, *this);
+    }
 }
