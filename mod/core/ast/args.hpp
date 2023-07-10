@@ -22,18 +22,8 @@ namespace namu {
                 _me = me.as<node>();
             return *this;
         }
+
         node& getMe() const { return *_me; }
-
-        std::string asStr() const {
-            std::string ret;
-            nbool first = true;
-            for(const auto& e : *this) {
-                ret += (first ? "" : ",") + e.getType().getName();
-                first = false;
-            }
-
-            return ret;
-        }
 
         clonable* deepClone() const override {
             me* ret = new me();

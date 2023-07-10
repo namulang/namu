@@ -2,12 +2,14 @@
 
 #include "visitor.hpp"
 #include "../frame/frame.hpp"
+#include "../ast/params.hpp"
 
 struct verifierTest;
 
 namespace namu {
 
     class loopExpr;
+
     class _nout verifier : public visitor {
         NAMU(ME(verifier, visitor))
         friend struct ::verifierTest;
@@ -59,6 +61,7 @@ namespace namu {
 
     private:
         void _prepare();
+        std::string _asStr(const params& ps);
 
         // @param newInfo is not a heap instance.
         void _leaveErrFrame();

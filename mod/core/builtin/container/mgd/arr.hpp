@@ -120,6 +120,10 @@ namespace namu {
             return *_org;
         }
 
+        std::string asStr() const {
+            return get().asStr();
+        }
+
     protected:
         iteration* _onMakeIteration(ncnt step) const override;
 

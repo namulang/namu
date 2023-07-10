@@ -46,32 +46,40 @@ namespace namu {
         template <typename E>
         tnarr<E, strTactic> getAll(std::function<nbool(const E&)> l) const;
         narr getAll(std::function<nbool(const T&)> l) const;
-
         // set:
         using super::set;
         using tarrayable<T>::set;
         nbool set(const iter& at, const T& new1) override;
         nbool set(nidx n, const T& new1) override;
-
         // add:
         using super::add;
         using tarrayable<T>::add;
         nbool add(const iter& e, const T& new1) override;
         nbool add(nidx n, const T& new1) override;
         void add(const iter& here, const iter& from, const iter& to) override;
-
         // del:
         using super::del;
         using tarrayable<T>::del;
         nbool del(const iter& from, const iter& end) override;
         nbool del(const iter& it) override;
         nbool del(nidx n) override;
-
         // etc:
         void rel() override;
 
         clonable* clone() const override { return new me(*this); }
         clonable* deepClone() const override;
+
+        std::string asStr() const {
+            std::string ret;
+            nbool first = true;
+            for(const auto& e : *this) {
+                str eval = e.getEval();
+                ret += (first ? "" : ",") + (eval ? e.getEval()->getType().getName() : "{none}");
+                first = false;
+            }
+
+            return ret;
+        }
 
     protected:
         iteration* _onMakeIteration(ncnt step) const override {
