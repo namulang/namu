@@ -14,7 +14,7 @@ PAIRX(ACCESS_TO_INCOMPLETE,         "accesses to incomplete object")
 
 // obj:
 PAIRX(CANT_CAST_TO_NODE,            "obj can't be cast into node class")
-PAIRX(OBJ_WRONG_ARGS,               "obj can't execute with this argument types '%s'")
+PAIRX(OBJ_WRONG_ARGS,               "I can't run with this argument types '%s'. they should be '%s'")
 PAIRX(OBJ_ALREADY_EXIST,            "\'%s\' object already exists at %s")
 
 // func:

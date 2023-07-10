@@ -343,10 +343,24 @@ namespace namu {
         str derivedSub = anySub.as<node>();
         if(!derivedSub) return _err(me.getPos(), errCode::CANT_ACCESS, ased->getType().getName().c_str(), "sub-node");
         NAMU_DI("verify: runExpr: derivedSub[%s]", derivedSub->getType().getName().c_str());
-        if(!derivedSub->canRun(me.getArgs()))
-            return _err(me.getPos(), errCode::OBJ_WRONG_ARGS, me.getArgs().asStr().c_str());
+        if(!derivedSub->canRun(me.getArgs())) {
+            const func& derivedCast = derivedSub->cast<func>();
+            std::string params = nul(derivedCast) ? "ctor" : _asStr(derivedCast.getParams());
+            return _err(me.getPos(), errCode::OBJ_WRONG_ARGS, me.getArgs().asStr().c_str(), params.c_str());
+        }
 
         a.setMe(nulOf<baseObj>());
+    }
+
+    std::string me::_asStr(const params& ps) {
+        std::string ret;
+        nbool first = true;
+        for(const param& p : ps) {
+            ret += (first ? "" : ",") + p.getOrigin().getType().getName();
+            first = false;
+        }
+
+        return ret;
     }
 
     void me::onVisit(visitInfo i, mgdFunc& me) {
