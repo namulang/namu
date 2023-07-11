@@ -210,3 +210,37 @@ TEST_F(genericsTest, assignDifferentParameterizedTypeNegative) {
             a = A<flt>()
     )SRC").shouldVerified(false);
 }
+
+TEST_F(genericsTest, defAssignForPreCtorShouldWork) {
+    make().parse(R"SRC(
+        def A<T>
+            a := T()
+        main() int
+            a1 A<str>
+            a1.a = "hello"
+            a1.a == "hello"
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
+TEST_F(genericsTest, 2DArrayWithGenerics) {
+    make().parse(R"SRC(
+        def A<T>
+            a := {{T()}}
+            say() str
+                for arr in a
+                    for e in arr
+                        ret e
+        main() int
+            a1 A<str>
+            a1.a[0][0] = "hello"
+            a1.say() == "hello"
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
