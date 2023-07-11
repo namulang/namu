@@ -76,7 +76,7 @@ namespace namu {
         else {
             if(i.parent && i.parent == &cast)
                 // if this ctor belongs to root object(== generic obj):
-                me._setOrigin(*(node*) cast.getOrigin().clone());
+                me._setOrigin(cast.getOrigin());
         }
 
         onVisit(i, (func&) me);
