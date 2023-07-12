@@ -45,13 +45,14 @@ namespace namu {
     }
 
     void me::pushObj(const baseObj& obj) {
+        _obj.bind(obj);
+
         scopes& bottom = *_local.getBottom();
-        if(!nul(bottom)) {
-            if(nul(obj))
-                bottom.unlink();
-            else
-                bottom.link(obj.subs());
-        }
+        if(nul(bottom)) return;
+        if(nul(obj))
+            bottom.unlink();
+        else
+            bottom.link(obj.subs());
     }
 
     namespace {
@@ -68,7 +69,15 @@ namespace namu {
     }
     baseObj& me::_getMe() { return *inner; }
 
-    scopes& me::getTop() { return *_local.getTop(); }
+    nbicontainer& me::getTop() {
+        if(_local.chainLen() > 0)
+            return _local.getTop()->getContainer();
+        if(_obj)
+            return _obj->subs();
+
+        static ndumMap inner;
+        return inner;
+    }
 
     tstr<scopes> me::popLocal() {
         if(*_retState == BLK_RET)

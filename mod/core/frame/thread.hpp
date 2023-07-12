@@ -13,7 +13,7 @@ namespace namu {
 
     class _nout thread : public node {
         NAMU(CLASS(thread, node))
-        friend class verifier;
+        friend class verifier; // for frames
         friend class baseObj; // for frames.
         friend class mgdFunc; // for frames.
         friend class blockExpr; // for frames.

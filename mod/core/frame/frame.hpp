@@ -122,8 +122,8 @@ namespace namu {
         nbool pushLocal(const std::string& name, const node* n);
         void pushObj(const baseObj& obj);
 
-        scopes& getTop();
-        const scopes& getTop() const NAMU_UNCONST_FUNC(getTop())
+        nbicontainer& getTop();
+        const nbicontainer& getTop() const NAMU_UNCONST_FUNC(getTop())
 
         // I won't provide API for poping a single node from the scope.
         tstr<scopes> popLocal();
