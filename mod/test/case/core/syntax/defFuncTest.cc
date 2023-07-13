@@ -215,3 +215,25 @@ TEST_F(defFuncTest, defFuncReturnClass) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 0);
 }
+
+TEST_F(defFuncTest, defFuncDuplicateNegative) {
+    make().negative().parse(R"SRC(
+        a(n int) void
+            ret
+        a(n int) int
+            ret n
+        main() void
+            ret
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(defFuncTest, defFuncDuplicate) {
+    make().parse(R"SRC(
+        a() void
+            ret
+        a(n int) int
+            ret n
+        main() void
+            ret
+    )SRC").shouldVerified(true);
+}

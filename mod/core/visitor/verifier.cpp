@@ -150,10 +150,11 @@ namespace namu {
 
     void me::onLeave(visitInfo i, defAssignExpr& me) {
         NAMU_DI("verify: defAssignExpr: duplication of variable.");
-        const scopes& top = thread::get().getNowFrame().getTop();
+        const nbicontainer& top = thread::get().getNowFrame().getTop();
         if(nul(top)) return;
+
         const std::string name = me.getSubName();
-        if(top.getContainer().has(name))
+        if(top.has(name))
             return _err(me.getPos(), errCode::ALREADY_DEFINED_VAR, name.c_str(), me.getEval()->getType().getName()
                     .c_str());
 
@@ -197,7 +198,7 @@ namespace namu {
 
     void me::onVisit(visitInfo i, defVarExpr& me) {
         NAMU_DI("verify: defVarExpr: check duplication");
-        const scopes& top = thread::get().getNowFrame().getTop();
+        const nbicontainer& top = thread::get().getNowFrame().getTop();
         str eval = me.getEval();
         if(!eval)
             return _err(me.getPos(), errCode::TYPE_NOT_EXIST, me.getName().c_str());
@@ -213,7 +214,7 @@ namespace namu {
         const ntype& t = eval->getType();
         const nchar* typeName = nul(t) ? "null" : t.getName().c_str();
         if(nul(top)) return;
-        if(top.getContainer().has(me.getName()))
+        if(top.has(me.getName()))
             return _err(me.getPos(), errCode::ALREADY_DEFINED_VAR, me.getName().c_str(), typeName);
 
 
@@ -366,6 +367,36 @@ namespace namu {
     void me::onVisit(visitInfo i, mgdFunc& me) {
         onVisit(i, (mgdFunc::super&) me);
 
+        NAMU_DI("verify: check duplication");
+        const nbicontainer& top = thread::get().getNowFrame().getTop();
+        ncnt len = me.getParams().len();
+        const node& errFound = top.get([&](const std::string& key, const node& val) {
+            if(key != i.name) return false;
+            if(&val == &me) return false;
+            const func& cast = val.cast<func>();
+            // val should be kind of a func:
+            //  obj or property shouldn't have same name to any func.
+            if(nul(cast)) return true; // true means 'err'
+
+            const params& castPs = cast.getParams();
+            if(castPs.len() != len) return false;
+
+            for(int n=0; n < castPs.len() ;n++) {
+                str lhs = castPs[n].getOrigin().getEval();
+                str rhs = me.getParams()[n].getOrigin().getEval();
+                if(lhs->getType() != rhs->getType())
+                    return false;
+            }
+
+            return true;
+        });
+        if(!nul(errFound)) {
+            if(errFound.isSub<func>())
+                _err(me.getPos(), errCode::ALREADY_DEFINED_FUNC, i.name.c_str());
+            else
+                _err(me.getPos(), errCode::ALREADY_DEFINED_IDENTIFIER, i.name.c_str());
+        }
+
         NAMU_DI("verify: mgdFunc: main func return type should be int or void");
         if(i.name == starter::MAIN) {
             str ret = me.getRet();
@@ -438,6 +469,18 @@ namespace namu {
     void me::_prepare() {
         _us.clear();
         _recentLoops.clear();
+        _setNow(this);
+
+        frames& frs = thread::get()._getFrames();
+        frame& fr = *new frame();
+        fr.pushObj(getRoot().cast<baseObj>());
+        frs.add(fr);
+    }
+
+    void me::_postpare(me* prev) {
+        _setNow(prev);
+        frames& frs = thread::get()._getFrames();
+        frs.del();
     }
 
     void me::onLeave(visitInfo i, mgdFunc& me) {

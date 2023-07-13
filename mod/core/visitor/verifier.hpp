@@ -24,12 +24,10 @@ namespace namu {
         frame& getErrFrame();
 
         void start() override {
-            _prepare();
-
             verifier* prev = &_getNow();
-            _setNow(this);
+            _prepare();
             super::start();
-            _setNow(prev);
+            _postpare(prev);
         }
 
         void onVisit(visitInfo i, node& me) override;
@@ -61,6 +59,7 @@ namespace namu {
 
     private:
         void _prepare();
+        void _postpare(me* prev);
         std::string _asStr(const params& ps);
 
         // @param newInfo is not a heap instance.
