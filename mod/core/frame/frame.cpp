@@ -101,7 +101,11 @@ namespace namu {
     // node:
     nbicontainer& me::subs() {
         scopes& top = *_local.getTop();
-        return nul(top) ? _obj->subs() : top;
+        if(!nul(top)) return top;
+        if(_obj) return _obj->subs();
+
+        static ndumMap inner;
+        return inner;
     }
 
     nbool me::canRun(const args& a) const { return false; }

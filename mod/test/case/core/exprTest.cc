@@ -105,14 +105,12 @@ TEST_F(exprTest, simpleRunExprWithoutMeObjNegative) {
     errReport rep;
     verifier veri;
     veri.setReport(rep).setRoot(exp1).start();
-    /*TODO: expr parser didn't put col & row on AST yet
-     *      uncomment these after the patch
-    ASSERT_TRUE(rep);*/
+    ASSERT_FALSE(rep);
 
     setLine(exp1, 1, 1);
     rep.rel();
     veri.setReport(rep).setRoot(exp1).start();
-    ASSERT_TRUE(rep);
+    ASSERT_FALSE(rep);
 }
 
 TEST_F(exprTest, simpleRunExpr) {
@@ -178,8 +176,4 @@ TEST_F(exprTest, constructExprInManual) {
     ASSERT_TRUE(res->getType() == ttype<nVoid>::get());
 
     getFrames().del();
-}
-
-TEST_F(exprTest, defVarExpr) {
-    // TODO:
 }

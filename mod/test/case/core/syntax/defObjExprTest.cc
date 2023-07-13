@@ -154,3 +154,25 @@ TEST_F(defObjExprTest, defVarWithVoidNegative) {
     ASSERT_TRUE(rpt);
     ASSERT_EQ(rpt[0].pos.row, 3);
 }
+
+TEST_F(defObjExprTest, defSameObjAndFuncNegative) {
+    make().negative().parse(R"SRC(
+        def foo
+            age := 0
+        foo(n int) void
+            ret
+        main() void
+            ret
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(defObjExprTest, defSameObjNegative) {
+    make().negative().parse(R"SRC(
+        def A
+            age := 0
+        def A
+            grade := 0.5
+        main() void
+            ret
+    )SRC").shouldVerified(false);
+}
