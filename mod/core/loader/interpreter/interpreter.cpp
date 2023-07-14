@@ -3,6 +3,7 @@
 #include "../../frame/thread.hpp"
 #include "interpreter.hpp"
 #include "../../visitor/graphVisitor.hpp"
+#include "../../visitor/preEvaluator.hpp"
 
 namespace namu {
 
@@ -51,6 +52,7 @@ namespace namu {
         _parse();
         if(*_rpt)
             return *_slot;
+        _preEval();
         _verify();
 
         _logStructure(_veri.getErrFrame());
@@ -95,6 +97,23 @@ namespace namu {
         }
 
         _isParsed = _isPackExist() && !_rpt->hasErr();
+    }
+
+    void me::_preEval() {
+        NAMU_DI("======================================");
+        NAMU_DI("                preEval               ");
+        NAMU_DI("======================================");
+
+        if(!_slot) {
+            NAMU_E("_slot is null");
+            return;
+        }
+
+        preEvaluator evaler;
+        evaler.setReport(*_rpt)
+              .setLog(false)
+              .setRoot(_slot->getPack())
+              .start();
     }
 
     void me::_verify() {

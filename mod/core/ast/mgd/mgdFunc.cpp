@@ -89,7 +89,7 @@ namespace namu {
         NAMU_DI("%s._onInFrame()", getType().getName().c_str());
         fr.pushLocal(subs());
         fr.pushFunc(*this);
-        fr.pushLocal((nbicontainer&) args); // including 'me'
+        fr.pushLocal(nul(args) ? nulOf<nbicontainer>() : (nbicontainer&) args); // including 'me'
     }
 
     void me::outFrame() {

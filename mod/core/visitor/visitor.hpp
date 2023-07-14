@@ -27,6 +27,9 @@ namespace namu {
             _isLog = toShow;
             return *this;
         }
+        nbool isLog() const {
+            return _isLog;
+        }
 
         me& setReport(errReport& rpt);
         errReport& getReport();

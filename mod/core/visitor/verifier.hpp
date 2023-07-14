@@ -66,6 +66,7 @@ namespace namu {
         void _leaveErrFrame();
         void _verifyMgdFuncImplicitReturn(mgdFunc& me);
         void _rel();
+        void _report(err* new1);
 
         template <typename... Args> void _err(Args... args);
         template <typename... Args> void _err(const point& pos, errCode code, Args... args);

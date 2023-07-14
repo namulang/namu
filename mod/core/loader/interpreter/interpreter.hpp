@@ -35,6 +35,7 @@ namespace namu {
         nbool _isPackExist();
 
         void _parse();
+        void _preEval();
         void _verify();
         void _logStructure(frame& info);
         void _logFrame(const frame& info) const;
