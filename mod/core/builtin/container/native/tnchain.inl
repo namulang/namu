@@ -124,6 +124,7 @@ namespace namu {
 
     TEMPL
     ME* ME::wrap(const super& toShallowWrap) {
+        if(nul(toShallowWrap)) return nullptr;
         ME* ret = const_cast<me*>(&toShallowWrap.template cast<ME>());
         if(nul(ret)) {
             ret = new me();

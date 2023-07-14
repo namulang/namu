@@ -8,34 +8,28 @@ namespace namu {
 
     template <typename... Args>
     void ME::_warn(Args... args) {
-        getReport().add(err::newWarn(args...));
-        _leaveErrFrame();
+        _report(err::newWarn(args...));
     }
     template <typename... Args>
     void ME::_err(Args... args) {
-        getReport().add(err::newErr(args...));
-        _leaveErrFrame();
-        NAMU_CALLSTACK();
+        _report(err::newErr(args...));
     }
     template <typename... Args>
     void ME::_info(Args... args) {
-        getReport().add(err::newInfo(args...));
+        _report(err::newInfo(args...));
     }
 
     template <typename... Args>
     void ME::_warn(const point& pos, errCode code, Args... args) {
-        getReport().add(err::newWarn(pos, code, args...));
-        _leaveErrFrame();
+        _report(err::newWarn(pos, code, args...));
     }
     template <typename... Args>
     void ME::_err(const point& pos, errCode code, Args... args) {
-        getReport().add(err::newErr(pos, code, args...));
-        _leaveErrFrame();
-        NAMU_CALLSTACK();
+        _report(err::newErr(pos, code, args...));
     }
     template <typename... Args>
     void ME::_info(const point& pos, errCode code, Args... args) {
-        getReport().add(err::newInfo(pos, code, args...));
+        _report(err::newInfo(pos, code, args...));
     }
 
 #undef ME

@@ -176,3 +176,29 @@ TEST_F(defObjExprTest, defSameObjNegative) {
             ret
     )SRC").shouldVerified(false);
 }
+
+TEST_F(defObjExprTest, testPrector) {
+    make().parse(R"SRC(
+        def A
+            age := B().age + 1
+        def B
+            age := 0
+        main() int
+            A().age
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
+
+TEST_F(defObjExprTest, testPrectorCircularNegative) {
+    make().negative().parse(R"SRC(
+        def A
+            age := B().age
+        def B
+            age := A().age
+        main() void
+            ret
+    )SRC").shouldVerified(false);
+}

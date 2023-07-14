@@ -29,6 +29,14 @@ namespace namu {
         }
 
     public:
+        nbool operator==(const me& rhs) const {
+            return fType == rhs.fType && code == rhs.code && code == rhs.code;
+        }
+        nbool operator!=(const me& rhs) const {
+            return !operator==(rhs);
+        }
+
+    public:
         virtual void log() const;
         void dbgLog() const;
 

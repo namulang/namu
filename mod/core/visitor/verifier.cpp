@@ -43,6 +43,17 @@ namespace namu {
 
     me::verifier() { rel(); }
 
+    void me::_report(err* new1) {
+        getReport().add(new1);
+        if(!isLog()) return;
+
+        switch(new1->fType) {
+            case err::ERR: NAMU_CALLSTACK();
+            case err::WARN: _leaveErrFrame(); break;
+            default:;
+        }
+    }
+
     void me::_leaveErrFrame() {
         _frame.bind(thread::get().getNowFrame());
     }
@@ -52,7 +63,7 @@ namespace namu {
 
     // verification:
     void me::onVisit(visitInfo i, node& me) {
-        NAMU_DI("verify: node: no same variable=%d", me.subs().len());
+        if(isLog()) NAMU_DI("verify: node: no same variable=%d", me.subs().len());
         if(me.isSub<frame>()) return;
 
         for(auto e=me.subs().begin(); e ;++e) {
@@ -62,23 +73,23 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, asExpr& me) {
-        NAMU_DI("verify: asExpr: _me & _as aren't null");
+        if(isLog()) NAMU_DI("verify: asExpr: _me & _as aren't null");
         if(nul(me.getMe())) return _err(me.getPos(), errCode::LHS_IS_NULL);
         if(nul(me.getAs())) return _err(me.getPos(), errCode::RHS_IS_NULL);
         if(me.getAs().isSub<nVoid>()) return _err(me.getPos(), errCode::VOID_NOT_CAST);
 
-        NAMU_DI("verify: asExpr: checks that me can cast to 'as'");
+        if(isLog()) NAMU_DI("verify: asExpr: checks that me can cast to 'as'");
         if(!me.getMe().is(me.getAs()))
             return _err(me.getPos(), errCode::CAST_NOT_AVAILABLE, me.getMe().getType().getName().c_str(),
                     me.getAs().getType().getName().c_str());
 
-        NAMU_DI("verify: asExpr: rhs shouldn't be expression");
+        if(isLog()) NAMU_DI("verify: asExpr: rhs shouldn't be expression");
         if(!me.getAs().asImpli<node>())
             return _err(me.getPos(), errCode::CAST_TO_UNKNOWN);
     }
 
     void me::onVisit(visitInfo i, assignExpr& me) {
-        NAMU_DI("verify: assignExpr: set evalType");
+        if(isLog()) NAMU_DI("verify: assignExpr: set evalType");
         str leftEval = me.getLeft().getEval();
         if(!leftEval) return _err(me.getPos(), errCode::LHS_IS_NULL);
         const ntype& ltype = leftEval->getType();
@@ -128,7 +139,7 @@ namespace namu {
         //          AssignExpr(getExpr(getExpr(A, B), NAME), nInt(5))
         //      so, only I need to check is, lhs of AssignExpr is kind of getExpr() or not.
         //      I can care about that the last expression is valid.
-        NAMU_DI("verify: assignExpr: checks rvalue");
+        if(isLog()) NAMU_DI("verify: assignExpr: checks rvalue");
         const node& lhs = me.getLeft();
         if(!lhs.isSub<getExpr>()/* TODO: && !lhs.isSub<ElementExpr>()*/)
             return _err(me.getPos(), errCode::ASSIGN_TO_RVALUE, me.getRight().getType().getName().c_str(),
@@ -136,20 +147,20 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, blockExpr& me) {
-        NAMU_DI("verify: blockExpr: it will iterate all subnodes[%d]", me.getStmts().len());
+        if(isLog()) NAMU_DI("verify: blockExpr: it will iterate all subnodes[%d]", me.getStmts().len());
     }
 
     void me::onLeave(visitInfo i, blockExpr& me) {
-        NAMU_DI("verify: blockExpr: last stmt should match to ret type");
+        if(isLog()) NAMU_DI("verify: blockExpr: last stmt should match to ret type");
         const narr& stmts = me.getStmts();
         if(nul(stmts) || stmts.len() <= 0) return; // will be catched to another verification.
 
-        NAMU_DI("verify: blockExpr: block.outFrame()");
+        if(isLog()) NAMU_DI("verify: blockExpr: block.outFrame()");
     }
 
 
     void me::onLeave(visitInfo i, defAssignExpr& me) {
-        NAMU_DI("verify: defAssignExpr: duplication of variable.");
+        if(isLog()) NAMU_DI("verify: defAssignExpr: duplication of variable.");
         const nbicontainer& top = thread::get().getNowFrame().getTop();
         if(nul(top)) return;
 
@@ -158,18 +169,19 @@ namespace namu {
             return _err(me.getPos(), errCode::ALREADY_DEFINED_VAR, name.c_str(), me.getEval()->getType().getName()
                     .c_str());
 
-        NAMU_DI("verify: defAssignExpr: is definable?");
+        if(isLog()) NAMU_DI("verify: defAssignExpr: is definable?");
         const node& rhs = me.getRight();
         if(nul(rhs))
             return _err(me.getPos(), errCode::CANT_DEF_VAR, me.getSubName().c_str(), "null");
 
-        NAMU_DI("verify: defAssignExpr: '%s %s' has defined.",
+        if(isLog())
+            NAMU_DI("verify: defAssignExpr: '%s %s' has defined.",
                 me.getSubName().c_str(),
                 nul(rhs) ? "name" : rhs.getType().getName().c_str());
 
         node& to = me.getTo();
         str new1 = me.isOnDefBlock() ? rhs.as<node>() : rhs.getEval();
-        NAMU_DI("verify: defAssignExpr: new1[%s]", new1 ? new1->getType().getName().c_str() : "null");
+        if(isLog()) NAMU_DI("verify: defAssignExpr: new1[%s]", new1 ? new1->getType().getName().c_str() : "null");
         if(!new1)
             return _err(me.getPos(), errCode::RHS_NOT_EVALUATED);
         if(!new1->isComplete())
@@ -197,7 +209,7 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, defVarExpr& me) {
-        NAMU_DI("verify: defVarExpr: check duplication");
+        if(isLog()) NAMU_DI("verify: defVarExpr: check duplication");
         const nbicontainer& top = thread::get().getNowFrame().getTop();
         str eval = me.getEval();
         if(!eval)
@@ -205,7 +217,7 @@ namespace namu {
         if(eval->isSub<nVoid>())
             return _err(me.getPos(), errCode::VOID_CANT_DEFINED);
 
-        NAMU_DI("verify: defVarExpr: check whether make a void container.");
+        if(isLog()) NAMU_DI("verify: defVarExpr: check whether make a void container.");
         const narr& beans = eval->getType().getBeans();
         for(const node& bean : beans)
             if(bean.isSub<nVoid>())
@@ -220,7 +232,7 @@ namespace namu {
 
         // 'check duplication' must be front of 'is %s definable':
         std::string name = me.getName();
-        NAMU_DI("verify: defVarExpr: is %s definable?", name.c_str());
+        if(isLog()) NAMU_DI("verify: defVarExpr: is %s definable?", name.c_str());
         if(name == "") return _err(me.getPos(), errCode::HAS_NO_NAME);
         const node& org = me.getOrigin();
         if(nul(org)) return _err(me.getPos(), errCode::NO_ORIGIN, name.c_str());
@@ -236,22 +248,22 @@ namespace namu {
             nbool res = me._where ? me._where->add(name.c_str(), (node*) eval->clone()) : thread::get()._getNowFrame()
                     .pushLocal(name, (node*) eval->clone());
             if(!res)
-                NAMU_E("verify: defVarExpr: define variable %s is failed.", name.c_str());
+                if(isLog()) NAMU_E("verify: defVarExpr: define variable %s is failed.", name.c_str());
         }
     }
 
     void me::onVisit(visitInfo i, defSeqExpr& me) {
-        NAMU_DI("verify: defSeqExpr: check lhs & rhs");
+        if(isLog()) NAMU_DI("verify: defSeqExpr: check lhs & rhs");
         if(nul(me.getStart())) return _err(me.getPos(), errCode::LHS_IS_NULL);
         if(nul(me.getEnd())) return _err(me.getPos(), errCode::RHS_IS_NULL);
 
-        NAMU_DI("verify: defSeqExpr: lhs & rhs is sort of Int?");
+        if(isLog()) NAMU_DI("verify: defSeqExpr: lhs & rhs is sort of Int?");
         if(!me.getStart().isImpli<nInt>()) return _err(me.getPos(), errCode::SEQ_SHOULD_INT_COMPATIBLE);
         if(!me.getEnd().isImpli<nInt>()) return _err(me.getPos(), errCode::SEQ_SHOULD_INT_COMPATIBLE);
     }
 
     void me::onVisit(visitInfo i, defArrayExpr& me) {
-        NAMU_DI("verify: defArrayExpr: check all elements");
+        if(isLog()) NAMU_DI("verify: defArrayExpr: check all elements");
         const node& type = me.getArrayType();
         if(nul(type)) return _err(me.getPos(), errCode::ELEM_TYPE_DEDUCED_NULL);
         if(type.isSuper<obj>())
@@ -261,13 +273,13 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, FBOExpr& me) {
-        NAMU_DI("verify: FBOExpr: lhs & rhs should bind something.");
+        if(isLog()) NAMU_DI("verify: FBOExpr: lhs & rhs should bind something.");
         const node& lhs = me.getLeft();
         const node& rhs = me.getRight();
         if(nul(lhs)) return _err(me.getPos(), errCode::LHS_IS_NULL);
         if(nul(rhs)) return _err(me.getPos(), errCode::RHS_IS_NULL);
 
-        NAMU_DI("verify: FBOExpr: finding eval of l(r)hs.");
+        if(isLog()) NAMU_DI("verify: FBOExpr: finding eval of l(r)hs.");
         str lEval = lhs.getEval();
         str rEval = rhs.getEval();
         if(!lEval) return _err(me.getPos(), errCode::LHS_IS_NULL);
@@ -288,34 +300,35 @@ namespace namu {
     void me::onVisit(visitInfo i, getExpr& me) {
         // TODO: I have to check that the evalType has what matched to given _params.
         // Until then, I rather use as() func and it makes slow emmersively.
-        NAMU_DI("verify: getExpr: isRunnable: %s.%s", me.getType().getName().c_str(), me.getSubName().c_str());
+        if(isLog()) NAMU_DI("verify: getExpr: isRunnable: %s.%s", me.getType().getName().c_str(), me.getSubName().c_str());
         if(!me.getEval()) return _err(me.getPos(), errCode::WHAT_IS_THIS_IDENTIFIER, me.getSubName().c_str());
         str got = me._get(true);
         if(!got) {
             const node& from = me.getMe();
             return _err(me.getPos(), errCode::CANT_ACCESS, me._name.c_str(), from.getType().getName().c_str());
         }
-        NAMU_DI("verify: getExpr: isRunnable: got=%s, me=%s", got->getType().getName().c_str(),
+        if(isLog())
+            NAMU_DI("verify: getExpr: isRunnable: got=%s, me=%s", got->getType().getName().c_str(),
                 me.getType().getName().c_str());
 
-        NAMU_DI("verify: getExpr: accesses to incomplete 'me' object");
+        if(isLog()) NAMU_DI("verify: getExpr: accesses to incomplete 'me' object");
         str asedMe = me.getMe().as<node>();
         if(asedMe && !asedMe->isComplete())
             return _err(me.getPos(), errCode::ACCESS_TO_INCOMPLETE);
     }
 
     void me::onVisit(visitInfo i, retExpr& me) {
-        NAMU_DI("verify: retExpr: checks evalType of func is matched to me");
+        if(isLog()) NAMU_DI("verify: retExpr: checks evalType of func is matched to me");
         const func& f = thread::get().getNowFrame().getFunc();
         if(nul(f)) return _err(me.getPos(), errCode::NO_FUNC_INFO);
 
         str myEval = me.getEval();
         if(!myEval) return _err(me.getPos(), errCode::EXPR_EVAL_NULL);
-        NAMU_DI("verify: retExpr: myEval=%s", myEval->getType().getName().c_str());
+        if(isLog()) NAMU_DI("verify: retExpr: myEval=%s", myEval->getType().getName().c_str());
         const ntype& myType = myEval->getType();
         str retType = f.getRet()->as<node>();
         const type& fType = retType->getType();
-        NAMU_DI("verify: retExpr: checks return[%s] == func[%s]", myType.getName().c_str(),
+        if(isLog()) NAMU_DI("verify: retExpr: checks return[%s] == func[%s]", myType.getName().c_str(),
             fType.getName().c_str());
 
         if(!myType.isImpli(fType))
@@ -323,7 +336,7 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, runExpr& me) {
-        NAMU_DI("verify: runExpr: is it possible to run?");
+        if(isLog()) NAMU_DI("verify: runExpr: is it possible to run?");
         if(nul(me.getMe())) return _err(me.getPos(), errCode::DONT_KNOW_ME);
 
         str ased = me.getMe().getEval();
@@ -332,7 +345,7 @@ namespace namu {
         node& anySub = me.getSubject();
         if(nul(anySub)) return _err(me.getPos(), errCode::FUNC_NOT_EXIST);
 
-        NAMU_DI("verify: runExpr: anySub[%s]", anySub.getType().getName().c_str());
+        if(isLog()) NAMU_DI("verify: runExpr: anySub[%s]", anySub.getType().getName().c_str());
 
         args& a = me.getArgs();
         a.setMe(*ased);
@@ -343,7 +356,7 @@ namespace namu {
 
         str derivedSub = anySub.as<node>();
         if(!derivedSub) return _err(me.getPos(), errCode::CANT_ACCESS, ased->getType().getName().c_str(), "sub-node");
-        NAMU_DI("verify: runExpr: derivedSub[%s]", derivedSub->getType().getName().c_str());
+        if(isLog()) NAMU_DI("verify: runExpr: derivedSub[%s]", derivedSub->getType().getName().c_str());
         if(!derivedSub->canRun(me.getArgs())) {
             const func& derivedCast = derivedSub->cast<func>();
             std::string params = nul(derivedCast) ? "ctor" : _asStr(derivedCast.getParams());
@@ -367,7 +380,7 @@ namespace namu {
     void me::onVisit(visitInfo i, mgdFunc& me) {
         onVisit(i, (mgdFunc::super&) me);
 
-        NAMU_DI("verify: check duplication");
+        if(isLog()) NAMU_DI("verify: check duplication");
         const nbicontainer& top = thread::get().getNowFrame().getTop();
         ncnt len = me.getParams().len();
         const node& errFound = top.get([&](const std::string& key, const node& val) {
@@ -397,14 +410,14 @@ namespace namu {
                 _err(me.getPos(), errCode::ALREADY_DEFINED_IDENTIFIER, i.name.c_str());
         }
 
-        NAMU_DI("verify: mgdFunc: main func return type should be int or void");
+        if(isLog()) NAMU_DI("verify: mgdFunc: main func return type should be int or void");
         if(i.name == starter::MAIN) {
             str ret = me.getRet();
             if(!ret->isSub<nInt>() && !ret->isSub<nVoid>())
                 _err(me.getPos(), errCode::MAIN_FUNC_RET_TYPE);
         }
 
-        NAMU_DI("verify: mgdFunc: retType exists and stmts exist one at least");
+        if(isLog()) NAMU_DI("verify: mgdFunc: retType exists and stmts exist one at least");
         str retType = me.getRet();
         if(!retType) return _err(me.getPos(), errCode::NO_RET_TYPE);
         if(!retType->isSub(ttype<node>::get()))
@@ -414,7 +427,8 @@ namespace namu {
         if(nul(blk) || blk.getStmts().len() <= 0)
             return _err(blk.getPos(), errCode::NO_STMT_IN_FUNC);
 
-        NAMU_DI("verify: mgdFunc[%s]: %s iterateBlock[%d]", i.name.c_str(),
+        if(isLog())
+            NAMU_DI("verify: mgdFunc[%s]: %s iterateBlock[%d]", i.name.c_str(),
                 me.getType().getName().c_str(), me._blk->subs().len());
 
         // sequence of adding frame matters:
@@ -450,11 +464,12 @@ namespace namu {
         str ret = me.getRet()->as<node>();
         const type& retType = ret->getType();
         const node& lastStmt = *me.getBlock().getStmts().last();
-        NAMU_DI("verify: mgdFunc: last stmt[%s] should matches to return type[%s]",
+        if(isLog())
+            NAMU_DI("verify: mgdFunc: last stmt[%s] should matches to return type[%s]",
                 lastStmt.getType().getName().c_str(), retType.getName().c_str());
 
         if(!lastStmt.isSub<retExpr>() && retType == ttype<nVoid>::get()) {
-            NAMU_DI("verify: mgdFunc: implicit return won't verify when retType is void.");
+            if(isLog()) NAMU_DI("verify: mgdFunc: implicit return won't verify when retType is void.");
             return;
         }
 
@@ -471,16 +486,17 @@ namespace namu {
         _recentLoops.clear();
         _setNow(this);
 
-        frames& frs = thread::get()._getFrames();
-        frame& fr = *new frame();
-        fr.pushObj(getRoot().cast<baseObj>());
-        frs.add(fr);
+        baseObj& root = getRoot().cast<baseObj>();
+        if(!nul(root))
+            // before verify obj and its subs, I need to register onto frame.
+            root.inFrame(nulOf<bicontainable>());
     }
 
     void me::_postpare(me* prev) {
         _setNow(prev);
-        frames& frs = thread::get()._getFrames();
-        frs.del();
+        baseObj& root = getRoot().cast<baseObj>();
+        if(!nul(root))
+            root.outFrame();
     }
 
     void me::onLeave(visitInfo i, mgdFunc& me) {
@@ -494,11 +510,12 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, baseObj& me) {
-        NAMU_DI("verify: baseObj: %s push me[%x] len=%d",
+        if(isLog())
+            NAMU_DI("verify: baseObj: %s push me[%x] len=%d",
                 me.getType().getName().c_str(), &frame::_getMe(), me.subs().len());
         _us.push_back(&frame::_setMe(me));
 
-        NAMU_DI("verify: baseObj: iterate all subs and checks void type variable");
+        if(isLog()) NAMU_DI("verify: baseObj: iterate all subs and checks void type variable");
         for(const node& elem : me.subs())
             if(elem.isSub<nVoid>())
                 // don't finsh and return. i need to check all subs by calling super::onVisit().
@@ -509,19 +526,19 @@ namespace namu {
 
     void me::onLeave(visitInfo i, baseObj& me) {
         frame::_setMe(*_us.back());
-        NAMU_DI("verify: baseObj: pop me[%x]", &frame::_getMe());
+        if(isLog()) NAMU_DI("verify: baseObj: pop me[%x]", &frame::_getMe());
         _us.pop_back();
     }
 
     void me::onVisit(visitInfo i, genericObj& me) {
-        NAMU_DI("verify: genericObj: cache check");
+        if(isLog()) NAMU_DI("verify: genericObj: cache check");
         for(auto e : me._cache)
             if(nul(e.second))
                 _err(me.getPos(), errCode::MAKE_GENERIC_FAIL, e.first.c_str());
     }
 
     void me::onLeave(visitInfo i, genericObj& me) {
-        NAMU_DI("verify: genericObj: onLeave");
+        if(isLog()) NAMU_DI("verify: genericObj: onLeave");
         // DO NOTHING, BUT LEAVE THIS FUNC:
         //  if I don't have this func, getGenericExpr::super (=baseObj)'s one will be called.
         //  and me pointer will be erased too inside the func.
@@ -537,7 +554,8 @@ namespace namu {
             return _err(me.getPos(), errCode::ELEM_TYPE_IS_NULL);
 
         const std::string& name = me.getLocalName();
-        NAMU_DI("verify: forExpr: define iterator '%s %s'", elemType->getType().getName().c_str(),
+        if(isLog())
+            NAMU_DI("verify: forExpr: define iterator '%s %s'", elemType->getType().getName().c_str(),
                 name.c_str());
 
         me.getBlock().inFrame(nulOf<bicontainable>());
@@ -547,23 +565,23 @@ namespace namu {
     }
 
     void me::onLeave(visitInfo i, forExpr& me) {
-        NAMU_DI("verify: forExpr: onLeave");
+        if(isLog()) NAMU_DI("verify: forExpr: onLeave");
         me.getBlock().outFrame();
         _recentLoops.pop_back();
     }
 
     void me::onVisit(visitInfo i, whileExpr& me) {
-        NAMU_DI("verify: whileExpr: onVisit");
+        if(isLog()) NAMU_DI("verify: whileExpr: onVisit");
         _recentLoops.push_back(&me);
     }
 
     void me::onLeave(visitInfo i, whileExpr& me) {
-        NAMU_DI("verify: whileExpr: onLeave");
+        if(isLog()) NAMU_DI("verify: whileExpr: onLeave");
         _recentLoops.pop_back();
     }
 
     void me::onVisit(visitInfo i, breakExpr& me) {
-        NAMU_DI("verify: breakExpr: declared outside of loop?");
+        if(isLog()) NAMU_DI("verify: breakExpr: declared outside of loop?");
         if(_recentLoops.size() <= 0) return _err(me.getPos(), errCode::BREAK_OUTSIDE_OF_LOOP);
 
         loopExpr& recent = *_recentLoops.back();
@@ -576,12 +594,12 @@ namespace namu {
     }
 
     void me::onVisit(visitInfo i, nextExpr& me) {
-        NAMU_DI("verify: nextExpr: declared outside of loop?");
+        if(isLog()) NAMU_DI("verify: nextExpr: declared outside of loop?");
         if(_recentLoops.size() <= 0) return _err(me.getPos(), errCode::NEXT_OUTSIDE_OF_LOOP);
     }
 
     void me::onVisit(visitInfo i, ifExpr& me) {
-        NAMU_DI("verify: ifExpr: condition-expr can be casted into bool?");
+        if(isLog()) NAMU_DI("verify: ifExpr: condition-expr can be casted into bool?");
         node& condition = me.getCondition();
         if(nul(condition))
             return _err(me.getPos(), errCode::CONDITION_IS_EMPTY);

@@ -26,9 +26,13 @@ namespace namu {
     ncnt me::len() const { return _errs.size(); }
 
     const err& me::add(const err* new1) {
-        new1->dbgLog();
         _errs.push_back(new1);
         return *new1;
+    }
+
+    void me::add(const me& rhs) {
+        for(const auto& e : rhs)
+            add(*e);
     }
 
     std::vector<tstr<err>>::const_iterator me::begin() const {
