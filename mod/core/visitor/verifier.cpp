@@ -380,16 +380,21 @@ namespace namu {
     void me::onVisit(visitInfo i, mgdFunc& me) {
         onVisit(i, (mgdFunc::super&) me);
 
-        if(isLog()) NAMU_DI("verify: check duplication");
-        const nbicontainer& top = thread::get().getNowFrame().getTop();
+        obj& meObj = frame::_getMe().cast<obj>(); // TODO: same to 'thread::get().getNowFrame().getMe().cast<obj>();'
+        if(nul(meObj)) return _err(me.getPos(), errCode::FUNC_REDIRECTED_OBJ);
+
+        if(isLog()) NAMU_DI("verify: check func duplication");
+        const nbicontainer& top = meObj.getShares();
         ncnt len = me.getParams().len();
         const node& errFound = top.get([&](const std::string& key, const node& val) {
             if(key != i.name) return false;
             if(&val == &me) return false;
+
             const func& cast = val.cast<func>();
-            // val should be kind of a func:
-            //  obj or property shouldn't have same name to any func.
-            if(nul(cast)) return true; // true means 'err'
+            if(nul(cast))
+                // this has same name on shares, but it's not func! it's not valid.
+                // this could be an origin obj.
+                return true;
 
             const params& castPs = cast.getParams();
             if(castPs.len() != len) return false;
@@ -403,12 +408,13 @@ namespace namu {
 
             return true;
         });
-        if(!nul(errFound)) {
-            if(errFound.isSub<func>())
-                _err(me.getPos(), errCode::ALREADY_DEFINED_FUNC, i.name.c_str());
-            else
-                _err(me.getPos(), errCode::ALREADY_DEFINED_IDENTIFIER, i.name.c_str());
-        }
+        if(!nul(errFound))
+            _err(me.getPos(), errCode::ALREADY_DEFINED_FUNC, i.name.c_str());
+
+        //  obj or property shouldn't have same name to any func.
+        if(isLog()) NAMU_DI("verify: check func has same name to field");
+        if(!nul(meObj.getOwns().get(i.name)))
+            _err(me.getPos(), errCode::ALREADY_DEFINED_IDENTIFIER, i.name.c_str());
 
         if(isLog()) NAMU_DI("verify: mgdFunc: main func return type should be int or void");
         if(i.name == starter::MAIN) {
@@ -433,8 +439,6 @@ namespace namu {
 
         // sequence of adding frame matters:
         //  object scope is first:
-        baseObj& meObj = frame::_getMe();
-        if(nul(meObj)) return _err(me.getPos(), errCode::FUNC_REDIRECTED_OBJ);
         meObj.inFrame(nulOf<bicontainable>());
 
         //  parameters of func is second:

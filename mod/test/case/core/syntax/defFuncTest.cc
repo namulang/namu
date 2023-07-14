@@ -237,3 +237,15 @@ TEST_F(defFuncTest, defFuncDuplicate) {
             ret
     )SRC").shouldVerified(true);
 }
+
+TEST_F(defFuncTest, funcHasSameNameToFieldNegative) {
+    make().parse(R"SRC(
+        def A
+            a() void
+
+            a := 0
+
+        main() void
+            ret
+    )SRC").shouldVerified(false);
+}

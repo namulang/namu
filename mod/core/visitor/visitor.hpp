@@ -73,5 +73,11 @@ namespace namu {
         tstr<errReport> _rpt;
         nbool _isLog;
         str _root;
+        // value will be true if key is visited func or obj:
+        //  obj usually has huge subs and was chained to its subpack. but subpack also has the
+        //  obj as its one of subs, so visitor will fall in the infinite recursive loop.
+        //  to prevent it, I prepare a map instance. that map will return true if the key,
+        //  func or obj, already got visited.
+        std::map<node*, nbool> _visited;
     };
 }

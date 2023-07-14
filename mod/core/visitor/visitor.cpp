@@ -25,6 +25,7 @@ namespace namu {
 
     void me::rel() {
         setReport(dummyErrReport::singletone);
+        _visited.clear();
     }
 
     me& me::setReport(errReport& rpt) {
@@ -59,8 +60,13 @@ namespace namu {
         nbicontainer& subs = me.subs();
         int n=0;
         ncnt len = me.subs().len();
-        for(auto e=subs.begin(); e ;++e, ++n)
-            e->accept(visitInfo {e.getKey(), &me, n, len, i.depth+1}, *this);
+        auto end = _visited.end();
+        for(auto e=subs.begin(); e ;++e, ++n) {
+            node& val = e.getVal();
+            if(_visited.find(&val) != end) continue;
+            _visited[&val] = true;
+            val.accept(visitInfo {e.getKey(), &me, n, len, i.depth+1}, *this);
+        }
     }
 
     void me::onTraverse(visitInfo i, getExpr& e) {

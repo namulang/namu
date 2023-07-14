@@ -105,12 +105,12 @@ TEST_F(exprTest, simpleRunExprWithoutMeObjNegative) {
     errReport rep;
     verifier veri;
     veri.setReport(rep).setRoot(exp1).start();
-    ASSERT_FALSE(rep);
+    ASSERT_TRUE(rep);
 
     setLine(exp1, 1, 1);
     rep.rel();
     veri.setReport(rep).setRoot(exp1).start();
-    ASSERT_FALSE(rep);
+    ASSERT_TRUE(rep);
 }
 
 TEST_F(exprTest, simpleRunExpr) {

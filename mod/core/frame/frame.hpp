@@ -132,6 +132,8 @@ namespace namu {
         void popFunc();
         func& getFunc();
         const func& getFunc() const NAMU_UNCONST_FUNC(getFunc())
+        const baseObj& getMe() const NAMU_UNCONST_FUNC(getMe())
+        baseObj& getMe() { return *_obj; }
 
         // node:
         using node::subs;

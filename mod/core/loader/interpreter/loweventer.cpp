@@ -140,8 +140,13 @@ namespace namu {
             e = sub;
         }
 
-        _subpack.bind(e);
-        return e;
+        return onSubPack(*e);
+    }
+
+    obj* me::onSubPack(obj& subpack) {
+        NAMU_DI("tokenEvent: onSubPack()");
+        _subpack.bind(subpack);
+        return &subpack;
     }
 
     obj* me::onPack() {
@@ -155,8 +160,7 @@ namespace namu {
         if(name != manifest::DEFAULT_NAME)
             return onErr(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), &newSlot->getPack();
 
-        _subpack.bind(newSlot->getPack()); // this is a default pack containing name as '{default}'.
-        return &_subpack.get();
+        return onSubPack(newSlot->getPack()); // this is a default pack containing name as '{default}'.
     }
 
     blockExpr* me::onBlock() {
@@ -289,6 +293,8 @@ namespace namu {
         obj& ret = *_maker.make<obj>(new mgdType(name));
         ret._setComplete(false);
         _onInjectObjSubs(ret, blk);
+        ret.getShares().link(_subpack->subs());
+
         _onPushName(name, ret);
         return &ret;
     }
@@ -315,6 +321,8 @@ namespace namu {
         obj& org = *_maker.make<obj>(new mgdType(name, typeParams));
         org._setComplete(false);
         _onInjectObjSubs(org, blk);
+        org.getShares().link(_subpack->subs());
+
         node* ret = _maker.make<genericObj>(org, _extractParamTypeNames(typeParams));
         _onPushName(name, *ret);
         return ret;
@@ -328,6 +336,11 @@ namespace namu {
         }
 
         _onInjectObjSubs(subpack, blk);
+
+        // link system slots:
+        subpack.getShares().link(thread::get().getSlots());
+        NAMU_DI("link system slots[%d]: len=%d", thread::get().getSlots().len(), subpack.subs().len());
+
         // at this far, subpack must have at least 1 default ctor created just before:
         NAMU_DI("tokenEvent: onCompilationUnit: run preconstructor(%d lines)",
                 (blk.asPreCtor) ? blk.asPreCtor->len() : 0);
@@ -341,13 +354,10 @@ namespace namu {
         bicontainable& share = it.getShares().getContainer();
         bicontainable& own = it.getOwns();
         for(auto e=blk.asScope->begin(); e ;++e) {
+            // TODO: not only func, but also shared variable.
             bicontainable& con = nul(e.getVal<func>()) ? own : share;
             con.add(e.getKey(), *e);
         }
-
-        // link system slots:
-        it.getShares().link(thread::get().getSlots());
-        NAMU_DI("link system slots[%d]: len=%d", thread::get().getSlots().len(), it.subs().len());
 
         return _onInjectCtor(it, blk);
     }
