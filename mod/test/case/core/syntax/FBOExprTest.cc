@@ -47,19 +47,20 @@ TEST_F(FBOExprTest, addWithDefAssign) {
     ASSERT_EQ(res->get(), 12);
 }
 
-TEST_F(FBOExprTest, addWithDefAssignReversedNegative) {
+TEST_F(FBOExprTest, addWithDefAssignReversed) {
     negative().make().parse(R"SRC(
         b := a + 2
         a := 5
         main() int
             ret a + b
-    )SRC").shouldVerified(false);
+    )SRC").shouldVerified(true);
 
     nInt& a = getSubPack().sub<nInt>("a");
     ASSERT_FALSE(nul(a));
     ASSERT_EQ(a.get(), 5);
     nInt& b = getSubPack().sub<nInt>("b");
-    ASSERT_TRUE(nul(b));
+    ASSERT_FALSE(nul(b));
+    ASSERT_EQ(b.get(), 7);
 }
 
 TEST_F(FBOExprTest, addIntAndStrNegative) {

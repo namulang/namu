@@ -145,6 +145,7 @@ namespace namu {
         //  keyword:
         obj* onPack(const narr& dotname);
         obj* onPack();
+        obj* onSubPack(obj& subpack);
         blockExpr* onBlock();
         blockExpr* onBlock(blockExpr& blk, node& exp);
         defBlock* onDefBlock();
@@ -228,6 +229,7 @@ namespace namu {
         tstr<slot> _slot;
         tstr<obj> _subpack;
         area _srcArea;
+        tstr<scope> _filescope;
         std::vector<nint> _states;
         std::map<node*, std::string> _nameMap;
         std::vector<ifExpr*> _outerIfStack;
