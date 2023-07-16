@@ -115,6 +115,7 @@ namespace namu {
 
         virtual void accept(visitInfo i, visitor& v);
 
+        using frameInteractable::inFrame;
         void inFrame(const bicontainable& args) override {}
         void outFrame() override {}
 

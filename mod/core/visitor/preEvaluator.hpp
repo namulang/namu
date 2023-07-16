@@ -24,6 +24,10 @@ namespace namu {
         using super::onVisit;
 
         void onVisit(visitInfo i, obj& me) override;
+        void onLeave(visitInfo i, obj& me) override;
+        void onVisit(visitInfo i, mgdFunc& me) override;
+        void onLeave(visitInfo i, mgdFunc& me) override;
+        void onVisit(visitInfo i, getGenericExpr& me) override;
 
     private:
         void _rel();
@@ -34,5 +38,7 @@ namespace namu {
 
     private:
         std::vector<evaluation> _stack;
+        tstr<obj> _obj;
+        tstr<mgdFunc> _func;
     };
 }

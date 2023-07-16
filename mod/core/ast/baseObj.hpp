@@ -29,6 +29,7 @@ namespace namu {
 
         virtual const baseObj& getOrigin() const = 0;
 
+        using super::inFrame;
         void inFrame(const bicontainable& args) override;
         void outFrame() override;
 

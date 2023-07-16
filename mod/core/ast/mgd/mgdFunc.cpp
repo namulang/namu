@@ -86,14 +86,14 @@ namespace namu {
             return;
         }
 
-        NAMU_DI("%s._onInFrame()", getType().getName().c_str());
+        NAMU_DI("%s._inFrame()", getType().getName().c_str());
         fr.pushLocal(subs());
         fr.pushFunc(*this);
         fr.pushLocal(nul(args) ? nulOf<nbicontainer>() : (nbicontainer&) args); // including 'me'
     }
 
     void me::outFrame() {
-        NAMU_DI("%s._onOutFrame()", getType().getName().c_str());
+        NAMU_DI("%s._outFrame()", getType().getName().c_str());
 
         frame& fr = thread::get()._getNowFrame();
         // TODO: is it safe to delete below lines?

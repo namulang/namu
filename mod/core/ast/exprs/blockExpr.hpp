@@ -23,6 +23,7 @@ namespace namu {
         const narr& getStmts() const { return _exprs; }
         narr& getStmts() { return _exprs; }
 
+        using super::inFrame;
         void inFrame(const bicontainable& args) override;
         void outFrame() override;
 

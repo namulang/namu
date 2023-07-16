@@ -11,6 +11,8 @@ namespace namu {
         NAMU(CLASS(getExpr, expr, expr::exprType), VISIT())
         friend class verifier;
         friend class loweventer;
+        friend class visitor; // for _me
+        friend class generalizer; // for _args
 
     public:
         getExpr(const std::string& name): _name(name) {}

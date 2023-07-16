@@ -11,6 +11,7 @@ namespace namu {
     class _nout frameInteractable {
     public:
         virtual void inFrame(const bicontainable& args) = 0;
+        void inFrame() { inFrame(nulOf<bicontainable>()); }
         virtual void outFrame() = 0;
     };
 }

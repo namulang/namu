@@ -73,15 +73,18 @@ namespace namu {
         if(_isLog)
             NAMU_DI("getExpr[%s]::onTraverse", i.name.c_str());
 
-        // check me: --> skip
+        // check me:
+        const args& args = e.getSubArgs();
+        nint n = 0;
+        node& me = *e._me;
+        ncnt len = (nul(args) ? 0 : args.len()) + (nul(me) ? 0 : 1);
+        if(!nul(me))
+            me.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
 
         // check arguments:
-        const args& args = e.getSubArgs();
-        if(!nul(args)) {
-            int n = 0;
+        if(!nul(args))
             for(auto& elem : e.getSubArgs())
-                elem.accept(visitInfo {"", &e, n++, args.len(), i.depth+1}, *this);
-        }
+                elem.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, frame& f) {

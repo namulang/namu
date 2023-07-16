@@ -35,6 +35,7 @@ namespace namu {
             return _pos;
         }
 
+        using super::inFrame;
         void inFrame(const bicontainable& args) override;
         void outFrame() override;
 

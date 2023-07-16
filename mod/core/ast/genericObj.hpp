@@ -31,6 +31,7 @@ namespace namu {
 
         virtual nbicontainer& subs() override;
 
+        using super::inFrame;
         void inFrame(const bicontainable& args) override {}
         void outFrame() override {}
 
@@ -42,7 +43,7 @@ namespace namu {
 
         /// make a generic object.
         tstr<obj> _makeGeneric(const args& a) const;
-        tstr<obj> _defGeneric(const std::string& key, verifier& v, const args& a) const;
+        tstr<obj> _defGeneric(const std::string& key, const args& a) const;
         void _setSrc(const src& newSrc) { _src.bind(newSrc); }
         void _setPos(const point& new1) override { _pos = new1; }
 
