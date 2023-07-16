@@ -6,6 +6,8 @@ namespace namu {
     NAMU(DEF_ME(generalizer))
 
     const node& me::_findOrigin(const node& toReplace) const {
+        const getGenericExpr& generic = toReplace.cast<getGenericExpr>();
+        if(!nul(generic)) return nulOf<node>();
         const getExpr& cast = toReplace.cast<getExpr>();
         if(nul(cast)) return nulOf<node>();
 
@@ -118,5 +120,16 @@ namespace namu {
         org = &_findOrigin(me.getRight());
         if(!nul(org))
             me.setRight(*org);
+    }
+
+    void me::onVisit(visitInfo i, getGenericExpr& me) {
+        args& a = *me._args;
+        if(nul(a)) return;
+
+        for(nint n=0; n < a.len(); n++) {
+            const node& org = _findOrigin(a[n]);
+            if(!nul(org))
+                a.set(n, org);
+        }
     }
 }

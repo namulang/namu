@@ -30,8 +30,6 @@ namespace namu {
         }
     }
 
-    me* me::_now = nullptr;
-
     void me::rel() {
         _rel();
         super::rel();
@@ -439,7 +437,7 @@ namespace namu {
 
         // sequence of adding frame matters:
         //  object scope is first:
-        meObj.inFrame(nulOf<bicontainable>());
+        meObj.inFrame();
 
         //  parameters of func is second:
         scope* s = new scope();
@@ -461,7 +459,7 @@ namespace namu {
         //
         //      so, all expressions contains blockstmt need to control in/out frame instead of blockstmt.
         //  function block's are last:
-        me.getBlock().inFrame(nulOf<bicontainable>());
+        me.getBlock().inFrame();
     }
 
     void me::_verifyMgdFuncImplicitReturn(mgdFunc& me) {
@@ -488,16 +486,14 @@ namespace namu {
     void me::_prepare() {
         _us.clear();
         _recentLoops.clear();
-        _setNow(this);
 
         baseObj& root = getRoot().cast<baseObj>();
         if(!nul(root))
             // before verify obj and its subs, I need to register onto frame.
-            root.inFrame(nulOf<bicontainable>());
+            root.inFrame();
     }
 
-    void me::_postpare(me* prev) {
-        _setNow(prev);
+    void me::_postpare() {
         baseObj& root = getRoot().cast<baseObj>();
         if(!nul(root))
             root.outFrame();
@@ -562,7 +558,7 @@ namespace namu {
             NAMU_DI("verify: forExpr: define iterator '%s %s'", elemType->getType().getName().c_str(),
                 name.c_str());
 
-        me.getBlock().inFrame(nulOf<bicontainable>());
+        me.getBlock().inFrame();
         thread::get()._getNowFrame().pushLocal(name, (node*) elemType->clone());
 
         _recentLoops.push_back(&me);

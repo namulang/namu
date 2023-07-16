@@ -24,10 +24,9 @@ namespace namu {
         frame& getErrFrame();
 
         void start() override {
-            verifier* prev = &_getNow();
             _prepare();
             super::start();
-            _postpare(prev);
+            _postpare();
         }
 
         void onVisit(visitInfo i, node& me) override;
@@ -59,7 +58,7 @@ namespace namu {
 
     private:
         void _prepare();
-        void _postpare(me* prev);
+        void _postpare();
         std::string _asStr(const params& ps);
 
         // @param newInfo is not a heap instance.
@@ -75,14 +74,9 @@ namespace namu {
         template <typename... Args> void _info(Args... args);
         template <typename... Args> void _info(const point& pos, errCode code, Args... args);
 
-        static verifier& _getNow() { return *_now; }
-        static void _setNow(verifier* new1) { _now = new1; }
-
     private:
         tstr<frame> _frame;
         std::vector<baseObj*> _us; // multiple 'me'
         std::vector<loopExpr*> _recentLoops;
-
-        static verifier* _now;
     };
 }

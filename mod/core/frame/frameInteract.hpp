@@ -9,7 +9,7 @@ namespace namu {
 
     public:
         frameInteract(frameInteractable& it, const bicontainable& args): _it(it) { _it.inFrame(args); }
-        frameInteract(frameInteractable& it): _it(it) { _it.inFrame(nulOf<bicontainable>()); }
+        frameInteract(frameInteractable& it): _it(it) { _it.inFrame(); }
         ~frameInteract() { _it.outFrame(); }
 
     private:

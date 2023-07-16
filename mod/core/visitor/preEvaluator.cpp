@@ -4,6 +4,7 @@
 #include "../ast/mgd/mgdFunc.hpp"
 #include "../frame/frameInteract.hpp"
 #include "verifier.hpp"
+#include "../ast/exprs/getGenericExpr.hpp"
 
 namespace namu {
 
@@ -27,11 +28,50 @@ namespace namu {
 
     void me::onVisit(visitInfo i, obj& me) {
         NAMU_DI("preEval: obj: %s", i.name.c_str());
-        mgdFunc& prector = me.sub<mgdFunc>(baseObj::PRECTOR_NAME);
-        if(nul(prector)) return;
 
-        NAMU_DI("preEval: obj: found prector");
-        _stack.push_back({me, prector, false});
+        _obj.bind(me);
+        me.inFrame();
+    }
+
+    void me::onLeave(visitInfo i, obj& me) {
+        me.outFrame();
+        _obj.rel();
+    }
+
+    void me::onVisit(visitInfo i, mgdFunc& me) {
+        _func.bind(me);
+        me.inFrame();
+
+        NAMU_DI("preEval: mgdFunc: %s", i.name.c_str());
+        for(const auto& p : me.getParams())
+            ((node&) p.getOrigin()).accept(i, *this);
+
+        if(i.name == baseObj::PRECTOR_NAME) {
+            NAMU_DI("preEval: mgdFunc: found prector");
+            _stack.push_back({*_obj, me, false});
+        }
+
+        me.getBlock().inFrame();
+    }
+
+    void me::onLeave(visitInfo i, mgdFunc& me) {
+        me.getBlock().outFrame();
+        me.outFrame();
+        _func.rel();
+    }
+
+    void me::onVisit(visitInfo i, getGenericExpr& me) {
+        NAMU_DI("preEval: getGenericExpr:");
+
+        // this lets genericObj make a their generic obj.
+        obj& genericObj = me.getEval().cast<obj>();
+        if(nul(genericObj)) return;
+
+        obj& prevObj = *_obj;
+        mgdFunc& prevFunc = *_func;
+        genericObj.accept(i, *this);
+        _func.bind(prevFunc);
+        _obj.bind(prevObj);
     }
 
     void me::_rel() {
@@ -39,6 +79,9 @@ namespace namu {
     }
 
     void me::_preEval() {
+        NAMU_DI(" ===================================");
+        NAMU_DI("          preEvaluationLoop         ");
+        NAMU_DI(" ===================================");
         errReport rpt;
         while(true) {
             errReport e;
@@ -50,6 +93,7 @@ namespace namu {
 
         _delPreCtors();
         getReport().add(rpt);
+        NAMU_DI(" ==== end of preEvaluationLoop ==== ");
     }
 
     void me::_delPreCtors() {

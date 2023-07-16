@@ -24,6 +24,7 @@ namespace namu {
         void onVisit(visitInfo i, params& me);
         void onVisit(visitInfo i, FBOExpr& me) override;
         void onVisit(visitInfo i, baseObj& me) override;
+        void onVisit(visitInfo i, getGenericExpr& me) override;
 
     private:
         const node& _findOrigin(const node& toReplace) const;

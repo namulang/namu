@@ -29,14 +29,16 @@ namespace namu {
         if(key.empty()) return NAMU_E("key is empty"), nulOf<obj>();
 
         if(!_cache.count(key))
-            _cache.insert({key, _defGeneric(key, verifier::_getNow(), a)});
+            _cache.insert({key, _defGeneric(key, a)});
 
         return _cache[key];
     }
 
-    tstr<obj> me::_defGeneric(const std::string& key, verifier& v, const args& a) const {
+    tstr<obj> me::_defGeneric(const std::string& key, const args& a) const {
+        // this making generic object will be done by preEvaluator:
+        //  when I run verification step, there are all of generic objects inside _cache.
+        //  so, don't worry and verify genenated objects here.
         tstr<obj> gen = _makeGeneric(a);
-        gen->accept(visitInfo {"", (me*) this, 0, (ncnt) _cache.size(), 1}, v);
         return gen;
     }
 
