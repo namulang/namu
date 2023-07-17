@@ -244,3 +244,73 @@ TEST_F(genericsTest, 2DArrayWithGenerics) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 1);
 }
+
+TEST_F(genericsTest, makeGenericOnPreCtor) {
+    make().parse(R"SRC(
+        def A<T>
+            age := 1
+        def B<E>
+            grade := A<E>().age + 4
+        main() int
+            B<int>().grade
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 5);
+}
+
+TEST_F(genericsTest, make2GenericsOnPreCtor) {
+    make().parse(R"SRC(
+        def B<E>
+            age := E() + 2
+        def C<T>
+            grade := 4.5
+        def A<T>
+            age := B<T>().age + 1
+            grade := C<T>().grade + 1
+
+        main() int
+            A<int>().grade
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 5);
+}
+
+TEST_F(genericsTest, make2GenericsOnPreCtor2) {
+    make().parse(R"SRC(
+        def B<E>
+            age := E() + 2
+        def C<T>
+            grade := 4.5
+        def A<T>
+            age := B<T>().age + 1 + C<T>().grade + 1
+
+        main() int
+            A<int>().age
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 8); // <== (4 + 4.5) as int
+}
+
+TEST_F(genericsTest, make2GenericsOnPreCtor3) {
+    make().parse(R"SRC(
+        def B<E>
+            age := E() + 2
+        def C<T>
+            grade := 4.5
+        def A<T>
+            age := B<T>().age + 1 + C<flt>().grade + 1
+
+        main() int
+            A<int>().age
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 8); // <== (4 + 4.5) as int
+}
