@@ -242,4 +242,15 @@ namespace namu {
         for(node& e : elems)
             e.accept(visitInfo {"", &d, n++, len, i.depth+1}, *this);
     }
+
+    void me::onTraverse(visitInfo i, genericObj& g) {
+        if(_isLog)
+            NAMU_DI("genericObj[%s]::onTraverse", i.name.c_str());
+
+        auto& cache = (std::map<std::string, tstr<obj>>&) g.getCache();
+        ncnt len = cache.size();
+        nint n = 0;
+        for(auto& e : cache)
+            e.second->accept(visitInfo{e.first, &g, n++, len, i.depth+1}, *this);
+    }
 }

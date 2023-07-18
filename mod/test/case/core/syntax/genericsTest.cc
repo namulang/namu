@@ -97,7 +97,7 @@ TEST_F(genericsTest, genericTwice2Negative) {
 
         main() int
             a := object<int>()
-            b := object<str>() // run 'b.foo()' occurs F/C
+            b := object<str>()
             ret b.foo("3.5") == "3.5"
     )SRC").shouldParsed(true);
     shouldVerified(false);
@@ -113,7 +113,7 @@ TEST_F(genericsTest, genericTwice2) {
 
         main() int
             a := object<int>()
-            b := object<str>() // run 'b.foo()' occurs F/C
+            b := object<str>()
             ret b.foo("3.5") == "3.5"
     )SRC").shouldVerified(true);
     str ret = run();

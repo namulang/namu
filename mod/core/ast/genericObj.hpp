@@ -31,6 +31,10 @@ namespace namu {
 
         virtual nbicontainer& subs() override;
 
+        const std::map<std::string, tstr<obj>>& getCache() const {
+            return _cache;
+        }
+
         using super::inFrame;
         void inFrame(const bicontainable& args) override {}
         void outFrame() override {}
