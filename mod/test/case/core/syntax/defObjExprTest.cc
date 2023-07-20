@@ -202,3 +202,22 @@ TEST_F(defObjExprTest, testPrectorCircularNegative) {
             ret
     )SRC").shouldVerified(false);
 }
+
+TEST_F(defObjExprTest, preCtorReversedSequence) {
+    make().parse(R"SRC(
+        def A
+            age := B().grade + grade
+            grade := 1
+
+        def B
+            grade := age + 1
+            age := 1
+
+        main() int
+            A().age
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 3);
+}

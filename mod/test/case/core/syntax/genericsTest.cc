@@ -314,3 +314,27 @@ TEST_F(genericsTest, make2GenericsOnPreCtor3) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 8); // <== (4 + 4.5) as int
 }
+
+TEST_F(genericsTest, genericsWillBeVerifiedWhenItIsUsed) {
+    make().parse(R"SRC(
+        def A<E>
+            age := B<E>().age + grade
+            grade := age
+        def B<T>
+            grade := 0
+        main() void
+            ret
+    )SRC").shouldVerified(true);
+}
+
+TEST_F(genericsTest, genericsWillBeVerifiedWhenItIsUsedNegative) {
+    make().negative().parse(R"SRC(
+        def A<E>
+            age := B<E>().grade + grade // err: grade is circular dependency
+            grade := age
+        def B<T>
+            grade := 0
+        main() void
+            A<int>().age
+    )SRC").shouldVerified(false);
+}
