@@ -1,4 +1,49 @@
 # Changelogs
+## v0.2.6 Mana Update
+released on 05-07 2023
+build#684
+
+### major changes
+* f07cce485 - core: fix: prector on generic object wasn't evaluated
+* 2110f0163 - core: feat: filescope
+* e7bf4db35 - core: refactor: preEvaluation
+* 0024b87ac - core: feat: supports escape sequence
+* a2f4e3838 - core: fix: type deduction doesn't work on add operation
+* d0fa146d3 - core: feat: return integer when program exit
+* d84a15aa0 - core: feat: setElem conversion for addAssign
+* ea5807303 - fix: memlite: optimization of vaults has defect scenario
+* 8a1184436 - core: fix: do implicit casting, not explicit when call func
+* e578f6d38 - core: feat: forExpr compatiable for string type
+* 48413d985 - core: feat: add 'iterate(int)' on str
+* 4b54dc21f - core: feat: add 'get(seq)' substring func on str
+* c931b76ed - core: feat: add char type core: feat: char concat to string
+* 50933ae00 - core: feat: add byte type
+* c385e8259 - core: feat: hex, octal literal expression
+* c4a14b644 - core: fix: nameless arr object doesn't work
+* fddac12b4 - core: feat: main() only allowed for int or void rettype
+* 562a1b881 - core: fix: to define variable to void isn't allowed
+* 08cfe2cec - core: fix: type deducing crashes app on wasm binary
+* 17f11a852 - core: fix: 'p1 person' accesses origin incomplete object
+* 71c702e09 - core: fix: keep prompt for inputting a value in emscripten
+* 6bb18159f - core: refactor: a little bit become easier to understand error log
+* 6c19062e7 - core: feat: let exprs contain src info
+* abea245e6 - core: refactor: no warnings for running a script without pack
+* 3ae8e9a8f - core: fix: carrage return in comment block shows empty line
+* b79efbd0d - refactor: change file extension to 'nm'
+* fbc68d5dc - core: feat: add 'input' builtin funcs
+* 9a7031027 - core: feat: add builtin 'print' func
+* b78d7e7da - core: fix: copyctor of array means 'deepcopy'
+* f20ccb72f - doc: move documents into gh-pages branch
+* ad618b52a - doc: use jekyll on _guide
+* 099b13ae3 - chore: make document using jekyll, not m.css
+* 9b2172b6a - wasm-frontend: feat: use tab for indentation
+* 5260d32ee - namu: feat: add simple wasm ide
+* 4b84f8f65 - namu: feat: add namu-wasm-fronted
+* 022f7e313 - namu: fix: show errors after run script
+* 8d87bf410 - fix: namu: Uncaught Runtime error
+* 6aa5433ba - namu: feat: add 'bufferSrcFlag'
+* b9822faa0 - fix: core: app crash on release because of null-check optimization
+
 ## v0.2.5 Mana Update
 released on 02-28 2023
 build#654
