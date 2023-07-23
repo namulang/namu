@@ -277,3 +277,16 @@ TEST_F(defAssignExprTest, defAssignEvalOfSetElemConversion) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), true);
 }
+
+TEST_F(defAssignExprTest, defAssignAtIf) {
+    make().parse(R"SRC(
+        main() int
+            if res := 0.3
+                ret res == 0.3
+            ret 0
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 1);
+}
