@@ -1,6 +1,7 @@
 #include "ifExpr.hpp"
 #include "../../builtin/primitive/nVoid.hpp"
 #include "../../visitor/visitor.hpp"
+#include "../../builtin/primitive/nBool.hpp"
 
 namespace namu {
 
@@ -15,8 +16,10 @@ namespace namu {
     node& me::getCondition() { return *_expr; }
 
     str me::run(const args& a) {
-        str res = _expr->as<node>();
-        if(res.cast<nbool>())
+        tstr<nBool> res = _expr->as<node>()->asImpli<nBool>();
+        if(!res) return nVoid::singletone();
+
+        if(res->cast<nbool>())
             return _thenBlk->run();
         else if(_elseBlk)
             return _elseBlk->run();
