@@ -2,6 +2,7 @@
 #include "../../builtin/primitive/nVoid.hpp"
 #include "../../visitor/visitor.hpp"
 #include "../../builtin/primitive/nBool.hpp"
+#include "../../frame/frameInteract.hpp"
 
 namespace namu {
 
@@ -19,10 +20,15 @@ namespace namu {
         tstr<nBool> res = _expr->as<node>()->asImpli<nBool>();
         if(!res) return nVoid::singletone();
 
-        if(res->cast<nbool>())
-            return _thenBlk->run();
-        else if(_elseBlk)
-            return _elseBlk->run();
+        if(res->cast<nbool>()) {
+            frameInteract f1(*_thenBlk); {
+                return _thenBlk->run();
+            }
+        } else if(_elseBlk) {
+            frameInteract f2(*_elseBlk); {
+                return _elseBlk->run();
+            }
+        }
 
         return str(nVoid::singletone());
     }
