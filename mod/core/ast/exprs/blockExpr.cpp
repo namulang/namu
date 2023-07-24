@@ -32,6 +32,8 @@ namespace namu {
     }
 
     str me::run(const args& a) {
+        // for optimization, blockExpr's frame should be controlled from outside of this this.
+        // that's why I didn't use frameInteracter here. see forExpr::run().
         str ret;
         frame& fr = namu::thread::get()._getNowFrame();
         for(auto& e : _exprs) {

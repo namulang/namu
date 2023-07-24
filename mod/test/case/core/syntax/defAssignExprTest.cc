@@ -290,3 +290,13 @@ TEST_F(defAssignExprTest, defAssignAtIf) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 1);
 }
+
+TEST_F(defAssignExprTest, defAssignAtBlockNegative) {
+    make().parse(R"SRC(
+        main() int
+            if true
+                res := 0.8
+            ret res == 0.8
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}

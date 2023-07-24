@@ -146,6 +146,8 @@ namespace namu {
 
     void me::onVisit(visitInfo i, blockExpr& me) {
         if(isLog()) NAMU_DI("verify: blockExpr: it will iterate all subnodes[%d]", me.getStmts().len());
+
+        me.inFrame();
     }
 
     void me::onLeave(visitInfo i, blockExpr& me) {
@@ -154,6 +156,7 @@ namespace namu {
         if(nul(stmts) || stmts.len() <= 0) return; // will be catched to another verification.
 
         if(isLog()) NAMU_DI("verify: blockExpr: block.outFrame()");
+        me.outFrame();
     }
 
 
@@ -459,7 +462,7 @@ namespace namu {
         //
         //      so, all expressions contains blockstmt need to control in/out frame instead of blockstmt.
         //  function block's are last:
-        me.getBlock().inFrame();
+        //me.getBlock().inFrame();
     }
 
     void me::_verifyMgdFuncImplicitReturn(mgdFunc& me) {
@@ -502,7 +505,7 @@ namespace namu {
     void me::onLeave(visitInfo i, mgdFunc& me) {
         _verifyMgdFuncImplicitReturn(me);
 
-        me.getBlock().outFrame();
+        //me.getBlock().outFrame();
 
         baseObj& meObj = frame::_getMe();
         me.outFrame();
