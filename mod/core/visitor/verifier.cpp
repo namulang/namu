@@ -155,6 +155,9 @@ namespace namu {
         const narr& stmts = me.getStmts();
         if(nul(stmts) || stmts.len() <= 0) return; // will be catched to another verification.
 
+        mgdFunc& parent = i.parent ? i.parent->cast<mgdFunc>() : nulOf<mgdFunc>();
+        if(!nul(parent))
+            _verifyMgdFuncImplicitReturn(parent);
         if(isLog()) NAMU_DI("verify: blockExpr: block.outFrame()");
         me.outFrame();
     }
@@ -454,15 +457,6 @@ namespace namu {
 
         //  function's subs are third:
         me.inFrame(*s);
-        //  !important!:
-        //      frameInteraction to blockstmt should be controlled by its holder, mgdFunc.
-        //      for validation of implicitReturn, I need to postpone frame to be released by blockstmt.
-        //      if I passed the control to blockstmts, it released its own frame before checking
-        //      implicit Return.
-        //
-        //      so, all expressions contains blockstmt need to control in/out frame instead of blockstmt.
-        //  function block's are last:
-        //me.getBlock().inFrame();
     }
 
     void me::_verifyMgdFuncImplicitReturn(mgdFunc& me) {
@@ -503,10 +497,6 @@ namespace namu {
     }
 
     void me::onLeave(visitInfo i, mgdFunc& me) {
-        _verifyMgdFuncImplicitReturn(me);
-
-        //me.getBlock().outFrame();
-
         baseObj& meObj = frame::_getMe();
         me.outFrame();
         meObj.outFrame();
