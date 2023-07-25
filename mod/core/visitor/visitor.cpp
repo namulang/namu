@@ -114,7 +114,7 @@ namespace namu {
         if(_isLog)
             NAMU_DI("mgdFunc[%s]::onTraverse", i.name.c_str());
 
-        f.getBlock().accept(i, *this);
+        f.getBlock().accept(visitInfo {"", &f, 0, 1, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, blockExpr& b) {
