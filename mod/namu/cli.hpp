@@ -10,6 +10,8 @@ namespace namu {
         nbool run(flagArgs& a) {
             _res = -1;
             interpreter ip;
+            errReport rpt;
+            ip.setReport(rpt);
 
             for(const auto& op : getFlags()) {
                 op->take(ip, *this, a);
@@ -18,9 +20,7 @@ namespace namu {
                     break;
             }
 
-            errReport rpt;
-            ip.setReport(rpt)
-              .interpret();
+            ip.interpret();
 
             if(!ip.isVerified())
                 return _finish(ip);

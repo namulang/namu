@@ -39,7 +39,7 @@ namespace namu {
 
     slot& me::getSlot() { return _pser.getSlot(); }
 
-    const errReport& me::getReport() const {
+    errReport& me::getReport() {
         return *_rpt;
     }
 

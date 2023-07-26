@@ -23,7 +23,8 @@ namespace namu {
         const node& getSubPack() const NAMU_UNCONST_FUNC(getSubPack())
         slot& getSlot();
         const slot& getSlot() const NAMU_UNCONST_FUNC(getSlot())
-        const errReport& getReport() const;
+        errReport& getReport();
+        const errReport& getReport() const NAMU_UNCONST_FUNC(getReport())
 
         slot& interpret();
 
