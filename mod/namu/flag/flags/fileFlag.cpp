@@ -10,6 +10,11 @@ namespace namu {
 
         for(const auto& filePath : tray) {
             std::ifstream fout(filePath);
+            if(fout.fail()) { // there is no file.
+                ip.getReport().add(err::newErr(errCode::FILE_NOT_OPEN, filePath.c_str()));
+                continue;
+            }
+
             std::stringstream buffer;
             buffer << fout.rdbuf();
 

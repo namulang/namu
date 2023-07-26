@@ -2,6 +2,7 @@
 PAIRX(UNKNOWN,                      "unknown")
 PAIRX(MSG,                          "%s")
 PAIRX(IS_NULL,                      "%s is null")
+PAIRX(FILE_NOT_OPEN,                "can't open %s file.")
 
 // location:
 PAIRX(NO_ROW_INFO,                  "this expr doesn't have row info")
