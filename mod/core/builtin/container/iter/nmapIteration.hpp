@@ -42,7 +42,9 @@ public:
     }
 
     using super::getContainer;
-    tbicontainable<K, V>& getContainer() override { return _own; }
+    tbicontainable<K, V>& getContainer() override {
+        return _own;
+    }
 
 protected:
     nbool _onSame(const typeProvidable& rhs) const override {

@@ -7,6 +7,11 @@ namespace namu {
 
     NAMU(DEF_ME(getExpr), DEF_VISIT())
 
+    me::getExpr(const std::string& name): _name(name) {}
+    me::getExpr(const std::string& name, const args& a): _name(name), _args(a) {}
+    me::getExpr(const node& me, const std::string& name): _me(me), _name(name) {}
+    me::getExpr(const node& me, const std::string& name, const args& a): _me(me), _name(name), _args(a) {}
+
     const node& me::getMe() const {
         if(!_me)
             return thread::get().getNowFrame();
@@ -25,10 +30,14 @@ namespace namu {
         return _get(false);
     }
 
-    const std::string& me::getSubName() const { return _name; }
+    const std::string& me::getSubName() const {
+        return _name;
+    }
 
     /// @return nullable
-    const args& me::getSubArgs() const { return *_args; }
+    const args& me::getSubArgs() const {
+        return *_args;
+    }
 
     str me::_get(nbool evalMode) const {
         NAMU_DI("_name=%s", _name.c_str());
@@ -45,5 +54,16 @@ namespace namu {
         if(!_args) return evalMe->sub(_name);
 
         return evalMe->sub(_name, *_args);
+    }
+
+    void me::setMe(const node& newMe) {
+        _me.bind(newMe);
+    }
+
+    clonable* me::deepClone() const {
+        me* ret = (me*) clone();
+        if(_args) ret->_args.bind((args*) _args->deepClone());
+
+        return ret;
     }
 }

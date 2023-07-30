@@ -13,30 +13,44 @@ public:
     explicit iter(iteration* newStep): _step(newStep) { _nextToMatchParamType(); }
     iter(const me& rhs) { _assign(rhs); }
 
+public:
     me operator+(ncnt step) {
         next(step);
         return *this;
     }
+
     me& operator++() {
         next(1);
         return *this;
     }
+
     me operator++(int) {
         me ret = *this;
         next(1);
         return ret;
     }
+
     me& operator+=(ncnt step) {
         next(step);
         return *this;
     }
 
-    T& operator*() { return get(); }
-    T* operator->() { return &get(); }
+    T& operator*() {
+        return get();
+    }
+
+    T* operator->() {
+        return &get();
+    }
+
     const T& operator*() const NAMU_UNCONST_FUNC(operator*())
     const T* operator->() const NAMU_UNCONST_FUNC(operator->())
-    explicit operator nbool() const { return !isEnd(); }
 
+    explicit operator nbool() const {
+        return !isEnd();
+    }
+
+public:
     nbool isFrom(const tucontainable& it) const override {
         if(!_step) return false;
         return _step->isFrom(it);

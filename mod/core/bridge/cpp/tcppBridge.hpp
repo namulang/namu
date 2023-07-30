@@ -59,8 +59,12 @@ namespace namu {
             return *this;
         }
 
-        T& get() { return *_real; }
-        const T& get() const { return *_real; }
+        T& get() {
+            return *_real;
+        }
+        const T& get() const {
+            return *_real;
+        }
 
         const obj& getOrigin() const override {
             // if an object doesn't have owned sub nodes it means that all instances of that classes

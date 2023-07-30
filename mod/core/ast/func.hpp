@@ -38,7 +38,7 @@ namespace namu {
         virtual str getRet() const = 0;
 
         /// @return whether setting new return-type has been done or not.
-        virtual nbool setRet(const node& newRet) { return false; }
+        virtual nbool setRet(const node& newRet);
     };
 
     typedef tnarr<func> funcs;

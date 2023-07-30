@@ -99,6 +99,20 @@ namespace namu {
         return get()[n];
     }
 
+    const ntype& me::getType() const {
+        return _type;
+    }
+
+    nbicontainer& me::subs() {
+        const type* key = &getType().getBeans()[0].getType();
+        auto e = _cache.find(key);
+        if(e != _cache.end())
+            return e->second.get();
+
+        // this is first try to generalize type T:
+        return _defGeneric(key);
+    }
+
     ncnt me::len() const {
         return get().len();
     }
@@ -109,6 +123,14 @@ namespace namu {
 
     node& me::get(nidx n) {
         return get().get(n);
+    }
+
+    node& me::get(std::function<nbool(const node&)> l) const {
+        return this->get<node>(l);
+    }
+
+    narr me::getAll(std::function<nbool(const node&)> l) const {
+        return this->getAll<node>(l);
     }
 
     nbool me::set(const iter& at, const node& new1) {
@@ -169,6 +191,16 @@ namespace namu {
 
     void me::rel() {
        get().rel();
+    }
+
+    const obj& me::getOrigin() const {
+        if(!_org)
+            _org.bind(new me(getType().getBeans()[0]));
+        return *_org;
+    }
+
+    std::string me::asStr() const {
+        return get().asStr();
     }
 
     me::iteration* me::_onMakeIteration(ncnt step) const {

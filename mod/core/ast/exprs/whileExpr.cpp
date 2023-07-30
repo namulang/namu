@@ -10,6 +10,10 @@ namespace namu {
     me::whileExpr(const node& condition, const blockExpr& blk): super(blk), _condition(condition),
         _initEval(false) {}
 
+    node& me::getCondition() {
+        return *_condition;
+    }
+
     str me::run(const args& a) {
         blockExpr& blk = getBlock();
         if(!_condition) return NAMU_E("_condition is null."), str();

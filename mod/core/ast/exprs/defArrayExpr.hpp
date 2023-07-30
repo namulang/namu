@@ -10,8 +10,8 @@ namespace namu {
         friend class visitor; // for getElems()
 
     public:
-        defArrayExpr(const node& type): _type(type) {}
-        defArrayExpr(const narr& elems): _elems(elems) {}
+        defArrayExpr(const node& type);
+        defArrayExpr(const narr& elems);
 
     public:
         using super::run;

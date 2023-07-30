@@ -15,18 +15,22 @@ namespace namu {
         _rpt.bind(report);
         return *this;
     }
+
     me& me::setSlot(slot& tray) {
         _slot.bind(tray);
         return *this;
     }
+
     me& me::setSrcSupply(const srcSupply& supply) {
         _srcs.bind(supply);
         return *this;
     }
+
     me& me::setLogStructure(nbool enable) {
         _isLogStructure = enable;
         return *this;
     }
+
     nbool me::isParsed() const {
         return _isParsed;
     }
@@ -35,9 +39,13 @@ namespace namu {
         return isParsed() && (_rpt && !_rpt->hasErr());
     }
 
-    node& me::getSubPack() { return _pser.getSubPack(); }
+    node& me::getSubPack() {
+        return _pser.getSubPack();
+    }
 
-    slot& me::getSlot() { return _pser.getSlot(); }
+    slot& me::getSlot() {
+        return _pser.getSlot();
+    }
 
     errReport& me::getReport() {
         return *_rpt;

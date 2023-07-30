@@ -74,14 +74,40 @@ namespace namu {
         _type = new1;
     }
 
-    nbicontainer& me::subs() { return *_subs; }
+    nbicontainer& me::subs() {
+        return *_subs;
+    }
 
-    scopes& me::getShares() { return *_shares; }
+    scopes& me::getShares() {
+        return *_shares;
+    }
 
-    scope& me::getOwns() { return *_owns; }
+    scope& me::getOwns() {
+        return *_owns;
+    }
 
     const obj& me::getOrigin() const {
         return *_org;
+    }
+
+    const point& me::getPos() const {
+        return _pos;
+    }
+
+    nbool me::isComplete() const {
+        return _isComplete;
+    }
+
+    void me::_setComplete(nbool isComplete) {
+        _isComplete = isComplete;
+    }
+
+    void me::_setSrc(const src& newSrc) {
+        _src.bind(newSrc);
+    }
+
+    void me::_setPos(const point& new1) {
+        _pos = new1;
     }
 
     scopes* me::_makeNewSubs() {

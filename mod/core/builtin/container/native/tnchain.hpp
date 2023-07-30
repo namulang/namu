@@ -24,6 +24,7 @@ namespace namu {
         explicit tnchain(const super& arr): _map(arr) {}
         explicit tnchain(const super* arr): _map(arr) {}
 
+    public:
         // has:
         nbool has(const K& key) const override;
 
@@ -53,10 +54,16 @@ namespace namu {
         void rel() override;
 
         super& getContainer();
-        const super& getContainer() const { return *_map; }
+        const super& getContainer() const {
+            return *_map;
+        }
 
-        me& getNext() { return *_next; }
-        const me& getNext() const { return *_next; }
+        me& getNext() {
+            return *_next;
+        }
+        const me& getNext() const {
+            return *_next;
+        }
 
         /// returned deep cloned of this object.
         /// @remark even if the chain has already linked to the another chain instance,

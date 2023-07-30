@@ -24,7 +24,9 @@ namespace namu {
 
     protected:
         virtual str _onRun(T& cast, const args& a) const = 0;
-        str getRet() const override { return getEval(); }
+        str getRet() const override {
+            return getEval();
+        }
         str getEval() const override {
             static str inner(new Ret());
             return inner;
@@ -48,10 +50,17 @@ namespace namu {
         primitiveObj(): _val() {}
         primitiveObj(const T& val): _val(val) {}
 
-        T& get() { return _val; }
-        const T& get() const { return _val; }
+    public:
+        T& get() {
+            return _val;
+        }
+        const T& get() const {
+            return _val;
+        }
 
-        const point& getPos() const override { return _pos; }
+        const point& getPos() const override {
+            return _pos;
+        }
 
         using super::cast;
         void* cast(const type& to) override {
@@ -78,6 +87,7 @@ namespace namu {
             const me& cast = (const me&) rhs;
             return _val == cast._val;
         }
+
         virtual void _onMakeSubs(scope& tray) const = 0;
 
     private:
@@ -93,8 +103,13 @@ namespace namu {
         NAMU(ADT(primitiveObj, arithmeticObj))
 
     public:
-        const super& getOrigin() const override { return *this; }
-        const point& getPos() const override { return _pos; }
+        const super& getOrigin() const override {
+            return *this;
+        }
+
+        const point& getPos() const override {
+            return _pos;
+        }
 
         using super::subs;
         nbicontainer& subs() override {
@@ -112,6 +127,7 @@ namespace namu {
         nbool _onSame(const typeProvidable& rhs) const override {
             return !nul(rhs);
         }
+
         virtual void _onMakeSubs(scope& tray) const = 0;
 
     private:

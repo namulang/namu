@@ -6,6 +6,9 @@ namespace namu {
 
     NAMU(DEF_ME(defArrayExpr), DEF_VISIT())
 
+    me::defArrayExpr(const node& type): _type(type) {}
+    me::defArrayExpr(const narr& elems): _elems(elems) {}
+
     str me::run(const args& a) {
         arr& ret = *new arr(getArrayType());
 

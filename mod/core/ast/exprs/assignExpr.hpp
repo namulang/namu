@@ -15,35 +15,15 @@ namespace namu {
         typedef scopes::iter iter;
 
     public:
-        assignExpr(const node& lhs, const node& rhs): _lhs(lhs), _rhs(rhs) {}
+        assignExpr(const node& lhs, const node& rhs);
 
     public:
         using super::run;
-        str run(const args& a) override {
-            iter e = _getScopeIterOfLhs(); // e exists. verified.
-
-            str ret = _rhs->as<node>();
-            e.setVal(*ret);
-            return ret;
-        }
-        str getEval() const override {
-            return _rhs->getEval();
-        }
-
-        const node& getLeft() const {
-            return *_lhs;
-        }
-
-        const node& getRight() const {
-            return *_rhs;
-        }
-
-        clonable* deepClone() const override {
-            me* ret = (me*) clone();
-            if(_lhs) ret->_lhs.bind((node*) _lhs->deepClone());
-            if(_rhs) ret->_rhs.bind((node*) _rhs->deepClone());
-            return ret;
-        }
+        str run(const args& a) override;
+        str getEval() const override;
+        const node& getLeft() const;
+        const node& getRight() const;
+        clonable* deepClone() const override;
 
     private:
         iter _getScopeIterOfLhs();

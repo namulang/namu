@@ -5,6 +5,11 @@ namespace namu {
 
     NAMU(DEF_ME(generalizer))
 
+    me& me::add(const param& newParam) {
+        _params.add(newParam);
+        return *this;
+    }
+
     const node& me::_findOrigin(const node& toReplace) const {
         const getGenericExpr& generic = toReplace.cast<getGenericExpr>();
         if(!nul(generic)) return nulOf<node>();

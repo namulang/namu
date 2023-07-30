@@ -4,14 +4,26 @@ namespace namu {
 
     NAMU_DEF_ME(scopeStack)
 
-    tstr<scopes>& me::getTop() { return _top; }
-    const tstr<scopes>& me::getTop() const { return _top; }
-    tstr<scopes>& me::getBottom() { return _bottom; }
-    const tstr<scopes>& me::getBottom() const { return _bottom; }
+    tstr<scopes>& me::getTop() {
+        return _top;
+    }
+
+    const tstr<scopes>& me::getTop() const {
+        return _top;
+    }
+
+    tstr<scopes>& me::getBottom() {
+        return _bottom;
+    }
+
+    const tstr<scopes>& me::getBottom() const {
+        return _bottom;
+    }
 
     ncnt me::len() const {
         return _top ? _top->len() : 0;
     }
+
     ncnt me::chainLen() const {
         return _top ? _top->chainLen() : 0;
     }

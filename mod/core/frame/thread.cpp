@@ -81,13 +81,18 @@ namespace namu {
         return _root->subs();
     }
 
-    nbool me::canRun(const args& a) const { return false; }
+    nbool me::canRun(const args& a) const {
+        return false;
+    }
 
-    void me::rel() { _frames.rel(); }
+    void me::rel() {
+        _frames.rel();
+    }
 
     frames& me::_getFrames() {
         return _frames;
     }
+
     frame& me::_getNowFrame() {
         return _frames[_frames.len() - 1];
     }

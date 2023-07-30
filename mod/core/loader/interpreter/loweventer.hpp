@@ -53,20 +53,9 @@ namespace namu {
         void rel();
         void prepareParse();
 
-        int pushState(int newState) {
-            NAMU_I("push state %d -> %d", _states.back(), newState);
-            _states.push_back(newState);
-            return _states.back();
-        }
+        int pushState(int newState);
+        int popState();
 
-        int popState() {
-            int previous = _states.back();
-            _states.pop_back();
-            NAMU_I("pop state %d <- %d", _states.back(), previous);
-            return _states.back();
-        }
-
-    public:
         // events:
         //  scan:
         using super::onScan;

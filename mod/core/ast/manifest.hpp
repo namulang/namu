@@ -16,6 +16,7 @@ namespace namu {
         std::string lang;
         std::vector<std::string> paths;
     };
+
     typedef std::vector<entrypoint> entrypoints;
 
     struct manifest : public validable {

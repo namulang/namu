@@ -16,5 +16,4 @@ namespace namu {
 
         return super::bind(me, *new1);
     }
-
 }

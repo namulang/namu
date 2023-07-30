@@ -287,4 +287,140 @@ namespace namu {
 
         return inner;
     }
+
+    nchar me::operator[](nint n) const {
+        return get()[n];
+    }
+
+    nint me::len() const {
+        return get().length();
+    }
+
+    tstr<arithmeticObj> me::bitwiseNot() const {
+        return *this;
+        // TODO: throw error
+    }
+
+    /// @param end is exclusive.
+    tstr<nStr> me::substr(nint start, nint end) {
+        return tstr<nStr>(new nStr(get().substr(start, end - start)));
+    }
+
+    nbool me::has(nidx n) const {
+        return 0 <= n && n < get().size();
+    }
+
+    nchar me::get(nidx n) const {
+        return get()[n];
+    }
+
+    void me::add(const iter& here, const iter& from, const iter& to) {}
+
+    nbool me::add(const iter& at, const nChar& new1) {
+        return false; /* nStr is immutable*/
+    }
+
+    nbool me::set(const iter& at, const nChar& new1) {
+        return false;
+    }
+
+    nbool me::del(const iter& at) {
+        return false;
+    }
+
+    nbool me::del(const iter& from, const iter& end) {
+        return false;
+    }
+
+    void me::rel() {}
+
+    tstr<arithmeticObj> me::_add(const arithmeticObj& rhs, nbool reversed) const {
+        return reversed ?
+                new me(rhs.as<me>()->get() + get()):
+                new me(get() + rhs.as<me>()->get());
+    }
+
+    tstr<arithmeticObj> me::_sub(const arithmeticObj& rhs, nbool reversed) const {
+        return *this;
+        // TODO: throw error
+    }
+
+    tstr<arithmeticObj> me::_mul(const arithmeticObj& rhs, nbool reversed) const {
+        return *this;
+        // TODO: throw error
+    }
+
+    tstr<arithmeticObj> me::_div(const arithmeticObj& rhs, nbool reversed) const {
+        return *this;
+        // TODO: throw error
+    }
+
+    tstr<arithmeticObj> me::_mod(const arithmeticObj& rhs, nbool reversed) const {
+        return *this;
+        // TODO: throw error
+    }
+
+    tstr<arithmeticObj> me::_bitwiseAnd(const arithmeticObj& rhs, nbool reversed) const {
+        return *this;
+        // TODO: throw error
+    }
+
+    tstr<arithmeticObj> me::_bitwiseXor(const arithmeticObj& rhs, nbool reversed) const {
+        return *this;
+        // TODO: throw error
+    }
+
+    tstr<arithmeticObj> me::_bitwiseOr(const arithmeticObj& rhs, nbool reversed) const {
+        return *this;
+        // TODO: throw error
+    }
+
+    tstr<arithmeticObj> me::_lshift(const arithmeticObj& rhs, nbool reversed) const {
+        return *this;
+        // TODO: throw error
+    }
+
+    tstr<arithmeticObj> me::_rshift(const arithmeticObj& rhs, nbool reversed) const {
+        return *this;
+        // TODO: throw error
+    }
+
+    nbool me::_eq(const arithmeticObj& rhs) const {
+        return get() == rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_ne(const arithmeticObj& rhs) const {
+        return get() != rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_gt(const arithmeticObj& rhs) const {
+        return get() > rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_lt(const arithmeticObj& rhs) const {
+        return get() < rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_ge(const arithmeticObj& rhs) const {
+        return get() >= rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_le(const arithmeticObj& rhs) const {
+        return get() <= rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_logicalAnd(const arithmeticObj& rhs) const {
+        // TODO: throw error
+        return false;
+    }
+
+    nbool me::_logicalOr(const arithmeticObj& rhs) const {
+        // TODO: throw error
+        return false;
+    }
+
+    arithmeticObj& me::_mov(const arithmeticObj& rhs) {
+        get() = rhs.asImpli<me>()->get();
+        return *this;
+    }
 }

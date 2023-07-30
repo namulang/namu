@@ -28,4 +28,8 @@ namespace namu {
         static params inner;
         return inner;
     }
+
+    nbool me::setRet(const node& newRet) {
+        return false;
+    }
 }

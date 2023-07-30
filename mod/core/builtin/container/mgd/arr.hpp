@@ -36,20 +36,10 @@ namespace namu {
         node& operator[](nidx n) override;
 
     public:
-        const ntype& getType() const override {
-            return _type;
-        }
+        const ntype& getType() const override;
 
         using super::subs;
-        nbicontainer& subs() override {
-            const type* key = &getType().getBeans()[0].getType();
-            auto e = _cache.find(key);
-            if(e != _cache.end())
-                return e->second.get();
-
-            // this is first try to generalize type T:
-            return _defGeneric(key);
-        }
+        nbicontainer& subs() override;
 
         ncnt len() const override;
 
@@ -69,9 +59,7 @@ namespace namu {
             return nulOf<E>();
         }
 
-        node& get(std::function<nbool(const node&)> l) const {
-            return this->get<node>(l);
-        }
+        node& get(std::function<nbool(const node&)> l) const;
 
         template <typename E>
         tnarr<E, strTactic> getAll(std::function<nbool(const E&)> l) const {
@@ -85,9 +73,7 @@ namespace namu {
             return ret;
         }
 
-        narr getAll(std::function<nbool(const node&)> l) const {
-            return this->getAll<node>(l);
-        }
+        narr getAll(std::function<nbool(const node&)> l) const;
 
         node& get(nidx n) override;
 
@@ -114,15 +100,9 @@ namespace namu {
         clonable* deepClone() const override;
         void rel() override;
 
-        const obj& getOrigin() const override {
-            if(!_org)
-                _org.bind(new me(getType().getBeans()[0]));
-            return *_org;
-        }
+        const obj& getOrigin() const override;
 
-        std::string asStr() const {
-            return get().asStr();
-        }
+        std::string asStr() const;
 
     protected:
         iteration* _onMakeIteration(ncnt step) const override;

@@ -8,41 +8,23 @@ namespace namu {
         NAMU(CLASS(exprMaker))
 
     public:
-        exprMaker() {}
-        exprMaker(const src& s, ncnt row, ncnt col) {
-            setSrc(s);
-            setCol(row);
-            setCol(col);
-        }
+        exprMaker();
+        exprMaker(const src& s, ncnt row, ncnt col);
 
     public:
-        me& addRow() { return addRow(1); }
-        me& addRow(ncnt step) { return setRow(_pos.row + step); }
-        me& addCol() { return addCol(1); }
-        me& addCol(ncnt step) { return setCol(_pos.col + step); }
+        me& addRow();
+        me& addRow(ncnt step);
+        me& addCol();
+        me& addCol(ncnt step);
 
-        me& setRow(ncnt row) {
-            _pos.row = row;
-            return *this;
-        }
+        me& setRow(ncnt row);
+        me& setCol(ncnt col);
+        me& setSrc(const src& s);
 
-        me& setCol(ncnt col) {
-            _pos.col = col;
-            return *this;
-        }
+        void rel();
 
-        me& setSrc(const src& s) {
-            _src.bind(s);
-            return *this;
-        }
-
-        void rel() {
-            _src.rel();
-            _pos.rel();
-        }
-
-        const point& getPos() const { return _pos; }
-        const src& getSrc() const { return *_src; }
+        const point& getPos() const;
+        const src& getSrc() const;
 
         template <typename T, typename... Args>
         T* make(const Args&... args) const {

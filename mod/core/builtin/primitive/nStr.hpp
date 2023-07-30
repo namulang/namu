@@ -26,35 +26,27 @@ namespace namu {
         nStr(const std::string& val);
 
     public:
-        nchar operator[](nint n) const { return get()[n]; }
+        nchar operator[](nint n) const;
 
-        nint len() const override { return get().length(); }
+    public:
+        nint len() const override;
 
-        tstr<arithmeticObj> bitwiseNot() const override {
-            return *this;
-            // TODO: throw error
-        }
+        tstr<arithmeticObj> bitwiseNot() const override;
 
         /// @param end is exclusive.
-        tstr<nStr> substr(nint start, nint end) {
-            return tstr<nStr>(new nStr(get().substr(start, end - start)));
-        }
+        tstr<nStr> substr(nint start, nint end);
 
-        nbool has(nidx n) const {
-            return 0 <= n && n < get().size();
-        }
+        nbool has(nidx n) const;
 
         using super::get;
-        nchar get(nidx n) const {
-            return get()[n];
-        }
+        nchar get(nidx n) const;
 
-        void add(const iter& here, const iter& from, const iter& to) override {}
-        nbool add(const iter& at, const nChar& new1) override { return false; /* nStr is immutable*/ }
-        nbool set(const iter& at, const nChar& new1) override { return false; }
-        nbool del(const iter& at) override { return false; }
-        nbool del(const iter& from, const iter& end) override { return false; }
-        void rel() override {}
+        void add(const iter& here, const iter& from, const iter& to) override;
+        nbool add(const iter& at, const nChar& new1) override;
+        nbool set(const iter& at, const nChar& new1) override;
+        nbool del(const iter& at) override;
+        nbool del(const iter& from, const iter& end) override;
+        void rel() override;
 
 
     protected:
@@ -62,66 +54,26 @@ namespace namu {
 
         void _onMakeSubs(scope& tray) const override;
 
-        tstr<arithmeticObj> _add(const arithmeticObj& rhs, nbool reversed) const override {
-            return reversed ?
-                    new me(rhs.as<me>()->get() + get()):
-                    new me(get() + rhs.as<me>()->get());
-        }
-        tstr<arithmeticObj> _sub(const arithmeticObj& rhs, nbool reversed) const override {
-            return *this;
-            // TODO: throw error
-        }
-        tstr<arithmeticObj> _mul(const arithmeticObj& rhs, nbool reversed) const override {
-            return *this;
-            // TODO: throw error
-        }
-        tstr<arithmeticObj> _div(const arithmeticObj& rhs, nbool reversed) const override {
-            return *this;
-            // TODO: throw error
-        }
-        tstr<arithmeticObj> _mod(const arithmeticObj& rhs, nbool reversed) const override {
-            return *this;
-            // TODO: throw error
-        }
-        tstr<arithmeticObj> _bitwiseAnd(const arithmeticObj& rhs, nbool reversed) const override {
-            return *this;
-            // TODO: throw error
-        }
-        tstr<arithmeticObj> _bitwiseXor(const arithmeticObj& rhs, nbool reversed) const override {
-            return *this;
-            // TODO: throw error
-        }
-        tstr<arithmeticObj> _bitwiseOr(const arithmeticObj& rhs, nbool reversed) const override {
-            return *this;
-            // TODO: throw error
-        }
-        tstr<arithmeticObj> _lshift(const arithmeticObj& rhs, nbool reversed) const override {
-            return *this;
-            // TODO: throw error
-        }
-        tstr<arithmeticObj> _rshift(const arithmeticObj& rhs, nbool reversed) const override {
-            return *this;
-            // TODO: throw error
-        }
+        tstr<arithmeticObj> _add(const arithmeticObj& rhs, nbool reversed) const override;
+        tstr<arithmeticObj> _sub(const arithmeticObj& rhs, nbool reversed) const override;
+        tstr<arithmeticObj> _mul(const arithmeticObj& rhs, nbool reversed) const override;
+        tstr<arithmeticObj> _div(const arithmeticObj& rhs, nbool reversed) const override;
+        tstr<arithmeticObj> _mod(const arithmeticObj& rhs, nbool reversed) const override;
+        tstr<arithmeticObj> _bitwiseAnd(const arithmeticObj& rhs, nbool reversed) const override;
+        tstr<arithmeticObj> _bitwiseXor(const arithmeticObj& rhs, nbool reversed) const override;
+        tstr<arithmeticObj> _bitwiseOr(const arithmeticObj& rhs, nbool reversed) const override;
+        tstr<arithmeticObj> _lshift(const arithmeticObj& rhs, nbool reversed) const override;
+        tstr<arithmeticObj> _rshift(const arithmeticObj& rhs, nbool reversed) const override;
 
-        nbool _eq(const arithmeticObj& rhs) const override { return get() == rhs.asImpli<me>()->get(); }
-        nbool _ne(const arithmeticObj& rhs) const override { return get() != rhs.asImpli<me>()->get(); }
-        nbool _gt(const arithmeticObj& rhs) const override { return get() > rhs.asImpli<me>()->get(); }
-        nbool _lt(const arithmeticObj& rhs) const override { return get() < rhs.asImpli<me>()->get(); }
-        nbool _ge(const arithmeticObj& rhs) const override { return get() >= rhs.asImpli<me>()->get(); }
-        nbool _le(const arithmeticObj& rhs) const override { return get() <= rhs.asImpli<me>()->get(); }
-        nbool _logicalAnd(const arithmeticObj& rhs) const override {
-            // TODO: throw error
-            return false;
-        }
-        nbool _logicalOr(const arithmeticObj& rhs) const override {
-            // TODO: throw error
-            return false;
-        }
+        nbool _eq(const arithmeticObj& rhs) const override;
+        nbool _ne(const arithmeticObj& rhs) const override;
+        nbool _gt(const arithmeticObj& rhs) const override;
+        nbool _lt(const arithmeticObj& rhs) const override;
+        nbool _ge(const arithmeticObj& rhs) const override;
+        nbool _le(const arithmeticObj& rhs) const override;
+        nbool _logicalAnd(const arithmeticObj& rhs) const override;
+        nbool _logicalOr(const arithmeticObj& rhs) const override;
 
-        arithmeticObj& _mov(const arithmeticObj& rhs) override {
-            get() = rhs.asImpli<me>()->get();
-            return *this;
-        }
+        arithmeticObj& _mov(const arithmeticObj& rhs) override;
     };
 }

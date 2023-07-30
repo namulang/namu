@@ -17,10 +17,10 @@ namespace namu {
         // overrides operator==() by 'instance' class.
 
         virtual nbool isOverwritable(const retState& it) const = 0;
-        virtual nbool isEmpty() const { return false; }
+        virtual nbool isEmpty() const;
 
     protected:
-        retState() {}
+        retState();
     };
 
     class _nout blkRetState : public retState {
@@ -28,13 +28,13 @@ namespace namu {
         friend class frame;
 
     public:
-        blkRetState(nbool isOverwritable): _isOverwritable(isOverwritable) {}
+        blkRetState(nbool isOverwritable);
 
     public:
         nbool isOverwritable(const retState& it) const override;
 
     protected:
-        blkRetState() {}
+        blkRetState();
 
     private:
         nbool _isOverwritable;
@@ -44,10 +44,10 @@ namespace namu {
         NAMU(CLASS(blkEmptyRetState, blkRetState))
 
     public:
-        blkEmptyRetState(): super(true) {}
+        blkEmptyRetState();
 
     public:
-        nbool isEmpty() const override { return true; }
+        nbool isEmpty() const override;
     };
 
     class _nout funcRetState : public retState {
@@ -58,17 +58,18 @@ namespace namu {
         nbool isOverwritable(const retState& it) const override;
 
     protected:
-        funcRetState() {}
+        funcRetState();
     };
+
     class _nout funcEmptyRetState : public funcRetState {
         NAMU(CLASS(funcEmptyRetState, funcRetState))
         friend class frame;
 
     public:
-        virtual nbool isEmpty() const override { return true; }
+        virtual nbool isEmpty() const override;
 
     protected:
-        funcEmptyRetState() {}
+        funcEmptyRetState();
     };
 
     class obj;
@@ -133,7 +134,7 @@ namespace namu {
         func& getFunc();
         const func& getFunc() const NAMU_UNCONST_FUNC(getFunc())
         const baseObj& getMe() const NAMU_UNCONST_FUNC(getMe())
-        baseObj& getMe() { return *_obj; }
+        baseObj& getMe();
 
         // node:
         using node::subs;
@@ -148,7 +149,7 @@ namespace namu {
         nbool setRet(const retState& new1);
         nbool setRet(const retState& new1, const node& toRet);
         const retState& getRetState() const;
-        node& getRet() const { return *_ret; }
+        node& getRet() const;
 
     protected:
         static baseObj& _setMe(baseObj& new1);

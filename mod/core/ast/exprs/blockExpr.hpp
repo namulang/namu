@@ -12,7 +12,7 @@ namespace namu {
         friend class mgdFunc;
 
     public:
-        blockExpr() {}
+        blockExpr();
         template <typename... Es>
         blockExpr(const Es&... elems): _exprs(elems...) {}
 
@@ -20,23 +20,14 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
         str getEval() const override;
-        const narr& getStmts() const { return _exprs; }
-        narr& getStmts() { return _exprs; }
+        const narr& getStmts() const;
+        narr& getStmts();
 
         using super::inFrame;
         void inFrame(const bicontainable& args) override;
         void outFrame() override;
 
-        clonable* deepClone() const override {
-            NAMU_DW("blockExpr: deepClone");
-
-            me* ret = (me*) clone();
-            ret->_exprs.rel();
-            for(auto e=_exprs.begin(); e ;e++)
-                ret->_exprs.add((node*) e->deepClone());
-
-            return ret;
-        }
+        clonable* deepClone() const override;
 
     private:
         narr _exprs;

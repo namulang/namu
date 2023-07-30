@@ -12,10 +12,8 @@ namespace namu {
         friend class verifier;
 
     public:
-        getGenericExpr(const std::string& genericName, const args& typeParams):
-                super(genericName, typeParams) {}
-        getGenericExpr(const node& me, const std::string& genericName, const args& typeParams):
-                super(me, genericName, typeParams) {}
+        getGenericExpr(const std::string& genericName, const args& typeParams);
+        getGenericExpr(const node& me, const std::string& genericName, const args& typeParams);
 
     protected:
         genericObj& _getGenericObj() const;

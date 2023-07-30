@@ -15,10 +15,10 @@ namespace namu {
         friend class generalizer; // for _args
 
     public:
-        getExpr(const std::string& name): _name(name) {}
-        getExpr(const std::string& name, const args& a): _name(name), _args(a) {}
-        getExpr(const node& me, const std::string& name): _me(me), _name(name) {}
-        getExpr(const node& me, const std::string& name, const args& a): _me(me), _name(name), _args(a) {}
+        getExpr(const std::string& name);
+        getExpr(const std::string& name, const args& a);
+        getExpr(const node& me, const std::string& name);
+        getExpr(const node& me, const std::string& name, const args& a);
 
     public:
         using super::run;
@@ -26,17 +26,12 @@ namespace namu {
         str getEval() const override;
         const node& getMe() const;
         const std::string& getSubName() const;
-        void setMe(const node& newMe) { _me.bind(newMe); }
+        void setMe(const node& newMe);
 
         /// @return nullable
         const args& getSubArgs() const;
 
-        clonable* deepClone() const override {
-            me* ret = (me*) clone();
-            if(_args) ret->_args.bind((args*) _args->deepClone());
-
-            return ret;
-        }
+        clonable* deepClone() const override;
 
     protected:
         virtual str _get(nbool evalMode) const;

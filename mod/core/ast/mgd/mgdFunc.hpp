@@ -31,40 +31,20 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
 
-        const point& getPos() const override {
-            return _pos;
-        }
+        const point& getPos() const override;
 
         using super::inFrame;
         void inFrame(const bicontainable& args) override;
         void outFrame() override;
 
-        clonable* deepClone() const override {
-            me* ret = (me*) clone();
-            // params:
-            ret->_params.rel();
-            for(auto e=_params.begin(); e ;++e)
-                ret->_params.add((param*) e->deepClone());
-            // shares:
-            ret->_shares.rel();
-            for(auto e=_shares.begin(); e ;++e)
-                ret->_shares.add(e.getKey(), (node*) e->deepClone());
-            // retType:
-            ret->_retType.bind((node*) _retType->deepClone());
-            // blk:
-            ret->_blk.bind((blockExpr*) _blk->deepClone());
-
-            return ret;
-        }
-
-        str _postProcess();
+        clonable* deepClone() const override;
 
     private:
         scope* _evalArgs(const ucontainable& args);
 
-        void _setPos(const point& new1) override {
-            _pos = new1;
-        }
+        void _setPos(const point& new1) override;
+
+        str _postProcess();
 
     private:
         params _params;

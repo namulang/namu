@@ -25,12 +25,26 @@ namespace namu {
         return org;
     }
 
-    const std::string& me::getName() const { return _name; }
-    const node& me::getOrigin() const { return *_org; }
+    void me::setOrigin(const node& newOrg) {
+        _org.bind(newOrg);
+    }
+
+    const std::string& me::getName() const {
+        return _name;
+    }
+
+    const node& me::getOrigin() const {
+        return *_org;
+    }
 
     /// @return null of scope if this variable will be defined to local scope.
-    const scope& me::getWhere() const { return *_where; }
-    void me::setWhere(const scope& new1) { _where.bind(new1); }
+    const scope& me::getWhere() const {
+        return *_where;
+    }
+
+    void me::setWhere(const scope& new1) {
+        _where.bind(new1);
+    }
 
     str me::getEval() const {
         return _org->getEval();

@@ -56,7 +56,15 @@ namespace namu {
         _frame.bind(thread::get().getNowFrame());
     }
 
-    frame& me::getErrFrame() { return *_frame; }
+    frame& me::getErrFrame() {
+        return *_frame;
+    }
+
+    void me::start() {
+        _prepare();
+        super::start();
+        _postpare();
+    }
 
 
     // verification:

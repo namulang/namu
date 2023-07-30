@@ -37,6 +37,10 @@ namespace namu {
         return run(baseObj::CTOR_NAME, a);
     }
 
+    const me& me::getOrigin() const {
+        return *this;
+    }
+
     tstr<me> me::mov(const me& rhs) {
         if(!rhs.isImpli(getType()))
             return tstr<me>();

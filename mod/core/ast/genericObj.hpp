@@ -15,32 +15,27 @@ namespace namu {
         typedef std::vector<std::string> strings;
 
     public:
-        genericObj(const obj& orgObj, const strings& paramNames): _orgObj(orgObj),
-                _paramNames(paramNames) {}
+        genericObj(const obj& orgObj, const strings& paramNames);
 
     public:
-        const obj& getOrigin() const override { return *_orgObj; }
-        const strings& getParamNames() const { return _paramNames; }
+        const obj& getOrigin() const override;
+        const strings& getParamNames() const;
 
         nbool canRun(const args& a) const override;
         str run(const args& a) override;
 
-        str getEval() const override {
-            return _orgObj;
-        }
+        str getEval() const override;
 
         virtual nbicontainer& subs() override;
 
-        const std::map<std::string, tstr<obj>>& getCache() const {
-            return _cache;
-        }
+        const std::map<std::string, tstr<obj>>& getCache() const;
 
         using super::inFrame;
-        void inFrame(const bicontainable& args) override {}
-        void outFrame() override {}
+        void inFrame(const bicontainable& args) override;
+        void outFrame() override;
 
     protected:
-        str _onRunSub(node& sub, const args& a) override { return str(); }
+        str _onRunSub(node& sub, const args& a) override;
 
     private:
         std::string _makeKey(const args& a) const;
@@ -48,8 +43,8 @@ namespace namu {
         /// make a generic object.
         tstr<obj> _makeGeneric(const args& a) const;
         tstr<obj> _defGeneric(const std::string& key, const args& a) const;
-        void _setSrc(const src& newSrc) { _src.bind(newSrc); }
-        void _setPos(const point& new1) override { _pos = new1; }
+        void _setSrc(const src& newSrc);
+        void _setPos(const point& new1) override;
 
     private:
         std::map<std::string, tstr<obj>> _cache;

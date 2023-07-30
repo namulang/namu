@@ -17,20 +17,19 @@ namespace namu {
         enum rule {
             POSTFIX_DOUBLE_PLUS = 0,
             START = POSTFIX_DOUBLE_PLUS,
-            POSTFIX_DOUBLE_MINUS,
-            BITWISE_NOT,
+            POSTFIX_DOUBLE_MINUS, BITWISE_NOT,
             END
         };
 
     public:
-        FUOExpr(rule rule, const node& it): _rule(rule), _it(it) {}
+        FUOExpr(rule rule, const node& it);
 
     public:
         using super::run;
         str run(const args& a) override;
 
         str getEval() const override;
-        rule getRule() const { return _rule; }
+        rule getRule() const;
 
     private:
         rule _rule;

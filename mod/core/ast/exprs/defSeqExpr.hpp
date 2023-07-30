@@ -12,7 +12,7 @@ namespace namu {
         friend class verifier;
 
     public:
-        defSeqExpr(const node& start, const node& end): _start(start), _end(end) {}
+        defSeqExpr(const node& start, const node& end);
 
     public:
         using super::run;
@@ -20,8 +20,8 @@ namespace namu {
 
         str getEval() const override;
 
-        const node& getStart() const { return *_start; }
-        const node& getEnd() const { return *_end; }
+        const node& getStart() const;
+        const node& getEnd() const;
 
     private:
         str _start;

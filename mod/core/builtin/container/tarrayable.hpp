@@ -15,7 +15,9 @@ namespace namu {
 
         // operator:
         virtual T& operator[](nidx n) = 0;
-        const T& operator[](nidx n) const { return get(n); }
+        const T& operator[](nidx n) const {
+            return get(n);
+        }
 
         // has:
         virtual nbool has(nidx n) const = 0;
@@ -26,12 +28,16 @@ namespace namu {
 
         // set:
         virtual nbool set(nidx n, const T& new1) = 0;
-        nbool set(nidx n, const T* new1) { return set(n, *new1); }
+        nbool set(nidx n, const T* new1) {
+            return set(n, *new1);
+        }
 
         // add:
         /// @return how many element has been added from rhs.
         virtual nbool add(nidx n, const T& new1) = 0;
-        nbool add(nidx n, const T* new1) { return add(n, *new1); }
+        nbool add(nidx n, const T* new1) {
+            return add(n, *new1);
+        }
 
         // del:
         /// delete last element if exists.

@@ -6,6 +6,8 @@ namespace namu {
 
     NAMU(DEF_ME(FBOExpr), DEF_VISIT())
 
+    me::FBOExpr(rule rule, const node& lhs, const node& rhs): _rule(rule), _lhs(str(lhs)), _rhs(str(rhs)) {}
+
     str me::getEval() const {
         static str inner(new nBool());
         if(isLogicalOp()) return inner;
@@ -52,5 +54,25 @@ namespace namu {
             default:
                 return str();
         }
+    }
+
+    const node& me::getLeft() const {
+        return *_lhs;
+    }
+
+    void me::setLeft(const node& new1) {
+        _lhs.bind(new1);
+    }
+
+    const node& me::getRight() const {
+        return *_rhs;
+    }
+
+    void me::setRight(const node& new1) {
+        _rhs.bind(new1);
+    }
+
+    me::rule me::getRule() const {
+        return _rule;
     }
 }

@@ -48,6 +48,10 @@ namespace namu {
         }
     }
 
+    const point& me::getPos() const {
+        return _pos;
+    }
+
     str me::_postProcess() {
         frame& fr = thread::get()._getNowFrame();
         node& retVal = fr.getRet();
@@ -79,6 +83,10 @@ namespace namu {
         return ret;
     }
 
+    void me::_setPos(const point& new1) {
+        _pos = new1;
+    }
+
     void me::inFrame(const bicontainable& args) {
         frame& fr = thread::get()._getNowFrame();
         if(nul(fr)) {
@@ -100,5 +108,23 @@ namespace namu {
         fr.popFunc();
         fr.popLocal();
         fr.popLocal();
+    }
+
+    clonable* me::deepClone() const {
+        me* ret = (me*) clone();
+        // params:
+        ret->_params.rel();
+        for(auto e=_params.begin(); e ;++e)
+            ret->_params.add((param*) e->deepClone());
+        // shares:
+        ret->_shares.rel();
+        for(auto e=_shares.begin(); e ;++e)
+            ret->_shares.add(e.getKey(), (node*) e->deepClone());
+        // retType:
+        ret->_retType.bind((node*) _retType->deepClone());
+        // blk:
+        ret->_blk.bind((blockExpr*) _blk->deepClone());
+
+        return ret;
     }
 }

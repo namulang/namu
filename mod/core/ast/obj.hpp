@@ -27,8 +27,10 @@ namespace namu {
         explicit obj(mgdType* newType, const scopes& shares, const scope& owns);
         explicit obj(const me& rhs);
 
+    public:
         me& operator=(const me& rhs);
 
+    public:
         using super::subs;
         nbicontainer& subs() override;
 
@@ -40,12 +42,12 @@ namespace namu {
         scope& getOwns();
         const scope& getOwns() const NAMU_UNCONST_FUNC(getOwns())
         const obj& getOrigin() const override;
-        const point& getPos() const override { return _pos; }
+        const point& getPos() const override;
 
         clonable* deepClone() const override;
         typedef ntype metaType;
         const ntype& getType() const override;
-        nbool isComplete() const override { return _isComplete; }
+        nbool isComplete() const override;
 
     private:
         scopes* _makeNewSubs();
@@ -56,10 +58,10 @@ namespace namu {
 
         me& _assign(const me& rhs);
 
-        void _setComplete(nbool isComplete) { _isComplete = isComplete; }
+        void _setComplete(nbool isComplete);
 
-        void _setSrc(const src& newSrc) { _src.bind(newSrc); }
-        void _setPos(const point& new1) override { _pos = new1; }
+        void _setSrc(const src& newSrc);
+        void _setPos(const point& new1) override;
 
     private:
         tstr<src> _src;

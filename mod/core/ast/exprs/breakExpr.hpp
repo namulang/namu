@@ -8,8 +8,8 @@ namespace namu {
         NAMU(CLASS(breakExpr, retStateExpr, expr::exprType), VISIT())
 
     public:
-        breakExpr(const node& ret): super(ret) {}
-        breakExpr() {}
+        breakExpr(const node& ret);
+        breakExpr();
 
     protected:
         const retState& _onGetRetState() const override;

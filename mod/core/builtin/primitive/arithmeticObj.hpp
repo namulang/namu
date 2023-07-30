@@ -12,7 +12,7 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
 
-        const me& getOrigin() const override { return *this; }
+        const me& getOrigin() const override;
         tstr<me> add(const me& rhs) const;
         using super::sub;
         tstr<me> sub(const me& rhs) const;

@@ -7,6 +7,28 @@ namespace namu {
 
     NAMU_DEF_ME(visitor)
 
+    me::visitor(): _isLog(false) {
+        me::rel();
+    }
+
+    me& me::setRoot(node& root) {
+        _root.bind(root);
+        return *this;
+    }
+
+    node& me::getRoot() {
+        return *_root;
+    }
+
+    me& me::setLog(nbool toShow) {
+        _isLog = toShow;
+        return *this;
+    }
+
+    nbool me::isLog() const {
+        return _isLog;
+    }
+
 #define X(T) \
     void me::visit(visitInfo i, T& me) { \
         if(nul(me)) return; \

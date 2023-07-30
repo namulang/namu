@@ -19,7 +19,9 @@ namespace namu {
         return ret;
     }
 
-    node& me::getRet() { return *_ret; }
+    node& me::getRet() {
+        return *_ret;
+    }
 
     nbool me::canRun(const args& a) const {
         if(_ret)

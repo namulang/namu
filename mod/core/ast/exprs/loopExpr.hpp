@@ -10,12 +10,12 @@ namespace namu {
         NAMU(ADT(loopExpr, expr, expr::exprType), VISIT())
 
     public:
-        loopExpr(const blockExpr& blk): _blk(blk) {}
+        loopExpr(const blockExpr& blk);
 
     public:
-        blockExpr& getBlock() const { return *_blk; }
-        str getEval() const override { return _eval; }
-        nbool setEval(const node& new1) const { return _eval.bind(new1); }
+        blockExpr& getBlock() const;
+        str getEval() const override;
+        nbool setEval(const node& new1) const;
 
     protected:
         /// @return true if exit the loop

@@ -10,6 +10,38 @@ namespace namu {
     me::seq(nint start, nint end): super(new nseq(start, end)) {}
     me::seq(nint start, nint end, nint step): super(new nseq(start, end, step)) {}
 
+    nint& me::operator[](nidx n) {
+        return get()[n];
+    }
+
+    const ntype& me::getType() const {
+        static ntype* inner = nullptr;
+        if(nul(inner)) {
+            inner = new ttype<seq>();
+            inner->getBeans().add(*new nInt());
+        }
+
+        return *inner;
+    }
+
+    ncnt me::len() const {
+        return get().len();
+    }
+
+    nbool me::has(nidx n) const {
+        return get().has(n);
+    }
+
+    //  get:
+    nint& me::get(nidx n) {
+        return get().get(n);
+    }
+
+    //  etc:
+    void me::rel() {
+        return get().rel();
+    }
+
     namespace {
         typedef tucontainable<nint>::iter niter;
         typedef tcppBridge<niter> __superMgdIter;
@@ -98,5 +130,35 @@ namespace namu {
 
     me::iteration* me::_onMakeIteration(ncnt step) const {
         return get()._onMakeIteration(step);
+    }
+
+    nbool me::set(const iter& at, const nint& new1) {
+        return false;
+    }
+
+    nbool me::set(nidx n, const nint& new1) {
+        return false;
+    }
+
+    nbool me::add(const iter& at, const nint& new1) {
+        return false;
+    }
+
+    nbool me::add(nidx n, const nint& new1) {
+        return false;
+    }
+
+    void me::add(const iter& here, const iter& from, const iter& to) {}
+
+    nbool me::del(nidx n) {
+        return false;
+    }
+
+    nbool me::del(const iter& it) {
+        return false;
+    }
+
+    nbool me::del(const iter& from, const iter& to) {
+        return false;
     }
 }

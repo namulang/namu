@@ -61,5 +61,85 @@ namespace namu {
                 new nInt(get() >> rhs.as<me>()->get());
     }
 
-    tstr<arithmeticObj> me::bitwiseNot() const { return nInt(!get()); }
+    tstr<arithmeticObj> me::bitwiseNot() const {
+        return nInt(!get());
+    }
+
+    tstr<arithmeticObj> me::_add(const arithmeticObj& rhs, nbool reversed) const {
+        return reversed ?
+                new me(rhs.as<me>()->get() + get()):
+                new me(get() + rhs.as<me>()->get());
+    }
+    tstr<arithmeticObj> me::_sub(const arithmeticObj& rhs, nbool reversed) const {
+        return reversed ?
+                new me(rhs.as<me>()->get() - get()):
+                new me(get() - rhs.as<me>()->get());
+    }
+    tstr<arithmeticObj> me::_mul(const arithmeticObj& rhs, nbool reversed) const {
+        return reversed ?
+                new me(rhs.as<me>()->get() * get()):
+                new me(get() * rhs.as<me>()->get());
+    }
+    tstr<arithmeticObj> me::_div(const arithmeticObj& rhs, nbool reversed) const {
+        return reversed ?
+                new me(rhs.as<me>()->get() / get()):
+                new me(get() / rhs.as<me>()->get());
+    }
+    tstr<arithmeticObj> me::_mod(const arithmeticObj& rhs, nbool reversed) const {
+        return reversed ?
+                new me(rhs.as<me>()->get() % get()):
+                new me(get() % rhs.as<me>()->get());
+    }
+    tstr<arithmeticObj> me::_bitwiseAnd(const arithmeticObj& rhs, nbool reversed) const {
+        return reversed ?
+                new me(rhs.as<me>()->get() && get()):
+                new me(get() && rhs.as<me>()->get());
+    }
+    tstr<arithmeticObj> me::_bitwiseOr(const arithmeticObj& rhs, nbool reversed) const {
+        return reversed ?
+                new me(rhs.as<me>()->get() || get()):
+                new me(get() || rhs.as<me>()->get());
+    }
+    tstr<arithmeticObj> me::_bitwiseXor(const arithmeticObj& rhs, nbool reversed) const {
+        return reversed ?
+                new me(rhs.as<me>()->get() ^ get()):
+                new me(get() ^ rhs.as<me>()->get());
+    }
+
+    nbool me::_eq(const arithmeticObj& rhs) const {
+        return get() == rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_ne(const arithmeticObj& rhs) const {
+        return get() != rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_gt(const arithmeticObj& rhs) const {
+        return get() > rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_lt(const arithmeticObj& rhs) const {
+        return get() < rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_ge(const arithmeticObj& rhs) const {
+        return get() >= rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_le(const arithmeticObj& rhs) const {
+        return get() <= rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_logicalAnd(const arithmeticObj& rhs) const {
+        return get() && rhs.asImpli<me>()->get();
+    }
+
+    nbool me::_logicalOr(const arithmeticObj& rhs) const {
+        return get() || rhs.asImpli<me>()->get();
+    }
+
+    arithmeticObj& me::_mov(const arithmeticObj& rhs) {
+        get() = rhs.asImpli<me>()->get();
+        return *this;
+    }
 }

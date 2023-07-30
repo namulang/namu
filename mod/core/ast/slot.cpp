@@ -7,6 +7,23 @@ namespace namu {
 
     NAMU(DEF_ME(slot), DEF_VISIT())
 
+
+    nbicontainer& me::subs() {
+        return getPack().subs();
+    }
+
+    nbool me::canRun(const args& a) const {
+        return getPack().canRun(a);
+    }
+
+    str me::run(const args& a) {
+        return getPack().run(a);
+    }
+
+    str me::getEval() const {
+        return getPack().getEval();
+    }
+
     me::slot(const manifest& manifest): _manifest(manifest) {
         _rel();
         _pak.bind(new obj(new mgdType(_manifest.name)));
@@ -54,5 +71,9 @@ namespace namu {
         for(auto& e : _dependents)
             e._invalidate();
         return true;
+    }
+
+    str me::_onRunSub(node& sub, const args& a) {
+        return getPack()._onRunSub(sub, a);
     }
 }

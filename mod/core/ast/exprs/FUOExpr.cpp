@@ -6,6 +6,8 @@ namespace namu {
 
     NAMU(DEF_ME(FUOExpr), DEF_VISIT())
 
+    me::FUOExpr(rule rule, const node& it): _rule(rule), _it(it) {}
+
     str me::run(const args& a) {
         if(!_it) return str();
         tstr<arithmeticObj> it(_it->as<node>());
@@ -39,5 +41,9 @@ namespace namu {
 
     str me::getEval() const {
         return _it->getEval();
+    }
+
+    me::rule me::getRule() const {
+        return _rule;
     }
 }

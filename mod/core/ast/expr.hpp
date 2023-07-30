@@ -16,8 +16,8 @@ namespace namu {
 
         public:
             using super::asImpli;
-            nbool isImpli(const type& to) const override { return to.isSub<node>(); }
-            str asImpli(const node& from, const type& to) const override { return str(((node&)from).run()); }
+            nbool isImpli(const type& to) const override;
+            str asImpli(const node& from, const type& to) const override;
         };
 
         NAMU(ADT(expr, node, exprType))
@@ -28,16 +28,8 @@ namespace namu {
         using super::subs;
         nbicontainer& subs() override;
 
-        nbool isImpli(const type& to) const override {
-            return getEval()->isSub(to);
-        }
-        virtual str asImpli(const type& to) const override {
-            me* unconst = const_cast<me*>(this);
-            str run = unconst->run();
-            if(!run)
-                return run;
-            return run->asImpli(to);
-        }
+        nbool isImpli(const type& to) const override;
+        virtual str asImpli(const type& to) const override;
 
         /// run of expr class get treated like 'evaluate' in namu.
         /// it should not take any argument to run()

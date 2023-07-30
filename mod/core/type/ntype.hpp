@@ -17,19 +17,14 @@ namespace namu {
         typedef std::map<const ntype*, deducer> deducers;
 
     public:
-        ntype(): _beans(nullptr) {}
-        ntype(const me& rhs): _beans(nullptr) {
-            _assign(rhs);
-        }
+        ntype();
+        ntype(const me& rhs);
+
         ~ntype() override;
 
     public:
         nbool operator==(const type& rhs) const override;
-        me& operator=(const me& rhs) {
-            if(this == &rhs) return *this;
-
-            return _assign(rhs);
-        }
+        me& operator=(const me& rhs);
 
     public:
         // ntype:
@@ -65,9 +60,7 @@ namespace namu {
         virtual nbool isImmutable() const;
         /// @return null if it's not relative between l & r.
         const ntype& deduce(const ntype& r) const;
-        const ntype& deduce(const typeProvidable& r) const {
-            return deduce((const ntype&) r.getType());
-        }
+        const ntype& deduce(const typeProvidable& r) const;
         template <typename T>
         const ntype& deduce() const {
             return deduce(ttype<T>::get());

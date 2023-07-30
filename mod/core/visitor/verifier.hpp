@@ -23,11 +23,7 @@ namespace namu {
 
         frame& getErrFrame();
 
-        void start() override {
-            _prepare();
-            super::start();
-            _postpare();
-        }
+        void start() override;
 
         void onVisit(visitInfo i, node& me) override;
         void onVisit(visitInfo i, asExpr& me) override;

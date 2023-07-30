@@ -26,25 +26,12 @@ namespace namu {
 
         node& getSubject();
         const node& getSubject() const;
-        void setSubject(const node& new1) { _subject.bind(new1); }
+        void setSubject(const node& new1);
 
         args& getArgs();
         const args& getArgs() const;
 
-        clonable* deepClone() const override {
-            NAMU_DI("runExpr: deepClone");
-
-            me* ret = (me*) clone();
-            if(_me) ret->_me.bind((node*) _me->deepClone());
-
-            ret->_args.rel();
-            for(const auto& a : _args)
-                ret->_args.add((node*) a.deepClone());
-
-            if(_subject) ret->_subject.bind((node*) _subject->deepClone());
-
-            return ret;
-        }
+        clonable* deepClone() const override;
 
     private:
         str _getSub(str me, const args& a) const;
