@@ -5,7 +5,29 @@
 #include "../../visitor/visitor.hpp"
 
 namespace namu {
+
     NAMU(DEF_ME(blockExpr), DEF_VISIT())
+
+    me::blockExpr() {}
+
+    const narr& me::getStmts() const {
+        return _exprs;
+    }
+
+    narr& me::getStmts() {
+        return _exprs;
+    }
+
+    clonable* me::deepClone() const {
+        NAMU_DW("blockExpr: deepClone");
+
+        me* ret = (me*) clone();
+        ret->_exprs.rel();
+        for(auto e=_exprs.begin(); e ;e++)
+            ret->_exprs.add((node*) e->deepClone());
+
+        return ret;
+    }
 
     void me::inFrame(const bicontainable& args) {
         NAMU_DI("%s._onInFrame()", getType().getName().c_str());

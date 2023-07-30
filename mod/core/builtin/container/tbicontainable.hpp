@@ -24,8 +24,12 @@ namespace namu {
         virtual ~tbicontainable() {}
 
         // operator:
-        V& operator[](const K& key) { return get(key); }
-        const V& operator[](const K& key) const { return get(key); }
+        V& operator[](const K& key) {
+            return get(key);
+        }
+        const V& operator[](const K& key) const {
+            return get(key);
+        }
 
         // len:
         virtual ncnt len() const = 0;
@@ -36,7 +40,9 @@ namespace namu {
         // get:
         virtual V& get(const K& key) = 0;
         const V& get(const K& key) const NAMU_UNCONST_FUNC(get(key))
-        template <typename V1> V1& get(const K& key) { return get(key).template cast<V1>(); }
+        template <typename V1> V1& get(const K& key) {
+            return get(key).template cast<V1>();
+        }
         template <typename V1> const V1& get(const K& key) const NAMU_UNCONST_FUNC(get<V1>(key))
         template <typename V1>
         V1& get(std::function<nbool(const K&, const V1&)> l) const;
@@ -48,15 +54,27 @@ namespace namu {
         narr getAll(std::function<nbool(const K&, const V&)> l) const;
 
         // iter:
-        iter begin() const { return iterate(0); }
-        virtual iter end() const { return iterate(len()); }
-        virtual iter last() const { return iterate(len()-1); }
-        iter iterate(ncnt step) const { return iter(_onMakeIteration(step)); }
-        iter iterate(const K& key) const { return iter(_onMakeIteration(key)); }
+        iter begin() const {
+            return iterate(0);
+        }
+        virtual iter end() const {
+            return iterate(len());
+        }
+        virtual iter last() const {
+            return iterate(len()-1);
+        }
+        iter iterate(ncnt step) const {
+            return iter(_onMakeIteration(step));
+        }
+        iter iterate(const K& key) const {
+            return iter(_onMakeIteration(key));
+        }
 
         // add:
         virtual nbool add(const K& key, const V& val) = 0;
-        nbool add(const K& key, const V* val) { return add(key, *val); }
+        nbool add(const K& key, const V* val) {
+            return add(key, *val);
+        }
         ncnt add(const iter& from, const iter& to) {
             int ret = 0;
             for(iter e=from; e != to ;++e)
@@ -64,14 +82,18 @@ namespace namu {
                     ret++;
             return ret;
         }
-        ncnt add(const tbicontainable& rhs) { return add(rhs.begin(), rhs.end()); }
+        ncnt add(const tbicontainable& rhs) {
+            return add(rhs.begin(), rhs.end());
+        }
 
         // del:
         /// delete last element if exists.
         virtual nbool del(const K& it) = 0;
         virtual nbool del(const iter& at) = 0;
         virtual nbool del(const iter& from, const iter& end) = 0;
-        nbool del(const tbicontainable& rhs) { return del(rhs.begin(), rhs.end()); }
+        nbool del(const tbicontainable& rhs) {
+            return del(rhs.begin(), rhs.end());
+        }
 
         // etc:
         virtual void rel() = 0;

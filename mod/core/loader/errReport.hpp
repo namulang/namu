@@ -10,18 +10,8 @@ namespace namu {
         NAMU(CLASS(errReport, instance))
 
     public:
-        nbool operator==(const me& rhs) const {
-            if(len() != rhs.len()) return false;
-
-            for(nint n=0; n < len() ;n++)
-                if(get(n) != rhs[n])
-                    return false;
-            return true;
-        }
-        nbool operator!=(const me& rhs) const {
-            return !operator==(rhs);
-        }
-
+        nbool operator==(const me& rhs) const;
+        nbool operator!=(const me& rhs) const;
         const err& operator[](nidx n) const;
         operator nbool() const;
 
@@ -35,7 +25,7 @@ namespace namu {
         ncnt len() const;
 
         virtual const err& add(const err* new1);
-        const err& add(const err& new1) { return add(&new1); }
+        const err& add(const err& new1);
         void add(const me& rhs);
 
         std::vector<tstr<err>>::const_iterator begin() const;

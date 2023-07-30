@@ -20,14 +20,16 @@ namespace namu {
     public:
         using super::run;
         str run(const args& a) override;
-        void setOrigin(const node& newOrg) {
-            _org.bind(newOrg);
-        }
+
+        void setOrigin(const node& newOrg);
         const node& getOrigin() const;
+
         const std::string& getName() const;
+
         /// @return null of scope if this variable will be defined to local scope.
         const scope& getWhere() const;
         void setWhere(const scope& new1);
+
         str getEval() const override;
 
     private:

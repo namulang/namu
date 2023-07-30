@@ -10,6 +10,41 @@ namespace namu {
 
     NAMU(DEF_ME(genericObj), DEF_VISIT())
 
+    me::genericObj(const obj& orgObj, const strings& paramNames): _orgObj(orgObj),
+            _paramNames(paramNames) {}
+
+    const obj& me::getOrigin() const {
+        return *_orgObj;
+    }
+
+    const me::strings& me::getParamNames() const {
+        return _paramNames;
+    }
+
+    str me::getEval() const {
+        return _orgObj;
+    }
+
+    const std::map<std::string, tstr<obj>>& me::getCache() const {
+        return _cache;
+    }
+
+    void me::inFrame(const bicontainable& args) {}
+
+    void me::outFrame() {}
+
+    str me::_onRunSub(node& sub, const args& a) {
+        return str();
+    }
+
+    void me::_setSrc(const src& newSrc) {
+        _src.bind(newSrc);
+    }
+
+    void me::_setPos(const point& new1) {
+        _pos = new1;
+    }
+
     nbicontainer& me::subs() {
         static ndumMap inner;
         return inner;

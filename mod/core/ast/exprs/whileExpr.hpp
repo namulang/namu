@@ -13,7 +13,7 @@ namespace namu {
 
     public:
         const node& getCondition() const NAMU_UNCONST_FUNC(getCondition())
-        node& getCondition() { return *_condition; }
+        node& getCondition();
 
         using super::run;
         str run(const args& a) override;

@@ -80,8 +80,19 @@ namespace namu {
         msg = _format(getErrMsg(code), args);
     }
 
-    void me::log() const {
+    me::err(err::type t, const point& ps, nint newCode, va_list args)
+        : super(), fType(t), code((errCode) newCode), pos(ps) {
+        msg = _format(getErrMsg(code), args);
+    }
 
+    nbool me::operator==(const me& rhs) const {
+        return fType == rhs.fType && code == rhs.code && code == rhs.code;
+    }
+    nbool me::operator!=(const me& rhs) const {
+        return !operator==(rhs);
+    }
+
+    void me::log() const {
         auto& log = logger::get();
         switch(fType) {
             case ERR:
@@ -122,5 +133,6 @@ namespace namu {
     }
 
     dummyErr::dummyErr(): super(err::ERR, 0) {}
+
     void dummyErr::log() const {}
 }

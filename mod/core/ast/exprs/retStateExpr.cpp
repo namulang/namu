@@ -16,7 +16,9 @@ namespace namu {
         return ret;
     }
 
-    node& me::getRet() { return *_ret; }
+    node& me::getRet() {
+        return *_ret;
+    }
 
     str me::_decideRet(const args& a) {
         if(!_ret) return str(nVoid::singletone());

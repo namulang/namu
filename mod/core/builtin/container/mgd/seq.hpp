@@ -35,33 +35,25 @@ namespace namu {
 
     public:
         using tarrayable<nint>::operator[];
-        nint& operator[](nidx n) override { return get()[n]; }
+        nint& operator[](nidx n) override;
 
     public:
-        const ntype& getType() const override {
-            static ntype* inner = nullptr;
-            if(nul(inner)) {
-                inner = new ttype<seq>();
-                inner->getBeans().add(*new nInt());
-            }
-
-            return *inner;
-        }
+        const ntype& getType() const override;
 
         using super::subs;
         nbicontainer& subs() override;
 
-        ncnt len() const override { return get().len(); }
+        ncnt len() const override;
 
-        nbool has(nidx n) const override { return get().has(n); }
+        nbool has(nidx n) const override;
 
         //  get:
         using tarrayable<nint>::get;
         using super::get;
-        nint& get(nidx n) override { return get().get(n); }
+        nint& get(nidx n) override;
 
         //  etc:
-        void rel() override { return get().rel(); }
+        void rel() override;
 
     protected:
         iteration* _onMakeIteration(ncnt step) const override;
@@ -71,18 +63,18 @@ namespace namu {
         //  set:
         using tucontainable<nint>::set;
         using tarrayable<nint>::set;
-        nbool set(const iter& at, const nint& new1) override { return false; }
-        nbool set(nidx n, const nint& new1) override { return false; }
+        nbool set(const iter& at, const nint& new1) override;
+        nbool set(nidx n, const nint& new1) override;
         //  add:
         using tucontainable<nint>::add;
         using tarrayable<nint>::add;
-        nbool add(const iter& at, const nint& new1) override { return false; }
-        nbool add(nidx n, const nint& new1) override { return false; }
-        void add(const iter& here, const iter& from, const iter& to) override {}
+        nbool add(const iter& at, const nint& new1) override;
+        nbool add(nidx n, const nint& new1) override;
+        void add(const iter& here, const iter& from, const iter& to) override;
         //  del:
         using tucontainable<nint>::del;
-        nbool del(nidx n) override { return false; }
-        nbool del(const iter& it) override { return false; }
-        nbool del(const iter& from, const iter& to) override { return false; }
+        nbool del(nidx n) override;
+        nbool del(const iter& it) override;
+        nbool del(const iter& from, const iter& to) override;
     };
 }

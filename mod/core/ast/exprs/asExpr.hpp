@@ -15,30 +15,16 @@ namespace namu {
         typedef scopes::iter iter;
 
     public:
-        asExpr(const node& me, const node& as): _me(me), _as(as) {}
+        asExpr(const node& me, const node& as);
 
     public:
         using super::run;
-        str run(const args& a) override {
-            if(!_me || !_as) return str();
-
-            str eval = _me->as<node>();
-            if(!eval) return NAMU_E("!eval.isBind()"), str();
-
-            return str(eval->as(*_as));
-        }
-
-        str getEval() const override { return _as; }
-        const node& getMe() const { return *_me; }
-        const node& getAs() const { return *_as; }
-        void setAs(const node& new1) { _as.bind(new1); }
-
-        clonable* deepClone() const override {
-            me* ret = (me*) clone();
-            if(_me) ret->_me.bind((node*) _me->deepClone());
-            if(_as) ret->_as.bind((node*) _as->deepClone());
-            return ret;
-        }
+        str run(const args& a) override;
+        str getEval() const override;
+        const node& getMe() const;
+        const node& getAs() const;
+        void setAs(const node& new1);
+        clonable* deepClone() const override;
 
     private:
         str _me;

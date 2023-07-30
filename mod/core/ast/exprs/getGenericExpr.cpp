@@ -7,6 +7,11 @@ namespace namu {
 
     NAMU(DEF_ME(getGenericExpr), DEF_VISIT())
 
+    me::getGenericExpr(const std::string& genericName, const args& typeParams):
+            super(genericName, typeParams) {}
+    me::getGenericExpr(const node& me, const std::string& genericName, const args& typeParams):
+            super(me, genericName, typeParams) {}
+
     str me::_get(nbool evalMode) const {
         genericObj& generic = _getGenericObj();
         if(nul(generic)) return NAMU_E("generic == null"), str();

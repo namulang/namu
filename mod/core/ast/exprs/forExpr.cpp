@@ -11,8 +11,13 @@ namespace namu {
     me::forExpr(const std::string& localName, const node& container, const blockExpr& blk):
         super(blk), _container(container), _name(localName), _initEval(false) {}
 
-    const std::string& me::getLocalName() const { return _name; }
-    str me::getContainer() { return *_container; }
+    const std::string& me::getLocalName() const {
+        return _name;
+    }
+
+    str me::getContainer() {
+        return *_container;
+    }
 
     str me::run(const args& a) {
         blockExpr& blk = getBlock();

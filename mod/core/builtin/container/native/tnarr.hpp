@@ -25,10 +25,11 @@ namespace namu {
             add( { (T*) &elems... } );
         }
 
-        // operator:
+    public:
         using tarrayable<T>::operator[];
         T& operator[](nidx n) override { return get(n); }
 
+    public:
         // len:
         ncnt len() const override;
 
@@ -66,7 +67,9 @@ namespace namu {
         // etc:
         void rel() override;
 
-        clonable* clone() const override { return new me(*this); }
+        clonable* clone() const override {
+            return new me(*this);
+        }
         clonable* deepClone() const override;
 
         std::string asStr() const {

@@ -26,22 +26,19 @@ namespace namu {
         const tnarr<me>& getDependents() const;
 
         using super::subs;
-        nbicontainer& subs() override { return getPack().subs(); }
+        nbicontainer& subs() override;
 
-        nbool canRun(const args& a) const override { return getPack().canRun(a); }
+        nbool canRun(const args& a) const override;
 
         using super::run;
-        str run(const args& a) override { return getPack().run(a); }
+        str run(const args& a) override;
 
-        str getEval() const override { return getPack().getEval(); }
+        str getEval() const override;
 
     protected:
         virtual nbool _invalidate();
         void _setValid(nbool valid);
-        virtual str _onRunSub(node& sub, const args& a) override {
-            return getPack()._onRunSub(sub, a);
-        }
-
+        virtual str _onRunSub(node& sub, const args& a) override;
 
     private:
         void _rel();

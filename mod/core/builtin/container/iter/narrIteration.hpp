@@ -29,6 +29,7 @@ public:
         }
         return step;
     }
+
     using super::get;
     T& get() override {
         if(isEnd()) return nulOf<T>();
@@ -36,7 +37,9 @@ public:
     }
 
     using super::getContainer;
-    tucontainable<T>& getContainer() override { return _own; }
+    tucontainable<T>& getContainer() override {
+        return _own;
+    }
 
 protected:
     nbool _onSame(const typeProvidable& rhs) const override {

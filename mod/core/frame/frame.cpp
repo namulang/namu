@@ -5,13 +5,36 @@
 
 namespace namu {
 
+    nbool retState::isEmpty() const {
+        return false;
+    }
+
+    retState::retState() {}
+
+    blkRetState::blkRetState(nbool isOverwritable): _isOverwritable(isOverwritable) {}
+    blkRetState::blkRetState() {}
+
     nbool blkRetState::isOverwritable(const retState& it) const {
         return _isOverwritable;
+    }
+
+    blkEmptyRetState::blkEmptyRetState(): super(true) {}
+
+    nbool blkEmptyRetState::isEmpty() const {
+        return true;
     }
 
     nbool funcRetState::isOverwritable(const retState& it) const {
         return isEmpty() || it.isSub<funcRetState>();
     }
+
+    funcRetState::funcRetState() {}
+
+    nbool funcEmptyRetState::isEmpty() const {
+        return true;
+    }
+
+    funcEmptyRetState::funcEmptyRetState() {}
 
 
     NAMU(DEF_ME(frame), DEF_VISIT())
@@ -98,6 +121,10 @@ namespace namu {
         return *_funcs.back();
     }
 
+    baseObj& me::getMe() {
+        return *_obj;
+    }
+
     // node:
     nbicontainer& me::subs() {
         scopes& top = *_local.getTop();
@@ -108,9 +135,13 @@ namespace namu {
         return inner;
     }
 
-    nbool me::canRun(const args& a) const { return false; }
+    nbool me::canRun(const args& a) const {
+        return false;
+    }
 
-    str me::run(const args& a) { return str(); }
+    str me::run(const args& a) {
+        return str();
+    }
 
     void me::rel() {
         _rel();
@@ -122,14 +153,23 @@ namespace namu {
         _ret.rel();
     }
 
-    nbool me::setRet(const retState& new1) { return setRet(new1, nulOf<node>()); }
+    nbool me::setRet(const retState& new1) {
+        return setRet(new1, nulOf<node>());
+    }
     nbool me::setRet(const retState& new1, const node& toRet) {
         if(_retState && !_retState->isOverwritable(new1)) return true;
 
         _retState.bind(new1);
         return _ret.bind(toRet);
     }
-    const retState& me::getRetState() const { return *_retState; }
+
+    const retState& me::getRetState() const {
+        return *_retState;
+    }
+
+    node& me::getRet() const {
+        return *_ret;
+    }
 
     void me::_rel() {
         _obj.rel();

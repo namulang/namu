@@ -5,15 +5,35 @@ namespace namu {
 
     NAMU_DEF_ME(errReport)
 
-    const err& me::operator[](nidx n) const { return get(n); }
-    me::operator nbool() const { return hasErr(); }
+    nbool me::operator==(const me& rhs) const {
+        if(len() != rhs.len()) return false;
+
+        for(nint n=0; n < len() ;n++)
+            if(get(n) != rhs[n])
+                return false;
+        return true;
+    }
+
+    nbool me::operator!=(const me& rhs) const {
+        return !operator==(rhs);
+    }
+
+    const err& me::operator[](nidx n) const {
+        return get(n);
+    }
+
+    me::operator nbool() const {
+        return hasErr();
+    }
 
     nbool me::hasErr() const {
         return has(err::ERR);
     }
+
     nbool me::hasWarn() const {
         return has(err::WARN);
     }
+
     nbool me::has(err::type type) const {
         for(auto& elem : _errs)
             if(elem->fType == type)
@@ -21,13 +41,21 @@ namespace namu {
         return false;
     }
 
-    const err& me::get(nidx n) const { return *_errs[n]; }
+    const err& me::get(nidx n) const {
+        return *_errs[n];
+    }
 
-    ncnt me::len() const { return _errs.size(); }
+    ncnt me::len() const {
+        return _errs.size();
+    }
 
     const err& me::add(const err* new1) {
         _errs.push_back(new1);
         return *new1;
+    }
+
+    const err& me::add(const err& new1) {
+        return add(&new1);
     }
 
     void me::add(const me& rhs) {
@@ -58,5 +86,4 @@ namespace namu {
     }
 
     dummyErrReport dummyErrReport::singletone;
-
 }

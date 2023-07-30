@@ -27,11 +27,40 @@ namespace namu {
         return *_me;
     }
 
-    const node& me::getSubject() const { return *_subject; }
-    node& me::getSubject() { return *_subject; }
+    const node& me::getSubject() const {
+        return *_subject;
+    }
 
-    args& me::getArgs() { return _args; }
-    const args& me::getArgs() const { return _args; }
+    node& me::getSubject() {
+        return *_subject;
+    }
+
+    void me::setSubject(const node& new1) {
+        _subject.bind(new1);
+    }
+
+    args& me::getArgs() {
+        return _args;
+    }
+
+    const args& me::getArgs() const {
+        return _args;
+    }
+
+    clonable* me::deepClone() const {
+        NAMU_DI("runExpr: deepClone");
+
+        me* ret = (me*) clone();
+        if(_me) ret->_me.bind((node*) _me->deepClone());
+
+        ret->_args.rel();
+        for(const auto& a : _args)
+            ret->_args.add((node*) a.deepClone());
+
+        if(_subject) ret->_subject.bind((node*) _subject->deepClone());
+
+        return ret;
+    }
 
     void me::setMe(const node& newMe) {
         _me.bind(newMe);

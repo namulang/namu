@@ -36,7 +36,9 @@ public:
     }
 
     using super::getContainer;
-    tucontainable<nint>& getContainer() override { return _own; }
+    tucontainable<nint>& getContainer() override {
+        return _own;
+    }
 
 protected:
     nbool _onSame(const typeProvidable& rhs) const override {

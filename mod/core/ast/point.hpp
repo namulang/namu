@@ -4,14 +4,11 @@
 
 namespace namu {
     struct _nout point {
-        nbool isOrigin() const { return row == 0 && col == 0; }
-        void rel() { row = col = 0; }
+        point& operator++();
 
-        point& operator++() {
-            ++row;
-            ++col;
-            return *this;
-        }
+    public:
+        nbool isOrigin() const;
+        void rel();
 
     public:
         ncnt row;
@@ -19,16 +16,10 @@ namespace namu {
     };
 
     struct _nout area {
-        void rel() {
-            start.rel();
-            end.rel();
-        }
+        area& operator++();
 
-        area& operator++() {
-            ++start;
-            ++end;
-            return *this;
-        }
+    public:
+        void rel();
 
     public:
         point start;

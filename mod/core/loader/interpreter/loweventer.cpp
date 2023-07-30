@@ -264,11 +264,13 @@ namespace namu {
         NAMU_DI("tokenEvent: onList()=%x", ret);
         return ret;
     }
+
     narr* me::onList(node* newExpr) {
         narr* ret = new narr(*newExpr);
         NAMU_DI("tokenEvent: onList(%s[%x])=%x", newExpr->getType().getName().c_str(), newExpr, ret);
         return ret;
     }
+
     narr* me::onList(narr& list, node* newExpr) {
         NAMU_DI("tokenEvent: onList(list[%x], %s[%x])", &list, newExpr->getType().getName().c_str(), newExpr);
         list.add(newExpr);
@@ -281,6 +283,7 @@ namespace namu {
         ret->add(param);
         return ret;
     }
+
     args* me::onTypeNames(args& params, const node& param) {
         NAMU_DI("tokenEvent: onTypeNames(len[%d], %s)", params.len(), param.getType().getName().c_str());
         params.add(param);
@@ -385,6 +388,7 @@ namespace namu {
 
         return _maker.make<retExpr>();
     }
+
     retExpr* me::onRet(node& exp) {
         NAMU_DI("tokenEvent: onRet(%s)", exp.getType().getName().c_str());
 
@@ -396,6 +400,7 @@ namespace namu {
 
         return _maker.make<breakExpr>();
     }
+
     breakExpr* me::onBreak(node& exp) {
         NAMU_DI("tokenEvent: onBreak(%s)", exp.getType().getName().c_str());
 
@@ -413,6 +418,7 @@ namespace namu {
         ret->add(new nStr(name));
         return ret;
     }
+
     narr* me::onPackDotname(narr& names, const std::string& name) {
         names.add(new nStr(name));
         return &names;
@@ -422,6 +428,7 @@ namespace namu {
         name.setMe(from);
         return &name;
     }
+
     getExpr* me::onDotname(const std::string& name) {
         return _maker.make<getExpr>(name);
     }
@@ -430,14 +437,17 @@ namespace namu {
         NAMU_DI("tokenEvent: onGet(%s)", name.c_str());
         return _maker.make<getExpr>(name);
     }
+
     node* me::onGet(const std::string& name, const narr& args) {
         NAMU_DI("tokenEvent: onGet(%s, %d)", name.c_str(), args.len());
         return _maker.make<getExpr>(name, args);
     }
+
     node* me::onGet(node& from, const std::string& name) {
         NAMU_DI("tokenEvent: onGet(%s, %s)", from.getType().getName().c_str(), name.c_str());
         return _maker.make<getExpr>(from, name);
     }
+
     node* me::onGet(node& from, const std::string& name, const narr& args) {
         NAMU_DI("tokenEvent: onGet(%s, %s, %d)", from.getType().getName().c_str(), name.c_str(),
                 args.len());
@@ -857,15 +867,33 @@ namespace namu {
 
     me::loweventer() { rel(); }
 
-    tstr<slot>& me::getSlot() { return _slot; }
-    tstr<obj>& me::getSubPack() { return _subpack; } // TODO: can I remove subpack variable?
-    tstr<errReport>& me::getReport() { return _report; }
-    tokenDispatcher& me::getDispatcher() { return _dispatcher; }
-    std::vector<ncnt>& me::getIndents() { return _indents; }
+    tstr<slot>& me::getSlot() {
+        return _slot;
+    }
+
+    tstr<obj>& me::getSubPack() {
+        return _subpack; // TODO: can I remove subpack variable?
+    }
+
+    tstr<errReport>& me::getReport() {
+        return _report;
+    }
+
+    tokenDispatcher& me::getDispatcher() {
+        return _dispatcher;
+    }
+
+    std::vector<ncnt>& me::getIndents() {
+        return _indents;
+    }
+
     const area& me::getArea() const {
         return _srcArea;
     }
-    nbool me::isInit() const { return _mode; }
+
+    nbool me::isInit() const {
+        return _mode;
+    }
 
     void me::rel() {
         _report.bind(dummyErrReport::singletone);
@@ -886,5 +914,18 @@ namespace namu {
         _outerIfStack.clear();
         _maker.rel();
         _maker.setSrc(*new src("__filename__"));
+    }
+
+    int me::pushState(int newState) {
+        NAMU_I("push state %d -> %d", _states.back(), newState);
+        _states.push_back(newState);
+        return _states.back();
+    }
+
+    int me::popState() {
+        int previous = _states.back();
+        _states.pop_back();
+        NAMU_I("pop state %d <- %d", _states.back(), previous);
+        return _states.back();
     }
 }

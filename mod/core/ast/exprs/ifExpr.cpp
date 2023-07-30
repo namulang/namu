@@ -12,9 +12,17 @@ namespace namu {
     me::ifExpr(const node& exp, const blockExpr& thenBlk, const blockExpr& elseBlk):
         _expr(exp), _thenBlk(thenBlk), _elseBlk(elseBlk) {}
 
-    blockExpr& me::getThenBlk() { return *_thenBlk; }
-    blockExpr& me::getElseBlk() { return *_elseBlk; }
-    node& me::getCondition() { return *_expr; }
+    blockExpr& me::getThenBlk() {
+        return *_thenBlk;
+    }
+
+    blockExpr& me::getElseBlk() {
+        return *_elseBlk;
+    }
+
+    node& me::getCondition() {
+        return *_expr;
+    }
 
     str me::run(const args& a) {
         tstr<nBool> res = _expr->as<node>()->asImpli<nBool>();
@@ -41,5 +49,17 @@ namespace namu {
 
         str elseEval = _elseBlk->getEval();
         return str(thenEval->deduce(*elseEval));
+    }
+
+    void me::setThenBlk(const blockExpr& newThen) {
+        _thenBlk.bind(newThen);
+    }
+
+    void me::setElseBlk(const blockExpr& newElse) {
+        _elseBlk.bind(newElse);
+    }
+
+    void me::setCondition(const node& newCondition) {
+        _expr.bind(newCondition);
     }
 }

@@ -9,7 +9,7 @@ namespace namu {
         NAMU(CLASS(defBlock, instance))
 
     public:
-        defBlock(): asScope(new scope()), asPreCtor(new narr()) {}
+        defBlock();
 
     public:
         tstr<scope> asScope;

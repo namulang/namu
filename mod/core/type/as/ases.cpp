@@ -21,6 +21,7 @@ namespace namu {
     void me::add(const asable& newCast) {
         _casts.push_back((asable*) &newCast);
     }
+
     void me::add(const asable* newCast) {
         _casts.push_back((asable*) newCast);
     }

@@ -10,7 +10,6 @@
 #include "exprs/asExpr.hpp"
 #include "exprs/FBOExpr.hpp"
 #include "exprs/FUOExpr.hpp"
-#include "exprs/makeExpr.hpp"
 #include "exprs/getGenericExpr.hpp"
 #include "exprs/defSeqExpr.hpp"
 #include "exprs/forExpr.hpp"

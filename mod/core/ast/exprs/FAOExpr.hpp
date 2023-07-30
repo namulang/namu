@@ -18,38 +18,30 @@ namespace namu {
             ADD = 0,
             START = ADD,
             ARITH_START = START,
-            SUB,
-            MUL,
-            DIV,
-            MOD,
+            SUB, MUL, DIV, MOD,
             ARITH_END,
+
             EQ,
             LOGIC_START = EQ,
-            NE,
-            GT,
-            LT,
-            GE,
-            LE,
-            AND,
-            OR,
+            NE, GT, LT, GE, LE, AND, OR,
             LOGIC_END,
             END = LOGIC_END
         };
 
     public:
-        FBOExpr(rule rule, const node& lhs, const node& rhs): _rule(rule), _lhs(str(lhs)), _rhs(str(rhs)) {}
+        FBOExpr(rule rule, const node& lhs, const node& rhs);
 
     public:
         using super::run;
         str run(const args& a) override;
 
         str getEval() const override;
-        const node& getLeft() const { return *_lhs; }
-        void setLeft(const node& new1) { _lhs.bind(new1); }
-        const node& getRight() const { return *_rhs; }
-        void setRight(const node& new1) { _rhs.bind(new1); }
+        const node& getLeft() const;
+        void setLeft(const node& new1);
+        const node& getRight() const;
+        void setRight(const node& new1);
         nbool isLogicalOp() const;
-        rule getRule() const { return _rule; }
+        rule getRule() const;
 
     private:
         rule _rule;

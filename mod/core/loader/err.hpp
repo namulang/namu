@@ -16,25 +16,17 @@ namespace namu {
 
     public:
         enum type {
-            ERR = 0,
-            WARN,
-            INFO,
+            ERR = 0, WARN, INFO,
         };
 
     public:
         err(err::type t, nint newCode);
         err(err::type t, nint newCode, va_list args);
-        err(err::type t, const point& ps, nint newCode, va_list args): super(), fType(t), code((errCode) newCode), pos(ps) {
-            msg = _format(getErrMsg(code), args);
-        }
+        err(err::type t, const point& ps, nint newCode, va_list args);
 
     public:
-        nbool operator==(const me& rhs) const {
-            return fType == rhs.fType && code == rhs.code && code == rhs.code;
-        }
-        nbool operator!=(const me& rhs) const {
-            return !operator==(rhs);
-        }
+        nbool operator==(const me& rhs) const;
+        nbool operator!=(const me& rhs) const;
 
     public:
         virtual void log() const;

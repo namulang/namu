@@ -6,6 +6,12 @@ namespace namu {
 
     NAMU_DEF_ME(ntype)
 
+    me::ntype(): _beans(nullptr) {}
+
+    me::ntype(const me& rhs): _beans(nullptr) {
+        _assign(rhs);
+    }
+
     nbool me::operator==(const type& rhs) const {
         if(!super::operator==(rhs)) return false;
 
@@ -24,6 +30,12 @@ namespace namu {
             if((*_beans)[n].getType() != (*cast._beans)[n].getType())
                 return false;
         return true;
+    }
+
+    me& me::operator=(const me& rhs) {
+        if(this == &rhs) return *this;
+
+        return _assign(rhs);
     }
 
     nbool me::isImpli(const type& to) const {
@@ -64,6 +76,10 @@ namespace namu {
 
     const ntype& me::deduce(const ntype& r) const {
         return deduce(*this, r);
+    }
+
+    const ntype& me::deduce(const typeProvidable& r) const {
+        return deduce((const ntype&) r.getType());
     }
 
     const ntype& me::deduce(const ntype& l, const ntype& r) {

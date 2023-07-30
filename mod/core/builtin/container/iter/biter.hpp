@@ -13,30 +13,42 @@ public:
     explicit iter(iteration* newStep): _step(newStep) { _nextToMatchParamType(); }
     iter(const me& rhs) { _assign(rhs); }
 
+public:
     me operator+(ncnt step) {
         next(step);
         return *this;
     }
+
     me& operator++() {
         next(1);
         return *this;
     }
+
     me operator++(int) {
         me ret = *this;
         next(1);
         return ret;
     }
+
     me& operator+=(ncnt step) {
         next(step);
         return *this;
     }
 
-    V& operator*() { return getVal(); }
-    V* operator->() { return &getVal(); }
+    V& operator*() {
+        return getVal();
+    }
+
+    V* operator->() {
+        return &getVal();
+    }
+
     const V& operator*() const NAMU_UNCONST_FUNC(operator*())
     const V* operator->() const NAMU_UNCONST_FUNC(operator->())
 
-    explicit operator nbool() const { return !isEnd(); }
+    explicit operator nbool() const {
+        return !isEnd();
+    }
 
     nbool isFrom(const tbicontainable& it) const override {
         if(!_step) return false;
@@ -64,6 +76,7 @@ public:
     const E& getKey() const {
         return getKey().template cast<E>();
     }
+
     using iterable::getVal;
     V& getVal() override;
     template <typename E>
@@ -78,6 +91,7 @@ public:
         if(!_step) return nulOf<tbicontainable<K, V> >();
         return _step->getContainer();
     }
+
     const tbicontainable<K, V>& getContainer() const NAMU_UNCONST_FUNC(getContainer());
 
 private:

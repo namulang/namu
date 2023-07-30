@@ -10,14 +10,10 @@ namespace namu {
         NAMU(CLASS(defaultCtor, ctor), VISIT())
 
     public:
-        defaultCtor(const node& org): super(org) {}
+        defaultCtor(const node& org);
 
     public:
         using super::run;
-        str run(const args& a) override {
-            if(a.len() >= 1) return str();
-
-            return str((node*) getOrigin().clone());
-        }
+        str run(const args& a) override;
     };
 }

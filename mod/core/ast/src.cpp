@@ -7,14 +7,20 @@ namespace namu {
 
     me::src(const std::string& fileName): _fileName(fileName) {}
 
-    nbool me::canRun(const args& a) const { return false; }
+    nbool me::canRun(const args& a) const {
+        return false;
+    }
 
-    str me::run(const args& a) { return str(); }
+    str me::run(const args& a) {
+        return str();
+    }
 
     nbicontainer& me::subs() {
         static nchain inner;
         return inner;
     }
 
-    const std::string& me::getFileName() const { return _fileName; }
+    const std::string& me::getFileName() const {
+        return _fileName;
+    }
 }

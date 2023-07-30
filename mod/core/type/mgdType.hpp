@@ -13,32 +13,23 @@ namespace namu {
         NAMU_DECL_ME(mgdType, ttype<obj>)
 
     public:
-        mgdType(const std::string& name): _name(name) { _initSupers(ttype<obj>::get()); }
-        mgdType(const std::string& name, const mgdType& super): _name(name) { _initSupers(super); }
+        mgdType(const std::string& name);
+        mgdType(const std::string& name, const mgdType& super);
         mgdType(const std::string& name, const narr& bean);
         mgdType(const std::string& name, const mgdType& super, const narr& bean);
 
     public:
-        const type& getSuper() const override { return *_supers[_supers.size()-1]; }
-        const nbool& isInit() const override {
-            static nbool inner = true;
-            return inner;
-        }
-        const std::string& getName() const override { return _name; }
+        const type& getSuper() const override;
+        const nbool& isInit() const override;
+        const std::string& getName() const override;
 
         // TODO: getSubs(), getLeafs()
 
     protected:
-        types& _getSupers() override {
-            return _supers;
-        }
+        types& _getSupers() override;
 
     private:
-        void _initSupers(const type& super) {
-            const types& supers = super.getSupers();
-            _supers.insert(_supers.end(), supers.begin(), supers.end());
-            _supers.push_back((type*) &super);
-        }
+        void _initSupers(const type& super);
 
     private:
         std::string _name;

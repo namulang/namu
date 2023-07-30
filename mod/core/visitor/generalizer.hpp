@@ -9,10 +9,7 @@ namespace namu {
         NAMU(ME(generalizer, visitor))
 
     public:
-        me& add(const param& newParam) {
-            _params.add(newParam);
-            return *this;
-        }
+        me& add(const param& newParam);
 
         using super::onVisit;
         void onVisit(visitInfo i, asExpr& me) override;

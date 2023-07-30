@@ -41,7 +41,9 @@ namespace namu {
         return super::getPack();
     }
 
-    me::state me::getState() const { return _state; }
+    me::state me::getState() const {
+        return _state;
+    }
 
     void me::setReport(errReport& rpt) {
         _rpt.bind(rpt);

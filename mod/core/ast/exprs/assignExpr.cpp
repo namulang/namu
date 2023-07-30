@@ -7,6 +7,35 @@ namespace namu {
 
     NAMU(DEF_ME(assignExpr), DEF_VISIT())
 
+    me::assignExpr(const node& lhs, const node& rhs): _lhs(lhs), _rhs(rhs) {}
+
+    str me::run(const args& a) {
+        iter e = _getScopeIterOfLhs(); // e exists. verified.
+
+        str ret = _rhs->as<node>();
+        e.setVal(*ret);
+        return ret;
+    }
+
+    str me::getEval() const {
+        return _rhs->getEval();
+    }
+
+    const node& me::getLeft() const {
+        return *_lhs;
+    }
+
+    const node& me::getRight() const {
+        return *_rhs;
+    }
+
+    clonable* me::deepClone() const {
+        me* ret = (me*) clone();
+        if(_lhs) ret->_lhs.bind((node*) _lhs->deepClone());
+        if(_rhs) ret->_rhs.bind((node*) _rhs->deepClone());
+        return ret;
+    }
+
     me::iter me::_getScopeIterOfLhs() {
         if(!_lhs) return iter();
 

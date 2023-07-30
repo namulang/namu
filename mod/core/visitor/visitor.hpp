@@ -13,23 +13,15 @@ namespace namu {
         NAMU(ME(visitor))
 
     public:
-        visitor(): _isLog(false) { me::rel(); }
+        visitor();
 
     public:
-        me& setRoot(node& root) {
-            _root.bind(root);
-            return *this;
-        }
-        node& getRoot() { return *_root; }
+        me& setRoot(node& root);
+        node& getRoot();
         const node& getRoot() const NAMU_UNCONST_FUNC(getRoot())
 
-        me& setLog(nbool toShow) {
-            _isLog = toShow;
-            return *this;
-        }
-        nbool isLog() const {
-            return _isLog;
-        }
+        me& setLog(nbool toShow);
+        nbool isLog() const;
 
         me& setReport(errReport& rpt);
         errReport& getReport();

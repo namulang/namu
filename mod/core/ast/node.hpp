@@ -86,19 +86,14 @@ namespace namu {
         str asImpli(const typeProvidable& to) const;
         virtual str asImpli(const type& to) const;
 
-        virtual const point& getPos() const {
-            static point inner;
-            return inner;
-        }
+        virtual const point& getPos() const;
 
-        clonable* deepClone() const override {
-            return (me*) clone();
-        }
+        clonable* deepClone() const override;
 
         /// returns whether this instance is complete or not.
         /// if some instance is incomplete, it means that it's not accessible on namulang source
         /// codes.
-        virtual nbool isComplete() const { return true; }
+        virtual nbool isComplete() const;
 
         /// getType() returns what it is. opposite to it, this returns what this class will
         /// represents after evaluation.
@@ -116,13 +111,13 @@ namespace namu {
         virtual void accept(visitInfo i, visitor& v);
 
         using frameInteractable::inFrame;
-        void inFrame(const bicontainable& args) override {}
-        void outFrame() override {}
+        void inFrame(const bicontainable& args) override;
+        void outFrame() override;
 
     protected:
         virtual str _onRunSub(node& sub, const args& a);
 
     private:
-        virtual void _setPos(const point& new1) {}
+        virtual void _setPos(const point& new1);
     };
 }

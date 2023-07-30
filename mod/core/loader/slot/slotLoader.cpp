@@ -64,17 +64,20 @@ namespace namu {
         _paths.push_back(filePath);
         return *this;
     }
+
     me& me::addPath(const std::vector<std::string> paths) {
         if(&_paths == &paths) return *this;
 
         _paths.insert(_paths.end(), paths.begin(), paths.end());
         return *this;
     }
+
     me& me::addPath(std::initializer_list<const nchar*> paths) {
         for(const nchar* e : paths)
             addPath(e);
         return *this;
     }
+
     me& me::addRelativePath(const std::string& path) {
         std::string cwd = fsystem::getCurrentDir() + fsystem::DELIMITER;
         NAMU_I("finding slots relative to %s or absolute", cwd.c_str());

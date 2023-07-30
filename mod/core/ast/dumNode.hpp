@@ -8,19 +8,15 @@ namespace namu {
         NAMU(ME(dumNode, node), VISIT())
 
     public:
-        const ntype& getType() const override {
-            return ttype<node>::get();
-        }
+        const ntype& getType() const override;
 
         using super::subs;
         nbicontainer& subs() override;
 
-        nbool canRun(const args& a) const override { return false; }
+        nbool canRun(const args& a) const override;
 
-        str run(const args& a) override { return str(); }
+        str run(const args& a) override;
 
-        clonable* clone() const override {
-            return new me(*this);
-        }
+        clonable* clone() const override;
     };
 }
