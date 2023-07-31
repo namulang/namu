@@ -4,33 +4,17 @@
 #include <iostream>
 
 struct namuTest : public ::testing::Test {
-    void SetUp() {
-        _assertVault();
-        _prevShowCallstack = namu::logger::get().isShowCallstack();
-    }
+    void SetUp();
 
-    void TearDown() {
-        _assertVault();
-        namu::logger::get().setCallstack(_prevShowCallstack);
-    }
+    void TearDown();
 
-public:
-    namuTest& negative() {
-        namu::logger::get().setCallstack(false);
-        return *this;
-    }
+    namuTest& negative();
 
 protected:
-    namu::instance::vault& _getVault() {
-        return namu::instance::_vault;
-    }
+    namu::instance::vault& _getVault();
 
 private:
-    void _assertVault() {
-        auto& v = _getVault();
-        NAMU_DI("vault[%x].len()=%d", &v, v.len());
-        ASSERT_EQ(v.len(), 0);
-    }
+    void _assertVault();
 
 private:
     namu::nbool _prevShowCallstack;
