@@ -29,4 +29,14 @@ namespace namu {
         _delArgs(a, del);
         return res;
     }
+
+    ncnt me::_onContinuousArgCount() const {
+        return 0;
+    }
+
+    void me::_delArgs(flagArgs& a, std::vector<int> indices) const {
+        // remove del in reverse order.
+        for(auto e=indices.rbegin(); e != indices.rend() ;++e)
+            a.erase(a.begin() + *e);
+    }
 }
