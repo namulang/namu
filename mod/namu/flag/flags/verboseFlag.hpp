@@ -8,17 +8,11 @@ namespace namu {
         NAMU(CLASS(verboseFlag, flag))
 
     public:
-        const nchar* getName() const override { return "-lv"; }
-        const nchar* getDescription() const override {
-            return R"DESC(
-        prints all logs in verbose level of the interpreter.
-        these are mostly about parser and verifier logs. and it includes all of process
-        to tokenizing, parsing, verification.
-        this info will be useful if you know how src to be interpreted.)DESC";
-        }
+        const nchar* getName() const override;
+        const nchar* getDescription() const override;
 
     protected:
-        const nchar* _getRegExpr() const override { return "^\\-lv$"; }
+        const nchar* _getRegExpr() const override;
         nbool _onTake(const flagArgs& tray, cli& c, interpreter& ip) const override;
     };
 }

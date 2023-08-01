@@ -8,16 +8,11 @@ namespace namu {
         NAMU(CLASS(logStructureFlag, flag))
 
     public:
-        const nchar* getName() const override { return "-ls"; }
-        const nchar* getDescription() const override {
-            return R"DESC(
-        this flag prints all log about structure of parsed ast.
-        by inspecting the structure, you can figure out that those asts are parsed properly.
-        it also shows frame info which contains the stackframe when latest error occurs.)DESC";
-        }
+        const nchar* getName() const override;
+        const nchar* getDescription() const override;
 
     protected:
-        const nchar* _getRegExpr() const override { return "^\\-ls$"; }
+        const nchar* _getRegExpr() const override;
         nbool _onTake(const flagArgs& tray, cli& c, interpreter& ip) const override;
     };
 }

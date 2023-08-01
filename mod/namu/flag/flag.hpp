@@ -20,13 +20,9 @@ namespace namu {
     protected:
         /// when this flag matched to one of args, the value of returning this func will be
         /// count of continuous argument of this flag.
-        virtual ncnt _onContinuousArgCount() const { return 0; }
+        virtual ncnt _onContinuousArgCount() const;
 
-        void _delArgs(flagArgs& a, std::vector<int> indices) const {
-            // remove del in reverse order.
-            for(auto e=indices.rbegin(); e != indices.rend() ;++e)
-                a.erase(a.begin() + *e);
-        }
+        void _delArgs(flagArgs& a, std::vector<int> indices) const;
 
         virtual const nchar* _getRegExpr() const = 0;
         virtual nbool _onTake(const flagArgs& tray, cli& c, interpreter& ip) const = 0;
