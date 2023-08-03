@@ -108,4 +108,4 @@ PAIRX(ELEM_TYPE_NOT_VOID,           "elem type shouldn't be the void type")
 PAIRX(CONTAINER_IS_NULL,            "there is no container")
 
 // operator:
-PAIRX(STRING_IS_NOT_LOGICAL,        "string type isn't suitable to logical operators.")
+PAIRX(STRING_IS_NOT_PROPER_TO_OP,   "string type isn't suitable to this operators.")
