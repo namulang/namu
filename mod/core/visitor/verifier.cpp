@@ -305,8 +305,14 @@ namespace namu {
                     lEval->getType().getName().c_str(), rEval->getType().getName().c_str());
 
         auto r = me.getRule();
-        if((r == FBOExpr::AND || r == FBOExpr::OR) && (lEval->isSub<nStr>() || rEval->isSub<nStr>()))
-            return _err(me.getPos(), errCode::STRING_IS_NOT_LOGICAL);
+        if((lEval->isSub<nStr>() || rEval->isSub<nStr>())) {
+            switch(r) {
+                case FBOExpr::AND: case FBOExpr::OR: case FBOExpr::SUB: case FBOExpr::DIV:
+                case FBOExpr::MOD: case FBOExpr::BITWISE_AND: case FBOExpr::BITWISE_XOR:
+                case FBOExpr::BITWISE_OR: case FBOExpr::LSHIFT: case FBOExpr::RSHIFT:
+                    return _err(me.getPos(), errCode::STRING_IS_NOT_PROPER_TO_OP);
+            }
+        }
     }
 
     void me::onVisit(visitInfo i, getExpr& me) {

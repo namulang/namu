@@ -105,3 +105,43 @@ TEST_F(primitiveTypeTest, deduceAndImplicitCast2) {
             print(a)
     )SRC").shouldVerified(true);
 }
+
+TEST_F(primitiveTypeTest, strNotSuitableToSomeOpNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "jokbal"
+            a - a
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(primitiveTypeTest, strNotSuitableToSomeOpNegative2) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "jokbal"
+            a / a
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(primitiveTypeTest, strNotSuitableToSomeOpNegative3) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "jokbal"
+            a % a
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(primitiveTypeTest, strNotSuitableToSomeOpNegative4) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "jokbal"
+            a >> 2
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(primitiveTypeTest, strNotSuitableToSomeOpNegative5) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "jokbal"
+            a & 2
+    )SRC").shouldVerified(false);
+}
