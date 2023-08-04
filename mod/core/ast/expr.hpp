@@ -11,7 +11,7 @@ namespace namu {
     class _nout expr : public node {
     public:
         // expr can be casted to node. it's proxy of a node.
-        class exprType : public ntype {
+        class _nout exprType : public ntype {
             NAMU(ME(exprType, ntype))
 
         public:
