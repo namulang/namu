@@ -311,6 +311,8 @@ namespace namu {
                 case FBOExpr::MOD: case FBOExpr::BITWISE_AND: case FBOExpr::BITWISE_XOR:
                 case FBOExpr::BITWISE_OR: case FBOExpr::LSHIFT: case FBOExpr::RSHIFT:
                     return _err(me.getPos(), errCode::STRING_IS_NOT_PROPER_TO_OP);
+
+                default:;
             }
         }
     }

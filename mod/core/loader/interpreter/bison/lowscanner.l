@@ -2,7 +2,8 @@
 /*  ============================================================================================
     |                                          PROLOGUE                                        |
     ============================================================================================  */
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
 #include "lowparser.hpp"
 #include "../loweventer.hpp"
 #include <iostream>
@@ -256,3 +257,4 @@ namespace {
         }
     }
 }
+#pragma clang diagnostic pop

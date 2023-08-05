@@ -1,4 +1,7 @@
 %{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-const-variable"
+#pragma clang diagnostic ignored "-Wunneeded-internal-declaration"
 namespace namu {
     class sobj;
 }
@@ -312,3 +315,4 @@ int goOutdent(char prev)
 void yyerror(const char* s) {
     NAMU_E("error #%d: %s, %s", yylineno, s, yytext);
 }
+#pragma clang diagnostic pop
