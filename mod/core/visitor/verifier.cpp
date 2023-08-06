@@ -319,6 +319,13 @@ namespace namu {
         }
     }
 
+    void me::onVisit(visitInfo i, FUOExpr& me) {
+        LOG("verify: FUOExpr: string isn't proper to any FUO operator");
+        str eval = me.getEval();
+        if(eval && eval->isImpli<nStr>())
+            return _err(me.getPos(), errCode::STRING_IS_NOT_PROPER_TO_OP);
+    }
+
     void me::onVisit(visitInfo i, getExpr& me) {
         // TODO: I have to check that the evalType has what matched to given _params.
         // Until then, I rather use as() func and it makes slow emmersively.

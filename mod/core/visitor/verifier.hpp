@@ -35,6 +35,7 @@ namespace namu {
         void onVisit(visitInfo i, defSeqExpr& me) override;
         void onVisit(visitInfo i, defArrayExpr& me) override;
         void onVisit(visitInfo i, FBOExpr& me) override;
+        void onVisit(visitInfo i, FUOExpr& me) override;
         void onVisit(visitInfo i, getExpr& me) override;
         void onVisit(visitInfo i, retExpr& me) override;
         void onVisit(visitInfo i, runExpr& me) override;

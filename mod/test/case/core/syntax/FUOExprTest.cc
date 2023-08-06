@@ -169,14 +169,26 @@ TEST_F(FUOExprTest, testUnaryPostfixDoubleMinus2) {
 }
 
 TEST_F(FUOExprTest, testUnaryPostfixDoubleMinus3) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main() int
             a := "hello"
             a--
             ret a == "hello"
-    )SRC").shouldVerified(true);
+    )SRC").shouldVerified(false);
+}
 
-    str res = run();
-    ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), 1);
+TEST_F(FUOExprTest, strNotSuitableToOpNegative1) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "wow"
+            ++a
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(FUOExprTest, strNotSuitableToOpNegative2) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "wow"
+            a--
+    )SRC").shouldVerified(false);
 }

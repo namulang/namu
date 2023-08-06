@@ -450,3 +450,43 @@ TEST_F(FBOExprTest, testBitwiseOperator6) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 15);
 }
+
+TEST_F(FBOExprTest, strNotSuitableToSomeOpNegative) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "jokbal"
+            a - a
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(FBOExprTest, strNotSuitableToSomeOpNegative2) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "jokbal"
+            a / a
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(FBOExprTest, strNotSuitableToSomeOpNegative3) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "jokbal"
+            a % a
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(FBOExprTest, strNotSuitableToSomeOpNegative4) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "jokbal"
+            a >> 2
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(FBOExprTest, strNotSuitableToSomeOpNegative5) {
+    make().negative().parse(R"SRC(
+        main() void
+            a := "jokbal"
+            a & 2
+    )SRC").shouldVerified(false);
+}
