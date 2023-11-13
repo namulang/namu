@@ -79,3 +79,4 @@ bin/
 *.deb
 build/debian/usr/
 *Zone.Identifier
+.clang_check
