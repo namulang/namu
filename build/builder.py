@@ -260,7 +260,7 @@ def _createMakefiles():
 
     printInfoEnd("generating makefiles as " + generator + "...")
 
-    res = os.system("cmake . -G \"" + generator + "\" " + config)
+    res = os.system("cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 . -G \"" + generator + "\" " + config)
     if not isWindow() and res != 0:
         return -1
 
