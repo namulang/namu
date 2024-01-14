@@ -1,48 +1,39 @@
 ---
 layout: guide
-title: quick start
+title: quick start for developer
 toc: true
 toc_label: "to next-point..."
 lang: ko
 ---
 
-미리 모든 내용을 훑어보죠.
+## 개발자를 위한 빠른 가이드 문서입니다.
 
-## 시작하기전에
+* 척하면 척하고 알죠.
+* 자세한 내용을 알고 싶으면 기본 가이드를 참고하세요.
 
-어떤 분은 프로그래밍 언어를 많이 접해봐서, 아래 내용만으로도 어떠한 언어고 어떻게 사용하면 되는지 깨닫는 분도 있을 거예요.<br>
-그런 분들은 필요한 항목만 추가로 열람하고 자유롭게 이곳을 떠나셔도 좋습니다.
+## 변수와 타입
 
-혹, 난 그게 아니구나 싶으시다면, 아래 내용들이 좀 혼란스러울 수 있어요.<br>
-하지만 어짜피 다시 자세하게 다룰 예정이니까 좀 이해가 안가셔도 괜찮거든요.<br>
-빠르게 훑어보고 지나가셔도 괜찮아요.
-
-
-## 시작은 hello world 죠?
-
-
+* 시작은 우리의 `Hello world` 가 아닙니다.
+* namulang 에서 타입을 명시적으로 표현할때는 항상 타입을 식별자 뒤에 표현합니다.
+* 변수를 정의할때도 다음과 같이 합니다.
 ```go
-main() void
-    print("Hello world!")
+value1 int // 뒤의 int가 타입이죠.
 ```
-
-{% include embed_src.html src='
-main() void
-    print("Hello world!")
-' id='1' %}
-
-## 변수와 표현식
-
-정의시, type은 항상 뒤에 옵니다.
-
+* 초기화를 해서 변수를 정의할 수도 있는데, 그럴때는 `:=` 기호를 사용합니다.
 ```go
-str1 := "message" // 변수의 정의
-str1 = "wow" 
-bool1 := false
-flt1 := 3.5 + 3
-int1 := 15
+value1 int := 42
+value2 := 42 // 그런데 보통 초기화구문을 넣을때는 타입을 생략합니다.
 ```
-
+* 다음 타입을 기본 제공합니다.
+```go
+str1 := "message" // str
+bool1 := false // bool
+flt1 := 3.5 + 3 // flt
+int1 := 15 // int
+// void는 변수로 정의할 수 없어요.
+char1 := `c`
+byte1 := 12
+```
 {% include embed_src.html src='
 main() void
     str1 := "message" // 변수의 정의
@@ -52,43 +43,140 @@ main() void
     int1 := 15
 ' id='2' %}
 
-## Indentation 레벨에 의한 Scope 범위
+## 함수 호출과 정의
+* 함수명과 소괄호를 사용해서 함수호출을 표현합니다.
+```go
+foo(a, b, c)
+```
+* parameter 목록과 Tuple과 반환형, Block문이 정의된 것을 함수라 정의합니다.
+```go
+foo(a int, b flt, c char) void
+    print(a + b + c) // print문은 기본 제공되는 함수로, 화면에 값을 출력합니다.
+```
 
-항상 Indentation 레벨에 의해서 scope를 표현합니다.
+* 블록문은 위처럼 항상 Indentation 레벨로 표현합니다. (전문용어로 offside-rule이라고 합니다.
+
+## 흐름 제어
+* 흐름제어로 `if`와 `for`를 사용할 수 있습니다.
+```go
+msg := "hello"
+for ch in msg
+    c.print("ch=" + ch)
+// 결과: 'ch=h ch=e ch=l ch=l ch=o'
+
+n := 0
+while ++n < 3 // while 뒤에 bool 식을 넣으면 해당 bool이 true일 동안 반복됩니다.
+    if sum in 1..0
+        sum += n
+    else if sum == 2
+        sum -= n
+```
+
+## String Template
+* StringTemplate도 지원합니다.
+```go
+print("ch=$ch") // 1 
+print("ch=" + ch) // 2
+```
+* 2 구문은 서로 같은 결과예요.
+
+## Scope
+
+* 항상 Indentation 레벨로 scope를 표현합니다.
+* 식별자 이름이 동일해도 scope이 다르면 중복정의 에러가 아니예요. 이 점은 어떠한
+상황에서도 적용됩니다.
 
 ```go
-val := 0
+val := 0 // 1
+if val == 0
+    if val > 0
+      val := val/*1에서 만든 val입니다*/ + 5
+      print("val=$val") // 5가 출력되요.
+      // 5의 값을 가진 val을 담은 scope은 이제 사라집니다.
+
+print("val=$val") // 1에서 만든 val입니다, 0이 나오겠죠.
+```
+
+* ':'는 블록문을 붙여서 쓸 수 있어요.
+* `;` 는 다음줄과 같은 블록문에 있다는 의미입니다.
+
+```go
+if val == 0: print("1"); print("2") // 1
+
+if val == 0 // 2: 위의 1과 같은 결과입니다.
+  print("1")
+  print("2")
+```
+* `:`를 응용하면 이렇게도 쓸 수 있는데요,
+```go
+if val == 0: if val > 0: print("ok") // `:`를 2번 했어요.
+  else: print("no") // 이 else는 indent를 1번 했죠? 그래서 두번째 if에 대한 else예요.
+
+/*
+풀어쓰면 이런 코드가 됩니다:
+
 if val == 0
     if val > 0
         print('ok')
-else
-    print('no')
-```
-
-':'를 사용하면 indent 없이 block문을 작성할 수 있구요.
-
-```go
-// ':' only allow to follow a single statement.
-if val == 0: print('this and then,')
-    print('this too') // err
-
-// below codes are same to the above.
-if val == 0: if val > 0: print('ok')
-else: print('no') // 'else' has no indentation level.
-/* if above 'else' statement has 1 level indentation like below,
-
-    if val == 0: if val > 0: print('ok')
-        else: print('no')
-
-    then it's like,
-
-    if val == 0
-        if val > 0
-            print('ok')
-        else
-            print('no')
+    else
+        print('no')
 */
 ```
+
+## 컨테이너
+* namulang은 배열, map, pair, sequence를 기본 제공합니다.
+```go
+intArr := {1, 2, 3} // 각 원소의 Literal 표현식으로 타입 추론합니다.
+floatArr := {1.5, 2.5, 3.5}
+
+seq := 1..3 // 시퀸스는 `..` 으로 표현합니다. startInclusive .. endExclusive
+입니다.
+seq.len == 2 // true. 1, 2가 seq에 포함됩니다.
+for n in seq
+    c.print(intArr[n]) // "23" 이 출력됩니다.
+
+<< 채우기>>
+pair1 := intArr[2]"banana" // ';' represents a pair. and a pair contains 'key' and 'val'.
+pair1.key == 3.5 // false
+pair1.val = "money?"
+
+map := {pair1, 2.5;"apple"} // map as float[str]
+
+aka sys.cons ->
+c.print("how many apple do you have = $map['apple']") // "how many apple do you have = 2.0"
+```
+
+## 표현식기반
+
+* namulang은 표현식기반 언어입니다. 무슨 말이냐면, 정의문을 제외하고는 값을
+반환할 수 있어요.
+```go
+isGood := true
+max := if !isGood
+    print("1")
+    print("2")
+    -1 // 블록문은 마지막 표현식을 반환합니다.
+else: print("3"); 10
+// max는 int 타입이고, -1 아니면 10의 값을 가지죠.
+
+val := for n in 0..max // "for"는 배열을 반환합니다.
+    n
+val.len == 10 // true 입니다.
+```
+
+
+
+
+
+* 제가 언급한 함수 정의에 함수명이 없다는 점을 눈치채셨나요?
+* 함수명을 적지 않으면 람다함수를 정의할 수 있어요.
+
+```go
+runLambda(val1, (a, b)
+  a + b
+)
+```
+
 
 closure도 동일합니다.
 
@@ -119,85 +207,6 @@ if val > 0
 
     callClosure((n): switch n: 22, 23: doSomething()
     , 23) // err. newline should not exist when you put ':' to represent a block statement.
-```
-
-
-## 흐름 제어
-```go
-msg := "hello"
-for ch in msg
-    c.print("ch=$ch ") // this'll shows like 'ch=h ch=e ch=l ch=l ch=o'
-
-n := 0
-for ++n < 3
-    if sum in 1..0 // allow reversed range.
-        sum += n
-    elif sum == 2 // elif is same to 'else if'
-        sum -= n
-```
-
-
-## 컨테이너
-
-```go
-intArr := {1, 2, 3}
-floatArr := {1.5, 2.5, 3.5}
-
-seq := 2..4
-seq.len == 3 // true
-for n in seq
-    c.print(intArr[n])
-
-pair1 := intArr[2];"banana" // ';' represents a pair. and a pair contains 'key' and 'val'.
-pair1.key == 3.5 // false
-pair1.val = "money?"
-
-map := {pair1, 2.5;"apple"} // map as float[str]
-
-aka sys.cons ->
-c.print("how many apple do you have = $map['apple']") // "how many apple do you have = 2.0"
-```
-
-
-## 함수
-```
-   <function-name> '(' <arg> ',' <arg>... ')' <return-type>
-       <stmt>+
-```
-
-* 정의시, 역시 type은 항상 뒤에 옵니다.
-* 함수의 반환형에는 expr이 올 수 없습니다. 타입만 올 수 있습니다.
-* 반드시 함수의 body를 정의해야 합니다.
-
-```go
-getLen(b int...) int // '...' means varidic argument
-    sum := 0
-    for n in b
-        sum++
-    return sum
-
-getLen(b int) // return type is deduced to 'int'
-    sum := 0
-    return sum
-
-(b int) // ok. but never got called. because it has no name.
-    sum := 0
-    return sum
-    
-fun := () // == declare a closure refering <nameless function>() str.
-    return ""
-fun()
-
-setClickListener((v): v.onClick()) // if a func was nested, it works like a closure.
-
-// getLen(b int) // err. this is ambigious. if the body of func was missing, it should be regarded to a function call.
-
-foo(useless int...) int = null // 'null' declares that this is abstract method def.
-likeFptr := foo // foo can be used as a type.
-likeFptr() // foo is abstract. Exception occurs.
-
-likeFptr = getLen // ok to assign.
-lifeFptr() == 0 // true
 ```
 
 
@@ -254,22 +263,6 @@ msg1 := "hello" // string is also a object.
 msg2 := "hel" + "lo"
 msg1 == msg2 // true
 msg1 === msg2 // however, they aren't same object.
-```
-
-## 표현식기반
-
-```go
-max := if isGood := false // max as int
-    c.out("never reach here.")
-    c.out("and returns the last expr to outside of block")
-    -1 
-else: c.out("or use \"ret\" keyword"): ret 10
-
-if isGood: return; // never reach here
-
-val := for n in 0..max // "for" returns last expr while it loops.
-    n
-val == 10 // true
 ```
 
 
