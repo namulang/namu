@@ -1,10 +1,9 @@
-name: CI for master
-
+name: CI for main
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build-on-linux:
@@ -45,7 +44,6 @@ jobs:
     steps:
     - name: install native dependencies.
       run: |
-        brew update
         brew install python3 cmake wget bison flex graphviz
 
     - name: checkout repository codes
