@@ -53,6 +53,7 @@ build/xml/
 external/
 build/*.tmp
 build/mod/
+build/compile_commands.json
 tags
 docs/html/
 docs/xml/

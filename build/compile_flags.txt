@@ -1,9 +1,0 @@
--std=c++17
--Wall
--fdiagnostics-color=always
--fno-delete-null-pointer-checks
--Wno-address
--Wno-unused-local-typedefs
--Wno-undefined-bool-conversion
--DUNICODE
--DNAMU_TAG="core"
