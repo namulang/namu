@@ -828,12 +828,6 @@ namespace namu {
         return _maker.make<whileExpr>(condition, blk);
     }
 
-    node* me::onAkaDefault(const getExpr& dotname, const std::string& newName) {
-        NAMU_DI("tokenEvent: onAkaDefault(%s..., %s)", dotname.getSubName().c_str(), newName.c_str());
-
-        return _maker.make<defAssignExpr>(newName, dotname);
-    }
-
     ifExpr* me::onIf(const node& condition, const blockExpr& thenBlk) {
         NAMU_DI("tokenEvent: onIf(then)");
 

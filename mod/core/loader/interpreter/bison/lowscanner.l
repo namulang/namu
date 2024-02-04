@@ -54,7 +54,6 @@ namespace {
 [%*+-/\(\.\,\{\[\^\|\&\~!] { return yyget_extra(yyscanner)->onIgnoreIndent(yytext[0]); }
 [\)\}\]<>] { return yytext[0]; }
 \-\- { return DOUBLE_MINUS; }
-\-> { return ARROW; }
 \+\+ { return DOUBLE_PLUS; }
 \.\. { return DOUBLE_DOT; }
 \[\] { return OPEN_CLOSE_SQUARE_BRACKET; }
@@ -113,16 +112,15 @@ false {
 }
 
 if { return IF; }
-void { return VOIDTYPE; }
-int { return INTTYPE; }
-str { return STRTYPE; }
-bool { return BOOLTYPE; }
-byte { return BYTETYPE; }
-char { return CHARTYPE; }
-flt { return FLTTYPE; }
-null { return NULTYPE; }
+void { return VOID; }
+int { return INT; }
+str { return STR; }
+bool { return BOOL; }
+byte { return BYTE; }
+char { return CHAR; }
+flt { return FLT; }
+nul { return NUL; }
 pack { return PACK; }
-aka { return AKA; }
 ret { return RET; }
 break { return BREAK; }
 as { return AS; }
@@ -131,7 +129,6 @@ for { return FOR; }
 next { return NEXT; }
 in { return _IN_; }
 else { return _ELSE_; }
-elif { return ELIF; }
 while { return _WHILE_; }
 
 0x[0-9a-fA-F]+ {

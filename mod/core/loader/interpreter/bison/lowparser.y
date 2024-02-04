@@ -115,10 +115,10 @@
 %token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE LOGICAL_AND LOGICAL_OR LSHIFT RSHIFT
 %token ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN OR_ASSIGN AND_ASSIGN XOR_ASSIGN
 //  primitive-type:
-%token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE BYTETYPE CHARTYPE
+%token VOID INT STR BOOL FLT NULTYPE BYTE CHAR
 //  reserved-keyword:
-%token IF _ELSE_ AKA RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
-%token _WHILE_ ELIF
+%token IF _ELSE_ RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
+%token _WHILE_ 
 
 // value-holding-token:
 %token <asChar> CHARVAL
@@ -138,7 +138,6 @@
 //  keyword:
 %type <asNode> ret
 %type <asNode> if ifing for break next while
-%type <asNode> aka aka-default aka-deduced
 %type <asObj> pack
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10 assign-compound assign-line
@@ -435,22 +434,9 @@ while: _WHILE_ expr-line indentblock {
      $$ = yyget_extra(scanner)->onWhile(*$2, $3->cast<blockExpr>());
    }
 
-aka: aka-default { $$ = $1; }
-   | aka-deduced { $$ = $1; }
-aka-default: AKA dotname NAME {
-            // dotname only available getExpr. need to verify in akaExpr
-            $$ = yyget_extra(scanner)->onAkaDefault($2->cast<getExpr>(), std::string(*$3));
-            free($3);
-         }
-aka-deduced: AKA dotname {
-            const getExpr& e = $2->cast<getExpr>();
-            $$ = yyget_extra(scanner)->onAkaDefault(e, e.getSubName());
-         }
-
 // defs:
 //  structure:
 defexpr-line: defexpr-line-except-aka { $$ = $1; }
-            | aka { $$ = $1; }
 defexpr-line-except-aka: defvar { $$ = $1; }
 defexpr-compound: deffunc { $$ = $1; }
                 | defobj { $$ = $1; }
@@ -465,13 +451,13 @@ defblock: %empty {
       }
 
 //  type:
-type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
-    | INTTYPE { $$ = yyget_extra(scanner)->onPrimitive<nInt>(); }
-    | BYTETYPE { $$ = yyget_extra(scanner)->onPrimitive<nByte>(); }
-    | CHARTYPE { $$ = yyget_extra(scanner)->onPrimitive<nChar>(); }
-    | STRTYPE { $$ = yyget_extra(scanner)->onPrimitive<nStr>(); }
-    | BOOLTYPE { $$ = yyget_extra(scanner)->onPrimitive<nBool>(); }
-    | FLTTYPE { $$ = yyget_extra(scanner)->onPrimitive<nFlt>(); }
+type: VOID { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
+    | INT { $$ = yyget_extra(scanner)->onPrimitive<nInt>(); }
+    | BYTE { $$ = yyget_extra(scanner)->onPrimitive<nByte>(); }
+    | CHAR { $$ = yyget_extra(scanner)->onPrimitive<nChar>(); }
+    | STR { $$ = yyget_extra(scanner)->onPrimitive<nStr>(); }
+    | BOOL { $$ = yyget_extra(scanner)->onPrimitive<nBool>(); }
+    | FLT { $$ = yyget_extra(scanner)->onPrimitive<nFlt>(); }
     | NAME { // TODO: handle 'as' expr
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);

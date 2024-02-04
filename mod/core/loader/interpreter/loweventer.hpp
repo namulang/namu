@@ -141,8 +141,6 @@ namespace namu {
         defBlock* onDefBlock(defBlock& blk, node& exp);
         node* onFor(const std::string& iterName, const node& expr, const blockExpr& blk);
         node* onWhile(const node& condition, const blockExpr& blk);
-        //      aka:
-        node* onAkaDefault(const getExpr& dotname, const std::string& newName);
 
         //  expr:
         //      def:
