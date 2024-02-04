@@ -1,0 +1,23 @@
+
+##### Subject 60 characters ########################### -> |
+#<module>: <type>: <subject>
+#######################################################
+# Type can be
+#   feat:       new feature
+#   fix:        bug fix
+#   refactor:   refactoring production code
+#   style:      formatting, missing semi colons, etc; no code change
+#   doc:        changes to documentation
+#   test:       adding or refactoring tests. no production code change
+#   chore:      updating grunt tasks etc. no production code change
+# Module is one of sub module like 'interp', 'seedling' or blank if
+# the commit affects entire this repository.
+# e.g.
+#chore: change build envrionment.
+#test: interp: add new test case for parsing blank src.
+
+# one empty single line should be between subject and body.
+
+######## Body 72 characters ####################################### -> |
+# You can use multiple lines here of course.
+# --- COMMIT END ---

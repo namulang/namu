@@ -1,3 +1,10 @@
+----
+layout: guide
+title: quick start for developer
+toc: true
+toc_label: "to next-point..."
+lang: ko
+----
 # 서론
 TODO.
 
