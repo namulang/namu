@@ -115,7 +115,7 @@
 %token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE LOGICAL_AND LOGICAL_OR LSHIFT RSHIFT
 %token ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN OR_ASSIGN AND_ASSIGN XOR_ASSIGN
 //  primitive-type:
-%token VOID INT STR BOOL FLT NULTYPE BYTE CHAR
+%token VOID INT STR BOOL FLT NUL BYTE CHAR
 //  reserved-keyword:
 %token IF _ELSE_ RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
 %token _WHILE_ 
@@ -130,7 +130,6 @@
 // nonterminal:
 %type <asNode> compilation-unit block indentblock
 %type <asNarr> packDotname
-%type <asNode> dotname dotname-item
 //  term:
 %type <asNode> term unary postfix primary func-call
 %type <asNarr> list list-items
@@ -216,22 +215,6 @@ func-call: type list {
         str typeLife($1);
         $$ = yyget_extra(scanner)->onRunExpr(*typeLife, *argsLife);
       }
-
-dotname-item: NAME {
-            $$ = yyget_extra(scanner)->onDotname(std::string(*$1));
-            free($1);
-          } | func-call {
-            // $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*new getExpr("me"), $1->cast<runExpr>());
-            // $1 is still on heap without binder
-            // TODO: convert $1 into getExpr
-          }
-
-
-dotname: dotname-item {
-       $$ = $1;
-     } | dotname '.' dotname-item {
-       $$ = yyget_extra(scanner)->onDotname($1->cast<getExpr>(), $3->cast<getExpr>());
-     }
 
 list-items: expr {
             $$ = yyget_extra(scanner)->onList($1);
@@ -414,15 +397,15 @@ next: NEXT NEWLINE {
 
 ifing: IF expr-line indentblock {
     $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
-   } | ifing ELIF expr-line indentblock {
-    $$ = yyget_extra(scanner)->onElif($1->cast<ifExpr>(), *$3, $4->cast<blockExpr>());
    }
 
 if: ifing {
     $$ = yyget_extra(scanner)->onEndOfIf();
 } | ifing _ELSE_ indentblock {
     $$ = yyget_extra(scanner)->onElse($1->cast<ifExpr>(), $3->cast<blockExpr>());
-  }
+} | ifing _ELSE_ ifing {
+    $$ = $1; // TODO
+}
 
 
 for: FOR NAME _IN_ expr-line indentblock {

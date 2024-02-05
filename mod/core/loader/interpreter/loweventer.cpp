@@ -424,15 +424,6 @@ namespace namu {
         return &names;
     }
 
-    getExpr* me::onDotname(const getExpr& from, getExpr& name) {
-        name.setMe(from);
-        return &name;
-    }
-
-    getExpr* me::onDotname(const std::string& name) {
-        return _maker.make<getExpr>(name);
-    }
-
     node* me::onGet(const std::string& name) {
         NAMU_DI("tokenEvent: onGet(%s)", name.c_str());
         return _maker.make<getExpr>(name);
