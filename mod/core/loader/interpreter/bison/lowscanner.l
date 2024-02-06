@@ -99,6 +99,39 @@ namespace {
     return FLTVAL;
 }
 
+//  reserved-keyword:
+//      branch:
+if { return IF; }
+else { return _ELSE_; }
+ret { return RET; }
+next { return NEXT; }
+break { return BREAK; }
+again { return AGAIN; }
+//      check:
+in { return _IN_; }
+is { return IS; }
+//      loop:
+while { return _WHILE_; }
+for { return FOR; }
+//      define:
+def { return DEF; }
+with { return WITH; }
+as { return AS; }
+enum { return ENUM; }
+only { return ONLY; }
+get { return GET; }
+set { return SET; }
+end { return END; }
+// predefined-types:
+void { return VOID; }
+int { return INT; }
+str { return STR; }
+bool { return BOOL; }
+byte { return BYTE; }
+char { return CHAR; }
+flt { return FLT; }
+nul { return NUL; }
+pack { return PACK; }
 true {
     yylval->asBool = true;
     NAMU_DI("scanner: BOOLVAL=true");
@@ -110,26 +143,6 @@ false {
     NAMU_DI("scanner: BOOLVAL=false");
     return BOOLVAL;
 }
-
-if { return IF; }
-void { return VOID; }
-int { return INT; }
-str { return STR; }
-bool { return BOOL; }
-byte { return BYTE; }
-char { return CHAR; }
-flt { return FLT; }
-nul { return NUL; }
-pack { return PACK; }
-ret { return RET; }
-break { return BREAK; }
-as { return AS; }
-def { return DEF; }
-for { return FOR; }
-next { return NEXT; }
-in { return _IN_; }
-else { return _ELSE_; }
-while { return _WHILE_; }
 
 0x[0-9a-fA-F]+ {
     yylval->asInt = std::stoi(yytext, nullptr, 0);

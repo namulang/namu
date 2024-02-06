@@ -110,15 +110,22 @@
 // mode:
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE SCAN_MODE_END
 
-// valueless-token:
-%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS DOUBLE_DOT PACK ARROW TAB ASSIGN DEFASSIGN
+//  reserved-keyword:
+//      use prefix '_' on some tokens for windows compatibility.
+//      branch:
+%token IF _ELSE_ RET NEXT BREAK AGAIN
+//      check:
+%token _IN_ IS
+//      loop:
+%token _WHILE_ FOR
+//      define:
+%token DEF WITH AS ENUM ONLY GET SET END
+//  predefined-type:
+%token VOID INT STR BOOL FLT NUL BYTE CHAR ME SUPER IT CTOR PACK 
+//  valueless-token:
+%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS DOUBLE_DOT ARROW TAB ASSIGN DEFASSIGN
 %token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE LOGICAL_AND LOGICAL_OR LSHIFT RSHIFT
 %token ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN OR_ASSIGN AND_ASSIGN XOR_ASSIGN
-//  primitive-type:
-%token VOID INT STR BOOL FLT NUL BYTE CHAR
-//  reserved-keyword:
-%token IF _ELSE_ RET AS DEF FOR BREAK NEXT _IN_ /* use prefix '_' for windows compatibility.*/
-%token _WHILE_ 
 
 // value-holding-token:
 %token <asChar> CHARVAL
