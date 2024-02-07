@@ -110,6 +110,7 @@
 // mode:
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE SCAN_MODE_END
 
+// terminal:
 //  reserved-keyword:
 //      use prefix '_' on some tokens for windows compatibility.
 //      branch:
@@ -126,8 +127,7 @@
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS DOUBLE_DOT ARROW TAB ASSIGN DEFASSIGN
 %token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE LOGICAL_AND LOGICAL_OR LSHIFT RSHIFT
 %token ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN OR_ASSIGN AND_ASSIGN XOR_ASSIGN
-
-// value-holding-token:
+//  value-holding-token:
 %token <asChar> CHARVAL
 %token <asInt> INTVAL
 %token <asFlt> FLTVAL
@@ -136,17 +136,27 @@
 
 // nonterminal:
 //  basic component:
-%type <asNode> compilation-unit block indentblock
-%type <asNarr> packDotname
-%type <asNode> term unary postfix primary func-call
-%type <asNarr> tuple tuple-items
-%type <asArgs> typenames typeparams
+%type <asNode> compilation-unit term unary postfix primary
 //      expr:
+//          inline:
 %type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9 expr-line10 
-%type <asNode> stmt assign-compound assign-line expr expr-compound
-%type <asNode> type
-%type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
+%type <asNode> defexpr-line defexpr-line-except-aka 
+//          compound:
+%type <asNode> expr-compound block indentblock 
+%type <asNode> defexpr-compound
 %type <asDefBlock> defblock
+//      stmt:
+%type <asNode> stmt
+%type <asNode> defstmt
+//      access:
+%type <asNarr> packDotname
+//      func:
+%type <asNode> func-call
+//      tuple:
+%type <asNarr> tuple tuple-items
+//      type:
+%type <asNode> type
+%type <asArgs> typenames typeparams
 //  keyword:
 //      branch:
 %type <asNode> if if-block ret next break
@@ -182,6 +192,7 @@
     ============================================================================================  */
 %%
 
+// basic component:
 compilation-unit: pack defblock {
                 tstr<obj> pak(*$1);
                 tstr<defBlock> lifeBlock($2);
@@ -189,22 +200,6 @@ compilation-unit: pack defblock {
                 _onEndParse(scanner);
               }
 
-expr: expr-line { $$ = $1; }
-    | expr-compound { $$ = $1; }
-
-stmt: expr-line NEWLINE { $$ = $1; }
-    | ret { $$ = $1; }
-    | break { $$ = $1; }
-    | next { $$ = $1; }
-    | expr-compound { $$ = $1; }
-
-block: %empty {
-     $$ = yyget_extra(scanner)->onBlock();
-   } | block stmt {
-     $$ = yyget_extra(scanner)->onBlock($1->cast<blockExpr>(), *$2);
-   }
-
-// term:
 term: unary { $$ = $1; }
 
 unary: postfix {
@@ -223,24 +218,6 @@ unary: postfix {
      $$ = yyget_extra(scanner)->onUnaryBitwiseNot(*$2);
    }
 
-func-call: type tuple {
-        tstr<narr> argsLife($2);
-        str typeLife($1);
-        $$ = yyget_extra(scanner)->onRunExpr(*typeLife, *argsLife);
-      }
-
-tuple-items: expr {
-            $$ = yyget_extra(scanner)->onTuple($1);
-        } | tuple-items ',' expr {
-            $$ = yyget_extra(scanner)->onTuple(*$1, $3);
-        }
-
-tuple: '(' tuple-items ')' {
-    $$ = $2;
-  } | '(' ')' {
-    $$ = yyget_extra(scanner)->onTuple();
-  }
-
 postfix: primary {
        $$ = $1;
      } | postfix DOUBLE_MINUS {
@@ -255,7 +232,7 @@ postfix: primary {
      } | func-call {
         $$ = $1;
         // $1 is still on heap without binder
-     } | postfix '[' expr ']' {
+     } | postfix '[' expr-line ']' {
         $$ = yyget_extra(scanner)->onGetElem(*$1, *$3);
      }
 
@@ -270,7 +247,7 @@ primary: INTVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nBool>($1);
      } | CHARVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
-     } | '(' expr ')' {
+     } | '(' expr-line ')' {
         // TODO: tuple should contain 1 element.
         $$ = $2;
      } | NAME {
@@ -278,29 +255,12 @@ primary: INTVAL {
         free($1);
      } | defarray-initial-value { $$ = $1; }
 
-// expr:
-//  structure:
 expr-line: defexpr-line { $$ = $1; }
          | expr-line10 { $$ = $1; }
-         | assign-line { $$ = $1; }
-         | defseq { $$ = $1; }
-
-expr-compound: defexpr-compound { $$ = $1; }
-             | if { $$ = $1; }
-             | assign-compound { $$ = $1; }
-             | for { $$ = $1; }
-             | while { $$ = $1; }
-
-assign-line: expr-line10 ASSIGN expr-line {
+         | expr-line10 ASSIGN expr-line {
             $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
-         }
-assign-compound: expr-line10 ASSIGN expr-compound {
-                $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
-             }
+       } | defseq { $$ = $1; }
 
-
-
-//  expr-line:
 expr-line10: expr-line9 {
         $$ = $1;
     } | expr-line10 ADD_ASSIGN expr-line9 {
@@ -388,63 +348,74 @@ expr-line1: term { $$ = $1;
      $$ = yyget_extra(scanner)->onAs(*$1, *$3);
    }
 
-ret: RET NEWLINE {
-    $$ = yyget_extra(scanner)->onRet();
- } | RET expr-line NEWLINE {
-    $$ = yyget_extra(scanner)->onRet(*$2);
- } | RET expr-compound {
-    $$ = yyget_extra(scanner)->onRet(*$2);
- }
-
-break: BREAK NEWLINE {
-    $$ = yyget_extra(scanner)->onBreak();
-   } | BREAK expr-line NEWLINE {
-    $$ = yyget_extra(scanner)->onBreak(*$2);
-   } | BREAK expr-compound {
-    $$ = yyget_extra(scanner)->onBreak(*$2);
-   }
-
-next: NEXT NEWLINE {
-    $$ = yyget_extra(scanner)->onNext();
-   }
-
-if-block: IF expr-line indentblock {
-    $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
-   }
-
-if: if-block {
-    $$ = yyget_extra(scanner)->onEndOfIf();
-} | if-block _ELSE_ indentblock {
-    $$ = yyget_extra(scanner)->onElse($1->cast<ifExpr>(), $3->cast<blockExpr>());
-} | if-block _ELSE_ if-block {
-    $$ = $1; // TODO
-}
-
-
-for: FOR NAME _IN_ expr-line indentblock {
-    $$ = yyget_extra(scanner)->onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
-    free($2);
- }
-
-while: _WHILE_ expr-line indentblock {
-     $$ = yyget_extra(scanner)->onWhile(*$2, $3->cast<blockExpr>());
-   }
-
-// defs:
-//  structure:
 defexpr-line: defexpr-line-except-aka { $$ = $1; }
 defexpr-line-except-aka: defvar { $$ = $1; }
+
+//      compound:
+expr-compound: defexpr-compound { $$ = $1; }
+             | if { $$ = $1; }
+             | expr-line10 ASSIGN expr-compound {
+                $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
+           } | for { $$ = $1; }
+             | while { $$ = $1; }
+
+block: %empty {
+     $$ = yyget_extra(scanner)->onBlock();
+   } | block stmt {
+     $$ = yyget_extra(scanner)->onBlock($1->cast<blockExpr>(), *$2);
+   }
+
+indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
+
 defexpr-compound: deffunc { $$ = $1; }
                 | defobj { $$ = $1; }
                 | defvar-compound { $$ = $1; }
-defstmt: defexpr-line NEWLINE { $$ = $1; }
-       | defexpr-compound { $$ = $1; }
+
 defblock: %empty {
         $$ = yyget_extra(scanner)->onDefBlock();
       } | defblock defstmt {
         str lifeStmt($2);
         $$ = yyget_extra(scanner)->onDefBlock(*$1, *lifeStmt);
       }
+
+//  stmt:
+stmt: expr-line NEWLINE { $$ = $1; }
+    | ret { $$ = $1; }
+    | break { $$ = $1; }
+    | next { $$ = $1; }
+    | expr-compound { $$ = $1; }
+
+defstmt: defexpr-line NEWLINE { $$ = $1; }
+       | defexpr-compound { $$ = $1; }
+
+//  access:
+packDotname: NAME {
+             $$ = yyget_extra(scanner)->onPackDotname(std::string(*$1));
+             free($1);
+         } | packDotname '.' NAME {
+             $$ = yyget_extra(scanner)->onPackDotname(*$1, std::string(*$3));
+             free($3);
+         }
+
+//  func:
+func-call: type tuple {
+        tstr<narr> argsLife($2);
+        str typeLife($1);
+        $$ = yyget_extra(scanner)->onRunExpr(*typeLife, *argsLife);
+      }
+
+//  tuple:
+tuple: '(' tuple-items ')' {
+    $$ = $2;
+  } | '(' ')' {
+    $$ = yyget_extra(scanner)->onTuple();
+  }
+
+tuple-items: expr-line {
+            $$ = yyget_extra(scanner)->onTuple($1);
+        } | tuple-items ',' expr-line {
+            $$ = yyget_extra(scanner)->onTuple(*$1, $3);
+        }
 
 //  type:
 type: VOID { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
@@ -465,7 +436,6 @@ type: VOID { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
         free($1);
   }
 
-//  typeparams:
 typeparams: '<' typenames '>' { $$ = $2; }
 typenames: type {
             $$ = yyget_extra(scanner)->onTypeNames(*$1);
@@ -473,7 +443,52 @@ typenames: type {
             $$ = yyget_extra(scanner)->onTypeNames(*$1, *$3);
        }
 
-//  variable:
+//  keyword:
+//      branch:
+if: if-block {
+    $$ = yyget_extra(scanner)->onEndOfIf();
+} | if-block _ELSE_ indentblock {
+    $$ = yyget_extra(scanner)->onElse($1->cast<ifExpr>(), $3->cast<blockExpr>());
+} | if-block _ELSE_ if-block {
+    $$ = $1; // TODO
+}
+
+if-block: IF expr-line indentblock {
+    $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
+   }
+
+ret: RET NEWLINE {
+    $$ = yyget_extra(scanner)->onRet();
+ } | RET expr-line NEWLINE {
+    $$ = yyget_extra(scanner)->onRet(*$2);
+ } | RET expr-compound {
+    $$ = yyget_extra(scanner)->onRet(*$2);
+ }
+
+next: NEXT NEWLINE {
+    $$ = yyget_extra(scanner)->onNext();
+   }
+
+break: BREAK NEWLINE {
+    $$ = yyget_extra(scanner)->onBreak();
+   } | BREAK expr-line NEWLINE {
+    $$ = yyget_extra(scanner)->onBreak(*$2);
+   } | BREAK expr-compound {
+    $$ = yyget_extra(scanner)->onBreak(*$2);
+   }
+
+//      loop:
+while: _WHILE_ expr-line indentblock {
+     $$ = yyget_extra(scanner)->onWhile(*$2, $3->cast<blockExpr>());
+   }
+
+for: FOR NAME _IN_ expr-line indentblock {
+    $$ = yyget_extra(scanner)->onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
+    free($2);
+ }
+
+//      define:
+//          value:
 defvar: defvar-exp-no-initial-value { $$ = $1; }
       | defvar-exp-initial-value { $$ = $1; }
 
@@ -491,26 +506,7 @@ defvar-compound: NAME DEFASSIGN expr-compound {
                 free($1);
              }
 
-defarray-initial-value: '{' tuple-items '}' {
-                        $$ = yyget_extra(scanner)->onDefArray(*$2);
-                    }
-defseq: expr-line10 DOUBLE_DOT expr-line10 {
-        $$ = yyget_extra(scanner)->onDefSeq(*$1, *$3);
-    }
-
-//  obj:
-defobj: defobj-default { $$ = $1; }
-      | defobj-default-generic { $$ = $1; }
-defobj-default: DEF NAME NEWLINE INDENT defblock DEDENT {
-            $$ = yyget_extra(scanner)->onDefObj(std::string(*$2), *$5);
-            free($2);
-            }
-defobj-default-generic: DEF NAME typeparams NEWLINE INDENT defblock DEDENT {
-                    tstr<args> argsLife($3);
-                    $$ = yyget_extra(scanner)->onDefObjGeneric(*$2, *argsLife, *$6);
-                    free($2);
-                    }
-//  func:
+//          func:
 deffunc: deffunc-default { $$ = $1; }
        | deffunc-deduction { $$ = new blockExpr(); /* TODO: */ }
        | deffunc-lambda { $$ = new blockExpr(); /* TODO: */ }
@@ -536,16 +532,28 @@ deffunc-lambda-deduction: tuple indentblock {
                     // checks tuple that it's NAME.
                       }
 
-indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
+//          obj:
+defobj: defobj-default { $$ = $1; }
+      | defobj-default-generic { $$ = $1; }
+defobj-default: DEF NAME NEWLINE INDENT defblock DEDENT {
+                $$ = yyget_extra(scanner)->onDefObj(std::string(*$2), *$5);
+                free($2);
+            }
+defobj-default-generic: DEF NAME typeparams NEWLINE INDENT defblock DEDENT {
+                        tstr<args> argsLife($3);
+                        $$ = yyget_extra(scanner)->onDefObjGeneric(*$2, *argsLife, *$6);
+                        free($2);
+                    }
 
-//  pack:
-packDotname: NAME {
-             $$ = yyget_extra(scanner)->onPackDotname(std::string(*$1));
-             free($1);
-         } | packDotname '.' NAME {
-             $$ = yyget_extra(scanner)->onPackDotname(*$1, std::string(*$3));
-             free($3);
-         }
+//              container:
+defseq: expr-line10 DOUBLE_DOT expr-line10 {
+        $$ = yyget_extra(scanner)->onDefSeq(*$1, *$3);
+    }
+defarray-initial-value: '{' tuple-items '}' {
+                        $$ = yyget_extra(scanner)->onDefArray(*$2);
+                    }
+
+//  predefined-type:
 pack: PACK packDotname NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
     | %empty { $$ = yyget_extra(scanner)->onPack(); }
 
