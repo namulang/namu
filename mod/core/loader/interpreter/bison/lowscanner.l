@@ -99,21 +99,15 @@ namespace {
     return FLTVAL;
 }
 
-//  reserved-keyword:
-//      branch:
 if { return IF; }
 else { return _ELSE_; }
 ret { return RET; }
 next { return NEXT; }
 break { return BREAK; }
-again { return AGAIN; }
-//      check:
 in { return _IN_; }
 is { return IS; }
-//      loop:
 while { return _WHILE_; }
 for { return FOR; }
-//      define:
 def { return DEF; }
 with { return WITH; }
 as { return AS; }
@@ -122,7 +116,6 @@ only { return ONLY; }
 get { return GET; }
 set { return SET; }
 end { return END; }
-// predefined-types:
 void { return VOID; }
 int { return INT; }
 str { return STR; }

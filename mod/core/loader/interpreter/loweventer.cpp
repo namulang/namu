@@ -259,20 +259,20 @@ namespace namu {
         return ret;
     }
 
-    narr* me::onList() {
+    narr* me::onTuple() {
         narr* ret = new narr();
-        NAMU_DI("tokenEvent: onList()=%x", ret);
+        NAMU_DI("tokenEvent: onTuple()=%x", ret);
         return ret;
     }
 
-    narr* me::onList(node* newExpr) {
+    narr* me::onTuple(node* newExpr) {
         narr* ret = new narr(*newExpr);
-        NAMU_DI("tokenEvent: onList(%s[%x])=%x", newExpr->getType().getName().c_str(), newExpr, ret);
+        NAMU_DI("tokenEvent: onTuple(%s[%x])=%x", newExpr->getType().getName().c_str(), newExpr, ret);
         return ret;
     }
 
-    narr* me::onList(narr& list, node* newExpr) {
-        NAMU_DI("tokenEvent: onList(list[%x], %s[%x])", &list, newExpr->getType().getName().c_str(), newExpr);
+    narr* me::onTuple(narr& list, node* newExpr) {
+        NAMU_DI("tokenEvent: onTuple(list[%x], %s[%x])", &list, newExpr->getType().getName().c_str(), newExpr);
         list.add(newExpr);
         return &list;
     }

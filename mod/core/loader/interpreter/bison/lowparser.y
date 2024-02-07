@@ -113,7 +113,7 @@
 //  reserved-keyword:
 //      use prefix '_' on some tokens for windows compatibility.
 //      branch:
-%token IF _ELSE_ RET NEXT BREAK AGAIN
+%token IF _ELSE_ RET NEXT BREAK
 //      check:
 %token _IN_ IS
 //      loop:
@@ -135,30 +135,36 @@
 %token <asStr> NAME STRVAL
 
 // nonterminal:
+//  basic component:
 %type <asNode> compilation-unit block indentblock
 %type <asNarr> packDotname
-//  term:
 %type <asNode> term unary postfix primary func-call
-%type <asNarr> list list-items
+%type <asNarr> tuple tuple-items
 %type <asArgs> typenames typeparams
-//  keyword:
-%type <asNode> ret
-%type <asNode> if ifing for break next while
-%type <asObj> pack
-//  expr:
-%type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10 assign-compound assign-line
+//      expr:
+%type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9 expr-line10 
+%type <asNode> stmt assign-compound assign-line expr expr-compound
 %type <asNode> type
 %type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
 %type <asDefBlock> defblock
-//      value:
-%type <asNode> defvar defvar-exp-no-initial-value defvar-exp-initial-value defarray-initial-value
+//  keyword:
+//      branch:
+%type <asNode> if if-block ret next break
+//      loop
+%type <asNode> while for
+//      define:
+//          value:
+%type <asNode> defvar defvar-exp-no-initial-value defvar-exp-initial-value 
 %type <asNode> defvar-compound
-%type <asNode> defseq
-//      func:
+//          func:
 %type <asNode> deffunc deffunc-default deffunc-deduction
 %type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
-//      obj:
+//          obj:
 %type <asNode> defobj defobj-default defobj-default-generic
+//              container:
+%type <asNode> defseq defarray-initial-value
+//  predefined-type:
+%type <asObj> pack
 
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
@@ -217,22 +223,22 @@ unary: postfix {
      $$ = yyget_extra(scanner)->onUnaryBitwiseNot(*$2);
    }
 
-func-call: type list {
+func-call: type tuple {
         tstr<narr> argsLife($2);
         str typeLife($1);
         $$ = yyget_extra(scanner)->onRunExpr(*typeLife, *argsLife);
       }
 
-list-items: expr {
-            $$ = yyget_extra(scanner)->onList($1);
-        } | list-items ',' expr {
-            $$ = yyget_extra(scanner)->onList(*$1, $3);
+tuple-items: expr {
+            $$ = yyget_extra(scanner)->onTuple($1);
+        } | tuple-items ',' expr {
+            $$ = yyget_extra(scanner)->onTuple(*$1, $3);
         }
 
-list: '(' list-items ')' {
+tuple: '(' tuple-items ')' {
     $$ = $2;
   } | '(' ')' {
-    $$ = yyget_extra(scanner)->onList();
+    $$ = yyget_extra(scanner)->onTuple();
   }
 
 postfix: primary {
@@ -265,7 +271,7 @@ primary: INTVAL {
      } | CHARVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
      } | '(' expr ')' {
-        // TODO: list should contain 1 element.
+        // TODO: tuple should contain 1 element.
         $$ = $2;
      } | NAME {
         $$ = yyget_extra(scanner)->onGet(*$1);
@@ -275,7 +281,7 @@ primary: INTVAL {
 // expr:
 //  structure:
 expr-line: defexpr-line { $$ = $1; }
-         | expr10 { $$ = $1; }
+         | expr-line10 { $$ = $1; }
          | assign-line { $$ = $1; }
          | defseq { $$ = $1; }
 
@@ -285,100 +291,100 @@ expr-compound: defexpr-compound { $$ = $1; }
              | for { $$ = $1; }
              | while { $$ = $1; }
 
-assign-line: expr10 ASSIGN expr-line {
+assign-line: expr-line10 ASSIGN expr-line {
             $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
          }
-assign-compound: expr10 ASSIGN expr-compound {
+assign-compound: expr-line10 ASSIGN expr-compound {
                 $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
              }
 
 
 
 //  expr-line:
-expr10: expr9 {
+expr-line10: expr-line9 {
         $$ = $1;
-    } | expr10 ADD_ASSIGN expr9 {
+    } | expr-line10 ADD_ASSIGN expr-line9 {
         $$ = yyget_extra(scanner)->onAddAssign(*$1, *$3);
-    } | expr10 SUB_ASSIGN expr9 {
+    } | expr-line10 SUB_ASSIGN expr-line9 {
         $$ = yyget_extra(scanner)->onSubAssign(*$1, *$3);
-    } | expr10 MUL_ASSIGN expr9 {
+    } | expr-line10 MUL_ASSIGN expr-line9 {
         $$ = yyget_extra(scanner)->onMulAssign(*$1, *$3);
-    } | expr10 DIV_ASSIGN expr9 {
+    } | expr-line10 DIV_ASSIGN expr-line9 {
         $$ = yyget_extra(scanner)->onDivAssign(*$1, *$3);
-    } | expr10 MOD_ASSIGN expr9 {
+    } | expr-line10 MOD_ASSIGN expr-line9 {
         $$ = yyget_extra(scanner)->onModAssign(*$1, *$3);
     }
 
-expr9: expr8 {
+expr-line9: expr-line8 {
     $$ = $1;
-   } | expr9 LOGICAL_OR expr8 {
+   } | expr-line9 LOGICAL_OR expr-line8 {
     $$ = yyget_extra(scanner)->onOr(*$1, *$3);
-   } | expr9 LOGICAL_AND expr8 {
+   } | expr-line9 LOGICAL_AND expr-line8 {
     $$ = yyget_extra(scanner)->onAnd(*$1, *$3);
    }
 
-expr8: expr7 {
+expr-line8: expr-line7 {
     $$ = $1;
-   } | expr8 LSHIFT expr7 {
+   } | expr-line8 LSHIFT expr-line7 {
     $$ = yyget_extra(scanner)->onLShift(*$1, *$3);
-   } | expr8 RSHIFT expr7 {
+   } | expr-line8 RSHIFT expr-line7 {
     $$ = yyget_extra(scanner)->onRShift(*$1, *$3);
    }
 
-expr7: expr6 {
+expr-line7: expr-line6 {
     $$ = $1;
-   } | expr7 '>' expr6 {
+   } | expr-line7 '>' expr-line6 {
     $$ = yyget_extra(scanner)->onGt(*$1, *$3);
-   } | expr7 '<' expr6 {
+   } | expr-line7 '<' expr-line6 {
     $$ = yyget_extra(scanner)->onLt(*$1, *$3);
-   } | expr7 GE expr6 {
+   } | expr-line7 GE expr-line6 {
     $$ = yyget_extra(scanner)->onGe(*$1, *$3);
-   } | expr7 LE expr6 {
+   } | expr-line7 LE expr-line6 {
     $$ = yyget_extra(scanner)->onLe(*$1, *$3);
-   } | expr7 EQ expr6 {
+   } | expr-line7 EQ expr-line6 {
     $$ = yyget_extra(scanner)->onEq(*$1, *$3);
-   } | expr7 NE expr6 {
+   } | expr-line7 NE expr-line6 {
     $$ = yyget_extra(scanner)->onNe(*$1, *$3);
    }
 
-expr6: expr5 {
+expr-line6: expr-line5 {
      $$ = $1;
-   } | expr6 '|' expr5 {
+   } | expr-line6 '|' expr-line5 {
      $$ = yyget_extra(scanner)->onBitwiseOr(*$1, *$3);
    }
 
-expr5: expr4 {
+expr-line5: expr-line4 {
     $$ = $1;
-   } | expr5 '^' expr4 {
+   } | expr-line5 '^' expr-line4 {
     $$ = yyget_extra(scanner)->onBitwiseXor(*$1, *$3);
    }
 
-expr4: expr3 {
+expr-line4: expr-line3 {
     $$ = $1;
-   } | expr4 '&' expr3 {
+   } | expr-line4 '&' expr-line3 {
     $$ = yyget_extra(scanner)->onBitwiseAnd(*$1, *$3);
    }
 
-expr3: expr2 {
+expr-line3: expr-line2 {
     $$ = $1;
-   } | expr3 '+' expr2 {
+   } | expr-line3 '+' expr-line2 {
     $$ = yyget_extra(scanner)->onAdd(*$1, *$3);
-   } | expr3 '-' expr2 {
+   } | expr-line3 '-' expr-line2 {
     $$ = yyget_extra(scanner)->onSub(*$1, *$3);
    }
 
-expr2: expr1 {
+expr-line2: expr-line1 {
     $$ = $1;
-   } | expr2 '*' expr1 {
+   } | expr-line2 '*' expr-line1 {
     $$ = yyget_extra(scanner)->onMul(*$1, *$3);
-   } | expr2 '/' expr1 {
+   } | expr-line2 '/' expr-line1 {
     $$ = yyget_extra(scanner)->onDiv(*$1, *$3);
-   } | expr2 '%' expr1 {
+   } | expr-line2 '%' expr-line1 {
     $$ = yyget_extra(scanner)->onMod(*$1, *$3);
    }
 
-expr1: term { $$ = $1;
-   } | expr1 AS type {
+expr-line1: term { $$ = $1;
+   } | expr-line1 AS type {
      $$ = yyget_extra(scanner)->onAs(*$1, *$3);
    }
 
@@ -402,15 +408,15 @@ next: NEXT NEWLINE {
     $$ = yyget_extra(scanner)->onNext();
    }
 
-ifing: IF expr-line indentblock {
+if-block: IF expr-line indentblock {
     $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
    }
 
-if: ifing {
+if: if-block {
     $$ = yyget_extra(scanner)->onEndOfIf();
-} | ifing _ELSE_ indentblock {
+} | if-block _ELSE_ indentblock {
     $$ = yyget_extra(scanner)->onElse($1->cast<ifExpr>(), $3->cast<blockExpr>());
-} | ifing _ELSE_ ifing {
+} | if-block _ELSE_ if-block {
     $$ = $1; // TODO
 }
 
@@ -485,10 +491,10 @@ defvar-compound: NAME DEFASSIGN expr-compound {
                 free($1);
              }
 
-defarray-initial-value: '{' list-items '}' {
+defarray-initial-value: '{' tuple-items '}' {
                         $$ = yyget_extra(scanner)->onDefArray(*$2);
                     }
-defseq: expr10 DOUBLE_DOT expr10 {
+defseq: expr-line10 DOUBLE_DOT expr-line10 {
         $$ = yyget_extra(scanner)->onDefSeq(*$1, *$3);
     }
 
@@ -508,14 +514,14 @@ defobj-default-generic: DEF NAME typeparams NEWLINE INDENT defblock DEDENT {
 deffunc: deffunc-default { $$ = $1; }
        | deffunc-deduction { $$ = new blockExpr(); /* TODO: */ }
        | deffunc-lambda { $$ = new blockExpr(); /* TODO: */ }
-deffunc-default: NAME list type indentblock {
+deffunc-default: NAME tuple type indentblock {
                 // take bind of exprs instance: because it's on heap. I need to free.
-                tstr<narr> list($2);
+                tstr<narr> tuple($2);
                 str typeLife($3);
-                $$ = yyget_extra(scanner)->onFunc(*$1, *list, *typeLife, $4->cast<blockExpr>());
+                $$ = yyget_extra(scanner)->onFunc(*$1, *tuple, *typeLife, $4->cast<blockExpr>());
                 free($1);
              }
-deffunc-deduction: NAME list indentblock {
+deffunc-deduction: NAME tuple indentblock {
                 // TODO: then free it
                }
 
@@ -523,11 +529,11 @@ deffunc-lambda: deffunc-lambda-default {
             } | deffunc-lambda-deduction {
             }
 
-deffunc-lambda-default: list type indentblock {
-                    // checks list that it's NAME.
+deffunc-lambda-default: tuple type indentblock {
+                    // checks tuple that it's NAME.
                      }
-deffunc-lambda-deduction: list indentblock {
-                    // checks list that it's NAME.
+deffunc-lambda-deduction: tuple indentblock {
+                    // checks tuple that it's NAME.
                       }
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }

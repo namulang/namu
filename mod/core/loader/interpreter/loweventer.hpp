@@ -143,9 +143,9 @@ namespace namu {
         //  expr:
         //      def:
         //          list:
-        narr* onList();
-        narr* onList(node* newExpr);
-        narr* onList(narr& list, node* newExpr);
+        narr* onTuple();
+        narr* onTuple(node* newExpr);
+        narr* onTuple(narr& list, node* newExpr);
         //          typenames:
         args* onTypeNames(const node& param);
         args* onTypeNames(args& params, const node& param);
