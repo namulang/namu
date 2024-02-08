@@ -98,7 +98,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 7
+%expect 3
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -140,10 +140,8 @@
 //      expr:
 //          inline:
 %type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9 expr-line10 
-%type <asNode> defexpr-line defexpr-line-except-aka 
 //          compound:
 %type <asNode> expr-compound block indentblock 
-%type <asNode> defexpr-compound
 %type <asDefBlock> defblock
 //      stmt:
 %type <asNode> stmt
@@ -164,7 +162,7 @@
 %type <asNode> while for
 //      define:
 //          value:
-%type <asNode> defvar defvar-exp-no-initial-value defvar-exp-initial-value 
+%type <asNode> defvar defvar-without-initial-value defvar-initial-value 
 %type <asNode> defvar-compound
 //          func:
 %type <asNode> deffunc deffunc-default deffunc-deduction
@@ -255,12 +253,10 @@ primary: INTVAL {
         free($1);
      } | defarray-initial-value { $$ = $1; }
 
-expr-line: defexpr-line { $$ = $1; }
-         | expr-line10 { $$ = $1; }
+expr-line: expr-line10 { $$ = $1; }
          | expr-line10 ASSIGN expr-line {
             $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
        } | defseq { $$ = $1; }
-
 expr-line10: expr-line9 {
         $$ = $1;
     } | expr-line10 ADD_ASSIGN expr-line9 {
@@ -274,7 +270,6 @@ expr-line10: expr-line9 {
     } | expr-line10 MOD_ASSIGN expr-line9 {
         $$ = yyget_extra(scanner)->onModAssign(*$1, *$3);
     }
-
 expr-line9: expr-line8 {
     $$ = $1;
    } | expr-line9 LOGICAL_OR expr-line8 {
@@ -282,7 +277,6 @@ expr-line9: expr-line8 {
    } | expr-line9 LOGICAL_AND expr-line8 {
     $$ = yyget_extra(scanner)->onAnd(*$1, *$3);
    }
-
 expr-line8: expr-line7 {
     $$ = $1;
    } | expr-line8 LSHIFT expr-line7 {
@@ -290,7 +284,6 @@ expr-line8: expr-line7 {
    } | expr-line8 RSHIFT expr-line7 {
     $$ = yyget_extra(scanner)->onRShift(*$1, *$3);
    }
-
 expr-line7: expr-line6 {
     $$ = $1;
    } | expr-line7 '>' expr-line6 {
@@ -306,25 +299,21 @@ expr-line7: expr-line6 {
    } | expr-line7 NE expr-line6 {
     $$ = yyget_extra(scanner)->onNe(*$1, *$3);
    }
-
 expr-line6: expr-line5 {
      $$ = $1;
    } | expr-line6 '|' expr-line5 {
      $$ = yyget_extra(scanner)->onBitwiseOr(*$1, *$3);
    }
-
 expr-line5: expr-line4 {
     $$ = $1;
    } | expr-line5 '^' expr-line4 {
     $$ = yyget_extra(scanner)->onBitwiseXor(*$1, *$3);
    }
-
 expr-line4: expr-line3 {
     $$ = $1;
    } | expr-line4 '&' expr-line3 {
     $$ = yyget_extra(scanner)->onBitwiseAnd(*$1, *$3);
    }
-
 expr-line3: expr-line2 {
     $$ = $1;
    } | expr-line3 '+' expr-line2 {
@@ -332,7 +321,6 @@ expr-line3: expr-line2 {
    } | expr-line3 '-' expr-line2 {
     $$ = yyget_extra(scanner)->onSub(*$1, *$3);
    }
-
 expr-line2: expr-line1 {
     $$ = $1;
    } | expr-line2 '*' expr-line1 {
@@ -342,18 +330,13 @@ expr-line2: expr-line1 {
    } | expr-line2 '%' expr-line1 {
     $$ = yyget_extra(scanner)->onMod(*$1, *$3);
    }
-
 expr-line1: term { $$ = $1;
    } | expr-line1 AS type {
      $$ = yyget_extra(scanner)->onAs(*$1, *$3);
    }
 
-defexpr-line: defexpr-line-except-aka { $$ = $1; }
-defexpr-line-except-aka: defvar { $$ = $1; }
-
 //      compound:
-expr-compound: defexpr-compound { $$ = $1; }
-             | if { $$ = $1; }
+expr-compound: if { $$ = $1; }
              | expr-line10 ASSIGN expr-compound {
                 $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
            } | for { $$ = $1; }
@@ -366,10 +349,6 @@ block: %empty {
    }
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
-
-defexpr-compound: deffunc { $$ = $1; }
-                | defobj { $$ = $1; }
-                | defvar-compound { $$ = $1; }
 
 defblock: %empty {
         $$ = yyget_extra(scanner)->onDefBlock();
@@ -385,8 +364,10 @@ stmt: expr-line NEWLINE { $$ = $1; }
     | next { $$ = $1; }
     | expr-compound { $$ = $1; }
 
-defstmt: defexpr-line NEWLINE { $$ = $1; }
-       | defexpr-compound { $$ = $1; }
+defstmt: defvar NEWLINE { $$ = $1; }
+       | deffunc { $$ = $1; }
+       | defobj { $$ = $1; }
+       | defvar-compound { $$ = $1; }
 
 //  access:
 packDotname: NAME {
@@ -410,7 +391,6 @@ tuple: '(' tuple-items ')' {
   } | '(' ')' {
     $$ = yyget_extra(scanner)->onTuple();
   }
-
 tuple-items: expr-line {
             $$ = yyget_extra(scanner)->onTuple($1);
         } | tuple-items ',' expr-line {
@@ -452,7 +432,6 @@ if: if-block {
 } | if-block _ELSE_ if-block {
     $$ = $1; // TODO
 }
-
 if-block: IF expr-line indentblock {
     $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
    }
@@ -489,18 +468,16 @@ for: FOR NAME _IN_ expr-line indentblock {
 
 //      define:
 //          value:
-defvar: defvar-exp-no-initial-value { $$ = $1; }
-      | defvar-exp-initial-value { $$ = $1; }
-
-defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
+defvar: defvar-without-initial-value { $$ = $1; }
+      | defvar-initial-value { $$ = $1; }
+defvar-without-initial-value: NAME type { // exp means 'explicitly'
                              $$ = yyget_extra(scanner)->onDefVar(*$1, *$2);
                              free($1);
                          }
-defvar-exp-initial-value: NAME DEFASSIGN expr-line {
+defvar-initial-value: NAME DEFASSIGN expr-line {
                           $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
                           free($1);
                       }
-
 defvar-compound: NAME DEFASSIGN expr-compound {
                 $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
                 free($1);
@@ -520,11 +497,9 @@ deffunc-default: NAME tuple type indentblock {
 deffunc-deduction: NAME tuple indentblock {
                 // TODO: then free it
                }
-
 deffunc-lambda: deffunc-lambda-default {
             } | deffunc-lambda-deduction {
             }
-
 deffunc-lambda-default: tuple type indentblock {
                     // checks tuple that it's NAME.
                      }
