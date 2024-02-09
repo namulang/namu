@@ -413,13 +413,13 @@ namespace namu {
         return _maker.make<nextExpr>();
     }
 
-    narr* me::onPackDotname(const std::string& name) {
+    narr* me::onPath(const std::string& name) {
         narr* ret = new narr();
         ret->add(new nStr(name));
         return ret;
     }
 
-    narr* me::onPackDotname(narr& names, const std::string& name) {
+    narr* me::onPath(narr& names, const std::string& name) {
         names.add(new nStr(name));
         return &names;
     }

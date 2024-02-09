@@ -147,7 +147,7 @@
 %type <asNode> stmt
 %type <asNode> defstmt
 //      access:
-%type <asNarr> packDotname
+%type <asNarr> path
 //      func:
 %type <asNode> func-call
 //      tuple:
@@ -370,11 +370,11 @@ defstmt: defvar NEWLINE { $$ = $1; }
        | defvar-compound { $$ = $1; }
 
 //  access:
-packDotname: NAME {
-             $$ = yyget_extra(scanner)->onPackDotname(std::string(*$1));
+path: NAME {
+             $$ = yyget_extra(scanner)->onPath(std::string(*$1));
              free($1);
-         } | packDotname '.' NAME {
-             $$ = yyget_extra(scanner)->onPackDotname(*$1, std::string(*$3));
+         } | path '.' NAME {
+             $$ = yyget_extra(scanner)->onPath(*$1, std::string(*$3));
              free($3);
          }
 
@@ -529,7 +529,7 @@ defarray-initial-value: '{' tuple-items '}' {
                     }
 
 //  predefined-type:
-pack: PACK packDotname NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
+pack: PACK path NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
     | %empty { $$ = yyget_extra(scanner)->onPack(); }
 
 

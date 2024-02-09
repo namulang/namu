@@ -79,8 +79,8 @@ namespace namu {
 
         //  operator:
         //      dot:
-        narr* onPackDotname(const std::string& name);
-        narr* onPackDotname(narr& names, const std::string& name);
+        narr* onPath(const std::string& name);
+        narr* onPath(narr& names, const std::string& name);
         node* onGet(const std::string& name);
         node* onGet(const std::string& name, const narr& args);
         node* onGet(node& from, const std::string& name);
