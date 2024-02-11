@@ -259,6 +259,17 @@ namespace namu {
         return ret;
     }
 
+    node* me::onParanthesisAsTuple(narr& tuple) {
+        NAMU_DI("tokenEnvent: onParanthesisAsTuple(%x.size=%d)", &tuple, tuple.len());
+
+        if(tuple.len() != 1) {
+            onErr(errCode::PARANTHESIS_WAS_TUPLE);
+            return nullptr;
+        }
+
+        return &tuple[0];
+    }
+
     narr* me::onTuple() {
         narr* ret = new narr();
         NAMU_DI("tokenEvent: onTuple()=%x", ret);

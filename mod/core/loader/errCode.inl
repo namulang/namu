@@ -109,3 +109,4 @@ PAIRX(CONTAINER_IS_NULL,            "there is no container")
 
 // operator:
 PAIRX(STRING_IS_NOT_PROPER_TO_OP,   "string type isn't suitable to this operators.")
+PAIRX(PARANTHESIS_WAS_TUPLE,        "paranthesis was tuple only contains 1 expression")

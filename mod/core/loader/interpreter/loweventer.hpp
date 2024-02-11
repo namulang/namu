@@ -143,6 +143,7 @@ namespace namu {
         //  expr:
         //      def:
         //          list:
+        node* onParanthesisAsTuple(narr& tuple);
         narr* onTuple();
         narr* onTuple(node* newExpr);
         narr* onTuple(narr& list, node* newExpr);

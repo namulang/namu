@@ -144,7 +144,7 @@
 %type <asNode> expr-compound block indentblock 
 %type <asDefBlock> defblock
 //      stmt:
-%type <asNode> stmt
+%type <asNode> allstmt stmt
 %type <asNode> defstmt
 //      access:
 %type <asNarr> path
@@ -152,6 +152,8 @@
 %type <asNode> func-call
 //      tuple:
 %type <asNarr> tuple tuple-items
+%type <asNarr> func-call-tuple func-call-tuple-items
+%type <asNode> func-call-tuple-item
 //      type:
 %type <asNode> type
 %type <asArgs> typenames typeparams
@@ -165,8 +167,8 @@
 %type <asNode> defvar defvar-without-initial-value defvar-initial-value 
 %type <asNode> defvar-compound
 //          func:
-%type <asNode> deffunc deffunc-default deffunc-deduction
-%type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
+%type <asNode> deffunc
+%type <asNode> lambda lambda-default lambda-deduction
 //          obj:
 %type <asNode> defobj defobj-default defobj-default-generic
 //              container:
@@ -245,9 +247,8 @@ primary: INTVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nBool>($1);
      } | CHARVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
-     } | '(' expr-line ')' {
-        // TODO: tuple should contain 1 element.
-        $$ = $2;
+     } | tuple {
+        $$ = yyget_extra(scanner)->onParanthesisAsTuple($1)
      } | NAME {
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
@@ -342,15 +343,15 @@ expr-compound: if { $$ = $1; }
            } | for { $$ = $1; }
              | while { $$ = $1; }
 
-block: %empty {
+block: allstmt {
      $$ = yyget_extra(scanner)->onBlock();
-   } | block stmt {
+   } | block allstmt {
      $$ = yyget_extra(scanner)->onBlock($1->cast<blockExpr>(), *$2);
    }
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
 
-defblock: %empty {
+defblock: defstmt {
         $$ = yyget_extra(scanner)->onDefBlock();
       } | defblock defstmt {
         str lifeStmt($2);
@@ -358,6 +359,8 @@ defblock: %empty {
       }
 
 //  stmt:
+allstmt: stmt { $$ = $1; }
+       | defstmt { $$ = $1; }
 stmt: expr-line NEWLINE { $$ = $1; }
     | ret { $$ = $1; }
     | break { $$ = $1; }
@@ -379,7 +382,7 @@ path: NAME {
          }
 
 //  func:
-func-call: type tuple {
+func-call: type func-call-tuple {
         tstr<narr> argsLife($2);
         str typeLife($1);
         $$ = yyget_extra(scanner)->onRunExpr(*typeLife, *argsLife);
@@ -396,6 +399,14 @@ tuple-items: expr-line {
         } | tuple-items ',' expr-line {
             $$ = yyget_extra(scanner)->onTuple(*$1, $3);
         }
+func-call-tuple: '(' func-call-tuple-items ')' { $$=$2; }
+               | '(' ')' { $$ = yyget_extra(scanner)->onTuple(); }
+func-call-tuple-item: expr-line {
+                  } | lambda {
+                  }
+func-call-tuple-items: func-call-tuple-item {
+                   } | func-call-tuple-items ',' func-call-tuple-item {
+                   }
 
 //  type:
 type: VOID { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
@@ -484,28 +495,23 @@ defvar-compound: NAME DEFASSIGN expr-compound {
              }
 
 //          func:
-deffunc: deffunc-default { $$ = $1; }
-       | deffunc-deduction { $$ = new blockExpr(); /* TODO: */ }
-       | deffunc-lambda { $$ = new blockExpr(); /* TODO: */ }
-deffunc-default: NAME tuple type indentblock {
-                // take bind of exprs instance: because it's on heap. I need to free.
-                tstr<narr> tuple($2);
-                str typeLife($3);
-                $$ = yyget_extra(scanner)->onFunc(*$1, *tuple, *typeLife, $4->cast<blockExpr>());
-                free($1);
-             }
-deffunc-deduction: NAME tuple indentblock {
-                // TODO: then free it
-               }
-deffunc-lambda: deffunc-lambda-default {
-            } | deffunc-lambda-deduction {
+deffunc: NAME tuple type indentblock {
+        // take bind of exprs instance: because it's on heap. I need to free.
+        tstr<narr> tuple($2);
+        str typeLife($3);
+        $$ = yyget_extra(scanner)->onFunc(*$1, *tuple, *typeLife, $4->cast<blockExpr>());
+        free($1);
+     }
+
+lambda: lambda-default {
+    } | lambda-deduction {
+    }
+lambda-default: tuple type indentblock {
+                // checks tuple that it's NAME.
             }
-deffunc-lambda-default: tuple type indentblock {
-                    // checks tuple that it's NAME.
-                     }
-deffunc-lambda-deduction: tuple indentblock {
-                    // checks tuple that it's NAME.
-                      }
+lambda-deduction: tuple indentblock {
+                // checks tuple that it's NAME.
+              }
 
 //          obj:
 defobj: defobj-default { $$ = $1; }
