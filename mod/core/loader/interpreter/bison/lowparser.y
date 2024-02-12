@@ -98,7 +98,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 3
+%expect 6
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -153,7 +153,8 @@
 //      tuple:
 %type <asNarr> tuple tuple-items
 %type <asNarr> func-call-tuple func-call-tuple-items
-%type <asNode> func-call-tuple-item
+%type <asNode> func-call-tuple-item param-item
+%type <asNarr> params param-items
 //      type:
 %type <asNode> type
 %type <asArgs> typenames typeparams
@@ -407,6 +408,13 @@ func-call-tuple-item: expr-line {
 func-call-tuple-items: func-call-tuple-item {
                    } | func-call-tuple-items ',' func-call-tuple-item {
                    }
+params: '(' VOID ')' {
+    } | '(' param-items ')' {
+    }
+param-item: defvar-without-initial-value { $$ = $1; }
+param-items: param-item {
+         } | param-items ',' param-item {
+         }
 
 //  type:
 type: VOID { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
@@ -495,11 +503,11 @@ defvar-compound: NAME DEFASSIGN expr-compound {
              }
 
 //          func:
-deffunc: NAME tuple type indentblock {
+deffunc: NAME params type indentblock {
         // take bind of exprs instance: because it's on heap. I need to free.
-        tstr<narr> tuple($2);
+        tstr<narr> params($2);
         str typeLife($3);
-        $$ = yyget_extra(scanner)->onFunc(*$1, *tuple, *typeLife, $4->cast<blockExpr>());
+        $$ = yyget_extra(scanner)->onFunc(*$1, *params, *typeLife, $4->cast<blockExpr>());
         free($1);
      }
 
@@ -508,9 +516,11 @@ lambda: lambda-default {
     }
 lambda-default: tuple type indentblock {
                 // checks tuple that it's NAME.
+            } | params type indentblock {
             }
 lambda-deduction: tuple indentblock {
                 // checks tuple that it's NAME.
+              } | params indentblock {
               }
 
 //          obj:
