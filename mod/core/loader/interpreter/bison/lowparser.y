@@ -136,7 +136,7 @@
 
 // nonterminal:
 //  basic component:
-%type <asNode> compilation-unit term unary postfix primary
+%type <asNode> compilation-unit unary postfix primary
 //      expr:
 //          inline:
 %type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9 expr-line10 
@@ -200,8 +200,6 @@ compilation-unit: pack defblock {
                 yyget_extra(scanner)->onCompilationUnit(*pak, *lifeBlock);
                 _onEndParse(scanner);
               }
-
-term: unary { $$ = $1; }
 
 unary: postfix {
      $$ = $1;
@@ -332,7 +330,7 @@ expr-line2: expr-line1 {
    } | expr-line2 '%' expr-line1 {
     $$ = yyget_extra(scanner)->onMod(*$1, *$3);
    }
-expr-line1: term { $$ = $1;
+expr-line1: unary { $$ = $1;
    } | expr-line1 AS type {
      $$ = yyget_extra(scanner)->onAs(*$1, *$3);
    }

@@ -1,5 +1,5 @@
 " quit when a syntax file was already loaded
-if exists("b:current_syntax")
+it exists("b:current_syntax")
     finish
 endif
 
