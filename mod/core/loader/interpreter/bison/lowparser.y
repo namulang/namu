@@ -98,7 +98,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 6
+%expect 5
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -148,6 +148,7 @@
 %type <asNode> defstmt
 //      access:
 %type <asNarr> path
+%type <asNode> func-access
 //      func:
 %type <asNode> func-call
 //      tuple:
@@ -252,6 +253,7 @@ primary: INTVAL {
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
      } | defarray-initial-value { $$ = $1; }
+       | func-access { $$ = $1; }
 
 expr-line: expr-line10 { $$ = $1; }
          | expr-line10 ASSIGN expr-line {
@@ -380,6 +382,9 @@ path: NAME {
              free($3);
          }
 
+func-access: type params {
+         }
+
 //  func:
 func-call: type func-call-tuple {
         tstr<narr> argsLife($2);
@@ -501,12 +506,13 @@ defvar-compound: NAME DEFASSIGN expr-compound {
              }
 
 //          func:
-deffunc: NAME params type indentblock {
+deffunc: func-access type indentblock {
+        // TODO: verify func-access has T<> or T[].
         // take bind of exprs instance: because it's on heap. I need to free.
-        tstr<narr> params($2);
+        /*TODO: tstr<narr> params($2);
         str typeLife($3);
         $$ = yyget_extra(scanner)->onFunc(*$1, *params, *typeLife, $4->cast<blockExpr>());
-        free($1);
+        free($1);*/
      }
 
 lambda: lambda-default {
