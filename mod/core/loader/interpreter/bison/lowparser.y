@@ -166,11 +166,12 @@
 %type <asNode> while for
 //      define:
 //          value:
-%type <asNode> defvar defvar-without-initial-value defvar-initial-value 
+%type <asNode> defvar defvar-without-initial-value defvar-initial-value defvar-getset defvar-getset-item
 %type <asNode> defvar-compound
 //          func:
 %type <asNode> deffunc
 %type <asNode> lambda lambda-default lambda-deduction
+%type <asNode> get set
 //          obj:
 %type <asNode> defobj defobj-default defobj-default-generic
 //              container:
@@ -248,7 +249,9 @@ primary: INTVAL {
      } | CHARVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
      } | tuple {
-        $$ = yyget_extra(scanner)->onParanthesisAsTuple($1);
+        $$ = yyget_extra(scanner)->onParanthesisAsTuple(*$1);
+     } | NUL {
+       // ??
      } | NAME {
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
@@ -303,6 +306,10 @@ expr-line6: expr-line5 {
      $$ = $1;
    } | expr-line6 '|' expr-line5 {
      $$ = yyget_extra(scanner)->onBitwiseOr(*$1, *$3);
+   } | expr-line6 IS type {
+        // ??
+   } | expr-line6 _IN_ expr-line5 {
+        // ??
    }
 expr-line5: expr-line4 {
     $$ = $1;
@@ -491,16 +498,26 @@ for: FOR NAME _IN_ expr-line indentblock {
 
 //      define:
 //          value:
-defvar: defvar-without-initial-value { $$ = $1; }
-      | defvar-initial-value { $$ = $1; }
+defvar: defvar-without-initial-value defvar-getset {
+        // ??
+    } | defvar-initial-value defvar-getset {
+        $$ = $1;
+    }
 defvar-without-initial-value: NAME type { // exp means 'explicitly'
                              $$ = yyget_extra(scanner)->onDefVar(*$1, *$2);
                              free($1);
-                         }
+                          }
 defvar-initial-value: NAME DEFASSIGN expr-line {
-                          $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
-                          free($1);
-                      }
+                      $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
+                      free($1);
+                  }
+defvar-getset-item: get { $$ = $1; }
+                  | set { $$ = $1; }
+defvar-getset: %empty { $$ = nullptr; }
+             | defvar-getset defvar-getset-item {
+                // ??
+           }
+
 defvar-compound: NAME DEFASSIGN expr-compound {
                 $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
                 free($1);
@@ -517,16 +534,30 @@ deffunc: func-access type indentblock {
      }
 
 lambda: lambda-default {
+        // ??
     } | lambda-deduction {
+        // ??
     }
 lambda-default: tuple type indentblock {
                 // checks tuple that it's NAME.
+                // ??
             } | params type indentblock {
+                // ??
             }
 lambda-deduction: tuple indentblock {
+                // ??
                 // checks tuple that it's NAME.
               } | params indentblock {
+                // ??
               }
+
+get: GET indentblock {
+    // ??
+ }
+
+set: SET indentblock {
+    // ??
+ }
 
 //          obj:
 defobj: defobj-default { $$ = $1; }
