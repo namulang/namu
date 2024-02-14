@@ -248,7 +248,7 @@ primary: INTVAL {
      } | CHARVAL {
        $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
      } | tuple {
-        $$ = yyget_extra(scanner)->onParanthesisAsTuple($1)
+        $$ = yyget_extra(scanner)->onParanthesisAsTuple($1);
      } | NAME {
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
@@ -256,9 +256,7 @@ primary: INTVAL {
        | func-access { $$ = $1; }
 
 expr-line: expr-line10 { $$ = $1; }
-         | expr-line10 ASSIGN expr-line {
-            $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
-       } | defseq { $$ = $1; }
+         | defseq { $$ = $1; }
 expr-line10: expr-line9 {
         $$ = $1;
     } | expr-line10 ADD_ASSIGN expr-line9 {
@@ -367,6 +365,9 @@ stmt: expr-line NEWLINE { $$ = $1; }
     | break { $$ = $1; }
     | next { $$ = $1; }
     | expr-compound { $$ = $1; }
+    | expr-line10 ASSIGN expr-line NEWLINE {
+        $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
+  }
 
 defstmt: defvar NEWLINE { $$ = $1; }
        | deffunc { $$ = $1; }
