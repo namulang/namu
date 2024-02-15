@@ -142,10 +142,10 @@
 %type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9
 //          compound:
 %type <asNode> expr-compound block indentblock 
-%type <asDefBlock> defblock
+%type <asDefBlock> defblock declBlock indentDeclBlock
 //      stmt:
 %type <asNode> allstmt stmt
-%type <asNode> defstmt
+%type <asNode> declstmt defstmt
 //      access:
 %type <asNarr> path
 %type <asNode> func-access
@@ -355,6 +355,15 @@ defblock: defstmt {
         $$ = yyget_extra(scanner)->onDefBlock(*$1, *lifeStmt);
       }
 
+declBlock: declstmt {
+            // ??
+       } | declBlock declstmt {
+            // ??
+       }
+indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
+                // ??
+             }
+
 //  stmt:
 allstmt: stmt { $$ = $1; }
        | defstmt { $$ = $1; }
@@ -376,6 +385,9 @@ stmt: expr-line NEWLINE { $$ = $1; }
   } | expr-line9 MOD_ASSIGN expr-line9 NEWLINE {
         $$ = yyget_extra(scanner)->onModAssign(*$1, *$3);
   }
+
+declstmt: path { $$ = $1; }
+        | func-access { $$ = $1; }
 
 defstmt: defvar NEWLINE { $$ = $1; }
        | with-inline NEWLINE { $$ = $1; }
@@ -590,6 +602,8 @@ with-inline: WITH expr-line {
          }
 
 with-compound: with-inline indentblock {
+                // ??
+           } | with-inline ONLY indentDeclBlock {
                 // ??
            }
 
