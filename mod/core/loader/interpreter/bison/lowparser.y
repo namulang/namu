@@ -139,7 +139,7 @@
 %type <asNode> compilation-unit unary postfix primary
 //      expr:
 //          inline:
-%type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9 expr-line10 
+%type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9
 //          compound:
 %type <asNode> expr-compound block indentblock 
 %type <asDefBlock> defblock
@@ -169,13 +169,14 @@
 %type <asNode> defvar defvar-without-initial-value defvar-initial-value defvar-getset defvar-getset-item
 %type <asNode> defvar-compound
 //          func:
-%type <asNode> deffunc
+%type <asNode> deffunc get set end
 %type <asNode> lambda lambda-default lambda-deduction
-%type <asNode> get set
 //          obj:
 %type <asNode> defobj defobj-default defobj-default-generic
 //              container:
-%type <asNode> defseq defarray-initial-value
+%type <asNode> defarray-initial-value
+//              with:
+%type <asNode> with-inline with-compound
 //  predefined-type:
 %type <asObj> pack
 
@@ -258,21 +259,10 @@ primary: INTVAL {
      } | defarray-initial-value { $$ = $1; }
        | func-access { $$ = $1; }
 
-expr-line: expr-line10 { $$ = $1; }
-         | defseq { $$ = $1; }
-expr-line10: expr-line9 {
-        $$ = $1;
-    } | expr-line10 ADD_ASSIGN expr-line9 {
-        $$ = yyget_extra(scanner)->onAddAssign(*$1, *$3);
-    } | expr-line10 SUB_ASSIGN expr-line9 {
-        $$ = yyget_extra(scanner)->onSubAssign(*$1, *$3);
-    } | expr-line10 MUL_ASSIGN expr-line9 {
-        $$ = yyget_extra(scanner)->onMulAssign(*$1, *$3);
-    } | expr-line10 DIV_ASSIGN expr-line9 {
-        $$ = yyget_extra(scanner)->onDivAssign(*$1, *$3);
-    } | expr-line10 MOD_ASSIGN expr-line9 {
-        $$ = yyget_extra(scanner)->onModAssign(*$1, *$3);
-    }
+expr-line: expr-line9 { $$ = $1; }
+         | expr-line9 DOUBLE_DOT expr-line9 {
+            $$ = yyget_extra(scanner)->onDefSeq(*$1, *$3);
+       }
 expr-line9: expr-line8 {
     $$ = $1;
    } | expr-line9 LOGICAL_OR expr-line8 {
@@ -344,10 +334,11 @@ expr-line1: unary { $$ = $1;
 
 //      compound:
 expr-compound: if { $$ = $1; }
-             | expr-line10 ASSIGN expr-compound {
+             | expr-line9 ASSIGN expr-compound {
                 $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
            } | for { $$ = $1; }
              | while { $$ = $1; }
+             | end { $$ = $1; }
 
 block: allstmt {
      $$ = yyget_extra(scanner)->onBlock();
@@ -372,12 +363,24 @@ stmt: expr-line NEWLINE { $$ = $1; }
     | break { $$ = $1; }
     | next { $$ = $1; }
     | expr-compound { $$ = $1; }
-    | expr-line10 ASSIGN expr-line NEWLINE {
+    | expr-line9 ASSIGN expr-line NEWLINE {
         $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
+  } | expr-line9 ADD_ASSIGN expr-line9 NEWLINE {
+        $$ = yyget_extra(scanner)->onAddAssign(*$1, *$3);
+  } | expr-line9 SUB_ASSIGN expr-line9 NEWLINE {
+        $$ = yyget_extra(scanner)->onSubAssign(*$1, *$3);
+  } | expr-line9 MUL_ASSIGN expr-line9 NEWLINE {
+        $$ = yyget_extra(scanner)->onMulAssign(*$1, *$3);
+  } | expr-line9 DIV_ASSIGN expr-line9 NEWLINE {
+        $$ = yyget_extra(scanner)->onDivAssign(*$1, *$3);
+  } | expr-line9 MOD_ASSIGN expr-line9 NEWLINE {
+        $$ = yyget_extra(scanner)->onModAssign(*$1, *$3);
   }
 
 defstmt: defvar NEWLINE { $$ = $1; }
+       | with-inline NEWLINE { $$ = $1; }
        | deffunc { $$ = $1; }
+       | with-compound { $$ = $1; }
        | defobj { $$ = $1; }
        | defvar-compound { $$ = $1; }
 
@@ -533,6 +536,18 @@ deffunc: func-access type indentblock {
         free($1);*/
      }
 
+get: GET indentblock {
+    // ??
+ }
+
+set: SET indentblock {
+    // ??
+ }
+
+end: END indentblock {
+    // ??
+ }
+
 lambda: lambda-default {
         // ??
     } | lambda-deduction {
@@ -551,14 +566,6 @@ lambda-deduction: tuple indentblock {
                 // ??
               }
 
-get: GET indentblock {
-    // ??
- }
-
-set: SET indentblock {
-    // ??
- }
-
 //          obj:
 defobj: defobj-default { $$ = $1; }
       | defobj-default-generic { $$ = $1; }
@@ -573,12 +580,18 @@ defobj-default-generic: DEF NAME typeparams NEWLINE INDENT defblock DEDENT {
                     }
 
 //              container:
-defseq: expr-line10 DOUBLE_DOT expr-line10 {
-        $$ = yyget_extra(scanner)->onDefSeq(*$1, *$3);
-    }
 defarray-initial-value: '{' tuple-items '}' {
                         $$ = yyget_extra(scanner)->onDefArray(*$2);
                     }
+
+//              with:
+with-inline: WITH expr-line {
+            // ??
+         }
+
+with-compound: with-inline indentblock {
+                // ??
+           }
 
 //  predefined-type:
 pack: PACK path NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
