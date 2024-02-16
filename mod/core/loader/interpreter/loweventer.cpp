@@ -424,13 +424,13 @@ namespace namu {
         return _maker.make<nextExpr>();
     }
 
-    narr* me::onPath(const std::string& name) {
+    narr* me::onDotNames(const std::string& name) {
         narr* ret = new narr();
         ret->add(new nStr(name));
         return ret;
     }
 
-    narr* me::onPath(narr& names, const std::string& name) {
+    narr* me::onDotNames(narr& names, const std::string& name) {
         names.add(new nStr(name));
         return &names;
     }

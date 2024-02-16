@@ -79,8 +79,8 @@ namespace namu {
 
         //  operator:
         //      dot:
-        narr* onPath(const std::string& name);
-        narr* onPath(narr& names, const std::string& name);
+        narr* onDotNames(const std::string& name);
+        narr* onDotNames(narr& names, const std::string& name);
         node* onGet(const std::string& name);
         node* onGet(const std::string& name, const narr& args);
         node* onGet(node& from, const std::string& name);
@@ -168,6 +168,11 @@ namespace namu {
         void onCompilationUnit(obj& subpack, defBlock& blk);
         //          func:
         mgdFunc* onFunc(const std::string& name, const narr& params, const node& evalType, const blockExpr& blk);
+        // stmt:
+        node* onDeclStmt(const narr& dotnames) {
+            // TODO:
+            return nullptr;
+        }
 
         //      return:
         retExpr* onRet();
