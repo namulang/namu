@@ -1,6 +1,0 @@
-foo(age int, name str) flt
-    return 3.5
-
-main() int
-    foo()
-    return 0
