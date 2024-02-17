@@ -51,7 +51,8 @@
 * get과 set이 모두 호출불가이므로, 이 prop은 abstract 하다.
 ```go
 def Base
-    age int: get; set
+    age int
+        get set
 ```
 * * *
 # with

@@ -145,7 +145,7 @@
 %type <asDefBlock> defblock declBlock indentDeclBlock
 //      stmt:
 %type <asNode> allstmt stmt
-%type <asNode> declstmt defstmt
+%type <asNode> decl-stmt def-stmt
 //      access:
 %type <asNarr> dotnames
 %type <asNode> func-access
@@ -166,15 +166,16 @@
 %type <asNode> while for
 //      define:
 //          value:
-%type <asNode> defvar defvar-without-value defvar-value defvar-getset defvar-getset-item
-%type <asNode> defvar-compound
+%type <asNode> def-prop-inline def-prop-value def-prop-without-value def-prop-accessor def-prop-accessor-item
+%type <asNarr> def-prop-accessor-items
+%type <asNode> def-prop-compound
 //          func:
-%type <asNode> deffunc get set end
+%type <asNode> abstract-func def-func getter get setter set end
 %type <asNode> lambda lambda-default lambda-deduction
 //          obj:
-%type <asNode> defobj defobj-default defobj-default-generic
+%type <asNode> def-obj def-obj-default def-obj-default-generic
 //              container:
-%type <asNode> defarray-value
+%type <asNode> def-array-value
 //              with:
 %type <asNode> with-inline with-compound
 //  predefined-type:
@@ -256,7 +257,7 @@ primary: INTVAL {
      } | NAME {
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
-     } | defarray-value { $$ = $1; }
+     } | def-array-value { $$ = $1; }
        | func-access { $$ = $1; }
 
 expr-line: expr-line9 { $$ = $1; }
@@ -348,16 +349,16 @@ block: allstmt {
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
 
-defblock: defstmt {
+defblock: def-stmt {
         $$ = yyget_extra(scanner)->onDefBlock();
-      } | defblock defstmt {
+      } | defblock def-stmt {
         str lifeStmt($2);
         $$ = yyget_extra(scanner)->onDefBlock(*$1, *lifeStmt);
       }
 
-declBlock: declstmt {
-            $$ = yyget_extra(scanner)->onDeclStmt(*$1);
-       } | declBlock declstmt {
+declBlock: decl-stmt {
+            $$ = yyget_extra(scanner)->ondecl-stmt(*$1);
+       } | declBlock decl-stmt {
             // ??
        }
 indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
@@ -366,7 +367,7 @@ indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
 
 //  stmt:
 allstmt: stmt { $$ = $1; }
-       | defstmt { $$ = $1; }
+       | def-stmt { $$ = $1; }
 stmt: expr-line NEWLINE { $$ = $1; }
     | ret { $$ = $1; }
     | break { $$ = $1; }
@@ -386,15 +387,15 @@ stmt: expr-line NEWLINE { $$ = $1; }
         $$ = yyget_extra(scanner)->onModAssign(*$1, *$3);
   }
 
-declstmt: dotnames { $$ = $1; }
+decl-stmt: dotnames { $$ = $1; }
         | func-access { $$ = $1; }
 
-defstmt: defvar NEWLINE { $$ = $1; }
+def-stmt: def-prop-inline NEWLINE { $$ = $1; }
        | with-inline NEWLINE { $$ = $1; }
-       | deffunc { $$ = $1; }
+       | def-func { $$ = $1; }
        | with-compound { $$ = $1; }
-       | defobj { $$ = $1; }
-       | defvar-compound { $$ = $1; }
+       | def-obj { $$ = $1; }
+       | def-prop-compound { $$ = $1; }
 
 //  access:
 dotnames: NAME {
@@ -443,7 +444,7 @@ params: '(' VOID ')' {
     } | '(' param-items ')' {
         // ??
     }
-param: defvar-without-value { $$ = $1; }
+param: def-prop-without-value { $$ = $1; }
 param-items: param {
             // ??
          } | param-items ',' param {
@@ -521,33 +522,40 @@ for: FOR NAME _IN_ expr-line indentblock {
 
 //      define:
 //          value:
-defvar: defvar-without-value defvar-getset {
-        // ??
-    } | defvar-value defvar-getset {
-        $$ = $1;
-    }
-defvar-without-value: NAME type { // exp means 'explicitly'
+def-prop-inline: def-prop-without-value { $$ = $1; }
+              | def-prop-value { $$ = $1; }
+def-prop-without-value: NAME type { // exp means 'explicitly'
                         $$ = yyget_extra(scanner)->onDefVar(*$1, *$2);
                         free($1);
-                  }
-defvar-value: NAME DEFASSIGN expr-line {
+                   }
+def-prop-value: NAME DEFASSIGN expr-line {
               $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
               free($1);
           }
-defvar-getset-item: get { $$ = $1; }
-                  | set { $$ = $1; }
-defvar-getset: %empty { $$ = nullptr; }
-             | defvar-getset defvar-getset-item {
-                // ??
-           }
+def-prop-accessor: NEWLINE INDENT def-prop-accessor-items DEDENT {
+                    // ??
+              }
+def-prop-accessor-item: getter { $$ = $1; }
+                     | setter { $$ = $1; }
+def-prop-accessor-items: def-prop-accessor-item {
+                        // ??
+                    } | def-prop-accessor-items def-prop-accessor-item {
+                        // ??
+                    }
 
-defvar-compound: NAME DEFASSIGN expr-compound {
-                $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
-                free($1);
-             }
+def-prop-compound: NAME DEFASSIGN expr-compound {
+                    $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
+                    free($1);
+              } | def-prop-inline def-prop-accessor {
+                    // ??
+              }
 
 //          func:
-deffunc: func-access type indentblock {
+abstract-func: func-access type {
+            // ??
+      }
+
+def-func: abstract-func indentblock {
         // TODO: verify func-access has T<> or T[].
         // take bind of exprs instance: because it's on heap. I need to free.
         /*TODO: tstr<narr> params($2);
@@ -556,11 +564,21 @@ deffunc: func-access type indentblock {
         free($1);*/
      }
 
-get: GET indentblock {
+getter: get indentblock {
+    // ??
+ }
+get: GET {
+    // ??
+ } | '_' GET {
     // ??
  }
 
-set: SET indentblock {
+setter: set indentblock {
+    // ??
+ }
+set: SET {
+    // ??
+ } | '_' SET {
     // ??
  }
 
@@ -587,21 +605,21 @@ lambda-deduction: tuple indentblock {
               }
 
 //          obj:
-defobj: defobj-default { $$ = $1; }
-      | defobj-default-generic { $$ = $1; }
-defobj-default: DEF NAME NEWLINE INDENT defblock DEDENT {
-                $$ = yyget_extra(scanner)->onDefObj(std::string(*$2), *$5);
+def-obj: def-obj-default { $$ = $1; }
+      | def-obj-default-generic { $$ = $1; }
+def-obj-default: DEF NAME NEWLINE INDENT defblock DEDENT {
+                $$ = yyget_extra(scanner)->ondef-obj(std::string(*$2), *$5);
                 free($2);
             }
-defobj-default-generic: DEF NAME typeparams NEWLINE INDENT defblock DEDENT {
+def-obj-default-generic: DEF NAME typeparams NEWLINE INDENT defblock DEDENT {
                         tstr<args> argsLife($3);
-                        $$ = yyget_extra(scanner)->onDefObjGeneric(*$2, *argsLife, *$6);
+                        $$ = yyget_extra(scanner)->ondef-objGeneric(*$2, *argsLife, *$6);
                         free($2);
                     }
 
 //              container:
-defarray-value: '{' tuple-items '}' {
-                $$ = yyget_extra(scanner)->onDefArray(*$2);
+def-array-value: '{' tuple-items '}' {
+                $$ = yyget_extra(scanner)->ondef-array(*$2);
             }
 
 //              with:
