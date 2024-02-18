@@ -162,6 +162,7 @@
 //  keyword:
 //      branch:
 %type <asNode> if if-item ret next break
+%type <asNode> matching matchers matcher-item matcher-in
 //      loop
 %type <asNode> while for
 //      define:
@@ -373,6 +374,7 @@ stmt: expr-line NEWLINE { $$ = $1; }
     | break { $$ = $1; }
     | next { $$ = $1; }
     | expr-compound { $$ = $1; }
+    | matching { $$ = $1; }
     | expr-line9 ASSIGN expr-line NEWLINE {
         $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
   } | expr-line9 ADD_ASSIGN expr-line9 NEWLINE {
@@ -509,6 +511,21 @@ break: BREAK NEWLINE {
    } | BREAK expr-compound {
     $$ = yyget_extra(scanner)->onBreak(*$2);
    }
+
+matching: expr-line NEWLINE INDENT matchers DEDENT {
+            // ??
+      }
+matchers: matcher-item {
+            // ??
+      } | matchers matcher-item {
+            // ??
+      }
+matcher-item: matcher-in {
+                // ??
+          }
+matcher-in: _IN_ expr-line5 indentblock {
+            // ??
+        }
 
 //      loop:
 while: _WHILE_ expr-line indentblock {
