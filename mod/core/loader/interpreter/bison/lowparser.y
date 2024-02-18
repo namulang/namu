@@ -162,7 +162,8 @@
 //  keyword:
 //      branch:
 %type <asNode> if if-item ret next break
-%type <asNode> matching matchers matcher-item matcher-in
+%type <asNode> matching matchers matcher-item
+%type <asNarr> matcher-equal-rhs
 //      loop
 %type <asNode> while for
 //      define:
@@ -520,12 +521,18 @@ matchers: matcher-item {
       } | matchers matcher-item {
             // ??
       }
-matcher-item: matcher-in {
+matcher-item: _IN_ expr-line5 indentblock {
+                // ??
+          } | IS type indentblock {
+                // ??
+          } | matcher-equal-rhs indentblock {
                 // ??
           }
-matcher-in: _IN_ expr-line5 indentblock {
-            // ??
-        }
+matcher-equal-rhs: expr-line {
+                    // ??
+               } | matcher-equal-rhs ',' expr-line {
+                    // ??
+               }
 
 //      loop:
 while: _WHILE_ expr-line indentblock {
