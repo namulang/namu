@@ -72,14 +72,14 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;arithmeticObj.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../ast/mgd.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../ast/func.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../../ast/scope.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Ret&gt;</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classnamu_1_1_a_p_i_bridge.html">   13</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1_a_p_i_bridge.html">APIBridge</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1func.html">func</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1_a_p_i_bridge.html">APIBridge</a>, <a class="code" href="classnamu_1_1func.html">func</a>))</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classnamu_1_1_a_p_i_bridge.html">   13</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1_a_p_i_bridge.html">APIBridge</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1base_func.html">baseFunc</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1_a_p_i_bridge.html">APIBridge</a>, <a class="code" href="classnamu_1_1base_func.html">baseFunc</a>))</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">using</span> super::run;</div>
@@ -210,7 +210,7 @@ $(function() {
 <div class="ttc" id="aclassnamu_1_1_a_p_i_bridge_html_a6c2ff3be4c12bd185a8ddbec903f80ec"><div class="ttname"><a href="classnamu_1_1_a_p_i_bridge.html#a6c2ff3be4c12bd185a8ddbec903f80ec">namu::APIBridge::getRet</a></div><div class="ttdeci">str getRet() const override</div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:27</div></div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1arithmetic_obj_html"><div class="ttname"><a href="classnamu_1_1arithmetic_obj.html">namu::arithmeticObj</a></div><div class="ttdef"><b>Definition:</b> arithmeticObj.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1func_html"><div class="ttname"><a href="classnamu_1_1func.html">namu::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:12</div></div>
+<div class="ttc" id="aclassnamu_1_1base_func_html"><div class="ttname"><a href="classnamu_1_1base_func.html">namu::baseFunc</a></div><div class="ttdef"><b>Definition:</b> baseFunc.hpp:12</div></div>
 <div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:18</div></div>
 <div class="ttc" id="aclassnamu_1_1primitive_obj_1_1as_primitive_html"><div class="ttname"><a href="classnamu_1_1primitive_obj_1_1as_primitive.html">namu::primitiveObj::asPrimitive</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:43</div></div>
 <div class="ttc" id="aclassnamu_1_1primitive_obj_html"><div class="ttname"><a href="classnamu_1_1primitive_obj.html">namu::primitiveObj</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:37</div></div>

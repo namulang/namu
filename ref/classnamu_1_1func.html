@@ -67,9 +67,10 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classnamu_1_1func-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">namu::func Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">namu::func Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
@@ -78,50 +79,80 @@ Inheritance diagram for namu::func:</div>
  <div class="center">
   <img src="classnamu_1_1func.png" usemap="#namu::func_map" alt=""/>
   <map id="namu::func_map" name="namu::func_map">
-<area href="classnamu_1_1expr.html" alt="namu::expr" shape="rect" coords="377,168,744,192"/>
-<area href="classnamu_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="namu::node" shape="rect" coords="377,112,744,136"/>
-<area href="classnamu_1_1instance.html" alt="namu::instance" shape="rect" coords="188,56,555,80"/>
-<area href="classnamu_1_1frame_interactable.html" alt="namu::frameInteractable" shape="rect" coords="565,56,932,80"/>
-<area href="classnamu_1_1type_providable.html" alt="namu::typeProvidable" shape="rect" coords="0,0,367,24"/>
-<area href="classnamu_1_1clonable.html" alt="namu::clonable" shape="rect" coords="377,0,744,24"/>
-<area href="classnamu_1_1tcpp_bridge_func_base.html" alt="namu::tcppBridgeFuncBase&lt; void, T, S, Marshaling, Args... &gt;" shape="rect" coords="754,280,1121,304"/>
-<area href="classnamu_1_1tcpp_bridge_func_base.html" alt="namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args... &gt;" shape="rect" coords="754,336,1121,360"/>
-<area href="classnamu_1_1_a_p_i_bridge.html" alt="namu::APIBridge&lt; T, Ret &gt;" shape="rect" coords="754,392,1121,416"/>
-<area href="classnamu_1_1ctor.html" alt="namu::ctor" shape="rect" coords="754,448,1121,472"/>
-<area href="classnamu_1_1input_func.html" alt="namu::inputFunc" shape="rect" coords="754,504,1121,528"/>
-<area href="classnamu_1_1mgd_func.html" alt="namu::mgdFunc" shape="rect" coords="754,560,1121,584"/>
-<area href="classnamu_1_1print_func.html" alt="namu::printFunc&lt; T &gt;" shape="rect" coords="754,616,1121,640"/>
-<area href="classnamu_1_1tcpp_bridge_func_base.html" alt="namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;" shape="rect" coords="754,672,1121,696"/>
+<area href="classnamu_1_1base_func.html" alt="namu::baseFunc" shape="rect" coords="156,224,302,248"/>
+<area href="classnamu_1_1expr.html" alt="namu::expr" shape="rect" coords="156,168,302,192"/>
+<area href="classnamu_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="namu::node" shape="rect" coords="156,112,302,136"/>
+<area href="classnamu_1_1instance.html" alt="namu::instance" shape="rect" coords="78,56,224,80"/>
+<area href="classnamu_1_1frame_interactable.html" alt="namu::frameInteractable" shape="rect" coords="234,56,380,80"/>
+<area href="classnamu_1_1type_providable.html" alt="namu::typeProvidable" shape="rect" coords="0,0,146,24"/>
+<area href="classnamu_1_1clonable.html" alt="namu::clonable" shape="rect" coords="156,0,302,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad1dd7fbb92b8a16bf936a4c286b84456"><td class="memItemLeft" align="right" valign="top"><a id="ad1dd7fbb92b8a16bf936a4c286b84456"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>canRun</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const override</td></tr>
-<tr class="separator:ad1dd7fbb92b8a16bf936a4c286b84456"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a405fd9229cd8206d7c08763df3d69edb"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classnamu_1_1tnarr.html">params</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1func.html#a405fd9229cd8206d7c08763df3d69edb">getParams</a> () const</td></tr>
-<tr class="separator:a405fd9229cd8206d7c08763df3d69edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4ed600a160d10c18cb1e0366aa8fa8a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1func.html#ad4ed600a160d10c18cb1e0366aa8fa8a">getRet</a> () const =0</td></tr>
-<tr class="separator:ad4ed600a160d10c18cb1e0366aa8fa8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1c807a8d88398967bc3185f9e2a17f5"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1func.html#ad1c807a8d88398967bc3185f9e2a17f5">setRet</a> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;newRet)</td></tr>
-<tr class="separator:ad1c807a8d88398967bc3185f9e2a17f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classnamu_1_1expr"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1expr.html">namu::expr</a></td></tr>
-<tr class="memitem:ab836ccb2611bd8b3c0b9cd50dc2f26a2 inherit pub_methods_classnamu_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="ab836ccb2611bd8b3c0b9cd50dc2f26a2"></a>
+<tr class="memitem:ab27ba9a5637c18f31079a315dbfac70c"><td class="memItemLeft" align="right" valign="top"><a id="ab27ba9a5637c18f31079a315dbfac70c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>func</b> (const <a class="el" href="classnamu_1_1tnarr.html">params</a> &amp;ps, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;retType)</td></tr>
+<tr class="separator:ab27ba9a5637c18f31079a315dbfac70c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1db2b49cdc7e39d13a355d51ea359e7b"><td class="memItemLeft" align="right" valign="top"><a id="a1db2b49cdc7e39d13a355d51ea359e7b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>func</b> (const <a class="el" href="classnamu_1_1tnarr.html">params</a> &amp;ps, const <a class="el" href="classnamu_1_1node.html">node</a> *retType)</td></tr>
+<tr class="separator:a1db2b49cdc7e39d13a355d51ea359e7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af12be527b4757c0476722ebe8e97bd25"><td class="memItemLeft" align="right" valign="top"><a id="af12be527b4757c0476722ebe8e97bd25"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>func</b> (const <a class="el" href="classnamu_1_1tnarr.html">params</a> &amp;ps, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;retType, const <a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;newBlock)</td></tr>
+<tr class="separator:af12be527b4757c0476722ebe8e97bd25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12ccaf71af61aceafb77a154aaa2505f"><td class="memItemLeft" align="right" valign="top"><a id="a12ccaf71af61aceafb77a154aaa2505f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>func</b> (const <a class="el" href="classnamu_1_1tnarr.html">params</a> &amp;ps, const <a class="el" href="classnamu_1_1node.html">node</a> *retType, const <a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;newBlock)</td></tr>
+<tr class="separator:a12ccaf71af61aceafb77a154aaa2505f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7c25990334ce9b0c636108338c6834d"><td class="memItemLeft" align="right" valign="top"><a id="ae7c25990334ce9b0c636108338c6834d"></a>
+<a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getBlock</b> ()</td></tr>
+<tr class="separator:ae7c25990334ce9b0c636108338c6834d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9fb88fc6a26dd7d884b20e86755f25e"><td class="memItemLeft" align="right" valign="top"><a id="ad9fb88fc6a26dd7d884b20e86755f25e"></a>
+const <a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getBlock</b> () const</td></tr>
+<tr class="separator:ad9fb88fc6a26dd7d884b20e86755f25e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac387633a1148d9a2eb5f40fea53961fa"><td class="memItemLeft" align="right" valign="top"><a id="ac387633a1148d9a2eb5f40fea53961fa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setBlock</b> (const <a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;new1)</td></tr>
+<tr class="separator:ac387633a1148d9a2eb5f40fea53961fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a990892e9a1587debf47b9bfc0d3bd32e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1func.html#a990892e9a1587debf47b9bfc0d3bd32e">getRet</a> () const override</td></tr>
+<tr class="separator:a990892e9a1587debf47b9bfc0d3bd32e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bff01893d9d4de4f52b27e7059b714e"><td class="memItemLeft" align="right" valign="top">nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1func.html#a6bff01893d9d4de4f52b27e7059b714e">setRet</a> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;newRet) override</td></tr>
+<tr class="separator:a6bff01893d9d4de4f52b27e7059b714e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27c5057bef5077fe96e0d21a638018de"><td class="memItemLeft" align="right" valign="top"><a id="a27c5057bef5077fe96e0d21a638018de"></a>
 <a class="el" href="classnamu_1_1tnbicontainer.html">nbicontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>subs</b> () override</td></tr>
-<tr class="separator:ab836ccb2611bd8b3c0b9cd50dc2f26a2 inherit pub_methods_classnamu_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a27c5057bef5077fe96e0d21a638018de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec4b2ee4316caacb143e156e558b6be1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classnamu_1_1tnarr.html">params</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1func.html#aec4b2ee4316caacb143e156e558b6be1">getParams</a> () const override</td></tr>
+<tr class="separator:aec4b2ee4316caacb143e156e558b6be1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26275b350ff02191886b61685b6f7d8c"><td class="memItemLeft" align="right" valign="top"><a id="a26275b350ff02191886b61685b6f7d8c"></a>
+<a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) override</td></tr>
+<tr class="separator:a26275b350ff02191886b61685b6f7d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04183981ff795ede50eb5d8ed2017c74"><td class="memItemLeft" align="right" valign="top"><a id="a04183981ff795ede50eb5d8ed2017c74"></a>
+const <a class="el" href="structnamu_1_1point.html">point</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPos</b> () const override</td></tr>
+<tr class="separator:a04183981ff795ede50eb5d8ed2017c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85bc5b1bfefe21633ec5cdc5c5c79de8"><td class="memItemLeft" align="right" valign="top"><a id="a85bc5b1bfefe21633ec5cdc5c5c79de8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>inFrame</b> (const <a class="el" href="classnamu_1_1tbicontainable.html">bicontainable</a> &amp;<a class="el" href="classnamu_1_1args.html">args</a>) override</td></tr>
+<tr class="separator:a85bc5b1bfefe21633ec5cdc5c5c79de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab58d8844ef95836b53c061e54451df1c"><td class="memItemLeft" align="right" valign="top"><a id="ab58d8844ef95836b53c061e54451df1c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>outFrame</b> () override</td></tr>
+<tr class="separator:ab58d8844ef95836b53c061e54451df1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e1443246a0046240be347e13eb5f366"><td class="memItemLeft" align="right" valign="top"><a id="a9e1443246a0046240be347e13eb5f366"></a>
+<a class="el" href="classnamu_1_1clonable.html">clonable</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>deepClone</b> () const override</td></tr>
+<tr class="separator:a9e1443246a0046240be347e13eb5f366"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classnamu_1_1base_func"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1base_func')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1base_func.html">namu::baseFunc</a></td></tr>
+<tr class="memitem:acabddea6b5827455f44fd78b4487f2d9 inherit pub_methods_classnamu_1_1base_func"><td class="memItemLeft" align="right" valign="top"><a id="acabddea6b5827455f44fd78b4487f2d9"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>canRun</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const override</td></tr>
+<tr class="separator:acabddea6b5827455f44fd78b4487f2d9 inherit pub_methods_classnamu_1_1base_func"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classnamu_1_1expr"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1expr.html">namu::expr</a></td></tr>
 <tr class="memitem:aeaa85566fb43ad40810b9c0cf7c57799 inherit pub_methods_classnamu_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="aeaa85566fb43ad40810b9c0cf7c57799"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isImpli</b> (const <a class="el" href="classnamu_1_1type.html">type</a> &amp;to) const override</td></tr>
 <tr class="separator:aeaa85566fb43ad40810b9c0cf7c57799 inherit pub_methods_classnamu_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9dad81af2bb8187464f758c328d0e72b inherit pub_methods_classnamu_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a9dad81af2bb8187464f758c328d0e72b"></a>
 virtual <a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>asImpli</b> (const <a class="el" href="classnamu_1_1type.html">type</a> &amp;to) const override</td></tr>
 <tr class="separator:a9dad81af2bb8187464f758c328d0e72b inherit pub_methods_classnamu_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0118e7e418198e7e4d702e9570d8a903 inherit pub_methods_classnamu_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a0118e7e418198e7e4d702e9570d8a903"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>canRun</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const override</td></tr>
+<tr class="separator:a0118e7e418198e7e4d702e9570d8a903 inherit pub_methods_classnamu_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a979f0a3e3acb73b3c5d35bac44aa78db inherit pub_methods_classnamu_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a979f0a3e3acb73b3c5d35bac44aa78db"></a>
 const <a class="el" href="classnamu_1_1src.html">src</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSrc</b> () const</td></tr>
 <tr class="separator:a979f0a3e3acb73b3c5d35bac44aa78db inherit pub_methods_classnamu_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa351b10ebf1ef0f830f7a25fb409c203 inherit pub_methods_classnamu_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="aa351b10ebf1ef0f830f7a25fb409c203"></a>
-const <a class="el" href="structnamu_1_1point.html">point</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPos</b> () const override</td></tr>
-<tr class="separator:aa351b10ebf1ef0f830f7a25fb409c203 inherit pub_methods_classnamu_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnamu_1_1node"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1node')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1node.html">namu::node</a></td></tr>
 <tr class="memitem:aaa0c5a2ee37ce890854488c85d34ed7c inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="aaa0c5a2ee37ce890854488c85d34ed7c"></a>
 <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const std::string &amp;name) const</td></tr>
@@ -168,9 +199,6 @@ template&lt;typename T  = me&gt; </td></tr>
 template&lt;typename T  = me&gt; </td></tr>
 <tr class="memitem:a3846395b0cb1dcd342ff1067b4f711c1 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tnarr.html">tnarr</a>&lt; T, <a class="el" href="classnamu_1_1str_tactic.html">strTactic</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subAll</b> (const std::string &amp;name, const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const</td></tr>
 <tr class="separator:a3846395b0cb1dcd342ff1067b4f711c1 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee67ee174c46308de65f6cf8e3fee80a inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="aee67ee174c46308de65f6cf8e3fee80a"></a>
-virtual <a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a)=0</td></tr>
-<tr class="separator:aee67ee174c46308de65f6cf8e3fee80a inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c6533ff0df733531481e2860cc30119 inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a3c6533ff0df733531481e2860cc30119"></a>
 <a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const std::string &amp;name, const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a)</td></tr>
 <tr class="separator:a3c6533ff0df733531481e2860cc30119 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -304,6 +332,12 @@ virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () 
 void&#160;</td><td class="memItemRight" valign="bottom"><b>inFrame</b> ()</td></tr>
 <tr class="separator:ad494fa4ca460827f89be49da79d6f41b inherit pub_methods_classnamu_1_1frame_interactable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:aa19ecb7a635b6e120bffce6c43ecd457"><td class="memItemLeft" align="right" valign="top"><a id="aa19ecb7a635b6e120bffce6c43ecd457"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>exprMaker</b></td></tr>
+<tr class="separator:aa19ecb7a635b6e120bffce6c43ecd457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_classnamu_1_1node"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classnamu_1_1node')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classnamu_1_1node.html">namu::node</a></td></tr>
@@ -327,8 +361,8 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
 <tr class="separator:a6e79fbdbee36e6a2568efc53511addfa inherit pro_attribs_classnamu_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a405fd9229cd8206d7c08763df3d69edb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a405fd9229cd8206d7c08763df3d69edb">&#9670;&nbsp;</a></span>getParams()</h2>
+<a id="aec4b2ee4316caacb143e156e558b6be1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec4b2ee4316caacb143e156e558b6be1">&#9670;&nbsp;</a></span>getParams()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -337,7 +371,7 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual const <a class="el" href="classnamu_1_1tnarr.html">params</a>&amp; namu::func::getParams </td>
+          <td class="memname">const <a class="el" href="classnamu_1_1tnarr.html">params</a>&amp; namu::func::getParams </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -345,19 +379,19 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>parameters of run() func. parameter is just a type. and I don't care about the value of each parameters. that is the reason why I uses a ref to represents parameter.</dd></dl>
 <p>I need the name and which types should be casted and binded from given arguments are matters. </p>
 
-<p>Reimplemented in <a class="el" href="classnamu_1_1print_func.html#aebe290ee72b91ccfc95c9a0efef845d4">namu::printFunc&lt; T &gt;</a>, <a class="el" href="classnamu_1_1input_func.html#a32c42c8706d2787a6dd644dc6d627d90">namu::inputFunc</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a9d6d91e3f664016501000f27d61fb7f7">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a9d6d91e3f664016501000f27d61fb7f7">namu::tcppBridgeFuncBase&lt; void, T, S, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a9d6d91e3f664016501000f27d61fb7f7">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1mgd_func.html#a4fb5a9629e06a10c84dcbab1687524ba">namu::mgdFunc</a>, and <a class="el" href="classnamu_1_1default_copy_ctor.html#a27a0a06d614438592b169d4a06fee8b5">namu::defaultCopyCtor</a>.</p>
+<p>Reimplemented from <a class="el" href="classnamu_1_1base_func.html#ac316e87db008720afeb93bed70ff05a8">namu::baseFunc</a>.</p>
 
 </div>
 </div>
-<a id="ad4ed600a160d10c18cb1e0366aa8fa8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4ed600a160d10c18cb1e0366aa8fa8a">&#9670;&nbsp;</a></span>getRet()</h2>
+<a id="a990892e9a1587debf47b9bfc0d3bd32e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a990892e9a1587debf47b9bfc0d3bd32e">&#9670;&nbsp;</a></span>getRet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -366,7 +400,7 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classnamu_1_1tstr.html">str</a> namu::func::getRet </td>
+          <td class="memname"><a class="el" href="classnamu_1_1tstr.html">str</a> namu::func::getRet </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -374,19 +408,19 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>node which has same type of the func. in namu lang, even type is an object. that's why I return this as a node. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>please don't confuse this to evalType. evaluate means program just read the code and expand or calculate then replace it to the accurate another identifier or variable. so evalType of the func is just the func itself because there is nothing to calculate or run. that's completely different to Return type of the function. if there is a <a class="el" href="classnamu_1_1run_expr.html">runExpr</a> instance, and it takes the func and proper argument, then it can be evaluated and its evalType is the return type of the func. </dd></dl>
 
-<p>Implemented in <a class="el" href="classnamu_1_1_a_p_i_bridge.html#a6c2ff3be4c12bd185a8ddbec903f80ec">namu::APIBridge&lt; T, Ret &gt;</a>, <a class="el" href="classnamu_1_1print_func.html#ac5f5699e61d8ca4f6e31b75914a45495">namu::printFunc&lt; T &gt;</a>, <a class="el" href="classnamu_1_1input_func.html#a6e0a48e007e498dbd220237cd10326b2">namu::inputFunc</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a900b56173009e241b33654738cf3044f">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a900b56173009e241b33654738cf3044f">namu::tcppBridgeFuncBase&lt; void, T, S, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#a900b56173009e241b33654738cf3044f">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1mgd_func.html#ac19329ae8fc48ad8190fe86339d55202">namu::mgdFunc</a>, and <a class="el" href="classnamu_1_1ctor.html#a07ee6bd3daa3d3a7180c67e34dee1b2f">namu::ctor</a>.</p>
+<p>Implements <a class="el" href="classnamu_1_1base_func.html#a73e6a05d7790269a6bf007c98ac2b1b4">namu::baseFunc</a>.</p>
 
 </div>
 </div>
-<a id="ad1c807a8d88398967bc3185f9e2a17f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1c807a8d88398967bc3185f9e2a17f5">&#9670;&nbsp;</a></span>setRet()</h2>
+<a id="a6bff01893d9d4de4f52b27e7059b714e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bff01893d9d4de4f52b27e7059b714e">&#9670;&nbsp;</a></span>setRet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -395,7 +429,7 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual nbool namu::func::setRet </td>
+          <td class="memname">nbool namu::func::setRet </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td>
           <td class="paramname"><em>newRet</em></td><td>)</td>
@@ -404,13 +438,13 @@ static <a class="el" href="classnamu_1_1instancer.html">instancer</a> &amp;&#160
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>whether setting new return-type has been done or not. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#aae8c3cd82f9d801455385bfa35ce2ca3">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#aae8c3cd82f9d801455385bfa35ce2ca3">namu::tcppBridgeFuncBase&lt; void, T, S, Marshaling, Args... &gt;</a>, <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#aae8c3cd82f9d801455385bfa35ce2ca3">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args... &gt;</a>, and <a class="el" href="classnamu_1_1mgd_func.html#a810cebf387ea8ab7f854abf31aae9744">namu::mgdFunc</a>.</p>
+<p>Reimplemented from <a class="el" href="classnamu_1_1base_func.html#a300d321ad397241522bfb37baaed8764">namu::baseFunc</a>.</p>
 
 </div>
 </div>
