@@ -263,9 +263,6 @@ primary: INTVAL {
        | func-access { $$ = $1; }
 
 expr-line: expr-line9 { $$ = $1; }
-         | expr-line9 DOUBLE_DOT expr-line9 {
-            $$ = yyget_extra(scanner)->onDefSeq(*$1, *$3);
-       }
 expr-line9: expr-line8 {
     $$ = $1;
    } | expr-line9 LOGICAL_OR expr-line8 {
@@ -332,7 +329,9 @@ expr-line2: expr-line1 {
    }
 expr-line1: unary { $$ = $1;
    } | expr-line1 AS type {
-     $$ = yyget_extra(scanner)->onAs(*$1, *$3);
+        $$ = yyget_extra(scanner)->onAs(*$1, *$3);
+   } | unary DOUBLE_DOT unary {
+        $$ = yyget_extra(scanner)->onDefSeq(*$1, *$3);
    }
 
 //      compound:
@@ -526,6 +525,18 @@ matcher-item: _IN_ expr-line5 indentblock {
           } | IS type indentblock {
                 // ??
           } | matcher-equal-rhs indentblock {
+                // ??
+          } | '>' expr-line6 indentblock {
+                // ??
+          } | '<' expr-line6 indentblock {
+                // ??
+          } | GE expr-line6 indentblock {
+                // ??
+          } | LE expr-line6 indentblock {
+                // ??
+          } | EQ expr-line6 indentblock {
+                // ??
+          } | NE expr-line6 indentblock {
                 // ??
           }
 matcher-equal-rhs: expr-line {
