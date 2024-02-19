@@ -98,7 +98,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 5
+%expect 6
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -142,7 +142,7 @@
 %type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9
 //          compound:
 %type <asNode> expr-compound block indentblock 
-%type <asDefBlock> defblock declBlock indentDeclBlock
+%type <asDefBlock> indentDefBlock defblock declBlock indentDeclBlock
 //      stmt:
 %type <asNode> allstmt stmt
 %type <asNode> decl-stmt def-stmt
@@ -349,6 +349,15 @@ block: allstmt {
    }
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
+           | ':' allstmt {
+            // ??
+         }
+
+indentDefBlock: NEWLINE INDENT defblock DEDENT {
+                // ??
+            } | ':' defstmt {
+                // ??
+            }
 
 defblock: def-stmt {
         $$ = yyget_extra(scanner)->onDefBlock();
@@ -363,6 +372,10 @@ declBlock: decl-stmt {
             // ??
        }
 indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
+                // ??
+             } | ':' allstmt {
+                // TODO: allstmt should be declstmt.
+                // for preventing reduce/reduce conflict, I need to declare allstmt on here rule.
                 // ??
              }
 
@@ -641,14 +654,14 @@ lambda-deduction: tuple indentblock {
 
 //          obj:
 def-obj: def-obj-default { $$ = $1; }
-      | def-obj-default-generic { $$ = $1; }
-def-obj-default: DEF NAME NEWLINE INDENT defblock DEDENT {
-                $$ = yyget_extra(scanner)->ondef-obj(std::string(*$2), *$5);
+       | def-obj-default-generic { $$ = $1; }
+def-obj-default: DEF NAME indentDefBlock {
+                $$ = yyget_extra(scanner)->onDefObj(std::string(*$2), *$3);
                 free($2);
             }
-def-obj-default-generic: DEF NAME typeparams NEWLINE INDENT defblock DEDENT {
+def-obj-default-generic: DEF NAME typeparams indentDefBlock {
                         tstr<args> argsLife($3);
-                        $$ = yyget_extra(scanner)->ondef-objGeneric(*$2, *argsLife, *$6);
+                        $$ = yyget_extra(scanner)->onDefObjGeneric(*$2, *argsLife, *$4);
                         free($2);
                     }
 
