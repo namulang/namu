@@ -98,7 +98,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 6
+%expect 5
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -144,8 +144,8 @@
 %type <asNode> expr-compound block indentblock
 %type <asDefBlock> indentDefBlock defblock declBlock indentDeclBlock
 //      stmt:
-%type <asNode> allstmt stmt declstmt defstmt
-%type <asNarr> allstmt-chain defstmt-chain
+%type <asNode> allstmt stmt decl-stmt def-stmt
+%type <asNarr> allstmt-chain def-stmt-chain
 //      access:
 %type <asNarr> dotnames
 %type <asNode> func-access
@@ -161,7 +161,7 @@
 %type <asArgs> typenames typeparams
 //  keyword:
 //      branch:
-%type <asNode> if if-item ret next break
+%type <asNode> if ret next break
 %type <asNode> matching matchers matcher-item
 %type <asNarr> matcher-equal-rhs
 //      loop
@@ -355,7 +355,7 @@ indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
 
 indentDefBlock: NEWLINE INDENT defblock DEDENT {
                 // ??
-            } | ':' defstmt-chain {
+            } | ':' def-stmt-chain {
                 // ??
             }
 
@@ -417,9 +417,9 @@ allstmt-chain: allstmt {
            } | allstmt-chain ';' allstmt {
                 // ??
            }
-defstmt-chain: defstmt {
+def-stmt-chain: def-stmt {
                 // ??
-           } | defstmt-chain ';' defstmt {
+           } | def-stmt-chain ';' def-stmt {
                 // ??
            }
 
@@ -505,16 +505,14 @@ typenames: type {
 
 //  keyword:
 //      branch:
-if: if-item {
-    $$ = yyget_extra(scanner)->onEndOfIf();
-} | if-item _ELSE_ indentblock {
-    $$ = yyget_extra(scanner)->onElse($1->cast<ifExpr>(), $3->cast<blockExpr>());
-} | if-item _ELSE_ if-item {
-    $$ = $1; // TODO
+if: IF expr-line indentblock {
+    $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
+    // TODO: $$ = yyget_extra(scanner)->onEndOfIf();
+} | IF expr-line _ELSE_ indentblock {
+    $$ = yyget_extra(scanner)->onElse($2->cast<ifExpr>(), $4->cast<blockExpr>());
+} | IF expr-line _ELSE_ if {
+    // TODO: ??
 }
-if-item: IF expr-line indentblock {
-        $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
-     }
 
 ret: RET NEWLINE {
     $$ = yyget_extra(scanner)->onRet();
