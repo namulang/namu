@@ -141,11 +141,11 @@
 //          inline:
 %type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9
 //          compound:
-%type <asNode> expr-compound block indentblock 
+%type <asNode> expr-compound block indentblock
 %type <asDefBlock> indentDefBlock defblock declBlock indentDeclBlock
 //      stmt:
-%type <asNode> allstmt stmt
-%type <asNode> decl-stmt def-stmt
+%type <asNode> allstmt stmt declstmt defstmt
+%type <asNarr> allstmt-chain defstmt-chain
 //      access:
 %type <asNarr> dotnames
 %type <asNode> func-access
@@ -186,8 +186,8 @@
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
     ============================================================================================  */
-/*%right ?? ?? */
-/*%left ?? ?? */
+%precedence ':'
+%precedence ';'
 
 
 
@@ -349,13 +349,13 @@ block: allstmt {
    }
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
-           | ':' allstmt {
+           | ':' allstmt-chain {
             // ??
          }
 
 indentDefBlock: NEWLINE INDENT defblock DEDENT {
                 // ??
-            } | ':' defstmt {
+            } | ':' defstmt-chain {
                 // ??
             }
 
@@ -373,7 +373,7 @@ declBlock: decl-stmt {
        }
 indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
                 // ??
-             } | ':' allstmt {
+             } | ':' allstmt-chain {
                 // TODO: allstmt should be declstmt.
                 // for preventing reduce/reduce conflict, I need to declare allstmt on here rule.
                 // ??
@@ -411,6 +411,17 @@ def-stmt: def-prop-inline NEWLINE { $$ = $1; }
        | with-compound { $$ = $1; }
        | def-obj { $$ = $1; }
        | def-prop-compound { $$ = $1; }
+
+allstmt-chain: allstmt {
+                // ??
+           } | allstmt-chain ';' allstmt {
+                // ??
+           }
+defstmt-chain: defstmt {
+                // ??
+           } | defstmt-chain ';' defstmt {
+                // ??
+           }
 
 //  access:
 dotnames: NAME {
