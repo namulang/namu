@@ -351,11 +351,15 @@ block: allstmt {
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
            | ':' allstmt-chain {
             // ??
+         } | ':' ';' {
+            // ??
          }
 
 indentDefBlock: NEWLINE INDENT defblock DEDENT {
                 // ??
             } | ':' def-stmt-chain {
+                // ??
+            } | ':' ';' {
                 // ??
             }
 
