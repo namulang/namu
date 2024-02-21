@@ -137,6 +137,7 @@
 // nonterminal:
 //  basic component:
 %type <asNode> compilation-unit unary postfix primary
+%type <asStr> visibility
 //      expr:
 //          inline:
 %type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9
@@ -144,7 +145,7 @@
 %type <asNode> expr-compound block indentblock
 %type <asDefBlock> indentDefBlock defblock declBlock indentDeclBlock
 //      stmt:
-%type <asNode> allstmt stmt decl-stmt def-stmt
+%type <asNode> allstmt stmt decl-stmt def-stmt def-stmt-no-visibility def-stmt-visibility
 %type <asNarr> allstmt-chain def-stmt-chain
 //      access:
 %type <asNarr> dotnames
@@ -207,6 +208,7 @@ compilation-unit: pack defblock {
                 _onEndParse(scanner);
               }
 
+// basic component:
 unary: postfix {
      $$ = $1;
    } | DOUBLE_PLUS unary {
@@ -261,7 +263,19 @@ primary: INTVAL {
         free($1);
      } | def-array-value { $$ = $1; }
        | func-access { $$ = $1; }
-
+visibility: '_' '+' {
+            // ??
+        } | '+' '_' {
+            // ??
+        } | '_' {
+            // ??
+        } | '+' {
+            // ??
+        } | %empty {
+            // ??
+        }
+//  expr:
+//      inline:
 expr-line: expr-line9 { $$ = $1; }
 expr-line9: expr-line8 {
     $$ = $1;
@@ -333,7 +347,6 @@ expr-line1: unary { $$ = $1;
    } | unary DOUBLE_DOT unary {
         $$ = yyget_extra(scanner)->onDefSeq(*$1, *$3);
    }
-
 //      compound:
 expr-compound: if { $$ = $1; }
              | expr-line9 ASSIGN expr-compound {
@@ -385,7 +398,8 @@ indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
 
 //  stmt:
 allstmt: stmt { $$ = $1; }
-       | def-stmt { $$ = $1; }
+       | def-stmt-no-visibility { $$ = $1; }
+       | def-stmt-visibility { $$ = $1; }
 stmt: expr-line NEWLINE { $$ = $1; }
     | ret { $$ = $1; }
     | break { $$ = $1; }
@@ -409,12 +423,17 @@ stmt: expr-line NEWLINE { $$ = $1; }
 decl-stmt: dotnames { $$ = $1; }
         | func-access { $$ = $1; }
 
-def-stmt: def-prop-inline NEWLINE { $$ = $1; }
-       | with-inline NEWLINE { $$ = $1; }
-       | def-func { $$ = $1; }
-       | with-compound { $$ = $1; }
-       | def-obj { $$ = $1; }
-       | def-prop-compound { $$ = $1; }
+def-stmt: def-stmt-no-visibility { $$ = $1; }
+        | visibility def-stmt-visibility {
+            // ??
+      }
+def-stmt-no-visibility: with-inline NEWLINE { $$ = $1; }
+                      | with-compound { $$ = $1; }
+                      | def-obj { $$ = $1; }
+def-stmt-visibility: def-prop-inline NEWLINE { $$ = $1; }
+                   | def-func { $$ = $1; }
+                   | abstract-func { $$ = $1; }
+                   | def-prop-compound { $$ = $1; }
 
 allstmt-chain: allstmt {
                 // ??
