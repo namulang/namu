@@ -384,7 +384,7 @@ defblock: def-stmt {
       }
 
 declBlock: decl-stmt {
-            $$ = yyget_extra(scanner)->ondecl-stmt(*$1);
+            // ??
        } | declBlock decl-stmt {
             // ??
        }
@@ -420,8 +420,11 @@ stmt: expr-line NEWLINE { $$ = $1; }
         $$ = yyget_extra(scanner)->onModAssign(*$1, *$3);
   }
 
-decl-stmt: dotnames { $$ = $1; }
-        | func-access { $$ = $1; }
+decl-stmt: dotnames {
+            // ??
+       } | func-access {
+            // ??
+       }
 
 def-stmt: def-stmt-no-visibility { $$ = $1; }
         | visibility def-stmt-visibility {
@@ -699,7 +702,7 @@ def-obj-default-generic: DEF NAME typeparams indentDefBlock {
 
 //              container:
 def-array-value: '{' tuple-items '}' {
-                $$ = yyget_extra(scanner)->ondef-array(*$2);
+                $$ = yyget_extra(scanner)->onDefArray(*$2);
             }
 
 //              with:
