@@ -112,14 +112,19 @@ def _cleanParser():
     pathDir= namuDir
     if isWindow():
         pathDir += "\\mod\\core\\loader\\interpreter\\bison\\"
+        seedlingPathDir = cwd + "\\..\\mod\\seedling\\parser\\"
     else:
         pathDir += "/mod/core/loader/interpreter/bison/"
+        seedlingPathDir = cwd + "/../mod/seedling/parser/"
 
     printInfoEnd("removing generated parser...")
     os.system("rm " + pathDir + "lowscanner.cpp")
     os.system("rm " + pathDir + "lowscanner.hpp")
     os.system("rm " + pathDir + "lowparser.cpp")
     os.system("rm " + pathDir + "lowparser.hpp")
+    os.system("rm " + seedlingPathDir + "seedlingParser.cpp")
+    os.system("rm " + seedlingPathDir + "seedlingParser.hpp")
+    os.system("rm " + seedlingPathDir + "seedlingScanner.cpp")
 
 def _cleanIntermediates():
     printInfoEnd("removing intermediate outputs...")
@@ -671,25 +676,6 @@ def clean():
     _cleanIntermediates()
     _cleanDir(binDir)
     _cleanParser()
-    if isWindow():
-        _cleanDir(cwd + "\\mod")
-        bisonDir = cwd + "\\..\\mod\\namu\\loader\\interpreter\\bison"
-    else:
-        _cleanDir(cwd + "/mod")
-        bisonDir = cwd + "/../mod/namu/loader/interpreter/bison"
-    try:
-        if isWindow():
-            os.remove(bisonDir + "\\lowparser.hpp")
-            os.remove(bisonDir + "\\lowparser.cpp")
-            os.remove(bisonDir + "\\lowscanner.hpp")
-            os.remove(bisonDir + "\\lowscanner.cpp")
-        else:
-            os.remove(bisonDir + "/lowparser.hpp")
-            os.remove(bisonDir + "/lowparser.cpp")
-            os.remove(bisonDir + "/lowscanner.hpp")
-            os.remove(bisonDir + "/lowscanner.cpp")
-    except FileNotFoundError:
-        pass
     if isWindow():
         os.system("del /f /s /q " + cwd + "\\html")
     else:
