@@ -98,7 +98,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 5
+%expect 4
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -148,15 +148,14 @@
 %type <asNode> allstmt stmt decl-stmt def-stmt def-stmt-no-visibility def-stmt-visibility
 %type <asNarr> allstmt-chain def-stmt-chain
 //      access:
-%type <asNarr> dotnames
-%type <asNode> func-access
+%type <asNode> access var-access call-access
 //      func:
 %type <asNode> func-call
 //      tuple:
 %type <asNarr> tuple tuple-items
 %type <asNarr> func-call-tuple func-call-tuple-items
 %type <asNode> func-call-tuple-item param
-%type <asNarr> params
+%type <asNarr> params args args-items
 //      type:
 %type <asNode> type
 %type <asArgs> typenames typeparams
@@ -231,7 +230,7 @@ postfix: primary {
         $$ = yyget_extra(scanner)->onUnaryPostfixDoubleMinus(*$1);
      } | postfix DOUBLE_PLUS {
         $$ = yyget_extra(scanner)->onUnaryPostfixDoublePlus(*$1);
-     } | postfix '.' NAME {
+     } | postfix '.' access {
         $$ = yyget_extra(scanner)->onGet(*$1, *$3);
         free($3);
      } | postfix '.' func-call {
@@ -244,25 +243,23 @@ postfix: primary {
      }
 
 primary: INTVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<nInt>($1);
+        $$ = yyget_extra(scanner)->onPrimitive<nInt>($1);
      } | STRVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<nStr>(*$1);
-       free($1);
+        $$ = yyget_extra(scanner)->onPrimitive<nStr>(*$1);
+        free($1);
      } | FLTVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<nFlt>($1);
+        $$ = yyget_extra(scanner)->onPrimitive<nFlt>($1);
      } | BOOLVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<nBool>($1);
+        $$ = yyget_extra(scanner)->onPrimitive<nBool>($1);
      } | CHARVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
+        $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
      } | tuple {
         $$ = yyget_extra(scanner)->onParanthesisAsTuple(*$1);
      } | NUL {
-       // ??
-     } | NAME {
-        $$ = yyget_extra(scanner)->onGet(*$1);
-        free($1);
+        // ??
      } | def-array-value { $$ = $1; }
        | func-access { $$ = $1; }
+       | access { $$ = $1; }
 visibility: '_' '+' {
             // ??
         } | '+' '_' {
@@ -368,9 +365,8 @@ indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
             // ??
          }
 
-indentDefBlock: NEWLINE INDENT defblock DEDENT {
-                // ??
-            } | ':' def-stmt-chain {
+indentDefBlock: NEWLINE INDENT defblock DEDENT { $$ = $3; }
+              | ':' def-stmt-chain {
                 // ??
             } | ':' ';' {
                 // ??
@@ -420,15 +416,14 @@ stmt: expr-line NEWLINE { $$ = $1; }
         $$ = yyget_extra(scanner)->onModAssign(*$1, *$3);
   }
 
-decl-stmt: dotnames {
-            // ??
-       } | func-access {
+decl-stmt: access NEWLINE {
             // ??
        }
 
 def-stmt: def-stmt-no-visibility { $$ = $1; }
         | visibility def-stmt-visibility {
-            // ??
+            // TODO: ??
+            $$ = $2;
       }
 def-stmt-no-visibility: with-inline NEWLINE { $$ = $1; }
                       | with-compound { $$ = $1; }
@@ -450,15 +445,17 @@ def-stmt-chain: def-stmt {
            }
 
 //  access:
-dotnames: NAME {
-         $$ = yyget_extra(scanner)->onDotNames(std::string(*$1));
-         free($1);
-      } | dotnames '.' NAME {
-         $$ = yyget_extra(scanner)->onDotNames(*$1, std::string(*$3));
-         free($3);
-      }
-
-func-access: type params {
+access: call-access {
+        // ??
+    } | var-access {
+        // ??
+    }
+var-access: type {
+            // ??
+        }
+call-access: type params {
+            // ??
+            $$ = yyget_extra(scanner)->onGet()
          }
 
 //  func:
@@ -502,6 +499,16 @@ param-items: param {
          } | param-items ',' param {
             // ??
          }
+args: '(' ')' {
+        // ??
+  } | '(' args-items ')' {
+        // ??
+  }
+args-items: NAME {
+            // ??
+        } | args-items NAME {
+            // ??
+        }
 
 //  type:
 type: VOID { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
@@ -634,12 +641,12 @@ def-prop-compound: NAME DEFASSIGN expr-compound {
               }
 
 //          func:
-abstract-func: func-access type {
+abstract-func: call-access type {
             // ??
       }
 
 def-func: abstract-func indentblock {
-        // TODO: verify func-access has T<> or T[].
+        // TODO: verify call-access has T<> or T[].
         // take bind of exprs instance: because it's on heap. I need to free.
         /*TODO: tstr<narr> params($2);
         str typeLife($3);
@@ -674,13 +681,13 @@ lambda: lambda-default {
     } | lambda-deduction {
         // ??
     }
-lambda-default: tuple type indentblock {
+lambda-default: args type indentblock {
                 // checks tuple that it's NAME.
                 // ??
             } | params type indentblock {
                 // ??
             }
-lambda-deduction: tuple indentblock {
+lambda-deduction: args indentblock {
                 // ??
                 // checks tuple that it's NAME.
               } | params indentblock {
@@ -717,7 +724,7 @@ with-compound: with-inline indentblock {
            }
 
 //  predefined-type:
-pack: PACK dotnames NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
+pack: PACK postfix NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
     | %empty { $$ = yyget_extra(scanner)->onPack(); }
 
 

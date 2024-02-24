@@ -111,7 +111,9 @@ namespace namu {
         _srcArea.rel();
     }
 
-    obj* me::onPack(const narr& dotname) {
+    obj* me::onPack(const node& path) {
+        // TODO: dotname should be chain of getExpr.
+
         NAMU_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
 
         // pack syntax rule #1:
@@ -422,17 +424,6 @@ namespace namu {
         NAMU_DI("tokenEvent: onNext()");
 
         return _maker.make<nextExpr>();
-    }
-
-    narr* me::onDotNames(const std::string& name) {
-        narr* ret = new narr();
-        ret->add(new nStr(name));
-        return ret;
-    }
-
-    narr* me::onDotNames(narr& names, const std::string& name) {
-        names.add(new nStr(name));
-        return &names;
     }
 
     node* me::onGet(const std::string& name) {
