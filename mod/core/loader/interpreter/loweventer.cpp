@@ -13,10 +13,10 @@ namespace namu {
     NAMU_DEF_ME(loweventer)
 
     namespace {
-        string merge(const narr& dotname) {
+        string join(const std::vector<string>& dotnames) {
             string ret;
-            for(auto& e : dotname)
-                ret += e.cast<std::string>();
+            for (const string& name : dotnames)
+                ret += name;
             return ret;
         }
     }
@@ -112,13 +112,12 @@ namespace namu {
     }
 
     obj* me::onPack(const node& path) {
-        // TODO: dotname should be chain of getExpr.
-
-        NAMU_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
+        std::vector<string> dotnames = _toDotnames(path);
+        NAMU_DI("tokenEvent: onPack(%s)", join(dotnames).c_str());
 
         // pack syntax rule #1:
         //  if there is no specified name of pack, I create an one.
-        std::string firstName = dotname[0].cast<std::string>();
+        const std::string& firstName = dotnames[0];
         if(!_slot)
             _slot.bind(new slot(manifest(firstName)));
         obj* e = &_slot->getPack();
@@ -134,8 +133,8 @@ namespace namu {
         //      'pack mypack.component.ui'
         //  in this scenario, mypack instance should be created before. and component sub
         //  pack object can be created in this parsing keyword.
-        for(int n=1; n < dotname.len(); n++) {
-            const std::string& name = dotname[n].cast<std::string>();
+        for(int n=1; n < dotnames.size(); n++) {
+            const std::string& name = dotnames[n];
             obj* sub = &e->sub<obj>(name);
             if(nul(sub))
                 e->subs().add(name, sub = new obj(new mgdType(name)));
@@ -330,6 +329,26 @@ namespace namu {
         return ret;
     }
 
+    std::vector<string> me::_toDotnames(const node& path) {
+        std::vector<string> ret;
+        const getExpr* iter = &path.cast<getExpr>();
+        if(nul(iter)) {
+            onErr(errCode::PACK_ONLY_ALLOW_VAR_ACCESS);
+            return std::vector<string>();
+        }
+
+        do {
+            ret.push_back(iter->getSubName());
+            const node& next = iter->getMe();
+            if(!next.is<getExpr>()) {
+                onErr(errCode::PACK_ONLY_ALLOW_VAR_ACCESS);
+                return std::vector<string>();
+            }
+            iter = &next.cast<getExpr>();
+        } while(iter);
+        return ret;
+    }
+
     node* me::onDefObjGeneric(const std::string& name, const args& typeParams, defBlock& blk) {
         NAMU_DI("tokenEvent: onDefObjGeneric(%s, type.len[%d], defBlock[%x]", name.c_str(),
                 typeParams.len(), &blk);
@@ -436,15 +455,9 @@ namespace namu {
         return _maker.make<getExpr>(name, args);
     }
 
-    node* me::onGet(node& from, const std::string& name) {
-        NAMU_DI("tokenEvent: onGet(%s, %s)", from.getType().getName().c_str(), name.c_str());
-        return _maker.make<getExpr>(from, name);
-    }
-
-    node* me::onGet(node& from, const std::string& name, const narr& args) {
-        NAMU_DI("tokenEvent: onGet(%s, %s, %d)", from.getType().getName().c_str(), name.c_str(),
-                args.len());
-        return _maker.make<getExpr>(from, name, args);
+    node* me::onGet(node& from, getExpr& name) {
+        NAMU_DI("tokenEvent: onGet(%s, %s)", from.getType().getName().c_str(), name.getSubName().c_str());
+        name.setMe(from);
     }
 
     node* me::onGetArray(node& elemType) {

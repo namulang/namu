@@ -33,6 +33,7 @@ PAIRX(PARSING_HAS_ERR,              "parsing has done. but something went wrong:
 PAIRX(NO_SRC,                       "source code not provided")
 
 // pack:
+PAIRX(PACK_ONLY_ALLOW_VAR_ACCESS,   "variable path only allowed when you define a pack")
 PAIRX(NO_PACK_TRAY,                 "pack tray hasn't been created before")
 PAIRX(NO_PACK,                      "no pack has been specified")
 PAIRX(PACK_NOT_MATCH,               "pack %s expected, but it was %s")

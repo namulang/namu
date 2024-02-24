@@ -18,8 +18,10 @@
               (Current).start.row = (Current).end.row = YYRHSLOC (Rhs, 0).end.row; \
               (Current).start.col = (Current).end.col = YYRHSLOC (Rhs, 0).end.col; \
           } \
-          yyget_extra(scanner)->onSrcArea(Current); \
+          EVENTER.onSrcArea(Current); \
         } while(0)
+
+    #define EVENTER (*yyget_extra(scanner))
 }
 
 /*  ============================================================================================
@@ -203,7 +205,7 @@
 compilation-unit: pack defblock {
                 tstr<obj> pak(*$1);
                 tstr<defBlock> lifeBlock($2);
-                yyget_extra(scanner)->onCompilationUnit(*pak, *lifeBlock);
+                EVENTER.onCompilationUnit(*pak, *lifeBlock);
                 _onEndParse(scanner);
               }
 
@@ -211,50 +213,50 @@ compilation-unit: pack defblock {
 unary: postfix {
      $$ = $1;
    } | DOUBLE_PLUS unary {
-     $$ = yyget_extra(scanner)->onUnaryDoublePlus(*$2);
+     $$ = EVENTER.onUnaryDoublePlus(*$2);
    } | DOUBLE_MINUS unary {
-     $$ = yyget_extra(scanner)->onUnaryDoubleMinus(*$2);
+     $$ = EVENTER.onUnaryDoubleMinus(*$2);
    } | '+' unary {
      $$ = $2;
    } | '-' unary {
-     $$ = yyget_extra(scanner)->onUnaryMinus(*$2);
+     $$ = EVENTER.onUnaryMinus(*$2);
    } | '!' unary {
-     $$ = yyget_extra(scanner)->onUnaryNot(*$2);
+     $$ = EVENTER.onUnaryNot(*$2);
    } | '~' unary {
-     $$ = yyget_extra(scanner)->onUnaryBitwiseNot(*$2);
+     $$ = EVENTER.onUnaryBitwiseNot(*$2);
    }
 
 postfix: primary {
        $$ = $1;
      } | postfix DOUBLE_MINUS {
-        $$ = yyget_extra(scanner)->onUnaryPostfixDoubleMinus(*$1);
+        $$ = EVENTER.onUnaryPostfixDoubleMinus(*$1);
      } | postfix DOUBLE_PLUS {
-        $$ = yyget_extra(scanner)->onUnaryPostfixDoublePlus(*$1);
+        $$ = EVENTER.onUnaryPostfixDoublePlus(*$1);
      } | postfix '.' access {
-        $$ = yyget_extra(scanner)->onGet(*$1, *$3);
+        $$ = EVENTER.onGet(*$1, $3->cast<getExpr>());
         free($3);
      } | postfix '.' func-call {
-        $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
+        $$ = EVENTER.onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
      } | func-call {
         $$ = $1;
         // $1 is still on heap without binder
      } | postfix '[' expr-line ']' {
-        $$ = yyget_extra(scanner)->onGetElem(*$1, *$3);
+        $$ = EVENTER.onGetElem(*$1, *$3);
      }
 
 primary: INTVAL {
-        $$ = yyget_extra(scanner)->onPrimitive<nInt>($1);
+        $$ = EVENTER.onPrimitive<nInt>($1);
      } | STRVAL {
-        $$ = yyget_extra(scanner)->onPrimitive<nStr>(*$1);
+        $$ = EVENTER.onPrimitive<nStr>(*$1);
         free($1);
      } | FLTVAL {
-        $$ = yyget_extra(scanner)->onPrimitive<nFlt>($1);
+        $$ = EVENTER.onPrimitive<nFlt>($1);
      } | BOOLVAL {
-        $$ = yyget_extra(scanner)->onPrimitive<nBool>($1);
+        $$ = EVENTER.onPrimitive<nBool>($1);
      } | CHARVAL {
-        $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
+        $$ = EVENTER.onPrimitive<nChar>($1);
      } | tuple {
-        $$ = yyget_extra(scanner)->onParanthesisAsTuple(*$1);
+        $$ = EVENTER.onParanthesisAsTuple(*$1);
      } | NUL {
         // ??
      } | def-array-value { $$ = $1; }
@@ -277,36 +279,36 @@ expr-line: expr-line9 { $$ = $1; }
 expr-line9: expr-line8 {
     $$ = $1;
    } | expr-line9 LOGICAL_OR expr-line8 {
-    $$ = yyget_extra(scanner)->onOr(*$1, *$3);
+    $$ = EVENTER.onOr(*$1, *$3);
    } | expr-line9 LOGICAL_AND expr-line8 {
-    $$ = yyget_extra(scanner)->onAnd(*$1, *$3);
+    $$ = EVENTER.onAnd(*$1, *$3);
    }
 expr-line8: expr-line7 {
     $$ = $1;
    } | expr-line8 LSHIFT expr-line7 {
-    $$ = yyget_extra(scanner)->onLShift(*$1, *$3);
+    $$ = EVENTER.onLShift(*$1, *$3);
    } | expr-line8 RSHIFT expr-line7 {
-    $$ = yyget_extra(scanner)->onRShift(*$1, *$3);
+    $$ = EVENTER.onRShift(*$1, *$3);
    }
 expr-line7: expr-line6 {
     $$ = $1;
    } | expr-line7 '>' expr-line6 {
-    $$ = yyget_extra(scanner)->onGt(*$1, *$3);
+    $$ = EVENTER.onGt(*$1, *$3);
    } | expr-line7 '<' expr-line6 {
-    $$ = yyget_extra(scanner)->onLt(*$1, *$3);
+    $$ = EVENTER.onLt(*$1, *$3);
    } | expr-line7 GE expr-line6 {
-    $$ = yyget_extra(scanner)->onGe(*$1, *$3);
+    $$ = EVENTER.onGe(*$1, *$3);
    } | expr-line7 LE expr-line6 {
-    $$ = yyget_extra(scanner)->onLe(*$1, *$3);
+    $$ = EVENTER.onLe(*$1, *$3);
    } | expr-line7 EQ expr-line6 {
-    $$ = yyget_extra(scanner)->onEq(*$1, *$3);
+    $$ = EVENTER.onEq(*$1, *$3);
    } | expr-line7 NE expr-line6 {
-    $$ = yyget_extra(scanner)->onNe(*$1, *$3);
+    $$ = EVENTER.onNe(*$1, *$3);
    }
 expr-line6: expr-line5 {
      $$ = $1;
    } | expr-line6 '|' expr-line5 {
-     $$ = yyget_extra(scanner)->onBitwiseOr(*$1, *$3);
+     $$ = EVENTER.onBitwiseOr(*$1, *$3);
    } | expr-line6 IS type {
         // ??
    } | expr-line6 _IN_ expr-line5 {
@@ -315,47 +317,47 @@ expr-line6: expr-line5 {
 expr-line5: expr-line4 {
     $$ = $1;
    } | expr-line5 '^' expr-line4 {
-    $$ = yyget_extra(scanner)->onBitwiseXor(*$1, *$3);
+    $$ = EVENTER.onBitwiseXor(*$1, *$3);
    }
 expr-line4: expr-line3 {
     $$ = $1;
    } | expr-line4 '&' expr-line3 {
-    $$ = yyget_extra(scanner)->onBitwiseAnd(*$1, *$3);
+    $$ = EVENTER.onBitwiseAnd(*$1, *$3);
    }
 expr-line3: expr-line2 {
     $$ = $1;
    } | expr-line3 '+' expr-line2 {
-    $$ = yyget_extra(scanner)->onAdd(*$1, *$3);
+    $$ = EVENTER.onAdd(*$1, *$3);
    } | expr-line3 '-' expr-line2 {
-    $$ = yyget_extra(scanner)->onSub(*$1, *$3);
+    $$ = EVENTER.onSub(*$1, *$3);
    }
 expr-line2: expr-line1 {
     $$ = $1;
    } | expr-line2 '*' expr-line1 {
-    $$ = yyget_extra(scanner)->onMul(*$1, *$3);
+    $$ = EVENTER.onMul(*$1, *$3);
    } | expr-line2 '/' expr-line1 {
-    $$ = yyget_extra(scanner)->onDiv(*$1, *$3);
+    $$ = EVENTER.onDiv(*$1, *$3);
    } | expr-line2 '%' expr-line1 {
-    $$ = yyget_extra(scanner)->onMod(*$1, *$3);
+    $$ = EVENTER.onMod(*$1, *$3);
    }
 expr-line1: unary { $$ = $1;
    } | expr-line1 AS type {
-        $$ = yyget_extra(scanner)->onAs(*$1, *$3);
+        $$ = EVENTER.onAs(*$1, *$3);
    } | unary DOUBLE_DOT unary {
-        $$ = yyget_extra(scanner)->onDefSeq(*$1, *$3);
+        $$ = EVENTER.onDefSeq(*$1, *$3);
    }
 //      compound:
 expr-compound: if { $$ = $1; }
              | expr-line9 ASSIGN expr-compound {
-                $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
+                $$ = EVENTER.onAssign(*$1, *$3);
            } | for { $$ = $1; }
              | while { $$ = $1; }
              | end { $$ = $1; }
 
 block: allstmt {
-     $$ = yyget_extra(scanner)->onBlock();
+     $$ = EVENTER.onBlock();
    } | block allstmt {
-     $$ = yyget_extra(scanner)->onBlock($1->cast<blockExpr>(), *$2);
+     $$ = EVENTER.onBlock($1->cast<blockExpr>(), *$2);
    }
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
@@ -373,10 +375,10 @@ indentDefBlock: NEWLINE INDENT defblock DEDENT { $$ = $3; }
             }
 
 defblock: def-stmt {
-        $$ = yyget_extra(scanner)->onDefBlock();
+        $$ = EVENTER.onDefBlock();
       } | defblock def-stmt {
         str lifeStmt($2);
-        $$ = yyget_extra(scanner)->onDefBlock(*$1, *lifeStmt);
+        $$ = EVENTER.onDefBlock(*$1, *lifeStmt);
       }
 
 declBlock: decl-stmt {
@@ -403,17 +405,17 @@ stmt: expr-line NEWLINE { $$ = $1; }
     | expr-compound { $$ = $1; }
     | matching { $$ = $1; }
     | expr-line9 ASSIGN expr-line NEWLINE {
-        $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
+        $$ = EVENTER.onAssign(*$1, *$3);
   } | expr-line9 ADD_ASSIGN expr-line9 NEWLINE {
-        $$ = yyget_extra(scanner)->onAddAssign(*$1, *$3);
+        $$ = EVENTER.onAddAssign(*$1, *$3);
   } | expr-line9 SUB_ASSIGN expr-line9 NEWLINE {
-        $$ = yyget_extra(scanner)->onSubAssign(*$1, *$3);
+        $$ = EVENTER.onSubAssign(*$1, *$3);
   } | expr-line9 MUL_ASSIGN expr-line9 NEWLINE {
-        $$ = yyget_extra(scanner)->onMulAssign(*$1, *$3);
+        $$ = EVENTER.onMulAssign(*$1, *$3);
   } | expr-line9 DIV_ASSIGN expr-line9 NEWLINE {
-        $$ = yyget_extra(scanner)->onDivAssign(*$1, *$3);
+        $$ = EVENTER.onDivAssign(*$1, *$3);
   } | expr-line9 MOD_ASSIGN expr-line9 NEWLINE {
-        $$ = yyget_extra(scanner)->onModAssign(*$1, *$3);
+        $$ = EVENTER.onModAssign(*$1, *$3);
   }
 
 decl-stmt: access NEWLINE {
@@ -455,29 +457,29 @@ var-access: type {
         }
 call-access: type params {
             // ??
-            $$ = yyget_extra(scanner)->onGet()
+            // $$ = yyget_extra(scanner)->onGet()
          }
 
 //  func:
 func-call: type func-call-tuple {
         tstr<narr> argsLife($2);
         str typeLife($1);
-        $$ = yyget_extra(scanner)->onRunExpr(*typeLife, *argsLife);
+        $$ = EVENTER.onRunExpr(*typeLife, *argsLife);
       }
 
 //  tuple:
 tuple: '(' tuple-items ')' {
     $$ = $2;
   } | '(' ')' {
-    $$ = yyget_extra(scanner)->onTuple();
+    $$ = EVENTER.onTuple();
   }
 tuple-items: expr-line {
-            $$ = yyget_extra(scanner)->onTuple($1);
+            $$ = EVENTER.onTuple($1);
         } | tuple-items ',' expr-line {
-            $$ = yyget_extra(scanner)->onTuple(*$1, $3);
+            $$ = EVENTER.onTuple(*$1, $3);
         }
 func-call-tuple: '(' func-call-tuple-items ')' { $$=$2; }
-               | '(' ')' { $$ = yyget_extra(scanner)->onTuple(); }
+               | '(' ')' { $$ = EVENTER.onTuple(); }
 func-call-tuple-item: expr-line {
                         // ??
                   } | lambda {
@@ -511,38 +513,38 @@ args-items: NAME {
         }
 
 //  type:
-type: VOID { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
-    | INT { $$ = yyget_extra(scanner)->onPrimitive<nInt>(); }
-    | BYTE { $$ = yyget_extra(scanner)->onPrimitive<nByte>(); }
-    | CHAR { $$ = yyget_extra(scanner)->onPrimitive<nChar>(); }
-    | STR { $$ = yyget_extra(scanner)->onPrimitive<nStr>(); }
-    | BOOL { $$ = yyget_extra(scanner)->onPrimitive<nBool>(); }
-    | FLT { $$ = yyget_extra(scanner)->onPrimitive<nFlt>(); }
+type: VOID { $$ = EVENTER.onPrimitive<nVoid>(); }
+    | INT { $$ = EVENTER.onPrimitive<nInt>(); }
+    | BYTE { $$ = EVENTER.onPrimitive<nByte>(); }
+    | CHAR { $$ = EVENTER.onPrimitive<nChar>(); }
+    | STR { $$ = EVENTER.onPrimitive<nStr>(); }
+    | BOOL { $$ = EVENTER.onPrimitive<nBool>(); }
+    | FLT { $$ = EVENTER.onPrimitive<nFlt>(); }
     | NAME { // TODO: handle 'as' expr
-        $$ = yyget_extra(scanner)->onGet(*$1);
+        $$ = EVENTER.onGet(*$1);
         free($1);
   } | type OPEN_CLOSE_SQUARE_BRACKET {
-        $$ = yyget_extra(scanner)->onGetArray(*$1);
+        $$ = EVENTER.onGetArray(*$1);
   } | NAME typeparams {
         tstr<args> argsLife($2);
-        $$ = yyget_extra(scanner)->onGetGeneric(*$1, *argsLife);
+        $$ = EVENTER.onGetGeneric(*$1, *argsLife);
         free($1);
   }
 
 typeparams: '<' typenames '>' { $$ = $2; }
 typenames: type {
-            $$ = yyget_extra(scanner)->onTypeNames(*$1);
+            $$ = EVENTER.onTypeNames(*$1);
        } | typenames ',' type {
-            $$ = yyget_extra(scanner)->onTypeNames(*$1, *$3);
+            $$ = EVENTER.onTypeNames(*$1, *$3);
        }
 
 //  keyword:
 //      branch:
 if: IF expr-line indentblock {
-    $$ = yyget_extra(scanner)->onIf(*$2, $3->cast<blockExpr>());
-    // TODO: $$ = yyget_extra(scanner)->onEndOfIf();
+    $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>());
+    // TODO: $$ = EVENTER.onEndOfIf();
 } | IF expr-line _ELSE_ indentblock {
-    $$ = yyget_extra(scanner)->onElse($2->cast<ifExpr>(), $4->cast<blockExpr>());
+    $$ = EVENTER.onElse($2->cast<ifExpr>(), $4->cast<blockExpr>());
 } | IF expr-line _ELSE_ if {
     // TODO: ??
 }
@@ -550,21 +552,21 @@ if: IF expr-line indentblock {
 ret: RET NEWLINE {
     $$ = yyget_extra(scanner)->onRet();
  } | RET expr-line NEWLINE {
-    $$ = yyget_extra(scanner)->onRet(*$2);
+    $$ = EVENTER.onRet(*$2);
  } | RET expr-compound {
-    $$ = yyget_extra(scanner)->onRet(*$2);
+    $$ = EVENTER.onRet(*$2);
  }
 
 next: NEXT NEWLINE {
-    $$ = yyget_extra(scanner)->onNext();
+    $$ = EVENTER.onNext();
    }
 
 break: BREAK NEWLINE {
-    $$ = yyget_extra(scanner)->onBreak();
+    $$ = EVENTER.onBreak();
    } | BREAK expr-line NEWLINE {
-    $$ = yyget_extra(scanner)->onBreak(*$2);
+    $$ = EVENTER.onBreak(*$2);
    } | BREAK expr-compound {
-    $$ = yyget_extra(scanner)->onBreak(*$2);
+    $$ = EVENTER.onBreak(*$2);
    }
 
 matching: expr-line NEWLINE INDENT matchers DEDENT {
@@ -602,11 +604,11 @@ matcher-equal-rhs: expr-line {
 
 //      loop:
 while: _WHILE_ expr-line indentblock {
-     $$ = yyget_extra(scanner)->onWhile(*$2, $3->cast<blockExpr>());
+     $$ = EVENTER.onWhile(*$2, $3->cast<blockExpr>());
    }
 
 for: FOR NAME _IN_ expr-line indentblock {
-    $$ = yyget_extra(scanner)->onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
+    $$ = EVENTER.onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
     free($2);
  }
 
@@ -615,11 +617,11 @@ for: FOR NAME _IN_ expr-line indentblock {
 def-prop-inline: def-prop-without-value { $$ = $1; }
               | def-prop-value { $$ = $1; }
 def-prop-without-value: NAME type { // exp means 'explicitly'
-                        $$ = yyget_extra(scanner)->onDefVar(*$1, *$2);
+                        $$ = EVENTER.onDefVar(*$1, *$2);
                         free($1);
                    }
 def-prop-value: NAME DEFASSIGN expr-line {
-              $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
+              $$ = EVENTER.onDefAssign(*$1, *$3);
               free($1);
           }
 def-prop-accessor: NEWLINE INDENT def-prop-accessor-items DEDENT {
@@ -634,7 +636,7 @@ def-prop-accessor-items: def-prop-accessor-item {
                     }
 
 def-prop-compound: NAME DEFASSIGN expr-compound {
-                    $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
+                    $$ = EVENTER.onDefAssign(*$1, *$3);
                     free($1);
               } | def-prop-inline def-prop-accessor {
                     // ??
@@ -650,7 +652,7 @@ def-func: abstract-func indentblock {
         // take bind of exprs instance: because it's on heap. I need to free.
         /*TODO: tstr<narr> params($2);
         str typeLife($3);
-        $$ = yyget_extra(scanner)->onFunc(*$1, *params, *typeLife, $4->cast<blockExpr>());
+        $$ = EVENTER.onFunc(*$1, *params, *typeLife, $4->cast<blockExpr>());
         free($1);*/
      }
 
@@ -698,18 +700,18 @@ lambda-deduction: args indentblock {
 def-obj: def-obj-default { $$ = $1; }
        | def-obj-default-generic { $$ = $1; }
 def-obj-default: DEF NAME indentDefBlock {
-                $$ = yyget_extra(scanner)->onDefObj(std::string(*$2), *$3);
+                $$ = EVENTER.onDefObj(std::string(*$2), *$3);
                 free($2);
             }
 def-obj-default-generic: DEF NAME typeparams indentDefBlock {
                         tstr<args> argsLife($3);
-                        $$ = yyget_extra(scanner)->onDefObjGeneric(*$2, *argsLife, *$4);
+                        $$ = EVENTER.onDefObjGeneric(*$2, *argsLife, *$4);
                         free($2);
                     }
 
 //              container:
 def-array-value: '{' tuple-items '}' {
-                $$ = yyget_extra(scanner)->onDefArray(*$2);
+                $$ = EVENTER.onDefArray(*$2);
             }
 
 //              with:
@@ -724,8 +726,8 @@ with-compound: with-inline indentblock {
            }
 
 //  predefined-type:
-pack: PACK postfix NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
-    | %empty { $$ = yyget_extra(scanner)->onPack(); }
+pack: PACK postfix NEWLINE { $$ = EVENTER.onPack(*$2); }
+    | %empty { $$ = EVENTER.onPack(); }
 
 
 %%
@@ -756,8 +758,8 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     yysymbol_kind_t symbol = yypcontext_token(ctx);
 
     if(symbol != YYSYMBOL_YYUNDEF) {
-        yyget_extra(scanner)->onSrcArea(*yypcontext_location(ctx));
-        yyget_extra(scanner)->onParseErr(traceErr(ctx, scanner), yysymbol_name(symbol));
+        EVENTER.onSrcArea(*yypcontext_location(ctx));
+        EVENTER.onParseErr(traceErr(ctx, scanner), yysymbol_name(symbol));
     }
 
     _onEndParse(scanner);
@@ -765,11 +767,11 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
 }
 
 void _onEndParse(yyscan_t scanner) {
-    yyget_extra(scanner)->onEndParse();
+    EVENTER.onEndParse();
     yyset_lineno(0, scanner);
 }
 
 // errors except syntax will come here. for instance, when available memory doesn't exist.
 void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
-    yyget_extra(scanner)->onErr(errCode::MSG, msg);
+    EVENTER.onErr(errCode::MSG, msg);
 }

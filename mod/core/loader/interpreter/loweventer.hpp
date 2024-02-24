@@ -81,8 +81,7 @@ namespace namu {
         //      dot:
         node* onGet(const std::string& name);
         node* onGet(const std::string& name, const narr& args);
-        node* onGet(node& from, const std::string& name);
-        node* onGet(node& from, const std::string& name, const narr& args);
+        node* onGet(node& from, getExpr& name);
         //      unary operation:
         FBOExpr* onUnaryMinus(const node& it);
         FBOExpr* onUnaryNot(const node& it);
@@ -128,7 +127,7 @@ namespace namu {
         node* onGetArray(node& elemType);
 
         //  keyword:
-        obj* onPack(const narr& dotname);
+        obj* onPack(const node& path);
         obj* onPack();
         obj* onSubPack(obj& subpack);
         blockExpr* onBlock();
@@ -208,6 +207,7 @@ namespace namu {
         nbool _onInjectCtor(obj& it, defBlock& blk);
         std::vector<std::string> _extractParamTypeNames(const args& types);
         const node& _onDefArrayType(const narr& items);
+        std::vector<std::string> _toDotnames(const node& path);
 
     private:
         tokenScan* _mode;
