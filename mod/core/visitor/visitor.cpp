@@ -197,9 +197,9 @@ namespace namu {
             right.accept(visitInfo {"", &d, 0, 1, i.depth+1}, *this);
     }
 
-    void me::onTraverse(visitInfo i, defVarExpr& d) {
+    void me::onTraverse(visitInfo i, defPropExpr& d) {
         if(_isLog)
-            NAMU_DI("defVarExpr[%s]::onTraverse", i.name.c_str());
+            NAMU_DI("defPropExpr[%s]::onTraverse", i.name.c_str());
 
         node& org = (node&) d.getOrigin();
         if(!nul(org))

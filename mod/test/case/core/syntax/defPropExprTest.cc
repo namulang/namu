@@ -4,10 +4,10 @@ using namespace namu;
 using namespace std;
 
 namespace {
-    struct defVarExprTest : public namuSyntaxTest {};
+    struct defPropExprTest : public namuSyntaxTest {};
 }
 
-TEST_F(defVarExprTest, simpleDefineVariable) {
+TEST_F(defPropExprTest, simpleDefineVariable) {
     if(make().parse(R"SRC(
         main() void
             age int
@@ -21,14 +21,14 @@ TEST_F(defVarExprTest, simpleDefineVariable) {
         const narr& stmts = f.getBlock().getStmts();
         ASSERT_FALSE(nul(stmts));
         ASSERT_EQ(stmts.len(), 2);
-        const defVarExpr& defVar = stmts[0].cast<defVarExpr>();
-        ASSERT_FALSE(nul(defVar));
-        ASSERT_EQ(defVar.getName(), "age");
-        ASSERT_EQ(defVar.getOrigin().getType(), ttype<nInt>());
+        const defPropExpr& defProp = stmts[0].cast<defPropExpr>();
+        ASSERT_FALSE(nul(defProp));
+        ASSERT_EQ(defProp.getName(), "age");
+        ASSERT_EQ(defProp.getOrigin().getType(), ttype<nInt>());
     }
 }
 
-TEST_F(defVarExprTest, definePackVariableNegative) {
+TEST_F(defPropExprTest, definePackVariableNegative) {
     negative().make().parse(R"SRC(
         name str
         age int
@@ -40,7 +40,7 @@ TEST_F(defVarExprTest, definePackVariableNegative) {
     shouldVerified(false);
 }
 
-TEST_F(defVarExprTest, definePackVariable2) {
+TEST_F(defPropExprTest, definePackVariable2) {
     make().parse(R"SRC(
         name str
         age int
@@ -75,7 +75,7 @@ TEST_F(defVarExprTest, definePackVariable2) {
     ASSERT_EQ(grade.get(), 0.0f);
 }
 
-TEST_F(defVarExprTest, defVarVoidNegative) {
+TEST_F(defPropExprTest, defPropVoidNegative) {
     make().negative().parse(R"SRC(
         main() void
             a void
@@ -83,7 +83,7 @@ TEST_F(defVarExprTest, defVarVoidNegative) {
     )SRC").shouldVerified(false);
 }
 
-TEST_F(defVarExprTest, passingVoidIsOk) {
+TEST_F(defPropExprTest, passingVoidIsOk) {
     make().parse(R"SRC(
         foo() void
             ret
@@ -96,12 +96,12 @@ TEST_F(defVarExprTest, passingVoidIsOk) {
     ASSERT_TRUE(res->isSub<nVoid>());
 }
 
-TEST_F(defVarExprTest, defVoidContainerNegative) {
+TEST_F(defPropExprTest, defVoidContainerNegative) {
     make().negative().parse(R"SRC(
         main() void
             a void[]
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
-/* TODO: TEST_F(defVarExprTest, defineVarWithoutCtorNegative) {
+/* TODO: TEST_F(defPropExprTest, defineVarWithoutCtorNegative) {
 }*/

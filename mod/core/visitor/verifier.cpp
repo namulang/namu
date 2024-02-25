@@ -222,8 +222,8 @@ namespace namu {
         }
     }
 
-    void me::onVisit(visitInfo i, defVarExpr& me) {
-        LOG("verify: defVarExpr: check duplication");
+    void me::onVisit(visitInfo i, defPropExpr& me) {
+        LOG("verify: defPropExpr: check duplication");
         const nbicontainer& top = thread::get().getNowFrame().getTop();
         str eval = me.getEval();
         if(!eval)
@@ -231,7 +231,7 @@ namespace namu {
         if(eval->isSub<nVoid>())
             return _err(me.getPos(), errCode::VOID_CANT_DEFINED);
 
-        LOG("verify: defVarExpr: check whether make a void container.");
+        LOG("verify: defPropExpr: check whether make a void container.");
         const narr& beans = eval->getType().getBeans();
         for(const node& bean : beans)
             if(bean.isSub<nVoid>())
@@ -246,7 +246,7 @@ namespace namu {
 
         // 'check duplication' must be front of 'is %s definable':
         std::string name = me.getName();
-        LOG("verify: defVarExpr: is %s definable?", name.c_str());
+        LOG("verify: defPropExpr: is %s definable?", name.c_str());
         if(name == "") return _err(me.getPos(), errCode::HAS_NO_NAME);
         const node& org = me.getOrigin();
         if(nul(org)) return _err(me.getPos(), errCode::NO_ORIGIN, name.c_str());
@@ -262,7 +262,7 @@ namespace namu {
             nbool res = me._where ? me._where->add(name.c_str(), (node*) eval->clone()) : thread::get()._getNowFrame()
                     .pushLocal(name, (node*) eval->clone());
             if(!res)
-                LOG("verify: defVarExpr: define variable %s is failed.", name.c_str());
+                LOG("verify: defPropExpr: define variable %s is failed.", name.c_str());
         }
     }
 

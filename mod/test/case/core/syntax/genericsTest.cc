@@ -25,7 +25,7 @@ TEST_F(genericsTest, simpleDefineGenerics) {
 }
 
 TEST_F(genericsTest, defineGenerics) {
-    // defVar, func
+    // defProp, func
     make().parse(R"SRC(
         def object<e>
             age e

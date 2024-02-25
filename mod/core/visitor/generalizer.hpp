@@ -14,7 +14,7 @@ namespace namu {
         using super::onVisit;
         void onVisit(visitInfo i, asExpr& me) override;
         void onVisit(visitInfo i, blockExpr& me) override;
-        void onVisit(visitInfo i, defVarExpr& me) override;
+        void onVisit(visitInfo i, defPropExpr& me) override;
         void onVisit(visitInfo i, runExpr& me) override;
         void onVisit(visitInfo i, func& me) override;
         void onVisit(visitInfo i, ctor& me) override;

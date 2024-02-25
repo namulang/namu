@@ -4,7 +4,7 @@
 #include "exprs/runExpr.hpp"
 #include "exprs/blockExpr.hpp"
 #include "exprs/exprMaker.hpp"
-#include "exprs/defVarExpr.hpp"
+#include "exprs/defPropExpr.hpp"
 #include "exprs/assignExpr.hpp"
 #include "exprs/defAssignExpr.hpp"
 #include "exprs/asExpr.hpp"

@@ -189,11 +189,11 @@ namespace namu {
         if(nul(s))
             return onSrcErr(errCode::IS_NULL, "s"), onDefBlock();
 
-        defVarExpr& defVar = candidate.cast<defVarExpr>();
-        if(!nul(defVar)) {
-            node* clone = (node*) defVar.getOrigin().clone();
-            clone->_setPos(defVar.getPos());
-            s.asScope->add(defVar.getName(), *clone);
+        defPropExpr& defProp = candidate.cast<defPropExpr>();
+        if(!nul(defProp)) {
+            node* clone = (node*) defProp.getOrigin().clone();
+            clone->_setPos(defProp.getPos());
+            s.asScope->add(defProp.getName(), *clone);
             return &s;
         }
         defAssignExpr& defAssign = candidate.cast<defAssignExpr>();
@@ -211,7 +211,7 @@ namespace namu {
     node* me::onDefVar(const std::string& name, const node& origin) {
         NAMU_DI("tokenEvent: onDefVar(%s, %s)", origin.getType().getName().c_str(), name.c_str());
 
-        return _maker.make<defVarExpr>(name, origin);
+        return _maker.make<defPropExpr>(name, origin);
     }
 
     node* me::onDefArray(const narr& items) {
@@ -241,10 +241,10 @@ namespace namu {
     params me::_convertParams(const narr& ps) {
         params ret;
         for(auto& p : ps) {
-            tstr<defVarExpr> defVar(p.cast<defVarExpr>());
-            if(!defVar) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
+            tstr<defPropExpr> defProp(p.cast<defPropExpr>());
+            if(!defProp) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
 
-            ret.add(new param(defVar->getName(), defVar->getOrigin()));
+            ret.add(new param(defProp->getName(), defProp->getOrigin()));
         }
 
         return ret;

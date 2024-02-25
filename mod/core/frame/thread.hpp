@@ -17,7 +17,7 @@ namespace namu {
         friend class baseObj; // for frames.
         friend class mgdFunc; // for frames.
         friend class blockExpr; // for frames.
-        friend class defVarExpr; // for frames
+        friend class defPropExpr; // for frames
         friend class defAssignExpr;
         friend class assignExpr;
         friend class verifier;

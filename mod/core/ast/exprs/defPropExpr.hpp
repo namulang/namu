@@ -8,14 +8,14 @@ namespace namu {
 
     class visitor;
 
-    class _nout defVarExpr : public expr {
-        NAMU(CLASS(defVarExpr, expr, expr::exprType), VISIT())
+    class _nout defPropExpr : public expr {
+        NAMU(CLASS(defPropExpr, expr, expr::exprType), VISIT())
         friend class mgdFunc;
         friend class verifier;
 
     public:
-        defVarExpr(const std::string& name, const node& org);
-        defVarExpr(const std::string& name, const node& org, const scope& where);
+        defPropExpr(const std::string& name, const node& org);
+        defPropExpr(const std::string& name, const node& org, const scope& where);
 
     public:
         using super::run;

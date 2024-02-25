@@ -1,13 +1,13 @@
-#include "defVarExpr.hpp"
+#include "defPropExpr.hpp"
 #include "../../frame/thread.hpp"
 #include "../../visitor/visitor.hpp"
 
 namespace namu {
 
-    NAMU(DEF_ME(defVarExpr), DEF_VISIT())
+    NAMU(DEF_ME(defPropExpr), DEF_VISIT())
 
-    me::defVarExpr(const std::string& name, const node& org): _org(org), _name(name) {}
-    me::defVarExpr(const std::string& name, const node& org, const scope& where): _org(org),
+    me::defPropExpr(const std::string& name, const node& org): _org(org), _name(name) {}
+    me::defPropExpr(const std::string& name, const node& org, const scope& where): _org(org),
             _name(name), _where(where) {}
 
     str me::run(const args& a) {
