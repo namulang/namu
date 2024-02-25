@@ -458,6 +458,7 @@ namespace namu {
     node* me::onGet(node& from, getExpr& name) {
         NAMU_DI("tokenEvent: onGet(%s, %s)", from.getType().getName().c_str(), name.getSubName().c_str());
         name.setMe(from);
+        return &name;
     }
 
     node* me::onGetArray(node& elemType) {

@@ -138,6 +138,7 @@
 
 // nonterminal:
 //  basic component:
+%type <asInt> delimiter
 %type <asNode> compilation-unit unary postfix primary
 %type <asStr> visibility
 //      expr:
@@ -202,6 +203,8 @@
 %%
 
 // basic component:
+delimiter: NEWLINE { $$ = 0; }
+         | ';' { $$ = 0; }
 compilation-unit: pack defblock {
                 tstr<obj> pak(*$1);
                 tstr<defBlock> lifeBlock($2);
@@ -398,27 +401,27 @@ indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
 allstmt: stmt { $$ = $1; }
        | def-stmt-no-visibility { $$ = $1; }
        | def-stmt-visibility { $$ = $1; }
-stmt: expr-line NEWLINE { $$ = $1; }
+stmt: expr-line delimiter { $$ = $1; }
     | ret { $$ = $1; }
     | break { $$ = $1; }
     | next { $$ = $1; }
     | expr-compound { $$ = $1; }
     | matching { $$ = $1; }
-    | expr-line9 ASSIGN expr-line NEWLINE {
+    | expr-line9 ASSIGN expr-line delimiter {
         $$ = EVENTER.onAssign(*$1, *$3);
-  } | expr-line9 ADD_ASSIGN expr-line9 NEWLINE {
+  } | expr-line9 ADD_ASSIGN expr-line9 delimiter {
         $$ = EVENTER.onAddAssign(*$1, *$3);
-  } | expr-line9 SUB_ASSIGN expr-line9 NEWLINE {
+  } | expr-line9 SUB_ASSIGN expr-line9 delimiter {
         $$ = EVENTER.onSubAssign(*$1, *$3);
-  } | expr-line9 MUL_ASSIGN expr-line9 NEWLINE {
+  } | expr-line9 MUL_ASSIGN expr-line9 delimiter {
         $$ = EVENTER.onMulAssign(*$1, *$3);
-  } | expr-line9 DIV_ASSIGN expr-line9 NEWLINE {
+  } | expr-line9 DIV_ASSIGN expr-line9 delimiter {
         $$ = EVENTER.onDivAssign(*$1, *$3);
-  } | expr-line9 MOD_ASSIGN expr-line9 NEWLINE {
+  } | expr-line9 MOD_ASSIGN expr-line9 delimiter {
         $$ = EVENTER.onModAssign(*$1, *$3);
   }
 
-decl-stmt: access NEWLINE {
+decl-stmt: access delimiter {
             // ??
        }
 
@@ -427,10 +430,10 @@ def-stmt: def-stmt-no-visibility { $$ = $1; }
             // TODO: ??
             $$ = $2;
       }
-def-stmt-no-visibility: with-inline NEWLINE { $$ = $1; }
+def-stmt-no-visibility: with-inline delimiter { $$ = $1; }
                       | with-compound { $$ = $1; }
                       | def-obj { $$ = $1; }
-def-stmt-visibility: def-prop-inline NEWLINE { $$ = $1; }
+def-stmt-visibility: def-prop-inline delimiter { $$ = $1; }
                    | def-func { $$ = $1; }
                    | abstract-func { $$ = $1; }
                    | def-prop-compound { $$ = $1; }
@@ -549,21 +552,21 @@ if: IF expr-line indentblock {
     // TODO: ??
 }
 
-ret: RET NEWLINE {
+ret: RET delimiter {
     $$ = yyget_extra(scanner)->onRet();
- } | RET expr-line NEWLINE {
+ } | RET expr-line delimiter {
     $$ = EVENTER.onRet(*$2);
  } | RET expr-compound {
     $$ = EVENTER.onRet(*$2);
  }
 
-next: NEXT NEWLINE {
+next: NEXT delimiter {
     $$ = EVENTER.onNext();
    }
 
-break: BREAK NEWLINE {
+break: BREAK delimiter {
     $$ = EVENTER.onBreak();
-   } | BREAK expr-line NEWLINE {
+   } | BREAK expr-line delimiter {
     $$ = EVENTER.onBreak(*$2);
    } | BREAK expr-compound {
     $$ = EVENTER.onBreak(*$2);
@@ -726,7 +729,7 @@ with-compound: with-inline indentblock {
            }
 
 //  predefined-type:
-pack: PACK postfix NEWLINE { $$ = EVENTER.onPack(*$2); }
+pack: PACK postfix delimiter { $$ = EVENTER.onPack(*$2); }
     | %empty { $$ = EVENTER.onPack(); }
 
 
