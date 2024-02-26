@@ -189,6 +189,8 @@
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
     ============================================================================================  */
+%precedence IF
+%precedence _ELSE_
 %precedence ':'
 %precedence ';'
 
@@ -449,7 +451,7 @@ type: VOID { $$ = EVENTER.onPrimitive<nVoid>(); }
     | STR { $$ = EVENTER.onPrimitive<nStr>(); }
     | BOOL { $$ = EVENTER.onPrimitive<nBool>(); }
     | FLT { $$ = EVENTER.onPrimitive<nFlt>(); }
-    | NAME { // TODO: handle 'as' expr
+    | NAME {
         $$ = EVENTER.onGet(*$1);
         free($1);
   } | type OPEN_CLOSE_SQUARE_BRACKET { $$ = EVENTER.onGetArray(*$1); }
@@ -466,11 +468,11 @@ typenames: type { $$ = EVENTER.onTypeNames(*$1); }
 //  keyword:
 //      branch:
 if: IF expr-line indentblock {
-    $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>());
+    // TODO: $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>());
     // TODO: $$ = EVENTER.onEndOfIf();
-} | IF expr-line _ELSE_ indentblock {
-    $$ = EVENTER.onElse($2->cast<ifExpr>(), $4->cast<blockExpr>());
-} | IF expr-line _ELSE_ if {
+} | IF expr-line indentblock _ELSE_ indentblock {
+    // TODO: $$ = EVENTER.onElse($2->cast<ifExpr>(), $4->cast<blockExpr>());
+} | IF expr-line indentblock _ELSE_ if {
     // TODO: ??
 }
 
