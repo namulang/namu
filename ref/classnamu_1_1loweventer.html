@@ -127,9 +127,24 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>popState</b> ()</td></
 <tr class="memitem:aafa8ca71eb3f19e76e5266ae20d4561b"><td class="memItemLeft" align="right" valign="top"><a id="aafa8ca71eb3f19e76e5266ae20d4561b"></a>
 nint&#160;</td><td class="memItemRight" valign="bottom"><b>onScan</b> (<a class="el" href="classnamu_1_1loweventer.html">loweventer</a> &amp;eventer, YYSTYPE *val, YYLTYPE *loc, yyscan_t scanner, nbool &amp;isBypass) override</td></tr>
 <tr class="separator:aafa8ca71eb3f19e76e5266ae20d4561b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a522060a62c80890c92feb6b12a4267f0"><td class="memItemLeft" align="right" valign="top"><a id="a522060a62c80890c92feb6b12a4267f0"></a>
-nint&#160;</td><td class="memItemRight" valign="bottom"><b>onEndOfFile</b> ()</td></tr>
-<tr class="separator:a522060a62c80890c92feb6b12a4267f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19ea17636bd76f3165f288713103b16d"><td class="memItemLeft" align="right" valign="top"><a id="a19ea17636bd76f3165f288713103b16d"></a>
+nint&#160;</td><td class="memItemRight" valign="bottom"><b>onTokenEndOfFile</b> ()</td></tr>
+<tr class="separator:a19ea17636bd76f3165f288713103b16d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5304c6a5d7cc3f5755038abb342eadd"><td class="memItemLeft" align="right" valign="top"><a id="ae5304c6a5d7cc3f5755038abb342eadd"></a>
+nint&#160;</td><td class="memItemRight" valign="bottom"><b>onTokenColon</b> (nint tok)</td></tr>
+<tr class="separator:ae5304c6a5d7cc3f5755038abb342eadd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbed8159a6069ac8852179040f01b48b"><td class="memItemLeft" align="right" valign="top"><a id="adbed8159a6069ac8852179040f01b48b"></a>
+nint&#160;</td><td class="memItemRight" valign="bottom"><b>onTokenNewLine</b> (nint tok)</td></tr>
+<tr class="separator:adbed8159a6069ac8852179040f01b48b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d1606cf02454a6e1a58da7f9e667c03"><td class="memItemLeft" align="right" valign="top"><a id="a7d1606cf02454a6e1a58da7f9e667c03"></a>
+nint&#160;</td><td class="memItemRight" valign="bottom"><b>onTokenLParan</b> (nint tok)</td></tr>
+<tr class="separator:a7d1606cf02454a6e1a58da7f9e667c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52c84b6b3161498301fc183a77b1bc8d"><td class="memItemLeft" align="right" valign="top"><a id="a52c84b6b3161498301fc183a77b1bc8d"></a>
+nint&#160;</td><td class="memItemRight" valign="bottom"><b>onTokenRParan</b> (nint tok)</td></tr>
+<tr class="separator:a52c84b6b3161498301fc183a77b1bc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ed691e88087e6e8d33a5a962e8fb3b1"><td class="memItemLeft" align="right" valign="top"><a id="a7ed691e88087e6e8d33a5a962e8fb3b1"></a>
+nint&#160;</td><td class="memItemRight" valign="bottom"><b>onTokenComma</b> (nint tok)</td></tr>
+<tr class="separator:a7ed691e88087e6e8d33a5a962e8fb3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a903cd5bb3bff4e1e24fdbcc98ca9cc"><td class="memItemLeft" align="right" valign="top"><a id="a5a903cd5bb3bff4e1e24fdbcc98ca9cc"></a>
 nint&#160;</td><td class="memItemRight" valign="bottom"><b>onIndent</b> (ncnt col, nint tok)</td></tr>
 <tr class="separator:a5a903cd5bb3bff4e1e24fdbcc98ca9cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,9 +154,6 @@ nint&#160;</td><td class="memItemRight" valign="bottom"><b>onDedent</b> (ncnt co
 <tr class="memitem:a1d0cfda48658f986adec0e871f458700"><td class="memItemLeft" align="right" valign="top"><a id="a1d0cfda48658f986adec0e871f458700"></a>
 nint&#160;</td><td class="memItemRight" valign="bottom"><b>onIgnoreIndent</b> (nint tok)</td></tr>
 <tr class="separator:a1d0cfda48658f986adec0e871f458700"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab07c8586c43c3c3baac74209f70c5c26"><td class="memItemLeft" align="right" valign="top"><a id="ab07c8586c43c3c3baac74209f70c5c26"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onNewLine</b> ()</td></tr>
-<tr class="separator:ab07c8586c43c3c3baac74209f70c5c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a867b0ad00157f3f75070af3d1830df81"><td class="memItemLeft" align="right" valign="top"><a id="a867b0ad00157f3f75070af3d1830df81"></a>
 nchar&#160;</td><td class="memItemRight" valign="bottom"><b>onScanUnexpected</b> (const nchar *token)</td></tr>
 <tr class="separator:a867b0ad00157f3f75070af3d1830df81"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -304,12 +316,18 @@ template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a9a751923d2499644529bd6d8416e8385"><td class="memItemLeft" align="right" valign="top"><a id="a9a751923d2499644529bd6d8416e8385"></a>
 <a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onBlock</b> (<a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;blk, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;stmt)</td></tr>
 <tr class="separator:a9a751923d2499644529bd6d8416e8385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7a038a625c5c09fba95da0095a1364d"><td class="memItemLeft" align="right" valign="top"><a id="ad7a038a625c5c09fba95da0095a1364d"></a>
+<a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onBlock</b> ()</td></tr>
+<tr class="separator:ad7a038a625c5c09fba95da0095a1364d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5014eb76239646ff150c45e4a210816d"><td class="memItemLeft" align="right" valign="top"><a id="a5014eb76239646ff150c45e4a210816d"></a>
 <a class="el" href="classnamu_1_1def_block.html">defBlock</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDefBlock</b> (<a class="el" href="classnamu_1_1node.html">node</a> &amp;stmt)</td></tr>
 <tr class="separator:a5014eb76239646ff150c45e4a210816d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2d9b19e74dc8c2f2624da4706cee777"><td class="memItemLeft" align="right" valign="top"><a id="ae2d9b19e74dc8c2f2624da4706cee777"></a>
 <a class="el" href="classnamu_1_1def_block.html">defBlock</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDefBlock</b> (<a class="el" href="classnamu_1_1def_block.html">defBlock</a> &amp;blk, <a class="el" href="classnamu_1_1node.html">node</a> &amp;stmt)</td></tr>
 <tr class="separator:ae2d9b19e74dc8c2f2624da4706cee777"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44718915ba375b85a7cecec3cca7f5a0"><td class="memItemLeft" align="right" valign="top"><a id="a44718915ba375b85a7cecec3cca7f5a0"></a>
+<a class="el" href="classnamu_1_1def_block.html">defBlock</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDefBlock</b> ()</td></tr>
+<tr class="separator:a44718915ba375b85a7cecec3cca7f5a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc759559039ca14233975da7b18247e4"><td class="memItemLeft" align="right" valign="top"><a id="afc759559039ca14233975da7b18247e4"></a>
 <a class="el" href="classnamu_1_1node.html">node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onFor</b> (const std::string &amp;iterName, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;<a class="el" href="classnamu_1_1expr.html">expr</a>, const <a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;blk)</td></tr>
 <tr class="separator:afc759559039ca14233975da7b18247e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -428,6 +446,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onCompilationUnit</b>
 <tr class="memitem:ae961b823e6f19115a6043aac01f26769"><td class="memItemLeft" align="right" valign="top"><a id="ae961b823e6f19115a6043aac01f26769"></a>
 <a class="el" href="classnamu_1_1if_expr.html">ifExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onIf</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;condition, const <a class="el" href="classnamu_1_1block_expr.html">blockExpr</a> &amp;then, const <a class="el" href="classnamu_1_1if_expr.html">ifExpr</a> &amp;elseIf)</td></tr>
 <tr class="separator:ae961b823e6f19115a6043aac01f26769"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfb69bcc8c0b1a42ad769cc1ebd3de3e"><td class="memItemLeft" align="right" valign="top"><a id="abfb69bcc8c0b1a42ad769cc1ebd3de3e"></a>
+<a class="el" href="classnamu_1_1run_expr.html">runExpr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onIn</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;it, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;container)</td></tr>
+<tr class="separator:abfb69bcc8c0b1a42ad769cc1ebd3de3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65de90c164bda3308fdb423bfb266101"><td class="memItemLeft" align="right" valign="top"><a id="a65de90c164bda3308fdb423bfb266101"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>onParseErr</b> (const std::string &amp;msg, const nchar *symbolName)</td></tr>
 <tr class="separator:a65de90c164bda3308fdb423bfb266101"><td class="memSeparator" colspan="2">&#160;</td></tr>
