@@ -455,10 +455,28 @@ namespace namu {
         return _maker.make<getExpr>(name, args);
     }
 
-    node* me::onGet(node& from, getExpr& name) {
-        NAMU_DI("tokenEvent: onGet(%s, %s)", from.getType().getName().c_str(), name.getSubName().c_str());
-        name.setMe(from);
-        return &name;
+    node* me::onGet(node& from, node& it) {
+        getExpr& cast = it.cast<getExpr>();
+        if(nul(cast)) {
+            onErr(errCode::IDENTIFIER_ONLY, it.getType().getName().c_str());
+            return &from;
+        }
+
+        NAMU_DI("tokenEvent: onGet(%s, %s)", from.getType().getName().c_str(), cast.getSubName().c_str());
+        cast.setMe(from);
+        return &cast;
+    }
+
+    node* me::onCallAccess(node& it, narr& args) {
+        getExpr& cast = it.cast<getExpr>();
+        if(nul(cast)) {
+            // it can be generic or primitive values. track it, leave as specific errs.
+            onErr(errCode::IDENTIFIER_ONLY, it.getType().getName().c_str());
+            return &it;
+        }
+
+        cast.getSubArgs() = args;
+        return &cast;
     }
 
     node* me::onGetArray(node& elemType) {

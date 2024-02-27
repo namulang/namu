@@ -81,7 +81,9 @@ namespace namu {
         //      dot:
         node* onGet(const std::string& name);
         node* onGet(const std::string& name, const narr& args);
-        node* onGet(node& from, getExpr& name);
+        node* onGet(node& from, node& it);
+        node* onCallAccess(node& it, narr& args);
+
         //      unary operation:
         FBOExpr* onUnaryMinus(const node& it);
         FBOExpr* onUnaryNot(const node& it);

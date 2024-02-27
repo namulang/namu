@@ -151,7 +151,7 @@
 %type <asNode> allstmt stmt decl-stmt def-stmt def-stmt-no-visibility def-stmt-visibility
 %type <asNarr> allstmt-chain def-stmt-chain
 //      access:
-%type <asNode> access var-access call-access
+%type <asNode> access call-access
 //      func:
 %type <asNode> func-call
 //      tuple:
@@ -227,7 +227,7 @@ postfix: primary { $$ = $1; }
        | postfix DOUBLE_MINUS { $$ = EVENTER.onUnaryPostfixDoubleMinus(*$1); }
        | postfix DOUBLE_PLUS { $$ = EVENTER.onUnaryPostfixDoublePlus(*$1); }
        | postfix '.' access {
-        $$ = EVENTER.onGet(*$1, $3->cast<getExpr>());
+        $$ = EVENTER.onGet(*$1, *$3);
         free($3);
      } | postfix '.' func-call {
         $$ = EVENTER.onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
@@ -384,18 +384,9 @@ def-stmt-chain: def-stmt {
            }
 
 //  access:
-access: call-access {
-        // ??
-    } | var-access {
-        // ??
-    }
-var-access: type {
-            // ??
-        }
-call-access: type params {
-            // ??
-            // $$ = yyget_extra(scanner)->onGet()
-         }
+access: call-access { $$ = $1; }
+      | type { $$ = $1; }
+call-access: type params { $$ = EVENTER.onCallAccess(*$1, *$2); }
 
 //  func:
 func-call: type func-call-tuple {
@@ -468,12 +459,11 @@ typenames: type { $$ = EVENTER.onTypeNames(*$1); }
 //  keyword:
 //      branch:
 if: IF expr-line indentblock {
-    // TODO: $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>());
-    // TODO: $$ = EVENTER.onEndOfIf();
+    $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>());
 } | IF expr-line indentblock _ELSE_ indentblock {
-    // TODO: $$ = EVENTER.onElse($2->cast<ifExpr>(), $4->cast<blockExpr>());
+    $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>(), $5->cast<blockExpr>());
 } | IF expr-line indentblock _ELSE_ if {
-    // TODO: ??
+    $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>(), $5->cast<ifExpr>());
 }
 
 ret: RET delimiter { $$ = EVENTER.onRet(); }
@@ -561,8 +551,9 @@ def-prop-compound: NAME DEFASSIGN expr-compound {
 
 //          func:
 abstract-func: call-access type {
-            // ??
-      }
+                // TODO:
+                //$$ = EVENTER.onAbstractFunc(*$1, *$2);
+           }
 
 def-func: abstract-func indentblock {
         // TODO: verify call-access has T<> or T[].

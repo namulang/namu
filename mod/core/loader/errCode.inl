@@ -81,6 +81,7 @@ PAIRX(CONDITION_IS_EMPTY,           "condition expression is empty")
 PAIRX(CONDITION_CANT_CAST_TO_BOOL,  "condition expression can't cast to bool type.")
 //  getExpr:
 PAIRX(WHAT_IS_THIS_IDENTIFIER,      "I don't know what '%s' is.")
+PAIRX(IDENTIFIER_ONLY,              "You can't use type or generic for '%s'")
 //  defAssign:
 PAIRX(RHS_NOT_EVALUATED,            "I can't define a new variable here because there is a problem with the expression on the right.")
 PAIRX(VOID_CANT_DEFINED,            "you can't define a variable to void type")

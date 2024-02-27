@@ -34,8 +34,16 @@ namespace namu {
         return _name;
     }
 
+    void me::setSubName(const std::string& new1) {
+        _name = new1;
+    }
+
     /// @return nullable
     const args& me::getSubArgs() const {
+        return *_args;
+    }
+
+    args& me::getSubArgs() {
         return *_args;
     }
 

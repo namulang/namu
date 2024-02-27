@@ -26,10 +26,12 @@ namespace namu {
         str getEval() const override;
         const node& getMe() const;
         const std::string& getSubName() const;
+        void setSubName(const std::string& new1);
         void setMe(const node& newMe);
 
         /// @return nullable
         const args& getSubArgs() const;
+        args& getSubArgs();
 
         clonable* deepClone() const override;
 
