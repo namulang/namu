@@ -184,10 +184,9 @@ namespace namu {
         //      cast:
         asExpr* onAs(const node& me, const node& as);
         //      if:
-        ifExpr* onIf(const node& condition, const blockExpr& thenBlk);
-        ifExpr* onElif(ifExpr& ifexpr, const node& elseIfCondition, const blockExpr& thenBlk);
-        ifExpr* onElse(ifExpr& ifexpr, const blockExpr& elseBlk);
-        ifExpr* onEndOfIf();
+        ifExpr* onIf(const node& condition, const blockExpr& then);
+        ifExpr* onIf(const node& condition, const blockExpr& then, const blockExpr& elseBlk);
+        ifExpr* onIf(const node& condition, const blockExpr& then, const ifExpr& elseIf);
 
         void onParseErr(const std::string& msg, const nchar* symbolName);
 
@@ -221,7 +220,6 @@ namespace namu {
         tstr<scope> _filescope;
         std::vector<nint> _states;
         std::map<node*, std::string> _nameMap;
-        std::vector<ifExpr*> _outerIfStack;
         exprMaker _maker;
     };
 }
