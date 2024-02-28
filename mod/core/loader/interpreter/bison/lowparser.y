@@ -157,8 +157,8 @@
 //      tuple:
 %type <asNarr> tuple tuple-items
 %type <asNarr> func-call-tuple func-call-tuple-items
-%type <asNode> func-call-tuple-item param
-%type <asNarr> params args args-items
+%type <asNode> func-call-tuple-item
+%type <asNarr> params param-items
 //      type:
 %type <asNode> type
 %type <asArgs> typenames typeparams
@@ -227,7 +227,8 @@ postfix: primary { $$ = $1; }
        | postfix DOUBLE_MINUS { $$ = EVENTER.onUnaryPostfixDoubleMinus(*$1); }
        | postfix DOUBLE_PLUS { $$ = EVENTER.onUnaryPostfixDoublePlus(*$1); }
        | postfix '.' access {
-        $$ = EVENTER.onGet(*$1, *$3);
+        str accessLife(*$3);
+        $$ = EVENTER.onGet(*$1, *accessLife);
         free($3);
      } | postfix '.' func-call {
         $$ = EVENTER.onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
@@ -412,16 +413,12 @@ func-call-tuple-items: func-call-tuple-item {
                    } | func-call-tuple-items ',' func-call-tuple-item {
                         // ??
                    }
-params: '(' VOID ')' {
-        // ??
-    } | '(' param-items ')' {
-        // ??
-    }
-param: def-prop-without-value { $$ = $1; }
-param-items: param {
-            // ??
-         } | param-items ',' param {
-            // ??
+params: '(' VOID ')' { $$ = EVENTER.onParams(); }
+      | '(' param-items ')' { $$ = $2; }
+param-items: def-prop-without-value {
+            $$ = EVENTER.onParams($1->cast<defPropExpr>());
+         } | param-items ',' def-prop-without-value {
+            $$ = EVENTER.onParams(*$1, $3->cast<defPropExpr>());
          }
 args: '(' ')' {
         // ??
@@ -551,17 +548,13 @@ def-prop-compound: NAME DEFASSIGN expr-compound {
 
 //          func:
 abstract-func: call-access type {
-                // TODO:
-                //$$ = EVENTER.onAbstractFunc(*$1, *$2);
+                str accessLife(*$1);
+                $$ = EVENTER.onAbstractFunc(accessLife->cast<getExpr>(), *$2);
            }
 
 def-func: abstract-func indentblock {
         // TODO: verify call-access has T<> or T[].
-        // take bind of exprs instance: because it's on heap. I need to free.
-        /*TODO: tstr<narr> params($2);
-        str typeLife($3);
-        $$ = EVENTER.onFunc(*$1, *params, *typeLife, $4->cast<blockExpr>());
-        free($1);*/
+        $$ = EVENTER.onFunc($1->cast<mgdFunc>(), $2->cast<blockExpr>());
      }
 
 getter: get indentblock {

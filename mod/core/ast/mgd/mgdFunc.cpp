@@ -21,6 +21,9 @@ namespace namu {
 
     blockExpr& me::getBlock() { return *_blk; }
     const blockExpr& me::getBlock() const { return *_blk; }
+    void me::setBlock(const blockExpr& new1) {
+        _blk.bind(new1);
+    }
     str me::getRet() const { return _retType; }
 
     nbool me::setRet(const node& newRet) { return _retType.bind(newRet); }

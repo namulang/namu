@@ -238,10 +238,10 @@ namespace namu {
         _report->add(new1);
     }
 
-    params me::_convertParams(const narr& ps) {
+    params me::_asParams(const args& as) {
         params ret;
-        for(auto& p : ps) {
-            tstr<defPropExpr> defProp(p.cast<defPropExpr>());
+        for(auto& a : as) {
+            tstr<defPropExpr> defProp(a.cast<defPropExpr>());
             if(!defProp) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
 
             ret.add(new param(defProp->getName(), defProp->getOrigin()));
@@ -250,14 +250,32 @@ namespace namu {
         return ret;
     }
 
-    mgdFunc* me::onFunc(const std::string& name, const narr& exprs, const node& evalObj, const blockExpr& blk) {
-        NAMU_DI("tokenEvent: onFunc: %s(...[%x]) %s: blk.len()=%d", name.c_str(), &exprs,
-                evalObj.getType().getName().c_str(), blk.getStmts().len());
+    mgdFunc* me::onAbstractFunc(const getExpr& access, const node& retType) {
+        NAMU_DI("tokenEvent: onAbstractFunc: access[%s] retType[%s]", access.getSubName().c_str(), retType.getType().getName().c_str());
 
-        tstr<narr> exprsWrapper(exprs);
-        mgdFunc* ret = _maker.make<mgdFunc>(_convertParams(*exprsWrapper), evalObj, blk);
-        _onPushName(name, *ret);
+        mgdFunc* ret = _maker.make<mgdFunc>(_asParams(access.getSubArgs()), retType);
+        _onPushName(access.getSubName(), *ret);
         return ret;
+    }
+
+    mgdFunc* me::onFunc(mgdFunc& f, const blockExpr& blk) {
+        NAMU_DI("tokenEvent: onFunc: func[%x] blk.len()=%d", (void*) &f, blk.getStmts().len());
+
+        f.setBlock(blk);
+        return &f;
+    }
+
+    narr* me::onParams() {
+        return new narr();
+    }
+    narr* me::onParams(const defPropExpr& elem) {
+        narr* ret = onParams();
+        ret->add(elem);
+        return ret;
+    }
+    narr* me::onParams(narr& it, const defPropExpr& elem) {
+        it.add(elem);
+        return &it;
     }
 
     node* me::onParanthesisAsTuple(narr& tuple) {
@@ -472,10 +490,11 @@ namespace namu {
         if(nul(cast)) {
             // it can be generic or primitive values. track it, leave as specific errs.
             onErr(errCode::IDENTIFIER_ONLY, it.getType().getName().c_str());
-            return &it;
+            return new getExpr("");
         }
 
-        cast.getSubArgs() = args;
+        cast.getSubArgs().rel();
+        cast.getSubArgs().add(args);
         return &cast;
     }
 

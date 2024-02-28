@@ -26,6 +26,7 @@ namespace namu {
     class nextExpr;
     class ifExpr;
     class FUOExpr;
+    class defPropExpr;
 
     class _nout loweventer : public tokenScan {
         NAMU(CLASS(loweventer, tokenScan))
@@ -166,7 +167,12 @@ namespace namu {
         //          file:
         void onCompilationUnit(obj& subpack, defBlock& blk);
         //          func:
-        mgdFunc* onFunc(const std::string& name, const narr& params, const node& evalType, const blockExpr& blk);
+        mgdFunc* onAbstractFunc(const getExpr& access, const node& retType);
+        mgdFunc* onFunc(mgdFunc& func, const blockExpr& blk);
+        //          params:
+        narr* onParams();
+        narr* onParams(const defPropExpr& elem);
+        narr* onParams(narr& it, const defPropExpr& elem);
         // stmt:
         node* onDeclStmt(const narr& dotnames) {
             // TODO:
@@ -199,7 +205,7 @@ namespace namu {
 
         nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         void _onRes(err* new1);
-        params _convertParams(const narr& exprs);
+        params _asParams(const args& exprs);
 
         void _onPushName(const std::string& name, node& n);
         std::string _onPopName(node& n);
