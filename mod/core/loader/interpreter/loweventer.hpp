@@ -144,9 +144,12 @@ namespace namu {
         //      def:
         //          list:
         node* onParanthesisAsTuple(narr& tuple);
-        narr* onTuple();
-        narr* onTuple(node* newExpr);
-        narr* onTuple(narr& list, node* newExpr);
+        args* onTuple();
+        args* onTuple(const node& elem);
+        args* onTuple(args& as, const node& elem);
+        args* onFuncCallTuple();
+        args* onFuncCallTuple(const node& elem);
+        args* onFuncCallTuple(args& as, const node& elem);
         //          typenames:
         args* onTypeNames(const node& param);
         args* onTypeNames(args& params, const node& param);

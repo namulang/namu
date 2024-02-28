@@ -155,8 +155,8 @@
 //      func:
 %type <asNode> func-call
 //      tuple:
-%type <asNarr> tuple tuple-items
-%type <asNarr> func-call-tuple func-call-tuple-items
+%type <asArgs> tuple tuple-items
+%type <asArgs> func-call-tuple func-call-tuple-items
 %type <asNode> func-call-tuple-item
 %type <asNarr> params param-items
 //      type:
@@ -399,19 +399,18 @@ func-call: type func-call-tuple {
 //  tuple:
 tuple: '(' tuple-items ')' { $$ = $2; }
      | '(' ')' { $$ = EVENTER.onTuple(); }
-tuple-items: expr-line { $$ = EVENTER.onTuple($1); }
-           | tuple-items ',' expr-line { $$ = EVENTER.onTuple(*$1, $3); }
-func-call-tuple: '(' func-call-tuple-items ')' { $$=$2; }
-               | '(' ')' { $$ = EVENTER.onTuple(); }
-func-call-tuple-item: expr-line {
-                        // ??
-                  } | lambda {
+tuple-items: expr-line { $$ = EVENTER.onTuple(*$1); }
+           | tuple-items ',' expr-line { $$ = EVENTER.onTuple(*$1, *$3); }
+func-call-tuple: '(' func-call-tuple-items ')' { $$ = $2; }
+               | '(' ')' { $$ = EVENTER.onFuncCallTuple(); }
+func-call-tuple-item: expr-line { $$ = $1; }
+                    | lambda {
                         // ??
                   }
 func-call-tuple-items: func-call-tuple-item {
-                        // ??
+                        $$ = EVENTER.onFuncCallTuple(*$1);
                    } | func-call-tuple-items ',' func-call-tuple-item {
-                        // ??
+                        $$ = EVENTER.onFuncCallTuple(*$1, *$3);
                    }
 params: '(' VOID ')' { $$ = EVENTER.onParams(); }
       | '(' param-items ')' { $$ = $2; }
@@ -553,7 +552,6 @@ abstract-func: call-access type {
            }
 
 def-func: abstract-func indentblock {
-        // TODO: verify call-access has T<> or T[].
         $$ = EVENTER.onFunc($1->cast<mgdFunc>(), $2->cast<blockExpr>());
      }
 

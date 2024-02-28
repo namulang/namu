@@ -289,22 +289,39 @@ namespace namu {
         return &tuple[0];
     }
 
-    narr* me::onTuple() {
-        narr* ret = new narr();
-        NAMU_DI("tokenEvent: onTuple()=%x", ret);
+    args* me::onTuple() {
+        NAMU_DI("tokenEvent: onTuple()");
+        return new args();
+    }
+
+    args* me::onTuple(const node& elem) {
+        args* ret = onTuple();
+        NAMU_DI("tokenEvent: onTuple(%s[%x])=%x", elem.getType().getName().c_str(), &elem, ret);
         return ret;
     }
 
-    narr* me::onTuple(node* newExpr) {
-        narr* ret = new narr(*newExpr);
-        NAMU_DI("tokenEvent: onTuple(%s[%x])=%x", newExpr->getType().getName().c_str(), newExpr, ret);
+    args* me::onTuple(args& as, const node& elem) {
+        NAMU_DI("tokenEvent: onTuple(as[%x], %s[%x])", &as, elem.getType().getName().c_str(), &elem);
+        as.add(elem);
+        return &as;
+    }
+
+    args* me::onFuncCallTuple() {
+        NAMU_DI("tokenEvent: onFuncCallTuple()");
+        return new args();
+    }
+
+    args* me::onFuncCallTuple(const node& elem) {
+        NAMU_DI("tokenEvent: onFuncCallTuple(elem[%s]=%x)", elem.getType().getName().c_str(), &elem);
+        args* ret = onFuncCallTuple();
+        ret->add(elem);
         return ret;
     }
 
-    narr* me::onTuple(narr& list, node* newExpr) {
-        NAMU_DI("tokenEvent: onTuple(list[%x], %s[%x])", &list, newExpr->getType().getName().c_str(), newExpr);
-        list.add(newExpr);
-        return &list;
+    args* me::onFuncCallTuple(args& as, const node& elem) {
+        NAMU_DI("tokenEvent: onFuncCallTuple(as[%x], elem[%s])", &as, elem.getType().getName().c_str());
+        as.add(elem);
+        return &as;
     }
 
     args* me::onTypeNames(const node& param) {
