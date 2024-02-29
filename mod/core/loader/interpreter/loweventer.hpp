@@ -83,7 +83,7 @@ namespace namu {
         node* onGet(const std::string& name);
         node* onGet(const std::string& name, const narr& args);
         node* onGet(node& from, node& it);
-        node* onCallAccess(node& it, narr& args);
+        node* onCallAccess(node& it, const narr& args);
 
         //      unary operation:
         FBOExpr* onUnaryMinus(const node& it);
@@ -170,7 +170,7 @@ namespace namu {
         //          file:
         void onCompilationUnit(obj& subpack, defBlock& blk);
         //          func:
-        mgdFunc* onAbstractFunc(const getExpr& access, const node& retType);
+        mgdFunc* onAbstractFunc(node& it, const node& retType);
         mgdFunc* onFunc(mgdFunc& func, const blockExpr& blk);
         //          params:
         narr* onParams();

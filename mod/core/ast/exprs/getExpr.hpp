@@ -31,7 +31,7 @@ namespace namu {
 
         /// @return nullable
         const args& getSubArgs() const;
-        args& getSubArgs();
+        void setSubArgs(const args& new1);
 
         clonable* deepClone() const override;
 

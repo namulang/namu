@@ -362,7 +362,7 @@ decl-stmt: access delimiter {
 
 def-stmt: def-stmt-no-visibility { $$ = $1; }
         | visibility def-stmt-visibility {
-            // TODO: ??
+            // TODO:
             $$ = $2;
       }
 def-stmt-no-visibility: with-inline delimiter { $$ = $1; }
@@ -549,6 +549,8 @@ def-prop-compound: NAME DEFASSIGN expr-compound {
 abstract-func: call-access type {
                 str accessLife(*$1);
                 $$ = EVENTER.onAbstractFunc(accessLife->cast<getExpr>(), *$2);
+           } | type '(' ')' type {
+                $$ = EVENTER.onAbstractFunc(*$1, *$4);
            }
 
 def-func: abstract-func indentblock {

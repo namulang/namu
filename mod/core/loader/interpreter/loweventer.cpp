@@ -258,6 +258,10 @@ namespace namu {
         return ret;
     }
 
+    mgdFunc* me::onAbstractFunc(node& it, const node& retType) {
+        return onAbstractFunc(onCallAccess(it, narr{})->cast<getExpr>(), retType);
+    }
+
     mgdFunc* me::onFunc(mgdFunc& f, const blockExpr& blk) {
         NAMU_DI("tokenEvent: onFunc: func[%x] blk.len()=%d", (void*) &f, blk.getStmts().len());
 
@@ -502,7 +506,7 @@ namespace namu {
         return &cast;
     }
 
-    node* me::onCallAccess(node& it, narr& args) {
+    node* me::onCallAccess(node& it, const narr& args) {
         getExpr& cast = it.cast<getExpr>();
         if(nul(cast)) {
             // it can be generic or primitive values. track it, leave as specific errs.
@@ -510,8 +514,7 @@ namespace namu {
             return new getExpr("");
         }
 
-        cast.getSubArgs().rel();
-        cast.getSubArgs().add(args);
+        cast.setSubArgs(args);
         return &cast;
     }
 

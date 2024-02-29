@@ -43,10 +43,6 @@ namespace namu {
         return *_args;
     }
 
-    args& me::getSubArgs() {
-        return *_args;
-    }
-
     str me::_get(nbool evalMode) const {
         NAMU_DI("_name=%s", _name.c_str());
         const node& me = getMe();
