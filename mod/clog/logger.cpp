@@ -92,8 +92,7 @@ namespace namu {
     }
 
     nbool me::rel() {
-        for(auto e : _streams)
-        {
+        for(auto e : _streams) {
             e->rel();
             delete e;
         }
@@ -103,8 +102,7 @@ namespace namu {
 
     me& me::get() {
         static me* inner = 0;
-        if(inner->isNull())
-        {
+        if(nul(inner)) {
             inner = new me();
             inner->init();
         }
