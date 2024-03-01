@@ -170,6 +170,7 @@ namespace namu {
         //          file:
         void onCompilationUnit(obj& subpack, defBlock& blk);
         //          func:
+        mgdFunc* onAbstractFunc(const getExpr& access, const node& retType);
         mgdFunc* onAbstractFunc(node& it, const node& retType);
         mgdFunc* onFunc(mgdFunc& func, const blockExpr& blk);
         //          params:
