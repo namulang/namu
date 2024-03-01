@@ -40,6 +40,9 @@ namespace namu {
 
     /// @return nullable
     const args& me::getSubArgs() const {
+        static args dummy;
+        if(!_args.isBind()) return dummy;
+
         return *_args;
     }
 

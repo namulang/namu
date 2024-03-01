@@ -229,7 +229,6 @@ postfix: primary { $$ = $1; }
        | postfix '.' access {
         str accessLife(*$3);
         $$ = EVENTER.onGet(*$1, *accessLife);
-        free($3);
      } | postfix '.' func-call {
         $$ = EVENTER.onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
      } | func-call { $$ = $1; }
