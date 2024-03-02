@@ -133,8 +133,8 @@ namespace namu {
         obj* onPack(const node& path);
         obj* onPack();
         obj* onSubPack(obj& subpack);
-        blockExpr* onBlock();
-        blockExpr* onBlock(blockExpr& blk, node& exp);
+        blockExpr* onBlock(const node& stmt);
+        blockExpr* onBlock(blockExpr& blk, const node& stmt);
         defBlock* onDefBlock();
         defBlock* onDefBlock(defBlock& blk, node& exp);
         node* onFor(const std::string& iterName, const node& expr, const blockExpr& blk);

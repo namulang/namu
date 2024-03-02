@@ -164,18 +164,18 @@ namespace namu {
         return onSubPack(newSlot->getPack()); // this is a default pack containing name as '{default}'.
     }
 
-    blockExpr* me::onBlock() {
+    blockExpr* me::onBlock(const node& stmt) {
         NAMU_DI("tokenEvent: onBlock()");
-        return _maker.make<blockExpr>();
+        return _maker.make<blockExpr>(stmt);
     }
 
-    blockExpr* me::onBlock(blockExpr& blk, node& stmt) {
+    blockExpr* me::onBlock(blockExpr& blk, const node& stmt) {
         NAMU_DI("tokenEvent: onBlock()");
         if(nul(blk))
-            return onSrcErr(errCode::IS_NULL, "blk"), onBlock();
+            return onSrcErr(errCode::IS_NULL, "blk"), _maker.make<blockExpr>();
 
         blk.getStmts().add(stmt);
-        NAMU_DI("tokenEvent: onBlock().len=%d", blk.getStmts().len());
+        NAMU_DI("tokenEvent: onBlock(%d).add(%s)", blk.getStmts().len(), stmt.getType().getName().c_str());
         return &blk;
     }
 

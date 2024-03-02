@@ -226,10 +226,8 @@ unary: postfix { $$ = $1; }
 postfix: primary { $$ = $1; }
        | postfix DOUBLE_MINUS { $$ = EVENTER.onUnaryPostfixDoubleMinus(*$1); }
        | postfix DOUBLE_PLUS { $$ = EVENTER.onUnaryPostfixDoublePlus(*$1); }
-       | postfix '.' access {
-        str accessLife(*$3);
-        $$ = EVENTER.onGet(*$1, *accessLife);
-     } | postfix '.' func-call {
+       | postfix '.' access { $$ = EVENTER.onGet(*$1, *$3); }
+       | postfix '.' func-call {
         $$ = EVENTER.onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
      } | func-call { $$ = $1; }
        | postfix '[' expr-line ']' { $$ = EVENTER.onGetElem(*$1, *$3); }
@@ -302,7 +300,7 @@ expr-compound: if { $$ = $1; }
              | while { $$ = $1; }
              | end { $$ = $1; }
 
-block: allstmt { $$ = EVENTER.onBlock(); }
+block: allstmt { $$ = EVENTER.onBlock(*$1); }
      | block allstmt { $$ = EVENTER.onBlock($1->cast<blockExpr>(), *$2); }
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
