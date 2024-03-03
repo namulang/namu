@@ -179,24 +179,24 @@ namespace namu {
         return &blk;
     }
 
-    defBlock* me::onDefBlock() {
-        NAMU_DI("tokenEvent: onDefBlock()");
-        return new defBlock();
+    defBlock* me::onDefBlock(node& stmt) {
+        NAMU_DI("tokenEvent: onDefBlock(%s)", stmt.getType().getName().c_str());
+        return onDefBlock(*new defBlock(), stmt);
     }
 
-    defBlock* me::onDefBlock(defBlock& s, node& candidate) {
-        NAMU_DI("tokenEvent: onDefBlock(candidate=%s)", candidate.getType().getName().c_str());
+    defBlock* me::onDefBlock(defBlock& s, node& stmt) {
+        NAMU_DI("tokenEvent: onDefBlock(stmt=%s)", stmt.getType().getName().c_str());
         if(nul(s))
-            return onSrcErr(errCode::IS_NULL, "s"), onDefBlock();
+            return onSrcErr(errCode::IS_NULL, "s"), new defBlock();
 
-        defPropExpr& defProp = candidate.cast<defPropExpr>();
+        defPropExpr& defProp = stmt.cast<defPropExpr>();
         if(!nul(defProp)) {
             node* clone = (node*) defProp.getOrigin().clone();
             clone->_setPos(defProp.getPos());
             s.asScope->add(defProp.getName(), *clone);
             return &s;
         }
-        defAssignExpr& defAssign = candidate.cast<defAssignExpr>();
+        defAssignExpr& defAssign = stmt.cast<defAssignExpr>();
         if(!nul(defAssign)) {
             defAssign.setTo(*_maker.make<getExpr>("me"));
             defAssign.setOnDefBlock(true);
@@ -204,7 +204,7 @@ namespace namu {
             return &s;
         }
 
-        s.asScope->add(_onPopName(candidate), &candidate);
+        s.asScope->add(_onPopName(stmt), &stmt);
         return &s;
     }
 
