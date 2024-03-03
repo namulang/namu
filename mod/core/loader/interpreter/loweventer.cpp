@@ -379,7 +379,7 @@ namespace namu {
         do {
             ret.push_back(iter->getSubName());
             const node& next = iter->getMe();
-            if(!next.is<getExpr>()) {
+            if(!nul(next) && !next.is<getExpr>()) {
                 onErr(errCode::PACK_ONLY_ALLOW_VAR_ACCESS);
                 return std::vector<string>();
             }
