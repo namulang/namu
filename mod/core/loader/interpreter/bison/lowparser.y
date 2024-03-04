@@ -158,7 +158,7 @@
 %type <asArgs> tuple tuple-items
 %type <asArgs> func-call-tuple func-call-tuple-items
 %type <asNode> func-call-tuple-item
-%type <asNarr> params param-items
+%type <asNarr> params param-items 
 //      type:
 %type <asNode> type
 %type <asArgs> typenames typeparams
@@ -243,7 +243,6 @@ primary: INTVAL { $$ = EVENTER.onPrimitive<nInt>($1); }
        | NUL {
         // ??
      } | def-array-value { $$ = $1; }
-       | func-access { $$ = $1; }
        | access { $$ = $1; }
 visibility: '_' '+' {
             // ??
@@ -419,16 +418,6 @@ param-items: def-prop-without-value {
          } | param-items ',' def-prop-without-value {
             $$ = EVENTER.onParams(*$1, $3->cast<defPropExpr>());
          }
-args: '(' ')' {
-        // ??
-  } | '(' args-items ')' {
-        // ??
-  }
-args-items: NAME {
-            // ??
-        } | args-items NAME {
-            // ??
-        }
 
 //  type:
 type: VOID { $$ = EVENTER.onPrimitive<nVoid>(); }
@@ -584,18 +573,19 @@ lambda: lambda-default {
     } | lambda-deduction {
         // ??
     }
-lambda-default: args type indentblock {
-                // checks tuple that it's NAME.
+lambda-default: tuple type indentblock {
+                // TODO: tuple should be checked whether it's defPropExpr or getExpr.
                 // ??
             } | params type indentblock {
                 // ??
             }
-lambda-deduction: args indentblock {
+lambda-deduction: tuple indentblock {
+                // TODO: tuple should be checked whether it's defPropExpr or getExpr.
                 // ??
-                // checks tuple that it's NAME.
               } | params indentblock {
                 // ??
               }
+
 
 //          obj:
 def-obj: def-obj-default { $$ = $1; }
