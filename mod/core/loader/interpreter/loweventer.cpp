@@ -299,8 +299,9 @@ namespace namu {
     }
 
     args* me::onTuple(const node& elem) {
-        args* ret = onTuple();
-        NAMU_DI("tokenEvent: onTuple(%s[%x])=%x", elem.getType().getName().c_str(), &elem, ret);
+        NAMU_DI("tokenEvent: onTuple(%s[%x])", elem.getType().getName().c_str(), &elem);
+        args* ret = new args();
+        ret->add(elem);
         return ret;
     }
 
@@ -317,7 +318,7 @@ namespace namu {
 
     args* me::onFuncCallTuple(const node& elem) {
         NAMU_DI("tokenEvent: onFuncCallTuple(elem[%s]=%x)", elem.getType().getName().c_str(), &elem);
-        args* ret = onFuncCallTuple();
+        args* ret = new args();
         ret->add(elem);
         return ret;
     }
