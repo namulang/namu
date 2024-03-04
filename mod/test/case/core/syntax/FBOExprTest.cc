@@ -278,7 +278,7 @@ TEST_F(FBOExprTest, testLogicalAndOpNegative) {
 
         main() int
             a := 0
-            if (foo() && a = 1)
+            if (foo() && a = 1) // assignment is not expression
                 print("ok")
             ret a
     )SRC").shouldVerified(false);
@@ -290,8 +290,8 @@ TEST_F(FBOExprTest, testLogicalAndOp2) {
             true
 
         main() int
-            a := 0
-            if (foo() && (a = 1))
+            a := 1
+            if foo()
                 print("ok")
             ret a
     )SRC").shouldVerified(true);
@@ -320,7 +320,8 @@ TEST_F(FBOExprTest, testAddAssign) {
     make().parse(R"SRC(
         main() int
             a := 5
-            ret a += 3
+            a += 3
+            ret a 
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -332,7 +333,8 @@ TEST_F(FBOExprTest, testSubAssign) {
     make().parse(R"SRC(
         main() int
             a := 5
-            ret a -= -3
+            a -= -3
+            ret a
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -344,7 +346,7 @@ TEST_F(FBOExprTest, testMulAssign) {
     make().parse(R"SRC(
         main() int
             a := 5
-            ret a *= 3
+            a *= 3
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -356,7 +358,7 @@ TEST_F(FBOExprTest, testDivAssign) {
     make().parse(R"SRC(
         main() int
             a := 6
-            ret a /= 3
+            a /= 3
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -368,7 +370,8 @@ TEST_F(FBOExprTest, testModAssign) {
     make().parse(R"SRC(
         main() int
             a := 5
-            ret a %= 3
+            a %= 3
+            ret a
     )SRC").shouldVerified(true);
 
     str res = run();
