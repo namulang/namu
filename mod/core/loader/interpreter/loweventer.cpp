@@ -251,7 +251,8 @@ namespace namu {
     }
 
     mgdFunc* me::onAbstractFunc(const getExpr& access, const node& retType) {
-        NAMU_DI("tokenEvent: onAbstractFunc: access[%s] retType[%s]", access.getSubName().c_str(), retType.getType().getName().c_str());
+        NAMU_DI("tokenEvent: onAbstractFunc(access: %s(%d), retType:%s)",
+                access.getSubName().c_str(), access.getSubArgs().len(), retType.getType().getName().c_str());
 
         mgdFunc* ret = _maker.make<mgdFunc>(_asParams(access.getSubArgs()), retType);
         _onPushName(access.getSubName(), *ret);
@@ -259,7 +260,8 @@ namespace namu {
     }
 
     mgdFunc* me::onAbstractFunc(node& it, const node& retType) {
-        return onAbstractFunc(onCallAccess(it, narr{})->cast<getExpr>(), retType);
+        NAMU_DI("tokenEvent: onAbstractFunc(it: %s, retType: %s)", it.getType().getName().c_str(), retType.getType().getName().c_str());
+        return onAbstractFunc(onCallAccess(it, *new narr())->cast<getExpr>(), retType);
     }
 
     mgdFunc* me::onFunc(mgdFunc& f, const blockExpr& blk) {
@@ -270,14 +272,17 @@ namespace namu {
     }
 
     narr* me::onParams() {
+        NAMU_DI("tokenEvent: onParams()");
         return new narr();
     }
     narr* me::onParams(const defPropExpr& elem) {
-        narr* ret = onParams();
+        NAMU_DI("tokenEvent: onParams(%s %s)", elem.getName().c_str(), elem.getOrigin().getType().getName().c_str());
+        narr* ret = new narr();
         ret->add(elem);
         return ret;
     }
     narr* me::onParams(narr& it, const defPropExpr& elem) {
+        NAMU_DI("tokenEvent: onParams(narr(%d), %s %s)", it.len(), elem.getName().c_str(), elem.getOrigin().getType().getName().c_str());
         it.add(elem);
         return &it;
     }
@@ -507,7 +512,7 @@ namespace namu {
         return &cast;
     }
 
-    node* me::onCallAccess(node& it, const narr& args) {
+    node* me::onCallAccess(node& it, const narr& as) {
         getExpr& cast = it.cast<getExpr>();
         if(nul(cast)) {
             // it can be generic or primitive values. track it, leave as specific errs.
@@ -515,7 +520,7 @@ namespace namu {
             return new getExpr("");
         }
 
-        cast.setSubArgs(args);
+        cast.setSubArgs(*new args(as));
         return &cast;
     }
 

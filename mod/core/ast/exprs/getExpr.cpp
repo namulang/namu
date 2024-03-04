@@ -47,7 +47,10 @@ namespace namu {
     }
 
     void me::setSubArgs(const args& new1) {
-        _args.bind(new1);
+        if(new1.len() <= 0)
+            _args.rel();
+        else
+            _args.bind(new1);
     }
 
     str me::_get(nbool evalMode) const {

@@ -317,7 +317,7 @@ indentDefBlock: NEWLINE INDENT defblock DEDENT { $$ = $3; }
                 // ??
             }
 
-defblock: def-stmt { $$ = EVENTER.onDefBlock(); }
+defblock: def-stmt { $$ = EVENTER.onDefBlock(*$1); }
         | defblock def-stmt {
         str lifeStmt($2);
         $$ = EVENTER.onDefBlock(*$1, *lifeStmt);
@@ -384,7 +384,10 @@ def-stmt-chain: def-stmt {
 //  access:
 access: call-access { $$ = $1; }
       | type { $$ = $1; }
-call-access: type params { $$ = EVENTER.onCallAccess(*$1, *$2); }
+call-access: type params {
+            tstr<narr> paramsLife(*$2);
+            $$ = EVENTER.onCallAccess(*$1, *paramsLife);
+         }
 
 //  func:
 func-call: type func-call-tuple {
