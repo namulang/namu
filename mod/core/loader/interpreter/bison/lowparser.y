@@ -122,7 +122,7 @@
 //      loop:
 %token _WHILE_ FOR
 //      define:
-%token DEF WITH AS ENUM ONLY GET SET END
+%token DEF WITH AS ENUM ONLY END
 //  predefined-type:
 %token VOID INT STR BOOL FLT NUL BYTE CHAR ME SUPER IT CTOR PACK 
 //  valueless-token:
@@ -175,7 +175,7 @@
 %type <asNarr> def-prop-accessor-items
 %type <asNode> def-prop-compound
 //          func:
-%type <asNode> abstract-func def-func getter get setter set end
+%type <asNode> abstract-func def-func end
 %type <asNode> lambda lambda-default lambda-deduction
 //          obj:
 %type <asNode> def-obj def-obj-default def-obj-default-generic
@@ -517,15 +517,17 @@ def-prop-value: NAME DEFASSIGN expr-line {
               free($1);
           }
 def-prop-accessor: NEWLINE INDENT def-prop-accessor-items DEDENT {
-                    // ??
-              }
-def-prop-accessor-item: getter { $$ = $1; }
-                      | setter { $$ = $1; }
+                   // ??
+               }
+def-prop-accessor-item: visibility NAME indentblock {
+                        // ??
+                        // TODO: NAME should 'get' or 'set'
+                    }
 def-prop-accessor-items: def-prop-accessor-item {
                         // ??
-                    } | def-prop-accessor-items def-prop-accessor-item {
+                     } | def-prop-accessor-items def-prop-accessor-item {
                         // ??
-                    }
+                     }
 
 def-prop-compound: NAME DEFASSIGN expr-compound {
                     $$ = EVENTER.onDefAssign(*$1, *$3);
@@ -545,24 +547,6 @@ abstract-func: call-access type {
 def-func: abstract-func indentblock {
         $$ = EVENTER.onFunc($1->cast<mgdFunc>(), $2->cast<blockExpr>());
      }
-
-getter: get indentblock {
-        // ??
-    }
-get: GET {
-    // ??
- } | '_' GET {
-    // ??
- }
-
-setter: set indentblock {
-    // ??
- }
-set: SET {
-    // ??
- } | '_' SET {
-    // ??
- }
 
 end: END indentblock {
     // ??

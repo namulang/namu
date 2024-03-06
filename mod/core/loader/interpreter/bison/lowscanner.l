@@ -113,8 +113,6 @@ with { return WITH; }
 as { return AS; }
 enum { return ENUM; }
 only { return ONLY; }
-get { return GET; }
-set { return SET; }
 end { return END; }
 void { return VOID; }
 int { return INT; }
