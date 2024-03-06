@@ -58,21 +58,10 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
 TEST_F(defFuncTest, distinguishDefineFuncOrCall2) {
     make().negative().parse(R"SRC(
         main() void
-            foo(a, 22)
+            foo(a, 22) void
                 a.doSomething(22)
             foo(a, 22)
-    )SRC").shouldParsed(true);
-    shouldVerified(false);
-}
-
-TEST_F(defFuncTest, distinguishDefineFuncOrCall3) {
-    make().negative().parse(R"SRC(
-        main() void
-            foo(a, 22)
-                a.doSomething(22)
-            foo(a, 22)
-    )SRC").shouldParsed(true);
-    shouldVerified(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(defFuncTest, distinguishDefineLambdaOrCall) {
@@ -82,25 +71,17 @@ TEST_F(defFuncTest, distinguishDefineLambdaOrCall) {
     )SRC").shouldParsed(false);
 }
 
-TEST_F(defFuncTest, distinguishDefineLambdaOrCall2) {
-    make().parse(R"SRC(
+TEST_F(defFuncTest, distinguishDefineLambdaOrCallNegative) {
+    make().negative().parse(R"SRC(
         main() void
-            (a, 22)
+            (a, 22) // lambda should be declared in func call.
                 a.doSomething(22)
             foo(a, 22)
-    )SRC").shouldParsed(true);
-}
-
-TEST_F(defFuncTest, distinguishDefineLambdaOrCall3) {
-    make().parse(R"SRC(
-        main() void
-            (a, 22)
-                a.doSomething(22)
-            foo(a, 22))SRC").shouldParsed(true);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(defFuncTest, lambda1) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main() void
             a.sendPacket((packet)
                 doSomething()
@@ -108,7 +89,7 @@ TEST_F(defFuncTest, lambda1) {
 }
 
 TEST_F(defFuncTest, lambda2) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main() void
             a.sendPacket((packet)
                 doSomething()
@@ -116,7 +97,7 @@ TEST_F(defFuncTest, lambda2) {
 }
 
 TEST_F(defFuncTest, lambda3) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main() void
             a.sendPacket((packet))
             (packet)
@@ -125,20 +106,29 @@ TEST_F(defFuncTest, lambda3) {
 }
 
 TEST_F(defFuncTest, lambda4) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main() void
-            a.sendPacket(foo() void
+            a.sendPacket(() void
                 doSomething()
             ))SRC").shouldParsed(true);
 }
 
-TEST_F(defFuncTest, lambda5) {
-    make().parse(R"SRC(
+TEST_F(defFuncTest, lambda5Negative) {
+    make().negative().parse(R"SRC(
         main() void
-            a.sendPacket((foo() void
-                doSomething()
+            a.sendPacket(((a int, b) void // no paranthesis for lambda
+                a.doSomething()
             ))
-    )SRC").shouldParsed(true);
+    )SRC").shouldParsed(false);
+}
+
+TEST_F(defFuncTest, lambda6) {
+    make().negative().parse(R"SRC(
+        main() void
+            a.sendPacket((a int, b) void
+                a.doSomething()
+            )
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(defFuncTest, noBodyNegative) {
@@ -156,22 +146,22 @@ TEST_F(defFuncTest, wrongParamNegative) {
             22
     )SRC").shouldParsed(false);
 
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main(age int()) void
             22
     )SRC").shouldParsed(false);
 
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main(age + 22, age int) void
             22
     )SRC").shouldParsed(false);
 
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main(age + 22, age int) void
             22
     )SRC").shouldParsed(false);
 
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main(aka int -> i) void
             22
     )SRC").shouldParsed(false);
@@ -239,7 +229,7 @@ TEST_F(defFuncTest, defFuncDuplicate) {
 }
 
 TEST_F(defFuncTest, funcHasSameNameToFieldNegative) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         def A
             a() void
 
