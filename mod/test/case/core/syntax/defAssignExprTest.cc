@@ -76,7 +76,7 @@ TEST_F(defAssignExprTest, testNearCircularDependencies) {
 TEST_F(defAssignExprTest, testDefAssign1) {
     make().parse(R"SRC(
         foo() int
-            ret a = 2
+            a = 2
 
         a := foo() + 5
 
@@ -115,9 +115,20 @@ TEST_F(defAssignExprTest, defAssignInObjectRefersInvalidFuncNegative2) {
     shouldVerified(false);
 }
 
-TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative) {
+TEST_F(defAssignExprTest, defAssignRefersItsIdentifier) {
     negative().make().parse(R"SRC(
-        aka sys.con
+        con := sys.con
+        con1 := con.add(1, 2)
+
+        main() void
+            print("res=" + con1 as str)
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+}
+
+TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative1) {
+    negative().make().parse(R"SRC(
+        con := sys.con
         con := con.add(1, 2)
 
         main() void
@@ -128,18 +139,7 @@ TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative) {
 
 TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative2) {
     negative().make().parse(R"SRC(
-        aka sys.con
-        con := con.add(1, 2)
-
-        main() void
-            print("res=" + con)
-    )SRC").shouldParsed(true);
-    shouldVerified(false);
-}
-
-TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative3) {
-    negative().make().parse(R"SRC(
-        aka sys.con
+        con := sys.con
         con := con.add(1, 2)
 
         main() void
@@ -148,30 +148,39 @@ TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative3) {
     shouldVerified(false);
 }
 
-TEST_F(defAssignExprTest, defAssignAsParameterNegative) {
-    make().negative().parse(R"SRC(
+TEST_F(defAssignExprTest, defAssignAsParameter) {
+    make().parse(R"SRC(
         def f
             foo(a int, b int) int
                 ret a + b
 
         main() void
             f1 f
-            a = f1.foo(a := 5, 5)
-    )SRC").shouldParsed(true);
-    shouldVerified(false);
+            a := 5
+            a = f1.foo(a, 5)
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_TRUE(res->is<nVoid>());
 }
 
-TEST_F(defAssignExprTest, defAssignAsParameterNegative2) {
+TEST_F(defAssignExprTest, defAssignAsParameter2) {
     make().negative().parse(R"SRC(
         def f
             foo(a int, b int) int
                 ret a + b
 
-        main() void
+        main() int
             f1 f
-            a = f1.foo((a := 5), 5)
+            a := 5
+            a = f1.foo((a), 5)
     )SRC").shouldParsed(true);
-    shouldVerified(false);
+    shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 10);
 }
 
 TEST_F(defAssignExprTest, defAssignAsParameterNegative3) {
@@ -187,7 +196,7 @@ TEST_F(defAssignExprTest, defAssignAsParameterNegative3) {
     )SRC").shouldVerified(false);
 }
 
-TEST_F(defAssignExprTest, defAssignAsParameter) {
+TEST_F(defAssignExprTest, defAssignAsParameter3) {
     make().parse(R"SRC(
         def f
             foo(a int, b int) int
@@ -195,7 +204,8 @@ TEST_F(defAssignExprTest, defAssignAsParameter) {
 
         main() int
             f1 f
-            a2 := f1.foo(a := 5, 5)
+            a := 5
+            a2 := f1.foo(a, 5)
             a2 = a2 + a
     )SRC").shouldParsed(true);
     shouldVerified(true);
@@ -206,7 +216,8 @@ TEST_F(defAssignExprTest, defAssignDefAssignedValue) {
         def a
             age int
         main() int
-            a1 := a2 := a()
+            a2 := a()
+            a1 := a2
             ret a1.age
     )SRC").shouldVerified(true);
 
@@ -265,23 +276,21 @@ TEST_F(defAssignExprTest, defAssignEvalOfSetElemConversion) {
             1
         main() int
             arr := {1, 2}
-            val := arr[foo()] -= boo()
+            arr[foo()] -= boo()
+            val := arr[foo()]
             val == true
-            // why val is bool type?:
-            //  because of 'setElemConversion', arr[foo()] -= boo() will translate to,
-            //      arr.set(foo(), arr.get(foo()) - boo())
-            //  . and set() returns 'true' as boolean  when its job successed.
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), true);
+    ASSERT_EQ(res.cast<nint>(), false);
 }
 
 TEST_F(defAssignExprTest, defAssignAtIf) {
     make().parse(R"SRC(
         main() int
-            if res := 0.3
+            res := 0.3
+            if res
                 ret res == 0.3
             ret 0
     )SRC").shouldVerified(true);
@@ -292,7 +301,7 @@ TEST_F(defAssignExprTest, defAssignAtIf) {
 }
 
 TEST_F(defAssignExprTest, defAssignAtBlockNegative) {
-    make().parse(R"SRC(
+    make().negative().parse(R"SRC(
         main() int
             if true
                 res := 0.8

@@ -61,7 +61,7 @@ TEST_F(callTest, callFuncWithExprInside2) {
     make().negative().parse(R"SRC(
         main() void
             if "test"
-                a.foo(22, 34, boo(a int) void
+                a.foo(22, 34, (a int) void
                     b.boo(a)
                 )
     )SRC").shouldParsed(true);
@@ -71,10 +71,10 @@ TEST_F(callTest, callFuncWithExprInside3) {
     make().negative().parse(R"SRC(
         main() void
             if "test"
-                a.foo(22, 34, (boo(a int) void
+                a.foo(22, 34, ((a int) void
                     b.boo(a)
                 ))
-    )SRC").shouldParsed(true);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(callTest, callObjCtor) {

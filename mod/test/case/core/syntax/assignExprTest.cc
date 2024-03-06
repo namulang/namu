@@ -61,7 +61,8 @@ TEST_F(assignExprTest, assignLocalVariable) {
             age = 5
 
             age int
-            ret age = 3
+            age = 3
+            ret age
     )SRC").shouldVerified(true)) {
         run();
         node& res = getSubPack();
@@ -78,15 +79,14 @@ TEST_F(assignExprTest, assignTypeNegative) {
         age int
         main() int
             ret age = "wow"
-    )SRC").shouldParsed(true);
-    shouldVerified(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(assignExprTest, mysteriousDeath) {
     make().parse(R"SRC(
         age := 0
         main() int
-            ret age = age + 1
+            age = age + 1 // assignment is not expression but it can be returned.
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -120,11 +120,21 @@ TEST_F(assignExprTest, assignClassNegative2) {
     shouldVerified(false);
 }
 
-TEST_F(assignExprTest, assignAssignedValue) {
+TEST_F(assignExprTest, assignAssignedValueNegative) {
     make().parse(R"SRC(
         main() int
             a1 int
             a1 = a2 := 55
+            ret a1
+    )SRC").shouldParsed(false);
+}
+
+TEST_F(assignExprTest, assignAssignedValue) {
+    make().parse(R"SRC(
+        main() int
+            a1 int
+            a2 := 55
+            a1 = a2
             ret a1
     )SRC").shouldVerified(true);
 
@@ -138,7 +148,8 @@ TEST_F(assignExprTest, assignAssignedValue2) {
         main() int
             a1 int
             a2 int
-            a1 = a2 = 55
+            a2 = 55
+            a1 = a2
             ret a1
     )SRC").shouldVerified(true);
 
