@@ -157,7 +157,7 @@
 //      tuple:
 %type <asArgs> tuple tuple-items
 %type <asArgs> func-call-tuple func-call-tuple-items
-%type <asNode> func-call-tuple-item
+%type <asNode> func-call-tuple-item tuple-item
 %type <asNarr> params param-items 
 //      type:
 %type <asNode> type
@@ -398,8 +398,10 @@ func-call: type func-call-tuple {
 //  tuple:
 tuple: '(' tuple-items ')' { $$ = $2; }
      | '(' ')' { $$ = EVENTER.onTuple(); }
-tuple-items: expr-line { $$ = EVENTER.onTuple(*$1); }
-           | tuple-items ',' expr-line { $$ = EVENTER.onTuple(*$1, *$3); }
+tuple-item: expr-line { $$ = $1; }
+          | expr-compound { $$ = $1; }
+tuple-items: tuple-item { $$ = EVENTER.onTuple(*$1); }
+           | tuple-items ',' tuple-item { $$ = EVENTER.onTuple(*$1, *$3); }
 func-call-tuple: '(' func-call-tuple-items ')' { $$ = $2; }
                | '(' ')' { $$ = EVENTER.onFuncCallTuple(); }
 func-call-tuple-item: expr-line { $$ = $1; }
