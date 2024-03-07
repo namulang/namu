@@ -405,6 +405,7 @@ tuple-items: tuple-item { $$ = EVENTER.onTuple(*$1); }
 func-call-tuple: '(' func-call-tuple-items ')' { $$ = $2; }
                | '(' ')' { $$ = EVENTER.onFuncCallTuple(); }
 func-call-tuple-item: expr-line { $$ = $1; }
+                    | expr-compound { $$ = $1; }
                     | lambda {
                         // ??
                   }

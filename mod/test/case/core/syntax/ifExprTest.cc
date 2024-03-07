@@ -75,7 +75,7 @@ TEST_F(ifExprTest, simpleReturnIfWithoutParenthesisTest) {
 TEST_F(ifExprTest, simpleReturnDefAssignWithoutParenthesisTest) {
     make().parse(R"SRC(
         main() int
-            ret a := if true
+            a := if true
                 11
             else
                 22
