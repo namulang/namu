@@ -127,11 +127,11 @@ TEST_F(ifExprTest, elif) {
         main() int
             if 222 < 33
                 0
-            elif 33 > 115
+            else if 33 > 115
                 1
-            elif 44 < 235
+            else if 44 < 235
                 2
-            elif 77 < 113
+            else if 77 < 113
                 3
             else
                 7
@@ -147,13 +147,13 @@ TEST_F(ifExprTest, elifNegative) {
         main() int
             if 222 < 33
                 0
-            elif 33 > 115
+            else if 33 > 115
                 1
-            elif 44 < 235
+            else if 44 < 235
                 2
             else
                 7
-            elif 77 < 113
+            else if 77 < 113
                 3
     )SRC").shouldParsed(false);
 }
@@ -163,11 +163,11 @@ TEST_F(ifExprTest, elifNegative2) {
         main() int
             if 222 < 33
                 0
-            elif 33 > 115
+            else if 33 > 115
                 1
-            elif 44 < 235
+            else if 44 < 235
                 2
-            elif 77 < 113
+            else if 77 < 113
                 3
             // there is no else block. so ifExpr eventually will be evaluated
             // to the void.
@@ -180,9 +180,9 @@ TEST_F(ifExprTest, elif2) {
         main() int
             if 222 < 33
                 0
-            elif 33 > 115
+            else if 33 > 115
                 1
-            elif 44 >= 235
+            else if 44 >= 235
                 2
             else
                 3
