@@ -408,12 +408,23 @@ namespace namu {
         return ret;
     }
 
+    void me::onCompilationUnit(obj& subpack) {
+        NAMU_DI("tokenEvent: onCompilationUnit(%x)", &subpack);
+       
+        tstr<defBlock> blkLife(new defBlock());
+        _onCompilationUnit(subpack, *blkLife);
+    }
+
     void me::onCompilationUnit(obj& subpack, defBlock& blk) {
-        NAMU_DI("tokenEvent: onCompilationUnit(%x, defBlock[%x])", &subpack, &blk);
-        if(nul(subpack)) {
-            onErr(errCode::NO_PACK_TRAY);
-            return;
-        }
+        NAMU_DI("tokenEvent: onCompilationUnit(%x, defBlock[%x].preCtor.len()=%d)",
+                &subpack, &blk, blk.asPreCtor ? blk.asPreCtor->len() : 0);
+
+        _onCompilationUnit(subpack, blk);
+    }
+
+    void me::_onCompilationUnit(obj& subpack, defBlock& blk) {
+        if(nul(subpack))
+            return onErr(errCode::NO_PACK_TRAY), void();
 
         _onInjectObjSubs(subpack, blk);
 
@@ -423,7 +434,7 @@ namespace namu {
 
         // at this far, subpack must have at least 1 default ctor created just before:
         NAMU_DI("tokenEvent: onCompilationUnit: run preconstructor(%d lines)",
-                (blk.asPreCtor) ? blk.asPreCtor->len() : 0);
+                (!nul(blk) && blk.asPreCtor) ? blk.asPreCtor->len() : 0);
         subpack.run(baseObj::CTOR_NAME); // don't need argument. it's default ctor.
     }
 

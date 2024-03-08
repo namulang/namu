@@ -116,7 +116,7 @@ TEST_F(retExprTest, retVoid) {
 TEST_F(retExprTest, retDefAssign) {
     make().parse(R"SRC(
         main() int
-            ret a := 5
+            a := 5
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);

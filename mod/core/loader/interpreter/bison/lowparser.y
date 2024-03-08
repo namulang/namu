@@ -212,6 +212,10 @@ compilation-unit: pack defblock {
                 tstr<defBlock> lifeBlock($2);
                 EVENTER.onCompilationUnit(*pak, *lifeBlock);
                 _onEndParse(scanner);
+              } | pack {
+                tstr<obj> pak(*$1);
+                EVENTER.onCompilationUnit(*pak);
+                _onEndParse(scanner);
               }
 
 // basic component:

@@ -168,6 +168,7 @@ namespace namu {
         node* onDefArray(const narr& items);
         node* onDefSeq(const node& start, const node& end);
         //          file:
+        void onCompilationUnit(obj& subpack);
         void onCompilationUnit(obj& subpack, defBlock& blk);
         //          func:
         mgdFunc* onAbstractFunc(const getExpr& access, const node& retType);
@@ -219,6 +220,7 @@ namespace namu {
         std::vector<std::string> _extractParamTypeNames(const args& types);
         const node& _onDefArrayType(const narr& items);
         std::vector<std::string> _toDotnames(const node& path);
+        void _onCompilationUnit(obj& subpack, defBlock& blk);
 
     private:
         tokenScan* _mode;
