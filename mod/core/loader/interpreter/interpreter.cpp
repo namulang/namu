@@ -112,10 +112,8 @@ namespace namu {
         NAMU_DI("                preEval               ");
         NAMU_DI("======================================");
 
-        if(!_slot) {
-            NAMU_E("_slot is null");
-            return;
-        }
+        if(!_slot)
+            return NAMU_E("_slot is null"), void();
 
         preEvaluator evaler;
         evaler.setReport(*_rpt)
@@ -129,10 +127,8 @@ namespace namu {
         NAMU_DI("                verify                ");
         NAMU_DI("======================================");
 
-        if(!_slot) {
-            NAMU_E("_slot is null");
-            return;
-        }
+        if(!_slot)
+            return NAMU_E("_slot is null"), void();
 
         // verify:
         _veri.setReport(*_rpt)

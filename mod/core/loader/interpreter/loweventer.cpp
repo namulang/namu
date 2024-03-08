@@ -242,7 +242,8 @@ namespace namu {
         params ret;
         for(auto& a : as) {
             tstr<defPropExpr> defProp(a.cast<defPropExpr>());
-            if(!defProp) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
+            if(!defProp)
+                return onSrcErr(errCode::PARAM_HAS_VAL), ret;
 
             ret.add(new param(defProp->getName(), defProp->getOrigin()));
         }

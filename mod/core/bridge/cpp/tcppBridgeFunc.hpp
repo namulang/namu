@@ -23,7 +23,8 @@ namespace namu {
         str run(const args& a) override {
             args tray;
             args& evaluated = _evalArgs(a, tray);
-            if(nul(evaluated)) return NAMU_E("evaluated == null"), str();
+            if(nul(evaluated))
+                return NAMU_E("evaluated == null"), str();
 
             return _runNative(evaluated);
         }
@@ -62,7 +63,8 @@ namespace namu {
             int n = 0;
             for(const node& e: a) {
                 str ased = e.as(ps[n++].getOrigin());
-                if(!ased) return nulOf<args>();
+                if(!ased)
+                    return nulOf<args>();
 
                 tray.add(*ased);
             }

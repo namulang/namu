@@ -12,10 +12,8 @@ namespace namu {
 
     str me::run(const args& a) {
         str org = _org->as<node>();
-        if(!org) {
-            NAMU_E("getting origin by %s returns null", _name.c_str());
-            return org;
-        }
+        if(!org)
+            return NAMU_E("getting origin by %s returns null", _name.c_str()), org;
 
         nbool res = _where ? _where->add(_name, *org->run()) :
             thread::get()._getNowFrame().pushLocal(_name, *org->run());
