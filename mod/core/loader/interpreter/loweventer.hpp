@@ -15,7 +15,7 @@
 namespace namu {
 
     class expr;
-    class mgdFunc;
+    class func;
     class blockExpr;
     class runExpr;
     class asExpr;
@@ -171,9 +171,9 @@ namespace namu {
         void onCompilationUnit(obj& subpack);
         void onCompilationUnit(obj& subpack, defBlock& blk);
         //          func:
-        mgdFunc* onAbstractFunc(const getExpr& access, const node& retType);
-        mgdFunc* onAbstractFunc(node& it, const node& retType);
-        mgdFunc* onFunc(mgdFunc& func, const blockExpr& blk);
+        func* onAbstractFunc(const getExpr& access, const node& retType);
+        func* onAbstractFunc(node& it, const node& retType);
+        func* onFunc(func& func, const blockExpr& blk);
         //          params:
         narr* onParams();
         narr* onParams(const defPropExpr& elem);

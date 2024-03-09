@@ -7,11 +7,11 @@ struct visitorTest : public namuSyntaxTest {};
 
 TEST_F(visitorTest, iterateManuallyConstructedNodes) {
     obj o;
-    o.subs().add("foo1", new mgdFunc(params(), *new nInt()));
+    o.subs().add("foo1", new func(params(), *new nInt()));
     o.subs().add("val1", new nInt());
 
     obj o2;
-    o2.subs().add("foo2", new mgdFunc(params(), *new nFlt()));
+    o2.subs().add("foo2", new func(params(), *new nFlt()));
     o2.subs().add("val2", new nFlt());
     o2.subs().add("o", o);
 
@@ -23,7 +23,7 @@ TEST_F(visitorTest, iterateManuallyConstructedNodes) {
 
         myVisitor(): metFoo1(false), metVal1(false), metFoo2(false), metVal2(false) {}
 
-        void onVisit(visitInfo i, mgdFunc& fun) override {
+        void onVisit(visitInfo i, func& fun) override {
             if(i.name == "foo1")
                 metFoo1 = true;
             if(i.name == "foo2") {

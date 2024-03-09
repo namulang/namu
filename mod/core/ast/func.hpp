@@ -1,24 +1,24 @@
 #pragma once
 
-#include "../baseFunc.hpp"
-#include "../exprs/blockExpr.hpp"
-#include "../../builtin/container/native/tnmap.hpp"
+#include "baseFunc.hpp"
+#include "exprs/blockExpr.hpp"
+#include "../builtin/container/native/tnmap.hpp"
 
 namespace namu {
 
     class visitor;
 
     typedef tnmap<std::string, node, immutableTactic> scope;
-    class _nout mgdFunc : public baseFunc {
-        NAMU(CLASS(mgdFunc, baseFunc), VISIT())
+    class _nout func : public baseFunc {
+        NAMU(CLASS(func, baseFunc), VISIT())
         friend class verifier;
         friend class exprMaker;
 
     public:
-        explicit mgdFunc(const params& ps, const node& retType);
-        explicit mgdFunc(const params& ps, const node* retType);
-        explicit mgdFunc(const params& ps, const node& retType, const blockExpr& newBlock);
-        explicit mgdFunc(const params& ps, const node* retType, const blockExpr& newBlock);
+        explicit func(const params& ps, const node& retType);
+        explicit func(const params& ps, const node* retType);
+        explicit func(const params& ps, const node& retType, const blockExpr& newBlock);
+        explicit func(const params& ps, const node* retType, const blockExpr& newBlock);
 
     public:
         blockExpr& getBlock();

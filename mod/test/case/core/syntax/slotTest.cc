@@ -6,8 +6,8 @@ using namespace std;
 namespace {
     struct slotTest : public namuSyntaxTest {};
 
-    class myfunc : public mgdFunc {
-        NAMU(CLASS(myfunc, mgdFunc))
+    class myfunc : public func {
+        NAMU(CLASS(myfunc, func))
 
         class myBlock : public blockExpr {
             NAMU(CLASS(myBlock, blockExpr))

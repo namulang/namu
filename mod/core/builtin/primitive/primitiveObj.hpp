@@ -1,7 +1,7 @@
 #pragma once
 
 #include "arithmeticObj.hpp"
-#include "../../ast/mgd.hpp"
+#include "../../ast/func.hpp"
 #include "../../ast/scope.hpp"
 
 namespace namu {

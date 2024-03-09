@@ -39,8 +39,8 @@ namespace namu {
         void onVisit(visitInfo i, getExpr& me) override;
         void onVisit(visitInfo i, retExpr& me) override;
         void onVisit(visitInfo i, runExpr& me) override;
-        void onVisit(visitInfo i, mgdFunc& me) override;
-        void onLeave(visitInfo i, mgdFunc& me) override;
+        void onVisit(visitInfo i, func& me) override;
+        void onLeave(visitInfo i, func& me) override;
         void onVisit(visitInfo i, baseObj& me) override;
         void onLeave(visitInfo i, baseObj& me) override;
         void onVisit(visitInfo i, genericObj& me) override;
@@ -60,7 +60,7 @@ namespace namu {
 
         // @param newInfo is not a heap instance.
         void _leaveErrFrame();
-        void _verifyMgdFuncImplicitReturn(mgdFunc& me);
+        void _verifyMgdFuncImplicitReturn(func& me);
         void _rel();
         void _report(err* new1);
 

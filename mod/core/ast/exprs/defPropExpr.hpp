@@ -10,7 +10,7 @@ namespace namu {
 
     class _nout defPropExpr : public expr {
         NAMU(CLASS(defPropExpr, expr, expr::exprType), VISIT())
-        friend class mgdFunc;
+        friend class func;
         friend class verifier;
 
     public:

@@ -47,7 +47,7 @@ TEST_F(parserTest, slotNoOnTray) {
     ASSERT_FALSE(nul(shares));
     ASSERT_EQ(shares.len(), 3); // 2 builtin func
     ASSERT_EQ(&getSlot().getPack(), &getSubPack());
-    mgdFunc& f = getSubPack().sub<mgdFunc>("main");
+    func& f = getSubPack().sub<func>("main");
     ASSERT_FALSE(nul(f));
 }
 
@@ -65,7 +65,7 @@ TEST_F(parserTest, slotNoOnTrayWithoutMake) {
     ASSERT_FALSE(nul(shares));
     ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
     ASSERT_EQ(&getSlot().getPack(), &getSubPack());
-    mgdFunc& f = getSubPack().sub<mgdFunc>("main");
+    func& f = getSubPack().sub<func>("main");
     ASSERT_FALSE(nul(f));
 }
 

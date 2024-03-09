@@ -8,7 +8,7 @@ namespace namu {
 
     class _nout defSeqExpr : public expr {
         NAMU(CLASS(defSeqExpr, expr, expr::exprType), VISIT())
-        friend class mgdFunc;
+        friend class func;
         friend class verifier;
 
     public:

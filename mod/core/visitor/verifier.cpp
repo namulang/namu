@@ -165,7 +165,7 @@ namespace namu {
         const narr& stmts = me.getStmts();
         if(nul(stmts) || stmts.len() <= 0) return; // will be catched to another verification.
 
-        mgdFunc& parent = i.parent ? i.parent->cast<mgdFunc>() : nulOf<mgdFunc>();
+        func& parent = i.parent ? i.parent->cast<func>() : nulOf<func>();
         if(!nul(parent))
             _verifyMgdFuncImplicitReturn(parent);
 
@@ -408,8 +408,8 @@ namespace namu {
         return ret;
     }
 
-    void me::onVisit(visitInfo i, mgdFunc& me) {
-        onVisit(i, (mgdFunc::super&) me);
+    void me::onVisit(visitInfo i, func& me) {
+        onVisit(i, (func::super&) me);
 
         obj& meObj = frame::_getMe().cast<obj>(); // TODO: same to 'thread::get().getNowFrame().getMe().cast<obj>();'
         if(nul(meObj)) return _err(me.getPos(), errCode::FUNC_REDIRECTED_OBJ);
@@ -447,14 +447,14 @@ namespace namu {
         if(!nul(meObj.getOwns().get(i.name)))
             _err(me.getPos(), errCode::ALREADY_DEFINED_IDENTIFIER, i.name.c_str());
 
-        LOG("verify: mgdFunc: main func return type should be int or void");
+        LOG("verify: func: main func return type should be int or void");
         if(i.name == starter::MAIN) {
             str ret = me.getRet();
             if(!ret->isSub<nInt>() && !ret->isSub<nVoid>())
                 _err(me.getPos(), errCode::MAIN_FUNC_RET_TYPE);
         }
 
-        LOG("verify: mgdFunc: retType exists and stmts exist one at least");
+        LOG("verify: func: retType exists and stmts exist one at least");
         str retType = me.getRet();
         if(!retType) return _err(me.getPos(), errCode::NO_RET_TYPE);
         if(!retType->isSub(ttype<node>::get()))
@@ -464,7 +464,7 @@ namespace namu {
         if(nul(blk) || blk.getStmts().len() <= 0)
             return _err(blk.getPos(), errCode::NO_STMT_IN_FUNC);
 
-        LOG("verify: mgdFunc[%s]: %s iterateBlock[%d]", i.name.c_str(), me.getType().getName().c_str(),
+        LOG("verify: func[%s]: %s iterateBlock[%d]", i.name.c_str(), me.getType().getName().c_str(),
                 me._blk->subs().len());
 
         // sequence of adding frame matters:
@@ -485,15 +485,15 @@ namespace namu {
         me.inFrame(*s);
     }
 
-    void me::_verifyMgdFuncImplicitReturn(mgdFunc& me) {
+    void me::_verifyMgdFuncImplicitReturn(func& me) {
         str ret = me.getRet()->as<node>();
         const type& retType = ret->getType();
         const node& lastStmt = *me.getBlock().getStmts().last();
-        LOG("verify: mgdFunc: last stmt[%s] should matches to return type[%s]",
+        LOG("verify: func: last stmt[%s] should matches to return type[%s]",
                 lastStmt.getType().getName().c_str(), retType.getName().c_str());
 
         if(!lastStmt.isSub<retExpr>() && retType == ttype<nVoid>::get()) {
-            LOG("verify: mgdFunc: implicit return won't verify when retType is void.");
+            LOG("verify: func: implicit return won't verify when retType is void.");
             return;
         }
 
@@ -521,7 +521,7 @@ namespace namu {
             root.outFrame();
     }
 
-    void me::onLeave(visitInfo i, mgdFunc& me) {
+    void me::onLeave(visitInfo i, func& me) {
         baseObj& meObj = frame::_getMe();
         me.outFrame();
         meObj.outFrame();

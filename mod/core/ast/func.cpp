@@ -1,22 +1,22 @@
-#include "mgdFunc.hpp"
-#include "../obj.hpp"
-#include "../../builtin/container/native/tnchain.inl"
-#include "../../frame/thread.hpp"
-#include "../params.hpp"
-#include "../../frame/frameInteract.hpp"
-#include "../../visitor/visitor.hpp"
+#include "func.hpp"
+#include "obj.hpp"
+#include "../builtin/container/native/tnchain.inl"
+#include "../frame/thread.hpp"
+#include "params.hpp"
+#include "../frame/frameInteract.hpp"
+#include "../visitor/visitor.hpp"
 
 namespace namu {
 
-    NAMU(DEF_ME(mgdFunc), DEF_VISIT())
+    NAMU(DEF_ME(func), DEF_VISIT())
 
-    me::mgdFunc(const params& ps, const node& retType):
+    me::func(const params& ps, const node& retType):
             super(), _params(ps), _retType(retType), _blk(new blockExpr()) {}
-    me::mgdFunc(const params& ps, const node* retType):
+    me::func(const params& ps, const node* retType):
             super(), _params(ps), _retType(retType), _blk(new blockExpr()) {}
-    me::mgdFunc(const params& ps, const node& retType, const blockExpr& newBlock):
+    me::func(const params& ps, const node& retType, const blockExpr& newBlock):
             super(), _params(ps), _retType(retType), _blk(newBlock) {}
-    me::mgdFunc(const params& ps, const node* retType, const blockExpr& newBlock):
+    me::func(const params& ps, const node* retType, const blockExpr& newBlock):
             super(), _params(ps), _retType(retType), _blk(newBlock) {}
 
     blockExpr& me::getBlock() { return *_blk; }

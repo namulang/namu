@@ -1,7 +1,7 @@
 #include "preEvaluator.hpp"
 #include "../ast/node.inl"
 #include "../ast/obj.hpp"
-#include "../ast/mgd/mgdFunc.hpp"
+#include "../ast/func.hpp"
 #include "../frame/frameInteract.hpp"
 #include "verifier.hpp"
 #include "../ast/exprs/getGenericExpr.hpp"
@@ -38,23 +38,23 @@ namespace namu {
         _obj.rel();
     }
 
-    void me::onVisit(visitInfo i, mgdFunc& me) {
+    void me::onVisit(visitInfo i, func& me) {
         _func.bind(me);
         me.inFrame();
 
-        NAMU_DI("preEval: mgdFunc: %s", i.name.c_str());
+        NAMU_DI("preEval: func: %s", i.name.c_str());
         for(const auto& p : me.getParams())
             ((node&) p.getOrigin()).accept(i, *this);
 
         if(i.name == baseObj::PRECTOR_NAME) {
-            NAMU_DI("preEval: mgdFunc: found prector");
+            NAMU_DI("preEval: func: found prector");
             _stack.push_back({*_obj, me, false});
         }
 
         me.getBlock().inFrame();
     }
 
-    void me::onLeave(visitInfo i, mgdFunc& me) {
+    void me::onLeave(visitInfo i, func& me) {
         me.getBlock().outFrame();
         me.outFrame();
         _func.rel();
@@ -68,7 +68,7 @@ namespace namu {
         if(nul(genericObj)) return;
 
         obj& prevObj = *_obj;
-        mgdFunc& prevFunc = *_func;
+        func& prevFunc = *_func;
         genericObj.accept(i, *this);
         _func.bind(prevFunc);
         _obj.bind(prevObj);
@@ -116,7 +116,7 @@ namespace namu {
     nbool me::_preEvalFunc(errReport& rpt, evaluation& eval) {
         obj& me = *eval.me;
         frameInteract f1(me); {
-            mgdFunc& fun = *eval.fun;
+            func& fun = *eval.fun;
             frameInteract f2(fun); {
                 blockExpr& blk = fun.getBlock();
                 frameInteract f3(blk); {

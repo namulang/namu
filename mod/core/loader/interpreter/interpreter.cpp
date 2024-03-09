@@ -1,5 +1,5 @@
 #include "../../ast/exprs/blockExpr.hpp"
-#include "../../ast/mgd/mgdFunc.hpp"
+#include "../../ast/func.hpp"
 #include "../../frame/thread.hpp"
 #include "interpreter.hpp"
 #include "../../visitor/graphVisitor.hpp"

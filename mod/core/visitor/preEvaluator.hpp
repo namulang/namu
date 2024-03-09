@@ -9,7 +9,7 @@ namespace namu {
 
         struct _nout evaluation {
             tweak<obj> me;
-            tweak<mgdFunc> fun;
+            tweak<func> fun;
             nbool evaluated;
         };
 
@@ -25,8 +25,8 @@ namespace namu {
 
         void onVisit(visitInfo i, obj& me) override;
         void onLeave(visitInfo i, obj& me) override;
-        void onVisit(visitInfo i, mgdFunc& me) override;
-        void onLeave(visitInfo i, mgdFunc& me) override;
+        void onVisit(visitInfo i, func& me) override;
+        void onLeave(visitInfo i, func& me) override;
         void onVisit(visitInfo i, getGenericExpr& me) override;
 
     private:
@@ -39,6 +39,6 @@ namespace namu {
     private:
         std::vector<evaluation> _stack;
         tstr<obj> _obj;
-        tstr<mgdFunc> _func;
+        tstr<func> _func;
     };
 }

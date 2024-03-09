@@ -11,7 +11,7 @@ namespace namu {
     class _nout assignExpr : public expr {
         NAMU(CLASS(assignExpr, expr, expr::exprType), VISIT())
         friend class verifier;
-        friend class mgdFunc;
+        friend class func;
         typedef scopes::iter iter;
 
     public:

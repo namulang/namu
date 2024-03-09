@@ -6,8 +6,8 @@ using namespace std;
 struct nodeTest : public namuTest {};
 
 namespace {
-    class myFunc : public mgdFunc {
-        NAMU(CLASS(myFunc, mgdFunc))
+    class myFunc : public func {
+        NAMU(CLASS(myFunc, func))
 
     public:
         myFunc(): super(params(), new nVoid()) {}

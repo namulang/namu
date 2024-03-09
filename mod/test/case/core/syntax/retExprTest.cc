@@ -28,7 +28,7 @@ TEST_F(retExprTest, simpleReturnTypeNegative) {
     )SRC").shouldParsed(true);
     shouldVerified(false);
 
-    mgdFunc& make = getSubPack().sub<mgdFunc>("make");
+    func& make = getSubPack().sub<func>("make");
     ASSERT_FALSE(nul(make));
     blockExpr& blkExp = make.getBlock();
     ASSERT_FALSE(nul(blkExp));

@@ -1,7 +1,7 @@
 #include "loweventer.hpp"
 #include "bison/lowparser.hpp"
 #include "../../ast.hpp"
-#include "../../ast/mgd/mgdFunc.hpp"
+#include "../../ast/func.hpp"
 #include "../../builtin/primitive.hpp"
 #include "../../frame/thread.hpp"
 #include "../../ast/genericObj.hpp"
@@ -251,21 +251,21 @@ namespace namu {
         return ret;
     }
 
-    mgdFunc* me::onAbstractFunc(const getExpr& access, const node& retType) {
+    func* me::onAbstractFunc(const getExpr& access, const node& retType) {
         NAMU_DI("tokenEvent: onAbstractFunc(access: %s(%d), retType:%s)",
                 access.getSubName().c_str(), access.getSubArgs().len(), retType.getType().getName().c_str());
 
-        mgdFunc* ret = _maker.make<mgdFunc>(_asParams(access.getSubArgs()), retType);
+        func* ret = _maker.make<func>(_asParams(access.getSubArgs()), retType);
         _onPushName(access.getSubName(), *ret);
         return ret;
     }
 
-    mgdFunc* me::onAbstractFunc(node& it, const node& retType) {
+    func* me::onAbstractFunc(node& it, const node& retType) {
         NAMU_DI("tokenEvent: onAbstractFunc(it: %s, retType: %s)", it.getType().getName().c_str(), retType.getType().getName().c_str());
         return onAbstractFunc(onCallAccess(it, *new narr())->cast<getExpr>(), retType);
     }
 
-    mgdFunc* me::onFunc(mgdFunc& f, const blockExpr& blk) {
+    func* me::onFunc(func& f, const blockExpr& blk) {
         NAMU_DI("tokenEvent: onFunc: func[%x] blk.len()=%d", (void*) &f, blk.getStmts().len());
 
         f.setBlock(blk);
@@ -465,7 +465,7 @@ namespace namu {
 
         // add preCtor:
         if(blk.asPreCtor && blk.asPreCtor->len()) {
-            mgdFunc* preCtor = _maker.make<mgdFunc>(params(), new nVoid());
+            func* preCtor = _maker.make<func>(params(), new nVoid());
             preCtor->getBlock().getStmts().add(*blk.asPreCtor);
             it.subs().add(baseObj::PRECTOR_NAME, preCtor);
         }

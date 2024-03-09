@@ -552,7 +552,7 @@ abstract-func: call-access type {
            }
 
 def-func: abstract-func indentblock {
-        $$ = EVENTER.onFunc($1->cast<mgdFunc>(), $2->cast<blockExpr>());
+        $$ = EVENTER.onFunc($1->cast<func>(), $2->cast<blockExpr>());
      }
 
 end: END indentblock {

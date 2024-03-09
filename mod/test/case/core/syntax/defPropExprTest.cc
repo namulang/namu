@@ -16,7 +16,7 @@ TEST_F(defPropExprTest, simpleDefineVariable) {
         node& res = getSubPack();
         ASSERT_FALSE(nul(res));
 
-        const mgdFunc& f = res.sub<mgdFunc>("main", narr());
+        const func& f = res.sub<func>("main", narr());
         ASSERT_FALSE(nul(f));
         const narr& stmts = f.getBlock().getStmts();
         ASSERT_FALSE(nul(stmts));
@@ -60,7 +60,7 @@ TEST_F(defPropExprTest, definePackVariable2) {
     ASSERT_EQ(owns.len(), 3);
     ASSERT_EQ(shares.len(), 3);
     ASSERT_EQ(s.subAll<baseObj>().len(), 3);
-    ASSERT_EQ(s.subAll<mgdFunc>().len(), 1);
+    ASSERT_EQ(s.subAll<func>().len(), 1);
 
     nStr& name = s.sub<nStr>("name");
     ASSERT_FALSE(nul(name));

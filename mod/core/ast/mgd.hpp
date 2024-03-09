@@ -1,3 +1,3 @@
 #pragma once
 
-#include "mgd/mgdFunc.hpp"
+#include "func.hpp"

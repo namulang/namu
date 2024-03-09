@@ -12,7 +12,7 @@ namespace namu {
     class _nout defAssignExpr : public expr {
         NAMU(CLASS(defAssignExpr, expr, expr::exprType), VISIT())
         friend class verifier;
-        friend class mgdFunc;
+        friend class func;
         typedef scopes::iter iter;
 
     public:

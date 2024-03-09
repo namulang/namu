@@ -9,7 +9,7 @@ namespace namu {
     class _nout blockExpr : public expr {
         NAMU(CLASS(blockExpr, expr, expr::exprType), VISIT())
         friend class verifier;
-        friend class mgdFunc;
+        friend class func;
 
     public:
         blockExpr();
