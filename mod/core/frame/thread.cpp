@@ -2,7 +2,7 @@
 #include "../loader/slot/slotLoader.hpp"
 #include "../loader/errReport.hpp"
 #include "../ast/node.inl"
-#include "../ast/func.hpp"
+#include "../ast/baseFunc.hpp"
 #include "../builtin/func.hpp"
 
 namespace namu {
@@ -51,7 +51,7 @@ namespace namu {
         // TODO: a validness check.
 
         // find 'main' func:
-        func& fun = _root->sub<func>("main"); // TODO: support generic type of str[]
+        baseFunc& fun = _root->sub<baseFunc>("main"); // TODO: support generic type of str[]
         if(nul(fun))
             return NAMU_E("there is no 'main' func."), str();
 

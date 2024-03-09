@@ -9,8 +9,8 @@ namespace namu {
     typedef tnarr<param, strTactic> params;
     class visitor;
 
-    class _nout func : public expr {
-        NAMU(ADT(func, expr), VISIT())
+    class _nout baseFunc : public expr {
+        NAMU(ADT(baseFunc, expr), VISIT())
 
     public:
         static inline const std::string ME = "me";
@@ -41,5 +41,5 @@ namespace namu {
         virtual nbool setRet(const node& newRet);
     };
 
-    typedef tnarr<func> funcs;
+    typedef tnarr<baseFunc> funcs;
 }

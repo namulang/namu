@@ -1,6 +1,6 @@
 #include "frame.hpp"
 #include "../ast/obj.hpp"
-#include "../ast/func.hpp"
+#include "../ast/baseFunc.hpp"
 #include "../visitor/visitor.hpp"
 
 namespace namu {
@@ -109,15 +109,15 @@ namespace namu {
     }
     // I won't provide API for poping a single node from the scope.
 
-    void me::pushFunc(func& new1) {
-        _funcs.push_back(tstr<func>(new1));
+    void me::pushFunc(baseFunc& new1) {
+        _funcs.push_back(tstr<baseFunc>(new1));
     }
 
     void me::popFunc() {
         _funcs.pop_back();
     }
 
-    func& me::getFunc() {
+    baseFunc& me::getFunc() {
         return *_funcs.back();
     }
 

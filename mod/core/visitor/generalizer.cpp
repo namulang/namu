@@ -86,10 +86,10 @@ namespace namu {
                 me._setOrigin(cast.getOrigin());
         }
 
-        onVisit(i, (func&) me);
+        onVisit(i, (baseFunc&) me);
     }
 
-    void me::onVisit(visitInfo i, func& me) {
+    void me::onVisit(visitInfo i, baseFunc& me) {
         NAMU_DI("generic: func[%s, %x]", i.name.c_str(), &me);
 
         onVisit(i, (params&) me.getParams());
@@ -101,7 +101,7 @@ namespace namu {
                 getReport().add(err::newErr(errCode::IS_NULL, "parent"));
         }
 
-        onVisit(i, (func::super&) me);
+        onVisit(i, (baseFunc::super&) me);
     }
 
     void me::onVisit(visitInfo i, baseObj& me) {

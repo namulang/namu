@@ -23,7 +23,7 @@ namespace namu {
         friend class verifier;
         friend class retExpr;
         friend class runExpr;
-        friend class func; // for frames.
+        friend class baseFunc; // for frames.
         friend class forExpr;
         friend class whileExpr;
         friend class retStateExpr;

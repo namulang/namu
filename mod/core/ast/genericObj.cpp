@@ -3,7 +3,7 @@
 #include "../visitor/generalizer.hpp"
 #include "args.hpp"
 #include "../visitor/verifier.hpp"
-#include "func.hpp"
+#include "baseFunc.hpp"
 #include "../type/mgdType.hpp"
 
 namespace namu {

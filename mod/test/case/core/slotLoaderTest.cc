@@ -16,7 +16,7 @@ TEST_F(slotLoaderTest, testDefaultLoaderInit) {
     node& origin = s["con"];
     ASSERT_FALSE(nul(origin));
     {
-        func& sayFunc = origin["say"].cast<func>();
+        baseFunc& sayFunc = origin["say"].cast<baseFunc>();
         ASSERT_FALSE(nul(sayFunc));
 
         ASSERT_EQ(sayFunc.getRet()->getType(), nVoid().getType());
@@ -33,7 +33,7 @@ TEST_F(slotLoaderTest, testDefaultLoaderInit) {
     }
 
     {
-        func& add = origin["add"].cast<func>();
+        baseFunc& add = origin["add"].cast<baseFunc>();
         ASSERT_FALSE(nul(add));
 
         const params& argTypes = add.getParams();

@@ -1,5 +1,5 @@
 #include "../ast/obj.hpp"
-#include "../ast/func.hpp"
+#include "../ast/baseFunc.hpp"
 #include "../ast/scope.inl"
 #include "../ast/slot.hpp"
 #include "../ast/node.inl"

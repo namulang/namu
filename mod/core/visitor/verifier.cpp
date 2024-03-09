@@ -347,7 +347,7 @@ namespace namu {
 
     void me::onVisit(visitInfo i, retExpr& me) {
         LOG("verify: retExpr: checks evalType of func is matched to me");
-        const func& f = thread::get().getNowFrame().getFunc();
+        const baseFunc& f = thread::get().getNowFrame().getFunc();
         if(nul(f)) return _err(me.getPos(), errCode::NO_FUNC_INFO);
 
         str myEval = me.getEval();
@@ -389,7 +389,7 @@ namespace namu {
 
         LOG("verify: runExpr: derivedSub[%s]", derivedSub->getType().getName().c_str());
         if(!derivedSub->canRun(me.getArgs())) {
-            const func& derivedCast = derivedSub->cast<func>();
+            const baseFunc& derivedCast = derivedSub->cast<baseFunc>();
             std::string params = nul(derivedCast) ? "ctor" : _asStr(derivedCast.getParams());
             return _err(me.getPos(), errCode::OBJ_WRONG_ARGS, me.getArgs().asStr().c_str(), params.c_str());
         }
@@ -421,7 +421,7 @@ namespace namu {
             if(key != i.name) return false;
             if(&val == &me) return false;
 
-            const func& cast = val.cast<func>();
+            const baseFunc& cast = val.cast<baseFunc>();
             if(nul(cast))
                 // this has same name on shares, but it's not func! it's not valid.
                 // this could be an origin obj.

@@ -66,8 +66,8 @@ namespace namu {
             }
         };
 
-        class iterateFunc : public func {
-            NAMU(CLASS(iterateFunc, func))
+        class iterateFunc : public baseFunc {
+            NAMU(CLASS(iterateFunc, baseFunc))
 
         public:
             str getRet() const override {
@@ -99,8 +99,8 @@ namespace namu {
             }
         };
 
-        class getElemTypeFunc : public func {
-            NAMU(CLASS(getElemTypeFunc, func))
+        class getElemTypeFunc : public baseFunc {
+            NAMU(CLASS(getElemTypeFunc, baseFunc))
 
         public:
             str getRet() const override {

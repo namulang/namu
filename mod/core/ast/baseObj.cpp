@@ -1,10 +1,10 @@
 #include "../builtin/container/mgd/arr.hpp"
 #include "baseObj.hpp"
-#include "func.hpp"
+#include "baseFunc.hpp"
 #include "../builtin/container/tucontainable.inl"
 #include "../frame/thread.hpp"
 #include "args.hpp"
-#include "func.hpp"
+#include "baseFunc.hpp"
 #include "node.inl"
 
 namespace namu {
@@ -23,7 +23,7 @@ namespace namu {
     }
 
     nbool me::canRun(const args& a) const {
-        return !nul(sub<func>(baseObj::CTOR_NAME, a));
+        return !nul(sub<baseFunc>(baseObj::CTOR_NAME, a));
     }
 
     void me::inFrame(const bicontainable& args) {

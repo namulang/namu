@@ -19,7 +19,7 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
         node& res = getSubPack();
         ASSERT_FALSE(nul(res));
 
-        const func& f = res.sub<func>("main", narr());
+        const baseFunc& f = res.sub<baseFunc>("main", narr());
         ASSERT_FALSE(nul(f));
         ASSERT_EQ(f.getParams().len(), 0);
         ASSERT_EQ(f.getRet()->getType(), ttype<nVoid>());
@@ -35,9 +35,9 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
         node& res = getSubPack();
         ASSERT_FALSE(nul(res));
 
-        const func& fwrong = res.sub<func>("main", narr());
+        const baseFunc& fwrong = res.sub<baseFunc>("main", narr());
         ASSERT_TRUE(nul(fwrong));
-        const func& f = res.sub<func>("main", narr(nInt(), nStr()));
+        const baseFunc& f = res.sub<baseFunc>("main", narr(nInt(), nStr()));
         ASSERT_FALSE(nul(f));
         ASSERT_EQ(f.getParams().len(), 2);
         ASSERT_EQ(f.getRet()->getType(), ttype<nVoid>());

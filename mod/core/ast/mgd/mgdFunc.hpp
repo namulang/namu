@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../func.hpp"
+#include "../baseFunc.hpp"
 #include "../exprs/blockExpr.hpp"
 #include "../../builtin/container/native/tnmap.hpp"
 
@@ -9,8 +9,8 @@ namespace namu {
     class visitor;
 
     typedef tnmap<std::string, node, immutableTactic> scope;
-    class _nout mgdFunc : public func {
-        NAMU(CLASS(mgdFunc, func), VISIT())
+    class _nout mgdFunc : public baseFunc {
+        NAMU(CLASS(mgdFunc, baseFunc), VISIT())
         friend class verifier;
         friend class exprMaker;
 

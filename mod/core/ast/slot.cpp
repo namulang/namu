@@ -1,5 +1,5 @@
 #include "slot.hpp"
-#include "func.hpp"
+#include "baseFunc.hpp"
 #include "../visitor/visitor.hpp"
 #include "../type/mgdType.hpp"
 

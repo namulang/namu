@@ -10,8 +10,8 @@ namespace namu {
     /// primitiveObj can't be tcppbridge object. it's already obj of namu.
     /// that's why this kind of func template required.
     template <typename T, typename Ret>
-    class APIBridge : public func {
-        NAMU(ADT(APIBridge, func))
+    class APIBridge : public baseFunc {
+        NAMU(ADT(APIBridge, baseFunc))
 
     public:
         using super::run;

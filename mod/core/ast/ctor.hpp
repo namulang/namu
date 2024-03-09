@@ -1,11 +1,11 @@
 #pragma once
 
-#include "func.hpp"
+#include "baseFunc.hpp"
 
 namespace namu {
 
-    class ctor: public func {
-        NAMU(ADT(ctor, func), VISIT())
+    class ctor: public baseFunc {
+        NAMU(ADT(ctor, baseFunc), VISIT())
         friend class generalizer; // for _setOrigin()
 
     public:

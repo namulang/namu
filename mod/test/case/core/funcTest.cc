@@ -78,7 +78,7 @@ namespace {
         return false;
     }
 
-    nbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const std::string& name,
+    nbool checkFrameHasfuncAndObjScope(const frame& fr, const baseFunc& func, const std::string& name,
         const obj& obj, const char* funcNames[], int funcNameSize) {
         if(nul(fr)) return false;
 

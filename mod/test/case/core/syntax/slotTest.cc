@@ -63,8 +63,8 @@ namespace {
         params _params;
     };
 
-    class nativeFunc : public func {
-        NAMU(CLASS(nativeFunc, func))
+    class nativeFunc : public baseFunc {
+        NAMU(CLASS(nativeFunc, baseFunc))
 
     public:
         nativeFunc(): super() {}

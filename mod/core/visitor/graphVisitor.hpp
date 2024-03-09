@@ -11,7 +11,7 @@ namespace namu {
         void start() override;
         void onVisit(visitInfo i, node& visitee) override;
         void onLeave(visitInfo i, node& visitee) override;
-        void onVisit(visitInfo i, func& fun) override;
+        void onVisit(visitInfo i, baseFunc& fun) override;
         void onVisit(visitInfo i, genericObj& o) override;
         void onVisit(visitInfo i, getExpr& e) override;
 

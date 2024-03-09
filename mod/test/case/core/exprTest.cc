@@ -79,7 +79,7 @@ TEST_F(exprTest, simpleGetExpr) {
     str res = exp.run();
     ASSERT_TRUE(res.isBind());
     ASSERT_TRUE(res.getType() == ttype<node>::get());
-    ASSERT_TRUE(res->isSub<func>());
+    ASSERT_TRUE(res->isSub<baseFunc>());
 }
 
 TEST_F(exprTest, simpleGetExprNegative) {

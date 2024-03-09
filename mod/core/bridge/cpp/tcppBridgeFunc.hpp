@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../../ast/func.hpp"
+#include "../../ast/baseFunc.hpp"
 #include "../../ast/args.hpp"
 
 namespace namu {
 
     template <typename Ret, typename T, typename S, template <typename, typename, nbool> class Marshaling, typename... Args>
-    class tcppBridgeFuncBase : public func {
-        NAMU(ADT(tcppBridgeFuncBase, func))
+    class tcppBridgeFuncBase : public baseFunc {
+        NAMU(ADT(tcppBridgeFuncBase, baseFunc))
     protected:
         typedef Ret (T::*fptrType)(Args...);
 

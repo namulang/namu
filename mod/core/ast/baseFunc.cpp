@@ -1,4 +1,4 @@
-#include "func.hpp"
+#include "baseFunc.hpp"
 #include "params.hpp"
 #include "../frame/frameInteract.hpp"
 #include "../visitor/visitor.hpp"
@@ -6,7 +6,7 @@
 
 namespace namu {
 
-    NAMU(DEF_ME(func), DEF_VISIT())
+    NAMU(DEF_ME(baseFunc), DEF_VISIT())
 
     nbool me::canRun(const args& a) const {
         const params& ps = getParams();

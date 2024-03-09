@@ -83,7 +83,7 @@ namespace namu {
         str sub = _getSub(getMe().getEval(), nulOf<args>());
         if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
 
-        const func& f = sub.cast<func>();
+        const baseFunc& f = sub.cast<baseFunc>();
         str ret = nul(f) ? sub : f.getRet();
         if(!ret)
             return NAMU_E("ret is null"), str();

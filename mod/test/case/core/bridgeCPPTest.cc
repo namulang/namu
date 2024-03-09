@@ -68,7 +68,7 @@ TEST_F(bridgeCPPTest, testHasName) {
     ASSERT_TRUE(bridge);
     m.add("kniz", *bridge);
 
-    func& say = m["kniz"]["say"].cast<func>();
+    baseFunc& say = m["kniz"]["say"].cast<baseFunc>();
     ASSERT_FALSE(nul(say));
 }
 

@@ -58,7 +58,7 @@ namespace namu {
     }
 
     str me::run(const args& a) {
-        func& found = sub<func>(baseObj::CTOR_NAME, a);
+        baseFunc& found = sub<baseFunc>(baseObj::CTOR_NAME, a);
         if(nul(found)) return NAMU_W("there is no such ctor."), str();
 
         return run(baseObj::CTOR_NAME, a);

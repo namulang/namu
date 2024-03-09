@@ -43,7 +43,7 @@ namespace namu {
         _parentsLast.pop_back();
     }
 
-    void me::onVisit(visitInfo i, func& fun) {
+    void me::onVisit(visitInfo i, baseFunc& fun) {
         onVisit(i, (node&) fun);
 
         std::string msg;

@@ -16,7 +16,7 @@ namespace namu {
         void onVisit(visitInfo i, blockExpr& me) override;
         void onVisit(visitInfo i, defPropExpr& me) override;
         void onVisit(visitInfo i, runExpr& me) override;
-        void onVisit(visitInfo i, func& me) override;
+        void onVisit(visitInfo i, baseFunc& me) override;
         void onVisit(visitInfo i, ctor& me) override;
         void onVisit(visitInfo i, params& me);
         void onVisit(visitInfo i, FBOExpr& me) override;
