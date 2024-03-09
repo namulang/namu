@@ -35,6 +35,9 @@ namespace namu {
         if(_isLog) {\
             NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str()); \
         } \
+        \
+        if(!_markVisited(me)) return; \
+        \
         onVisit(i, me); \
         onTraverse(i, me); \
         onLeave(i, me); \
@@ -62,6 +65,8 @@ namespace namu {
         if(_isLog)
             NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str());
 
+        if(!_markVisited(me)) return;
+
         onVisit(i, me);
         onTraverse(i, me);
         onLeave(i, me);
@@ -72,6 +77,7 @@ namespace namu {
     void me::start() {
         if(!_root) return;
 
+        _visited.clear();
         _root->accept(visitInfo {"", nullptr, 0, 1, 1}, *this);
     }
 
@@ -81,11 +87,9 @@ namespace namu {
         return _visited[&me] = true;
     }
 
-    nbool me::onTraverse(visitInfo i, node& me) {
+    void me::onTraverse(visitInfo i, node& me) {
         if(_isLog)
             NAMU_DI("node[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(me)) return false;
 
         nbicontainer& subs = me.subs();
         int n=0;
@@ -93,18 +97,13 @@ namespace namu {
         auto end = _visited.end();
         for(auto e=subs.begin(); e ;++e, ++n) {
             node& val = e.getVal();
-            if(_markVisited(val))
-                val.accept(visitInfo {e.getKey(), &me, n, len, i.depth+1}, *this);
+            val.accept(visitInfo {e.getKey(), &me, n, len, i.depth+1}, *this);
         }
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, getExpr& e) {
+    void me::onTraverse(visitInfo i, getExpr& e) {
         if(_isLog)
             NAMU_DI("getExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(e)) return false;
 
         // check me:
         const args& args = e.getSubArgs();
@@ -118,23 +117,17 @@ namespace namu {
         if(!nul(args))
             for(auto& elem : e.getSubArgs())
                 elem.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, frame& f) {
+    void me::onTraverse(visitInfo i, frame& f) {
         if(_isLog)
             NAMU_DI("frame[%s]::onTraverse", i.name.c_str());
         // do nothing.
-
-        return _markVisited(f);
     }
 
-    nbool me::onTraverse(visitInfo i, runExpr& e) {
+    void me::onTraverse(visitInfo i, runExpr& e) {
         if(_isLog)
             NAMU_DI("runExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(e)) return false;
 
         int n = 0;
         node& me = e.getMe();
@@ -147,55 +140,39 @@ namespace namu {
 
         for(auto& elem : e.getArgs())
             elem.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, func& f) {
+    void me::onTraverse(visitInfo i, func& f) {
         if(_isLog)
             NAMU_DI("func[%s]::onTraverse", i.name.c_str());
 
-        if(!_markVisited(f)) return false;
-
         f.getBlock().accept(visitInfo {"", &f, 0, 1, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, blockExpr& b) {
+    void me::onTraverse(visitInfo i, blockExpr& b) {
         if(_isLog)
             NAMU_DI("blockExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(b)) return false;
 
         int n = 0;
         narr& stmts = b.getStmts();
         int len = stmts.len();
         for(auto& stmt : stmts)
             stmt.accept(visitInfo {"", &b, n++, len, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, retExpr& b) {
+    void me::onTraverse(visitInfo i, retExpr& b) {
         if(_isLog)
             NAMU_DI("retExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(b)) return false;
 
         int n = 0;
         node& ret = b.getRet();
         if(!nul(ret))
             ret.accept(visitInfo {"", &b, n++, 1, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, asExpr& a) {
+    void me::onTraverse(visitInfo i, asExpr& a) {
         if(_isLog)
             NAMU_DI("asExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(a)) return false;
 
         int n = 0;
         node& me = (node&) a.getMe();
@@ -205,15 +182,11 @@ namespace namu {
             me.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
         if(!nul(as))
             as.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, assignExpr& a) {
+    void me::onTraverse(visitInfo i, assignExpr& a) {
         if(_isLog)
             NAMU_DI("assignExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(a)) return false;
 
         int n = 0;
         node& left = (node&) a.getLeft();
@@ -223,41 +196,29 @@ namespace namu {
             left.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
         if(!nul(right))
             right.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, defAssignExpr& d) {
+    void me::onTraverse(visitInfo i, defAssignExpr& d) {
         if(_isLog)
             NAMU_DI("defAssignExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(d)) return false;
 
         node& right = d.getRight();
         if(!nul(right))
             right.accept(visitInfo {"", &d, 0, 1, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, defPropExpr& d) {
+    void me::onTraverse(visitInfo i, defPropExpr& d) {
         if(_isLog)
             NAMU_DI("defPropExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(d)) return false;
 
         node& org = (node&) d.getOrigin();
         if(!nul(org))
             org.accept(visitInfo {d.getName(), &d, 0, 1, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, FBOExpr& f) {
+    void me::onTraverse(visitInfo i, FBOExpr& f) {
         if(_isLog)
             NAMU_DI("FBOExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(f)) return false;
 
         int n = 0;
         node& left = (node&) f.getLeft();
@@ -267,44 +228,32 @@ namespace namu {
             left.accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
         if(!nul(right))
             right.accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, forExpr& f) {
+    void me::onTraverse(visitInfo i, forExpr& f) {
         if(_isLog)
             NAMU_DI("forExpr[%s]::onTraverse", i.name.c_str());
 
-        if(!_markVisited(f)) return false;
-        
         node& con = *f.getContainer();
         ncnt len = nul(con) ? 1 : 2;
         ncnt n = 0;
         if(!nul(con))
             con.accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
         f.getBlock().accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, retStateExpr& r) {
+    void me::onTraverse(visitInfo i, retStateExpr& r) {
         if(_isLog)
             NAMU_DI("%s[%s]::onTraverse", r.getType().getName().c_str(), i.name.c_str());
-
-        if(!_markVisited(r)) return false;
 
         node& ret = r.getRet();
         if(!nul(ret))
             ret.accept(visitInfo {"", &r, 0, 1, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, ifExpr& f) {
+    void me::onTraverse(visitInfo i, ifExpr& f) {
         if(_isLog)
             NAMU_DI("ifExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(f)) return false;
 
         blockExpr& elseBlk = f.getElseBlk();
         int len = !nul(elseBlk) ? 3 : 2;
@@ -314,49 +263,35 @@ namespace namu {
         f.getThenBlk().accept(visitInfo {"", &f, 1, len, i.depth+1}, *this);
         if(!nul(elseBlk))
             elseBlk.accept(visitInfo {"", &f, 2, len, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, whileExpr& w) {
+    void me::onTraverse(visitInfo i, whileExpr& w) {
         if(_isLog)
             NAMU_DI("whileExpr[%s]::onTraverse", i.name.c_str());
 
-        if(!_markVisited(w)) return false;
-
         w.getCondition().accept(visitInfo {"", &w, 0, 2, i.depth+1}, *this);
         w.getBlock().accept(visitInfo {"", &w, 1, 2, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, defArrayExpr& d) {
+    void me::onTraverse(visitInfo i, defArrayExpr& d) {
         if(_isLog)
             NAMU_DI("defArrayExpr[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(d)) return false;
 
         narr& elems = d.getElems();
         int len = elems.len(),
             n = 0;
         for(node& e : elems)
             e.accept(visitInfo {"", &d, n++, len, i.depth+1}, *this);
-
-        return true;
     }
 
-    nbool me::onTraverse(visitInfo i, genericObj& g) {
+    void me::onTraverse(visitInfo i, genericObj& g) {
         if(_isLog)
             NAMU_DI("genericObj[%s]::onTraverse", i.name.c_str());
-
-        if(!_markVisited(g)) return false;
 
         auto& cache = (std::map<std::string, tstr<obj>>&) g.getCache();
         ncnt len = cache.size();
         nint n = 0;
         for(auto& e : cache)
             e.second->accept(visitInfo{e.first, &g, n++, len, i.depth+1}, *this);
-
-        return true;
     }
 }
