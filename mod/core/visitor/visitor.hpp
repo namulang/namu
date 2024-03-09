@@ -43,25 +43,30 @@ namespace namu {
 
         //  traverse:
         //      generalized-way:
-        virtual void onTraverse(visitInfo i, node& me);
+        //  @ return false if the node is already visited.
+        virtual nbool onTraverse(visitInfo i, node& me);
         //      specific-way:
-        virtual void onTraverse(visitInfo i, asExpr& a);
-        virtual void onTraverse(visitInfo i, assignExpr& a);
-        virtual void onTraverse(visitInfo i, blockExpr& b);
-        virtual void onTraverse(visitInfo i, defAssignExpr& d);
-        virtual void onTraverse(visitInfo i, defPropExpr& d);
-        virtual void onTraverse(visitInfo i, FBOExpr& f);
-        virtual void onTraverse(visitInfo i, getExpr& e);
-        virtual void onTraverse(visitInfo i, retExpr& b);
-        virtual void onTraverse(visitInfo i, runExpr& e);
-        virtual void onTraverse(visitInfo i, func& f);
-        virtual void onTraverse(visitInfo i, frame& f);
-        virtual void onTraverse(visitInfo i, forExpr& f);
-        virtual void onTraverse(visitInfo i, retStateExpr& r);
-        virtual void onTraverse(visitInfo i, ifExpr& f);
-        virtual void onTraverse(visitInfo i, whileExpr& w);
-        virtual void onTraverse(visitInfo i, defArrayExpr& d);
-        virtual void onTraverse(visitInfo i, genericObj& g);
+        virtual nbool onTraverse(visitInfo i, asExpr& a);
+        virtual nbool onTraverse(visitInfo i, assignExpr& a);
+        virtual nbool onTraverse(visitInfo i, blockExpr& b);
+        virtual nbool onTraverse(visitInfo i, defAssignExpr& d);
+        virtual nbool onTraverse(visitInfo i, defPropExpr& d);
+        virtual nbool onTraverse(visitInfo i, FBOExpr& f);
+        virtual nbool onTraverse(visitInfo i, getExpr& e);
+        virtual nbool onTraverse(visitInfo i, retExpr& b);
+        virtual nbool onTraverse(visitInfo i, runExpr& e);
+        virtual nbool onTraverse(visitInfo i, func& f);
+        virtual nbool onTraverse(visitInfo i, frame& f);
+        virtual nbool onTraverse(visitInfo i, forExpr& f);
+        virtual nbool onTraverse(visitInfo i, retStateExpr& r);
+        virtual nbool onTraverse(visitInfo i, ifExpr& f);
+        virtual nbool onTraverse(visitInfo i, whileExpr& w);
+        virtual nbool onTraverse(visitInfo i, defArrayExpr& d);
+        virtual nbool onTraverse(visitInfo i, genericObj& g);
+
+    private:
+        /// @return false if the node is already visited.
+        nbool _markVisited(node& me);
 
     private:
         tstr<errReport> _rpt;
