@@ -124,7 +124,7 @@
 //      define:
 %token DEF WITH AS ENUM ONLY END
 //  predefined-type:
-%token VOID INT STR BOOL FLT NUL BYTE CHAR ME SUPER IT CTOR PACK 
+%token _VOID_ _INT_ _STR_ _BOOL_ FLT NUL _BYTE_ _CHAR_ ME SUPER IT CTOR PACK 
 //  valueless-token:
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS DOUBLE_DOT ARROW TAB ASSIGN DEFASSIGN
 %token OPEN_CLOSE_SQUARE_BRACKET GE LE EQ NE LOGICAL_AND LOGICAL_OR LSHIFT RSHIFT
@@ -418,7 +418,7 @@ func-call-tuple-items: func-call-tuple-item {
                    } | func-call-tuple-items ',' func-call-tuple-item {
                         $$ = EVENTER.onFuncCallTuple(*$1, *$3);
                    }
-params: '(' VOID ')' { $$ = EVENTER.onParams(); }
+params: '(' _VOID_ ')' { $$ = EVENTER.onParams(); }
       | '(' param-items ')' { $$ = $2; }
 param-items: def-prop-without-value {
             $$ = EVENTER.onParams($1->cast<defPropExpr>());
@@ -427,12 +427,12 @@ param-items: def-prop-without-value {
          }
 
 //  type:
-type: VOID { $$ = EVENTER.onPrimitive<nVoid>(); }
-    | INT { $$ = EVENTER.onPrimitive<nInt>(); }
-    | BYTE { $$ = EVENTER.onPrimitive<nByte>(); }
-    | CHAR { $$ = EVENTER.onPrimitive<nChar>(); }
-    | STR { $$ = EVENTER.onPrimitive<nStr>(); }
-    | BOOL { $$ = EVENTER.onPrimitive<nBool>(); }
+type: _VOID_ { $$ = EVENTER.onPrimitive<nVoid>(); }
+    | _INT_ { $$ = EVENTER.onPrimitive<nInt>(); }
+    | _BYTE_ { $$ = EVENTER.onPrimitive<nByte>(); }
+    | _CHAR_ { $$ = EVENTER.onPrimitive<nChar>(); }
+    | _STR_ { $$ = EVENTER.onPrimitive<nStr>(); }
+    | _BOOL_ { $$ = EVENTER.onPrimitive<nBool>(); }
     | FLT { $$ = EVENTER.onPrimitive<nFlt>(); }
     | NAME {
         $$ = EVENTER.onGet(*$1);
