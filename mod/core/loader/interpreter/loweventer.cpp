@@ -165,12 +165,12 @@ namespace namu {
     }
 
     blockExpr* me::onBlock(const node& stmt) {
-        NAMU_DI("tokenEvent: onBlock()");
+        NAMU_DI("tokenEvent: onBlock(%s)", stmt.getType().getName().c_str());
         return _maker.make<blockExpr>(stmt);
     }
 
     blockExpr* me::onBlock(blockExpr& blk, const node& stmt) {
-        NAMU_DI("tokenEvent: onBlock()");
+        NAMU_DI("tokenEvent: onBlock(blk, %s)", stmt.getType().getName().c_str());
         if(nul(blk))
             return onSrcErr(errCode::IS_NULL, "blk"), _maker.make<blockExpr>();
 
@@ -185,7 +185,7 @@ namespace namu {
     }
 
     defBlock* me::onDefBlock(defBlock& s, node& stmt) {
-        NAMU_DI("tokenEvent: onDefBlock(stmt=%s)", stmt.getType().getName().c_str());
+        NAMU_DI("tokenEvent: onDefBlock(s, %s)", stmt.getType().getName().c_str());
         if(nul(s))
             return onSrcErr(errCode::IS_NULL, "s"), new defBlock();
 
@@ -228,8 +228,6 @@ namespace namu {
     void me::onSrcArea(const area& area) {
         _srcArea = area;
         ++_srcArea;
-        NAMU_DI("tokenEvent: onSrcArea(%d, %d) -> (%d, %d)", area.start.row, area.start.col,
-                _srcArea.start.row, _srcArea.start.col);
         _maker.setRow(_srcArea.start.row).setCol(_srcArea.start.col);
     }
 
