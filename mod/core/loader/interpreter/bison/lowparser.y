@@ -143,12 +143,12 @@
 //      expr:
 //          inline:
 %type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9
-%type <asNode> def-expr def-expr-inline def-expr-compound
+%type <asNode> def-expr-inline def-expr-compound
 //          compound:
 %type <asNode> expr-compound block indentblock
 %type <asDefBlock> indentDefBlock defblock declBlock indentDeclBlock
 //      stmt:
-%type <asNode> allstmt stmt stmt-inline stmt-compound decl-stmt def-stmt def-stmt-inline def-stmt-compound
+%type <asNode> allstmt stmt stmt-inline stmt-compound def-stmt def-stmt-inline def-stmt-compound
 %type <asNode> allstmt-chain allstmt-chain-item def-stmt-chain-item
 %type <asDefBlock> def-stmt-chain
 //      access:
@@ -190,10 +190,6 @@
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
     ============================================================================================  */
-%precedence ':'
-%precedence ';'
-%precedence IF
-%precedence _ELSE_
 
 
 
@@ -323,9 +319,9 @@ defblock: def-stmt { $$ = EVENTER.onDefBlock(*$1); }
         $$ = EVENTER.onDefBlock(*$1, *lifeStmt);
       }
 
-declBlock: decl-stmt {
+declBlock: access NEWLINE {
             // ??
-       } | declBlock decl-stmt {
+       } | declBlock access NEWLINE {
             // ??
        }
 indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
@@ -355,8 +351,6 @@ stmt-compound: ret { $$ = $1; }
              | matching { $$ = $1; }
 
 //      def:
-def-expr: def-expr-inline { $$ = $1; }
-        | def-expr-compound { $$ = $1; }
 def-expr-inline: with-inline { $$ = $1; }
                | def-prop-inline { $$ = $1; }
                | abstract-func { $$ = $1; }
@@ -386,12 +380,6 @@ allstmt-chain: allstmt-chain-item { $$ = EVENTER.onBlock(*$1); }
 allstmt-chain-item: expr-line { $$ = $1; }
                   | expr-compound { $$ = $1; }
                   | def-stmt-chain-item { $$ = $1; }
-
-//      decl:
-decl-stmt: access NEWLINE {
-            // ??
-       }
-
 
 //  access:
 access: call-access { $$ = $1; }
