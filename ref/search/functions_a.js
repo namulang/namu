@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['take_640',['take',['../classnamu_1_1flag.html#a254906f63903414705cd22d54797debe',1,'namu::flag']]],
-  ['tstr_641',['tstr',['../classnamu_1_1tstr.html#a103b945a25ac15fb296f7e617cbca009',1,'namu::tstr']]],
-  ['tweak_642',['tweak',['../classnamu_1_1tweak.html#aef31199aa7db95425a4b7631b070bae9',1,'namu::tweak']]]
+  ['rel_691',['rel',['../classnamu_1_1autoslot.html#a73c85124ea9f59bfecfc482356a86e17',1,'namu::autoslot::rel()'],['../classnamu_1_1node.html#a2f0b986e1fae7fd99d2c257fbfe607b8',1,'namu::node::rel()'],['../classnamu_1_1frame.html#a89141d4f7c8ba638c4d6bcbbb94621bf',1,'namu::frame::rel()'],['../classnamu_1_1thread.html#ad946cb8d5ab1ffad634aa98ce349954a',1,'namu::thread::rel()']]],
+  ['resize_692',['resize',['../classnamu_1_1chunks.html#a0511779e9a49944dcf821df4669c54eb',1,'namu::chunks']]],
+  ['ret_693',['ret',['../classnamu_1_1buffer_src_supply.html#ace4fc8db18bd494425d23d695275333a',1,'namu::bufferSrcSupply::ret()'],['../classnamu_1_1src_supply.html#a52cc7b0392d799a8024a4f88b442408b',1,'namu::srcSupply::ret()']]]
 ];

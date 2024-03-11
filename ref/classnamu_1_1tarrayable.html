@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>namu: namu::tarrayable&lt; T &gt; Class Template Reference</title>
+<title>namu: namu::tarrayable&lt; T, R &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -70,80 +70,82 @@ $(function() {
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classnamu_1_1tarrayable-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">namu::tarrayable&lt; T &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">namu::tarrayable&lt; T, R &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="tarrayable_8hpp_source.html">tarrayable.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for namu::tarrayable&lt; T &gt;:</div>
+Inheritance diagram for namu::tarrayable&lt; T, R &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classnamu_1_1tarrayable.png" usemap="#namu::tarrayable_3C_20T_20_3E_map" alt=""/>
-  <map id="namu::tarrayable_3C_20T_20_3E_map" name="namu::tarrayable_3C_20T_20_3E_map">
-<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; me &gt;" shape="rect" coords="0,56,191,80"/>
-<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; param, strTactic &gt;" shape="rect" coords="201,56,392,80"/>
-<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; src &gt;" shape="rect" coords="402,56,593,80"/>
-<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; T, strTactic &gt;" shape="rect" coords="603,56,794,80"/>
-<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; frame &gt;" shape="rect" coords="804,56,995,80"/>
-<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; T, TACTIC &gt;" shape="rect" coords="1005,56,1196,80"/>
-<area href="classnamu_1_1tndum_arr.html" alt="namu::tndumArr&lt; T, TACTIC &gt;" shape="rect" coords="603,112,794,136"/>
+  <img src="classnamu_1_1tarrayable.png" usemap="#namu::tarrayable_3C_20T_2C_20R_20_3E_map" alt=""/>
+  <map id="namu::tarrayable_3C_20T_2C_20R_20_3E_map" name="namu::tarrayable_3C_20T_2C_20R_20_3E_map">
+<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; V1, namu::strTactic &gt;" shape="rect" coords="218,56,426,80"/>
+<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; tprior&lt; T &gt; &gt;" shape="rect" coords="218,112,426,136"/>
+<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; T, namu::strTactic &gt;" shape="rect" coords="218,168,426,192"/>
+<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; me &gt;" shape="rect" coords="218,224,426,248"/>
+<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; src &gt;" shape="rect" coords="218,280,426,304"/>
+<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; T, strTactic &gt;" shape="rect" coords="218,336,426,360"/>
+<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; param &gt;" shape="rect" coords="218,392,426,416"/>
+<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; frame &gt;" shape="rect" coords="218,448,426,472"/>
+<area href="classnamu_1_1tnarr.html" alt="namu::tnarr&lt; T, TACTIC &gt;" shape="rect" coords="218,504,426,528"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae7eb43b09b7f8def936331a34e634ba7"><td class="memItemLeft" align="right" valign="top"><a id="ae7eb43b09b7f8def936331a34e634ba7"></a>
-virtual T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (nidx n)=0</td></tr>
-<tr class="separator:ae7eb43b09b7f8def936331a34e634ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a301b514d2fffa00cb05a31ddf18d13d1"><td class="memItemLeft" align="right" valign="top"><a id="a301b514d2fffa00cb05a31ddf18d13d1"></a>
-const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (nidx n) const</td></tr>
-<tr class="separator:a301b514d2fffa00cb05a31ddf18d13d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c43b27b25ad418627cc220b12c3d9e6"><td class="memItemLeft" align="right" valign="top"><a id="a3c43b27b25ad418627cc220b12c3d9e6"></a>
+<tr class="memitem:a5211a9cb2e71a51ad6c8f3943165f068"><td class="memItemLeft" align="right" valign="top"><a id="a5211a9cb2e71a51ad6c8f3943165f068"></a>
+virtual R&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (nidx n)=0</td></tr>
+<tr class="separator:a5211a9cb2e71a51ad6c8f3943165f068"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79280587b5ce6e70e788edd5968f7e90"><td class="memItemLeft" align="right" valign="top"><a id="a79280587b5ce6e70e788edd5968f7e90"></a>
+const R&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (nidx n) const</td></tr>
+<tr class="separator:a79280587b5ce6e70e788edd5968f7e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae25124437ccae7201dc9160910b96f6c"><td class="memItemLeft" align="right" valign="top"><a id="ae25124437ccae7201dc9160910b96f6c"></a>
 virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>has</b> (nidx n) const =0</td></tr>
-<tr class="separator:a3c43b27b25ad418627cc220b12c3d9e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7deae443a8ae5cba7749ef9ee5fe271"><td class="memItemLeft" align="right" valign="top"><a id="ab7deae443a8ae5cba7749ef9ee5fe271"></a>
-virtual T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (nidx n)=0</td></tr>
-<tr class="separator:ab7deae443a8ae5cba7749ef9ee5fe271"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1524ab7ea1a55f8831739ad3f2ca296"><td class="memItemLeft" align="right" valign="top"><a id="aa1524ab7ea1a55f8831739ad3f2ca296"></a>
-const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (nidx n) const NAMU_UNCONST_FUNC(get(n)) virtual nbool set(nidx n</td></tr>
-<tr class="separator:aa1524ab7ea1a55f8831739ad3f2ca296"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a544b2d802ed50a5c0206a06b22041e0d"><td class="memItemLeft" align="right" valign="top"><a id="a544b2d802ed50a5c0206a06b22041e0d"></a>
+<tr class="separator:ae25124437ccae7201dc9160910b96f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64628e54733cf02008d5e8957b33e736"><td class="memItemLeft" align="right" valign="top"><a id="a64628e54733cf02008d5e8957b33e736"></a>
+virtual R&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (nidx n)=0</td></tr>
+<tr class="separator:a64628e54733cf02008d5e8957b33e736"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90e1edc6a42202714297c2212521cb6a"><td class="memItemLeft" align="right" valign="top"><a id="a90e1edc6a42202714297c2212521cb6a"></a>
+const R&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (nidx n) const NAMU_UNCONST_FUNC(get(n)) virtual nbool set(nidx n</td></tr>
+<tr class="separator:a90e1edc6a42202714297c2212521cb6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82c271969657c5b9f16ca23d1c01e2e9"><td class="memItemLeft" align="right" valign="top"><a id="a82c271969657c5b9f16ca23d1c01e2e9"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (nidx n, const T *new1)</td></tr>
-<tr class="separator:a544b2d802ed50a5c0206a06b22041e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea876f99be5d31798b41a5bcfd4c344d"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1tarrayable.html#aea876f99be5d31798b41a5bcfd4c344d">add</a> (nidx n, const T &amp;new1)=0</td></tr>
-<tr class="separator:aea876f99be5d31798b41a5bcfd4c344d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee365c5a7a94fa7c7ac5142cd4cd13e0"><td class="memItemLeft" align="right" valign="top"><a id="aee365c5a7a94fa7c7ac5142cd4cd13e0"></a>
+<tr class="separator:a82c271969657c5b9f16ca23d1c01e2e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a609f158c888a92389b94c57ac2237fdb"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1tarrayable.html#a609f158c888a92389b94c57ac2237fdb">add</a> (nidx n, const T &amp;new1)=0</td></tr>
+<tr class="separator:a609f158c888a92389b94c57ac2237fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a21168a24514ce96b73625554483e85"><td class="memItemLeft" align="right" valign="top"><a id="a9a21168a24514ce96b73625554483e85"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (nidx n, const T *new1)</td></tr>
-<tr class="separator:aee365c5a7a94fa7c7ac5142cd4cd13e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86f60f85742bb19544abae2c5b3a17d3"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1tarrayable.html#a86f60f85742bb19544abae2c5b3a17d3">del</a> (nidx n)=0</td></tr>
-<tr class="separator:a86f60f85742bb19544abae2c5b3a17d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a9a21168a24514ce96b73625554483e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a555b5569754fb01d0c0a45b2037bad8d"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1tarrayable.html#a555b5569754fb01d0c0a45b2037bad8d">del</a> (nidx n)=0</td></tr>
+<tr class="separator:a555b5569754fb01d0c0a45b2037bad8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a5b9afdb43eb87df2d13d6c182284e4ca"><td class="memItemLeft" align="right" valign="top"><a id="a5b9afdb43eb87df2d13d6c182284e4ca"></a>
-const T const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>new1</b> = 0</td></tr>
-<tr class="separator:a5b9afdb43eb87df2d13d6c182284e4ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee5961e188519cf27bdb9af157a9c169"><td class="memItemLeft" align="right" valign="top"><a id="aee5961e188519cf27bdb9af157a9c169"></a>
+const R const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>new1</b> = 0</td></tr>
+<tr class="separator:aee5961e188519cf27bdb9af157a9c169"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename T&gt;<br />
-class namu::tarrayable&lt; T &gt;</h3>
+<div class="textblock"><h3>template&lt;typename T, typename R = T&amp;&gt;<br />
+class namu::tarrayable&lt; T, R &gt;</h3>
 
 <dl class="section remark"><dt>Remarks</dt><dd>arrayable has API treating index as its parameter. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aea876f99be5d31798b41a5bcfd4c344d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea876f99be5d31798b41a5bcfd4c344d">&#9670;&nbsp;</a></span>add()</h2>
+<a id="a609f158c888a92389b94c57ac2237fdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a609f158c888a92389b94c57ac2237fdb">&#9670;&nbsp;</a></span>add()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename T , typename R  = T&amp;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual nbool <a class="el" href="classnamu_1_1tarrayable.html">namu::tarrayable</a>&lt; T &gt;::add </td>
+          <td class="memname">virtual nbool <a class="el" href="classnamu_1_1tarrayable.html">namu::tarrayable</a>&lt; T, R &gt;::add </td>
           <td>(</td>
           <td class="paramtype">nidx&#160;</td>
           <td class="paramname"><em>n</em>, </td>
@@ -168,23 +170,23 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>how many element has been added from rhs. </dd></dl>
 
-<p>Implemented in <a class="el" href="classnamu_1_1tnarr.html#a6c72558c94232aed3cb5e9d7dd395dc7">namu::tnarr&lt; T, TACTIC &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6c72558c94232aed3cb5e9d7dd395dc7">namu::tnarr&lt; T, strTactic &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6c72558c94232aed3cb5e9d7dd395dc7">namu::tnarr&lt; node &gt;</a>, and <a class="el" href="classnamu_1_1arr.html#a0e9158a31aea46033a594bb5c58b623b">namu::arr</a>.</p>
+<p>Implemented in <a class="el" href="classnamu_1_1tnarr.html#a6c72558c94232aed3cb5e9d7dd395dc7">namu::tnarr&lt; T, TACTIC &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6c72558c94232aed3cb5e9d7dd395dc7">namu::tnarr&lt; T, namu::strTactic &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6c72558c94232aed3cb5e9d7dd395dc7">namu::tnarr&lt; T, strTactic &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6c72558c94232aed3cb5e9d7dd395dc7">namu::tnarr&lt; node &gt;</a>, and <a class="el" href="classnamu_1_1arr.html#a0e9158a31aea46033a594bb5c58b623b">namu::arr</a>.</p>
 
 </div>
 </div>
-<a id="a86f60f85742bb19544abae2c5b3a17d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86f60f85742bb19544abae2c5b3a17d3">&#9670;&nbsp;</a></span>del()</h2>
+<a id="a555b5569754fb01d0c0a45b2037bad8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a555b5569754fb01d0c0a45b2037bad8d">&#9670;&nbsp;</a></span>del()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename T , typename R  = T&amp;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual nbool <a class="el" href="classnamu_1_1tarrayable.html">namu::tarrayable</a>&lt; T &gt;::del </td>
+          <td class="memname">virtual nbool <a class="el" href="classnamu_1_1tarrayable.html">namu::tarrayable</a>&lt; T, R &gt;::del </td>
           <td>(</td>
           <td class="paramtype">nidx&#160;</td>
           <td class="paramname"><em>n</em></td><td>)</td>
@@ -199,7 +201,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>delete last element if exists. </p><dl class="section return"><dt>Returns</dt><dd>true if element got deleted successfully. </dd></dl>
 
-<p>Implemented in <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; T, TACTIC &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; node &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; me &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; param, strTactic &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; src &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; T, strTactic &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; frame &gt;</a>, and <a class="el" href="classnamu_1_1arr.html#a83e77399ad70a0c6d273098d6b0beef8">namu::arr</a>.</p>
+<p>Implemented in <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; T, TACTIC &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; node &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; V1, namu::strTactic &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; tprior&lt; T &gt; &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; T, namu::strTactic &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; me &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; src &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; T, strTactic &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; param &gt;</a>, <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; frame &gt;</a>, and <a class="el" href="classnamu_1_1arr.html#a83e77399ad70a0c6d273098d6b0beef8">namu::arr</a>.</p>
 
 </div>
 </div>

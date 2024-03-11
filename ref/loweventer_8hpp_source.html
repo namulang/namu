@@ -230,7 +230,7 @@ $(function() {
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        <a class="code" href="classnamu_1_1args.html">args</a>* onFuncCallTuple(<a class="code" href="classnamu_1_1args.html">args</a>&amp; as, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; elem);</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="comment">//          typenames:</span></div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <a class="code" href="classnamu_1_1args.html">args</a>* onTypeNames(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1param.html">param</a>);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <a class="code" href="classnamu_1_1args.html">args</a>* onTypeNames(<a class="code" href="classnamu_1_1args.html">args</a>&amp; <a class="code" href="classnamu_1_1tnarr.html">params</a>, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1param.html">param</a>);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <a class="code" href="classnamu_1_1args.html">args</a>* onTypeNames(<a class="code" href="classnamu_1_1args.html">args</a>&amp; <a class="code" href="classnamu_1_1params.html">params</a>, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1param.html">param</a>);</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="comment">//          var:</span></div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        T* onPrimitive(Args... <a class="code" href="classnamu_1_1args.html">args</a>) {</div>
@@ -270,8 +270,8 @@ $(function() {
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <a class="code" href="classnamu_1_1next_expr.html">nextExpr</a>* onNext();</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        <span class="comment">//      run:</span></div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        <a class="code" href="classnamu_1_1run_expr.html">runExpr</a>* onFillFromOfFuncCall(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; me, <a class="code" href="classnamu_1_1run_expr.html">runExpr</a>&amp; to);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        <a class="code" href="classnamu_1_1run_expr.html">runExpr</a>* onRunExpr(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1type.html">type</a>, <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">narr</a>&amp; a);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        <a class="code" href="classnamu_1_1run_expr.html">runExpr</a>* onRunExpr(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1type.html">type</a>, <span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        <a class="code" href="classnamu_1_1run_expr.html">runExpr</a>* onRunExpr(<a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1type.html">type</a>, <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">narr</a>&amp; a);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        <a class="code" href="classnamu_1_1run_expr.html">runExpr</a>* onRunExpr(<a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1type.html">type</a>, <span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a);</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        <span class="comment">//      cast:</span></div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <a class="code" href="classnamu_1_1as_expr.html">asExpr</a>* onAs(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; me, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; as);</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        <span class="comment">//      if:</span></div>
@@ -288,37 +288,38 @@ $(function() {
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>* _onSetElem(<a class="code" href="classnamu_1_1run_expr.html">runExpr</a>&amp; lhs, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; rhs);</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>* _onAssignElem(FBOExpr::rule <a class="code" href="classnamu_1_1type.html">type</a>, <a class="code" href="classnamu_1_1node.html">node</a>&amp; lhs, <a class="code" href="classnamu_1_1node.html">node</a>&amp; rhs);</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>* _onConvertAssignElem(<a class="code" href="classnamu_1_1run_expr.html">runExpr</a>&amp; lhs, <a class="code" href="classnamu_1_1node.html">node</a>&amp; rhs);</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="keywordtype">void</span> _onRes(<a class="code" href="structnamu_1_1err.html">err</a>* new1);</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <a class="code" href="classnamu_1_1tnarr.html">params</a> _asParams(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; exprs);</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="keywordtype">void</span> _onPushName(<span class="keyword">const</span> std::string&amp; name, <a class="code" href="classnamu_1_1node.html">node</a>&amp; n);</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        std::string _onPopName(<a class="code" href="classnamu_1_1node.html">node</a>&amp; n);</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        nbool _onInjectObjSubs(<a class="code" href="classnamu_1_1obj.html">obj</a>&amp; it, <a class="code" href="classnamu_1_1def_block.html">defBlock</a>&amp; blk);</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        nbool _onInjectCtor(<a class="code" href="classnamu_1_1obj.html">obj</a>&amp; it, <a class="code" href="classnamu_1_1def_block.html">defBlock</a>&amp; blk);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        std::vector&lt;std::string&gt; _extractParamTypeNames(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; types);</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; _onDefArrayType(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">narr</a>&amp; items);</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        std::vector&lt;std::string&gt; _toDotnames(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; path);</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <span class="keywordtype">void</span> _onCompilationUnit(<a class="code" href="classnamu_1_1obj.html">obj</a>&amp; subpack, <a class="code" href="classnamu_1_1def_block.html">defBlock</a>&amp; blk);</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160; </div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        <a class="code" href="classnamu_1_1token_scan.html">tokenScan</a>* _mode;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        nbool _isIgnoreWhitespace;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        <a class="code" href="classnamu_1_1token_dispatcher.html">tokenDispatcher</a> _dispatcher;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        std::vector&lt;ncnt&gt; _indents;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;errReport&gt;</a> _report;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;slot&gt;</a> _slot;</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;obj&gt;</a> _subpack;</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <a class="code" href="structnamu_1_1area.html">area</a> _srcArea;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;scope&gt;</a> _filescope;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        std::vector&lt;nint&gt; _states;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        std::map&lt;node*, std::string&gt; _nameMap;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        <a class="code" href="classnamu_1_1expr_maker.html">exprMaker</a> _maker;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <a class="code" href="classnamu_1_1smart_dedent.html">smartDedent</a> _dedent;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    };</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;}</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        <a class="code" href="classnamu_1_1run_expr.html">runExpr</a>* _onRunExpr(<a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1type.html">type</a>, <span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="keywordtype">void</span> _onRes(<a class="code" href="structnamu_1_1err.html">err</a>* new1);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <a class="code" href="classnamu_1_1params.html">params</a> _asParams(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; exprs);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="keywordtype">void</span> _onPushName(<span class="keyword">const</span> std::string&amp; name, <a class="code" href="classnamu_1_1node.html">node</a>&amp; n);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        std::string _onPopName(<a class="code" href="classnamu_1_1node.html">node</a>&amp; n);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        nbool _onInjectObjSubs(<a class="code" href="classnamu_1_1obj.html">obj</a>&amp; it, <a class="code" href="classnamu_1_1def_block.html">defBlock</a>&amp; blk);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        nbool _onInjectCtor(<a class="code" href="classnamu_1_1obj.html">obj</a>&amp; it, <a class="code" href="classnamu_1_1def_block.html">defBlock</a>&amp; blk);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        std::vector&lt;std::string&gt; _extractParamTypeNames(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; types);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; _onDefArrayType(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">narr</a>&amp; items);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        std::vector&lt;std::string&gt; _toDotnames(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; path);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="keywordtype">void</span> _onCompilationUnit(<a class="code" href="classnamu_1_1obj.html">obj</a>&amp; subpack, <a class="code" href="classnamu_1_1def_block.html">defBlock</a>&amp; blk);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <a class="code" href="classnamu_1_1token_scan.html">tokenScan</a>* _mode;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        nbool _isIgnoreWhitespace;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        <a class="code" href="classnamu_1_1token_dispatcher.html">tokenDispatcher</a> _dispatcher;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        std::vector&lt;ncnt&gt; _indents;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;errReport&gt;</a> _report;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;slot&gt;</a> _slot;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;obj&gt;</a> _subpack;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <a class="code" href="structnamu_1_1area.html">area</a> _srcArea;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;scope&gt;</a> _filescope;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        std::vector&lt;nint&gt; _states;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        std::map&lt;node*, std::string&gt; _nameMap;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <a class="code" href="classnamu_1_1expr_maker.html">exprMaker</a> _maker;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        <a class="code" href="classnamu_1_1smart_dedent.html">smartDedent</a> _dedent;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    };</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1_f_b_o_expr_html"><div class="ttname"><a href="classnamu_1_1_f_b_o_expr.html">namu::FBOExpr</a></div><div class="ttdef"><b>Definition:</b> FAOExpr.hpp:13</div></div>
 <div class="ttc" id="aclassnamu_1_1_f_u_o_expr_html"><div class="ttname"><a href="classnamu_1_1_f_u_o_expr.html">namu::FUOExpr</a></div><div class="ttdef"><b>Definition:</b> FUOExpr.hpp:13</div></div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
@@ -330,14 +331,15 @@ $(function() {
 <div class="ttc" id="aclassnamu_1_1def_prop_expr_html"><div class="ttname"><a href="classnamu_1_1def_prop_expr.html">namu::defPropExpr</a></div><div class="ttdef"><b>Definition:</b> defPropExpr.hpp:11</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_maker_html"><div class="ttname"><a href="classnamu_1_1expr_maker.html">namu::exprMaker</a></div><div class="ttdef"><b>Definition:</b> exprMaker.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1func_html"><div class="ttname"><a href="classnamu_1_1func.html">namu::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:12</div></div>
+<div class="ttc" id="aclassnamu_1_1func_html"><div class="ttname"><a href="classnamu_1_1func.html">namu::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:13</div></div>
 <div class="ttc" id="aclassnamu_1_1get_expr_html"><div class="ttname"><a href="classnamu_1_1get_expr.html">namu::getExpr</a></div><div class="ttdef"><b>Definition:</b> getExpr.hpp:10</div></div>
 <div class="ttc" id="aclassnamu_1_1if_expr_html"><div class="ttname"><a href="classnamu_1_1if_expr.html">namu::ifExpr</a></div><div class="ttdef"><b>Definition:</b> ifExpr.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1loweventer_html"><div class="ttname"><a href="classnamu_1_1loweventer.html">namu::loweventer</a></div><div class="ttdef"><b>Definition:</b> loweventer.hpp:32</div></div>
 <div class="ttc" id="aclassnamu_1_1next_expr_html"><div class="ttname"><a href="classnamu_1_1next_expr.html">namu::nextExpr</a></div><div class="ttdef"><b>Definition:</b> nextExpr.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:18</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:20</div></div>
 <div class="ttc" id="aclassnamu_1_1obj_html"><div class="ttname"><a href="classnamu_1_1obj.html">namu::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:13</div></div>
 <div class="ttc" id="aclassnamu_1_1param_html"><div class="ttname"><a href="classnamu_1_1param.html">namu::param</a></div><div class="ttdef"><b>Definition:</b> param.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1params_html"><div class="ttname"><a href="classnamu_1_1params.html">namu::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1ret_expr_html"><div class="ttname"><a href="classnamu_1_1ret_expr.html">namu::retExpr</a></div><div class="ttdef"><b>Definition:</b> retExpr.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1run_expr_html"><div class="ttname"><a href="classnamu_1_1run_expr.html">namu::runExpr</a></div><div class="ttdef"><b>Definition:</b> runExpr.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1smart_dedent_html"><div class="ttname"><a href="classnamu_1_1smart_dedent.html">namu::smartDedent</a></div><div class="ttdef"><b>Definition:</b> smartDedent.hpp:6</div></div>

@@ -72,7 +72,7 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;baseObj.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;scope.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;scopes.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
@@ -90,9 +90,9 @@ $(function() {
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1obj.html">obj</a>();</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1obj.html">obj</a>(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tnchain.html">scopes</a>&amp; shares, <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnmap.html">scope</a>&amp; owns);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1obj.html">obj</a>(<span class="keyword">const</span> <a class="code" href="classnamu_1_1scopes.html">scopes</a>&amp; shares, <span class="keyword">const</span> <a class="code" href="classnamu_1_1scope.html">scope</a>&amp; owns);</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1obj.html">obj</a>(<a class="code" href="classnamu_1_1mgd_type.html">mgdType</a>* newType);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1obj.html">obj</a>(<a class="code" href="classnamu_1_1mgd_type.html">mgdType</a>* newType, <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnchain.html">scopes</a>&amp; shares, <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnmap.html">scope</a>&amp; owns);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1obj.html">obj</a>(<a class="code" href="classnamu_1_1mgd_type.html">mgdType</a>* newType, <span class="keyword">const</span> <a class="code" href="classnamu_1_1scopes.html">scopes</a>&amp; shares, <span class="keyword">const</span> <a class="code" href="classnamu_1_1scope.html">scope</a>&amp; owns);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1obj.html">obj</a>(<span class="keyword">const</span> me&amp; rhs);</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">public</span>:</div>
@@ -105,10 +105,10 @@ $(function() {
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">using</span> super::run;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="classnamu_1_1tnchain.html">scopes</a>&amp; getShares();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnchain.html">scopes</a>&amp; getShares() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getShares())</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classnamu_1_1tnmap.html">scope</a>&amp; getOwns();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnmap.html">scope</a>&amp; getOwns() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getOwns())</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="classnamu_1_1scopes.html">scopes</a>&amp; getShares();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1scopes.html">scopes</a>&amp; getShares() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getShares())</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classnamu_1_1scope.html">scope</a>&amp; getOwns();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1scope.html">scope</a>&amp; getOwns() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getOwns())</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1obj.html">obj</a>&amp; getOrigin() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">const</span> <a class="code" href="structnamu_1_1point.html">point</a>&amp; getPos() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
@@ -118,7 +118,7 @@ $(function() {
 <div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classnamu_1_1obj.html#a4ba4427dd8bf0fb7768c3cb799bdcdcc">   50</a></span>&#160;        nbool <a class="code" href="classnamu_1_1obj.html#a4ba4427dd8bf0fb7768c3cb799bdcdcc">isComplete</a>() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="classnamu_1_1tnchain.html">scopes</a>* _makeNewSubs();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="classnamu_1_1scopes.html">scopes</a>* _makeNewSubs();</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">void</span> _setType(<span class="keyword">const</span> <a class="code" href="classnamu_1_1mgd_type.html">mgdType</a>* new1);</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="comment">// update origin pointer of an object.</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="comment">// to modify origin* is very dangerous. only permitted module should do this.</span></div>
@@ -154,7 +154,7 @@ $(function() {
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">//</span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">//  clang, gcc didn&#39;t complain about this.</span></div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">namespace </span>{</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">inline</span> <a class="code" href="classnamu_1_1tnchain.html">scopes</a> a3;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">inline</span> <a class="code" href="classnamu_1_1scopes.html">scopes</a> a3;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
@@ -168,11 +168,11 @@ $(function() {
 <div class="ttc" id="aclassnamu_1_1ntype_html"><div class="ttname"><a href="classnamu_1_1ntype.html">namu::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:12</div></div>
 <div class="ttc" id="aclassnamu_1_1obj_html"><div class="ttname"><a href="classnamu_1_1obj.html">namu::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:13</div></div>
 <div class="ttc" id="aclassnamu_1_1obj_html_a4ba4427dd8bf0fb7768c3cb799bdcdcc"><div class="ttname"><a href="classnamu_1_1obj.html#a4ba4427dd8bf0fb7768c3cb799bdcdcc">namu::obj::isComplete</a></div><div class="ttdeci">nbool isComplete() const override</div></div>
+<div class="ttc" id="aclassnamu_1_1scope_html"><div class="ttname"><a href="classnamu_1_1scope.html">namu::scope</a></div><div class="ttdef"><b>Definition:</b> scope.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1scopes_html"><div class="ttname"><a href="classnamu_1_1scopes.html">namu::scopes</a></div><div class="ttdef"><b>Definition:</b> scopes.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1slot_html"><div class="ttname"><a href="classnamu_1_1slot.html">namu::slot</a></div><div class="ttdef"><b>Definition:</b> slot.hpp:11</div></div>
 <div class="ttc" id="aclassnamu_1_1src_html"><div class="ttname"><a href="classnamu_1_1src.html">namu::src</a></div><div class="ttdoc">src represents src file of namulang source codes.</div><div class="ttdef"><b>Definition:</b> src.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1tnchain_html"><div class="ttname"><a href="classnamu_1_1tnchain.html">namu::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:10</div></div>
-<div class="ttc" id="aclassnamu_1_1tnmap_html"><div class="ttname"><a href="classnamu_1_1tnmap.html">namu::tnmap</a></div><div class="ttdef"><b>Definition:</b> tnmap.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="astructnamu_1_1point_html"><div class="ttname"><a href="structnamu_1_1point.html">namu::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>
 </div><!-- fragment --></div><!-- contents -->

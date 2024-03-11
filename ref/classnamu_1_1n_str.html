@@ -109,6 +109,9 @@ nint&#160;</td><td class="memItemRight" valign="bottom"><b>len</b> () const over
 <tr class="memitem:a0b55f2360926a394122bae44d133c51c"><td class="memItemLeft" align="right" valign="top"><a id="a0b55f2360926a394122bae44d133c51c"></a>
 <a class="el" href="classnamu_1_1tstr.html">tstr</a>&lt; <a class="el" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bitwiseNot</b> () const override</td></tr>
 <tr class="separator:a0b55f2360926a394122bae44d133c51c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95f2d18a8c599100e14d8a1bc02426bf"><td class="memItemLeft" align="right" valign="top"><a id="a95f2d18a8c599100e14d8a1bc02426bf"></a>
+const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getOrigin</b> () const override</td></tr>
+<tr class="separator:a95f2d18a8c599100e14d8a1bc02426bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1d0deb0aabc6c623fb05029793d9a9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tstr.html">tstr</a>&lt; <a class="el" href="classnamu_1_1n_str.html">nStr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1n_str.html#ab1d0deb0aabc6c623fb05029793d9a9b">substr</a> (nint start, nint end)</td></tr>
 <tr class="separator:ab1d0deb0aabc6c623fb05029793d9a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54a63f53dcfc3f4fbbdfa41985b1d85c"><td class="memItemLeft" align="right" valign="top"><a id="a54a63f53dcfc3f4fbbdfa41985b1d85c"></a>
@@ -158,9 +161,6 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>cast</b> (const <a 
 <tr class="memitem:a6ab2ea41a1e67a94525ec59c5b73be20 inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memItemLeft" align="right" valign="top"><a id="a6ab2ea41a1e67a94525ec59c5b73be20"></a>
 <a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) override</td></tr>
 <tr class="separator:a6ab2ea41a1e67a94525ec59c5b73be20 inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4a531717cccd96268917321f5e64261 inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memItemLeft" align="right" valign="top"><a id="ae4a531717cccd96268917321f5e64261"></a>
-const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getOrigin</b> () const override</td></tr>
-<tr class="separator:ae4a531717cccd96268917321f5e64261 inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e5033263e495b77c3954994e5541a11 inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memItemLeft" align="right" valign="top"><a id="a0e5033263e495b77c3954994e5541a11"></a>
 <a class="el" href="classnamu_1_1tstr.html">tstr</a>&lt; me &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const me &amp;rhs) const</td></tr>
 <tr class="separator:a0e5033263e495b77c3954994e5541a11 inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,9 +220,9 @@ nbool&#160;</td><td class="memItemRight" valign="bottom"><b>logicalOr</b> (const
 <tr class="memdesc:a0888a8ee498908313fa151deb49831af inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="mdescLeft">&#160;</td><td class="mdescRight">same to 'assign'. <br /></td></tr>
 <tr class="separator:a0888a8ee498908313fa151deb49831af inherit pub_methods_classnamu_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnamu_1_1base_obj"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1base_obj')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1base_obj.html">namu::baseObj</a></td></tr>
-<tr class="memitem:a3c42b43f27bc7655dd66ceab187676fd inherit pub_methods_classnamu_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a3c42b43f27bc7655dd66ceab187676fd"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>canRun</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const override</td></tr>
-<tr class="separator:a3c42b43f27bc7655dd66ceab187676fd inherit pub_methods_classnamu_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ef3d0bfe8b75a3f0a27505a3f2c3b76 inherit pub_methods_classnamu_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a9ef3d0bfe8b75a3f0a27505a3f2c3b76"></a>
+priority&#160;</td><td class="memItemRight" valign="bottom"><b>prioritize</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const override</td></tr>
+<tr class="separator:a9ef3d0bfe8b75a3f0a27505a3f2c3b76 inherit pub_methods_classnamu_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab679d8a90f3aa7f87c0b9f65292114c7 inherit pub_methods_classnamu_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="ab679d8a90f3aa7f87c0b9f65292114c7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>inFrame</b> (const <a class="el" href="classnamu_1_1tbicontainable.html">bicontainable</a> &amp;<a class="el" href="classnamu_1_1args.html">args</a>) override</td></tr>
 <tr class="separator:ab679d8a90f3aa7f87c0b9f65292114c7 inherit pub_methods_classnamu_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -230,35 +230,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>inFrame</b> (const <a
 void&#160;</td><td class="memItemRight" valign="bottom"><b>outFrame</b> () override</td></tr>
 <tr class="separator:aa4148778ae521755f7e4e807be5aef6a inherit pub_methods_classnamu_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnamu_1_1node"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1node')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1node.html">namu::node</a></td></tr>
-<tr class="memitem:aaa0c5a2ee37ce890854488c85d34ed7c inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="aaa0c5a2ee37ce890854488c85d34ed7c"></a>
-<a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const std::string &amp;name) const</td></tr>
-<tr class="separator:aaa0c5a2ee37ce890854488c85d34ed7c inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab09403806cf0d8317309add564355e0c inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classnamu_1_1tnbicontainer.html">nbicontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1node.html#ab09403806cf0d8317309add564355e0c">subs</a> () const NAMU_UNCONST_FUNC(subs()) const <a class="el" href="classnamu_1_1node.html">node</a> &amp;deduce(const <a class="el" href="classnamu_1_1node.html">node</a> &amp;r) const</td></tr>
-<tr class="separator:ab09403806cf0d8317309add564355e0c inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a922c2ada48cfb345a438b3cd23a51a inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a8a922c2ada48cfb345a438b3cd23a51a"></a>
+<tr class="memitem:aada22313957bb7a31690ec826732063b inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="aada22313957bb7a31690ec826732063b"></a>
+<a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const std::string &amp;name)</td></tr>
+<tr class="separator:aada22313957bb7a31690ec826732063b inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7894f9c880b600f00d1f330b9ea4c732 inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a7894f9c880b600f00d1f330b9ea4c732"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8a922c2ada48cfb345a438b3cd23a51a inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (std::function&lt; nbool(const std::string &amp;, const T &amp;)&gt; l) const</td></tr>
-<tr class="separator:a8a922c2ada48cfb345a438b3cd23a51a inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a397d79033936ac4da8a3da6245673328 inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a397d79033936ac4da8a3da6245673328"></a>
-template&lt;typename T  = me&gt; </td></tr>
-<tr class="memitem:a397d79033936ac4da8a3da6245673328 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> () const</td></tr>
-<tr class="separator:a397d79033936ac4da8a3da6245673328 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ed190c4d996bea403214afcb33107b8 inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a3ed190c4d996bea403214afcb33107b8"></a>
-template&lt;typename T  = me&gt; </td></tr>
-<tr class="memitem:a3ed190c4d996bea403214afcb33107b8 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (const std::string &amp;name) const</td></tr>
-<tr class="separator:a3ed190c4d996bea403214afcb33107b8 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26c25b8dd3db18442a1b38084918287a inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a26c25b8dd3db18442a1b38084918287a"></a>
-template&lt;typename T  = me&gt; </td></tr>
-<tr class="memitem:a26c25b8dd3db18442a1b38084918287a inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (const std::string &amp;name, const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a)</td></tr>
-<tr class="separator:a26c25b8dd3db18442a1b38084918287a inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0352858fdea1b36f7f13dec3e2d4a48c inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a0352858fdea1b36f7f13dec3e2d4a48c"></a>
-template&lt;typename T  = me&gt; </td></tr>
-<tr class="memitem:a0352858fdea1b36f7f13dec3e2d4a48c inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (const std::string &amp;name, const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const</td></tr>
-<tr class="separator:a0352858fdea1b36f7f13dec3e2d4a48c inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaaf7685839334bf0373301430f0a1055 inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="aaaf7685839334bf0373301430f0a1055"></a>
+<tr class="memitem:a7894f9c880b600f00d1f330b9ea4c732 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (std::function&lt; nbool(const std::string &amp;, const T &amp;)&gt; l)</td></tr>
+<tr class="separator:a7894f9c880b600f00d1f330b9ea4c732 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7f8bbc6a4dde0c2e2e76111bf8cbfa9 inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="af7f8bbc6a4dde0c2e2e76111bf8cbfa9"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aaaf7685839334bf0373301430f0a1055 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tnarr.html">tnarr</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subAll</b> (std::function&lt; nbool(const std::string &amp;, const T &amp;)&gt; l) const</td></tr>
-<tr class="separator:aaaf7685839334bf0373301430f0a1055 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7f8bbc6a4dde0c2e2e76111bf8cbfa9 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (std::function&lt; nbool(const std::string &amp;, const T &amp;)&gt; l) const NAMU_UNCONST_FUNC(sub&lt; T &gt;(l)) template&lt; typename T</td></tr>
+<tr class="separator:af7f8bbc6a4dde0c2e2e76111bf8cbfa9 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8749079e6b7784b90e3ff88fffb095bd inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a8749079e6b7784b90e3ff88fffb095bd"></a>
+template&lt;typename T  = me&gt; </td></tr>
+<tr class="memitem:a8749079e6b7784b90e3ff88fffb095bd inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> () const NAMU_UNCONST_FUNC(sub&lt; T &gt;()) template&lt; typename T</td></tr>
+<tr class="separator:a8749079e6b7784b90e3ff88fffb095bd inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f38f4246beda110c03657f35f9aab74 inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a1f38f4246beda110c03657f35f9aab74"></a>
+template&lt;typename T  = me&gt; </td></tr>
+<tr class="memitem:a1f38f4246beda110c03657f35f9aab74 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (const std::string &amp;name) const NAMU_UNCONST_FUNC(sub&lt; T &gt;(name)) template&lt; typename T</td></tr>
+<tr class="separator:a1f38f4246beda110c03657f35f9aab74 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ab3eff3a110a9453a0566ae35a790b inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a77ab3eff3a110a9453a0566ae35a790b"></a>
+template&lt;typename T  = me&gt; </td></tr>
+<tr class="memitem:a77ab3eff3a110a9453a0566ae35a790b inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (const std::string &amp;name, const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const NAMU_UNCONST_FUNC(sub&lt; T &gt;(name</td></tr>
+<tr class="separator:a77ab3eff3a110a9453a0566ae35a790b inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa231ddd5a1b1ff8e1e3bd44a99e83706 inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="aa231ddd5a1b1ff8e1e3bd44a99e83706"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aa231ddd5a1b1ff8e1e3bd44a99e83706 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top">const T a <a class="el" href="classnamu_1_1tnarr.html">tnarr</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subAll</b> (std::function&lt; nbool(const std::string &amp;, const T &amp;)&gt; l) const</td></tr>
+<tr class="separator:aa231ddd5a1b1ff8e1e3bd44a99e83706 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4d7de3a774bebf19c34b348a7381bcd inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="ad4d7de3a774bebf19c34b348a7381bcd"></a>
 template&lt;typename T  = me&gt; </td></tr>
 <tr class="memitem:ad4d7de3a774bebf19c34b348a7381bcd inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tnarr.html">tnarr</a>&lt; T, <a class="el" href="classnamu_1_1str_tactic.html">strTactic</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subAll</b> () const</td></tr>
@@ -267,14 +265,13 @@ template&lt;typename T  = me&gt; </td></tr>
 template&lt;typename T  = me&gt; </td></tr>
 <tr class="memitem:a087c65109bf7a67d0c9a999681182d28 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tnarr.html">tnarr</a>&lt; T, <a class="el" href="classnamu_1_1str_tactic.html">strTactic</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subAll</b> (const std::string &amp;name) const</td></tr>
 <tr class="separator:a087c65109bf7a67d0c9a999681182d28 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc36088d22c0fd398039089a5253c5e3 inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="acc36088d22c0fd398039089a5253c5e3"></a>
+<tr class="memitem:a2eb5c329cf9aeeddc01dbeaad9faadd4 inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a2eb5c329cf9aeeddc01dbeaad9faadd4"></a>
 template&lt;typename T  = me&gt; </td></tr>
-<tr class="memitem:acc36088d22c0fd398039089a5253c5e3 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tnarr.html">tnarr</a>&lt; T, <a class="el" href="classnamu_1_1str_tactic.html">strTactic</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subAll</b> (const std::string &amp;name, const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a)</td></tr>
-<tr class="separator:acc36088d22c0fd398039089a5253c5e3 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3846395b0cb1dcd342ff1067b4f711c1 inherit pub_methods_classnamu_1_1node"><td class="memTemplParams" colspan="2"><a id="a3846395b0cb1dcd342ff1067b4f711c1"></a>
-template&lt;typename T  = me&gt; </td></tr>
-<tr class="memitem:a3846395b0cb1dcd342ff1067b4f711c1 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tnarr.html">tnarr</a>&lt; T, <a class="el" href="classnamu_1_1str_tactic.html">strTactic</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subAll</b> (const std::string &amp;name, const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const</td></tr>
-<tr class="separator:a3846395b0cb1dcd342ff1067b4f711c1 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eb5c329cf9aeeddc01dbeaad9faadd4 inherit pub_methods_classnamu_1_1node"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classnamu_1_1tpriorities.html">tpriorities</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subAll</b> (const std::string &amp;name, const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const</td></tr>
+<tr class="separator:a2eb5c329cf9aeeddc01dbeaad9faadd4 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8b2325e2ee3a20dec82fec7bdb2f88d inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="ae8b2325e2ee3a20dec82fec7bdb2f88d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>canRun</b> (const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a) const</td></tr>
+<tr class="separator:ae8b2325e2ee3a20dec82fec7bdb2f88d inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c6533ff0df733531481e2860cc30119 inherit pub_methods_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a3c6533ff0df733531481e2860cc30119"></a>
 <a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const std::string &amp;name, const <a class="el" href="classnamu_1_1args.html">args</a> &amp;a)</td></tr>
 <tr class="separator:a3c6533ff0df733531481e2860cc30119 inherit pub_methods_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -412,70 +409,76 @@ virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () 
 void&#160;</td><td class="memItemRight" valign="bottom"><b>inFrame</b> ()</td></tr>
 <tr class="separator:ad494fa4ca460827f89be49da79d6f41b inherit pub_methods_classnamu_1_1frame_interactable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnamu_1_1tucontainable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1tucontainable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1tucontainable.html">namu::tucontainable&lt; nChar &gt;</a></td></tr>
-<tr class="memitem:a88efc09d191eeccfd7d8f6bef7bd4dc9 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a88efc09d191eeccfd7d8f6bef7bd4dc9"></a>
-<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> () const</td></tr>
-<tr class="separator:a88efc09d191eeccfd7d8f6bef7bd4dc9 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12285e94fa418aa86bf52a996e380eb1 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a12285e94fa418aa86bf52a996e380eb1"></a>
-virtual <a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const</td></tr>
-<tr class="separator:a12285e94fa418aa86bf52a996e380eb1 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a223e967e556dd9fb7701597f443084cb inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a223e967e556dd9fb7701597f443084cb"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>has</b> (const <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;it) const</td></tr>
-<tr class="separator:a223e967e556dd9fb7701597f443084cb inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e769b169cf0892c48125b39743f6019 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a3e769b169cf0892c48125b39743f6019"></a>
-virtual <a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>last</b> () const</td></tr>
-<tr class="separator:a3e769b169cf0892c48125b39743f6019 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21b1213911264d847f9d4fd2d6a112d2 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a21b1213911264d847f9d4fd2d6a112d2"></a>
-<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>iterate</b> (ncnt step) const</td></tr>
-<tr class="separator:a21b1213911264d847f9d4fd2d6a112d2 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01e32b1047dec887aef12b34c4d4a7b5 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a01e32b1047dec887aef12b34c4d4a7b5"></a>
-<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>iterate</b> (const <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;it) const</td></tr>
-<tr class="separator:a01e32b1047dec887aef12b34c4d4a7b5 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa91b4ccc564611d25993435a29c41f48 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="aa91b4ccc564611d25993435a29c41f48"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (const <a class="el" href="classiter.html">iter</a> &amp;at, const <a class="el" href="classnamu_1_1n_char.html">nChar</a> *new1)</td></tr>
-<tr class="separator:aa91b4ccc564611d25993435a29c41f48 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3cc12a115d714ee90632e7c617db1704 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a3cc12a115d714ee90632e7c617db1704"></a>
+<tr class="memitem:a93624547d74184f0fd00f92de5ae3b1e inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a93624547d74184f0fd00f92de5ae3b1e"></a>
+T1 &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (std::function&lt; nbool(const T1 &amp;)&gt; l)</td></tr>
+<tr class="separator:a93624547d74184f0fd00f92de5ae3b1e inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a763a6aa9e992cf8d7363dcf2938049c4 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a763a6aa9e992cf8d7363dcf2938049c4"></a>
+<a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (std::function&lt; nbool(const <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;)&gt; l)</td></tr>
+<tr class="separator:a763a6aa9e992cf8d7363dcf2938049c4 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8df396be739683e604e0570a926a28b9 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a8df396be739683e604e0570a926a28b9"></a>
+<a class="el" href="classnamu_1_1tnarr.html">tnarr</a>&lt; T1, <a class="el" href="classnamu_1_1str_tactic.html">strTactic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getAll</b> (std::function&lt; nbool(const T1 &amp;, <a class="el" href="classnamu_1_1node.html">node</a> &amp;)&gt; l) const</td></tr>
+<tr class="separator:a8df396be739683e604e0570a926a28b9 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89784971e65fcc6ef3313ff52a9ee95a inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a89784971e65fcc6ef3313ff52a9ee95a"></a>
+<a class="el" href="classnamu_1_1tnarr.html">tnarr</a>&lt; <a class="el" href="classnamu_1_1n_char.html">nChar</a>, <a class="el" href="classnamu_1_1str_tactic.html">strTactic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getAll</b> (std::function&lt; nbool(const <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;, <a class="el" href="classnamu_1_1node.html">node</a> &amp;)&gt; l) const</td></tr>
+<tr class="separator:a89784971e65fcc6ef3313ff52a9ee95a inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d45703808200077bab4cfc43ed4fd66 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a5d45703808200077bab4cfc43ed4fd66"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>each</b> (std::function&lt; nbool(T1 &amp;)&gt; l)</td></tr>
+<tr class="separator:a5d45703808200077bab4cfc43ed4fd66 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fe8abf6114ffa2a57becddf322cba7f inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a5fe8abf6114ffa2a57becddf322cba7f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>each</b> (std::function&lt; nbool(<a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;)&gt; l)</td></tr>
+<tr class="separator:a5fe8abf6114ffa2a57becddf322cba7f inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56707c303c47deb5030d238cb9454962 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a56707c303c47deb5030d238cb9454962"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isEmpty</b> () const</td></tr>
+<tr class="separator:a56707c303c47deb5030d238cb9454962 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a033eed34949bd71339c2ef58b8d3692d inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a033eed34949bd71339c2ef58b8d3692d"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classiter.html">iter</a> &amp;at, const <a class="el" href="classnamu_1_1n_char.html">nChar</a> *new1)</td></tr>
-<tr class="separator:a3cc12a115d714ee90632e7c617db1704 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77b054be190ec70d0a26a4d656eaaeee inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a77b054be190ec70d0a26a4d656eaaeee"></a>
+<tr class="separator:a033eed34949bd71339c2ef58b8d3692d inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b9168adea528f48cc25ebe412bbd4b6 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a9b9168adea528f48cc25ebe412bbd4b6"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (std::initializer_list&lt; const <a class="el" href="classnamu_1_1n_char.html">nChar</a> * &gt; elems)</td></tr>
-<tr class="separator:a77b054be190ec70d0a26a4d656eaaeee inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb9fa27930e61b134bfbe2ece2b46016 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="afb9fa27930e61b134bfbe2ece2b46016"></a>
+<tr class="separator:a9b9168adea528f48cc25ebe412bbd4b6 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a318e78087820f4b08757aefc178e2edb inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a318e78087820f4b08757aefc178e2edb"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classnamu_1_1n_char.html">nChar</a> *new1)</td></tr>
-<tr class="separator:afb9fa27930e61b134bfbe2ece2b46016 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63f1775723137cef0b1239db511c5305 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a63f1775723137cef0b1239db511c5305"></a>
+<tr class="separator:a318e78087820f4b08757aefc178e2edb inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e3f0027af2ff467755cec145cdd267a inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a6e3f0027af2ff467755cec145cdd267a"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;new1)</td></tr>
-<tr class="separator:a63f1775723137cef0b1239db511c5305 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d7b7388f877a41fceaa9b6ce16aa6c1 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a5d7b7388f877a41fceaa9b6ce16aa6c1"></a>
+<tr class="separator:a6e3f0027af2ff467755cec145cdd267a inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6c6ee2bfbf6d622af9bf6fcaa0d68b2 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="ae6c6ee2bfbf6d622af9bf6fcaa0d68b2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classiter.html">iter</a> &amp;from, const <a class="el" href="classiter.html">iter</a> &amp;to)</td></tr>
-<tr class="separator:a5d7b7388f877a41fceaa9b6ce16aa6c1 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a416f68605eaa4f8b086a09beff737d43 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a416f68605eaa4f8b086a09beff737d43"></a>
+<tr class="separator:ae6c6ee2bfbf6d622af9bf6fcaa0d68b2 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64ad75556326db38a2f40a76ffa71f26 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a64ad75556326db38a2f40a76ffa71f26"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classiter.html">iter</a> &amp;here, me &amp;rhs)</td></tr>
-<tr class="separator:a416f68605eaa4f8b086a09beff737d43 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73ae5dcc099a11a466a4665e6b72f289 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a73ae5dcc099a11a466a4665e6b72f289"></a>
+<tr class="separator:a64ad75556326db38a2f40a76ffa71f26 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a235f41b7c2ca93b7ebac2088139176e4 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a235f41b7c2ca93b7ebac2088139176e4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const me &amp;rhs)</td></tr>
-<tr class="separator:a73ae5dcc099a11a466a4665e6b72f289 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa81ec916eb7e85fdcf2a1bd435446aee inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="aa81ec916eb7e85fdcf2a1bd435446aee"></a>
+<tr class="separator:a235f41b7c2ca93b7ebac2088139176e4 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af739598e2825f2f160c06d4178c4d906 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="af739598e2825f2f160c06d4178c4d906"></a>
 ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const typename <a class="el" href="classnamu_1_1tucontainable.html">tucontainable</a>&lt; E &gt;::<a class="el" href="classiter.html">iter</a> &amp;from, const typename <a class="el" href="classnamu_1_1tucontainable.html">tucontainable</a>&lt; E &gt;::<a class="el" href="classiter.html">iter</a> &amp;to)</td></tr>
-<tr class="separator:aa81ec916eb7e85fdcf2a1bd435446aee inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb3db361dc7216fd22f57ed17546bcd3 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="aeb3db361dc7216fd22f57ed17546bcd3"></a>
+<tr class="separator:af739598e2825f2f160c06d4178c4d906 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9397df3957c236d1f2cf2008ec0e9663 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a9397df3957c236d1f2cf2008ec0e9663"></a>
 ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classnamu_1_1tucontainable.html">tucontainable</a>&lt; E &gt; &amp;rhs)</td></tr>
-<tr class="separator:aeb3db361dc7216fd22f57ed17546bcd3 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16b4bc4e1003f2a777eaa2ae5e55226d inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a16b4bc4e1003f2a777eaa2ae5e55226d"></a>
+<tr class="separator:a9397df3957c236d1f2cf2008ec0e9663 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a442ff45fb7a2b990ca6a45eb6a8bd1 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a3a442ff45fb7a2b990ca6a45eb6a8bd1"></a>
 ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classnamu_1_1tbicontainable.html">tbicontainable</a>&lt; K, V &gt; &amp;rhs)</td></tr>
-<tr class="separator:a16b4bc4e1003f2a777eaa2ae5e55226d inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a88fc5da8abaaa7fe752169a7149551 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a2a88fc5da8abaaa7fe752169a7149551"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1tucontainable.html#a2a88fc5da8abaaa7fe752169a7149551">del</a> ()</td></tr>
-<tr class="memdesc:a2a88fc5da8abaaa7fe752169a7149551 inherit pub_methods_classnamu_1_1tucontainable"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete last element if exists. <br /></td></tr>
-<tr class="separator:a2a88fc5da8abaaa7fe752169a7149551 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9cc67955962ebc68240a802c811f2b8 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="ab9cc67955962ebc68240a802c811f2b8"></a>
+<tr class="separator:a3a442ff45fb7a2b990ca6a45eb6a8bd1 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fda52d48502dec2bbf30e9841a560d4 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a9fda52d48502dec2bbf30e9841a560d4"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1tucontainable.html#a9fda52d48502dec2bbf30e9841a560d4">del</a> ()</td></tr>
+<tr class="memdesc:a9fda52d48502dec2bbf30e9841a560d4 inherit pub_methods_classnamu_1_1tucontainable"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete last element if exists. <br /></td></tr>
+<tr class="separator:a9fda52d48502dec2bbf30e9841a560d4 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38d6be93d5db3fa14d5fd205f8c22109 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a38d6be93d5db3fa14d5fd205f8c22109"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classnamu_1_1n_char.html">nChar</a> *it)</td></tr>
-<tr class="separator:ab9cc67955962ebc68240a802c811f2b8 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06d986087cb93f9db10990a123b72d5d inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a06d986087cb93f9db10990a123b72d5d"></a>
+<tr class="separator:a38d6be93d5db3fa14d5fd205f8c22109 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6053005474cd6ebdea1da34bb39d3122 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a6053005474cd6ebdea1da34bb39d3122"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;it)</td></tr>
-<tr class="separator:a06d986087cb93f9db10990a123b72d5d inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39786606183841b35a96c75fd5b2ec7a inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a39786606183841b35a96c75fd5b2ec7a"></a>
+<tr class="separator:a6053005474cd6ebdea1da34bb39d3122 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9379743e4489a60ac57c2fdfafed6d09 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a9379743e4489a60ac57c2fdfafed6d09"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classnamu_1_1tucontainable.html">tucontainable</a> &amp;rhs)</td></tr>
-<tr class="separator:a39786606183841b35a96c75fd5b2ec7a inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a9379743e4489a60ac57c2fdfafed6d09 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af32565cbffb0f4e68540a2a44a0c9fa3 inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="af32565cbffb0f4e68540a2a44a0c9fa3"></a>
+virtual <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getOwner</b> ()</td></tr>
+<tr class="separator:af32565cbffb0f4e68540a2a44a0c9fa3 inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff8feb58e462afc195763cd0684d8eba inherit pub_methods_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="aff8feb58e462afc195763cd0684d8eba"></a>
+const <a class="el" href="classnamu_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getOwner</b> () const NAMU_UNCONST_FUNC(getOwner()) virtual void setOwner(const <a class="el" href="classnamu_1_1node.html">node</a> &amp;owner)</td></tr>
+<tr class="separator:aff8feb58e462afc195763cd0684d8eba inherit pub_methods_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -483,7 +486,7 @@ Protected Member Functions</h2></td></tr>
 <a class="el" href="classiteration.html">iteration</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeIteration</b> (ncnt step) const override</td></tr>
 <tr class="separator:a64b6c265dc46c78cc5adae4ec1d2f3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a781a29f972598e1ac0b76871d6a1df2d"><td class="memItemLeft" align="right" valign="top"><a id="a781a29f972598e1ac0b76871d6a1df2d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeSubs</b> (<a class="el" href="classnamu_1_1tnmap.html">scope</a> &amp;tray) const override</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeSubs</b> (<a class="el" href="classnamu_1_1scope.html">scope</a> &amp;tray) const override</td></tr>
 <tr class="separator:a781a29f972598e1ac0b76871d6a1df2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87b1df794c64f880eff598f463fb1b83"><td class="memItemLeft" align="right" valign="top"><a id="a87b1df794c64f880eff598f463fb1b83"></a>
 <a class="el" href="classnamu_1_1tstr.html">tstr</a>&lt; <a class="el" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_add</b> (const <a class="el" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a> &amp;rhs, nbool reversed) const override</td></tr>
@@ -559,6 +562,22 @@ nbool&#160;</td><td class="memItemRight" valign="bottom"><b>_setId</b> (<a class
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_attribs_classnamu_1_1node"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classnamu_1_1node')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classnamu_1_1node.html">namu::node</a></td></tr>
+<tr class="memitem:a051ee86dc51363ab8e504a97a8b0bebf inherit pub_attribs_classnamu_1_1node"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classnamu_1_1node.html">node</a> &amp;operator[](const std::string &amp;name) const NAMU_UNCONST_FUNC(operator[](name)) public const <a class="el" href="classnamu_1_1tnbicontainer.html">nbicontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1node.html#a051ee86dc51363ab8e504a97a8b0bebf">subs</a> () const NAMU_UNCONST_FUNC(subs()) const <a class="el" href="classnamu_1_1node.html">node</a> &amp;deduce(const <a class="el" href="classnamu_1_1node.html">node</a> &amp;r) const</td></tr>
+<tr class="separator:a051ee86dc51363ab8e504a97a8b0bebf inherit pub_attribs_classnamu_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_classnamu_1_1tucontainable"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classnamu_1_1tucontainable')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classnamu_1_1tucontainable.html">namu::tucontainable&lt; nChar &gt;</a></td></tr>
+<tr class="memitem:af31f7064bd79c57e8fb4e94115b79e02 inherit pub_attribs_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="af31f7064bd79c57e8fb4e94115b79e02"></a>
+const T1 &amp;get(std::function&lt; nbool(const T1 &amp;)&gt; l) const NAMU_UNCONST_FUNC(get(l)) const <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp; get(std <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (std::function&lt; nbool(const <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;, <a class="el" href="classnamu_1_1node.html">node</a> &amp;)&gt; l)</td></tr>
+<tr class="separator:af31f7064bd79c57e8fb4e94115b79e02 inherit pub_attribs_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a490aa451593a9cc2ec1d7a61b78a8fa1 inherit pub_attribs_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="a490aa451593a9cc2ec1d7a61b78a8fa1"></a>
+const T1 &amp;get(std::function&lt; nbool(const T1 &amp;, <a class="el" href="classnamu_1_1node.html">node</a> &amp;)&gt; l) const NAMU_UNCONST_FUNC(get(l)) const <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp; get(std <a class="el" href="classnamu_1_1tnarr.html">tnarr</a>&lt; <a class="el" href="classnamu_1_1n_char.html">nChar</a>, <a class="el" href="classnamu_1_1str_tactic.html">strTactic</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getAll</b> (std::function&lt; nbool(const <a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;)&gt; l) const</td></tr>
+<tr class="separator:a490aa451593a9cc2ec1d7a61b78a8fa1 inherit pub_attribs_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8add214214214be7fbc01a335a1df5c inherit pub_attribs_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="ae8add214214214be7fbc01a335a1df5c"></a>
+void each(std::function&lt; nbool(const T1 &amp;)&gt; l) const NAMU_UNCONST_FUNC(each(l)) void each(std void&#160;</td><td class="memItemRight" valign="bottom"><b>each</b> (std::function&lt; nbool(<a class="el" href="classnamu_1_1n_char.html">nChar</a> &amp;, <a class="el" href="classnamu_1_1node.html">node</a> &amp;)&gt; l)</td></tr>
+<tr class="separator:ae8add214214214be7fbc01a335a1df5c inherit pub_attribs_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa04f42f4b746052c48e485745c93b76c inherit pub_attribs_classnamu_1_1tucontainable"><td class="memItemLeft" align="right" valign="top"><a id="aa04f42f4b746052c48e485745c93b76c"></a>
+void each(std::function&lt; nbool(const T1 &amp;, <a class="el" href="classnamu_1_1node.html">node</a> &amp;)&gt; l) const NAMU_UNCONST_FUNC(each(l)) void each(std nbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (const <a class="el" href="classiter.html">iter</a> &amp;at, const <a class="el" href="classnamu_1_1n_char.html">nChar</a> *new1)</td></tr>
+<tr class="separator:aa04f42f4b746052c48e485745c93b76c inherit pub_attribs_classnamu_1_1tucontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classnamu_1_1base_obj"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classnamu_1_1base_obj')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classnamu_1_1base_obj.html">namu::baseObj</a></td></tr>
 <tr class="memitem:a41dbf5be36c7efdd97a9733d44d760d1 inherit pub_static_attribs_classnamu_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a41dbf5be36c7efdd97a9733d44d760d1"></a>
 static const string&#160;</td><td class="memItemRight" valign="bottom"><b>CTOR_NAME</b> = &quot;@ctor&quot;</td></tr>

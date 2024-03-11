@@ -66,7 +66,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
@@ -89,25 +88,17 @@ Inheritance diagram for namu::err:</div>
   </map>
 </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:af799a672b99ff039120f16346bf9b29e"><td class="memItemLeft" align="right" valign="top"><a id="af799a672b99ff039120f16346bf9b29e"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>type</b> { <b>ERR</b> = 0
-, <b>WARN</b>
-, <b>INFO</b>
- }</td></tr>
-<tr class="separator:af799a672b99ff039120f16346bf9b29e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acf6b6dc11b8cc53056b53d8c26d37a3a"><td class="memItemLeft" align="right" valign="top"><a id="acf6b6dc11b8cc53056b53d8c26d37a3a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>err</b> (err::type t, nint newCode)</td></tr>
-<tr class="separator:acf6b6dc11b8cc53056b53d8c26d37a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72e70f153bf5265d7f47aa9f6e1e175a"><td class="memItemLeft" align="right" valign="top"><a id="a72e70f153bf5265d7f47aa9f6e1e175a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>err</b> (err::type t, nint newCode, va_list <a class="el" href="classnamu_1_1args.html">args</a>)</td></tr>
-<tr class="separator:a72e70f153bf5265d7f47aa9f6e1e175a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a644401feb45afde63829357609a8907a"><td class="memItemLeft" align="right" valign="top"><a id="a644401feb45afde63829357609a8907a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>err</b> (err::type t, const <a class="el" href="structnamu_1_1point.html">point</a> &amp;ps, nint newCode, va_list <a class="el" href="classnamu_1_1args.html">args</a>)</td></tr>
-<tr class="separator:a644401feb45afde63829357609a8907a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71beaee26abecd0d6af04c7b862283b4"><td class="memItemLeft" align="right" valign="top"><a id="a71beaee26abecd0d6af04c7b862283b4"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>err</b> (logLv::level t, nint newCode)</td></tr>
+<tr class="separator:a71beaee26abecd0d6af04c7b862283b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9069f3a23f563dc3665cae8f8f503d3f"><td class="memItemLeft" align="right" valign="top"><a id="a9069f3a23f563dc3665cae8f8f503d3f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>err</b> (logLv::level t, nint newCode, va_list <a class="el" href="classnamu_1_1args.html">args</a>)</td></tr>
+<tr class="separator:a9069f3a23f563dc3665cae8f8f503d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a250128af29011c6d6c608a3adeb2f91f"><td class="memItemLeft" align="right" valign="top"><a id="a250128af29011c6d6c608a3adeb2f91f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>err</b> (logLv::level t, const <a class="el" href="structnamu_1_1point.html">point</a> &amp;ps, nint newCode, va_list <a class="el" href="classnamu_1_1args.html">args</a>)</td></tr>
+<tr class="separator:a250128af29011c6d6c608a3adeb2f91f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a668183ceb1cc3da772c5ca4494bfa87a"><td class="memItemLeft" align="right" valign="top"><a id="a668183ceb1cc3da772c5ca4494bfa87a"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const me &amp;rhs) const</td></tr>
 <tr class="separator:a668183ceb1cc3da772c5ca4494bfa87a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,9 +205,9 @@ static <a class="el" href="structnamu_1_1err.html">err</a> *&#160;</td><td class
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a1b96a5ff5f22ce58fa05563579205afa"><td class="memItemLeft" align="right" valign="top"><a id="a1b96a5ff5f22ce58fa05563579205afa"></a>
-err::type&#160;</td><td class="memItemRight" valign="bottom"><b>fType</b></td></tr>
-<tr class="separator:a1b96a5ff5f22ce58fa05563579205afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96cdfbf3fba7e0e4eb25e9b6f109b781"><td class="memItemLeft" align="right" valign="top"><a id="a96cdfbf3fba7e0e4eb25e9b6f109b781"></a>
+logLv::level&#160;</td><td class="memItemRight" valign="bottom"><b>fType</b></td></tr>
+<tr class="separator:a96cdfbf3fba7e0e4eb25e9b6f109b781"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bae5fdbaaa46c83760ea2e4754b6a32"><td class="memItemLeft" align="right" valign="top"><a id="a0bae5fdbaaa46c83760ea2e4754b6a32"></a>
 errCode&#160;</td><td class="memItemRight" valign="bottom"><b>code</b></td></tr>
 <tr class="separator:a0bae5fdbaaa46c83760ea2e4754b6a32"><td class="memSeparator" colspan="2">&#160;</td></tr>

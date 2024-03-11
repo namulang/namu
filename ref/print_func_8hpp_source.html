@@ -80,8 +80,8 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1print_func.html">printFunc</a>, <a class="code" href="classnamu_1_1base_func.html">baseFunc</a>))</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classnamu_1_1print_func.html#aebe290ee72b91ccfc95c9a0efef845d4">   12</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">params</a>&amp; <a class="code" href="classnamu_1_1print_func.html#aebe290ee72b91ccfc95c9a0efef845d4">getParams</a>()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnamu_1_1tnarr.html">params</a> inner(*<span class="keyword">new</span> <a class="code" href="classnamu_1_1param.html">param</a>(<span class="stringliteral">&quot;msg&quot;</span>, <span class="keyword">new</span> T()));</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classnamu_1_1print_func.html#aebe290ee72b91ccfc95c9a0efef845d4">   12</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1params.html">params</a>&amp; <a class="code" href="classnamu_1_1print_func.html#aebe290ee72b91ccfc95c9a0efef845d4">getParams</a>()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnamu_1_1params.html">params</a> inner(*<span class="keyword">new</span> <a class="code" href="classnamu_1_1param.html">param</a>(<span class="stringliteral">&quot;msg&quot;</span>, <span class="keyword">new</span> T()));</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <span class="keywordflow">return</span> inner;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        }</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
@@ -91,7 +91,7 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        }</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">params</a>&amp; ps = getParams();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keyword">const</span> <a class="code" href="classnamu_1_1params.html">params</a>&amp; ps = getParams();</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <span class="keywordflow">if</span>(a.len() != ps.len())</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                <span class="keywordflow">return</span> NAMU_E(<span class="stringliteral">&quot;length of args(%d) and typs(%d) doesn&#39;t match.&quot;</span>, a.len(), ps.len()), <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
@@ -108,12 +108,12 @@ $(function() {
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1base_func_html"><div class="ttname"><a href="classnamu_1_1base_func.html">namu::baseFunc</a></div><div class="ttdef"><b>Definition:</b> baseFunc.hpp:12</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:18</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:20</div></div>
 <div class="ttc" id="aclassnamu_1_1param_html"><div class="ttname"><a href="classnamu_1_1param.html">namu::param</a></div><div class="ttdef"><b>Definition:</b> param.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1params_html"><div class="ttname"><a href="classnamu_1_1params.html">namu::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1print_func_html"><div class="ttname"><a href="classnamu_1_1print_func.html">namu::printFunc</a></div><div class="ttdef"><b>Definition:</b> printFunc.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1print_func_html_ac5f5699e61d8ca4f6e31b75914a45495"><div class="ttname"><a href="classnamu_1_1print_func.html#ac5f5699e61d8ca4f6e31b75914a45495">namu::printFunc::getRet</a></div><div class="ttdeci">str getRet() const override</div><div class="ttdef"><b>Definition:</b> printFunc.hpp:17</div></div>
 <div class="ttc" id="aclassnamu_1_1print_func_html_aebe290ee72b91ccfc95c9a0efef845d4"><div class="ttname"><a href="classnamu_1_1print_func.html#aebe290ee72b91ccfc95c9a0efef845d4">namu::printFunc::getParams</a></div><div class="ttdeci">const params &amp; getParams() const override</div><div class="ttdef"><b>Definition:</b> printFunc.hpp:12</div></div>
-<div class="ttc" id="aclassnamu_1_1tnarr_html"><div class="ttname"><a href="classnamu_1_1tnarr.html">namu::tnarr&lt; param, strTactic &gt;</a></div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

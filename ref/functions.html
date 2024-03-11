@@ -67,6 +67,9 @@ $(function() {
 <li>_get()
 : <a class="el" href="classnamu_1_1chunk.html#ad9f68a36e395194c749f55e977281b64">namu::chunk</a>
 </li>
+<li>_nextToMatchParamType()
+: <a class="el" href="classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84">iter</a>
+</li>
 <li>_onContinuousArgCount()
 : <a class="el" href="classnamu_1_1buffer_src_flag.html#ab0a42e8af1533ca5a47574545bce95ca">namu::bufferSrcFlag</a>
 , <a class="el" href="classnamu_1_1flag.html#af413ec73f9741bc0dc141247c0d06aaa">namu::flag</a>
@@ -80,7 +83,7 @@ $(function() {
 <h3><a id="index_a"></a>- a -</h3><ul>
 <li>add()
 : <a class="el" href="classnamu_1_1arr.html#a0e9158a31aea46033a594bb5c58b623b">namu::arr</a>
-, <a class="el" href="classnamu_1_1tarrayable.html#aea876f99be5d31798b41a5bcfd4c344d">namu::tarrayable&lt; T &gt;</a>
+, <a class="el" href="classnamu_1_1tarrayable.html#a609f158c888a92389b94c57ac2237fdb">namu::tarrayable&lt; T, R &gt;</a>
 , <a class="el" href="classnamu_1_1tnarr.html#a6c72558c94232aed3cb5e9d7dd395dc7">namu::tnarr&lt; T, TACTIC &gt;</a>
 </li>
 </ul>
@@ -102,12 +105,12 @@ $(function() {
 </li>
 <li>del()
 : <a class="el" href="classnamu_1_1arr.html#a83e77399ad70a0c6d273098d6b0beef8">namu::arr</a>
-, <a class="el" href="classnamu_1_1tarrayable.html#a86f60f85742bb19544abae2c5b3a17d3">namu::tarrayable&lt; T &gt;</a>
+, <a class="el" href="classnamu_1_1tarrayable.html#a555b5569754fb01d0c0a45b2037bad8d">namu::tarrayable&lt; T, R &gt;</a>
 , <a class="el" href="classnamu_1_1tbicontainable.html#a569ac8831edd1c38cf306e1b4c8e139a">namu::tbicontainable&lt; K, V &gt;</a>
 , <a class="el" href="classnamu_1_1tnarr.html#a6869589b2111366c9c3b5e14f7543e54">namu::tnarr&lt; T, TACTIC &gt;</a>
 , <a class="el" href="classnamu_1_1tnchain.html#af14fc19fcc47070e3151cbd3b59dcdc2">namu::tnchain&lt; K, V, defaultContainer &gt;</a>
 , <a class="el" href="classnamu_1_1tnmap.html#a037362e9a7b91e0866ecc8f20218f2ed">namu::tnmap&lt; K, V, TACTIC &gt;</a>
-, <a class="el" href="classnamu_1_1tucontainable.html#a2a88fc5da8abaaa7fe752169a7149551">namu::tucontainable&lt; T &gt;</a>
+, <a class="el" href="classnamu_1_1tucontainable.html#a9fda52d48502dec2bbf30e9841a560d4">namu::tucontainable&lt; T, R &gt;</a>
 </li>
 <li>dump()
 : <a class="el" href="classnamu_1_1console_stream.html#ae4842977952f03a627365a2971648f59">namu::consoleStream</a>
@@ -118,7 +121,20 @@ $(function() {
 </ul>
 
 
+<h3><a id="index_f"></a>- f -</h3><ul>
+<li>filt()
+: <a class="el" href="classnamu_1_1err_pass_filter.html#a04844c684dea6cb0ea8b639b51598d52">namu::errPassFilter</a>
+, <a class="el" href="classnamu_1_1filterable.html#a1bf24694dceca73033ae1e5f0f7ce759">namu::filterable</a>
+, <a class="el" href="classnamu_1_1filters.html#af87ef83c1062de0af46d3a98cb89929f">namu::filters</a>
+</li>
+</ul>
+
+
 <h3><a id="index_g"></a>- g -</h3><ul>
+<li>get()
+: <a class="el" href="classnamu_1_1tmatches.html#a4a285a7a3282f74822d1a0db1c48c3b6">namu::tmatches&lt; T &gt;</a>
+, <a class="el" href="structnamu_1_1tprior.html#a753d231ca1aef3933773d85c0858a450">namu::tprior&lt; T &gt;</a>
+</li>
 <li>getEval()
 : <a class="el" href="classnamu_1_1_a_p_i_bridge.html#a461455a3fed56e528c769aefd9c90fc5">namu::APIBridge&lt; T, Ret &gt;</a>
 , <a class="el" href="classnamu_1_1as_expr.html#abfa263e5fbd2fbc0478c817a3851f455">namu::asExpr</a>
@@ -145,6 +161,9 @@ $(function() {
 </li>
 <li>getLeafs()
 : <a class="el" href="classnamu_1_1type.html#a3a49a8fd7cfcfce6af561d4d31c6da7e">namu::type</a>
+</li>
+<li>getMatches()
+: <a class="el" href="classnamu_1_1tpriorities.html#a8a354c5dd8973db0d652ec00df5a8244">namu::tpriorities&lt; T &gt;</a>
 </li>
 <li>getParams()
 : <a class="el" href="classnamu_1_1base_func.html#ac316e87db008720afeb93bed70ff05a8">namu::baseFunc</a>
@@ -217,6 +236,13 @@ $(function() {
 </ul>
 
 
+<h3><a id="index_p"></a>- p -</h3><ul>
+<li>params()
+: <a class="el" href="classnamu_1_1params.html#ab6b2984f36d4a128028cac15b5d9c800">namu::params</a>
+</li>
+</ul>
+
+
 <h3><a id="index_r"></a>- r -</h3><ul>
 <li>rel()
 : <a class="el" href="classnamu_1_1autoslot.html#a73c85124ea9f59bfecfc482356a86e17">namu::autoslot</a>
@@ -246,9 +272,9 @@ $(function() {
 , <a class="el" href="classnamu_1_1func.html#a6bff01893d9d4de4f52b27e7059b714e">namu::func</a>
 , <a class="el" href="classnamu_1_1tcpp_bridge_func_base.html#aae8c3cd82f9d801455385bfa35ce2ca3">namu::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;</a>
 </li>
-<li>subs()
-: <a class="el" href="classnamu_1_1frame.html#ab09403806cf0d8317309add564355e0c">namu::frame</a>
-, <a class="el" href="classnamu_1_1node.html#ab09403806cf0d8317309add564355e0c">namu::node</a>
+<li>subs
+: <a class="el" href="classnamu_1_1frame.html#a051ee86dc51363ab8e504a97a8b0bebf">namu::frame</a>
+, <a class="el" href="classnamu_1_1node.html#a051ee86dc51363ab8e504a97a8b0bebf">namu::node</a>
 </li>
 <li>substr()
 : <a class="el" href="classnamu_1_1n_str.html#ab1d0deb0aabc6c623fb05029793d9a9b">namu::nStr</a>
@@ -259,6 +285,12 @@ $(function() {
 <h3><a id="index_t"></a>- t -</h3><ul>
 <li>take()
 : <a class="el" href="classnamu_1_1flag.html#a254906f63903414705cd22d54797debe">namu::flag</a>
+</li>
+<li>tmatches()
+: <a class="el" href="classnamu_1_1tmatches.html#ac5704e8a7496299d21bcc0d1472058d0">namu::tmatches&lt; T &gt;</a>
+</li>
+<li>tnarr()
+: <a class="el" href="classnamu_1_1tnarr.html#a4db2f5b237f8c17cadd1239a02e452b2">namu::tnarr&lt; T, TACTIC &gt;</a>
 </li>
 <li>tstr()
 : <a class="el" href="classnamu_1_1tstr.html#a103b945a25ac15fb296f7e617cbca009">namu::tstr&lt; T, TACTIC &gt;</a>
@@ -271,10 +303,10 @@ $(function() {
 
 <h3><a id="index_w"></a>- w -</h3><ul>
 <li>wrap()
-: <a class="el" href="classnamu_1_1tnchain.html#a6f16e48495d3d1b45787589768a67160">namu::tnchain&lt; K, V, defaultContainer &gt;</a>
+: <a class="el" href="classnamu_1_1tnchain.html#a46c967f84bfaa560a34b7d376127eaf7">namu::tnchain&lt; K, V, defaultContainer &gt;</a>
 </li>
 <li>wrapDeep()
-: <a class="el" href="classnamu_1_1tnchain.html#aeef6fd46bd1cf148a23e1837148046f4">namu::tnchain&lt; K, V, defaultContainer &gt;</a>
+: <a class="el" href="classnamu_1_1tnchain.html#a44ea4c6af381c560fc41ed7e98de791a">namu::tnchain&lt; K, V, defaultContainer &gt;</a>
 </li>
 </ul>
 </div><!-- contents -->

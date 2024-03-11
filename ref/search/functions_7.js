@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['next_631',['next',['../classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab',1,'iter::next()'],['../classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f',1,'iterable::next()'],['../classnarr_iteration.html#a68835c58bc641c53744f9bdc700fd96c',1,'narrIteration::next()'],['../classchain_iteration.html#a4c8ff27d24722f4ca59ae2653777fc57',1,'chainIteration::next()'],['../classnmap_iteration.html#a9767458340b98d2c8dc00c9018033f97',1,'nmapIteration::next()'],['../classnseq_iteration.html#a295d8af29d3ecb2435e1071002ec84a5',1,'nseqIteration::next()'],['../classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab',1,'iter::next()'],['../classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f',1,'iterable::next()'],['../classnamu_1_1buffer_src_supply.html#a11c63039e837ab3c870db5de88229df7',1,'namu::bufferSrcSupply::next()'],['../classnamu_1_1src_supply.html#a9ae7d54cbe82f06302977a10f2e22402',1,'namu::srcSupply::next()']]]
+  ['make_687',['make',['../classnamu_1_1ttype_base_3_01void_00_01type_01_4.html#a823ba5a0c6c8dbde62e0f84299323f58',1,'namu::ttypeBase&lt; void, type &gt;::make()'],['../classnamu_1_1type.html#a9dd9bd3805f00deefbf50b3eb0f4ef73',1,'namu::type::make()']]],
+  ['mov_688',['mov',['../classnamu_1_1arithmetic_obj.html#a0888a8ee498908313fa151deb49831af',1,'namu::arithmeticObj']]]
 ];

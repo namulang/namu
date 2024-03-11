@@ -122,9 +122,9 @@ ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>getStreamCount</b> ()
 <tr class="memitem:a972f000958eb2f6ee6c4f11da90dd482"><td class="memItemLeft" align="right" valign="top"><a id="a972f000958eb2f6ee6c4f11da90dd482"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>dumpFormat</b> (const nchar *fmt,...)</td></tr>
 <tr class="separator:a972f000958eb2f6ee6c4f11da90dd482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e864e07b0c9ae1d8ca2b71bfc302936"><td class="memItemLeft" align="right" valign="top"><a id="a9e864e07b0c9ae1d8ca2b71bfc302936"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>dumpFormatLog</b> (const nchar *level, const nchar *tag, const nchar *filename, const nchar *<a class="el" href="classnamu_1_1func.html">func</a>, int line, const nchar *fmt,...)</td></tr>
-<tr class="separator:a9e864e07b0c9ae1d8ca2b71bfc302936"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6665d33dee16de8b0ce42be556810be3"><td class="memItemLeft" align="right" valign="top"><a id="a6665d33dee16de8b0ce42be556810be3"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>dumpFormatLog</b> (logLv::level lv, const nchar *tag, const nchar *filename, const nchar *<a class="el" href="classnamu_1_1func.html">func</a>, int line, const nchar *fmt,...)</td></tr>
+<tr class="separator:a6665d33dee16de8b0ce42be556810be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2135e267cbfb72dbfe97bc964b3dbd6a"><td class="memItemLeft" align="right" valign="top"><a id="a2135e267cbfb72dbfe97bc964b3dbd6a"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>pushStream</b> (<a class="el" href="classnamu_1_1stream.html">stream</a> *new_stream)</td></tr>
 <tr class="separator:a2135e267cbfb72dbfe97bc964b3dbd6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,6 +145,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setCallstack</b> (nbo
 <tr class="memitem:a9bcfb20738c6764070b38cf5fdf80b5c"><td class="memItemLeft" align="right" valign="top"><a id="a9bcfb20738c6764070b38cf5fdf80b5c"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isShowCallstack</b> () const</td></tr>
 <tr class="separator:a9bcfb20738c6764070b38cf5fdf80b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dfa9a38963f580fa7b86196704c4afa"><td class="memItemLeft" align="right" valign="top"><a id="a5dfa9a38963f580fa7b86196704c4afa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setFilters</b> (const <a class="el" href="classnamu_1_1filters.html">filters</a> &amp;newFilters)</td></tr>
+<tr class="separator:a5dfa9a38963f580fa7b86196704c4afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37a82b4610262fb42adb048308fd07f0"><td class="memItemLeft" align="right" valign="top"><a id="a37a82b4610262fb42adb048308fd07f0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setFilters</b> ()</td></tr>
+<tr class="separator:a37a82b4610262fb42adb048308fd07f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c663659f1f07d565fcc0142b437cbe1"><td class="memItemLeft" align="right" valign="top"><a id="a6c663659f1f07d565fcc0142b437cbe1"></a>
+const <a class="el" href="classnamu_1_1filters.html">filters</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getFilters</b> () const</td></tr>
+<tr class="separator:a6c663659f1f07d565fcc0142b437cbe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnamu_1_1stream"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnamu_1_1stream')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnamu_1_1stream.html">namu::stream</a></td></tr>
 <tr class="memitem:a6af0f2586ef2e5dd2b64cd728009ea7a inherit pub_methods_classnamu_1_1stream"><td class="memItemLeft" align="right" valign="top"><a id="a6af0f2586ef2e5dd2b64cd728009ea7a"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>stream</b> (nbool isEnable=true)</td></tr>
