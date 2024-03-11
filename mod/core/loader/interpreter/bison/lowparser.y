@@ -141,16 +141,27 @@
 %type <asNode> compilation-unit unary postfix primary
 %type <asStr> visibility
 //      expr:
-//          inline:
-%type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9
+//          normal:
+%type <asNode> expr-inline expr-inline1 expr-inline2 expr-inline3 expr-inline4 expr-inline5 expr-inline6 expr-inline7 expr-inline8 expr-inline9
+%type <asNode> expr-compound
+//          def:
 %type <asNode> def-expr-inline def-expr-compound
-//          compound:
-%type <asNode> expr-compound block indentblock
-%type <asDefBlock> indentDefBlock defblock declBlock indentDeclBlock
 //      stmt:
-%type <asNode> allstmt stmt stmt-inline stmt-compound def-stmt def-stmt-inline def-stmt-compound
-%type <asNode> allstmt-chain allstmt-chain-item def-stmt-chain-item
+//          normal:
+%type <asNode> allstmt stmt stmt-inline stmt-compound
+%type <asNode> allstmt-chain allstmt-chain-item
+//          def:
+%type <asNode> def-stmt def-stmt-inline def-stmt-compound
+//          decl:
+//      block:
+%type<asNode> block indentblock
+//          normal:
+//          def:
+%type <asDefBlock> indentDefBlock defblock
 %type <asDefBlock> def-stmt-chain
+%type <asNode> def-stmt-chain-item
+//          decl:
+%type <asDefBlock> declBlock indentDeclBlock
 //      access:
 %type <asNode> access call-access
 //      func:
@@ -229,7 +240,7 @@ postfix: primary { $$ = $1; }
        | postfix '.' func-call {
         $$ = EVENTER.onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
      } | func-call { $$ = $1; }
-       | postfix '[' expr-line9 ']' { $$ = EVENTER.onGetElem(*$1, *$3); }
+       | postfix '[' expr-inline9 ']' { $$ = EVENTER.onGetElem(*$1, *$3); }
 
 primary: INTVAL { $$ = EVENTER.onPrimitive<nInt>($1); }
        | STRVAL {
@@ -254,46 +265,46 @@ visibility: '_' '+' {
         } | %empty {
             // ??
         }
+
 //  expr:
 //      inline:
- xpr-line9: expr-line8 { $$ = $1; }
-expr-line9: expr-line8 { $$ = $1; }
-          | expr-line9 LOGICAL_OR expr-line8 { $$ = EVENTER.onOr(*$1, *$3); }
-          | expr-line9 LOGICAL_AND expr-line8 { $$ = EVENTER.onAnd(*$1, *$3); }
-expr-line8: expr-line7 { $$ = $1; }
-          | expr-line8 LSHIFT expr-line7 { $$ = EVENTER.onLShift(*$1, *$3); }
-          | expr-line8 RSHIFT expr-line7 { $$ = EVENTER.onRShift(*$1, *$3); }
-expr-line7: expr-line6 { $$ = $1; }
-          | expr-line6 '>' expr-line6 { $$ = EVENTER.onGt(*$1, *$3); }
-          | expr-line6 '<' expr-line6 { $$ = EVENTER.onLt(*$1, *$3); }
-          | expr-line6 GE expr-line6 { $$ = EVENTER.onGe(*$1, *$3); }
-          | expr-line6 LE expr-line6 { $$ = EVENTER.onLe(*$1, *$3); }
-          | expr-line6 EQ expr-line6 { $$ = EVENTER.onEq(*$1, *$3); }
-          | expr-line6 NE expr-line6 { $$ = EVENTER.onNe(*$1, *$3); }
-expr-line6: expr-line5 { $$ = $1; }
-          | expr-line6 '|' expr-line5 { $$ = EVENTER.onBitwiseOr(*$1, *$3); }
-          | expr-line6 IS type {
+expr-inline9: expr-inline8 { $$ = $1; }
+          | expr-inline9 LOGICAL_OR expr-inline8 { $$ = EVENTER.onOr(*$1, *$3); }
+          | expr-inline9 LOGICAL_AND expr-inline8 { $$ = EVENTER.onAnd(*$1, *$3); }
+expr-inline8: expr-inline7 { $$ = $1; }
+          | expr-inline8 LSHIFT expr-inline7 { $$ = EVENTER.onLShift(*$1, *$3); }
+          | expr-inline8 RSHIFT expr-inline7 { $$ = EVENTER.onRShift(*$1, *$3); }
+expr-inline7: expr-inline6 { $$ = $1; }
+          | expr-inline6 '>' expr-inline6 { $$ = EVENTER.onGt(*$1, *$3); }
+          | expr-inline6 '<' expr-inline6 { $$ = EVENTER.onLt(*$1, *$3); }
+          | expr-inline6 GE expr-inline6 { $$ = EVENTER.onGe(*$1, *$3); }
+          | expr-inline6 LE expr-inline6 { $$ = EVENTER.onLe(*$1, *$3); }
+          | expr-inline6 EQ expr-inline6 { $$ = EVENTER.onEq(*$1, *$3); }
+          | expr-inline6 NE expr-inline6 { $$ = EVENTER.onNe(*$1, *$3); }
+expr-inline6: expr-inline5 { $$ = $1; }
+          | expr-inline6 '|' expr-inline5 { $$ = EVENTER.onBitwiseOr(*$1, *$3); }
+          | expr-inline6 IS type {
             // ??
-        } | expr-line6 _IN_ expr-line5 {
+        } | expr-inline6 _IN_ expr-inline5 {
             // ??
         }
-expr-line5: expr-line4 { $$ = $1; }
-          | expr-line5 '^' expr-line4 { $$ = EVENTER.onBitwiseXor(*$1, *$3); }
-expr-line4: expr-line3 { $$ = $1; }
-          | expr-line4 '&' expr-line3 { $$ = EVENTER.onBitwiseAnd(*$1, *$3); }
-expr-line3: expr-line2 { $$ = $1; }
-          | expr-line3 '+' expr-line2 { $$ = EVENTER.onAdd(*$1, *$3); }
-          | expr-line3 '-' expr-line2 { $$ = EVENTER.onSub(*$1, *$3); }
-expr-line2: expr-line1 { $$ = $1; }
-          | expr-line2 '*' expr-line1 { $$ = EVENTER.onMul(*$1, *$3); }
-          | expr-line2 '/' expr-line1 { $$ = EVENTER.onDiv(*$1, *$3); }
-          | expr-line2 '%' expr-line1 { $$ = EVENTER.onMod(*$1, *$3); }
-expr-line1: unary { $$ = $1; }
-          | expr-line1 AS type { $$ = EVENTER.onAs(*$1, *$3); }
+expr-inline5: expr-inline4 { $$ = $1; }
+          | expr-inline5 '^' expr-inline4 { $$ = EVENTER.onBitwiseXor(*$1, *$3); }
+expr-inline4: expr-inline3 { $$ = $1; }
+          | expr-inline4 '&' expr-inline3 { $$ = EVENTER.onBitwiseAnd(*$1, *$3); }
+expr-inline3: expr-inline2 { $$ = $1; }
+          | expr-inline3 '+' expr-inline2 { $$ = EVENTER.onAdd(*$1, *$3); }
+          | expr-inline3 '-' expr-inline2 { $$ = EVENTER.onSub(*$1, *$3); }
+expr-inline2: expr-inline1 { $$ = $1; }
+          | expr-inline2 '*' expr-inline1 { $$ = EVENTER.onMul(*$1, *$3); }
+          | expr-inline2 '/' expr-inline1 { $$ = EVENTER.onDiv(*$1, *$3); }
+          | expr-inline2 '%' expr-inline1 { $$ = EVENTER.onMod(*$1, *$3); }
+expr-inline1: unary { $$ = $1; }
+          | expr-inline1 AS type { $$ = EVENTER.onAs(*$1, *$3); }
           | unary DOUBLE_DOT unary { $$ = EVENTER.onDefSeq(*$1, *$3); }
 //      compound:
 expr-compound: if { $$ = $1; }
-             | expr-line9 ASSIGN expr-compound { $$ = EVENTER.onAssign(*$1, *$3); }
+             | expr-inline9 ASSIGN expr-compound { $$ = EVENTER.onAssign(*$1, *$3); }
              | for { $$ = $1; }
              | while { $$ = $1; }
              | end { $$ = $1; }
@@ -334,16 +345,16 @@ indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
 
 //  stmt:
 //      normal:
-expr-line: expr-line9 { $$ = $1; }
-         | expr-line9 ASSIGN expr-line { $$ = EVENTER.onAssign(*$1, *$3); }
-         | expr-line9 ADD_ASSIGN expr-line9 { $$ = EVENTER.onAddAssign(*$1, *$3); }
-         | expr-line9 SUB_ASSIGN expr-line9 { $$ = EVENTER.onSubAssign(*$1, *$3); }
-         | expr-line9 MUL_ASSIGN expr-line9 { $$ = EVENTER.onMulAssign(*$1, *$3); }
-         | expr-line9 DIV_ASSIGN expr-line9 { $$ = EVENTER.onDivAssign(*$1, *$3); }
-         | expr-line9 MOD_ASSIGN expr-line9 { $$ = EVENTER.onModAssign(*$1, *$3); }
+expr-inline: expr-inline9 { $$ = $1; }
+         | expr-inline9 ASSIGN expr-inline { $$ = EVENTER.onAssign(*$1, *$3); }
+         | expr-inline9 ADD_ASSIGN expr-inline9 { $$ = EVENTER.onAddAssign(*$1, *$3); }
+         | expr-inline9 SUB_ASSIGN expr-inline9 { $$ = EVENTER.onSubAssign(*$1, *$3); }
+         | expr-inline9 MUL_ASSIGN expr-inline9 { $$ = EVENTER.onMulAssign(*$1, *$3); }
+         | expr-inline9 DIV_ASSIGN expr-inline9 { $$ = EVENTER.onDivAssign(*$1, *$3); }
+         | expr-inline9 MOD_ASSIGN expr-inline9 { $$ = EVENTER.onModAssign(*$1, *$3); }
 stmt: stmt-inline { $$ = $1; }
     | stmt-compound { $$ = $1; }
-stmt-inline: expr-line NEWLINE { $$ = $1; }
+stmt-inline: expr-inline NEWLINE { $$ = $1; }
 stmt-compound: ret { $$ = $1; }
              | break { $$ = $1; }
              | next { $$ = $1; }
@@ -377,7 +388,7 @@ allstmt-chain: allstmt-chain-item { $$ = EVENTER.onBlock(*$1); }
              | allstmt-chain ';' allstmt-chain-item {
                 $$ = EVENTER.onBlock($1->cast<blockExpr>(), *$3);
            }
-allstmt-chain-item: expr-line { $$ = $1; }
+allstmt-chain-item: expr-inline { $$ = $1; }
                   | expr-compound { $$ = $1; }
                   | def-stmt-chain-item { $$ = $1; }
 
@@ -399,13 +410,13 @@ func-call: type func-call-tuple {
 //  tuple:
 tuple: '(' tuple-items ')' { $$ = $2; }
      | '(' ')' { $$ = EVENTER.onTuple(); }
-tuple-item: expr-line9 { $$ = $1; }
+tuple-item: expr-inline9 { $$ = $1; }
           | expr-compound { $$ = $1; }
 tuple-items: tuple-item { $$ = EVENTER.onTuple(*$1); }
            | tuple-items ',' tuple-item { $$ = EVENTER.onTuple(*$1, *$3); }
 func-call-tuple: '(' func-call-tuple-items ')' { $$ = $2; }
                | '(' ')' { $$ = EVENTER.onFuncCallTuple(); }
-func-call-tuple-item: expr-line9 { $$ = $1; }
+func-call-tuple-item: expr-inline9 { $$ = $1; }
                     | expr-compound { $$ = $1; }
                     | lambda {
                         // ??
@@ -447,25 +458,25 @@ typenames: type { $$ = EVENTER.onTypeNames(*$1); }
 
 //  keyword:
 //      branch:
-if: IF expr-line9 indentblock {
+if: IF expr-inline9 indentblock {
     $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>());
-} | IF expr-line9 indentblock _ELSE_ indentblock {
+} | IF expr-inline9 indentblock _ELSE_ indentblock {
     $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>(), $5->cast<blockExpr>());
-} | IF expr-line9 indentblock _ELSE_ if {
+} | IF expr-inline9 indentblock _ELSE_ if {
     $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>(), $5->cast<ifExpr>());
 }
 
 ret: RET NEWLINE { $$ = EVENTER.onRet(); }
-   | RET expr-line9 NEWLINE { $$ = EVENTER.onRet(*$2); }
+   | RET expr-inline9 NEWLINE { $$ = EVENTER.onRet(*$2); }
    | RET expr-compound { $$ = EVENTER.onRet(*$2); }
 
 next: NEXT NEWLINE { $$ = EVENTER.onNext(); }
 
 break: BREAK NEWLINE { $$ = EVENTER.onBreak(); }
-     | BREAK expr-line9 NEWLINE { $$ = EVENTER.onBreak(*$2); }
+     | BREAK expr-inline9 NEWLINE { $$ = EVENTER.onBreak(*$2); }
      | BREAK expr-compound { $$ = EVENTER.onBreak(*$2); }
 
-matching: expr-line9 NEWLINE INDENT matchers DEDENT {
+matching: expr-inline9 NEWLINE INDENT matchers DEDENT {
             // ??
       }
 matchers: matcher-item {
@@ -473,37 +484,37 @@ matchers: matcher-item {
       } | matchers matcher-item {
             // ??
       }
-matcher-item: _IN_ expr-line5 indentblock {
+matcher-item: _IN_ expr-inline5 indentblock {
                 // ??
           } | IS type indentblock {
                 // ??
           } | matcher-equal-rhs indentblock {
                 // ??
-          } | '>' expr-line6 indentblock {
+          } | '>' expr-inline6 indentblock {
                 // ??
-          } | '<' expr-line6 indentblock {
+          } | '<' expr-inline6 indentblock {
                 // ??
-          } | GE expr-line6 indentblock {
+          } | GE expr-inline6 indentblock {
                 // ??
-          } | LE expr-line6 indentblock {
+          } | LE expr-inline6 indentblock {
                 // ??
-          } | EQ expr-line6 indentblock {
+          } | EQ expr-inline6 indentblock {
                 // ??
-          } | NE expr-line6 indentblock {
+          } | NE expr-inline6 indentblock {
                 // ??
           }
-matcher-equal-rhs: expr-line9 {
+matcher-equal-rhs: expr-inline9 {
                     // ??
-               } | matcher-equal-rhs ',' expr-line9 {
+               } | matcher-equal-rhs ',' expr-inline9 {
                     // ??
                }
 
 //      loop:
-while: _WHILE_ expr-line9 indentblock {
+while: _WHILE_ expr-inline9 indentblock {
      $$ = EVENTER.onWhile(*$2, $3->cast<blockExpr>());
    }
 
-for: FOR NAME _IN_ expr-line9 indentblock {
+for: FOR NAME _IN_ expr-inline9 indentblock {
     $$ = EVENTER.onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
     free($2);
  }
@@ -516,7 +527,7 @@ def-prop-without-value: NAME type { // exp means 'explicitly'
                         $$ = EVENTER.onDefVar(*$1, *$2);
                         free($1);
                    }
-def-prop-value: NAME DEFASSIGN expr-line9 {
+def-prop-value: NAME DEFASSIGN expr-inline9 {
               $$ = EVENTER.onDefAssign(*$1, *$3);
               free($1);
           }
@@ -592,7 +603,7 @@ def-obj-default-generic: DEF NAME typeparams indentDefBlock {
 def-array-value: '{' tuple-items '}' { $$ = EVENTER.onDefArray(*$2); }
 
 //              with:
-with-inline: WITH expr-line9 {
+with-inline: WITH expr-inline9 {
             // ??
          }
 
