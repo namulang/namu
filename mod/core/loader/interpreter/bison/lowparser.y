@@ -100,7 +100,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 5
+%expect 8
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -143,12 +143,14 @@
 //      expr:
 //          inline:
 %type <asNode> expr-line expr-line1 expr-line2 expr-line3 expr-line4 expr-line5 expr-line6 expr-line7 expr-line8 expr-line9
+%type <asNode> def-expr def-expr-inline def-expr-compound
 //          compound:
 %type <asNode> expr-compound block indentblock
 %type <asDefBlock> indentDefBlock defblock declBlock indentDeclBlock
 //      stmt:
-%type <asNode> allstmt stmt stmt-compound decl-stmt def-stmt def-stmt-no-visibility def-stmt-visibility
-%type <asNode> allstmt-chain allstmt-chain-item def-stmt-chain
+%type <asNode> allstmt stmt stmt-inline stmt-compound decl-stmt def-stmt def-stmt-inline def-stmt-compound
+%type <asNode> allstmt-chain allstmt-chain-item def-stmt-chain-item
+%type <asDefBlock> def-stmt-chain
 //      access:
 %type <asNode> access call-access
 //      func:
@@ -310,9 +312,8 @@ indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
          }
 
 indentDefBlock: NEWLINE INDENT defblock DEDENT { $$ = $3; }
-              | ':' def-stmt-chain {
-                // ??
-            } | ':' ';' {
+              | ':' def-stmt-chain NEWLINE { $$ = $2; }
+              | ':' ';' NEWLINE {
                 // ??
             }
 
@@ -336,10 +337,7 @@ indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
              }
 
 //  stmt:
-allstmt: stmt { $$ = $1; }
-       | stmt-compound { $$ = $1; }
-       | def-stmt-no-visibility { $$ = $1; }
-       | def-stmt-visibility { $$ = $1; }
+//      normal:
 expr-line: expr-line9 { $$ = $1; }
          | expr-line9 ASSIGN expr-line { $$ = EVENTER.onAssign(*$1, *$3); }
          | expr-line9 ADD_ASSIGN expr-line9 { $$ = EVENTER.onAddAssign(*$1, *$3); }
@@ -347,39 +345,53 @@ expr-line: expr-line9 { $$ = $1; }
          | expr-line9 MUL_ASSIGN expr-line9 { $$ = EVENTER.onMulAssign(*$1, *$3); }
          | expr-line9 DIV_ASSIGN expr-line9 { $$ = EVENTER.onDivAssign(*$1, *$3); }
          | expr-line9 MOD_ASSIGN expr-line9 { $$ = EVENTER.onModAssign(*$1, *$3); }
-stmt: expr-line NEWLINE { $$ = $1; }
+stmt: stmt-inline { $$ = $1; }
+    | stmt-compound { $$ = $1; }
+stmt-inline: expr-line NEWLINE { $$ = $1; }
 stmt-compound: ret { $$ = $1; }
              | break { $$ = $1; }
              | next { $$ = $1; }
              | expr-compound { $$ = $1; }
              | matching { $$ = $1; }
 
-decl-stmt: access NEWLINE {
-            // ??
-       }
+//      def:
+def-expr: def-expr-inline { $$ = $1; }
+        | def-expr-compound { $$ = $1; }
+def-expr-inline: with-inline { $$ = $1; }
+               | def-prop-inline { $$ = $1; }
+               | abstract-func { $$ = $1; }
+def-expr-compound: with-compound { $$ = $1; }
+                 | def-obj { $$ = $1; }
+                 | def-func { $$ = $1; }
+                 | def-prop-compound { $$ = $1; }
+def-stmt: def-stmt-inline { $$ = $1; }
+        | def-stmt-compound { $$ = $1; }
+def-stmt-inline: def-expr-inline NEWLINE { $$ = $1; }
+def-stmt-compound: def-expr-compound { $$ = $1; }
+def-stmt-chain: def-stmt-chain-item { $$ = EVENTER.onDefBlock(*$1); }
+              | def-stmt-chain ';' def-stmt-chain-item {
+                str lifeItem($3);
+                $$ = EVENTER.onDefBlock(*$1, *lifeItem);
+            }
+def-stmt-chain-item: def-expr-inline { $$ = $1; }
+                   | def-expr-compound { $$ = $1; }
 
-def-stmt: def-stmt-no-visibility { $$ = $1; }
-        | visibility def-stmt-visibility {
-            // TODO:
-            $$ = $2;
-      }
-def-stmt-no-visibility: with-inline NEWLINE { $$ = $1; }
-                      | with-compound { $$ = $1; }
-                      | def-obj { $$ = $1; }
-def-stmt-visibility: def-prop-inline NEWLINE { $$ = $1; }
-                   | def-func { $$ = $1; }
-                   | abstract-func { $$ = $1; }
-                   | def-prop-compound { $$ = $1; }
-
+//      all:
+allstmt: stmt { $$ = $1; }
+       | def-stmt { $$ = $1; }
 allstmt-chain: allstmt-chain-item { $$ = EVENTER.onBlock(*$1); }
              | allstmt-chain ';' allstmt-chain-item {
                 $$ = EVENTER.onBlock($1->cast<blockExpr>(), *$3);
            }
 allstmt-chain-item: expr-line { $$ = $1; }
                   | expr-compound { $$ = $1; }
-def-stmt-chain: def-stmt {
-                // ??
-            }
+                  | def-stmt-chain-item { $$ = $1; }
+
+//      decl:
+decl-stmt: access NEWLINE {
+            // ??
+       }
+
 
 //  access:
 access: call-access { $$ = $1; }
