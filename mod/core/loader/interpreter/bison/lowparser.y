@@ -100,7 +100,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 8
+%expect 9
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -143,7 +143,7 @@
 //      expr:
 //          normal:
 %type <asNode> expr-inline expr-inline1 expr-inline2 expr-inline3 expr-inline4 expr-inline5 expr-inline6 expr-inline7 expr-inline8 expr-inline9
-%type <asNode> expr-compound
+%type <asNode> expr-compound all-expr-compound
 //          def:
 %type <asNode> def-expr-inline def-expr-compound
 //      stmt:
@@ -151,7 +151,7 @@
 %type <asNode> allstmt stmt stmt-inline stmt-compound
 %type <asNode> allstmt-chain allstmt-chain-item
 //          def:
-%type <asNode> def-stmt def-stmt-inline def-stmt-compound
+%type <asNode> def-stmt
 //          decl:
 //      block:
 %type<asNode> block indentblock
@@ -159,7 +159,6 @@
 //          def:
 %type <asDefBlock> indentDefBlock defblock
 %type <asDefBlock> def-stmt-chain
-%type <asNode> def-stmt-chain-item
 //          decl:
 %type <asDefBlock> declBlock indentDeclBlock
 //      access:
@@ -176,7 +175,7 @@
 %type <asArgs> typenames typeparams
 //  keyword:
 //      branch:
-%type <asNode> if ret next break
+%type <asNode> if ret-inline ret-compound next break-inline break-compound
 %type <asNode> matching matchers matcher-item
 %type <asNarr> matcher-equal-rhs
 //      loop
@@ -201,6 +200,8 @@
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
     ============================================================================================  */
+%precedence IF
+%precedence _ELSE_
 
 
 
@@ -314,13 +315,22 @@ block: allstmt { $$ = EVENTER.onBlock(*$1); }
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
            | ':' allstmt-chain NEWLINE { $$ = $2; }
-           | ':' ';' NEWLINE {
+           | ':' all-expr-compound {
+            $$ = EVENTER.onBlock(*$2);
+         } | ':' allstmt-chain ';' all-expr-compound {
+            $$ = EVENTER.onBlock($2->cast<blockExpr>(), *$4);
+         } | ':' ';' NEWLINE {
             // ??
          }
 
 indentDefBlock: NEWLINE INDENT defblock DEDENT { $$ = $3; }
               | ':' def-stmt-chain NEWLINE { $$ = $2; }
-              | ':' ';' NEWLINE {
+              | ':' def-expr-compound {
+                $$ = EVENTER.onDefBlock(*$2);
+            } | ':' def-stmt-chain ';' def-expr-compound {
+                str exprLife($4);
+                $$ = EVENTER.onDefBlock(*$2, *exprLife);
+            } | ':' ';' NEWLINE {
                 // ??
             }
 
@@ -352,12 +362,14 @@ expr-inline: expr-inline9 { $$ = $1; }
          | expr-inline9 MUL_ASSIGN expr-inline9 { $$ = EVENTER.onMulAssign(*$1, *$3); }
          | expr-inline9 DIV_ASSIGN expr-inline9 { $$ = EVENTER.onDivAssign(*$1, *$3); }
          | expr-inline9 MOD_ASSIGN expr-inline9 { $$ = EVENTER.onModAssign(*$1, *$3); }
+         | ret-inline { $$ = $1; }
+         | break-inline { $$ = $1; }
+         | next { $$ = $1; }
 stmt: stmt-inline { $$ = $1; }
     | stmt-compound { $$ = $1; }
 stmt-inline: expr-inline NEWLINE { $$ = $1; }
-stmt-compound: ret { $$ = $1; }
-             | break { $$ = $1; }
-             | next { $$ = $1; }
+stmt-compound: ret-compound { $$ = $1; }
+             | break-compound { $$ = $1; }
              | expr-compound { $$ = $1; }
              | matching { $$ = $1; }
 
@@ -369,19 +381,17 @@ def-expr-compound: with-compound { $$ = $1; }
                  | def-obj { $$ = $1; }
                  | def-func { $$ = $1; }
                  | def-prop-compound { $$ = $1; }
-def-stmt: def-stmt-inline { $$ = $1; }
-        | def-stmt-compound { $$ = $1; }
-def-stmt-inline: def-expr-inline NEWLINE { $$ = $1; }
-def-stmt-compound: def-expr-compound { $$ = $1; }
-def-stmt-chain: def-stmt-chain-item { $$ = EVENTER.onDefBlock(*$1); }
-              | def-stmt-chain ';' def-stmt-chain-item {
+def-stmt: def-expr-inline NEWLINE { $$ = $1; }
+        | def-expr-compound { $$ = $1; }
+def-stmt-chain: def-expr-inline { $$ = EVENTER.onDefBlock(*$1); }
+              | def-stmt-chain ';' def-expr-inline {
                 str lifeItem($3);
                 $$ = EVENTER.onDefBlock(*$1, *lifeItem);
             }
-def-stmt-chain-item: def-expr-inline { $$ = $1; }
-                   | def-expr-compound { $$ = $1; }
 
 //      all:
+all-expr-compound: expr-compound { $$ = $1; }
+                 | def-expr-compound { $$ = $1; }
 allstmt: stmt { $$ = $1; }
        | def-stmt { $$ = $1; }
 allstmt-chain: allstmt-chain-item { $$ = EVENTER.onBlock(*$1); }
@@ -389,8 +399,7 @@ allstmt-chain: allstmt-chain-item { $$ = EVENTER.onBlock(*$1); }
                 $$ = EVENTER.onBlock($1->cast<blockExpr>(), *$3);
            }
 allstmt-chain-item: expr-inline { $$ = $1; }
-                  | expr-compound { $$ = $1; }
-                  | def-stmt-chain-item { $$ = $1; }
+                  | def-expr-inline { $$ = $1; }
 
 //  access:
 access: call-access { $$ = $1; }
@@ -466,15 +475,15 @@ if: IF expr-inline9 indentblock {
     $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>(), $5->cast<ifExpr>());
 }
 
-ret: RET NEWLINE { $$ = EVENTER.onRet(); }
-   | RET expr-inline9 NEWLINE { $$ = EVENTER.onRet(*$2); }
-   | RET expr-compound { $$ = EVENTER.onRet(*$2); }
+ret-inline: RET { $$ = EVENTER.onRet(); }
+          | RET expr-inline9 { $$ = EVENTER.onRet(*$2); }
+ret-compound: RET expr-compound { $$ = EVENTER.onRet(*$2); }
 
-next: NEXT NEWLINE { $$ = EVENTER.onNext(); }
+next: NEXT { $$ = EVENTER.onNext(); }
 
-break: BREAK NEWLINE { $$ = EVENTER.onBreak(); }
-     | BREAK expr-inline9 NEWLINE { $$ = EVENTER.onBreak(*$2); }
-     | BREAK expr-compound { $$ = EVENTER.onBreak(*$2); }
+break-inline: BREAK { $$ = EVENTER.onBreak(); }
+            | BREAK expr-inline9 { $$ = EVENTER.onBreak(*$2); }
+break-compound: BREAK expr-compound { $$ = EVENTER.onBreak(*$2); }
 
 matching: expr-inline9 NEWLINE INDENT matchers DEDENT {
             // ??
