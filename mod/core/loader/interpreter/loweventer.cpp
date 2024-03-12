@@ -76,9 +76,11 @@ namespace namu {
             onSrcWarn(errCode::WRONG_INDENT_LV, col, now, now);
 
         while(_indents.back() > col) {
-            NAMU_DI("tokenEvent: onDedent: indentlv become %d -> %d", _indents.back(), _indents[_indents.size()-2]);
-            _indents.pop_back();
+            NAMU_DI("tokenEvent: onDedent: indentlv become %d -> %d",
+                    _indents.back(), _indents.size() > 1 ? _indents[_indents.size()-2] : -1);
             _dispatcher.add(DEDENT);
+            _indents.pop_back();
+            if(_indents.size() <= 0) break;
         }
 
         _dispatcher.add(tok);
