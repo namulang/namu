@@ -49,14 +49,36 @@ namespace namu {
         return tok;
     }
 
-    nint me::onEndOfFile() {
-        NAMU_DI("tokenEvent: onEndOfFile() indents.size()=%d", _indents.size());
+    nint me::onTokenEndOfFile() {
+        NAMU_DI("tokenEvent: onTokenEndOfFile() indents.size()=%d", _indents.size());
         if(_indents.size() <= 1)
             _dispatcher.add(SCAN_MODE_END);
         else
             _dispatcher.addFront(onDedent(_indents.front(), SCAN_MODE_END));
 
         NAMU_DI("tokenEvent: onEndOfFile: finalize by adding 'NEWLINE', then dispatch end-of-file.");
+        return NEWLINE;
+    }
+
+    nint me::onTokenColon(nint tok) {
+        _useSmartDedent = true;
+        return onIgnoreIndent(tok);
+    }
+
+    nint me::onTokenComma(nint tok) {
+        return _onTokenEndOfInlineBlock(onIgnoreIndent(tok));
+    }
+
+    nint me::onTokenRParan(nint tok) {
+        return _onTokenEndOfInlineBlock(tok);
+    }
+
+    nint me::_onTokenEndOfInlineBlock(nint tok) {
+        if(!_useSmartDedent) return tok;
+
+        NAMU_DI("tokenEvent: onTokenEndOfInlineBlock: %c[%d] use smart dedent!", (char) tok, tok);
+        _dispatcher.addFront(tok);
+        _useSmartDedent = false;
         return NEWLINE;
     }
 
@@ -87,11 +109,13 @@ namespace namu {
         return DEDENT;
     }
 
-    void me::onNewLine() {
+    nint me::onTokenNewLine(nint tok) {
         NAMU_DI("tokenEvent: onNewLine: _isIgnoreWhitespace=%s, _indents.size()=%d",
             _isIgnoreWhitespace ? "true" : "false", _indents.size());
         if(!_isIgnoreWhitespace && _indents.size() >= 1)
             _dispatcher.add(SCAN_MODE_INDENT);
+        _useSmartDedent = false;
+        return tok;
     }
 
     nchar me::onScanUnexpected(const nchar* token) {
@@ -969,6 +993,7 @@ namespace namu {
         _nameMap.clear();
         _states.clear();
         _states.push_back(0); // 0 for default state
+        _useSmartDedent = false;
         prepareParse();
     }
 

@@ -61,11 +61,14 @@ namespace namu {
         //  scan:
         using super::onScan;
         nint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) override;
-        nint onEndOfFile();
+        nint onTokenEndOfFile();
+        nint onTokenColon(nint tok);
+        nint onTokenNewLine(nint tok);
+        nint onTokenRParan(nint tok);
+        nint onTokenComma(nint tok);
         nint onIndent(ncnt col, nint tok);
         nint onDedent(ncnt col, nint tok);
         nint onIgnoreIndent(nint tok);
-        void onNewLine();
         nchar onScanUnexpected(const nchar* token);
         void onEndParse();
         void onSrcArea(const area& area);
@@ -204,6 +207,7 @@ namespace namu {
         void onParseErr(const std::string& msg, const nchar* symbolName);
 
     private:
+        nint _onTokenEndOfInlineBlock(nint tok);
         node* _onSetElem(runExpr& lhs, const node& rhs);
         node* _onAssignElem(FBOExpr::rule type, node& lhs, node& rhs);
         node* _onConvertAssignElem(runExpr& lhs, node& rhs);
@@ -235,5 +239,6 @@ namespace namu {
         std::vector<nint> _states;
         std::map<node*, std::string> _nameMap;
         exprMaker _maker;
+        nbool _useSmartDedent;
     };
 }

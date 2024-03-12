@@ -20,6 +20,7 @@ namespace {
 #define YY_USER_ACTION yylloc->start.row = yylloc->end.row = yyget_lineno(yyscanner); \
                        yylloc->start.col = yylloc->colcnt; yylloc->end.col = yylloc->colcnt+yyleng-1; \
                        yylloc->colcnt += yyleng;
+#define EVENTER (*yyget_extra(yyscanner))
 }
 
 
@@ -51,8 +52,11 @@ namespace {
 /* actual-pattern: */
 %%
 
-[%*+-/\(\.\,\{\[\^\|\&\~!\:\;] { return yyget_extra(yyscanner)->onIgnoreIndent(yytext[0]); }
-[\)\}\]<>] { return yytext[0]; }
+[%*+-/\(\.\{\[\^\|\&\~!\;] { return EVENTER.onIgnoreIndent(yytext[0]); }
+'\:' { return EVENTER.onTokenColon(yytext[0]); }
+[\}\]<>] { return yytext[0]; }
+'\,' { return EVENTER.onTokenComma(yytext[0]); }
+'\)' { return EVENTER.onTokenRParan(yytext[0]); }
 \-\- { return DOUBLE_MINUS; }
 \+\+ { return DOUBLE_PLUS; }
 \.\. { return DOUBLE_DOT; }
@@ -83,8 +87,7 @@ namespace {
 
 \n {
     yylloc->colcnt = yylloc->start.col = yylloc->end.col = 0;
-    yyget_extra(yyscanner)->onNewLine();
-    return NEWLINE;
+    return EVENTER.onTokenNewLine(yytext[0]);
 }
 
 [-]*[[:digit:]]+ {
@@ -181,7 +184,7 @@ false {
 }
 
 \"[^"\\]* { yylval->asStr = new std::string(yytext + 1, yyleng - 1);
-    BEGIN(yyget_extra(yyscanner)->pushState(escSeq));
+    BEGIN(EVENTER.pushState(escSeq));
 }
 
 <escSeq>[^"\\]+ { yylval->asStr->append(yytext, yyleng); }
@@ -190,7 +193,7 @@ false {
 <escSeq>\\\n    { /* A backslash at the end of the line. Do nothing */ }
 <escSeq>\\.     { (*yylval->asStr) += yytext[1]; }
 <escSeq>\"      {
-    BEGIN(yyget_extra(yyscanner)->popState());
+    BEGIN(EVENTER.popState());
     return STRVAL;
 }
 
@@ -203,17 +206,17 @@ false {
 \/\/[^\n]* {}
 
 \/\* {
-    BEGIN(yyget_extra(yyscanner)->pushState(stateComment));
+    BEGIN(EVENTER.pushState(stateComment));
 }
 
 <stateComment>"*/" {
-    BEGIN(yyget_extra(yyscanner)->popState());
+    BEGIN(EVENTER.popState());
 }
 <stateComment>\n {}
 <stateComment>. {}
 
 . {
-    return yyget_extra(yyscanner)->onScanUnexpected(yytext);
+    return EVENTER.onScanUnexpected(yytext);
 }
 
 %%
@@ -222,13 +225,13 @@ false {
     ============================================================================================  */
 
 int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner) {
-    namu::loweventer* eventer = yyget_extra(yyscanner);
-    if(!eventer->isInit()) // init: tokenScanable
-        eventer->setScan<namu::indentScan>();
+    namu::loweventer& eventer = EVENTER;
+    if(!eventer.isInit()) // init: tokenScanable
+        eventer.setScan<namu::indentScan>();
 
     int tok;
     do
-        tok = eventer->onScan(*eventer, yylval_param, yylloc_param, yyscanner);
+        tok = eventer.onScan(eventer, yylval_param, yylloc_param, yyscanner);
     while(tok == SCAN_AGAIN ||
           tok == SCAN_MODE_INDENT ||
           tok == SCAN_MODE_NORMAL);

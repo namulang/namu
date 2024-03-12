@@ -49,3 +49,42 @@ TEST_F(stmtChainTest, chain5) {
             return // ok. belonged to 'main()' func.
     )SRC").shouldParsed(true);
 }
+
+TEST_F(stmtChainTest, lambdaWithChain) {
+    make().negative().parse(R"SRC(
+        main() void
+            foo((a, b): a + b
+            ) // when smartDedent disabled.
+    )SRC").shouldParsed(true);
+}
+
+TEST_F(stmtChainTest, lambdaWithChainAndSmartDedent) {
+    make().negative().parse(R"SRC(
+        main() void
+            foo((a, b): a + b) // when smartDedent enabled.
+    )SRC").shouldParsed(true);
+}
+
+TEST_F(stmtChainTest, lambdaWithChainAndSmartDedent2) {
+    make().negative().parse(R"SRC(
+        main() void
+            foo((a, b): for n in 2..5: foo(3))
+    )SRC").shouldParsed(true);
+}
+
+TEST_F(stmtChainTest, lambdaWithChainAndSmartDedent3Negative) {
+    make().negative().parse(R"SRC(
+        main() void
+            foo((a, b): for n in 2..5: foo(3), boo(2, 3), (): with a: for n in 2..5
+                doSomething(n))
+    )SRC").shouldParsed(false);
+}
+
+TEST_F(stmtChainTest, lambdaWithChainAndSmartDedent3) {
+    make().negative().parse(R"SRC(
+        main() void
+            foo((a, b): for n in 2..5: foo(3), boo(2, 3), (): with a: for n in 2..5
+                doSomething(n)
+            )
+    )SRC").shouldParsed(true);
+}

@@ -18,7 +18,7 @@ namespace namu {
         if(!(isBypass = disp.pop(tok)))
             tok = yylexOrigin(val, loc, scanner);
         if(tok == ENDOFFILE)
-            tok = eventer.onEndOfFile();
+            tok = eventer.onTokenEndOfFile();
 
         NAMU_DI("%s: dispatcher[%d]%s(token: %c[%d]) at %d,%d", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", tok <= 127 ? (char) tok : '?', tok, loc->start.row, loc->start.col);
         return tok;
