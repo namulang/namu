@@ -653,14 +653,10 @@ static std::string traceErr(const yypcontext_t* ctx, yyscan_t scanner) {
 // it means that error recovery has been failed already.
 static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     yysymbol_kind_t symbol = yypcontext_token(ctx);
+    EVENTER.onSrcArea(*yypcontext_location(ctx));
+    EVENTER.onParseErr(traceErr(ctx, scanner), yysymbol_name(symbol));
 
-    if(symbol != YYSYMBOL_YYUNDEF) {
-        EVENTER.onSrcArea(*yypcontext_location(ctx));
-        EVENTER.onParseErr(traceErr(ctx, scanner), yysymbol_name(symbol));
-    }
-
-    _onEndParse(scanner);
-    return 0;
+    return _onEndParse(scanner), 0;
 }
 
 void _onEndParse(yyscan_t scanner) {

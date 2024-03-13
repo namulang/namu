@@ -72,12 +72,15 @@ TEST_F(stmtChainTest, lambdaWithChainAndSmartDedent2) {
     )SRC").shouldParsed(true);
 }
 
-TEST_F(stmtChainTest, lambdaWithChainAndSmartDedent3Negative) {
+TEST_F(stmtChainTest, lambdaAndSmartDedentDisabled) {
     make().negative().parse(R"SRC(
         main() void
-            foo((a, b): for n in 2..5: foo(3), boo(2, 3), (): with a: for n in 2..5
-                doSomething(n))
-    )SRC").shouldParsed(false);
+            a := 5
+            foo((a, b)
+                for n in 2..5
+                    doSomething(n)
+            )
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(stmtChainTest, lambdaWithChainAndSmartDedent3) {
