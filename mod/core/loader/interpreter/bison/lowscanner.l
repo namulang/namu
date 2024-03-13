@@ -87,7 +87,7 @@ namespace {
 
 \n {
     yylloc->colcnt = yylloc->start.col = yylloc->end.col = 0;
-    return EVENTER.onTokenNewLine(yytext[0]);
+    return EVENTER.onTokenNewLine(NEWLINE);
 }
 
 [-]*[[:digit:]]+ {
