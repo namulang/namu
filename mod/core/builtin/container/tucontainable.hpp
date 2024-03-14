@@ -42,6 +42,11 @@ namespace namu {
             static iter (me::*specifier)(ncnt) const = &me::iterate;
             return (this->*specifier)(len());
         }
+        nbool has(const T& it) const {
+            for(const T& elem : *this)
+                if(it == elem) return true;
+            return false;
+        }
         virtual iter last() const {
             static iter (me::*specifier)(ncnt) const = &me::iterate;
             return (this->*specifier)(len()-1);

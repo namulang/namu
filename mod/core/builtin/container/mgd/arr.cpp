@@ -232,7 +232,7 @@ namespace namu {
                   .genericFunc<nbool, nidx, const node&>("add", &narr::add)
                   .genericFunc<nbool, nidx, const node&>("set", &narr::set)
                   .genericFunc<node&, nidx>("get", &narr::get)
-                  .genericFunc("has", &narr::has);
+                  .genericFunc<nbool, const node&>("has", &narr::has);
             inner->subs().add("iterate", new iterateFunc());
         }
 

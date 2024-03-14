@@ -34,6 +34,7 @@ namespace namu {
         ncnt len() const override;
 
         // has:
+        using super::has;
         nbool has(nidx n) const override {
             return 0 <= n && n < len();
         }
