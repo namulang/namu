@@ -11,6 +11,7 @@
 #include "defBlock.hpp"
 #include "../../ast/exprs/exprMaker.hpp"
 #include "../../ast/exprs/FBOExpr.hpp"
+#include "smartDedent.hpp"
 
 namespace namu {
 
@@ -239,6 +240,6 @@ namespace namu {
         std::vector<nint> _states;
         std::map<node*, std::string> _nameMap;
         exprMaker _maker;
-        nbool _useSmartDedent;
+        smartDedent _dedent;
     };
 }

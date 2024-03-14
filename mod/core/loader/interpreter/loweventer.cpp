@@ -61,24 +61,31 @@ namespace namu {
     }
 
     nint me::onTokenColon(nint tok) {
-        _useSmartDedent = true;
+        _dedent.setEnable(true);
         return onIgnoreIndent(tok);
     }
 
     nint me::onTokenComma(nint tok) {
+        _dedent.countDown();
         return _onTokenEndOfInlineBlock(onIgnoreIndent(tok));
     }
 
+    nint me::onTokenLParan(nint tok) {
+        _dedent.countUp();
+        return tok;
+    }
+
     nint me::onTokenRParan(nint tok) {
+        _dedent.countDown();
         return _onTokenEndOfInlineBlock(tok);
     }
 
     nint me::_onTokenEndOfInlineBlock(nint tok) {
-        if(!_useSmartDedent) return tok;
+        if(!_dedent.canDedent()) return tok;
 
-        NAMU_DI("tokenEvent: onTokenEndOfInlineBlock: %c[%d] use smart dedent!", (char) tok, tok);
+        NAMU_DI("tokenEvent: onTokenEndOfInlineBlock: '%c' [%d] use smart dedent!", (char) tok, tok);
         _dispatcher.addFront(tok);
-        _useSmartDedent = false;
+        _dedent.setEnable(false);
         return NEWLINE;
     }
 
@@ -114,7 +121,7 @@ namespace namu {
             _isIgnoreWhitespace ? "true" : "false", _indents.size());
         if(!_isIgnoreWhitespace && _indents.size() >= 1)
             _dispatcher.add(SCAN_MODE_INDENT);
-        _useSmartDedent = false;
+        _dedent.setEnable(false);
         return tok;
     }
 
@@ -993,7 +1000,7 @@ namespace namu {
         _nameMap.clear();
         _states.clear();
         _states.push_back(0); // 0 for default state
-        _useSmartDedent = false;
+        _dedent.setEnable(false);
         prepareParse();
     }
 

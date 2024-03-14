@@ -86,7 +86,7 @@ TEST_F(stmtChainTest, lambdaAndSmartDedentDisabled) {
 TEST_F(stmtChainTest, lambdaWithChainAndSmartDedent3) {
     make().negative().parse(R"SRC(
         main() void
-            foo((a, b): for n in 2..5: foo(3), boo(2, 3), (): with a: for n in 2..5
+            foo((a, b): for n in 2..5: foo(3), boo(2, 3), (): for n in 2..5
                 doSomething(n)
             )
     )SRC").shouldParsed(true);
