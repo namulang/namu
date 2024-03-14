@@ -960,6 +960,11 @@ namespace namu {
         return ret;
     }
 
+    runExpr* me::onIn(const node& it, const node& container) {
+        NAMU_DI("tokenEvent: onIn(%s, %s)", it.getType().getName().c_str(), container.getType().getName().c_str());
+        return _maker.make<runExpr>(container, *_maker.make<getExpr>("has"), args(narr{it}));
+    }
+
     void me::onParseErr(const std::string& msg, const nchar* symbolName) {
         onErr(_srcArea.start, errCode::SYNTAX_ERR, msg.c_str(), symbolName);
     }

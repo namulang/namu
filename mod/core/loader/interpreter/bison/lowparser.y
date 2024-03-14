@@ -286,9 +286,7 @@ expr-inline6: expr-inline5 { $$ = $1; }
           | expr-inline6 '|' expr-inline5 { $$ = EVENTER.onBitwiseOr(*$1, *$3); }
           | expr-inline6 IS type {
             // ??
-        } | expr-inline6 _IN_ expr-inline5 {
-            // ??
-        }
+        } | expr-inline6 _IN_ expr-inline5 { $$ = EVENTER.onIn(*$1, *$3); }
 expr-inline5: expr-inline4 { $$ = $1; }
           | expr-inline5 '^' expr-inline4 { $$ = EVENTER.onBitwiseXor(*$1, *$3); }
 expr-inline4: expr-inline3 { $$ = $1; }

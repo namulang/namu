@@ -204,6 +204,8 @@ namespace namu {
         ifExpr* onIf(const node& condition, const blockExpr& then);
         ifExpr* onIf(const node& condition, const blockExpr& then, const blockExpr& elseBlk);
         ifExpr* onIf(const node& condition, const blockExpr& then, const ifExpr& elseIf);
+        //      in:
+        runExpr* onIn(const node& it, const node& container);
 
         void onParseErr(const std::string& msg, const nchar* symbolName);
 
