@@ -72,7 +72,7 @@ namespace namu {
 
     nint me::onTokenLParan(nint tok) {
         _dedent.countUp();
-        return tok;
+        return onIgnoreIndent(tok);
     }
 
     nint me::onTokenRParan(nint tok) {
