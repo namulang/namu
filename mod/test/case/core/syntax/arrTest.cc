@@ -281,7 +281,7 @@ TEST_F(arrTest, testSimpleBridgedFuncs2) {
     str res = it.run("add", args{narr{*new nInt(1)}});
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nbool>(), true);
-    res = it.run("add", args{narr{*new nInt(0), *new nInt(2)}});
+    res = it.run("add", args{narr{*new nInt(0), *new nInt(2)}}); // arr: {2, 1}
 
     ASSERT_EQ(arr1.len(), 2);
     res = it.run("len");
@@ -292,20 +292,20 @@ TEST_F(arrTest, testSimpleBridgedFuncs2) {
     ASSERT_EQ(res.cast<nint>(), 2);
     ASSERT_EQ(arr1[0].cast<nint>(), 2);
 
-    res = it.run("set", args{narr{*new nInt(1), *new nInt(2)}});
+    res = it.run("set", args{narr{*new nInt(1), *new nInt(2)}}); // arr: {2, 2}
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nbool>(), true);
     ASSERT_EQ(arr1[0].cast<nint>(), arr1[1].cast<nint>());
 
     res = it.run("has", args{narr{*new nInt(0)}});
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nbool>(), true);
+    ASSERT_EQ(res.cast<nbool>(), false);
     res = it.run("has", args{narr{*new nInt(1)}});
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nbool>(), true);
+    ASSERT_EQ(res.cast<nbool>(), false);
     res = it.run("has", args{narr{*new nInt(2)}});
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nbool>(), false);
+    ASSERT_EQ(res.cast<nbool>(), true);
 }
 
 TEST_F(arrTest, testIteratorBridgedFunc) {
