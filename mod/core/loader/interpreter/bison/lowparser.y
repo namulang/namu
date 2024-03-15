@@ -72,6 +72,7 @@
     }
 
     void _onEndParse(yyscan_t scanner);
+    std::string getTokenName(int tok);
 }
 
 /*  ============================================================================================
@@ -660,6 +661,13 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
 void _onEndParse(yyscan_t scanner) {
     EVENTER.onEndParse();
     yyset_lineno(0, scanner);
+}
+
+std::string getTokenName(int tok) {
+    if(tok <= 127) return std::string(1, tok);
+
+    auto token = YYTRANSLATE(tok);
+    return std::string(yysymbol_name(token));
 }
 
 // errors except syntax will come here. for instance, when available memory doesn't exist.

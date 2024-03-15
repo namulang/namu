@@ -4,6 +4,8 @@
 
 YY_DECL;
 
+std::string getTokenName(int tok);
+
 namespace namu {
 
     nint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
@@ -20,7 +22,9 @@ namespace namu {
         if(tok == ENDOFFILE)
             tok = eventer.onTokenEndOfFile();
 
-        NAMU_DI("%s: dispatcher[%d]%s(token: %c[%d]) at %d,%d", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", tok <= 127 ? (char) tok : '?', tok, loc->start.row, loc->start.col);
+        std::string tokName = getTokenName(tok);
+        NAMU_DI("%s: dispatcher[%d]%s(token: \"%s\" [%d]) at %d,%d", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner",
+                tokName.c_str(), tok, loc->start.row, loc->start.col);
         return tok;
     }
 
