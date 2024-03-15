@@ -65,6 +65,7 @@ namespace namu {
         nint onTokenEndOfFile();
         nint onTokenColon(nint tok);
         nint onTokenNewLine(nint tok);
+        nint onTokenLParan(nint tok);
         nint onTokenRParan(nint tok);
         nint onTokenComma(nint tok);
         nint onIndent(ncnt col, nint tok);

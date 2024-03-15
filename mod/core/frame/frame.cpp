@@ -118,6 +118,7 @@ namespace namu {
     }
 
     baseFunc& me::getFunc() {
+        if(_funcs.size() <= 0) return nulOf<baseFunc>();
         return *_funcs.back();
     }
 

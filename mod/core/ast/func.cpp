@@ -107,7 +107,9 @@ namespace namu {
         NAMU_DI("%s._outFrame()", getType().getName().c_str());
 
         frame& fr = thread::get()._getNowFrame();
-        // TODO: is it safe to delete below lines?
+        baseFunc& f = fr.getFunc();
+        if(nul(f) || &f != this) return;
+
         fr.popFunc();
         fr.popLocal();
         fr.popLocal();

@@ -133,11 +133,13 @@ TEST_F(defFuncTest, lambda6) {
 
 TEST_F(defFuncTest, noBodyNegative) {
     negative().make().parse(R"SRC(
-        main() void)SRC").shouldParsed(false);
+        main() void)SRC").shouldParsed(true);
+    shouldVerified(false);
 
     make().parse(R"SRC(
         main(n int) void
-    )SRC").shouldParsed(false);
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
 }
 
 TEST_F(defFuncTest, wrongParamNegative) {

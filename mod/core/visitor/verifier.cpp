@@ -461,8 +461,11 @@ namespace namu {
             return _err(me.getPos(), errCode::WRONG_RET_TYPE, retType->getType().getName().c_str());
 
         blockExpr& blk = (blockExpr&) me.getBlock();
-        if(nul(blk) || blk.getStmts().len() <= 0)
-            return _err(blk.getPos(), errCode::NO_STMT_IN_FUNC);
+        if(nul(blk) || blk.getStmts().len() <= 0) {
+            if(i.name == starter::MAIN)
+                _err(blk.getPos(), errCode::MAIN_SHOULD_HAVE_STMTS);
+            return;
+        }
 
         LOG("verify: func[%s]: %s iterateBlock[%d]", i.name.c_str(), me.getType().getName().c_str(),
                 me._blk->subs().len());
@@ -522,8 +525,8 @@ namespace namu {
     }
 
     void me::onLeave(visitInfo i, func& me) {
-        baseObj& meObj = frame::_getMe();
         me.outFrame();
+        baseObj& meObj = frame::_getMe();
         meObj.outFrame();
     }
 
