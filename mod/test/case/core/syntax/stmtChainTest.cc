@@ -39,7 +39,7 @@ TEST_F(stmtChainTest, chainNegative1) {
             for n in 2..5: foo(3); if true: foo(5); print("this is inside of if expr")
                 return // invalid syntax: when you define block as inline, it should be ended in one line.
                        // so next line can't be part of the block.
-    )SRC").shouldParsed(true);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(stmtChainTest, chain5) {
