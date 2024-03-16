@@ -464,6 +464,11 @@ namespace namu {
         if(nul(blk) || blk.getStmts().len() <= 0) {
             if(i.name == starter::MAIN)
                 _err(blk.getPos(), errCode::MAIN_SHOULD_HAVE_STMTS);
+            /*TODO: uncomment after implement abstract:
+            if(!func.isAbstract() && !retType->isSub<nVoid>())
+                _err(...)
+            */
+        
             return;
         }
 

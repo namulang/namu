@@ -52,8 +52,8 @@ namespace {
 /* actual-pattern: */
 %%
 
-[\%\*\+\-\/\.\{\[\^\|\&\~\!\;] { return EVENTER.onIgnoreIndent(yytext[0]); }
-[\}\]<>] { return yytext[0]; }
+[\%\*\+\-\/\.\{\[\^\|\&\~\!] { return EVENTER.onIgnoreIndent(yytext[0]); }
+[\}\]<>\;] { return yytext[0]; }
 [,] { return EVENTER.onTokenComma(yytext[0]); }
 [\:] { return EVENTER.onTokenColon(yytext[0]); }
 [\(] { return EVENTER.onTokenLParan(yytext[0]); }

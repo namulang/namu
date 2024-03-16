@@ -314,24 +314,18 @@ block: allstmt { $$ = EVENTER.onBlock(*$1); }
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
            | ':' allstmt-chain NEWLINE { $$ = $2; }
-           | ':' all-expr-compound {
-            $$ = EVENTER.onBlock(*$2);
-         } | ':' allstmt-chain ';' all-expr-compound {
+           | ':' all-expr-compound { $$ = EVENTER.onBlock(*$2); }
+           | ':' allstmt-chain ';' all-expr-compound {
             $$ = EVENTER.onBlock($2->cast<blockExpr>(), *$4);
-         } | ':' ';' NEWLINE {
-            // ??
-         }
+         } | ':' ';' NEWLINE { $$ = EVENTER.onBlock(); }
 
 indentDefBlock: NEWLINE INDENT defblock DEDENT { $$ = $3; }
               | ':' def-stmt-chain NEWLINE { $$ = $2; }
-              | ':' def-expr-compound {
-                $$ = EVENTER.onDefBlock(*$2);
-            } | ':' def-stmt-chain ';' def-expr-compound {
+              | ':' def-expr-compound { $$ = EVENTER.onDefBlock(*$2); }
+              | ':' def-stmt-chain ';' def-expr-compound {
                 str exprLife($4);
                 $$ = EVENTER.onDefBlock(*$2, *exprLife);
-            } | ':' ';' NEWLINE {
-                // ??
-            }
+            } | ':' ';' NEWLINE { $$ = EVENTER.onDefBlock(); }
 
 defblock: def-stmt { $$ = EVENTER.onDefBlock(*$1); }
         | defblock def-stmt {

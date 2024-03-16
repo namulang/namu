@@ -241,3 +241,20 @@ TEST_F(defFuncTest, funcHasSameNameToFieldNegative) {
             ret
     )SRC").shouldVerified(false);
 }
+
+TEST_F(defFuncTest, funcButNoStmts) {
+    make().parse(R"SRC(
+        foo() void:;
+        main() void
+            foo()
+    )SRC").shouldVerified(true);
+}
+
+/* TODO: uncomment after implement isAbstract() on func/originObj
+TEST_F(defFuncTest, funcButNoStmtsNegative) {
+    make().negative().parse(R"SRC(
+        foo() int:; // err: no return stmt
+        main() void
+            foo()
+    )SRC").shouldVerified(false);
+}*/

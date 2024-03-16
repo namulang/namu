@@ -62,7 +62,7 @@ namespace namu {
 
     nint me::onTokenColon(nint tok) {
         _dedent.setEnable(true);
-        return onIgnoreIndent(tok);
+        return tok;
     }
 
     nint me::onTokenComma(nint tok) {
@@ -210,6 +210,16 @@ namespace namu {
         blk.getStmts().add(stmt);
         NAMU_DI("tokenEvent: onBlock(%d).add(%s)", blk.getStmts().len(), stmt.getType().getName().c_str());
         return &blk;
+    }
+
+    blockExpr* me::onBlock() {
+        NAMU_DI("tokenEvent: onBlock()");
+        return _maker.make<blockExpr>();
+    }
+
+    defBlock* me::onDefBlock() {
+        NAMU_DI("tokenEvent: onDefBlock()");
+        return new defBlock();
     }
 
     defBlock* me::onDefBlock(node& stmt) {
