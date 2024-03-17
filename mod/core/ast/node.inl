@@ -23,7 +23,7 @@ namespace namu {
             tnarr<ME::prior<T>> ret;
             for(int n=0; n < this->size(); n++) {
                 for(const T& elem : (*this)[n])
-                    ret.add(ME::prior<T>(elem, ME::priority(n)));
+                    ret.add(new ME::prior<T>(elem, ME::priority(n)));
             }
             return ret;
         }
@@ -77,7 +77,8 @@ namespace namu {
             }
 
             priority p = sub.prioritize(a);
-            ps.push_back(prior<T>(sub, p));
+            if(p != node::NO_MATCH)
+                ps.push_back(prior<T>(sub, p));
         }
 
         return ps.join();
