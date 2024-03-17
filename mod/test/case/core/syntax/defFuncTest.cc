@@ -250,6 +250,36 @@ TEST_F(defFuncTest, funcButNoStmts) {
     )SRC").shouldVerified(true);
 }
 
+TEST_F(defFuncTest, overloadingDifferentParameters) {
+    make().parse(R"SRC(
+        def a
+            foo() int: 0
+            foo(n int) int: 1
+    )SRC").shouldVerified(true);
+
+    const node& pak = getSubPack();
+    obj& a = pak.sub<obj>("a");
+    ASSERT_FALSE(nul(a));
+
+    {
+        auto subs = a.subAll<func>("foo");
+        ASSERT_EQ(subs.len(), 2);
+    }
+
+    {
+        args args1(narr{nInt()});
+        auto subs = a.subAll<func>("foo", args1);
+        ASSERT_EQ(subs.len(), 1);
+        ASSERT_EQ(subs[0].lv, node::EXACT);
+        const params& ps = subs[0]->getParams();
+        ASSERT_EQ(ps.len(), 1);
+        ASSERT_EQ(ps[0].getOrigin().getType(), ttype<nInt>());
+        str res = a.run("foo", args1);
+        ASSERT_TRUE(res);
+        ASSERT_EQ(res->cast<nint>(), 1);
+    }
+}
+
 /* TODO: uncomment after implement isAbstract() on func/originObj
 TEST_F(defFuncTest, funcButNoStmtsNegative) {
     make().negative().parse(R"SRC(
