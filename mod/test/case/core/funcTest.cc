@@ -98,7 +98,7 @@ namespace {
                 return NAMU_I("fr.sub(%s) is 0 or +2 founds", name), false;
         }
 
-        narr foundfunc = fr.subAll(name);
+        auto foundfunc = fr.subAll(name);
         if(foundfunc.len() != 1)
             return NAMU_I("couldn't find %s func on frame(%x)", name.c_str(), &fr), false;
 

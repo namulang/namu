@@ -50,13 +50,13 @@ namespace namu {
         return inner;
     }
 
-    nbool me::canRun(const args& a) const {
+    me::priority me::prioritize(const args& a) const {
         std::string key = _makeKey(a);
-        if(key.empty()) return false;
-        if(!_cache.count(key)) return false;
+        if(key.empty()) return node::NO_MATCH;
+        if(!_cache.count(key)) return node::NO_MATCH;
         // after verification, making GenericObject is supressed.
 
-        return true;
+        return node::EXACT;
     }
 
     str me::run(const args& a) {

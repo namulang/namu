@@ -16,7 +16,7 @@ namespace namu {
         static inline const std::string ME = "me";
 
     public:
-        nbool canRun(const args& a) const override;
+        priority prioritize(const args& a) const override;
 
         /// @return parameters of run() func.
         ///         parameter is just a type. and I don't care about the value of each parameters.
@@ -39,6 +39,9 @@ namespace namu {
 
         /// @return whether setting new return-type has been done or not.
         virtual nbool setRet(const node& newRet);
+
+    private:
+        nbool _isNatureNumber(const node& it) const;
     };
 
     typedef tnarr<baseFunc> funcs;

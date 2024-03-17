@@ -13,11 +13,46 @@ namespace namu {
     class args;
     class visitor;
     struct visitInfo;
+    class baseObj;
 
     /// node provides common API to manipulate its sub nodes.
     class _nout node : public instance, public frameInteractable {
         NAMU(ADT(node, instance))
         friend class loweventer; // for _setPos()
+
+    public:
+        enum priority {
+            EXACT = 0,      // lv0: exact match.
+            NUMERIC = 1,    // lv1: numeric match.
+                            //      it's almost same level of lv0. except lv1 allows numeric implicit type cast ('byte to int' or reverse order)
+            IMPLICIT = 2,   // lv2: implicit cast match.
+                            //      it's almost same level of lv1 except it allows all kind of implicit type cast.
+            NO_MATCH,       // lv+: no match.
+        };
+
+        template <typename T>
+        struct _nout prior: instance {
+            NAMU(CLASS(prior, instance))
+
+        public:
+            prior(const node& newElem, priority newLv): lv(newLv) {
+                elem.bind(newElem);
+            }
+
+        public:
+            T* operator->() { return &get(); }
+            T& operator*() { return get(); }
+            const T* operator->() const NAMU_UNCONST_FUNC(operator->())
+            const T& operator*() const NAMU_UNCONST_FUNC(operator*())
+
+        public:
+            T& get() { return elem.get(); }
+            const T& get() const NAMU_UNCONST_FUNC(get())
+
+        public:
+            tstr<T> elem;
+            priority lv; // priority level.
+        };
 
     public:
         node& operator[](const std::string& name) const;
@@ -55,10 +90,11 @@ namespace namu {
 
         template <typename T = me> tnarr<T, strTactic> subAll() const;
         template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name) const;
-        template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name, const args& a);
-        template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name, const args& a) const;
+        template <typename T = me> tnarr<prior<T>, strTactic> subAll(const std::string& name, const args& a);
+        template <typename T = me> tnarr<prior<T>, strTactic> subAll(const std::string& name, const args& a) const;
 
-        virtual nbool canRun(const args& a) const = 0;
+        bool canRun(const args& a) const;
+        virtual priority prioritize(const args& a) const = 0;
 
         virtual str run(const args& a) = 0;
         str run(const std::string& name, const args& a);
@@ -116,6 +152,7 @@ namespace namu {
 
     protected:
         virtual str _onRunSub(node& sub, const args& a);
+        template <typename T> tnarr<prior<T>> _costPriority(const tnarr<T>& subs, const args& a) const;
 
     private:
         virtual void _setPos(const point& new1);

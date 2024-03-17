@@ -19,7 +19,7 @@ namespace namu {
 
         str run(const args& a) override;
 
-        nbool canRun(const args& a) const override;
+        priority prioritize(const args& a) const override;
 
     private:
         node& _findMain(node& pak, const args& a);

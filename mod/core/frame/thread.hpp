@@ -44,7 +44,7 @@ namespace namu {
         // node:
         nbicontainer& subs() override;
 
-        nbool canRun(const args& a) const override;
+        priority prioritize(const args& a) const override;
         str run(const args& a) override;
 
         void rel() override;

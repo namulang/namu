@@ -13,7 +13,7 @@ namespace namu {
         src(const std::string& fileName);
 
     public:
-        nbool canRun(const args& a) const override;
+        priority prioritize(const args& a) const override;
 
         using super::run;
         str run(const args& a) override;

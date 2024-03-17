@@ -21,7 +21,7 @@ namespace namu {
         const obj& getOrigin() const override;
         const strings& getParamNames() const;
 
-        nbool canRun(const args& a) const override;
+        priority prioritize(const args& a) const override;
         str run(const args& a) override;
 
         str getEval() const override;

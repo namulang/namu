@@ -3,25 +3,48 @@
 #include "../frame/frameInteract.hpp"
 #include "../visitor/visitor.hpp"
 #include "../frame/frame.hpp"
+#include "../builtin/primitive/nInt.hpp"
+#include "../builtin/primitive/nByte.hpp"
 
 namespace namu {
 
     NAMU(DEF_ME(baseFunc), DEF_VISIT())
 
-    nbool me::canRun(const args& a) const {
+    me::priority me::prioritize(const args& a) const {
         const params& ps = getParams();
-        if(a.len() != ps.len()) return false;
+        if(a.len() != ps.len()) return node::NO_MATCH;
 
         int n = 0;
+        priority max = node::EXACT; // begining from lv0.
         for(const auto& e : a) {
             str t = e.getEval();
-            if(!t) return NAMU_W("t == null"), false;
+            if(!t) return NAMU_W("t == null"), NO_MATCH;
             str p = ps[n++].getOrigin().as<node>();
-            if(!t->isImpli(*p)) return false;
-            if(!t->isComplete()) return false;
+            if(!t->isComplete()) return NO_MATCH;
+
+            // overloading priority algorithm:
+            //  each subs can be categorized into 3 level of priority.
+            //  the priority against func call will be computed maximum priority value between the argument and its paramter.
+            //  the lower value of 'max', the more check needed.
+            switch(max) {
+                case node::EXACT:
+                    if(t->getType() == p->getType()) continue; // lv0 check.
+                case node::NUMERIC:
+                    if(_isNatureNumber(*t) && _isNatureNumber(*p)) { // lv1 check.
+                        max = node::NUMERIC;
+                        continue;
+                    }
+                case node::IMPLICIT:
+                    if(t->isImpli(*p)) { // lv2 check.
+                        max = node::IMPLICIT;
+                        continue;
+                    }
+                default:
+                    return node::NO_MATCH;
+            }
         }
 
-        return true;
+        return max;
     }
 
     const params& me::getParams() const {
@@ -31,5 +54,9 @@ namespace namu {
 
     nbool me::setRet(const node& newRet) {
         return false;
+    }
+
+    nbool me::_isNatureNumber(const node& it) const {
+        return it.isSub<nInt>() || it.isSub<nByte>();
     }
 }

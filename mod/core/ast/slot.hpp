@@ -28,7 +28,7 @@ namespace namu {
         using super::subs;
         nbicontainer& subs() override;
 
-        nbool canRun(const args& a) const override;
+        priority prioritize(const args& a) const override;
 
         using super::run;
         str run(const args& a) override;

@@ -1,6 +1,8 @@
 #include "obj.hpp"
 #include "../visitor/visitor.hpp"
 #include "../type/mgdType.hpp"
+#include "baseFunc.hpp"
+#include "node.inl"
 
 namespace namu {
 

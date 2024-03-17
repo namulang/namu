@@ -33,8 +33,8 @@ namespace namu {
         return run->asImpli(to);
     }
 
-    nbool me::canRun(const args& a) const {
-        return a.len() == 0;
+    me::priority me::prioritize(const args& a) const {
+        return a.len() == 0 ? node::EXACT : node::NO_MATCH;
     }
 
     const src& me::getSrc() const {

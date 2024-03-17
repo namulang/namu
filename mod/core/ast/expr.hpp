@@ -33,8 +33,8 @@ namespace namu {
 
         /// run of expr class get treated like 'evaluate' in namu.
         /// it should not take any argument to run()
-        using super::canRun;
-        nbool canRun(const args& a) const override;
+        using super::prioritize;
+        priority prioritize(const args& a) const override;
         const src& getSrc() const;
         const point& getPos() const override;
 

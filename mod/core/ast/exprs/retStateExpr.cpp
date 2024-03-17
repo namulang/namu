@@ -27,10 +27,10 @@ namespace namu {
         return _ret->run(a);
     }
 
-    nbool me::canRun(const args& a) const {
+    me::priority me::prioritize(const args& a) const {
         if(_ret)
-            return _ret->canRun(a);
-        return super::canRun(a);
+            return _ret->prioritize(a);
+        return super::prioritize(a);
     }
 
     str me::getEval() const {

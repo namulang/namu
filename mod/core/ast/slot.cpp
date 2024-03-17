@@ -12,8 +12,8 @@ namespace namu {
         return getPack().subs();
     }
 
-    nbool me::canRun(const args& a) const {
-        return getPack().canRun(a);
+    me::priority me::prioritize(const args& a) const {
+        return getPack().prioritize(a);
     }
 
     str me::run(const args& a) {

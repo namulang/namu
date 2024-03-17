@@ -15,7 +15,7 @@ namespace {
         myNode(int num): number(num) {}
 
         nbicontainer& subs() override { return nulOf<nbicontainer>(); }
-        nbool canRun(const args& a) const override { return false; }
+        priority prioritize(const args& a) const override { return node::NO_MATCH; }
         using super::run;
         str run(const args& a) override { return str(); }
 

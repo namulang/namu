@@ -19,7 +19,7 @@ namespace namu {
 
         node& getRet();
         const node& getRet() const NAMU_UNCONST_FUNC(getRet())
-        nbool canRun(const args& a) const override;
+        priority prioritize(const args& a) const override;
         str getEval() const override;
 
     private:

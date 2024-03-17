@@ -22,8 +22,12 @@ namespace namu {
         return str(this);
     }
 
-    nbool me::canRun(const args& a) const {
-        return !nul(sub<baseFunc>(baseObj::CTOR_NAME, a));
+    me::priority me::prioritize(const args& a) const {
+        priority min = node::NO_MATCH; // beginning from the worst value.
+        tnarr<prior<baseFunc>> subs = subAll<baseFunc>(baseObj::CTOR_NAME, a);
+        for(const auto& sub : subs)
+            min = min < sub.lv ? min : sub.lv;
+        return min;
     }
 
     void me::inFrame(const bicontainable& args) {

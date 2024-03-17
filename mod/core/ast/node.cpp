@@ -13,6 +13,10 @@ namespace namu {
         return sub(name);
     }
 
+    nbool me::canRun(const args& a) const {
+        return prioritize(a) != NO_MATCH;
+    }
+
     str me::run() {
         return run(args());
     }

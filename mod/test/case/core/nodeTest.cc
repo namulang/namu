@@ -145,13 +145,13 @@ TEST_F(nodeTest, testManualNativefuncCall) {
     obj.subs().add("myFunc", func);
 
     args a;
-    narr subs = ((const myObj&) obj).subAll("myFunc", a);
+    auto subs = ((const myObj&) obj).subAll("myFunc", a);
     ASSERT_EQ(subs.len(), 1);
-    ASSERT_TRUE(subs[0].canRun(a));
+    ASSERT_TRUE(subs[0]->canRun(a));
 
     // when:
     func.setUp();
-    subs[0].run(a);
+    subs[0]->run(a);
     ASSERT_TRUE(func.isRun());
 }
 
