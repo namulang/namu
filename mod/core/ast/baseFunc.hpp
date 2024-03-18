@@ -42,6 +42,7 @@ namespace namu {
 
     private:
         nbool _isNatureNumber(const node& it) const;
+        priority _prioritize(const node& param, const node& arg) const;
     };
 
     typedef tnarr<baseFunc> funcs;
