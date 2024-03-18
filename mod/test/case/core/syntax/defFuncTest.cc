@@ -301,15 +301,14 @@ TEST_F(defFuncTest, overloadingSimilarParameters) {
         ASSERT_EQ(subs[0].lv, subs[1].lv);
         ASSERT_EQ(subs[0].lv, node::IMPLICIT);
         str res = a.run("foo", args1);
-        ASSERT_TRUE(res);
-        ASSERT_EQ(res.cast<nint>(), 1);
+        ASSERT_FALSE(res);
     }
 
     {
-        args args1(narr{nByte()}); // byte <--> int are overloading priority lv1. refers func.cpp
+        args args1(narr{*new nBool(), *new nByte(), *new nStr()}); // byte <--> int are overloading priority lv1. refers func.cpp
         auto subs = a.subAll<func>("foo", args1);
         ASSERT_EQ(subs.len(), 2);
-        ASSERT_NE(subs[0].lv, node::NUMERIC);
+        ASSERT_EQ(subs[0].lv, node::NUMERIC);
         ASSERT_EQ(subs[1].lv, node::IMPLICIT);
         str res = a.run("foo", args1);
         ASSERT_TRUE(res);

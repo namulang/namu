@@ -8,7 +8,7 @@ namespace namu {
 #define ME node
 
     template <typename T>
-    class _nout priorities : public std::vector<tnarr<T>> {
+    class _nout prioritiesBucket : public std::vector<tnarr<T>> {
         typedef std::vector<tnarr<T>> super;
     public:
         tnarr<T>& operator[](nidx n) {
@@ -16,11 +16,11 @@ namespace namu {
                 push_back(tnarr<T>());
             return this->super::operator[](n);
         }
-        const tnarr<T>& operator[](nidx n) const NAMU_UNCONST_FUNC(priorities<T>, operator[](n))
+        const tnarr<T>& operator[](nidx n) const NAMU_UNCONST_FUNC(prioritiesBucket<T>, operator[](n))
 
     public:
-        tnarr<ME::prior<T>> join() const {
-            tnarr<ME::prior<T>> ret;
+        ME::priorities<T> join() const {
+            ME::priorities<T> ret;
             for(int n=0; n < this->size(); n++) {
                 for(const T& elem : (*this)[n])
                     ret.add(new ME::prior<T>(elem, ME::priority(n)));
@@ -63,8 +63,8 @@ namespace namu {
     T& ME::sub(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(sub<T>(name, a))
 
     template <typename T>
-    tnarr<ME::prior<T>, strTactic> ME::_costPriority(const tnarr<T>& subs, const args& a) const {
-        priorities<T> ps;
+    ME::priorities<T> ME::_costPriority(const tnarr<T>& subs, const args& a) const {
+        prioritiesBucket<T> ps;
         // subs is arranged already to its scope:
         //  so if priority of sub was same level, I need to keep the priority of original container.
         for(const T& sub : subs) {
@@ -99,8 +99,8 @@ namespace namu {
     }
 
     template <typename T>
-    tnarr<ME::prior<T>, strTactic> ME::subAll(const std::string& name, const args& a) {
-        if(nul(a)) return NAMU_W("a == null"), tnarr<prior<T>>();
+    ME::priorities<T> ME::subAll(const std::string& name, const args& a) {
+        if(nul(a)) return NAMU_W("a == null"), priorities<T>();
 
         return _costPriority<T>(subs().getAll<T>([&](const std::string& key, const T& val) {
             NAMU_DI("this=%s[%x]: key=%s name=%s", getType().getName().c_str(), this, key.c_str(), name.c_str());
@@ -109,7 +109,7 @@ namespace namu {
     }
 
     template <typename T>
-    tnarr<ME::prior<T>, strTactic> ME::subAll(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(subAll<T>(name, a))
+    ME::priorities<T> ME::subAll(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(subAll<T>(name, a))
 
 #undef ME
 }

@@ -67,7 +67,7 @@ namespace namu {
         NAMU_DI("%s.sub(%s, %s)", evalMe->getType().getName().c_str(), _name.c_str(), argsName.c_str());
         if(!_args) return evalMe->sub(_name);
 
-        return evalMe->sub(_name, *_args);
+        return evalMe->subAll(_name, *_args).getMatched();
     }
 
     void me::setMe(const node& newMe) {

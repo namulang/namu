@@ -54,6 +54,57 @@ namespace namu {
             priority lv; // priority level.
         };
 
+        template <typename T>
+        class _nout priorities : public tnarr<prior<T>> {
+            NAMU(CLASS(priorities, prior<T>))
+
+        public:
+            priorities() {}
+            /// @param  elems   instances to derived type of T.
+            ///                 should be created on Heap.
+            template <typename... Es>
+            explicit priorities(const Es&... elems) {
+                static_assert(areBaseOfT<T, Es...>::value, "some of type of args are not base of type 'T'");
+                add( { (T*) &elems... } );
+            }
+
+        public:
+            /// @return finally matched sub when you want to access.
+            ///         if there is any ambigious err, this will return nulOf<T>().
+            T& getMatched() {
+                // assume that this container already got sorted to priority.
+                ncnt len = this->len();
+                if(len <= 0) return nulOf<T>();
+
+                auto ret = split(this->get(0).lv);
+                if(ret.len() != 1) return nulOf<T>();
+                return *ret[0].elem;
+            }
+            /// @return all elements causes current ambigious err.
+            ///         but return nothing if there is no err.
+            tnarr<prior<T>> getAmbigious() const {
+                if(this->len() < 2) return tnarr<prior<T>>();
+                auto ret = split(this->get(0).lv);
+                if(ret.len() <= 1) return tnarr<prior<T>>();
+
+                return ret;
+            }
+
+            tnarr<prior<T>> split(priority by) const {
+                tnarr<prior<T>> ret;
+                priority p = node::NO_MATCH;
+                for(const auto& e : *this) {
+                    if(p == node::NO_MATCH)
+                        p = e.lv;
+                    else if(p != e.lv)
+                        break;
+                    ret.add(e);
+                }
+                return ret;
+            }
+            const T& getMatched() const NAMU_UNCONST_FUNC(getMatched())
+        };
+
     public:
         node& operator[](const std::string& name) const;
 
@@ -90,8 +141,8 @@ namespace namu {
 
         template <typename T = me> tnarr<T, strTactic> subAll() const;
         template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name) const;
-        template <typename T = me> tnarr<prior<T>, strTactic> subAll(const std::string& name, const args& a);
-        template <typename T = me> tnarr<prior<T>, strTactic> subAll(const std::string& name, const args& a) const;
+        template <typename T = me> priorities<T> subAll(const std::string& name, const args& a);
+        template <typename T = me> priorities<T> subAll(const std::string& name, const args& a) const;
 
         bool canRun(const args& a) const;
         virtual priority prioritize(const args& a) const = 0;
@@ -152,7 +203,7 @@ namespace namu {
 
     protected:
         virtual str _onRunSub(node& sub, const args& a);
-        template <typename T> tnarr<prior<T>> _costPriority(const tnarr<T>& subs, const args& a) const;
+        template <typename T> priorities<T> _costPriority(const tnarr<T>& subs, const args& a) const;
 
     private:
         virtual void _setPos(const point& new1);
