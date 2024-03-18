@@ -19,6 +19,8 @@ namespace namu {
 
     public:
         tnarr() {}
+        /// @param  elems   instances to derived type of T.
+        ///                 should be created on Heap.
         template <typename... Es>
         explicit tnarr(const Es&... elems) {
             static_assert(areBaseOfT<T, Es...>::value, "some of type of args are not base of type 'T'");
