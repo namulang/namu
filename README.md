@@ -2,7 +2,6 @@
 [![](https://img.shields.io/github/release-date-pre/namulang/namu.svg?label=on&style=flat-square)](https://github.com/namulang/namu/releases)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/namulang/namu/ci-main.yml?style=flat-square)](https://github.com/namulang/namu/actions)
 ![](https://img.shields.io/github/languages/code-size/namulang/namu.svg?style=flat-square)
-[![](https://img.shields.io/github/downloads/namulang/namu/total.svg?style=flat-square)](https://github.com/kniz/worldlang/releases)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/namulang/namu/total?style=flat-square)
 [![Discord](https://img.shields.io/discord/1080131343012339712?style=flat-square)](https://discord.com/channels/1080131343012339712/)
 
