@@ -16,7 +16,7 @@ namespace namu {
     }
 
     priority me::prioritize(const args& a) const {
-        return nul(a.getMe()) ? NO_MATCH : EXACT;
+        return nul(a.getMe()) ? NO_MATCH : EXACT_MATCH;
     }
 
     str me::run(const args& a) {

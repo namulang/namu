@@ -4,10 +4,10 @@
 
 namespace namu {
     enum priority {
-        EXACT = 0,      // lv0: exact match.
-        NUMERIC = 1,    // lv1: numeric match.
+        EXACT_MATCH = 0,      // lv0: exact match.
+        NUMERIC_MATCH = 1,    // lv1: numeric match.
                         //      it's almost same level of lv0. except lv1 allows numeric implicit type cast ('byte to int' or reverse order)
-        IMPLICIT = 2,   // lv2: implicit cast match.
+        IMPLICIT_MATCH = 2,   // lv2: implicit cast match.
                         //      it's almost same level of lv1 except it allows all kind of implicit type cast.
         NO_MATCH,       // lv+: no match.
     };

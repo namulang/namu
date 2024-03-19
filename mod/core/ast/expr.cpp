@@ -34,7 +34,7 @@ namespace namu {
     }
 
     priority me::prioritize(const args& a) const {
-        return a.len() == 0 ? EXACT : NO_MATCH;
+        return a.len() == 0 ? EXACT_MATCH : NO_MATCH;
     }
 
     const src& me::getSrc() const {

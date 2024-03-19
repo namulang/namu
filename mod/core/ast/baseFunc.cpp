@@ -15,7 +15,7 @@ namespace namu {
         if(a.len() != ps.len()) return NO_MATCH;
 
         int n = 0;
-        priority max = EXACT; // begining from lv0.
+        priority max = EXACT_MATCH; // begining from lv0.
         for(const auto& e : a) {
             str t = e.getEval();
             if(!t) return NAMU_W("t == null"), NO_MATCH;
@@ -36,9 +36,9 @@ namespace namu {
     }
 
     priority me::_prioritize(const node& param, const node& arg) const {
-        if(arg.getType() == param.getType()) return EXACT;
-        if(_isNatureNumber(param) && _isNatureNumber(arg)) return NUMERIC;
-        if(arg.isImpli(param)) return IMPLICIT;
+        if(arg.getType() == param.getType()) return EXACT_MATCH;
+        if(_isNatureNumber(param) && _isNatureNumber(arg)) return NUMERIC_MATCH;
+        if(arg.isImpli(param)) return IMPLICIT_MATCH;
 
         return NO_MATCH;
     }

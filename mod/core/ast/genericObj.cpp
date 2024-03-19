@@ -56,7 +56,7 @@ namespace namu {
         if(!_cache.count(key)) return NO_MATCH;
         // after verification, making GenericObject is supressed.
 
-        return EXACT;
+        return EXACT_MATCH;
     }
 
     str me::run(const args& a) {
