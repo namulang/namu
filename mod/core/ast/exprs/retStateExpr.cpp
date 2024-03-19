@@ -27,7 +27,7 @@ namespace namu {
         return _ret->run(a);
     }
 
-    me::priority me::prioritize(const args& a) const {
+    priority me::prioritize(const args& a) const {
         if(_ret)
             return _ret->prioritize(a);
         return super::prioritize(a);

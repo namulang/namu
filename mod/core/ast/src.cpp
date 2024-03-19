@@ -7,8 +7,8 @@ namespace namu {
 
     me::src(const std::string& fileName): _fileName(fileName) {}
 
-    me::priority me::prioritize(const args& a) const {
-        return node::NO_MATCH;
+    priority me::prioritize(const args& a) const {
+        return NO_MATCH;
     }
 
     str me::run(const args& a) {

@@ -15,8 +15,8 @@ namespace namu {
         return inner;
     }
 
-    me::priority me::prioritize(const args& a) const {
-        return nul(a.getMe()) ? node::NO_MATCH : node::EXACT;
+    priority me::prioritize(const args& a) const {
+        return nul(a.getMe()) ? NO_MATCH : EXACT;
     }
 
     str me::run(const args& a) {

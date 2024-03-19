@@ -10,7 +10,7 @@ namespace {
         myNode(int n): num(n) {}
 
         nbicontainer& subs() override { return nulOf<nbicontainer>(); }
-        priority prioritize(const args& a) const override { return node::NO_MATCH; }
+        priority prioritize(const args& a) const override { return NO_MATCH; }
         str run(const args& a) override { return str(); }
 
         int num;

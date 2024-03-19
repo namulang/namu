@@ -12,7 +12,7 @@ namespace namu {
         return getPack().subs();
     }
 
-    me::priority me::prioritize(const args& a) const {
+    priority me::prioritize(const args& a) const {
         return getPack().prioritize(a);
     }
 

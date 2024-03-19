@@ -33,8 +33,8 @@ namespace namu {
         return run->asImpli(to);
     }
 
-    me::priority me::prioritize(const args& a) const {
-        return a.len() == 0 ? node::EXACT : node::NO_MATCH;
+    priority me::prioritize(const args& a) const {
+        return a.len() == 0 ? EXACT : NO_MATCH;
     }
 
     const src& me::getSrc() const {

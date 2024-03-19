@@ -81,8 +81,8 @@ namespace namu {
         return _root->subs();
     }
 
-    me::priority me::prioritize(const args& a) const {
-        return node::NO_MATCH;
+    priority me::prioritize(const args& a) const {
+        return NO_MATCH;
     }
 
     void me::rel() {

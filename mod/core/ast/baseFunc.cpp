@@ -10,12 +10,12 @@ namespace namu {
 
     NAMU(DEF_ME(baseFunc), DEF_VISIT())
 
-    me::priority me::prioritize(const args& a) const {
+    priority me::prioritize(const args& a) const {
         const params& ps = getParams();
-        if(a.len() != ps.len()) return node::NO_MATCH;
+        if(a.len() != ps.len()) return NO_MATCH;
 
         int n = 0;
-        priority max = node::EXACT; // begining from lv0.
+        priority max = EXACT; // begining from lv0.
         for(const auto& e : a) {
             str t = e.getEval();
             if(!t) return NAMU_W("t == null"), NO_MATCH;
@@ -28,19 +28,19 @@ namespace namu {
             //  the lower value of 'max', the more check needed.
             priority newP = _prioritize(*p, *t);
             max = newP > max ? newP : max;
-            if(max == node::NO_MATCH)
-                return node::NO_MATCH;
+            if(max == NO_MATCH)
+                return NO_MATCH;
         }
 
         return max;
     }
 
-    me::priority me::_prioritize(const node& param, const node& arg) const {
-        if(arg.getType() == param.getType()) return node::EXACT;
-        if(_isNatureNumber(param) && _isNatureNumber(arg)) return node::NUMERIC;
-        if(arg.isImpli(param)) return node::IMPLICIT;
+    priority me::_prioritize(const node& param, const node& arg) const {
+        if(arg.getType() == param.getType()) return EXACT;
+        if(_isNatureNumber(param) && _isNatureNumber(arg)) return NUMERIC;
+        if(arg.isImpli(param)) return IMPLICIT;
 
-        return node::NO_MATCH;
+        return NO_MATCH;
     }
 
     const params& me::getParams() const {
