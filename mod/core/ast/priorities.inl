@@ -35,17 +35,17 @@ namespace namu {
     }
 
     TEMPLATE
-    tnarr<prior<T>> ME::getAmbigious() const {
-        if(this->len() < 2) return tnarr<prior<T>>();
+    ME ME::getAmbigious() const {
+        if(this->len() < 2) return ME();
         auto ret = split(this->get(0).lv);
-        if(ret.len() <= 1) return tnarr<prior<T>>();
+        if(ret.len() <= 1) return ME();
 
         return ret;
     }
 
     TEMPLATE
-    tnarr<prior<T>> ME::split(priority by) const {
-        tnarr<prior<T>> ret;
+    ME ME::split(priority by) const {
+        ME ret;
         priority p = NO_MATCH;
         for(const auto& e : *this) {
             if(p == NO_MATCH)

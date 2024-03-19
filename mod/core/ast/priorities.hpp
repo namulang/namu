@@ -55,9 +55,9 @@ namespace namu {
 
         /// @return all elements causes current ambigious err.
         ///         but return nothing if there is no err.
-        tnarr<prior<T>> getAmbigious() const;
+        priorities getAmbigious() const;
 
-        tnarr<prior<T>> split(priority by) const;
+        priorities split(priority by) const;
 
         const T& getMatched() const NAMU_UNCONST_FUNC(getMatched())
     };
