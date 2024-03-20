@@ -59,15 +59,15 @@ namuSyntaxTest& me::negative() {
     return *this;
 }
 
-namu::nbool me::shouldParsed(namu::nbool well) {
+namu::nbool me::shouldParsed(namu::nbool expect) {
     namu::nbool ret = _ip.isParsed();
-    EXPECT_EQ(ret, well);
+    EXPECT_EQ(ret, expect);
     return ret;
 }
 
-namu::nbool me::shouldVerified(namu::nbool well) {
+namu::nbool me::shouldVerified(namu::nbool expect) {
     namu::nbool ret = _ip.isVerified();
-    EXPECT_EQ(ret, well);
+    EXPECT_EQ(ret, expect);
     return ret;
 }
 
