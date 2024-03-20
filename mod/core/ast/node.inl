@@ -2,7 +2,7 @@
 
 #include "node.hpp"
 #include "baseObj.hpp"
-#include "priorities.inl"
+#include "tpriorities.inl"
 
 namespace namu {
 
@@ -10,7 +10,7 @@ namespace namu {
 #define TEMPLATE template <typename T>
 
     template <typename T>
-    class _nout prioritiesBucket : public std::vector<tnarr<T>> {
+    class _nout tprioritiesBucket : public std::vector<tnarr<T>> {
         typedef std::vector<tnarr<T>> super;
     public:
         tnarr<T>& operator[](nidx n) {
@@ -18,19 +18,19 @@ namespace namu {
                 push_back(tnarr<T>());
             return this->super::operator[](n);
         }
-        const tnarr<T>& operator[](nidx n) const NAMU_UNCONST_FUNC(prioritiesBucket<T>, operator[](n))
+        const tnarr<T>& operator[](nidx n) const NAMU_UNCONST_FUNC(tprioritiesBucket<T>, operator[](n))
 
     public:
-        priorities<T> join() const {
-            priorities<T> ret;
+        tpriorities<T> join() const {
+            tpriorities<T> ret;
             for(int n=0; n < this->size(); n++) {
                 for(const T& elem : (*this)[n])
-                    ret.add(new prior<T>(elem, priority(n)));
+                    ret.add(new tprior<T>(elem, priority(n)));
             }
             return ret;
         }
         using super::push_back;
-        void push_back(const prior<T>& elem) {
+        void push_back(const tprior<T>& elem) {
             (*this)[elem.lv].add(*elem.elem);
         }
     };
@@ -65,22 +65,22 @@ namespace namu {
     T& ME::sub(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(sub<T>(name, a))
 
     TEMPLATE
-    priorities<T> ME::_costPriority(const tnarr<T>& subs, const args& a) const {
-        prioritiesBucket<T> ps;
+    tpriorities<T> ME::_costPriority(const tnarr<T>& subs, const args& a) const {
+        tprioritiesBucket<T> ps;
         // subs is arranged already to its scope:
         //  so if priority of sub was same level, I need to keep the priority of original container.
         for(const T& sub : subs) {
             const baseObj& o = sub.template cast<baseObj>();
             if(!nul(o)) {
                 auto subs = sub.template subAll<T>(baseObj::CTOR_NAME, a);
-                for(const prior<T>& p : subs)
+                for(const tprior<T>& p : subs)
                     ps.push_back(p);
                 continue;
             }
 
             priority p = sub.prioritize(a);
             if(p != NO_MATCH)
-                ps.push_back(prior<T>(sub, p));
+                ps.push_back(tprior<T>(sub, p));
         }
 
         return ps.join();
@@ -101,8 +101,8 @@ namespace namu {
     }
 
     TEMPLATE
-    priorities<T> ME::subAll(const std::string& name, const args& a) {
-        if(nul(a)) return NAMU_W("a == null"), priorities<T>();
+    tpriorities<T> ME::subAll(const std::string& name, const args& a) {
+        if(nul(a)) return NAMU_W("a == null"), tpriorities<T>();
 
         return _costPriority<T>(subs().getAll<T>([&](const std::string& key, const T& val) {
             NAMU_DI("this=%s[%x]: key=%s name=%s", getType().getName().c_str(), this, key.c_str(), name.c_str());
@@ -111,7 +111,7 @@ namespace namu {
     }
 
     TEMPLATE
-    priorities<T> ME::subAll(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(subAll<T>(name, a))
+    tpriorities<T> ME::subAll(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(subAll<T>(name, a))
 
 #undef TEMPLATE
 #undef ME

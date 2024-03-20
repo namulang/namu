@@ -6,7 +6,7 @@
 #include "point.hpp"
 #include "../type/ntype.hpp"
 #include "../frame/frameInteractable.hpp"
-#include "priorities.hpp"
+#include "tpriorities.hpp"
 
 namespace namu {
 
@@ -57,8 +57,8 @@ namespace namu {
 
         template <typename T = me> tnarr<T, strTactic> subAll() const;
         template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name) const;
-        template <typename T = me> priorities<T> subAll(const std::string& name, const args& a);
-        template <typename T = me> priorities<T> subAll(const std::string& name, const args& a) const;
+        template <typename T = me> tpriorities<T> subAll(const std::string& name, const args& a);
+        template <typename T = me> tpriorities<T> subAll(const std::string& name, const args& a) const;
 
         bool canRun(const args& a) const;
         virtual priority prioritize(const args& a) const = 0;
@@ -119,7 +119,7 @@ namespace namu {
 
     protected:
         virtual str _onRunSub(node& sub, const args& a);
-        template <typename T> priorities<T> _costPriority(const tnarr<T>& subs, const args& a) const;
+        template <typename T> tpriorities<T> _costPriority(const tnarr<T>& subs, const args& a) const;
 
     private:
         virtual void _setPos(const point& new1);

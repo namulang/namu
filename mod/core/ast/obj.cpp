@@ -60,9 +60,9 @@ namespace namu {
     }
 
     str me::run(const args& a) {
-        priorities<baseFunc> p = subAll<baseFunc>(baseObj::CTOR_NAME, a);
+        tpriorities<baseFunc> p = subAll<baseFunc>(baseObj::CTOR_NAME, a);
         if(nul(p.getMatched())) {
-            tnarr<prior<baseFunc>> ambigious = p.getAmbigious();
+            tpriorities<baseFunc> ambigious = p.getAmbigious();
             //TODO: if(ambigious.len() <= 0)
                 return NAMU_W("there is no such ctor."), str();
             /*else // TODO: 1. change err management module to use 'err' class, not errCode.

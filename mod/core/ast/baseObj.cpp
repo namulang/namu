@@ -24,7 +24,7 @@ namespace namu {
 
     priority me::prioritize(const args& a) const {
         priority min = NO_MATCH; // beginning from the worst value.
-        tnarr<prior<baseFunc>> subs = subAll<baseFunc>(baseObj::CTOR_NAME, a);
+        tpriorities<baseFunc> subs = subAll<baseFunc>(baseObj::CTOR_NAME, a);
         for(const auto& sub : subs)
             min = min < sub.lv ? min : sub.lv;
         return min;

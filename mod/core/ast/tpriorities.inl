@@ -1,14 +1,14 @@
 #pragma once
 
-#include "priorities.hpp"
+#include "tpriorities.hpp"
 
 namespace namu {
 
 #define TEMPLATE template <typename T>
-#define ME prior<T>
+#define ME tprior<T>
 
     TEMPLATE
-    ME::prior(const node& newElem, priority newLv): lv(newLv) {
+    ME::tprior(const node& newElem, priority newLv): lv(newLv) {
         elem.bind(newElem);
     }
 
@@ -18,10 +18,10 @@ namespace namu {
     TEMPLATE T& ME::get() { return elem.get(); }
 
 #undef ME
-#define ME priorities<T>
+#define ME tpriorities<T>
 
     TEMPLATE
-    ME::priorities() {}
+    ME::tpriorities() {}
 
     TEMPLATE
     T& ME::getMatched() {

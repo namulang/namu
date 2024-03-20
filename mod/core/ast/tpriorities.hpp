@@ -13,11 +13,11 @@ namespace namu {
     };
 
     template <typename T>
-    struct _nout prior: instance {
-        NAMU(CLASS(prior, instance))
+    struct _nout tprior: instance {
+        NAMU(CLASS(tprior, instance))
 
     public:
-        prior(const node& newElem, priority newLv);
+        tprior(const node& newElem, priority newLv);
 
     public:
         T* operator->();
@@ -35,15 +35,15 @@ namespace namu {
     };
 
     template <typename T>
-    class _nout priorities : public tnarr<prior<T>> {
-        NAMU(CLASS(priorities, prior<T>))
+    class _nout tpriorities : public tnarr<tprior<T>> {
+        NAMU(CLASS(tpriorities, tprior<T>))
 
     public:
-        priorities();
+        tpriorities();
         /// @param  elems   instances to derived type of T.
         ///                 should be created on Heap.
         template <typename... Es>
-        explicit priorities(const Es&... elems) {
+        explicit tpriorities(const Es&... elems) {
             static_assert(areBaseOfT<T, Es...>::value, "some of type of args are not base of type 'T'");
             add( { (T*) &elems... } );
         }
@@ -55,9 +55,9 @@ namespace namu {
 
         /// @return all elements causes current ambigious err.
         ///         but return nothing if there is no err.
-        priorities getAmbigious() const;
+        tpriorities getAmbigious() const;
 
-        priorities split(priority by) const;
+        tpriorities split(priority by) const;
 
         const T& getMatched() const NAMU_UNCONST_FUNC(getMatched())
     };
