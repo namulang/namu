@@ -42,6 +42,5 @@ namespace namu {
         str _me;
         std::string _name;
         tstr<args> _args;
-        nidx _index;
     };
 }

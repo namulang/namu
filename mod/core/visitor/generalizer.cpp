@@ -22,14 +22,15 @@ namespace namu {
         return nulOf<node>();
     }
 
-    void me::onVisit(visitInfo i, asExpr& me) {
+    nbool me::onVisit(visitInfo i, asExpr& me) {
         const node& org = _findOrigin(me.getAs());
-        if(nul(org)) return;
+        if(nul(org)) return true;
 
         me.setAs(org);
+        return true;
     }
 
-    void me::onVisit(visitInfo i, blockExpr& me) {
+    nbool me::onVisit(visitInfo i, blockExpr& me) {
         narr& stmts = me.getStmts();
         for(int n=0; n < stmts.len() ;n++) {
             const node& org = _findOrigin(stmts[n]);
