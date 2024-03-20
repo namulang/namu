@@ -315,6 +315,23 @@ TEST_F(defFuncTest, overloadingSimilarParameters) {
         ASSERT_EQ(res.cast<nint>(), 1);
     }
 }
+
+TEST_F(defFuncTest, overloadingAmbigiousNegative) {
+    make().negative().parse(R"SRC(
+        def a
+            foo(b bool, c int) int: 1
+            foo(b int, c bool) int: 2
+        main() void
+            foo('1', '2')
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+
+    obj& a = getSubPack().sub<obj>("a");
+    ASSERT_FALSE(nul(a));
+    tpriorities<func> p = a.subAll<func>("foo", args(narr{nChar(), nChar()})).getAmbigious();
+    ASSERT_EQ(p.len(), 2);
+}
+
 /* TODO: uncomment after implement isAbstract() on func/originObj
 TEST_F(defFuncTest, funcButNoStmtsNegative) {
     make().negative().parse(R"SRC(

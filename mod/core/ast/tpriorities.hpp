@@ -61,4 +61,6 @@ namespace namu {
 
         const T& getMatched() const NAMU_UNCONST_FUNC(getMatched())
     };
+
+    typedef tpriorities<node> priorities;
 }
