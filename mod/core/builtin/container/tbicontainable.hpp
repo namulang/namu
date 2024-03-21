@@ -33,6 +33,7 @@ namespace namu {
 
         // len:
         virtual ncnt len() const = 0;
+        ncnt isEmpty() const { return len() <= 0; }
 
         // has:
         virtual nbool has(const K& key) const = 0;

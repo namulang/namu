@@ -226,6 +226,7 @@ namespace namu {
         if(nul(inner)) {
             inner = &super::def();
             inner->genericFunc("len", &narr::len)
+                  .genericFunc("isEmpty", &narr::isEmpty)
                   .genericFunc("rel", &narr::rel)
                   .genericFunc<nbool, nidx>("del", &narr::del)
                   .genericFunc<nbool, const node&>("add", &tucontainable<node>::add)

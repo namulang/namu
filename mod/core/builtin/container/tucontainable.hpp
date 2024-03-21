@@ -24,7 +24,7 @@ namespace namu {
 
         // len:
         virtual ncnt len() const = 0;
-
+        nbool isEmpty() const { return len() <= 0; }
 
         // iter:
         iter begin() const {
