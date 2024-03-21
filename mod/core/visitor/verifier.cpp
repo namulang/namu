@@ -331,12 +331,17 @@ namespace namu {
         // Until then, I rather use as() func and it makes slow emmersively.
         LOG("verify: getExpr: isRunnable: %s.%s", me.getType().getName().c_str(), me.getSubName().c_str());
         if(!me.getEval()) return _err(me.getPos(), errCode::WHAT_IS_THIS_IDENTIFIER, me.getSubName().c_str());
-        str got = me._get(true);
-        if(!got) {
+        auto matches = me._get(true);
+        if(matches.isEmpty()) {
             const node& from = me.getMe();
             return _err(me.getPos(), errCode::CANT_ACCESS, me._name.c_str(), from.getType().getName().c_str());
         }
-        LOG("verify: getExpr: isRunnable: got=%s, me=%s", got->getType().getName().c_str(),
+        if(matches.len() >= 2) {
+            // TODO: leave all ambigious candidates as err.
+            return _err(me.getPos(), errCode::AMBIGIOUS_ACCESS, i.name.c_str());
+        }
+        node& got = matches.getMatched();
+        LOG("verify: getExpr: isRunnable: got=%s, me=%s", got.getType().getName().c_str(),
                 me.getType().getName().c_str());
 
         LOG("verify: getExpr: accesses to incomplete 'me' object");

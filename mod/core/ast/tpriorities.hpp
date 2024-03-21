@@ -40,12 +40,13 @@ namespace namu {
 
     public:
         tpriorities();
-        /// @param  elems   instances to derived type of T.
-        ///                 should be created on Heap.
+
+        /// @param  elems   'T' instances to derived type of T. and priority would be set to EXACT_MATCH.
+        ///                 these should be created on Heap.
         template <typename... Es>
         explicit tpriorities(const Es&... elems) {
             static_assert(areBaseOfT<T, Es...>::value, "some of type of args are not base of type 'T'");
-            add( { (T*) &elems... } );
+            (this->add(new tprior<T>(elems, EXACT_MATCH)),...);
         }
 
     public:

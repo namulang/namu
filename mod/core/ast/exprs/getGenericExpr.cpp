@@ -12,11 +12,11 @@ namespace namu {
     me::getGenericExpr(const node& me, const std::string& genericName, const args& typeParams):
             super(me, genericName, typeParams) {}
 
-    str me::_get(nbool evalMode) const {
+    priorities me::_get(nbool evalMode) const {
         genericObj& generic = _getGenericObj();
-        if(nul(generic)) return NAMU_E("generic == null"), str();
+        if(nul(generic)) return NAMU_E("generic == null"), priorities();
 
-        return generic.run(getSubArgs());
+        return priorities(*generic.run(getSubArgs()));
     }
 
     genericObj& me::_getGenericObj() const {

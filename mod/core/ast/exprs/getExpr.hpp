@@ -36,7 +36,7 @@ namespace namu {
         clonable* deepClone() const override;
 
     protected:
-        virtual str _get(nbool evalMode) const;
+        virtual priorities _get(nbool evalMode) const;
 
     private:
         str _me;

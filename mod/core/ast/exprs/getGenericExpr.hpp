@@ -19,6 +19,6 @@ namespace namu {
         genericObj& _getGenericObj() const;
 
     protected:
-        str _get(nbool evalMode) const override;
+        priorities _get(nbool evalMode) const override;
     };
 }

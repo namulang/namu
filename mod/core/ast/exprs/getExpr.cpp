@@ -19,7 +19,7 @@ namespace namu {
     }
 
     str me::getEval() const {
-        str got = _get(true);
+        str got = _get(true).getMatched();
         if(!got)
             return got;
         return got->getEval();
@@ -27,7 +27,7 @@ namespace namu {
 
     str me::run(const args& a) {
         // believe that this expression was checked to be valid.
-        return _get(false);
+        return _get(false).getMatched();
     }
 
     const std::string& me::getSubName() const {
@@ -53,21 +53,21 @@ namespace namu {
             _args.bind(new1);
     }
 
-    str me::_get(nbool evalMode) const {
+    priorities me::_get(nbool evalMode) const {
         NAMU_DI("_name=%s", _name.c_str());
         const node& me = getMe();
-        if(nul(me)) return NAMU_E("me == null"), str();
+        if(nul(me)) return NAMU_E("me == null"), priorities();
 
         str evalMe = evalMode ? me.getEval() : me.as<node>();
-        if(!evalMe) return NAMU_E("from == null"), str();
+        if(!evalMe) return NAMU_E("from == null"), priorities();
         if(evalMode)
             evalMe = evalMe->as<node>();
 
         std::string argsName = _args ? _args->asStr().c_str() : "{}";
         NAMU_DI("%s.sub(%s, %s)", evalMe->getType().getName().c_str(), _name.c_str(), argsName.c_str());
-        if(!_args) return evalMe->sub(_name);
+        if(!_args) return priorities(evalMe->sub(_name));
 
-        return evalMe->subAll(_name, *_args).getMatched();
+        return evalMe->subAll(_name, *_args);
     }
 
     void me::setMe(const node& newMe) {

@@ -10,6 +10,7 @@ PAIRX(NO_COL_INFO,                  "this expr doesn't have col info")
 
 // node:
 PAIRX(CANT_ACCESS,                  "there is no '%s' in '%s'")
+PAIRX(AMBIGIOUS_ACCESS,             "ambigious access found on '%s'")
 PAIRX(DUP_VAR,                      "duplicated variable '%s' found")
 PAIRX(ACCESS_TO_INCOMPLETE,         "accesses to incomplete object")
 
