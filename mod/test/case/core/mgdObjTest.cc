@@ -59,3 +59,18 @@ TEST_F(mgdObjTest, testAccessInCompleteObjectNegative2) {
             ret b.age as str + a.age as str
     )SRC").shouldVerified(false);
 }
+
+TEST_F(mgdObjTest, distinguishPackScopeAndObjScopeByItsOwner) {
+    make().parse(R"SRC(
+        // there are {default} pack.@ctor()
+        def a
+            // 'a' also has @ctor.
+            age := 0
+    )SRC").shouldVerified(true);
+
+    obj& a = getSubPack().sub<obj>("a");
+    ASSERT_FALSE(nul(a));
+    tpriorities<baseFunc> pr = a.subAll<baseFunc>(baseObj::CTOR_NAME, args(narr()));
+    ASSERT_EQ(pr.len(), 1);
+    ASSERT_FALSE(nul(pr.getMatched()));
+}
