@@ -65,6 +65,11 @@ namespace namu {
         return nInt(!get());
     }
 
+    const me& me::getOrigin() const {
+        static me inner;
+        return inner;
+    }
+
     tstr<arithmeticObj> me::_add(const arithmeticObj& rhs, nbool reversed) const {
         return reversed ?
                 new me(rhs.as<me>()->get() + get()):

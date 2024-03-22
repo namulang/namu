@@ -31,6 +31,11 @@ namespace namu {
         return *this;
     }
 
+    const me& me::getOrigin() const {
+        static nVoid inner;
+        return inner;
+    }
+
     tstr<arithmeticObj> me::_add(const arithmeticObj& rhs, nbool reversed) const {
         return *this;
     }

@@ -20,6 +20,7 @@ namespace namu {
 
     public:
         tstr<arithmeticObj> bitwiseNot() const override;
+        const me& getOrigin() const override;
 
     public:
         static me& singletone();

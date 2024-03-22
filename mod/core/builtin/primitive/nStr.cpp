@@ -301,6 +301,11 @@ namespace namu {
         // TODO: throw error
     }
 
+    const me& me::getOrigin() const {
+        static me inner;
+        return inner;
+    }
+
     /// @param end is exclusive.
     tstr<nStr> me::substr(nint start, nint end) {
         return tstr<nStr>(new nStr(get().substr(start, end - start)));
