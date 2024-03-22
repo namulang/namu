@@ -7,8 +7,8 @@
 namespace namu {
 
     class visitor;
+    class scope;
 
-    typedef tnmap<std::string, node, immutableTactic> scope;
     class _nout func : public baseFunc {
         NAMU(CLASS(func, baseFunc), VISIT())
         friend class verifier;

@@ -208,7 +208,7 @@ namespace namu {
     }
 
     scope& me::_defGeneric(const type* key) {
-        tstr<scope> clone = _getOriginScope().deepClone();
+        tstr<scope> clone(_getOriginScope().deepClone());
         clone->add("getElemType", new getElemTypeFunc());
 
         _cache.insert({key, clone}); // this avoids infinite loop.

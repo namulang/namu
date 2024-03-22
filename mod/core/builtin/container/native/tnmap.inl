@@ -71,7 +71,7 @@ namespace namu {
 
     TEMPL
     ME* ME::deepClone() const {
-        me* ret = new me();
+        me* ret = (me*) getType().make();
         for(iter e=this->begin(); e ;++e)
             ret->add(e.getKey(), (V*) e.getVal().deepClone());
 

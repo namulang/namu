@@ -72,7 +72,7 @@ namespace namu {
         if(args.len() != ps.len())
             return NAMU_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()), nullptr;
 
-        scope* ret = new scope();
+        scope* ret = new scope(*this);
         int n = 0;
         for(const node& e: args) {
             const param& p = ps[n++];

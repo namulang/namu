@@ -99,6 +99,10 @@ namespace namu {
         // etc:
         virtual void rel() = 0;
 
+        virtual node& getOwner() { return nulOf<node>(); }
+        const node& getOwner() const NAMU_UNCONST_FUNC(getOwner())
+        virtual void setOwner(const node& owner) { return; }
+
     protected:
         virtual iteration* _onMakeIteration(ncnt step) const = 0;
         virtual iteration* _onMakeIteration(const K& key) const = 0;

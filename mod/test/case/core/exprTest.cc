@@ -73,6 +73,9 @@ TEST_F(exprTest, simpleGetExpr) {
 
     rep.rel();
     ASSERT_FALSE(rep);
+
+    baseFunc& f = bridge->sub<baseFunc>("main");
+    ASSERT_FALSE(nul(f));
     veri.setRoot(exp).start();
     ASSERT_FALSE(rep);
 

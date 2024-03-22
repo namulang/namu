@@ -9,7 +9,10 @@ namespace namu {
     NAMU(DEF_ME(obj), DEF_VISIT())
 
     me& me::_assign(const me& rhs) {
-        _owns.bind(rhs._owns->deepClone());
+        scope* cloned = (scope*) rhs._owns->deepClone();
+        cloned->setOwner(*this);
+        _owns.bind(cloned);
+
         _shares.bind(*rhs._shares);
         _subs.bind(_makeNewSubs());
         _org = rhs._org;
@@ -24,7 +27,7 @@ namespace namu {
     }
 
     me::obj():
-            super(), _shares(new scopes()), _owns(new scope()), _org(this), _type(nullptr),
+            super(), _shares(new scopes(new scope(*this))), _owns(new scope(*this)), _org(this), _type(nullptr),
             _isComplete(true) {
         _subs.bind(_makeNewSubs());
     }
@@ -35,7 +38,7 @@ namespace namu {
     }
 
     me::obj(mgdType* newType):
-            super(), _shares(new scopes()), _owns(new scope()), _org(this), _type(nullptr),
+            super(), _shares(new scopes(new scope(*this))), _owns(new scope(*this)), _org(this), _type(nullptr),
             _isComplete(true) {
         _subs.bind(_makeNewSubs());
         _setType(newType);

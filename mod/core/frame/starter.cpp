@@ -11,7 +11,7 @@ namespace namu {
     NAMU_DEF_ME(starter)
 
     nbicontainer& me::subs() {
-        static ndumMap inner;
+        static dumScope inner;
         return inner;
     }
 

@@ -1,6 +1,6 @@
 #include "arithmeticObj.hpp"
-#include "nVoid.hpp"
 #include "../../ast/node.inl"
+#include "nVoid.hpp"
 
 namespace namu {
 

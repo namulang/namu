@@ -98,7 +98,7 @@ namespace namu {
         if(_obj)
             return _obj->subs();
 
-        static ndumMap inner;
+        static dumScope inner;
         return inner;
     }
 
@@ -132,7 +132,7 @@ namespace namu {
         if(!nul(top)) return top;
         if(_obj) return _obj->subs();
 
-        static ndumMap inner;
+        static dumScope inner;
         return inner;
     }
 

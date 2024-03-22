@@ -74,7 +74,7 @@ namespace namu {
         nbicontainer& subs() override {
             static tstr<scope> inner;
             if(!inner) {
-                scope scapegoat;
+                scope scapegoat(this->getOrigin());
                 _onMakeSubs(scapegoat);
                 inner.bind(new dumScope(scapegoat));
             }
@@ -119,7 +119,7 @@ namespace namu {
         nbicontainer& subs() override {
             static tstr<scope> inner;
             if(!inner) {
-                scope scapegoat;
+                scope scapegoat(getOrigin());
                 _onMakeSubs(scapegoat);
                 inner.bind(new dumScope(scapegoat));
             }

@@ -1,5 +1,4 @@
 #include "genericObj.hpp"
-#include "../builtin/container/native/tndumMap.hpp"
 #include "../visitor/generalizer.hpp"
 #include "args.hpp"
 #include "../visitor/verifier.hpp"
@@ -46,7 +45,7 @@ namespace namu {
     }
 
     nbicontainer& me::subs() {
-        static ndumMap inner;
+        static scope inner;
         return inner;
     }
 

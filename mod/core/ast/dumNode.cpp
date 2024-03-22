@@ -1,6 +1,7 @@
 #include "dumNode.hpp"
 #include "../builtin/container/native/tndumMap.hpp"
 #include "../visitor/visitor.hpp"
+#include "scope.hpp"
 
 namespace namu {
 
@@ -23,7 +24,7 @@ namespace namu {
     }
 
     nbicontainer& me::subs() {
-        static ndumMap inner;
+        static dumScope inner;
         return inner;
     }
 }
