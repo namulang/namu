@@ -22,7 +22,8 @@ namespace namu {
         friend class loweventer; // for _setPos()
 
     public:
-        node& operator[](const std::string& name) const;
+        node& operator[](const std::string& name);
+        const node& operator[](const std::string& name) const NAMU_UNCONST_FUNC(operator[](name))
 
     public:
         virtual nbicontainer& subs() = 0;
@@ -42,13 +43,17 @@ namespace namu {
         }
 
         template <typename T>
-        T& sub(std::function<nbool(const std::string&, const T&)> l) const {
+        T& sub(std::function<nbool(const std::string&, const T&)> l) {
             return subs().get<T>(l);
         }
-        template <typename T = me> T& sub() const;
-        template <typename T = me> T& sub(const std::string& name) const;
+        template <typename T>
+        const T& sub(std::function<nbool(const std::string&, const T&)> l) const NAMU_UNCONST_FUNC(sub<T>(l))
+        template <typename T = me> T& sub();
+        template <typename T = me> const T& sub() const NAMU_UNCONST_FUNC(sub<T>())
+        template <typename T = me> T& sub(const std::string& name);
+        template <typename T = me> const T& sub(const std::string& name) const NAMU_UNCONST_FUNC(sub<T>(name))
         template <typename T = me> T& sub(const std::string& name, const args& a);
-        template <typename T = me> T& sub(const std::string& name, const args& a) const;
+        template <typename T = me> const T& sub(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(sub<T>(name, a))
 
         template <typename T>
         tnarr<T> subAll(std::function<nbool(const std::string&, const T&)> l) const {
@@ -57,7 +62,6 @@ namespace namu {
 
         template <typename T = me> tnarr<T, strTactic> subAll() const;
         template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name) const;
-        template <typename T = me> tpriorities<T> subAll(const std::string& name, const args& a);
         template <typename T = me> tpriorities<T> subAll(const std::string& name, const args& a) const;
 
         bool canRun(const args& a) const;

@@ -9,7 +9,7 @@ namespace namu {
 
     NAMU(DEF_ME(node), DEF_VISIT())
 
-    node& me::operator[](const std::string& name) const {
+    node& me::operator[](const std::string& name) {
         return sub(name);
     }
 

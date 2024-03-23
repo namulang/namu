@@ -257,7 +257,7 @@ TEST_F(defFuncTest, overloadingDifferentParameters) {
             foo(n int) int: 1
     )SRC").shouldVerified(true);
 
-    const node& pak = getSubPack();
+    node& pak = getSubPack();
     obj& a = pak.sub<obj>("a");
     ASSERT_FALSE(nul(a));
 

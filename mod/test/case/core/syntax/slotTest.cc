@@ -126,7 +126,7 @@ TEST_F(slotTest, slotIsInFrameWhenCallMgdFunc) {
         if(nul(fr)) return false;
 
         // checks slot is in frame:
-        myfunc& cast = fr.sub<myfunc>("foo", narr(nInt(), nFlt()));
+        const myfunc& cast = fr.sub<myfunc>("foo", narr(nInt(), nFlt()));
         if(nul(cast)) return false;
 
         const params& ps = cast.getParams();
@@ -136,11 +136,11 @@ TEST_F(slotTest, slotIsInFrameWhenCallMgdFunc) {
         if(ps[1].getName() != "grade") return false;
 
         // checks args of funcs is in frame:
-        nInt& age = fr.sub<nInt>("age");
+        const nInt& age = fr.sub<nInt>("age");
         if(nul(age)) return false;
         if(age.cast<int>() != 1) return false;
 
-        nFlt& grade = fr.sub("grade").cast<nFlt>();
+        const nFlt& grade = fr.sub("grade").cast<nFlt>();
         if(nul(grade)) return false;
         if(grade.get() < 3.4f || grade.get() > 3.6f) return false;
 

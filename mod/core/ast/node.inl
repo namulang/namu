@@ -36,14 +36,14 @@ namespace namu {
     };
 
     TEMPLATE
-    T& ME::sub() const {
+    T& ME::sub() {
         return subs().get<T>([](const std::string& key, const T& val) {
             return true;
         });
     }
 
     TEMPLATE
-    T& ME::sub(const std::string& name) const {
+    T& ME::sub(const std::string& name) {
         return subs().get<T>([&](const std::string& key, const T& val) {
             NAMU_DI("this=%s[%x]: key=%s name=%s", getType().getName().c_str(), this, key.c_str(), name.c_str());
             return key == name;
@@ -60,9 +60,6 @@ namespace namu {
             return key == name && val.canRun(a);
         });
     }
-
-    TEMPLATE
-    T& ME::sub(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(sub<T>(name, a))
 
     TEMPLATE
     tpriorities<T> ME::_costPriority(const tnarr<T>& subs, const args& a) const {
@@ -101,7 +98,7 @@ namespace namu {
     }
 
     TEMPLATE
-    tpriorities<T> ME::subAll(const std::string& name, const args& a) {
+    tpriorities<T> ME::subAll(const std::string& name, const args& a) const {
         if(nul(a)) return NAMU_W("a == null"), tpriorities<T>();
 
         return _costPriority<T>(subs().getAll<T>([&](const std::string& key, const T& val) {
@@ -109,9 +106,6 @@ namespace namu {
             return key == name && val.canRun(a);
         }), a);
     }
-
-    TEMPLATE
-    tpriorities<T> ME::subAll(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(subAll<T>(name, a))
 
 #undef TEMPLATE
 #undef ME
