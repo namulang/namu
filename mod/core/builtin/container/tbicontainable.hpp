@@ -53,6 +53,9 @@ namespace namu {
         template <typename V1>
         tnarr<V1, strTactic> getAll(std::function<nbool(const K&, const V1&)> l) const;
         narr getAll(std::function<nbool(const K&, const V&)> l) const;
+        template <typename V1>
+        void each(std::function<void(const K&, const V1&, const node&)> l) const;
+        void each(std::function<void(const K&, const V&, const node&)> l) const;
 
         // iter:
         iter begin() const {

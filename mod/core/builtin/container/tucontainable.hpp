@@ -26,6 +26,30 @@ namespace namu {
         virtual ncnt len() const = 0;
         nbool isEmpty() const { return len() <= 0; }
 
+        // get:
+        template <typename T1> T1& get(std::function<nbool(const T1&)> l);
+        T& get(std::function<nbool(const T&)> l);
+        template <typename T1> const T1& get(std::function<nbool(const T1&)> l) const NAMU_UNCONST_FUNC(get(l))
+        const T& get(std::function<nbool(const T&)> l) const NAMU_UNCONST_FUNC(get(l))
+        template <typename T1> T1& get(std::function<nbool(const T1&, node&)> l);
+        T& get(std::function<nbool(const T&, node&)> l);
+        template <typename T1> const T1& get(std::function<nbool(const T1&, node&)> l) const NAMU_UNCONST_FUNC(get(l))
+        const T& get(std::function<nbool(const T&, node&)> l) const NAMU_UNCONST_FUNC(get(l))
+
+        template <typename T1> tnarr<T1, strTactic> getAll(std::function<nbool(const T1&)> l) const;
+        narr getAll(std::function<nbool(const T&)> l) const;
+        template <typename T1> tnarr<T1, strTactic> getAll(std::function<nbool(const T1&, node&)> l) const;
+        narr getAll(std::function<nbool(const T&, node&)> l) const;
+
+        template <typename T1> void each(std::function<void(T1&)> l);
+        void each(std::function<void(T&)> l);
+        template <typename T1> void each(std::function<void(const T1&)> l) const NAMU_UNCONST_FUNC(each(l))
+        void each(std::function<void(const T&)> l) const NAMU_UNCONST_FUNC(each(l))
+        template <typename T1> void each(std::function<void(T1&, node&)> l);
+        void each(std::function<void(T&, node&)> l);
+        template <typename T1> void each(std::function<void(const T1&, node&)> l) const NAMU_UNCONST_FUNC(each(l))
+        void each(std::function<void(const T&, node&)> l) NAMU_UNCONST_FUNC(each(l))
+
         // iter:
         iter begin() const {
             static iter(me:: * specifier)(ncnt) const = &me::iterate;

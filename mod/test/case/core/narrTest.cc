@@ -287,3 +287,21 @@ TEST_F(narrTest, testRangeBasedForLoop) {
 
     ASSERT_EQ(sum, expect);
 }
+
+TEST_F(narrTest, testEach) {
+    narr arr1 {*new nInt(1), *new nByte(100), *new nInt(2)};
+    dumNode dum;
+    arr1.setOwner(dum);
+
+    nint sum = 0;
+    arr1.each<nInt>([&](const auto& elem) {
+        sum += elem.get();
+    });
+    ASSERT_EQ(sum, 3);
+
+    auto arr2 = arr1.getAll<nInt>([&](const auto& elem) -> nbool {
+        return elem.get() > 1;
+    });
+    ASSERT_EQ(arr2.len(), 1);
+    ASSERT_EQ(arr2[0].get(), 2);
+}

@@ -42,14 +42,9 @@ namespace namu {
         }
 
         // get:
+        using super::get;
         using tarrayable<T>::get;
         T& get(nidx n) override;
-        template <typename E>
-        E& get(std::function<nbool(const E&)> l) const;
-        T& get(std::function<nbool(const T&)> l) const;
-        template <typename E>
-        tnarr<E, strTactic> getAll(std::function<nbool(const E&)> l) const;
-        narr getAll(std::function<nbool(const T&)> l) const;
         // set:
         using super::set;
         using tarrayable<T>::set;

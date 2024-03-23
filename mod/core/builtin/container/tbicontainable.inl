@@ -37,6 +37,22 @@ namespace namu {
     }
 
     TEMPL
+    template <typename V1>
+    void ME::each(std::function<void(const K&, const V1&, const node&)> l) const {
+        for(auto e=begin(); e ;++e) {
+            const V1& val = e.getVal().template cast<V1>();
+            if(nul(val)) continue;
+
+            l(e.getKey(), val, e.getOwner());
+        }
+    }
+
+    TEMPL
+    void ME::each(std::function<void(const K&, const V&, const node&)> l) const {
+        this->each<node>(l);
+    }
+
+    TEMPL
     V& ME::get(std::function<nbool(const K&, const V&)> l) const {
         return this->get<V>(l);
     }
