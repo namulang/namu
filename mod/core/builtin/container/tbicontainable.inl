@@ -12,14 +12,43 @@ namespace namu {
 
     TEMPL
     template <typename V1>
-    V1& ME::get(std::function<nbool(const K&, const V1&)> l) const {
+    V1& ME::get(std::function<nbool(const K&, const V1&)> l) {
         for(auto e=begin(); e ;++e) {
-            const V1& val = e.getVal().template cast<V1>();
+            V1& val = e.getVal().template cast<V1>();
             if(nul(val) || !l(e.getKey(), val)) continue;
-                return (V1&) val;
+                return val;
         }
 
         return nulOf<V1>();
+    }
+
+    TEMPL
+    V& ME::get(std::function<nbool(const K&, const V&)> l) {
+        return this->get<V>(l);
+    }
+
+    TEMPL
+    template <typename V1>
+    V1& ME::get(std::function<nbool(const K&, const V1&, node&)> l) {
+        for(auto e=begin(); e ;++e) {
+            V1& val = e.getVal().template cast<V1>();
+            if(nul(val) || !l(e.getKey(), val, e.getOwner())) continue;
+                return val;
+        }
+
+        return nulOf<V1>();
+    }
+
+    TEMPL
+    V& ME::get(std::function<nbool(const K&, const V&, node&)> l) {
+        return this->get<V>(l);
+    }
+
+    TEMPL
+    tnarr<V> ME::getAll(const K& key) const {
+        narr ret;
+        _getAll(key, ret);
+        return ret;
     }
 
     TEMPL
@@ -37,10 +66,50 @@ namespace namu {
     }
 
     TEMPL
+    tnarr<V> ME::getAll(std::function<nbool(const K&, const V&)> l) const {
+        return this->getAll<V>(l);
+    }
+
+    TEMPL
     template <typename V1>
-    void ME::each(std::function<void(const K&, const V1&, const node&)> l) const {
+    tnarr<V1> ME::getAll(std::function<nbool(const K&, const V1&, node&)> l) const {
+        tnarr<V1> ret;
         for(auto e=begin(); e ;++e) {
             const V1& val = e.getVal().template cast<V1>();
+            if(nul(val) || !l(e.getKey(), val, e.getOwner())) continue;
+
+            ret.add(val);
+        }
+
+        return ret;
+    }
+
+    TEMPL
+    tnarr<V> ME::getAll(std::function<nbool(const K&, const V&, node&)> l) const {
+        return this->getAll<V>(l);
+    }
+
+    TEMPL
+    template <typename V1>
+    void ME::each(std::function<void(const K&, V1&)> l) {
+        for(auto e=begin(); e ;++e) {
+            V1& val = e.getVal().template cast<V1>();
+            if(nul(val)) continue;
+
+            l(e.getKey(), val);
+        }
+    }
+
+    TEMPL
+    void ME::each(std::function<void(const K&, V&)> l) {
+        this->each<node>(l);
+    }
+
+    TEMPL
+    template <typename V1>
+    void ME::each(std::function<void(const K&, V1&, node&)> l) {
+        for(auto e=begin(); e ;++e) {
+            V1& val = e.getVal().template cast<V1>();
             if(nul(val)) continue;
 
             l(e.getKey(), val, e.getOwner());
@@ -48,25 +117,8 @@ namespace namu {
     }
 
     TEMPL
-    void ME::each(std::function<void(const K&, const V&, const node&)> l) const {
+    void ME::each(std::function<void(const K&, V&, node&)> l) {
         this->each<node>(l);
-    }
-
-    TEMPL
-    V& ME::get(std::function<nbool(const K&, const V&)> l) const {
-        return this->get<V>(l);
-    }
-
-    TEMPL
-    narr ME::getAll(std::function<nbool(const K&, const V&)> l) const {
-        return this->getAll<V>(l);
-    }
-
-    TEMPL
-    narr ME::getAll(const K& key) const {
-        narr ret;
-        _getAll(key, ret);
-        return ret;
     }
 
 #undef ME

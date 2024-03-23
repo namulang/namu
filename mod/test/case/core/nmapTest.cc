@@ -370,3 +370,24 @@ TEST_F(nmapTest, delWhileIteration) {
     ASSERT_EQ(m.get("apple").cast<int>(), 3);
     ASSERT_EQ(m.getAll("meat").len(), 3);
 }
+
+TEST_F(nmapTest, testEach) {
+    nmap map1;
+    map1.add("val1", *new nInt(1));
+    map1.add("val2", *new nByte(100));
+    map1.add("val3", *new nInt(2));
+    dumNode dum;
+    map1.setOwner(dum);
+
+    nint sum = 0;
+    map1.each<nInt>([&](const std::string&, const auto& elem) {
+        sum += elem.get();
+    });
+    ASSERT_EQ(sum, 3);
+
+    auto arr2 = map1.getAll<nInt>([&](const std::string&, const auto& elem) -> nbool {
+        return elem.get() > 1;
+    });
+    ASSERT_EQ(arr2.len(), 1);
+    ASSERT_EQ(arr2[0].get(), 2);
+}
