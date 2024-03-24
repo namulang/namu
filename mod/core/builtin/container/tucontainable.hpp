@@ -41,14 +41,14 @@ namespace namu {
         template <typename T1> tnarr<T1, strTactic> getAll(std::function<nbool(const T1&, node&)> l) const;
         narr getAll(std::function<nbool(const T&, node&)> l) const;
 
-        template <typename T1> void each(std::function<void(T1&)> l);
-        void each(std::function<void(T&)> l);
-        template <typename T1> void each(std::function<void(const T1&)> l) const NAMU_UNCONST_FUNC(each(l))
-        void each(std::function<void(const T&)> l) const NAMU_UNCONST_FUNC(each(l))
-        template <typename T1> void each(std::function<void(T1&, node&)> l);
-        void each(std::function<void(T&, node&)> l);
-        template <typename T1> void each(std::function<void(const T1&, node&)> l) const NAMU_UNCONST_FUNC(each(l))
-        void each(std::function<void(const T&, node&)> l) NAMU_UNCONST_FUNC(each(l))
+        template <typename T1> void each(std::function<nbool(T1&)> l);
+        void each(std::function<nbool(T&)> l);
+        template <typename T1> void each(std::function<nbool(const T1&)> l) const NAMU_UNCONST_FUNC(each(l))
+        void each(std::function<nbool(const T&)> l) const NAMU_UNCONST_FUNC(each(l))
+        template <typename T1> void each(std::function<nbool(T1&, node&)> l);
+        void each(std::function<nbool(T&, node&)> l);
+        template <typename T1> void each(std::function<nbool(const T1&, node&)> l) const NAMU_UNCONST_FUNC(each(l))
+        void each(std::function<nbool(const T&, node&)> l) NAMU_UNCONST_FUNC(each(l))
 
         // iter:
         iter begin() const {

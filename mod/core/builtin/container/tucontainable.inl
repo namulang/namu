@@ -95,33 +95,31 @@ namespace namu {
 
     TEMPL
     template <typename T1>
-    void ME::each(std::function<void(T1&)> l) {
+    void ME::each(std::function<nbool(T1&)> l) {
         for(auto e=begin(); e ;++e) {
             T1& val = e->template cast<T1>();
             if(nul(val)) continue;
-
-            l(val);
+            if(!l(val)) break;
         }
     }
 
     TEMPL
-    void ME::each(std::function<void(T&)> l) {
+    void ME::each(std::function<nbool(T&)> l) {
         this->each<node>(l);
     }
 
     TEMPL
     template <typename T1>
-    void ME::each(std::function<void(T1&, node&)> l) {
+    void ME::each(std::function<nbool(T1&, node&)> l) {
         for(auto e=begin(); e ;++e) {
             T1& val = e->template cast<T1>();
             if(nul(val)) continue;
-
-            l(val, e.getOwner());
+            if(!l(val, e.getOwner())) break;
         }
     }
 
     TEMPL
-    void ME::each(std::function<void(T&, node&)> l) {
+    void ME::each(std::function<nbool(T&, node&)> l) {
         this->each<node>(l);
     }
 
