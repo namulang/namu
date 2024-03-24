@@ -29,4 +29,13 @@ namespace namu {
         ret->_me = _me;
         return ret;
     }
+
+    std::string me::toStr() const {
+        int n=0;
+        std::string msg;
+        each([&](const auto& val) {
+            msg += val.getType().getName() + (++n >= len() ? "" : ",");
+        });
+        return msg;
+    }
 }

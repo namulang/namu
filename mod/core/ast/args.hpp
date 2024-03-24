@@ -20,6 +20,8 @@ namespace namu {
 
         clonable* deepClone() const override;
 
+        std::string toStr() const;
+
     private:
         mutable str _me;
     };
