@@ -45,7 +45,6 @@ namespace namu {
             return get(key).template cast<V1>();
         }
         template <typename V1> const V1& get(const K& key) const NAMU_UNCONST_FUNC(get<V1>(key))
-
         template <typename V1> V1& get(std::function<nbool(const K&, const V1&)> l);
         V& get(std::function<nbool(const K&, const V&)> l);
         template <typename V1> const V1& get(std::function<nbool(const K&, const V1&)> l) const NAMU_UNCONST_FUNC(get(l))

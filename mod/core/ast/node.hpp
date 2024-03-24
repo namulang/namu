@@ -123,7 +123,6 @@ namespace namu {
 
     protected:
         virtual str _onRunSub(node& sub, const args& a);
-        template <typename T> tpriorities<T> _costPriority(const tnarr<T>& subs, const args& a) const;
 
     private:
         virtual void _setPos(const point& new1);

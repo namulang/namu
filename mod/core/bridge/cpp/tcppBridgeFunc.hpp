@@ -2,6 +2,7 @@
 
 #include "../../ast/baseFunc.hpp"
 #include "../../ast/args.hpp"
+#include "../../ast/params.hpp"
 
 namespace namu {
 

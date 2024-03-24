@@ -12,6 +12,12 @@ namespace namu {
         elem.bind(newElem);
     }
 
+    TEMPLATE
+    ME::tprior(const node& newElem, const node& newOwner, priority newLv): lv(newLv) {
+        elem.bind(newElem);
+        owner.bind(newOwner);
+    }
+
     TEMPLATE T* ME::operator->() { return &get(); }
     TEMPLATE T& ME::operator*() { return get(); }
 
@@ -22,6 +28,16 @@ namespace namu {
 
     TEMPLATE
     ME::tpriorities() {}
+
+    TEMPLATE
+    ME::tpriorities(const T& elem) {
+        this->add(*new tprior<T>(elem, EXACT_MATCH));
+    }
+
+    TEMPLATE
+    ME::tpriorities(const T& elem, const node& owner) {
+        this->add(*new tprior<T>(elem, owner, EXACT_MATCH));
+    }
 
     TEMPLATE
     T& ME::getMatched() {

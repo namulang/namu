@@ -65,7 +65,7 @@ namespace namu {
 
         std::string argsName = _args ? _args->asStr().c_str() : "{}";
         NAMU_DI("%s.sub(%s, %s)", evalMe->getType().getName().c_str(), _name.c_str(), argsName.c_str());
-        if(!_args) return priorities(evalMe->sub(_name));
+        if(!_args) return priorities(evalMe->sub(_name), *evalMe);
 
         return evalMe->subAll(_name, *_args);
     }

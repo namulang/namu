@@ -6,7 +6,7 @@ namespace namu {
 
     class param;
     template <typename T, typename TACTIC> class tnarr;
-    typedef tnarr<param, strTactic> params;
+    class params;
     class visitor;
 
     class _nout baseFunc : public expr {

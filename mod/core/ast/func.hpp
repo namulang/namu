@@ -3,6 +3,7 @@
 #include "baseFunc.hpp"
 #include "exprs/blockExpr.hpp"
 #include "../builtin/container/native/tnmap.hpp"
+#include "params.hpp"
 
 namespace namu {
 

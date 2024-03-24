@@ -18,6 +18,7 @@ namespace namu {
 
     public:
         tprior(const node& newElem, priority newLv);
+        tprior(const node& newElem, const node& newOwner, priority newLv);
 
     public:
         T* operator->();
@@ -31,6 +32,7 @@ namespace namu {
 
     public:
         tstr<T> elem;
+        str owner;
         priority lv; // priority level.
     };
 
@@ -40,14 +42,8 @@ namespace namu {
 
     public:
         tpriorities();
-
-        /// @param  elems   'T' instances to derived type of T. and priority would be set to EXACT_MATCH.
-        ///                 these should be created on Heap.
-        template <typename... Es>
-        explicit tpriorities(const Es&... elems) {
-            static_assert(areBaseOfT<T, Es...>::value, "some of type of args are not base of type 'T'");
-            (this->add(new tprior<T>(elems, EXACT_MATCH)),...);
-        }
+        tpriorities(const T& elem);
+        tpriorities(const T& elem, const node& owner);
 
     public:
         /// @return finally matched sub when you want to access.
@@ -61,6 +57,17 @@ namespace namu {
         tpriorities split(priority by) const;
 
         const T& getMatched() const NAMU_UNCONST_FUNC(getMatched())
+
+        tpriorities<T> sort() const {
+            /* TODO:
+            tpriorities<T> ret;
+            for(int n=0; n < this->len(); n++) {
+                for(const T& elem : *this)
+                    ret.add(new tprior<T>(elem, priority(n)));
+            }*/
+            return *this;
+        }
+
     };
 
     typedef tpriorities<node> priorities;

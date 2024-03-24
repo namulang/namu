@@ -45,14 +45,7 @@ namespace namu {
 
     void me::onVisit(visitInfo i, baseFunc& fun) {
         onVisit(i, (node&) fun);
-
-        std::string msg;
-        int n=0;
-        const params& ps = fun.getParams();
-        for(const param& p : ps)
-            msg += "\"" + p.getName() + "\" " + p.getOrigin().getType().getName() +
-                    (++n >= ps.len() ? "" : ",");
-        std::cout << "params[" << msg << "] " << "ret[" << fun.getRet()->getType().getName() << "]";
+        std::cout << "params[" << fun.getParams().toStr() << "] " << "ret[" << fun.getRet()->getType().getName() << "]";
     }
 
     void me::onVisit(visitInfo i, genericObj& o) {

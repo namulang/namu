@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ctor.hpp"
+#include "params.hpp"
 
 namespace namu {
 
