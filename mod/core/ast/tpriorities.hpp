@@ -30,6 +30,10 @@ namespace namu {
         T& get();
         const T& get() const NAMU_UNCONST_FUNC(get())
 
+        /// @brief precedence is more detail concept of priority.
+        ///        it considers the owner of them are equal above priority.
+        nbool isSamePrecedence(const me& rhs) const;
+
     public:
         tstr<T> elem;
         str owner;
@@ -48,26 +52,10 @@ namespace namu {
     public:
         /// @return finally matched sub when you want to access.
         ///         if there is any ambigious err, this will return nulOf<T>().
-        T& getMatched();
-
-        /// @return all elements causes current ambigious err.
-        ///         but return nothing if there is no err.
-        tpriorities getAmbigious() const;
-
+        tnarr<T> getMatches() const;
+        T& getMatch();
+        const T& getMatch() const NAMU_UNCONST_FUNC(getMatch())
         tpriorities split(priority by) const;
-
-        const T& getMatched() const NAMU_UNCONST_FUNC(getMatched())
-
-        tpriorities<T> sort() const {
-            /* TODO:
-            tpriorities<T> ret;
-            for(int n=0; n < this->len(); n++) {
-                for(const T& elem : *this)
-                    ret.add(new tprior<T>(elem, priority(n)));
-            }*/
-            return *this;
-        }
-
     };
 
     typedef tpriorities<node> priorities;

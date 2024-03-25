@@ -23,6 +23,10 @@ namespace namu {
 
     TEMPLATE T& ME::get() { return elem.get(); }
 
+    TEMPLATE nbool ME::isSamePrecedence(const ME& rhs) const {
+        return lv == rhs.lv && &owner.get() == &rhs.owner.get();
+    }
+
 #undef ME
 #define ME tpriorities<T>
 
@@ -40,23 +44,27 @@ namespace namu {
     }
 
     TEMPLATE
-    T& ME::getMatched() {
+    tnarr<T> ME::getMatches() const {
         // assume that this container already got sorted to priority.
+        // sub node at index 0 is always highest priority.
+        tnarr<T> ret;
         ncnt len = this->len();
-        if(len <= 0) return nulOf<T>();
+        if(len <= 0) return ret;
 
-        auto ret = split(this->get(0).lv);
-        if(ret.len() != 1) return nulOf<T>();
-        return *ret[0].elem;
+        const tprior<T>* sample = nullptr;
+        this->each([&](const auto& p) {
+            if(nul(sample)) sample = &p;
+            if(!sample->isSamePrecedence(p)) return false;
+            return ret.add(*p.elem);
+        });
+        return ret;
     }
 
     TEMPLATE
-    ME ME::getAmbigious() const {
-        if(this->len() < 2) return ME();
-        auto ret = split(this->get(0).lv);
-        if(ret.len() <= 1) return ME();
-
-        return ret;
+    T& ME::getMatch() {
+        auto matches = getMatches();
+        if(matches.len() != 1) return nulOf<T>();
+        return matches[0];
     }
 
     TEMPLATE

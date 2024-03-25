@@ -27,7 +27,7 @@ namespace namu {
 
     str me::run(const std::string& name, const args& a) {
         if(name.empty()) return run(a);
-        me& found = subAll(name, a).getMatched();
+        me& found = subAll(name, a).getMatch();
         if(nul(found)) return str();
 
         return _onRunSub(found, a);

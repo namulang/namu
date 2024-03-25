@@ -64,16 +64,15 @@ namespace namu {
 
     str me::run(const args& a) {
         tpriorities<baseFunc> p = subAll<baseFunc>(baseObj::CTOR_NAME, a);
-        if(nul(p.getMatched())) {
-            tpriorities<baseFunc> ambigious = p.getAmbigious();
-            //TODO: if(ambigious.len() <= 0)
-                return NAMU_W("there is no such ctor."), str();
-            /*else // TODO: 1. change err management module to use 'err' class, not errCode.
-                   //       2. let it dump all ambigious funcs here.
-                return NAMU_W("")*/
+        auto matches = p.getMatches();
+        switch(matches.len()) {
+            case 1: return run(baseObj::CTOR_NAME, a);
+            case 0: return NAMU_W("there is no such ctor."), str();
         }
-
-        return run(baseObj::CTOR_NAME, a);
+        /*// TODO: 1. change err management module to use 'err' class, not errCode.
+          //       2. let it dump all ambigious funcs here.
+          return NAMU_W("")*/
+        return NAMU_E("ambigious call found: %s", "TODO:"), str();
     }
 
     const ntype& me::getType() const {

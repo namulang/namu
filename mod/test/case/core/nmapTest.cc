@@ -380,8 +380,8 @@ TEST_F(nmapTest, testEach) {
     map1.setOwner(dum);
 
     nint sum = 0;
-    map1.each<nInt>([&](const std::string&, const auto& elem) {
-        sum += elem.get();
+    map1.each<nInt>([&](const std::string&, const nInt& elem) {
+        return sum += elem.get(), true;
     });
     ASSERT_EQ(sum, 3);
 

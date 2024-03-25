@@ -328,7 +328,7 @@ TEST_F(defFuncTest, overloadingAmbigiousNegative) {
 
     obj& a = getSubPack().sub<obj>("a");
     ASSERT_FALSE(nul(a));
-    tpriorities<func> p = a.subAll<func>("foo", args(narr{nChar(), nChar()})).getAmbigious();
+    tnarr<func> p = a.subAll<func>("foo", args(narr{nChar(), nChar()})).getMatches();
     ASSERT_EQ(p.len(), 2);
 }
 

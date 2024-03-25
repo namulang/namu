@@ -10,6 +10,32 @@ namespace namu {
 #define ME node
 #define TEMPLATE template <typename T>
 
+    template <typename T>
+    class _nout tprioritiesBucket : public std::vector<tnarr<T>> {
+        typedef std::vector<tnarr<T>> super;
+    public:
+        tnarr<T>& operator[](nidx n) {
+            while(n >= this->size())
+                push_back(tnarr<T>());
+            return this->super::operator[](n);
+        }
+        const tnarr<T>& operator[](nidx n) const NAMU_UNCONST_FUNC(tprioritiesBucket<T>, operator[](n))
+
+    public:
+        tpriorities<T> join() const {
+            tpriorities<T> ret;
+            for(int n=0; n < this->size(); n++) {
+                for(const T& elem : (*this)[n])
+                    ret.add(new tprior<T>(elem, priority(n)));
+            }
+            return ret;
+        }
+        using super::push_back;
+        void push_back(const tprior<T>& elem) {
+            (*this)[elem.lv].add(*elem.elem);
+        }
+    };
+
     TEMPLATE
     T& ME::sub() {
         return subs().get<T>([](const std::string& key, const T& val) {
@@ -51,27 +77,38 @@ namespace namu {
     }
 
     TEMPLATE
+    tpriorities<T> ME::_costPriority(const tnarr<T>& subs, const args& a) const {
+        tprioritiesBucket<T> ps;
+        // subs is arranged already to its scope:
+        //  so if priority of sub was same level, I need to keep the priority of original container.
+        for(const T& sub : subs) {
+            const baseObj& o = sub.template cast<baseObj>();
+            if(!nul(o)) {
+                auto subs = sub.template subAll<T>(baseObj::CTOR_NAME, a);
+                for(const tprior<T>& p : subs)
+                    ps.push_back(p);
+                continue;
+            }
+
+            priority p = sub.prioritize(a);
+            if(p != NO_MATCH)
+                ps.push_back(tprior<T>(sub, p));
+        }
+
+        return ps.join();
+    }
+
+    TEMPLATE
     tpriorities<T> ME::subAll(const std::string& name, const args& a) const {
         if(nul(a)) return NAMU_W("a == null"), tpriorities<T>();
 
         NAMU_DI("subAll: %s(%s)", name.c_str(), a.toStr().c_str());
         tpriorities<T> ret;
-        subs().each<T>([&](const std::string& key, const T& val, node& owner) {
-            /* TODO: is this code needed?
-                const baseObj& o = sub.template cast<baseObj>();
-                if(!nul(o)) {
-                    auto subs = sub.template subAll<T>(baseObj::CTOR_NAME, a);
-                    for(const tprior<T>& p : subs)
-                        ps.push_back(p);
-                    continue;
-                }
-            */
+        return _costPriority<T>(subs().getAll<T>([&](const std::string& key, const T& val) {
             priority p = val.prioritize(a);
             NAMU_DI("\tname=%s match=%d", key.c_str(), p);
-            if(key == name && p != NO_MATCH)
-                ret.add(tprior<T>(val, owner, p));
-        });
-        return ret.sort();
+            return key == name && p != NO_MATCH;
+        }), a);
     }
 
 #undef TEMPLATE

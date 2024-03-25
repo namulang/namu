@@ -340,7 +340,7 @@ namespace namu {
             // TODO: leave all ambigious candidates as err.
             return _err(me.getPos(), errCode::AMBIGIOUS_ACCESS, i.name.c_str());
         }
-        node& got = matches.getMatched();
+        node& got = matches.getMatch();
         LOG("verify: getExpr: isRunnable: got=%s, me=%s", got.getType().getName().c_str(),
                 me.getType().getName().c_str());
 

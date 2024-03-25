@@ -19,15 +19,15 @@ namespace namu {
     }
 
     str me::getEval() const {
-        str got = _get(true).getMatched();
-        if(!got)
+        node& got = _get(true).getMatch();
+        if(nul(got))
             return got;
-        return got->getEval();
+        return got.getEval();
     }
 
     str me::run(const args& a) {
         // believe that this expression was checked to be valid.
-        return _get(false).getMatched();
+        return str(_get(false).getMatch());
     }
 
     const std::string& me::getSubName() const {

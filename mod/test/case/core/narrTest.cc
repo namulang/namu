@@ -295,7 +295,7 @@ TEST_F(narrTest, testEach) {
 
     nint sum = 0;
     arr1.each<nInt>([&](const auto& elem) {
-        sum += elem.get();
+        return sum += elem.get(), true;
     });
     ASSERT_EQ(sum, 3);
 
