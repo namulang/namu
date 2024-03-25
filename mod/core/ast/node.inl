@@ -45,8 +45,9 @@ namespace namu {
 
     TEMPLATE
     T& ME::sub(const std::string& name) {
+        ncnt n = 0;
         return subs().get<T>([&](const std::string& key, const T& val) {
-            NAMU_DI("this=%s[%x]: key=%s name=%s", getType().getName().c_str(), this, key.c_str(), name.c_str());
+            NAMU_DI("sub: [%d/%d] %s --> %s", n, subs().len(), name.c_str(), key.c_str());
             return key == name;
         });
     }
@@ -56,9 +57,12 @@ namespace namu {
         if(nul(a))
             return sub<T>(name);
 
+        ncnt n = 0;
+        std::string argStr = a.toStr();
         return subs().get<T>([&](const std::string& key, const T& val) {
-            NAMU_DI("this=%s[%x]: key=%s name=%s", getType().getName().c_str(), this, key.c_str(), name.c_str());
-            return key == name && val.canRun(a);
+            priority p = val.prioritize(a);
+            NAMU_DI("sub: [%d/%d] %s(%s) --> %s = %d", n, subs().len(), name.c_str(), argStr.c_str(), key.c_str(), p);
+            return key == name && p != NO_MATCH;
         });
     }
 
@@ -102,11 +106,12 @@ namespace namu {
     tpriorities<T> ME::subAll(const std::string& name, const args& a) const {
         if(nul(a)) return NAMU_W("a == null"), tpriorities<T>();
 
-        NAMU_DI("subAll: %s(%s)", name.c_str(), a.toStr().c_str());
+        ncnt n = 0;
         tpriorities<T> ret;
+        std::string argStr = a.toStr();
         return _costPriority<T>(subs().getAll<T>([&](const std::string& key, const T& val) {
             priority p = val.prioritize(a);
-            NAMU_DI("\tname=%s match=%d", key.c_str(), p);
+            NAMU_DI("subAll: [%d/%d] %s(%s) --> %s = %d", n++, subs().len(), name.c_str(), argStr.c_str(), key.c_str(), p);
             return key == name && p != NO_MATCH;
         }), a);
     }
