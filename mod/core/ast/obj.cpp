@@ -26,9 +26,9 @@ namespace namu {
         return *this;
     }
 
-    me::obj():
-            super(), _shares(new scopes(new scope(*this))), _owns(new scope(*this)), _org(this), _type(nullptr),
-            _isComplete(true) {
+    me::obj(): super(), _org(this), _type(nullptr), _isComplete(true) {
+        _shares.bind(new scopes(new scope(*this)));
+        _owns.bind(new scope(*this));
         _subs.bind(_makeNewSubs());
     }
 
@@ -37,9 +37,9 @@ namespace namu {
         _subs.bind(_makeNewSubs());
     }
 
-    me::obj(mgdType* newType):
-            super(), _shares(new scopes(new scope(*this))), _owns(new scope(*this)), _org(this), _type(nullptr),
-            _isComplete(true) {
+    me::obj(mgdType* newType): super(), _org(this), _type(nullptr), _isComplete(true) {
+        _shares.bind(new scopes(new scope(*this)));
+        _owns.bind(new scope(*this));
         _subs.bind(_makeNewSubs());
         _setType(newType);
     }
