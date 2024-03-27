@@ -51,6 +51,7 @@ namuSyntaxTest& me::parse(const namu::nchar* src) {
        .setLogStructure(isVerbose)
        .setReport(_rpt)
        .interpret();
+    _ip.log();
     return *this;
 }
 
