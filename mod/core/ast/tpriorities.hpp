@@ -53,8 +53,8 @@ namespace namu {
         /// @return finally matched sub when you want to access.
         ///         if there is any ambigious err, this will return nulOf<T>().
         tnarr<T> getMatches() const;
-        T& getMatch();
-        const T& getMatch() const NAMU_UNCONST_FUNC(getMatch())
+        tstr<T> getMatch();
+        const tstr<T> getMatch() const NAMU_UNCONST_FUNC(getMatch())
         tpriorities split(priority by) const;
     };
 

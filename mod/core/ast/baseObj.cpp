@@ -23,11 +23,10 @@ namespace namu {
     }
 
     priority me::prioritize(const args& a) const {
-        priority min = NO_MATCH; // beginning from the worst value.
-        tpriorities<baseFunc> subs = subAll<baseFunc>(baseObj::CTOR_NAME, a);
-        for(const auto& sub : subs)
-            min = min < sub.lv ? min : sub.lv;
-        return min;
+        auto subs = subAll<baseFunc>(baseObj::CTOR_NAME, a);
+        auto matches = subs.getMatches();
+        if(matches.len() != 1) return NO_MATCH;
+        return subs[0].lv;
     }
 
     void me::inFrame(const bicontainable& args) {

@@ -61,10 +61,10 @@ namespace namu {
     }
 
     TEMPLATE
-    T& ME::getMatch() {
+    tstr<T> ME::getMatch() {
         auto matches = getMatches();
-        if(matches.len() != 1) return nulOf<T>();
-        return matches[0];
+        if(matches.len() != 1) return tstr<T>();
+        return tstr<T>(matches[0]);
     }
 
     TEMPLATE

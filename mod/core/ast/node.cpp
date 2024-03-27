@@ -27,10 +27,10 @@ namespace namu {
 
     str me::run(const std::string& name, const args& a) {
         if(name.empty()) return run(a);
-        me& found = subAll(name, a).getMatch();
-        if(nul(found)) return str();
+        str found = subAll(name, a).getMatch();
+        if(!found) return str();
 
-        return _onRunSub(found, a);
+        return _onRunSub(*found, a);
     }
 
     nbool me::is(const typeProvidable& to) const {
