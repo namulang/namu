@@ -47,7 +47,7 @@ namespace namu {
     T& ME::sub(const std::string& name) {
         ncnt n = 0;
         return subs().get<T>([&](const std::string& key, const T& val) {
-            NAMU_DI("sub: [%d/%d] %s --> %s", n, subs().len(), name.c_str(), key.c_str());
+            NAMU_DI("sub: [%d/%d] %s --> %s", ++n, subs().len(), name.c_str(), key.c_str());
             return key == name;
         });
     }
@@ -61,7 +61,7 @@ namespace namu {
         std::string argStr = a.toStr();
         return subs().get<T>([&](const std::string& key, const T& val) {
             priority p = val.prioritize(a);
-            NAMU_DI("sub: [%d/%d] %s(%s) --> %s = %d", n, subs().len(), name.c_str(), argStr.c_str(), key.c_str(), p);
+            NAMU_DI("sub: [%d/%d] %s(%s) --> %s = %d", ++n, subs().len(), name.c_str(), argStr.c_str(), key.c_str(), p);
             return key == name && p != NO_MATCH;
         });
     }
