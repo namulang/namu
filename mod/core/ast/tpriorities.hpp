@@ -41,6 +41,39 @@ namespace namu {
     };
 
     template <typename T>
+    class _nout tmatches : public tnarr<T> {
+        NAMU(CLASS(tmatches, tnarr<T>))
+        template <typename E> friend class tpriorities;
+        
+    public:
+        tmatches();
+        /// @param  elems   instances to derived type of T.
+        ///                 should be created on Heap.
+        template <typename... Es>
+        explicit tmatches(const Es&... elems) {
+            static_assert(areBaseOfT<T, Es...>::value, "some of type of args are not base of type 'T'");
+            add( { (T*) &elems... } );
+        }
+
+    public:
+        nbool isMatched() const;
+
+        using super::get;
+        T& get();
+        const T& get() const NAMU_UNCONST_FUNC(get())
+
+        /// @return priority of matched one.
+        ///         this'll be NO_MATCH if isMatched() returns false.
+        priority getPriority() const;
+
+    protected:
+        void _setPriority(priority new1);
+
+    private:
+        priority _lv;
+    };
+
+    template <typename T>
     class _nout tpriorities : public tnarr<tprior<T>> {
         NAMU(CLASS(tpriorities, tprior<T>))
 
@@ -52,7 +85,7 @@ namespace namu {
     public:
         /// @return finally matched sub when you want to access.
         ///         if there is any ambigious err, this will return nulOf<T>().
-        tnarr<T> getMatches() const;
+        tmatches<T> getMatches() const;
         tstr<T> getMatch();
         const tstr<T> getMatch() const NAMU_UNCONST_FUNC(getMatch())
         tpriorities split(priority by) const;

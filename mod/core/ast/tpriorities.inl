@@ -28,6 +28,28 @@ namespace namu {
     }
 
 #undef ME
+#define ME tmatches<T>
+
+    TEMPLATE
+    ME::tmatches(): _lv(NO_MATCH) {}
+
+    TEMPLATE
+    nbool ME::isMatched() const { return this->len() == 1; }
+
+    TEMPLATE
+    T& ME::get() { return this->get(0); }
+
+    TEMPLATE
+    priority ME::getPriority() const {
+        return _lv;
+    }
+
+    TEMPLATE
+    void ME::_setPriority(priority new1) {
+        _lv = new1;
+    }
+
+#undef ME
 #define ME tpriorities<T>
 
     TEMPLATE
@@ -44,10 +66,10 @@ namespace namu {
     }
 
     TEMPLATE
-    tnarr<T> ME::getMatches() const {
+    tmatches<T> ME::getMatches() const {
         // assume that this container already got sorted to priority.
         // sub node at index 0 is always highest priority.
-        tnarr<T> ret;
+        tmatches<T> ret;
         ncnt len = this->len();
         if(len <= 0) return ret;
 
@@ -57,6 +79,9 @@ namespace namu {
             if(!sample->isSamePrecedence(p)) return false;
             return ret.add(*p.elem);
         });
+        
+        if(ret.isMatched())
+            ret._setPriority(sample->lv);
         return ret;
     }
 
