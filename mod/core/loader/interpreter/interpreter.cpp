@@ -31,6 +31,11 @@ namespace namu {
         return *this;
     }
 
+    me& me::setVerbose(nbool isVerbose) {
+        _isVerbose = isVerbose;
+        return *this;
+    }
+
     nbool me::isParsed() const {
         return _isParsed;
     }
@@ -63,8 +68,11 @@ namespace namu {
         _preEval();
         _verify();
 
-        _logStructure(_veri.getErrFrame());
-
+        auto info = _veri.getErrFrame();
+        _logFrame(info); std::cout << "\n";
+        _logStructure(info); std::cout << "\n";
+        _log();
+       
         return *_slot;
     }
 
@@ -79,6 +87,7 @@ namespace namu {
 
     void me::log() const {
         if(!_rpt && !*_rpt) return;
+        if(!_isVerbose) return;
 
         _rpt->log();
     }
@@ -140,17 +149,11 @@ namespace namu {
     void me::_logStructure(frame& info) {
         if(!_isLogStructure) return;
 
-        std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGREEN) << " - frame:\n";
-        _logFrame(info);
-        std::cout << "\n";
-
         if(!nul(_pser.getSubPack()) && _slot) {
             std::cout << " - structure:\n";
             graphVisitor().setRoot(_slot->getPack())
                           .start();
         }
-
-        std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
     }
 
     void me::_logFrame(const frame& info) const {
@@ -159,8 +162,18 @@ namespace namu {
             return;
         }
 
+        std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGREEN) << " - frame:\n";
+
         int n=0;
         for(auto e = info.subs().begin(); e ;++e)
             std::cout << "    [" << n++ << "]: '" << e.getKey() << "' " << e.getVal().getType().getName().c_str() << "\n";
+
+        std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+    }
+
+    void me::_log() const {
+        if(!_isVerbose) return;
+        std::cout << " - err:\n";
+        log();
     }
 }

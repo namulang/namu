@@ -49,9 +49,9 @@ namuSyntaxTest& me::parse(const namu::nchar* src) {
 
     _ip.setSrcSupply(buf)
        .setLogStructure(isVerbose)
+       .setVerbose(isVerbose)
        .setReport(_rpt)
        .interpret();
-    _ip.log();
     return *this;
 }
 

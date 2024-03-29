@@ -22,7 +22,7 @@ namespace namu {
     }
 
     nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip) const {
-        logger::get()["consoleStream"].setEnable(true);
+        ip.setVerbose(true);
         return true;
     }
 }

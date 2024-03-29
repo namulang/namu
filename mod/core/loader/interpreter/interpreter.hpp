@@ -17,6 +17,7 @@ namespace namu {
         me& setSlot(slot& pak);
         me& setSrcSupply(const srcSupply& supply);
         me& setLogStructure(nbool enable);
+        me& setVerbose(nbool isVerbose);
         nbool isParsed() const;
         nbool isVerified() const;
         node& getSubPack();
@@ -40,6 +41,7 @@ namespace namu {
         void _verify();
         void _logStructure(frame& info);
         void _logFrame(const frame& info) const;
+        void _log() const;
 
     private:
         tstr<errReport> _rpt;
@@ -49,5 +51,6 @@ namespace namu {
         tstr<srcSupply> _srcs;
         nbool _isParsed;
         nbool _isLogStructure;
+        nbool _isVerbose;
     };
 }

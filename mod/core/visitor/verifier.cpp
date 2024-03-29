@@ -397,7 +397,7 @@ namespace namu {
         if(!derivedSub->canRun(me.getArgs())) {
             const baseFunc& derivedCast = derivedSub->cast<baseFunc>();
             std::string params = nul(derivedCast) ? "ctor" : _asStr(derivedCast.getParams());
-            return _err(me.getPos(), errCode::OBJ_WRONG_ARGS, me.getArgs().asStr().c_str(), params.c_str());
+            return _err(me.getPos(), errCode::OBJ_WRONG_ARGS, i.name.c_str(), me.getArgs().asStr().c_str(), params.c_str());
         }
 
         a.setMe(nulOf<baseObj>());
