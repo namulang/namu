@@ -46,8 +46,10 @@ namespace namu {
     TEMPLATE
     T& ME::sub(const std::string& name) {
         ncnt n = 0;
-        return subs().get<T>([&](const std::string& key, const T& val) {
-            NAMU_DI("sub: [%d/%d] %s --> %s", ++n, subs().len(), name.c_str(), key.c_str());
+        return subs().get<T>([&](const std::string& key, const T& val, node& owner) {
+            std::string ownerName = nul(owner) ? "null" : owner.getType().getName();
+            NAMU_DI("sub: [%d/%d] %s --> %s.%s",
+                    ++n, subs().len(), name.c_str(), ownerName.c_str(), key.c_str());
             return key == name;
         });
     }
@@ -59,9 +61,11 @@ namespace namu {
 
         ncnt n = 0;
         std::string argStr = a.toStr();
-        return subs().get<T>([&](const std::string& key, const T& val) {
+        return subs().get<T>([&](const std::string& key, const T& val, node& owner) {
             priority p = val.prioritize(a);
-            NAMU_DI("sub: [%d/%d] %s(%s) --> %s = %d", ++n, subs().len(), name.c_str(), argStr.c_str(), key.c_str(), p);
+            std::string ownerName = nul(owner) ? "null" : owner.getType().getName();
+            NAMU_DI("sub: [%d/%d] %s(%s) --> %s.%s = %d",
+                    ++n, subs().len(), name.c_str(), argStr.c_str(), ownerName.c_str(), key.c_str(), p);
             return key == name && p != NO_MATCH;
         });
     }
@@ -109,9 +113,11 @@ namespace namu {
         ncnt n = 0;
         tpriorities<T> ret;
         std::string argStr = a.toStr();
-        return _costPriority<T>(subs().getAll<T>([&](const std::string& key, const T& val) {
+        return _costPriority<T>(subs().getAll<T>([&](const std::string& key, const T& val, node& owner) {
             priority p = val.prioritize(a);
-            NAMU_DI("subAll: [%d/%d] %s(%s) --> %s = %d", n++, subs().len(), name.c_str(), argStr.c_str(), key.c_str(), p);
+            std::string ownerName = nul(owner) ? "null" : owner.getType().getName();
+            NAMU_DI("subAll: [%d/%d] %s(%s) --> %s.%s = %d",
+                    n++, subs().len(), name.c_str(), argStr.c_str(), ownerName.c_str(), key.c_str(), p);
             return key == name && p != NO_MATCH;
         }), a);
     }
