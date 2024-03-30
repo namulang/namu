@@ -2,6 +2,7 @@
 #include "../ast/obj.hpp"
 #include "../ast/baseFunc.hpp"
 #include "../visitor/visitor.hpp"
+#include "../ast/dumScope.hpp"
 
 namespace namu {
 
@@ -48,7 +49,7 @@ namespace namu {
     }
 
     nbool me::pushLocal(nbicontainer* con) { return pushLocal(*con); }
-    nbool me::pushLocal(nbicontainer& con) { return pushLocal(*scopes::wrap(con)); }
+    nbool me::pushLocal(nbicontainer& con) { return pushLocal(*scopes::wrap<scopes>(con)); }
     nbool me::pushLocal(scopes* new1) { return _local.push(*new1); }
     nbool me::pushLocal(scopes& new1) {
         nbool ret = _local.push(new1);

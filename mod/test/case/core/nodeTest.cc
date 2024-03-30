@@ -113,7 +113,7 @@ TEST_F(nodeTest, testManuallyMakeNodeStructure) {
     // when:
     frameEmulator.bind(obj.subs());
     //  push another:
-    scopes* chnOffunc = scopes::wrap(func.subs());
+    scopes* chnOffunc = (scopes*) scopes::wrap<scopes>(func.subs());
     chnOffunc->link(*frameEmulator);
     frameEmulator.bind(*chnOffunc);
 

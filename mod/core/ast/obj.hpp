@@ -1,7 +1,7 @@
 #pragma once
 
 #include "baseObj.hpp"
-#include "scope.hpp"
+#include "scopes.hpp"
 
 namespace namu {
 

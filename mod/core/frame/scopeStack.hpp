@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ast/scope.hpp"
+#include "../ast/scopes.hpp"
 #include "../builtin/container/native/tnchain.inl"
 
 namespace namu {

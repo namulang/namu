@@ -555,7 +555,7 @@ TEST_F(nchainTest, testDeepChainIteration) {
     chn2.add(4.0, new myNode(4));
     ASSERT_EQ(chn2.len(), 2);
 
-    tstr<tnchain<float, myNode>> root(tnchain<float, myNode>::wrapDeep(chn1));
+    tstr<tnchain<float, myNode>> root(chn1.wrapDeep(chn1));
     ASSERT_EQ(root->len(), 2);
 
     chn1.link(chn2);
@@ -590,7 +590,7 @@ TEST_F(nchainTest, testDeepChainAddDel) {
     chn2.add(4.0, new myNode(4));
     chn1.link(chn2);
 
-    tstr<tnchain<float, myNode>> root(tnchain<float, myNode>::wrapDeep(chn1));
+    tstr<tnchain<float, myNode>> root(chn1.wrapDeep(chn1));
 
     tnchain<float, myNode> chn3;
     chn3.add(5.0, new myNode2(5));

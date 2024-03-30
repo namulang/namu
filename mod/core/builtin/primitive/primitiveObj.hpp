@@ -3,6 +3,7 @@
 #include "arithmeticObj.hpp"
 #include "../../ast/func.hpp"
 #include "../../ast/scope.hpp"
+#include "../../ast/dumScope.hpp"
 
 namespace namu {
 

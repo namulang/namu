@@ -1,6 +1,6 @@
 #include "../ast/obj.hpp"
 #include "../ast/baseFunc.hpp"
-#include "../ast/scope.inl"
+#include "../ast/dumScope.hpp"
 #include "../ast/slot.hpp"
 #include "../ast/node.inl"
 #include "starter.hpp"

@@ -1,7 +1,7 @@
 #include "dumNode.hpp"
 #include "../builtin/container/native/tndumMap.hpp"
 #include "../visitor/visitor.hpp"
-#include "scope.hpp"
+#include "dumScope.hpp"
 
 namespace namu {
 

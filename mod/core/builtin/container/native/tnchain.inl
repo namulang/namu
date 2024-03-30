@@ -124,11 +124,11 @@ namespace namu {
 
     TEMPL
     template <typename T>
-    ME* ME::_wrap(const super& toShallowWrap) {
+    T* ME::wrap(const super& toShallowWrap) {
         if(nul(toShallowWrap)) return nullptr;
-        me* ret = const_cast<me*>(&toShallowWrap.template cast<ME>());
+        T* ret = const_cast<T*>(&toShallowWrap.template cast<T>());
         if(nul(ret)) {
-            ret = (me*) new T();
+            ret = new T();
             ret->_map.bind(toShallowWrap);
         }
 

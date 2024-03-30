@@ -1,5 +1,4 @@
 #include "node.inl"
-#include "scope.inl"
 #include "../builtin/container/native/tnarr.inl"
 #include "../type/as.hpp"
 #include "args.hpp"

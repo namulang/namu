@@ -72,7 +72,7 @@ namespace {
     };
 
     nbool _isFrameLinkScope(const frame& fr, const scopes& subs) {
-        for(const scopes* e=&fr.subs().cast<scopes>(); e ; e=&e->getNext())
+        for(const scopes* e=&fr.subs().cast<scopes>(); e ; e=(scopes*) &e->getNext())
             if(e == &subs)
                 return true;
         return false;
