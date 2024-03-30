@@ -38,5 +38,26 @@ namespace namu {
         me* deepClone() const override { return (me*) super::deepClone(); }
     };
 
-    typedef tnchain<std::string, node, scope> scopes;
+    class _nout scopes : public tnchain<std::string, node, scope> {
+        typedef tnchain<std::string, node, scope> __super;
+        NAMU(CLASS(scopes, __super))
+
+    public:
+        scopes();
+        explicit scopes(const super::super& arr): super(arr) {}
+        explicit scopes(const super::super* arr): super(arr) {}
+
+    public:
+        node& getOwner() override { return *_owner; }
+        void setOwner(const node& owner) override { _owner.bind(owner); }
+        me* deepClone() const override { return (me*) super::deepClone(); }
+
+        using super::wrap;
+        me* wrap(const super::super& toShallowWrap) const override { return (me*) _wrap<me>(toShallowWrap); }
+        using super::wrapDeep;
+        virtual me* wrapDeep(const super::super& toDeepWrap) const override { return (me*) _wrapDeep<me>(toDeepWrap); }
+        
+    private:
+        weak _owner;
+    };
 }

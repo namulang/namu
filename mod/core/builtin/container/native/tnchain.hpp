@@ -75,28 +75,12 @@ namespace namu {
             return ret;
         }
 
-        /// wrap given container as the same level to this chain.
-        /// @param toShallowWrap
-        ///        if this is a chain, then the wrap func returns it as it is.
-        ///        if this is any container except chain, then it returns after
-        ///        wrapping given container.
-        static me* wrap(const super& toShallowWrap);
-        static me* wrap(const super* toShallowWrap) {
-            return wrap(*toShallowWrap);
-        }
+        virtual me* wrap(const super& toShallowWrap) const { return _wrap<me>(toShallowWrap); }
+        me* wrap(const super* toShallowWrap) const { return wrap(*toShallowWrap); }
 
         /// wrap given container no matter what it is.
-        static me* wrapDeep(const super& toDeepWrap) {
-            me* innerChn = wrap(toDeepWrap);
-
-            me* ret = new me();
-            ret->_map.bind(innerChn);
-            return ret;
-        }
-
-        static me* wrapDeep(const super* toDeepWrap) {
-            return wrapDeep(*toDeepWrap);
-        }
+        virtual me* wrapDeep(const super& toDeepWrap) const { return _wrapDeep<me>(toDeepWrap); }
+        me* wrapDeep(const super* toDeepWrap) const { return wrapDeep(*toDeepWrap); }
 
     protected:
         iteration* _onMakeIteration(ncnt step) const override {
@@ -112,6 +96,23 @@ namespace namu {
         }
 
         void _getAll(const K& key, narr& tray) const override;
+
+        /// wrap given container as the same level to this chain.
+        /// @param toShallowWrap
+        ///        if this is a chain, then the wrap func returns it as it is.
+        ///        if this is any container except chain, then it returns after
+        ///        wrapping given container.
+        template <typename T>
+        static me* _wrap(const super& toShallowWrap);
+
+        template <typename T>
+        static me* _wrapDeep(const super& toDeepWrap) {
+            me* innerChn = _wrap<T>(toDeepWrap);
+
+            me* ret = new me();
+            ret->_map.bind(innerChn);
+            return ret;
+        }
 
     private:
         iter& _getMapIterFromChainIter(const iter& wrapper) {
