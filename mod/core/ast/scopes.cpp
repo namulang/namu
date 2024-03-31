@@ -6,8 +6,8 @@ namespace namu {
     NAMU(DEF_ME(scopes))
 
     me::scopes() {}
-    me::scopes(const super::super& arr): super(arr) {}
-    me::scopes(const super::super* arr): super(arr) {}
+    me::scopes(const super::super& arr): super(arr), _owner(arr.getOwner()) {}
+    me::scopes(const super::super* arr): super(arr), _owner(arr->getOwner()) {}
 
     node& me::getOwner() { return *_owner; }
     void me::setOwner(const node& owner) { _owner.bind(owner); }
