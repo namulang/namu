@@ -99,8 +99,8 @@ namespace namu {
             std::string ownerName = nul(owner) ? "null" : owner.getType().getName();
             NAMU_DI("subAll: [%d/%d] %s(%s) --> %s.%s = %d",
                     n++, subs().len(), name.c_str(), argStr.c_str(), ownerName.c_str(), key.c_str(), p);
-            if(key == name || p != NO_MATCH)
-                ps.push_back(tprior<T>(val, owner, p)); 
+            if(key == name && p != NO_MATCH)
+                ps.push_back(*new tprior<T>(val, owner, p));
 
             /* TODO: this code is required?
             const baseObj& o = sub.template cast<baseObj>();

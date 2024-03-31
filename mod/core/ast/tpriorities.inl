@@ -88,7 +88,7 @@ namespace namu {
     TEMPLATE
     tstr<T> ME::getMatch() {
         auto matches = getMatches();
-        if(matches.len() != 1) return tstr<T>();
+        if(!matches.isMatched()) return tstr<T>();
         return tstr<T>(matches[0]);
     }
 
