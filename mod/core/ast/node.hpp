@@ -126,7 +126,5 @@ namespace namu {
 
     private:
         virtual void _setPos(const point& new1);
-        template <typename T>
-        tpriorities<T> _costPriority(const tnarr<T>& subs, const args& a) const;
     };
 }
