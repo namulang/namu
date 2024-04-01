@@ -217,6 +217,7 @@ namespace namu {
         node* _onSetElem(runExpr& lhs, const node& rhs);
         node* _onAssignElem(FBOExpr::rule type, node& lhs, node& rhs);
         node* _onConvertAssignElem(runExpr& lhs, node& rhs);
+        runExpr* _onRunExpr(node& type, const args& a);
 
         nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         void _onRes(err* new1);

@@ -607,22 +607,11 @@ namespace namu {
 
     runExpr* me::onRunExpr(node& trg, const narr& a) {
         NAMU_DI("tokenEvent: onRunExpr(%s, narr[%d])", trg.getType().getName().c_str(), a.len());
-
-        args* arg = new args(a);
-        runExpr* ret = _maker.make<runExpr>(nulOf<node>(), trg, *arg);
-        getExpr& cast = trg.cast<getExpr>(); 
-        if(!nul(cast))
-            cast.setSubArgs(*arg);
-        return ret;
+        return _onRunExpr(trg, *new args(a));
     }
     runExpr* me::onRunExpr(node& trg, const args& a) {
         NAMU_DI("tokenEvent: onRunExpr(%s, args[%d])", trg.getType().getName().c_str(), a.len());
-
-        runExpr* ret = _maker.make<runExpr>(nulOf<node>(), trg, a);
-        getExpr& cast = trg.cast<getExpr>(); 
-        if(!nul(cast))
-            cast.setSubArgs(a);
-        return ret;
+        return _onRunExpr(trg, a);
     }
 
     // @param from  can be expr. so I need to evaluate it through 'as()'.
@@ -736,6 +725,14 @@ namespace namu {
         setter._subject.bind(newSubj);
         setter.getArgs().add(rhs);
         return &setter;
+    }
+
+    runExpr* me::_onRunExpr(node& trg, const args& a) {
+        runExpr* ret = _maker.make<runExpr>(nulOf<node>(), trg, a);
+        getExpr& cast = trg.cast<getExpr>(); 
+        if(!nul(cast) && !cast.isSub<getGenericExpr>())
+            cast.setSubArgs(a);
+        return ret;
     }
 
     node* me::onAddAssign(node& lhs, node& rhs) {
