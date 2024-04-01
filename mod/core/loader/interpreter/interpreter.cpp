@@ -68,7 +68,7 @@ namespace namu {
         _preEval();
         _verify();
 
-        auto info = _veri.getErrFrame();
+        auto& info = _veri.getErrFrame();
         _logFrame(info); std::cout << "\n";
         _logStructure(info); std::cout << "\n";
         _log();
@@ -157,10 +157,9 @@ namespace namu {
     }
 
     void me::_logFrame(const frame& info) const {
-        if(nul(info)) {
-            std::cout << "    null\n";
-            return;
-        }
+        if(!_isLogStructure) return;
+        if(nul(info))
+            return std::cout << "    null\n", void();
 
         std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGREEN) << " - frame:\n";
 
