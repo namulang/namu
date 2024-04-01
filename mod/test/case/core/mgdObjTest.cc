@@ -71,6 +71,8 @@ TEST_F(mgdObjTest, distinguishPackScopeAndObjScopeByItsOwner) {
     obj& a = getSubPack().sub<obj>("a");
     ASSERT_FALSE(nul(a));
     tpriorities<baseFunc> pr = a.subAll<baseFunc>(baseObj::CTOR_NAME, args(narr()));
-    ASSERT_EQ(pr.len(), 1);
+    ASSERT_EQ(pr.len(), 2);
+    auto matches = pr.getMatches();
+    ASSERT_EQ(matches.len(), 1);
     ASSERT_TRUE(pr.getMatch());
 }
