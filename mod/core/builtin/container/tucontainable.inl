@@ -70,7 +70,7 @@ namespace namu {
     }
 
     TEMPL
-    narr ME::getAll(std::function<nbool(const T&)> l) const {
+    tnarr<T> ME::getAll(std::function<nbool(const T&)> l) const {
         return this->getAll<T>(l);
     }
 
@@ -89,7 +89,7 @@ namespace namu {
     }
 
     TEMPL
-    narr ME::getAll(std::function<nbool(const T&, node&)> l) const {
+    tnarr<T> ME::getAll(std::function<nbool(const T&, node&)> l) const {
         return this->getAll<T>(l);
     }
 
@@ -105,7 +105,7 @@ namespace namu {
 
     TEMPL
     void ME::each(std::function<nbool(T&)> l) {
-        this->each<node>(l);
+        this->each<T>(l);
     }
 
     TEMPL
@@ -120,7 +120,7 @@ namespace namu {
 
     TEMPL
     void ME::each(std::function<nbool(T&, node&)> l) {
-        this->each<node>(l);
+        this->each<T>(l);
     }
 
 #undef ME

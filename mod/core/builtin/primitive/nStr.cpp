@@ -59,8 +59,8 @@ namespace namu {
                 tstr<seq> s = a[0].as<seq>();
                 if(!s) return str();
 
-                nint start = (*s)[0];
-                nint end = (*s)[s->len()-1] + 1;
+                nint start = (*s)[0].cast<nint>();
+                nint end = (*s)[s->len()-1].cast<nint>() + 1;
                 return cast.substr(start, end);
             }
 
@@ -68,7 +68,7 @@ namespace namu {
             const params& getParams() const override {
                 static params inner;
                 if(inner.len() <= 0) {
-                    inner.add(new param("index", new seq(0, 1)));
+                    inner.add(new param("index", new seq(nInt(0), nInt(1))));
                 }
 
                 return inner;

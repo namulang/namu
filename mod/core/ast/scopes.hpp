@@ -5,8 +5,8 @@
 
 namespace namu {
     class _nout scopes : public tnchain<std::string, node, scope> {
-        typedef tnchain<std::string, node, scope> __super;
-        NAMU(CLASS(scopes, __super))
+        typedef tnchain<std::string, node, scope> _super2;
+        NAMU(CLASS(scopes, _super2))
 
     public:
         scopes();

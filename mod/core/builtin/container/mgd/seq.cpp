@@ -7,10 +7,10 @@ namespace namu {
 
     NAMU(DEF_ME(seq), DEF_VISIT())
 
-    me::seq(nint start, nint end): super(new nseq(start, end)) {}
-    me::seq(nint start, nint end, nint step): super(new nseq(start, end, step)) {}
+    me::seq(nInt start, nInt end): super(new nseq(start, end)) {}
+    me::seq(nInt start, nInt end, nInt step): super(new nseq(start, end, step)) {}
 
-    nint& me::operator[](nidx n) {
+    nInt& me::operator[](nidx n) {
         return get()[n];
     }
 
@@ -33,7 +33,7 @@ namespace namu {
     }
 
     //  get:
-    nint& me::get(nidx n) {
+    nInt& me::get(nidx n) {
         return get().get(n);
     }
 
@@ -43,7 +43,7 @@ namespace namu {
     }
 
     namespace {
-        typedef tucontainable<nint>::iter niter;
+        typedef tucontainable<nInt>::iter niter;
         typedef tcppBridge<niter> __superMgdIter;
         class _nout mgdIter : public __superMgdIter {
             NAMU(CLASS(mgdIter, __superMgdIter))
@@ -59,7 +59,7 @@ namespace namu {
                     inner = new super();
                     inner->func("isEnd", &niter::isEnd)
                           .func("next", &niter::next)
-                          .func<nint&>("get", &niter::get);
+                          .func<nInt&>("get", &niter::get);
                 }
 
                 return inner->subs();
@@ -94,7 +94,7 @@ namespace namu {
                     return NAMU_E("evaluation of arg[%s] -> param[%s] has been failed", a[0].getType().getName().c_str(), ps[0].getType().getName().c_str()), str();
 
                 nint step = eval->cast<nint>();
-                static tucontainable<nint>::iter (tucontainable<nint>::*specifier)(ncnt) const = &seq::iterate;
+                static tucontainable<nInt>::iter (tucontainable<nInt>::*specifier)(ncnt) const = &seq::iterate;
                 return new mgdIter(new niter((meObj.get().*specifier)(step)));
             }
         };
@@ -132,19 +132,19 @@ namespace namu {
         return get()._onMakeIteration(step);
     }
 
-    nbool me::set(const iter& at, const nint& new1) {
+    nbool me::set(const iter& at, const nInt& new1) {
         return false;
     }
 
-    nbool me::set(nidx n, const nint& new1) {
+    nbool me::set(nidx n, const nInt& new1) {
         return false;
     }
 
-    nbool me::add(const iter& at, const nint& new1) {
+    nbool me::add(const iter& at, const nInt& new1) {
         return false;
     }
 
-    nbool me::add(nidx n, const nint& new1) {
+    nbool me::add(nidx n, const nInt& new1) {
         return false;
     }
 

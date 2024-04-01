@@ -3,34 +3,35 @@
 #include "../../../ast/node.hpp"
 #include "tnucontainer.hpp"
 #include "../tarrayable.hpp"
+#include "../../primitive/nInt.hpp"
 
 namespace namu {
 
-    class _nout nseq : public tnucontainer<nint>, public tarrayable<nint> {
-        NAMU(CLASS(nseq, tnucontainer<nint>))
+    class _nout nseq : public tnucontainer<nInt>, public tarrayable<nInt> {
+        NAMU(CLASS(nseq, tnucontainer<nInt>))
         friend class seq;
 
     public:
 #include "../iter/nseqIteration.hpp"
 
     public:
-        nseq(nint start, nint end);
-        nseq(nint start, nint end, nint step);
+        nseq(nInt start, nInt end);
+        nseq(nInt start, nInt end, nInt step);
 
     public:
-        using tarrayable<nint>::operator[];
-        virtual nint& operator[](nidx n) override;
+        using tarrayable<nInt>::operator[];
+        virtual nInt& operator[](nidx n) override;
 
     public:
-        nint getStart() const;
-        nint getEnd() const;
-        nint getStep() const;
+        const nInt& getStart() const;
+        const nInt& getEnd() const;
+        const nInt& getStep() const;
 
         ncnt len() const override;
 
         void rel() override;
 
-        nint& get(nidx n) override;
+        nInt& get(nidx n) override;
 
         nbool has(nidx n) const override;
 
@@ -40,16 +41,16 @@ namespace namu {
     private:
         // these method has been prohibited.
         using super::add;
-        using tarrayable<nint>::add;
-        nbool add(const iter& at, const nint& new1) override;
+        using tarrayable<nInt>::add;
+        nbool add(const iter& at, const nInt& new1) override;
         void add(const iter& at, const iter& from, const iter& to) override;
-        nbool add(nidx n, const nint& new1) override;
+        nbool add(nidx n, const nInt& new1) override;
         using super::set;
-        using tarrayable<nint>::set;
-        nbool set(const iter& at, const nint& new1) override;
-        nbool set(nidx n, const nint& new1) override;
+        using tarrayable<nInt>::set;
+        nbool set(const iter& at, const nInt& new1) override;
+        nbool set(nidx n, const nInt& new1) override;
         using super::del;
-        using tarrayable<nint>::del;
+        using tarrayable<nInt>::del;
         nbool del(const iter& it) override;
         nbool del(const iter& from, const iter& end) override;
         nbool del(nidx n) override;
@@ -57,8 +58,8 @@ namespace namu {
         void _updateStep();
 
     private:
-        nint _start;
-        nint _end;
-        nint _step;
+        nInt _start;
+        nInt _end;
+        nInt _step;
     };
 }

@@ -17,7 +17,7 @@ namespace namu {
         if(!start || !end)
             return NAMU_E("ased start or end is null"), str();
 
-        return str(new seq(start->cast<nint>(), end->cast<nint>()));
+        return str(new seq(start->cast<nInt>(), end->cast<nInt>()));
     }
 
     str me::getEval() const {

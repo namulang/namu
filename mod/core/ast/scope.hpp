@@ -6,8 +6,8 @@
 
 namespace namu {
     class _nout scope : public tnmap<std::string, node, immutableTactic> {
-        typedef tnmap<std::string, node, immutableTactic> __super;
-        NAMU(CLASS(scope, __super))
+        typedef tnmap<std::string, node, immutableTactic> __super1;
+        NAMU(CLASS(scope, __super1))
 
     public:
         scope();

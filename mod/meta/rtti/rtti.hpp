@@ -65,7 +65,7 @@ namespace namu {
     };
     template <typename T>
     struct tinstanceMaker<T, true> {
-        static void* make() { return new T(); }
+        static void* make() { return (void*) new T(); }
     };
 
     /// @remark TClass is a class template using monostate pattern.

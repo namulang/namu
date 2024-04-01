@@ -11,7 +11,7 @@ namespace namu {
     //  spended plenty of hours again to find out the reason. thank you so much.
     typedef class _nout tcppBridge<nseq> __seqSuperClass;
 
-    class _nout seq : public __seqSuperClass, public tucontainable<nint>, tarrayable<nint> {
+    class _nout seq : public __seqSuperClass, public tucontainable<nInt>, tarrayable<nInt> {
         // seq uses wrapType:
         //  wrapType contains beanType as 'const type*' instance variable. so user should be
         //  careful when calling ttype<arr>. because it will also return wrapType instance
@@ -26,16 +26,16 @@ namespace namu {
 
     public:
         typedef ntype metaType; // for ttype<T>
-        typedef typename tucontainable<nint>::iter iter;
-        typedef typename tucontainable<nint>::iteration iteration;
+        typedef typename tucontainable<nInt>::iter iter;
+        typedef typename tucontainable<nInt>::iteration iteration;
 
     public:
-        seq(nint start, nint end);
-        seq(nint start, nint end, nint step);
+        seq(nInt start, nInt end);
+        seq(nInt start, nInt end, nInt step);
 
     public:
-        using tarrayable<nint>::operator[];
-        nint& operator[](nidx n) override;
+        using tarrayable<nInt>::operator[];
+        nInt& operator[](nidx n) override;
 
     public:
         const ntype& getType() const override;
@@ -48,9 +48,9 @@ namespace namu {
         nbool has(nidx n) const override;
 
         //  get:
-        using tarrayable<nint>::get;
+        using tarrayable<nInt>::get;
         using super::get;
-        nint& get(nidx n) override;
+        nInt& get(nidx n) override;
 
         //  etc:
         void rel() override;
@@ -61,18 +61,18 @@ namespace namu {
     private:
         // these method has been prohibited.
         //  set:
-        using tucontainable<nint>::set;
-        using tarrayable<nint>::set;
-        nbool set(const iter& at, const nint& new1) override;
-        nbool set(nidx n, const nint& new1) override;
+        using tucontainable<nInt>::set;
+        using tarrayable<nInt>::set;
+        nbool set(const iter& at, const nInt& new1) override;
+        nbool set(nidx n, const nInt& new1) override;
         //  add:
-        using tucontainable<nint>::add;
-        using tarrayable<nint>::add;
-        nbool add(const iter& at, const nint& new1) override;
-        nbool add(nidx n, const nint& new1) override;
+        using tucontainable<nInt>::add;
+        using tarrayable<nInt>::add;
+        nbool add(const iter& at, const nInt& new1) override;
+        nbool add(nidx n, const nInt& new1) override;
         void add(const iter& here, const iter& from, const iter& to) override;
         //  del:
-        using tucontainable<nint>::del;
+        using tucontainable<nInt>::del;
         nbool del(nidx n) override;
         nbool del(const iter& it) override;
         nbool del(const iter& from, const iter& to) override;

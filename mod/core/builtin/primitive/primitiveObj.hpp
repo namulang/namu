@@ -94,10 +94,6 @@ namespace namu {
     private:
         void _setPos(const point& new1) override { _pos = new1; }
 
-        me& _getOrigin() {
-            return const_cast<me&>(getOrigin());
-        }
-
     private:
         T _val;
         point _pos;

@@ -37,9 +37,9 @@ namespace namu {
         const T& get(std::function<nbool(const T&, node&)> l) const NAMU_UNCONST_FUNC(get(l))
 
         template <typename T1> tnarr<T1, strTactic> getAll(std::function<nbool(const T1&)> l) const;
-        narr getAll(std::function<nbool(const T&)> l) const;
+        tnarr<T, strTactic> getAll(std::function<nbool(const T&)> l) const;
         template <typename T1> tnarr<T1, strTactic> getAll(std::function<nbool(const T1&, node&)> l) const;
-        narr getAll(std::function<nbool(const T&, node&)> l) const;
+        tnarr<T, strTactic> getAll(std::function<nbool(const T&, node&)> l) const;
 
         template <typename T1> void each(std::function<nbool(T1&)> l);
         void each(std::function<nbool(T&)> l);

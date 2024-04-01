@@ -74,8 +74,7 @@ namespace namu {
             std::string ret;
             nbool first = true;
             for(const auto& e : *this) {
-                str eval = e.getEval();
-                ret += (first ? "" : ",") + (eval ? e.getEval()->getType().getName() : "{none}");
+                ret += (first ? "" : ",") + e.getType().getName();
                 first = false;
             }
 

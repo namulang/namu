@@ -5,45 +5,45 @@ namespace namu {
 
     NAMU(DEF_ME(nseq))
 
-    me::nseq(nint start, nint end): _start(start), _end(end) {
+    me::nseq(nInt start, nInt end): _start(start), _end(end) {
         _updateStep();
     }
 
-    me::nseq(nint start, nint end, nint step): _start(start), _end(end), _step(step) {}
+    me::nseq(nInt start, nInt end, nInt step): _start(start), _end(end), _step(step) {}
 
-    nint& me::operator[](nidx n) {
+    nInt& me::operator[](nidx n) {
         return get(n);
     }
 
-    nint me::getStart() const {
+    const nInt& me::getStart() const {
         return _start;
     }
 
-    nint me::getEnd() const {
+    const nInt& me::getEnd() const {
         return _end;
     }
 
-    nint me::getStep() const {
+    const nInt& me::getStep() const {
         return _step;
     }
 
     void me::rel() {}
 
-    nbool me::add(const iter& at, const nint& new1) {
+    nbool me::add(const iter& at, const nInt& new1) {
         return false;
     }
 
     void me::add(const iter& at, const iter& from, const iter& to) {}
 
-    nbool me::add(nidx n, const nint& new1) {
+    nbool me::add(nidx n, const nInt& new1) {
         return false;
     }
 
-    nbool me::set(const iter& at, const nint& new1) {
+    nbool me::set(const iter& at, const nInt& new1) {
         return false;
     }
 
-    nbool me::set(nidx n, const nint& new1) {
+    nbool me::set(nidx n, const nInt& new1) {
         return false;
     }
 
@@ -60,11 +60,11 @@ namespace namu {
     }
 
     void me::_updateStep() {
-        _step = _end >= _start ? 1 : -1;
+        _step.get() = _end.get() >= _start.get() ? 1 : -1;
     }
 
     ncnt me::len() const {
-        return abs(_end - _start);
+        return abs(_end.get() - _start.get());
     }
 
     me::iteration* me::_onMakeIteration(ncnt step) const {
@@ -72,12 +72,13 @@ namespace namu {
         return new nseqIteration(*unconst, step);
     }
 
-    nint& me::get(nidx n) {
-        static nint inner;
+    nInt& me::get(nidx n) {
+        static nInt inner;
         if(n >= len()) n = len() - 1;
         if(n < 0) n = 0;
 
-        return inner = _start + _step * n;
+        inner.get() = _start.get() + _step.get() * n;
+        return inner;
     }
 
     nbool me::has(nidx n) const {
