@@ -605,15 +605,24 @@ namespace namu {
         return ret;
     }
 
-    runExpr* me::onRunExpr(const node& trg, const narr& a) {
+    runExpr* me::onRunExpr(node& trg, const narr& a) {
         NAMU_DI("tokenEvent: onRunExpr(%s, narr[%d])", trg.getType().getName().c_str(), a.len());
 
-        return _maker.make<runExpr>(nulOf<node>(), trg, *new args(a));
+        args* arg = new args(a);
+        runExpr* ret = _maker.make<runExpr>(nulOf<node>(), trg, *arg);
+        getExpr& cast = trg.cast<getExpr>(); 
+        if(!nul(cast))
+            cast.setSubArgs(*arg);
+        return ret;
     }
-    runExpr* me::onRunExpr(const node& trg, const args& a) {
+    runExpr* me::onRunExpr(node& trg, const args& a) {
         NAMU_DI("tokenEvent: onRunExpr(%s, args[%d])", trg.getType().getName().c_str(), a.len());
 
-        return _maker.make<runExpr>(nulOf<node>(), trg, a);
+        runExpr* ret = _maker.make<runExpr>(nulOf<node>(), trg, a);
+        getExpr& cast = trg.cast<getExpr>(); 
+        if(!nul(cast))
+            cast.setSubArgs(a);
+        return ret;
     }
 
     // @param from  can be expr. so I need to evaluate it through 'as()'.

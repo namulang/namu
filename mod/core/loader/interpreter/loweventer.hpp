@@ -199,8 +199,8 @@ namespace namu {
         nextExpr* onNext();
         //      run:
         runExpr* onFillFromOfFuncCall(const node& me, runExpr& to);
-        runExpr* onRunExpr(const node& type, const narr& a);
-        runExpr* onRunExpr(const node& type, const args& a);
+        runExpr* onRunExpr(node& type, const narr& a);
+        runExpr* onRunExpr(node& type, const args& a);
         //      cast:
         asExpr* onAs(const node& me, const node& as);
         //      if:
