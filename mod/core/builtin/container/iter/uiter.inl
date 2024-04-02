@@ -6,8 +6,8 @@
 
 namespace namu {
 
-#define TEMPL template <typename T>
-#define ME tucontainable<T>::iter
+#define TEMPL template <typename T, typename R>
+#define ME tucontainable<T, R>::iter
 
     TEMPL
     typename ME ME::operator+(ncnt step) {
@@ -35,12 +35,12 @@ namespace namu {
     }
 
     TEMPL
-    T& ME::operator*() {
+    R ME::operator*() {
         return get();
     }
 
     TEMPL
-    T* ME::operator->() {
+    typename std::remove_reference<R>::type* ME::operator->() {
         return &get();
     }
 
@@ -74,14 +74,14 @@ namespace namu {
     }
 
     TEMPL
-    T& ME::get() {
-        if(!_step) return nulOf<T>();
-        return (T&) _step->get();
+    R ME::get() {
+        if(!_step) return nulr<R>::get();
+        return (R) _step->get();
     }
 
     TEMPL
-    tucontainable<T>& ME::getContainer() {
-        if(!_step) return nulOf<tnucontainer<T>>();
+    tucontainable<T, R>& ME::getContainer() {
+        if(!_step) return nulOf<tnucontainer<T, R>>();
         return _step->getContainer();
     }
 
@@ -107,7 +107,7 @@ namespace namu {
     TEMPL
     void ME::_nextToMatchParamType() {
         while(!isEnd()) {
-            if(!nul(get())) return;
+            if(!nulr<R>::isNul(get())) return;
 
             next(1);
         }

@@ -7,8 +7,9 @@
 
 namespace namu {
 
-    class _nout nseq : public tnucontainer<nInt>, public tarrayable<nInt> {
-        NAMU(CLASS(nseq, tnucontainer<nInt>))
+    class _nout nseq : public tnucontainer<nInt, nInt>, public tarrayable<nInt, nInt> {
+        typedef tnucontainer<nInt, nInt> _super3;
+        NAMU(CLASS(nseq, _super3))
         friend class seq;
 
     public:
@@ -19,8 +20,8 @@ namespace namu {
         nseq(nInt start, nInt end, nInt step);
 
     public:
-        using tarrayable<nInt>::operator[];
-        virtual nInt& operator[](nidx n) override;
+        using tarrayable<nInt, nInt>::operator[];
+        virtual nInt operator[](nidx n) override;
 
     public:
         const nInt& getStart() const;
@@ -31,7 +32,8 @@ namespace namu {
 
         void rel() override;
 
-        nInt& get(nidx n) override;
+        using super::get;
+        nInt get(nidx n) override;
 
         nbool has(nidx n) const override;
 
@@ -41,16 +43,16 @@ namespace namu {
     private:
         // these method has been prohibited.
         using super::add;
-        using tarrayable<nInt>::add;
+        using tarrayable<nInt, nInt>::add;
         nbool add(const iter& at, const nInt& new1) override;
         void add(const iter& at, const iter& from, const iter& to) override;
         nbool add(nidx n, const nInt& new1) override;
         using super::set;
-        using tarrayable<nInt>::set;
+        using tarrayable<nInt, nInt>::set;
         nbool set(const iter& at, const nInt& new1) override;
         nbool set(nidx n, const nInt& new1) override;
         using super::del;
-        using tarrayable<nInt>::del;
+        using tarrayable<nInt, nInt>::del;
         nbool del(const iter& it) override;
         nbool del(const iter& from, const iter& end) override;
         nbool del(nidx n) override;

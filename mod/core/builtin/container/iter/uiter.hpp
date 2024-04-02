@@ -1,4 +1,5 @@
 #include "uiteration.hpp"
+#include <type_traits>
 
 // nested class of tucontainable.hpp:
 //  this file allows to be refered by 'tucontainable.hpp' file only.
@@ -18,10 +19,10 @@ public:
     me& operator++();
     me operator++(int);
     me& operator+=(ncnt step);
-    T& operator*();
-    T* operator->();
-    const T& operator*() const NAMU_UNCONST_FUNC(operator*())
-    const T* operator->() const NAMU_UNCONST_FUNC(operator->())
+    R operator*();
+    const R operator*() const NAMU_UNCONST_FUNC(operator*())
+    typename std::remove_reference<R>::type* operator->();
+    const typename std::remove_reference<R>::type* operator->() const NAMU_UNCONST_FUNC(operator->())
     explicit operator nbool() const;
 
 public:
@@ -30,15 +31,15 @@ public:
     ncnt next(ncnt step) override;
 
     using iterable::get;
-    T& get() override;
+    R get() override;
 
     template <typename E>
     E& get() {
         return get().template cast<E>();
     }
 
-    tucontainable<T>& getContainer() override;
-    const tucontainable<T>& getContainer() const NAMU_UNCONST_FUNC(getContainer());
+    tucontainable<T, R>& getContainer() override;
+    const tucontainable<T, R>& getContainer() const NAMU_UNCONST_FUNC(getContainer());
 
     node& getOwner();
     const node& getOwner() const NAMU_UNCONST_FUNC(getOwner())

@@ -6,7 +6,7 @@
 namespace namu {
 
     /// @remark arrayable has API treating index as its parameter.
-    template <typename T>
+    template <typename T, typename R = T&>
     class tarrayable {
         NAMU_DECL_ME(tarrayable)
 
@@ -14,8 +14,8 @@ namespace namu {
         virtual ~tarrayable() {}
 
         // operator:
-        virtual T& operator[](nidx n) = 0;
-        const T& operator[](nidx n) const {
+        virtual R operator[](nidx n) = 0;
+        const R operator[](nidx n) const {
             return get(n);
         }
 
@@ -23,8 +23,8 @@ namespace namu {
         virtual nbool has(nidx n) const = 0;
 
         // get:
-        virtual T& get(nidx n) = 0;
-        const T& get(nidx n) const NAMU_UNCONST_FUNC(get(n))
+        virtual R get(nidx n) = 0;
+        const R get(nidx n) const NAMU_UNCONST_FUNC(get(n))
 
         // set:
         virtual nbool set(nidx n, const T& new1) = 0;

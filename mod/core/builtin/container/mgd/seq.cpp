@@ -10,7 +10,7 @@ namespace namu {
     me::seq(nInt start, nInt end): super(new nseq(start, end)) {}
     me::seq(nInt start, nInt end, nInt step): super(new nseq(start, end, step)) {}
 
-    nInt& me::operator[](nidx n) {
+    nInt me::operator[](nidx n) {
         return get()[n];
     }
 
@@ -33,7 +33,7 @@ namespace namu {
     }
 
     //  get:
-    nInt& me::get(nidx n) {
+    nInt me::get(nidx n) {
         return get().get(n);
     }
 
@@ -43,7 +43,7 @@ namespace namu {
     }
 
     namespace {
-        typedef tucontainable<nInt>::iter niter;
+        typedef tucontainable<nInt, nInt>::iter niter;
         typedef tcppBridge<niter> __superMgdIter;
         class _nout mgdIter : public __superMgdIter {
             NAMU(CLASS(mgdIter, __superMgdIter))
@@ -94,7 +94,7 @@ namespace namu {
                     return NAMU_E("evaluation of arg[%s] -> param[%s] has been failed", a[0].getType().getName().c_str(), ps[0].getType().getName().c_str()), str();
 
                 nint step = eval->cast<nint>();
-                static tucontainable<nInt>::iter (tucontainable<nInt>::*specifier)(ncnt) const = &seq::iterate;
+                static tucontainable<nInt, nInt>::iter (tucontainable<nInt, nInt>::*specifier)(ncnt) const = &seq::iterate;
                 return new mgdIter(new niter((meObj.get().*specifier)(step)));
             }
         };

@@ -5,14 +5,14 @@
 namespace namu {
 
     class node;
-    template <typename T>
+    template <typename T, typename R = T&>
     class tnucontainer;
     template <typename T, typename TACTIC> class tnarr;
     typedef class _nout tnarr<node, strTactic> narr;
     template <typename K, typename V> class tbicontainable;
 
     /// @remark tucontainable has API treating iter ref and element as its parameter.
-    template <typename T>
+    template <typename T, typename R = T&>
     class tucontainable {
         NAMU_DECL_ME(tucontainable)
 
@@ -28,13 +28,13 @@ namespace namu {
 
         // get:
         template <typename T1> T1& get(std::function<nbool(const T1&)> l);
-        T& get(std::function<nbool(const T&)> l);
+        R get(std::function<nbool(const T&)> l);
         template <typename T1> const T1& get(std::function<nbool(const T1&)> l) const NAMU_UNCONST_FUNC(get(l))
-        const T& get(std::function<nbool(const T&)> l) const NAMU_UNCONST_FUNC(get(l))
+        const R get(std::function<nbool(const T&)> l) const NAMU_UNCONST_FUNC(get(l))
         template <typename T1> T1& get(std::function<nbool(const T1&, node&)> l);
-        T& get(std::function<nbool(const T&, node&)> l);
+        R get(std::function<nbool(const T&, node&)> l);
         template <typename T1> const T1& get(std::function<nbool(const T1&, node&)> l) const NAMU_UNCONST_FUNC(get(l))
-        const T& get(std::function<nbool(const T&, node&)> l) const NAMU_UNCONST_FUNC(get(l))
+        const R get(std::function<nbool(const T&, node&)> l) const NAMU_UNCONST_FUNC(get(l))
 
         template <typename T1> tnarr<T1, strTactic> getAll(std::function<nbool(const T1&)> l) const;
         tnarr<T, strTactic> getAll(std::function<nbool(const T&)> l) const;

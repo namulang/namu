@@ -8,8 +8,8 @@
 
 namespace namu {
 
-#define TEMPL template <typename T>
-#define ME tucontainable<T>
+#define TEMPL template <typename T, typename R>
+#define ME tucontainable<T, R>
 
     TEMPL
     template <typename K, typename V>
@@ -34,7 +34,7 @@ namespace namu {
     }
 
     TEMPL
-    T& ME::get(std::function<nbool(const T&)> l) {
+    R ME::get(std::function<nbool(const T&)> l) {
         return this->get<T>(l);
     }
 
@@ -51,7 +51,7 @@ namespace namu {
     }
 
     TEMPL
-    T& ME::get(std::function<nbool(const T&, node&)> l) {
+    R ME::get(std::function<nbool(const T&, node&)> l) {
         return this->get<T>(l);
     }
 

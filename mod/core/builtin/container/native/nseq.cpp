@@ -11,7 +11,7 @@ namespace namu {
 
     me::nseq(nInt start, nInt end, nInt step): _start(start), _end(end), _step(step) {}
 
-    nInt& me::operator[](nidx n) {
+    nInt me::operator[](nidx n) {
         return get(n);
     }
 
@@ -72,13 +72,11 @@ namespace namu {
         return new nseqIteration(*unconst, step);
     }
 
-    nInt& me::get(nidx n) {
-        static nInt inner;
+    nInt me::get(nidx n) {
         if(n >= len()) n = len() - 1;
         if(n < 0) n = 0;
 
-        inner.get() = _start.get() + _step.get() * n;
-        return inner;
+        return nInt(_start.get() + _step.get() * n);
     }
 
     nbool me::has(nidx n) const {

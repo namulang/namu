@@ -13,9 +13,9 @@ public:
     ///         it won't be counted as returning value.
     ///         it'll return '0' if it already reached to the end.
     virtual ncnt next(ncnt step) = 0;
-    virtual T& get() = 0;
-    const T& get() const NAMU_UNCONST_FUNC(get())
+    virtual R get() = 0;
+    const R get() const NAMU_UNCONST_FUNC(get())
     virtual nbool isFrom(const tucontainable& it) const = 0;
-    virtual tucontainable<T>& getContainer() = 0;
-    const tucontainable<T>& getContainer() const NAMU_UNCONST_FUNC(getContainer())
+    virtual tucontainable<T, R>& getContainer() = 0;
+    const tucontainable<T, R>& getContainer() const NAMU_UNCONST_FUNC(getContainer())
 };

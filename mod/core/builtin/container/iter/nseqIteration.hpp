@@ -30,13 +30,13 @@ public:
         return step;
     }
     using super::get;
-    nInt& get() override {
+    nInt get() override {
         if(isEnd()) return nulOf<nInt>();
         return _own[_n];
     }
 
     using super::getContainer;
-    tucontainable<nInt>& getContainer() override {
+    tucontainable<nInt, nInt>& getContainer() override {
         return _own;
     }
 
