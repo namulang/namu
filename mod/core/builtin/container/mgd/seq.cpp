@@ -119,7 +119,7 @@ namespace namu {
         if(nul(inner)) {
             inner = new super();
             inner->func("len", &nseq::len)
-                  .func("get", &nseq::get)
+                  .func<nInt, nint>("get", &nseq::get)
                   .func("has", &nseq::has);
             inner->subs().add("iterate", new iterateFunc());
             inner->subs().add("getElemType", new getElemTypeFunc());

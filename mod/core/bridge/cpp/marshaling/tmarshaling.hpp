@@ -10,161 +10,81 @@ namespace namu {
     template <typename T> class tarr;
     class arr;
 
-    template <typename tnativeType, typename tnativeGenericType, typename tmarshalType>
-    struct tnormalMarshaling : public metaIf {
-        typedef tmarshalType mgd;
-        typedef tnativeType native;
-
-        static native toNative(node& it) {
-            return ((mgd&) it).get();
-        }
-
-        static str toMgd(native it) {
-            return str(new mgd(it));
-        }
-
-        static mgd& onAddParam() {
-            return *new mgd();
-        }
-
-        static mgd& onGetRet() {
-            return *new mgd();
-        }
-
-        static yes canMarshal();
-    };
-
-    template <typename S>
-    struct _nout tnormalMarshaling<void, S, nVoid> : public metaIf {
-        typedef nVoid mgd;
-        typedef void native;
-
-        static str toMgd() {
-            return str(new nVoid());
-        }
-
-        static mgd& onAddParam() {
-            return *new mgd();
-        }
-
-        static mgd& onGetRet() {
-            return *new mgd();
-        }
-
-        static yes canMarshal();
-    };
-
     template <typename T, typename S, nbool isNode = tifSub<T, node>::is>
     struct tmarshaling : public metaIf {
-        static T& toNative(node& it) {
-            throw marshalErr();
-        }
-
         template <typename E>
         static str toMgd(E& it) {
             throw marshalErr();
         }
 
-        static T& onAddParam() {
-            return *new T();
-        }
-
-        static T& onGetRet() {
-            throw marshalErr();
-        }
-
+        static T& toNative(node& it) { throw marshalErr(); }
+        static T& onAddParam() { return *new T(); }
+        static T& onGetRet() { throw marshalErr(); }
         static no canMarshal();
     };
     template <typename S>
     struct tmarshaling<node&, S, true> : public metaIf {
         typedef node mgd;
-
-        static node& toNative(node& it) {
-            return it;
-        }
-
         template <typename E>
         static str toMgd(E& it) {
             return it;
         }
 
-        static mgd& onAddParam() {
-            return *new dumNode();
-        }
-
-        static mgd& onGetRet() {
-            return *new dumNode();
-        }
-
+        static node& toNative(node& it) { return it; }
+        static mgd& onAddParam() { return *new dumNode(); }
+        static mgd& onGetRet() { return *new dumNode(); }
         static yes canMarshal();
     };
     template <typename T, typename S>
     struct tmarshaling<T&, S, true> : public metaIf {
         typedef T mgd;
-
-        static T& toNative(node& it) {
-            return it.cast<T>();
-        }
-
         template <typename E>
         static str toMgd(E& it) {
             return it;
         }
 
-        static mgd& onAddParam() {
-            return *new mgd();
+        static T& toNative(node& it) { return it.cast<T>(); }
+        static mgd& onAddParam() { return *new mgd(); }
+        static mgd& onGetRet() { return *new mgd(); }
+        static yes canMarshal();
+    };
+    template <typename T, typename S>
+    struct tmarshaling<T, S, true> : public metaIf {
+        typedef T mgd;
+        template <typename E>
+        static str toMgd(const E& it) {
+            return str(it);
         }
 
-        static mgd& onGetRet() {
-            return *new mgd();
-        }
-
+        static T& toNative(node& it) { return it.cast<T>(); }
+        static mgd& onAddParam() { return *new mgd(); }
+        static mgd& onGetRet() { return *new mgd(); }
         static yes canMarshal();
     };
     template <typename T, typename S>
     struct tmarshaling<T&, S, false> : public metaIf {
         typedef class tcppBridge<T, S> mgd;
-
-        static T& toNative(node& it) {
-            return it.cast<tcppBridge<T, S>>().get();
-        }
-
         template <typename E>
         static str toMgd(E& it) {
             return new mgd(&it);
         }
 
-        static mgd& onAddParam() {
-            return *new mgd();
-        }
-
-        static mgd& onGetRet() {
-            return *new mgd();
-        }
-
+        static T& toNative(node& it) { return it.cast<tcppBridge<T, S>>().get(); }
+        static mgd& onAddParam() { return *new mgd(); }
+        static mgd& onGetRet() { return *new mgd(); }
         static yes canMarshal();
     };
     template <typename T, typename S>
     struct tmarshaling<T*, S, false> : public metaIf {
         typedef tcppBridge<T, S> mgd;
-
-        static T* toNative(node& it) {
-            return &it.cast<tcppBridge<T, S>>().get();
-        }
-
         template <typename E>
         static str toMgd(E* it) {
             return new mgd(it);
         }
 
-        static mgd& onAddParam() {
-            return *new mgd();
-        }
-
-        static mgd& onGetRet() {
-            return *new mgd();
-        }
-
+        static T* toNative(node& it) { return &it.cast<tcppBridge<T, S>>().get(); }
+        static mgd& onAddParam() { return *new mgd(); }
+        static mgd& onGetRet() { return *new mgd(); }
         static yes canMarshal();
     };
     template <typename T, typename S>
@@ -177,9 +97,29 @@ namespace namu {
         static str toMgd(E* it);
 
         static mgd& onAddParam();
-
         static mgd& onGetRet();
+        static yes canMarshal();
+    };
 
+    template <typename tnativeType, typename tnativeGenericType, typename tmarshalType>
+    struct tnormalMarshaling : public metaIf {
+        typedef tmarshalType mgd;
+        typedef tnativeType native;
+
+        static native toNative(node& it) { return ((mgd&) it).get(); }
+        static str toMgd(native it) { return str(new mgd(it)); }
+        static mgd& onAddParam() { return *new mgd(); }
+        static mgd& onGetRet() { return *new mgd(); }
+        static yes canMarshal();
+    };
+    template <typename S>
+    struct _nout tnormalMarshaling<void, S, nVoid> : public metaIf {
+        typedef nVoid mgd;
+        typedef void native;
+
+        static str toMgd() { return str(new nVoid()); }
+        static mgd& onAddParam() { return *new mgd(); }
+        static mgd& onGetRet() { return *new mgd(); }
         static yes canMarshal();
     };
 
