@@ -49,8 +49,8 @@ namespace namu {
 
         new1->log();
         switch(new1->fType) {
-            case err::ERR: NAMU_CALLSTACK();
-            case err::WARN: _leaveErrFrame(); break;
+            case logLv::ERR: NAMU_CALLSTACK();
+            case logLv::WARN: _leaveErrFrame(); break;
             default:;
         }
     }

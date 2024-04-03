@@ -15,14 +15,9 @@ namespace namu {
         NAMU(CLASS(err, instance))
 
     public:
-        enum type {
-            ERR = 0, WARN, INFO,
-        };
-
-    public:
-        err(err::type t, nint newCode);
-        err(err::type t, nint newCode, va_list args);
-        err(err::type t, const point& ps, nint newCode, va_list args);
+        err(logLv::level t, nint newCode);
+        err(logLv::level t, nint newCode, va_list args);
+        err(logLv::level t, const point& ps, nint newCode, va_list args);
 
     public:
         nbool operator==(const me& rhs) const;
@@ -42,7 +37,7 @@ namespace namu {
         static err* newInfo(const point& src, int code, ...);
 
     public:
-        err::type fType;
+        logLv::level fType;
         errCode code;
         std::string msg;
         point pos;

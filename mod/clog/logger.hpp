@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stream/stream.hpp"
+#include "filter/filters.hpp"
 
 namespace namu {
 
@@ -26,7 +27,7 @@ namespace namu {
         void setEnable(nbool enable) override;
         ncnt getStreamCount() const;
         nbool dumpFormat(const nchar* fmt, ...);
-        nbool dumpFormatLog(const nchar* level, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...);
+        nbool dumpFormatLog(logLv::level lv, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...);
         nbool pushStream(stream* new_stream);
         static logger& get();
         //  stream:
@@ -36,6 +37,10 @@ namespace namu {
         void callstack() const;
         void setCallstack(nbool show);
         nbool isShowCallstack() const { return _showCallstack; }
+        //  filter:
+        void setFilters(const filters& newFilters);
+        void setFilters();
+        const filters& getFilters() const;
 
     private:
         //  Logger:
@@ -45,8 +50,12 @@ namespace namu {
         nbool init() override;
         nbool rel() override;
 
+        std::string _makeStr(const nchar* fmt, ...);
+        std::string _makeStr(const nchar* fmt, va_list va);
+
     private:
         std::vector<stream*> _streams;
+        const filters* _filters;
         nbool _showCallstack;
     };
 }

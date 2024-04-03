@@ -55,11 +55,9 @@ namespace namu {
     nbool me::dumpFormat(const nchar* fmt, ...) {
         va_list va;
         va_start(va, fmt);
-        nchar buf[1024];
-        vsnprintf(buf, 1024, fmt, va);
+        nbool ret = dump(_makeStr(fmt, va).c_str());
         va_end(va);
-
-        return dump(buf);
+        return ret;
     }
 
     nbool me::pushStream(stream* new_stream) {
@@ -110,30 +108,34 @@ namespace namu {
         return *inner;
     }
 
-    nbool me::dumpFormatLog(const nchar* level, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...) {
-        std::cout << platformAPI::getConsoleFore(platformAPI::BROWN);
-        dumpFormat("%s ", platformAPI::createNowTime("%b %d %Y  %X").c_str());
+    nbool me::dumpFormatLog(logLv::level lv, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...) {
+        std::string toDump;
+        toDump += platformAPI::getConsoleFore(platformAPI::BROWN);
+        toDump += _makeStr("%s ", platformAPI::createNowTime("%b %d %Y  %X").c_str());
 
         platformAPI::consoleColor clrLv = platformAPI::WHITE;
-        switch(level[0]) {
-            case 'E': clrLv = platformAPI::LIGHTRED; break;
-            case 'W': clrLv = platformAPI::YELLOW; break;
-            case 'I': clrLv = platformAPI::LIGHTBLUE; break;
+        switch(lv) {
+            case logLv::ERR: clrLv = platformAPI::LIGHTRED; break;
+            case logLv::WARN: clrLv = platformAPI::YELLOW; break;
+            case logLv::INFO: clrLv = platformAPI::LIGHTBLUE; break;
         }
+        toDump += platformAPI::getConsoleFore(clrLv);
+        toDump += _makeStr("%s %s ", tag, logLv::getName(lv).c_str());
 
-        std::cout << platformAPI::getConsoleFore(clrLv);
-        dumpFormat("%s %s ", tag, level);
+        toDump += platformAPI::getConsoleFore(platformAPI::GREEN);
+        toDump += _makeStr("<%s::%s#%d> ", filename, func, line);
 
-        std::cout << platformAPI::getConsoleFore(platformAPI::GREEN);
-        dumpFormat("<%s::%s#%d> ", filename, func, line);
-
-        std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+        toDump += platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
         va_list va;
         va_start(va, fmt);
-        nchar buf[1024];
-        vsnprintf(buf, 1024, fmt, va);
+        toDump += _makeStr(fmt, va);
         va_end(va);
-        return dump(buf);
+
+        if(_filters)
+            toDump = _filters->filt(lv, tag, toDump);
+        if(!toDump.empty())
+            return dump(toDump.c_str());
+        return false;
     }
 
     me::logger() : super(), _showCallstack(true) {}
@@ -161,5 +163,31 @@ namespace namu {
 
     void me::setCallstack(nbool show) {
         _showCallstack = show;
+    }
+
+    void me::setFilters(const filters& newFilters) {
+        _filters = &newFilters;
+    }
+
+    void me::setFilters() {
+        _filters = nullptr;
+    }
+
+    const filters& me::getFilters() const {
+        return *_filters;
+    }
+
+    std::string me::_makeStr(const nchar* fmt, ...) {
+        va_list va;
+        va_start(va, fmt);
+        std::string ret = _makeStr(fmt, va);
+        va_end(va);
+        return ret;
+    }
+
+    std::string me::_makeStr(const nchar* fmt, va_list va) {
+        nchar buf[1024];
+        vsnprintf(buf, 1024, fmt, va);
+        return std::string(buf);
     }
 }

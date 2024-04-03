@@ -27,14 +27,14 @@ namespace namu {
     }
 
     nbool me::hasErr() const {
-        return has(err::ERR);
+        return has(logLv::ERR);
     }
 
     nbool me::hasWarn() const {
-        return has(err::WARN);
+        return has(logLv::WARN);
     }
 
-    nbool me::has(err::type type) const {
+    nbool me::has(logLv::level type) const {
         for(auto& elem : _errs)
             if(elem->fType == type)
                 return true;

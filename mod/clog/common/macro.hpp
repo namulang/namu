@@ -14,9 +14,9 @@
 //      usage:
 //          NAMU_I("just message.")
 //          NAMU_I("with format=%x string=%s", &format, format.c_str())
-#define NAMU_E(fmt, ...) ::namu::logger::get().dumpFormatLog("E", NAMU_TAG, __FILENAME__, __func__, __LINE__, fmt "\n", ## __VA_ARGS__)
-#define NAMU_W(fmt, ...) ::namu::logger::get().dumpFormatLog("W", NAMU_TAG, __FILENAME__, __func__, __LINE__, fmt "\n", ## __VA_ARGS__)
-#define NAMU_I(fmt, ...) ::namu::logger::get().dumpFormatLog("I", NAMU_TAG, __FILENAME__, __func__, __LINE__, fmt "\n", ## __VA_ARGS__)
+#define NAMU_E(fmt, ...) ::namu::logger::get().dumpFormatLog(namu::logLv::ERR, NAMU_TAG, __FILENAME__, __func__, __LINE__, fmt "\n", ## __VA_ARGS__)
+#define NAMU_W(fmt, ...) ::namu::logger::get().dumpFormatLog(namu::logLv::WARN, NAMU_TAG, __FILENAME__, __func__, __LINE__, fmt "\n", ## __VA_ARGS__)
+#define NAMU_I(fmt, ...) ::namu::logger::get().dumpFormatLog(namu::logLv::INFO, NAMU_TAG, __FILENAME__, __func__, __LINE__, fmt "\n", ## __VA_ARGS__)
 #ifdef NAMU_DEBUG
 #   define NAMU_DE(fmt, ...) NAMU_E(fmt, ## __VA_ARGS__)
 #   define NAMU_DW(fmt, ...) NAMU_W(fmt, ## __VA_ARGS__)
