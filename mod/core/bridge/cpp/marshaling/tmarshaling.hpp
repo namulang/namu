@@ -53,7 +53,7 @@ namespace namu {
         typedef T mgd;
         template <typename E>
         static str toMgd(const E& it) {
-            return str(it);
+            return str((E*) it.clone());
         }
 
         static T& toNative(node& it) { return it.cast<T>(); }

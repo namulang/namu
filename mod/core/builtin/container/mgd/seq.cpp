@@ -59,7 +59,7 @@ namespace namu {
                     inner = new super();
                     inner->func("isEnd", &niter::isEnd)
                           .func("next", &niter::next)
-                          .func<nInt&>("get", &niter::get);
+                          .func<nInt>("get", &niter::get);
                 }
 
                 return inner->subs();
