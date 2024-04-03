@@ -6,7 +6,7 @@
 namespace namu {
 
     class _nout watcher : public chunk {
-        NAMU_DECL_ME(watcher, chunk)
+        NAMU_ME(watcher, chunk)
         NAMU_INIT_META(me)
         friend class instancer;
         friend class bindTag;

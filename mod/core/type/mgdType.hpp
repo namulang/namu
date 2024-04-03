@@ -10,7 +10,7 @@ namespace namu {
     typedef tnarr<node, strTactic> narr;
 
     class _nout mgdType : public ttype<obj> {
-        NAMU_DECL_ME(mgdType, ttype<obj>)
+        NAMU_ME(mgdType, ttype<obj>)
 
     public:
         mgdType(const std::string& name);

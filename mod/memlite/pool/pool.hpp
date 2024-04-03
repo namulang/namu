@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout pool : public memoryHaver {
-        NAMU_DECL_ME(pool, memoryHaver)
+        NAMU_ME(pool, memoryHaver)
         NAMU_INIT_META(me)
 
     public:

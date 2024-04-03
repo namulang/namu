@@ -6,7 +6,7 @@
 namespace namu {
 
     class _nout fileLogStream : public stream {
-        NAMU_DECL_ME(fileLogStream, stream)
+        NAMU_ME(fileLogStream, stream)
 
     public:
         //  fileLogStream:

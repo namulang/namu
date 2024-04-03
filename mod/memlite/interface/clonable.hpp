@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout clonable {
-        NAMU_DECL_ME(clonable)
+        NAMU_ME(clonable)
         NAMU_INIT_META(me)
 
     public:

@@ -7,7 +7,7 @@ namespace namu {
 
     class chunk;
     class _nout bindTag : public typeProvidable, public tbindable<instance> {
-        NAMU_DECL_ME(bindTag)
+        NAMU_ME(bindTag)
         NAMU_INIT_META(me)
         template <typename T, typename TACTIC> friend class tweak;
         template <typename T, typename TACTIC> friend class tstr;

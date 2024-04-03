@@ -10,7 +10,7 @@ namespace namu {
     typedef tnarr<node, strTactic> narr;
 
     class _nout ntype : public type {
-        NAMU_DECL_ME(ntype, type)
+        NAMU_ME(ntype, type)
 
     private:
         typedef std::map<const ntype*, const ntype*> deducer;

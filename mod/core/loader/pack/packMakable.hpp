@@ -13,7 +13,7 @@ namespace namu {
     typedef tnarr<src, strTactic> srcs;
 
     class _nout packMakable {
-        NAMU_DECL_ME(packMakable)
+        NAMU_ME(packMakable)
         NAMU_INIT_META(me)
 
     public:

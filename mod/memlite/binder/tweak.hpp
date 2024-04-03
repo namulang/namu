@@ -7,7 +7,7 @@ namespace namu {
 
     template <typename T, typename TACTIC = weakTactic>
     class tweak : public binder {
-        NAMU_DECL_ME(tweak, binder)
+        NAMU_ME(tweak, binder)
         NAMU_INIT_META(me)
         friend class bindTag;
 

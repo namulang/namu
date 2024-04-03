@@ -7,11 +7,11 @@ namespace namu {
     using std::string;
 
     class _nout buildFeature {
-        NAMU_DECL_ME(buildFeature)
+        NAMU_ME(buildFeature)
 
     public:
         struct _nout date {
-            NAMU_DECL_ME(date)
+            NAMU_ME(date)
 
         public:
             static NAMU_SINGLETON_GETTER(const string& get(), string, NAMU_BUILD_DATE)
@@ -21,7 +21,7 @@ namespace namu {
         };
 
         struct _nout time {
-            NAMU_DECL_ME(time)
+            NAMU_ME(time)
 
         public:
             static NAMU_SINGLETON_GETTER(const string& get(), string, NAMU_BUILD_TIME)
@@ -31,7 +31,7 @@ namespace namu {
         };
 
         struct _nout version {
-            NAMU_DECL_ME(version)
+            NAMU_ME(version)
 
         public:
             static NAMU_SINGLETON_GETTER(const string& get(), string, NAMU_BUILD_VERSION)
@@ -52,7 +52,7 @@ namespace namu {
         };
 
         struct _nout platform {
-            NAMU_DECL_ME(platform)
+            NAMU_ME(platform)
 
         public:
             static platformType get();
@@ -68,7 +68,7 @@ namespace namu {
         };
 
         struct _nout config {
-            NAMU_DECL_ME(config)
+            NAMU_ME(config)
 
         public:
             static buildType get();

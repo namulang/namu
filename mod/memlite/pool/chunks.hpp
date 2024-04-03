@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout chunks : public allocator {
-        NAMU_DECL_ME(chunks, allocator)
+        NAMU_ME(chunks, allocator)
         NAMU_INIT_META(me)
 
     public:

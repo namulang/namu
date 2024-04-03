@@ -13,7 +13,7 @@ namespace namu {
     /// @remark tbicontainable has API treating iter ref and element as its parameter.
     template <typename K, typename V>
     class tbicontainable {
-        NAMU_DECL_ME(tbicontainable)
+        NAMU_ME(tbicontainable)
         template <typename K1, typename V1, typename defaultContainer>
         friend class tnchain;
 

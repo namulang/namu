@@ -4,7 +4,7 @@
 
 namespace namu {
     class _nout typeProvidable {
-        NAMU_DECL_ME(typeProvidable)
+        NAMU_ME(typeProvidable)
 
     public:
         nbool operator==(const me& rhs) const;

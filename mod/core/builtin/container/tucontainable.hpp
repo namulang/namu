@@ -14,7 +14,7 @@ namespace namu {
     /// @remark tucontainable has API treating iter ref and element as its parameter.
     template <typename T, typename R = T&>
     class tucontainable {
-        NAMU_DECL_ME(tucontainable)
+        NAMU_ME(tucontainable)
 
     public:
         #include "iter/uiter.hpp"

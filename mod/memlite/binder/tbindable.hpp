@@ -6,7 +6,7 @@ namespace namu {
 
     template <typename T>
     class tbindable {
-        NAMU_DECL_ME(tbindable)
+        NAMU_ME(tbindable)
         NAMU_INIT_META(me)
 
     public:

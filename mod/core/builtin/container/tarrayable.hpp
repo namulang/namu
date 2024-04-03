@@ -8,7 +8,7 @@ namespace namu {
     /// @remark arrayable has API treating index as its parameter.
     template <typename T, typename R = T&>
     class tarrayable {
-        NAMU_DECL_ME(tarrayable)
+        NAMU_ME(tarrayable)
 
     public:
         virtual ~tarrayable() {}

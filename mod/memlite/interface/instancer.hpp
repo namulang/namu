@@ -6,7 +6,7 @@
 namespace namu {
 
     class _nout instancer {
-        NAMU_DECL_ME(instancer)
+        NAMU_ME(instancer)
         NAMU_INIT_META(me)
         friend class instance;
 

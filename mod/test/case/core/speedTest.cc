@@ -11,6 +11,8 @@ struct speedTest : namuSyntaxTest {};
 
 namespace  {
     void benchMark(string name, int cnt, function<void(void)> func) {
+        nbool prevEnable = logger::get().isEnable();
+        logger::get().setEnable(false);
 
         auto start = chrono::steady_clock::now();
         for(int n=0; n < cnt; n++)
@@ -18,6 +20,7 @@ namespace  {
         auto end = chrono::steady_clock::now();
         auto totalElapsed = end - start;
 
+        logger::get().setEnable(prevEnable);
         NAMU_I("[%s]: it took total %d ms.", name.c_str(), totalElapsed / chrono::milliseconds(1));
     }
 

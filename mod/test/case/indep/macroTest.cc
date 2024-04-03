@@ -73,7 +73,7 @@ TEST(macroTest, NAMU_GETtest) {
 
 TEST(macroTest, UnconstCalltest) {
     struct A {
-        NAMU_DECL_ME(A)
+        NAMU_ME(A)
 
     public:
         nbool foo() {

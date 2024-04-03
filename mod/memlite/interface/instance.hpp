@@ -12,7 +12,7 @@ namespace namu {
     class instancer;
 
     class _nout instance : public typeProvidable, public clonable {
-        NAMU_DECL_ME(instance)
+        NAMU_ME(instance)
         NAMU_INIT_META(me)
         friend class bindTag;
         friend class watcher; // for vault.

@@ -5,7 +5,7 @@
 namespace namu {
     /// @remark type returning ttype<type> as result of getType()
     class _nout type {
-        NAMU_DECL_ME(type)
+        NAMU_ME(type)
 
     public:
         virtual ~type() {}

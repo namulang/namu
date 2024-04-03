@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout sinterpreter {
-        NAMU_DECL_ME(sinterpreter)
+        NAMU_ME(sinterpreter)
 
     public:
         static tstr<sobj> interp(const nchar* script);

@@ -67,7 +67,7 @@ namespace {
     class chef : public obj {
 
         class myType : public ntype {
-            NAMU_DECL_ME(myType, ntype);
+            NAMU_ME(myType, ntype);
 
         protected:
             const ases& _getImpliAses() const override {

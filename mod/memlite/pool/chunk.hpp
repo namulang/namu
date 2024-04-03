@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout chunk : public allocator {
-        NAMU_DECL_ME(chunk, allocator)
+        NAMU_ME(chunk, allocator)
         NAMU_INIT_META(me)
         friend class watcher;
 

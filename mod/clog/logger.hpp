@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout logger : public stream {
-        NAMU_DECL_ME(logger, stream)
+        NAMU_ME(logger, stream)
 
     public:
         //  Logger:

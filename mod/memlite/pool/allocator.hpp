@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout allocator : public memoryHaver {
-        NAMU_DECL_ME(allocator)
+        NAMU_ME(allocator)
         NAMU_INIT_META(me)
 
     public:

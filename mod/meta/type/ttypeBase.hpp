@@ -15,7 +15,7 @@ namespace namu {
     template <typename T, typename S = typename tmetaTypeDef<T>::is>
     class ttypeBase : public S {
         typedef ttypeBase<T, S> _T;
-        NAMU_DECL_ME(_T, S)
+        NAMU_ME(_T, S)
 
     public:
         ttypeBase();
@@ -45,7 +45,7 @@ namespace namu {
     template <>
     class ttypeBase<void, type> : public type {
         typedef ttypeBase<void, type> _T;
-        NAMU_DECL_ME(_T, type)
+        NAMU_ME(_T, type)
 
     public:
         ttypeBase();

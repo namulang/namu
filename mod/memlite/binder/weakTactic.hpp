@@ -6,7 +6,7 @@
 namespace namu {
 
     class _nout weakTactic : public bindTacticable {
-        NAMU_DECL_ME(weakTactic, bindTacticable);
+        NAMU_ME(weakTactic, bindTacticable);
 
     public:
         void rel(binder& me) override;

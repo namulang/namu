@@ -6,7 +6,7 @@
 namespace namu {
 
     class _nout platformAPI {
-        NAMU_DECL_ME(platformAPI)
+        NAMU_ME(platformAPI)
 
     public:
         enum consoleColor {

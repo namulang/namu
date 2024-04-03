@@ -1,6 +1,6 @@
 // nested class of bicontainable.hpp
 class iterable {
-    NAMU_DECL_ME(iterable)
+    NAMU_ME(iterable)
 
 public:
     virtual ~iterable() {}

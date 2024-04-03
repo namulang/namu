@@ -6,7 +6,7 @@ namespace namu {
 
     class instance;
     class _nout memoryHaver {
-        NAMU_DECL_ME(memoryHaver)
+        NAMU_ME(memoryHaver)
         NAMU_INIT_META(me)
 
     public:

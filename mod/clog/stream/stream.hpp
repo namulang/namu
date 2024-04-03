@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout stream {
-        NAMU_DECL_ME(stream)
+        NAMU_ME(stream)
 
     public:
         stream(nbool isEnable = true);

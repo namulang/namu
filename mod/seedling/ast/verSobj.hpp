@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout verSobj : public termSobj {
-        NAMU_DECL_ME(verSobj, termSobj)
+        NAMU_ME(verSobj, termSobj)
         NAMU_INIT_META(verSobj)
 
     public:
