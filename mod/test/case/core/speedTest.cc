@@ -139,7 +139,12 @@ TEST_F(speedTest, benchmarkSumOfSequence) {
     )SRC").shouldVerified(true);
 
     auto start2 = chrono::steady_clock::now();
+    const filters& prevFilters = logger::get().getFilters();
+    filters fs(new errPassFilter());
+    logger::get().setFilters(fs);
     str res = run();
+    logger::get().setFilters(prevFilters);
+
     auto end2 = chrono::steady_clock::now();
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), sum);
