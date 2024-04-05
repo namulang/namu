@@ -142,7 +142,7 @@ namespace namu {
                     inner = new super();
                     inner->func("isEnd", &niter::isEnd)
                           .func("next", &niter::next)
-                          .func<nChar&>("get", &niter::get);
+                          .funcNonConst<nChar&>("get", &niter::get);
                 }
 
                 return inner->subs();

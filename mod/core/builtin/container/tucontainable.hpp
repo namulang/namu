@@ -48,7 +48,7 @@ namespace namu {
         template <typename T1> void each(std::function<nbool(T1&, node&)> l);
         void each(std::function<nbool(T&, node&)> l);
         template <typename T1> void each(std::function<nbool(const T1&, node&)> l) const NAMU_UNCONST_FUNC(each(l))
-        void each(std::function<nbool(const T&, node&)> l) NAMU_UNCONST_FUNC(each(l))
+        void each(std::function<nbool(const T&, node&)> l) const NAMU_UNCONST_FUNC(each(l))
 
         // iter:
         iter begin() const {

@@ -24,13 +24,23 @@ namespace namu {
         }
 
         template <typename Ret, typename... Args>
-        me& genericFunc(const std::string& name, Ret(T::*fptr)(Args...)) {
+        me& genericFunc(const std::string& name, Ret(T::* fptr)(Args...)) {
             this->subs().add(name, new tcppBridgeFunc<Ret, T, obj, tgenericMarshaling, Args...>(fptr));
+            return *this;
+        }
+        template <typename Ret, typename... Args>
+        me& genericFuncNonConst(const std::string& name, Ret(T::* fptr)(Args...)) {
+            this->subs().add(name, new tcppBridgeFunc<Ret, T, obj, tgenericMarshaling, Args...>((Ret(T::*)(Args...)) fptr));
             return *this;
         }
         template <typename Ret, typename... Args>
         me& genericFunc(const std::string& name, Ret(T::*fptr)(Args...) const) {
             this->subs().add(name, new tcppBridgeFunc<Ret, T, obj, tgenericMarshaling, Args...>( (Ret(T::*)(Args...)) fptr));
+            return *this;
+        }
+        template <typename Ret, typename... Args>
+        me& genericFuncConst(const std::string& name, Ret(T::* fptr)(Args...) const) {
+            this->subs().add(name, new tcppBridgeFunc<Ret, T, obj, tgenericMarshaling, Args...>((Ret(T::*)(Args...)) fptr));
             return *this;
         }
 

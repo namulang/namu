@@ -27,7 +27,7 @@ namespace namu {
                     inner = new super();
                     inner->func("isEnd", &niter::isEnd)
                           .func("next", &niter::next)
-                          .func<node&>("get", &niter::get);
+                          .funcNonConst<node&>("get", &niter::get);
                 }
 
                 return inner->subs();
@@ -231,7 +231,7 @@ namespace namu {
                   .genericFunc<nbool, const node&>("add", &tucontainable<node>::add)
                   .genericFunc<nbool, nidx, const node&>("add", &narr::add)
                   .genericFunc<nbool, nidx, const node&>("set", &narr::set)
-                  .genericFunc<node&, nidx>("get", &narr::get)
+                  .genericFuncNonConst<node&, nidx>("get", &narr::get)
                   .genericFunc<nbool, const node&>("has", &narr::has);
             inner->subs().add("iterate", new iterateFunc());
         }
