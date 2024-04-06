@@ -13,7 +13,7 @@ namespace namu {
     };
 
     template <typename T>
-    struct _nout tprior: instance {
+    struct tprior: instance {
         NAMU(CLASS(tprior, instance))
 
     public:
@@ -41,7 +41,7 @@ namespace namu {
     };
 
     template <typename T>
-    class _nout tmatches : public tnarr<T> {
+    class tmatches : public tnarr<T> {
         NAMU(CLASS(tmatches, tnarr<T>))
         template <typename E> friend class tpriorities;
         
@@ -74,7 +74,7 @@ namespace namu {
     };
 
     template <typename T>
-    class _nout tpriorities : public tnarr<tprior<T>> {
+    class tpriorities : public tnarr<tprior<T>> {
         NAMU(CLASS(tpriorities, tprior<T>))
 
     public:
