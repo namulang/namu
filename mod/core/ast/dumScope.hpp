@@ -3,7 +3,7 @@
 #include "scope.hpp"
 
 namespace namu {
-    class dumScope : public scope {
+    class _nout dumScope : public scope {
         NAMU(CLASS(dumScope, scope))
 
     public:
