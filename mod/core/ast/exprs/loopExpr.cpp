@@ -1,6 +1,8 @@
 #include "loopExpr.hpp"
 #include "../../visitor/visitor.hpp"
 #include "../../frame/thread.hpp"
+#include "breakExpr.hpp"
+#include "nextExpr.hpp"
 
 namespace namu {
 
@@ -21,17 +23,11 @@ namespace namu {
     }
 
     nbool me::_postProcess(frame& fr) const {
-        const retState& state = fr.getRetState();
-        if(state == frame::FUNC_RETURN) return true;
-        if(state == frame::BLK_BREAK) {
-            fr.relRet();
-            return true;
-        }
-        if(state == frame::BLK_NEXT) {
-            fr.relRet();
-            return false;
-        }
+        const node& ret = fr.getRet();
+        if(nul(ret)) return false;
 
-        return false;
+        if(ret.isSub<breakRet>()) return true;
+        if(ret.isSub<nextRet>()) return false;
+        return true;
     }
 }

@@ -245,10 +245,6 @@ namespace namu {
     void me::onTraverse(visitInfo i, retStateExpr& r) {
         if(_isLog)
             NAMU_DI("%s[%s]::onTraverse", r.getType().getName().c_str(), i.name.c_str());
-
-        node& ret = r.getRet();
-        if(!nul(ret))
-            ret.accept(visitInfo {"", &r, 0, 1, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, ifExpr& f) {

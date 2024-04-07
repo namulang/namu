@@ -44,8 +44,7 @@ namespace namu {
         frameInteract f1(meObj); {
             frameInteract f2(*this, s); {
                 frameInteract f3(*_blk); {
-                    _blk->run();
-                    return _postProcess();
+                    return _postprocess(_blk->run());
                 }
             }
         }
@@ -55,16 +54,13 @@ namespace namu {
         return _pos;
     }
 
-    str me::_postProcess() {
+    str me::_postprocess(str ret) {
         frame& fr = thread::get()._getNowFrame();
-        node& retVal = fr.getRet();
+        node* retVal = &fr.getRet();
+        if(nul(retVal)) retVal = &ret.get();
+        if(nul(retVal)) return NAMU_E("retVal == null"), str();
 
-        str ret;
-        if(!nul(retVal))
-            ret = retVal.as(*getRet()->as<node>());
-
-        fr.relRet();
-        return ret;
+        return retVal->as(*getRet()->as<node>());
     }
 
     scope* me::_evalArgs(const ucontainable& args) {

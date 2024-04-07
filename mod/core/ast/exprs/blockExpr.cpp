@@ -3,6 +3,7 @@
 #include "../../frame/thread.hpp"
 #include "../../builtin/primitive/nVoid.hpp"
 #include "../../visitor/visitor.hpp"
+#include "retStateExpr.hpp"
 
 namespace namu {
 
@@ -60,10 +61,8 @@ namespace namu {
         frame& fr = namu::thread::get()._getNowFrame();
         for(auto& e : _exprs) {
             ret = e.as<node>(); // if e is expr, it runs(). if not, it returns itself.
-            if(!fr.getRetState().isOverwritable(frame::BLK_EMPTY)) break;
+            if(fr.getRet().isSub<retStateExpr>()) break;
         }
-
-        fr.setRet(frame::BLK_RET, *ret);
         return ret;
     }
 

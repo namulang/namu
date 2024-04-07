@@ -3,75 +3,12 @@
 #include "../ast/baseObj.hpp"
 #include "scopeStack.hpp"
 #include "../builtin/res/tpair.hpp"
+#include "../ast/dumNode.hpp"
 
 struct immutableTest;
 struct frameTest;
 
 namespace namu {
-
-    class _nout retState : public instance {
-        NAMU(ADT(retState, instance))
-        friend class frame;
-
-    public:
-        // overrides operator==() by 'instance' class.
-
-        virtual nbool isOverwritable(const retState& it) const = 0;
-        virtual nbool isEmpty() const;
-
-    protected:
-        retState();
-    };
-
-    class _nout blkRetState : public retState {
-        NAMU(CLASS(blkRetState, retState))
-        friend class frame;
-
-    public:
-        blkRetState(nbool isOverwritable);
-
-    public:
-        nbool isOverwritable(const retState& it) const override;
-
-    protected:
-        blkRetState();
-
-    private:
-        nbool _isOverwritable;
-    };
-
-    class _nout blkEmptyRetState : public blkRetState {
-        NAMU(CLASS(blkEmptyRetState, blkRetState))
-
-    public:
-        blkEmptyRetState();
-
-    public:
-        nbool isEmpty() const override;
-    };
-
-    class _nout funcRetState : public retState {
-        NAMU(CLASS(funcRetState, retState))
-        friend class frame;
-
-    public:
-        nbool isOverwritable(const retState& it) const override;
-
-    protected:
-        funcRetState();
-    };
-
-    class _nout funcEmptyRetState : public funcRetState {
-        NAMU(CLASS(funcEmptyRetState, funcRetState))
-        friend class frame;
-
-    public:
-        virtual nbool isEmpty() const override;
-
-    protected:
-        funcEmptyRetState();
-    };
-
     class obj;
     class baseFunc;
     class _nout frame : public node { // TODO: may be obj, not node.
@@ -80,14 +17,6 @@ namespace namu {
         friend struct ::immutableTest;
         friend struct ::frameTest;
         friend class baseObj;
-
-    public:
-        static inline const blkEmptyRetState BLK_EMPTY;
-        static inline const blkRetState BLK_RET = blkRetState(true);
-        static inline const blkRetState BLK_BREAK = blkRetState(false);
-        static inline const blkRetState BLK_NEXT = blkRetState(false);
-        static inline const funcEmptyRetState FUNC_EMPTY;
-        static inline const funcRetState FUNC_RETURN;
 
     public:
         frame();
@@ -145,10 +74,7 @@ namespace namu {
 
         void rel() override;
 
-        void relRet();
-        nbool setRet(const retState& new1);
-        nbool setRet(const retState& new1, const node& toRet);
-        const retState& getRetState() const;
+        nbool setRet(const node& newRet) const;
         node& getRet() const;
 
     protected:
@@ -160,7 +86,6 @@ namespace namu {
         void _rel();
 
     private:
-        tstr<retState> _retState;
         tstr<baseObj> _obj;
         tstr<baseFunc> _func;
         scopeStack _local;

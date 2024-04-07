@@ -5,39 +5,6 @@
 #include "../ast/dumScope.hpp"
 
 namespace namu {
-
-    nbool retState::isEmpty() const {
-        return false;
-    }
-
-    retState::retState() {}
-
-    blkRetState::blkRetState(nbool isOverwritable): _isOverwritable(isOverwritable) {}
-    blkRetState::blkRetState() {}
-
-    nbool blkRetState::isOverwritable(const retState& it) const {
-        return _isOverwritable;
-    }
-
-    blkEmptyRetState::blkEmptyRetState(): super(true) {}
-
-    nbool blkEmptyRetState::isEmpty() const {
-        return true;
-    }
-
-    nbool funcRetState::isOverwritable(const retState& it) const {
-        return isEmpty() || it.isSub<funcRetState>();
-    }
-
-    funcRetState::funcRetState() {}
-
-    nbool funcEmptyRetState::isEmpty() const {
-        return true;
-    }
-
-    funcEmptyRetState::funcEmptyRetState() {}
-
-
     NAMU(DEF_ME(frame), DEF_VISIT())
 
     me::frame() {
@@ -104,12 +71,9 @@ namespace namu {
     }
 
     tstr<scopes> me::popLocal() {
-        if(*_retState == BLK_RET)
-            relRet();
         return _local.pop();
     }
     // I won't provide API for poping a single node from the scope.
-
     void me::setFunc(baseFunc& new1) { _func.bind(new1); }
     void me::setFunc() { setFunc(nulOf<baseFunc>()); }
     baseFunc& me::getFunc() { return *_func; }
@@ -138,23 +102,8 @@ namespace namu {
         super::rel();
     }
 
-    void me::relRet() {
-        _retState.bind(BLK_EMPTY);
-        _ret.rel();
-    }
-
-    nbool me::setRet(const retState& new1) {
-        return setRet(new1, nulOf<node>());
-    }
-    nbool me::setRet(const retState& new1, const node& toRet) {
-        if(_retState && !_retState->isOverwritable(new1)) return true;
-
-        _retState.bind(new1);
-        return _ret.bind(toRet);
-    }
-
-    const retState& me::getRetState() const {
-        return *_retState;
+    nbool me::setRet(const node& newRet) const {
+        return _ret.bind(newRet);
     }
 
     node& me::getRet() const {
@@ -165,6 +114,6 @@ namespace namu {
         _obj.rel();
         _func.rel();
         _local.rel();
-        relRet();
+        _ret.rel();
     }
 }

@@ -46,7 +46,7 @@ namespace namu {
 
         void _setPos(const point& new1) override;
 
-        str _postProcess();
+        str _postprocess(str ret);
 
     private:
         params _params;

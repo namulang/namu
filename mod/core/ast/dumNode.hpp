@@ -17,6 +17,8 @@ namespace namu {
 
         str run(const args& a) override;
 
+        str getEval() const override;
+
         clonable* clone() const override;
     };
 }

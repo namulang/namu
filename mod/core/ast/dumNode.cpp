@@ -19,6 +19,10 @@ namespace namu {
         return str();
     }
 
+    str me::getEval() const {
+        return str();
+    }
+
     clonable* me::clone() const {
         return new me(*this);
     }

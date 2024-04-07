@@ -6,10 +6,8 @@ namespace namu {
 
     NAMU(DEF_ME(nextExpr), DEF_VISIT())
 
-    me::nextExpr(const node& ret): super(ret) {}
-    me::nextExpr() {}
-
-    const retState& me::_onGetRetState() const {
-        return frame::BLK_NEXT;
+    const node& me::_onGetRet() const {
+        static nextRet inner;
+        return inner;
     }
 }

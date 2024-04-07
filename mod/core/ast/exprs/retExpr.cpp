@@ -15,7 +15,7 @@ namespace namu {
         if(_ret->isSub<baseObj>()) return _ret; // case: obj
 
         str ret = _ret->as<node>(); // case: expr
-        thread::get()._getNowFrame().setRet(frame::FUNC_RETURN, *ret);
+        thread::get()._getNowFrame().setRet(*ret);
         return ret;
     }
 
