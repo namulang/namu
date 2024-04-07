@@ -58,10 +58,9 @@ namespace namu {
         // for optimization, blockExpr's frame should be controlled from outside of this this.
         // that's why I didn't use frameInteracter here. see forExpr::run().
         str ret;
-        frame& fr = namu::thread::get()._getNowFrame();
         for(auto& e : _exprs) {
             ret = e.as<node>(); // if e is expr, it runs(). if not, it returns itself.
-            if(fr.getRet().isSub<retStateExpr>()) break;
+            if(ret && ret.isSub<retStateExpr>()) break;
         }
         return ret;
     }
