@@ -531,12 +531,6 @@ namespace namu {
         return _maker.make<breakExpr>();
     }
 
-    breakExpr* me::onBreak(node& exp) {
-        NAMU_DI("tokenEvent: onBreak(%s)", exp.getType().getName().c_str());
-
-        return _maker.make<breakExpr>(exp);
-    }
-
     nextExpr* me::onNext() {
         NAMU_DI("tokenEvent: onNext()");
 

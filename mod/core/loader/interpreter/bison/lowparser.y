@@ -176,7 +176,7 @@
 %type <asArgs> typenames typeparams
 //  keyword:
 //      branch:
-%type <asNode> if ret-inline ret-compound next break-inline break-compound
+%type <asNode> if ret-inline ret-compound next break
 %type <asNode> matching matchers matcher-item
 %type <asNarr> matcher-equal-rhs
 //      loop
@@ -356,13 +356,12 @@ expr-inline: expr-inline9 { $$ = $1; }
          | expr-inline9 DIV_ASSIGN expr-inline9 { $$ = EVENTER.onDivAssign(*$1, *$3); }
          | expr-inline9 MOD_ASSIGN expr-inline9 { $$ = EVENTER.onModAssign(*$1, *$3); }
          | ret-inline { $$ = $1; }
-         | break-inline { $$ = $1; }
+         | break { $$ = $1; }
          | next { $$ = $1; }
 stmt: stmt-inline { $$ = $1; }
     | stmt-compound { $$ = $1; }
 stmt-inline: expr-inline NEWLINE { $$ = $1; }
 stmt-compound: ret-compound { $$ = $1; }
-             | break-compound { $$ = $1; }
              | expr-compound { $$ = $1; }
              | matching { $$ = $1; }
 
@@ -474,9 +473,7 @@ ret-compound: RET expr-compound { $$ = EVENTER.onRet(*$2); }
 
 next: NEXT { $$ = EVENTER.onNext(); }
 
-break-inline: BREAK { $$ = EVENTER.onBreak(); }
-            | BREAK expr-inline9 { $$ = EVENTER.onBreak(*$2); }
-break-compound: BREAK expr-compound { $$ = EVENTER.onBreak(*$2); }
+break: BREAK { $$ = EVENTER.onBreak(); }
 
 matching: expr-inline9 NEWLINE INDENT matchers DEDENT {
             // ??

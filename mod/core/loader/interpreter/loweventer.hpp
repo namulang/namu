@@ -195,7 +195,6 @@ namespace namu {
         retExpr* onRet();
         retExpr* onRet(node& exp);
         breakExpr* onBreak();
-        breakExpr* onBreak(node& exp);
         nextExpr* onNext();
         //      run:
         runExpr* onFillFromOfFuncCall(const node& me, runExpr& to);
