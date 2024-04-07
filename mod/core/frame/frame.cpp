@@ -110,22 +110,10 @@ namespace namu {
     }
     // I won't provide API for poping a single node from the scope.
 
-    void me::pushFunc(baseFunc& new1) {
-        _funcs.push_back(tstr<baseFunc>(new1));
-    }
-
-    void me::popFunc() {
-        _funcs.pop_back();
-    }
-
-    baseFunc& me::getFunc() {
-        if(_funcs.size() <= 0) return nulOf<baseFunc>();
-        return *_funcs.back();
-    }
-
-    baseObj& me::getMe() {
-        return *_obj;
-    }
+    void me::setFunc(baseFunc& new1) { _func.bind(new1); }
+    void me::setFunc() { setFunc(nulOf<baseFunc>()); }
+    baseFunc& me::getFunc() { return *_func; }
+    baseObj& me::getMe() { return *_obj; }
 
     // node:
     nbicontainer& me::subs() {
@@ -175,7 +163,7 @@ namespace namu {
 
     void me::_rel() {
         _obj.rel();
-        _funcs.clear();
+        _func.rel();
         _local.rel();
         relRet();
     }

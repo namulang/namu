@@ -99,7 +99,7 @@ namespace namu {
 
         NAMU_DI("%s._inFrame()", getType().getName().c_str());
         fr.pushLocal(subs());
-        fr.pushFunc(*this);
+        fr.setFunc(*this);
         fr.pushLocal(nul(args) ? nulOf<nbicontainer>() : (nbicontainer&) args); // including 'me'
     }
 
@@ -110,7 +110,7 @@ namespace namu {
         baseFunc& f = fr.getFunc();
         if(nul(f) || &f != this) return;
 
-        fr.popFunc();
+        fr.setFunc();
         fr.popLocal();
         fr.popLocal();
     }

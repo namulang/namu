@@ -129,8 +129,8 @@ namespace namu {
         // I won't provide API for poping a single node from the scope.
         tstr<scopes> popLocal();
 
-        void pushFunc(baseFunc& new1);
-        void popFunc();
+        void setFunc(baseFunc& new1);
+        void setFunc();
         baseFunc& getFunc();
         const baseFunc& getFunc() const NAMU_UNCONST_FUNC(getFunc())
         const baseObj& getMe() const NAMU_UNCONST_FUNC(getMe())
@@ -162,7 +162,7 @@ namespace namu {
     private:
         tstr<retState> _retState;
         tstr<baseObj> _obj;
-        std::vector<tstr<baseFunc>> _funcs;
+        tstr<baseFunc> _func;
         scopeStack _local;
         mutable str _ret;
     };
