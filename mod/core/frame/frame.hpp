@@ -75,6 +75,7 @@ namespace namu {
         void rel() override;
 
         nbool setRet(const node& newRet) const;
+        nbool setRet() const;
         node& getRet() const;
 
     protected:

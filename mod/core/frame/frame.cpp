@@ -106,6 +106,11 @@ namespace namu {
         return _ret.bind(newRet);
     }
 
+    nbool me::setRet() const {
+        _ret.rel();
+        return true;
+    }
+
     node& me::getRet() const {
         return *_ret;
     }

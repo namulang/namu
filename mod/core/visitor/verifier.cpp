@@ -478,6 +478,11 @@ namespace namu {
             return;
         }
 
+        LOG("verify: func: 'break' or 'next' can't be used to last stmt");
+        const node& lastStmt = *blk.getStmts().last();
+        if(lastStmt.isSub<retStateExpr>())
+            return _err(lastStmt.getPos(), errCode::FUNC_SHOULD_RETURN_SOMETHING);
+
         LOG("verify: func[%s]: %s iterateBlock[%d]", i.name.c_str(), me.getType().getName().c_str(),
                 me._blk->subs().len());
 
