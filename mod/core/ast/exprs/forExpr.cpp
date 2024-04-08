@@ -40,7 +40,7 @@ namespace namu {
                 fr.pushLocal(_name, *elem);
 
                 ret = blk.run();
-                if(_postProcess(fr))
+                if(_postprocess(fr))
                     return ret->asImpli(*getEval());
             }
 

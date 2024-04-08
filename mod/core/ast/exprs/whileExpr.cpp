@@ -30,7 +30,7 @@ namespace namu {
 
             frameInteract f1(blk); {
                 res = blk.run();
-                if(_postProcess(fr))
+                if(_postprocess(fr))
                     return res->asImpli(*getEval());
             }
         }

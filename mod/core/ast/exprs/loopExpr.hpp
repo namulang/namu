@@ -19,7 +19,7 @@ namespace namu {
 
     protected:
         /// @return true if exit the loop
-        nbool _postProcess(frame& fr) const;
+        nbool _postprocess(frame& fr) const;
 
     private:
         mutable tstr<blockExpr> _blk;

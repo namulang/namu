@@ -8,7 +8,7 @@ namespace namu {
 
     str me::run(const args& a) {
         thread::get()._getNowFrame().setRet(_onGetRet());
-        return str();
+        return nVoid::singletone();
     }
 
     priority me::prioritize(const args& a) const {
@@ -16,6 +16,6 @@ namespace namu {
     }
 
     str me::getEval() const {
-        return str();
+        return nVoid::singletone();
     }
 }

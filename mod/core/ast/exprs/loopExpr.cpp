@@ -22,12 +22,16 @@ namespace namu {
         return _eval.bind(new1);
     }
 
-    nbool me::_postProcess(frame& fr) const {
+    nbool me::_postprocess(frame& fr) const {
         const node& ret = fr.getRet();
         if(nul(ret)) return false;
+        if(ret.isSub<nextRet>()) {
+            fr.setRet();
+            return false;
+        }
+        if(ret.isSub<breakRet>()) fr.setRet(); // after I go out of the loop, I should clear break state.
 
-        if(ret.isSub<breakRet>()) return true;
-        if(ret.isSub<nextRet>()) return false;
+        // stop the loop. I found the return value of the func.
         return true;
     }
 }
