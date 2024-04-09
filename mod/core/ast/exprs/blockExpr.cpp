@@ -66,9 +66,7 @@ namespace namu {
     }
 
     str me::getEval() const {
-        ncnt len = _exprs.len();
-        if(len <= 0) return str();
-
-        return _exprs[len-1].getEval();
+        if(_exprs.isEmpty()) return str();
+        return _exprs.last()->getEval();
     }
 }

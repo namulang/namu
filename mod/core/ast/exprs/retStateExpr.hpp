@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout retStateExpr : public expr {
-        NAMU(ADT(retStateExpr, expr, expr::exprType), VISIT())
+        NAMU(ADT(retStateExpr, expr), VISIT())
 
     public:
         using super::run;

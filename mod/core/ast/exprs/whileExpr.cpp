@@ -42,8 +42,8 @@ namespace namu {
         if(_initEval) return super::getEval();
 
         _initEval = true;
-        str newEval = getBlock().getEval();
-        setEval(*newEval);
+        str newEval = getBlock().getEval(); // elem of last stmt.
+        setEval(*new arr(*newEval));
         return newEval;
     }
 }

@@ -1,12 +1,12 @@
 #pragma once
 
 #include "retStateExpr.hpp"
-#include "../dumNode.hpp"
+#include "../../builtin/primitive/nVoid.hpp"
 
 namespace namu {
 
-    class breakRet : public dumNode {
-        NAMU(CLASS(breakRet, dumNode))
+    class breakRet : public nVoid {
+        NAMU(CLASS(breakRet, nVoid))
     };
 
     class _nout breakExpr : public retStateExpr {

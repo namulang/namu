@@ -619,13 +619,12 @@ namespace namu {
         LOG("verify: breakExpr: declared outside of loop?");
         if(_recentLoops.size() <= 0) return _err(me.getPos(), errCode::BREAK_OUTSIDE_OF_LOOP);
 
-        loopExpr& recent = *_recentLoops.back();
-        str recentEval = recent.getEval();
-        if(recentEval) {
-            str meEval = me.getEval();
-            const node& deduced = recentEval->deduce(*meEval);
-            recent.setEval(deduced);
-        }
+        tstr<arr> eval = me.getEval();
+        if(!eval) return _err(me.getPos(), errCode::LOOP_NO_RET_ARR);
+
+        const narr& beans = eval->getType().getBeans();
+        ncnt len = beans.len();
+        if(len != 1) return _err(me.getPos(), errCode::LOOP_NO_RET_PARAMS_NOT_1, len);
     }
 
     void me::onVisit(visitInfo i, nextExpr& me) {

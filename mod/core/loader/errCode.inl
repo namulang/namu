@@ -77,6 +77,8 @@ PAIRX(DONT_KNOW_ME,                 "I don't know what the 'me' object is to cal
 //  retState:
 PAIRX(BREAK_OUTSIDE_OF_LOOP,        "use 'break' outside of a loop")
 PAIRX(NEXT_OUTSIDE_OF_LOOP,         "use 'next' outside of a loop")
+PAIRX(LOOP_NO_RET_ARR,              "loop expression didn't return an array")
+PAIRX(LOOP_NO_RET_PARAMS_NOT_1,     "loop expression didn't return an array with single generic parameter. length of it was '%d'")
 //  if:
 PAIRX(CONDITION_IS_EMPTY,           "condition expression is empty")
 PAIRX(CONDITION_CANT_CAST_TO_BOOL,  "condition expression can't cast to bool type.")
