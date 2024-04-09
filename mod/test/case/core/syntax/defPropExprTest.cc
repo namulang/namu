@@ -100,7 +100,7 @@ TEST_F(defPropExprTest, defVoidContainerNegative) {
     make().negative().parse(R"SRC(
         main() void
             a void[]
-    )SRC").shouldParsed(true);
+    )SRC").shouldParsed(false);
     shouldVerified(false);
 }
 /* TODO: TEST_F(defPropExprTest, defineVarWithoutCtorNegative) {
