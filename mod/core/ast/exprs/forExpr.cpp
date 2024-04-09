@@ -29,25 +29,28 @@ namespace namu {
         str iter = ased->run("iterate", args{narr{*new nInt(0)}});
         if(!iter) return NAMU_E("iter is null"), str();
 
-        str ret;
+        arr& eval = getEval().cast<arr>();
+        if(nul(eval))
+            return NAMU_E("eval isn't arr"), str();
+        arr& ret = *new arr(eval.getType().getBeans()[0]);
         frame& fr = thread::get()._getNowFrame();
+
         while(!iter->run("isEnd")->cast<nbool>()) {
             str elem = iter->run("get");
             if(!elem)
                 return NAMU_E("elem is null"), str();
-
             frameInteract f1(blk); {
                 fr.pushLocal(_name, *elem);
 
-                ret = blk.run();
+                ret.add(*blk.run());
                 if(_postprocess(fr))
-                    return ret->asImpli(*getEval());
+                    return ret;
             }
 
             iter->run("next", args{narr{*new nInt(1)}});
         }
 
-        return ret ? ret->asImpli(*getEval()) : ret;
+        return ret;
     }
 
     str me::getEval() const {
@@ -62,8 +65,8 @@ namespace namu {
         frameInteract f1(blk); {
             thread::get()._getNowFrame().pushLocal(getLocalName(), (node*) elemType->clone());
 
-            str newEval = blk.getEval(); // elem of last stmt.
-            setEval(*new arr(*newEval));
+            arr& newEval = *new arr(*blk.getEval()); // elem of last stmt.
+            setEval(newEval);
             return newEval;
         }
     }

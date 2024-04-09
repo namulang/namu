@@ -169,9 +169,11 @@ TEST_F(forExprTest, returnMiddleOfLoop1) {
             p1.name = "Chales"
 
             res := (for p in {p1, person()}
-                break p1.name
+                if p.name != p1.name
+                    break
+                p.name
             )
-            ret (res + " Lee") == "Chales Lee"
+            ret (res[0] + " Lee") == "Chales Lee"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);

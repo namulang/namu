@@ -595,7 +595,6 @@ namespace namu {
 
         me.getBlock().inFrame();
         thread::get()._getNowFrame().pushLocal(name, (node*) elemType->clone());
-
         _recentLoops.push_back(&me);
     }
 
@@ -603,6 +602,15 @@ namespace namu {
         LOG("verify: forExpr: onLeave");
         me.getBlock().outFrame();
         _recentLoops.pop_back();
+
+        LOG("verify: forExpr: eval Value check: is an array?");
+        tstr<arr> eval = me.getEval();
+        if(!eval) return _err(me.getPos(), errCode::LOOP_NO_RET_ARR);
+
+        LOG("verify: forExpr: eval Value check: array has single generic parameter which is not void?");
+        const narr& beans = eval->getType().getBeans();
+        ncnt len = beans.len();
+        if(len != 1) return _err(me.getPos(), errCode::LOOP_NO_RET_PARAMS_NOT_1, len);
     }
 
     void me::onVisit(visitInfo i, whileExpr& me) {
@@ -613,18 +621,20 @@ namespace namu {
     void me::onLeave(visitInfo i, whileExpr& me) {
         LOG("verify: whileExpr: onLeave");
         _recentLoops.pop_back();
+
+        LOG("verify: whileExpr: eval Value check: is an array?");
+        tstr<arr> eval = me.getEval();
+        if(!eval) return _err(me.getPos(), errCode::LOOP_NO_RET_ARR);
+
+        LOG("verify: whileExpr: eval Value check: array has single generic parameter which is not void?");
+        const narr& beans = eval->getType().getBeans();
+        ncnt len = beans.len();
+        if(len != 1) return _err(me.getPos(), errCode::LOOP_NO_RET_PARAMS_NOT_1, len);
     }
 
     void me::onVisit(visitInfo i, breakExpr& me) {
         LOG("verify: breakExpr: declared outside of loop?");
         if(_recentLoops.size() <= 0) return _err(me.getPos(), errCode::BREAK_OUTSIDE_OF_LOOP);
-
-        tstr<arr> eval = me.getEval();
-        if(!eval) return _err(me.getPos(), errCode::LOOP_NO_RET_ARR);
-
-        const narr& beans = eval->getType().getBeans();
-        ncnt len = beans.len();
-        if(len != 1) return _err(me.getPos(), errCode::LOOP_NO_RET_PARAMS_NOT_1, len);
     }
 
     void me::onVisit(visitInfo i, nextExpr& me) {
