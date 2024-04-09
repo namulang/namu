@@ -19,7 +19,10 @@ namespace namu {
         if(!_condition) return NAMU_E("_condition is null."), str();
         if(nul(blk)) return NAMU_E("blk is null."), str();
 
-        str res;
+        arr& eval = getEval().cast<arr>();
+        if(nul(eval))
+            return NAMU_E("eval isn't arr"), str();
+        arr& ret = *new arr(eval.getType().getBeans()[0]);
         frame& fr = thread::get()._getNowFrame();
         while(true) {
             str ased = _condition->asImpli<nBool>();
@@ -29,21 +32,21 @@ namespace namu {
                 break;
 
             frameInteract f1(blk); {
-                res = blk.run();
+                ret.add(*blk.run());
                 if(_postprocess(fr))
-                    return res->asImpli(*getEval());
+                    return ret;
             }
         }
 
-        return res->asImpli(*getEval());
+        return ret;
     }
 
     str me::getEval() const {
         if(_initEval) return super::getEval();
 
         _initEval = true;
-        str newEval = getBlock().getEval(); // elem of last stmt.
-        setEval(*new arr(*newEval));
+        arr& newEval = *new arr(*getBlock().getEval()); // elem of last stmt.
+        setEval(newEval);
         return newEval;
     }
 }
