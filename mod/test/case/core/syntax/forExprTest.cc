@@ -207,10 +207,10 @@ TEST_F(forExprTest, retMiddleOfLoop) {
             p1 := person()
             p1.name = "Chales"
 
-            res := (for p in {p1, person()}
+            res := (for p in {person(), p1, person()}
                 p1.name
             )
-            ret res + " Lee" == "Chales Lee"
+            ret res[1] + " Lee" == "Chales Lee"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -227,8 +227,8 @@ TEST_F(forExprTest, retMiddleOfLoopWithoutParenthesis) {
             p1.name = "Chales"
 
             res := for p in {p1, person()}
-                p1.name
-            ret res + " Lee" == "Chales Lee"
+                p1.name // it's p1, not p.
+            ret res[1] + " Lee" == "Chales Lee"
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -264,7 +264,7 @@ TEST_F(forExprTest, evalForExprWithoutRet) {
             res := (for p in {p1, person()}
                 p.name
             )
-            ret res == ""
+            ret res[1] == ""
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -275,13 +275,16 @@ TEST_F(forExprTest, simpleBreakTest) {
     make().parse(R"SRC(
         main() int
             res := (for n in 1..10
-                break 5
+                if n < 5
+                    n
+                else
+                    break
             )
-            ret res
+            ret res[res.len() - 1]
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), 5);
+    ASSERT_EQ(res.cast<nint>(), 10);
 }
 
 TEST_F(forExprTest, simpleBreakTestWithoutParenthesis) {
