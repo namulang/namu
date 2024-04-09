@@ -60,7 +60,9 @@ namespace namu {
         if(nul(retVal)) retVal = &ret.get();
         if(nul(retVal)) return NAMU_E("retVal == null"), str();
 
-        return retVal->as(*getRet()->as<node>());
+        ret = retVal->as(*getRet()->as<node>());
+        fr.setRet();
+        return ret;
     }
 
     scope* me::_evalArgs(const ucontainable& args) {
