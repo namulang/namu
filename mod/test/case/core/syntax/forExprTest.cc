@@ -307,12 +307,17 @@ TEST_F(forExprTest, simpleBreakTestWithoutParenthesis) {
     make().parse(R"SRC(
         main() int
             res := for n in 1..10
-                break 5
-            ret res
+                if n < 5
+                    next
+                else if n > 5
+                    break
+                else
+                    n
+            ret res[0] + res.len() // 5 + 1
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), 5);
+    ASSERT_EQ(res.cast<nint>(), 6);
 }
 
 TEST_F(forExprTest, retForExpr) {
