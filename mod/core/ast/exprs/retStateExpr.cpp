@@ -11,11 +11,11 @@ namespace namu {
         return nVoid::singletone();
     }
 
-    priority me::prioritize(const args& a) const {
-        return NO_MATCH;
+    str me::getEval() const {
+        return _onGetRet();
     }
 
-    str me::getEval() const {
-        return nVoid::singletone();
+    priority me::prioritize(const args& a) const {
+        return NO_MATCH;
     }
 }

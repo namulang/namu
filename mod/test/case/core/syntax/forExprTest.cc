@@ -279,12 +279,12 @@ TEST_F(forExprTest, simpleBreakTest) {
                     n
                 else
                     break
-            )
-            ret res[res.len() - 1]
+            ) // res will be {1, 2, 3, 4}
+            ret res[res.len() - 1] // 4
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), 10);
+    ASSERT_EQ(res.cast<nint>(), 4);
 }
 
 TEST_F(forExprTest, simpleBreakTestWithoutParenthesis) {

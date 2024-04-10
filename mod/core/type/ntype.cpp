@@ -1,6 +1,8 @@
 #include "ntype.hpp"
 #include "../ast/node.hpp"
 #include "../builtin/primitive.hpp"
+#include "../ast/exprs/breakExpr.hpp"
+#include "../ast/exprs/nextExpr.hpp"
 
 namespace namu {
 
@@ -108,22 +110,30 @@ namespace namu {
                 {_X(nByte), _X(nInt)},
                 {_X(nBool), _X(nInt)},
                 {_X(nChar), _X(nChar)},
+                {_X(breakRet), _X(nInt)},
+                {_X(nextRet), _X(nInt)},
             }},
             {_X(nFlt), {
                 {_X(nInt), _X(nFlt)},
                 {_X(nFlt), _X(nFlt)},
                 {_X(nByte), _X(nFlt)},
-                {_X(nBool), _X(nFlt)}
+                {_X(nBool), _X(nFlt)},
+                {_X(breakRet), _X(nFlt)},
+                {_X(nextRet), _X(nFlt)},
             }},
             {_X(nStr), {
                 {_X(nStr), _X(nStr)},
                 {_X(nChar), _X(nStr)},
+                {_X(breakRet), _X(nStr)},
+                {_X(nextRet), _X(nStr)}
             }},
             {_X(nByte), {
                 {_X(nInt), _X(nInt)},
                 {_X(nByte), _X(nByte)},
                 {_X(nBool), _X(nByte)},
                 {_X(nChar), _X(nChar)},
+                {_X(breakRet), _X(nChar)},
+                {_X(nextRet), _X(nChar)}
             }},
             {_X(nBool), {
                 {_X(nInt), _X(nInt)},
@@ -131,6 +141,8 @@ namespace namu {
                 {_X(nByte), _X(nByte)},
                 {_X(nBool), _X(nBool)},
                 {_X(nChar), _X(nChar)},
+                {_X(breakRet), _X(nBool)},
+                {_X(nextRet), _X(nBool)}
             }},
             {_X(nChar), {
                 {_X(nChar), _X(nChar)},
@@ -138,6 +150,8 @@ namespace namu {
                 {_X(nByte), _X(nChar)},
                 {_X(nInt), _X(nChar)},
                 {_X(nStr), _X(nStr)},
+                {_X(breakRet), _X(nChar)},
+                {_X(nextRet), _X(nChar)}
             }},
         };
 
