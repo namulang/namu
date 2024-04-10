@@ -125,7 +125,7 @@ namespace namu {
                 {_X(nStr), _X(nStr)},
                 {_X(nChar), _X(nStr)},
                 {_X(breakRet), _X(nStr)},
-                {_X(nextRet), _X(nStr)}
+                {_X(nextRet), _X(nStr)},
             }},
             {_X(nByte), {
                 {_X(nInt), _X(nInt)},
@@ -133,7 +133,7 @@ namespace namu {
                 {_X(nBool), _X(nByte)},
                 {_X(nChar), _X(nChar)},
                 {_X(breakRet), _X(nChar)},
-                {_X(nextRet), _X(nChar)}
+                {_X(nextRet), _X(nChar)},
             }},
             {_X(nBool), {
                 {_X(nInt), _X(nInt)},
@@ -142,7 +142,7 @@ namespace namu {
                 {_X(nBool), _X(nBool)},
                 {_X(nChar), _X(nChar)},
                 {_X(breakRet), _X(nBool)},
-                {_X(nextRet), _X(nBool)}
+                {_X(nextRet), _X(nBool)},
             }},
             {_X(nChar), {
                 {_X(nChar), _X(nChar)},
@@ -151,8 +151,24 @@ namespace namu {
                 {_X(nInt), _X(nChar)},
                 {_X(nStr), _X(nStr)},
                 {_X(breakRet), _X(nChar)},
-                {_X(nextRet), _X(nChar)}
+                {_X(nextRet), _X(nChar)},
             }},
+            {_X(breakRet), {
+                {_X(nInt), _X(nInt)},
+                {_X(nBool), _X(nBool)},
+                {_X(nChar), _X(nChar)},
+                {_X(nByte), _X(nByte)},
+                {_X(nStr), _X(nStr)},
+                {_X(nFlt), _X(nFlt)},
+            }},
+            {_X(nextRet), {
+                {_X(nInt), _X(nInt)},
+                {_X(nBool), _X(nBool)},
+                {_X(nChar), _X(nChar)},
+                {_X(nByte), _X(nByte)},
+                {_X(nStr), _X(nStr)},
+                {_X(nFlt), _X(nFlt)},
+            }}
         };
 
 #undef _X
