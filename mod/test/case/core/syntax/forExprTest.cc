@@ -434,8 +434,8 @@ TEST_F(forExprTest, evalOfForLoop) {
             ans := for n in 0..8
                 if sum > 3
                     break
-                ++sum as str
-            ret ans == "2"
+                print(++sum as str)
+            ret ans[ans.len() - 1] == "4"
     )SRC").shouldVerified(true);
 
     str res = run();

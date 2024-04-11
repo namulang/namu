@@ -1,12 +1,11 @@
 #pragma once
 
 #include "retStateExpr.hpp"
-#include "../../builtin/primitive/nVoid.hpp"
 
 namespace namu {
 
-    class _nout nextRet : public nVoid {
-        NAMU(CLASS(nextRet, nVoid))
+    class _nout nextRet : public retState {
+        NAMU(CLASS(nextRet, retState))
     };
 
     class _nout nextExpr : public retStateExpr {

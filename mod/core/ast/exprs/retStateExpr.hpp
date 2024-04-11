@@ -1,8 +1,13 @@
 #pragma once
 
 #include "../expr.hpp"
+#include "../../builtin/primitive/nVoid.hpp"
 
 namespace namu {
+
+    class _nout retState : public nVoid {
+        NAMU(CLASS(retState, nVoid))
+    };
 
     class _nout retStateExpr : public expr {
         NAMU(ADT(retStateExpr, expr), VISIT())

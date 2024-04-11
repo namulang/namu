@@ -8,7 +8,7 @@ namespace namu {
 
     str me::run(const args& a) {
         thread::get()._getNowFrame().setRet(_onGetRet());
-        return nVoid::singletone();
+        return _onGetRet();
     }
 
     str me::getEval() const {

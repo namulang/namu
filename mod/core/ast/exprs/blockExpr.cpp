@@ -60,7 +60,7 @@ namespace namu {
         str ret;
         for(auto& e : _exprs) {
             ret = e.as<node>(); // if e is expr, it runs(). if not, it returns itself.
-            if(ret && ret.isSub<retStateExpr>()) break;
+            if(ret && ret->isSub<retState>()) break;
         }
         return ret;
     }
