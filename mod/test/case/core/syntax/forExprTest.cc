@@ -86,7 +86,7 @@ TEST_F(forExprTest, sequenceLoop) {
     ASSERT_EQ(res.cast<nint>(), 9);
 }
 
-TEST_F(forExprTest, validationCheck) {
+TEST_F(forExprTest, validationCheckNegative) {
     make().negative().parse(R"SRC(
         main() str
             for n in {1, 2, 3}
@@ -248,7 +248,7 @@ TEST_F(forExprTest, retMiddleOfLoopNegative) {
             res = (for p in {p1, person()}
                 p1.name
             )
-            ret res
+            ret res // res is array.
     )SRC").shouldVerified(false);
 }
 
@@ -323,11 +323,12 @@ TEST_F(forExprTest, simpleBreakTestWithoutParenthesis) {
 TEST_F(forExprTest, retForExpr) {
     make().parse(R"SRC(
         main() int
-            for n in 1..10
+            answer := for n in 1..10
                 if true
                     5
                 else
                     7
+            answer[3]
     )SRC").shouldVerified(true);
     str res = run();
     ASSERT_TRUE(res);
@@ -336,70 +337,75 @@ TEST_F(forExprTest, retForExpr) {
 
 TEST_F(forExprTest, breakIsNotExpressionNegative) {
     make().negative().parse(R"SRC(
+        foo() int: 3
         main() int
-            for n in 1..5
-                foo(break 3)
+            answer := for n in 1..5
+                foo(break)
+            answer[0]
     )SRC").shouldParsed(false);
 }
 
 TEST_F(forExprTest, nextIsNotExpressionNegative) {
     make().negative().parse(R"SRC(
+        foo() int: 3
         main() int
-            for n in 1..5
+            answer := for n in 1..5
                 foo(next)
+            answer[0]
     )SRC").shouldParsed(false);
 }
 
 TEST_F(forExprTest, breakInsideOfFor) {
     make().parse(R"SRC(
         main() int
-            for n in 1..5
-                break 7
+            answer := for n in 1..5
+                if n < 4
+                    n
+                else: break
+            answer[answer.len() - 1]
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), 7);
-}
-
-TEST_F(forExprTest, breakInsideOfIfExpr) {
-    make().parse(R"SRC(
-        main() void
-            for n in 1..5
-                if n == 3
-                    break 7
-    )SRC").shouldVerified(true);
-
-    str res = run();
-    ASSERT_TRUE(res);
-    ASSERT_TRUE(res->isSub<nVoid>());
+    ASSERT_EQ(res.cast<nint>(), 3);
 }
 
 TEST_F(forExprTest, breakInsideOfIfExprNegative) {
     make().negative().parse(R"SRC(
         main() int
+            for n in 1..5
+                if n == 3
+                    break
+    )SRC").shouldVerified(false);
+}
+
+TEST_F(forExprTest, breakInsideOfIfExprNegative2) {
+    make().negative().parse(R"SRC(
+        main() int
             // this stmt returns what forExpr evaluated.
             // but its type is void. because ifExpr doesn't have else
             // block.
-            for n in 1..5
+            res := for n in 1..5
                 if n == 3
-                    break 7
+                    break
+            ret res[res.len() - 1]
     )SRC").shouldVerified(false);
 }
 
 TEST_F(forExprTest, breakInsideOfIfExpr2) {
     make().parse(R"SRC(
         main() int
-            for n in 1..5
+            res := for n in 1..5
                 if n == 3
-                    break 7
+                    break
                 else
                     n
+            ret res[res.len() - 1] // res = {1, 2}
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), 7);
+    ASSERT_EQ(res.cast<nint>(), 2);
 }
 
 TEST_F(forExprTest, breakNestedForLoop) {
@@ -427,9 +433,9 @@ TEST_F(forExprTest, evalOfForLoop) {
             sum := 0
             ans := for n in 0..8
                 if sum > 3
-                    break "hello"
+                    break
                 ++sum as str
-            ret ans == "hello"
+            ret ans == "2"
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -437,46 +443,56 @@ TEST_F(forExprTest, evalOfForLoop) {
     ASSERT_EQ(res.cast<nint>(), 1);
 }
 
-TEST_F(forExprTest, evalOfForLoopNegative) {
-    make().negative().parse(R"SRC(
+TEST_F(forExprTest, evalOfForLoop2) {
+    make().parse(R"SRC(
         main() int
             sum := 0
             for n in 0..8
                 if sum > 3
-                    break "hello"
-                ++sum
-    )SRC").shouldVerified(false);
+                    break
+                sum += n
+            sum
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 3);
 }
 
-TEST_F(forExprTest, evalOfForLoopNegative2) {
-    make().negative().parse(R"SRC(
+TEST_F(forExprTest, evalOfForLoop3) {
+    make().parse(R"SRC(
         def a
-            foo() void
-                ret
+            val := 0
 
         main() int
-            sum := 0
-            for n in 0..8
-                if sum > 3
-                    break a()
-                ++sum
-    )SRC").shouldVerified(false);
+            res := for n in 0..8
+                if n > 3
+                    break
+                a1 := a()
+                a1.val = n
+            ret res[res.len()].val
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 3);
 }
  
-TEST_F(forExprTest, evalOfForLoopNegative3) {
-    make().negative().parse(R"SRC(
-        def a
-            foo() void
-                ret
-
+TEST_F(forExprTest, evalOfForLoop4) {
+    make().parse(R"SRC(
         main() int
-            sum := 0
+            sum int
             answer := for n in 0..8
                 if sum > 11
                     if true
-                        break "hello"
-                ++sum
-    )SRC").shouldVerified(false);
+                        break
+                sum += n
+            answer[answer.len() - 1] // answer = {0, 1, 3, 6, 10, 15}
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 15);
 }
 
 TEST_F(forExprTest, evalOfForLoopNegative4) {
@@ -499,18 +515,6 @@ TEST_F(forExprTest, evalOfForLoopNegative4) {
     ASSERT_EQ(res.cast<nint>(), 4);
 }
 
-TEST_F(forExprTest, evalOfForLoopNegative5) {
-    make().negative().parse(R"SRC(
-        main() str
-            sum := 0
-            answer := for n in 0..8
-                if sum > 11
-                    if true
-                        break "hello"
-                ++sum
-    )SRC").shouldVerified(false);
-}
-
 TEST_F(forExprTest, evalOfForLoopIntAndBoolIsCompatible) {
     make().parse(R"SRC(
         main() int
@@ -520,6 +524,7 @@ TEST_F(forExprTest, evalOfForLoopIntAndBoolIsCompatible) {
                     if true
                         break false
                 ++sum
+            answer[answer.len() - 1]
     )SRC").shouldVerified(true);
 
     str res = run();
@@ -534,14 +539,15 @@ TEST_F(forExprTest, evalOfForLoopIntAndBoolIsCompatible2) {
             answer := for n in 0..8
                 if sum > 3
                     if true
-                        break false
+                        break
                 ++sum
+            answer[answer.len() - 1]
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_EQ(res->getType(), ttype<nInt>::get());
-    ASSERT_EQ(res.cast<nint>(), 0);
+    ASSERT_EQ(res.cast<nint>(), 3);
 }
 
 TEST_F(forExprTest, defAssignWhatLoops) {
@@ -549,7 +555,7 @@ TEST_F(forExprTest, defAssignWhatLoops) {
         main() int
             a := for n in 0..2
                 n++
-            ret a
+            ret a[a.len() - 1]
     )SRC").shouldVerified(true);
 
     str res = run();
