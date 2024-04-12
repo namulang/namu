@@ -606,11 +606,6 @@ namespace namu {
         LOG("verify: forExpr: eval Value check: is an array?");
         tstr<arr> eval = me.getEval();
         if(!eval) return _err(me.getPos(), errCode::LOOP_NO_RET_ARR);
-
-        LOG("verify: forExpr: eval Value check: array has single generic parameter which is not void?");
-        const narr& beans = eval->getType().getBeans();
-        ncnt len = beans.len();
-        if(len != 1) return _err(me.getPos(), errCode::LOOP_NO_RET_PARAMS_NOT_1, len);
     }
 
     void me::onVisit(visitInfo i, whileExpr& me) {
@@ -625,11 +620,6 @@ namespace namu {
         LOG("verify: whileExpr: eval Value check: is an array?");
         tstr<arr> eval = me.getEval();
         if(!eval) return _err(me.getPos(), errCode::LOOP_NO_RET_ARR);
-
-        LOG("verify: whileExpr: eval Value check: array has single generic parameter which is not void?");
-        const narr& beans = eval->getType().getBeans();
-        ncnt len = beans.len();
-        if(len != 1) return _err(me.getPos(), errCode::LOOP_NO_RET_PARAMS_NOT_1, len);
     }
 
     void me::onVisit(visitInfo i, breakExpr& me) {
