@@ -104,7 +104,11 @@ namespace namu {
     }
 
     nbicontainer& me::subs() {
-        const type* key = &getType().getBeans()[0].getType();
+        static dumScope dummy;
+        const auto& beans = getType().getBeans();
+        if(beans.isEmpty()) return dummy;
+
+        const type* key = &beans[0].getType();
         auto e = _cache.find(key);
         if(e != _cache.end())
             return e->second.get();
