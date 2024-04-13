@@ -73,14 +73,20 @@ namespace namu {
 
     TEMPLATE
     tnarr<T, strTactic> ME::subAll() const {
-        return subs().template getAll<T>([](const std::string& key, const T& val) {
+        ncnt n = 0;
+        return subs().template getAll<T>([&](const std::string& key, const T& val) {
+            NAMU_DI("subAll: [%d/%d] 'any' --> %s = %d",
+                    n++, subs().len(), key.c_str(), EXACT_MATCH);
             return true;
         });
     }
 
     TEMPLATE
     tnarr<T, strTactic> ME::subAll(const std::string& name) const {
+        ncnt n = 0;
         return subs().getAll<T>([&](const std::string& key, const T& val) {
+            NAMU_DI("subAll: [%d/%d] %s --> %s = %d",
+                    n++, subs().len(), name.c_str(), key.c_str(), EXACT_MATCH);
             return key == name;
         });
     }
