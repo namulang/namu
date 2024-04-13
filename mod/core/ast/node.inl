@@ -63,11 +63,13 @@ namespace namu {
         ncnt n = 0;
         std::string argStr = a.toStr();
         return subs().get<T>([&](const std::string& key, const T& val, node& owner) {
-            priority p = val.prioritize(a);
+            priority p = NO_MATCH;
+            if(key == name) p = val.prioritize(a);
+
             std::string ownerName = nul(owner) ? "null" : owner.getType().getName();
             NAMU_DI("sub: [%d/%d] %s(%s) --> %s.%s = %d",
                     ++n, subs().len(), name.c_str(), argStr.c_str(), ownerName.c_str(), key.c_str(), p);
-            return key == name && p != NO_MATCH;
+            return p != NO_MATCH;
         });
     }
 
@@ -101,13 +103,15 @@ namespace namu {
         std::string argStr = a.toStr();
         tprioritiesBucket<T> ps;
         subs().each<T>([&](const auto& key, const T& val, node& owner) {
-            priority p = val.prioritize(a);
+            priority p = NO_MATCH;
             std::string ownerName = nul(owner) ? "null" : owner.getType().getName();
+            if(key == name) {
+                p = val.prioritize(a);
+                if(p != NO_MATCH)
+                    ps.push_back(*new tprior<T>(val, owner, p));
+            }
             NAMU_DI("subAll: [%d/%d] %s(%s) --> %s.%s = %d",
                     n++, subs().len(), name.c_str(), argStr.c_str(), ownerName.c_str(), key.c_str(), p);
-            if(key == name && p != NO_MATCH)
-                ps.push_back(*new tprior<T>(val, owner, p));
-
             /* TODO: this code is required?
             const baseObj& o = sub.template cast<baseObj>();
             if(!nul(o)) {
