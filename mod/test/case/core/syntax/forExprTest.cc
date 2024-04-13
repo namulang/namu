@@ -450,13 +450,13 @@ TEST_F(forExprTest, evalOfForLoop2) {
             for n in 0..8
                 if sum > 3
                     break
-                sum += n
+                sum += n // sum = 0, 1, 3, 6
             sum
     )SRC").shouldVerified(true);
 
     str res = run();
     ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<nint>(), 3);
+    ASSERT_EQ(res.cast<nint>(), 6);
 }
 
 TEST_F(forExprTest, evalOfForLoop3) {
@@ -470,6 +470,7 @@ TEST_F(forExprTest, evalOfForLoop3) {
                     break
                 a1 := a()
                 a1.val = n
+                a1
             ret res[res.len()].val
     )SRC").shouldVerified(true);
 

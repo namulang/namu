@@ -157,8 +157,6 @@ namespace namu {
 
     void me::onVisit(visitInfo i, blockExpr& me) {
         LOG("verify: blockExpr: it will iterate all subnodes[%d]", me.getStmts().len());
-
-        me.inFrame();
     }
 
     void me::onLeave(visitInfo i, blockExpr& me) {
@@ -169,9 +167,6 @@ namespace namu {
         func& parent = i.parent ? i.parent->cast<func>() : nulOf<func>();
         if(!nul(parent))
             _verifyMgdFuncImplicitReturn(parent);
-
-        LOG("verify: blockExpr: block.outFrame()");
-        me.outFrame();
     }
 
 
@@ -502,6 +497,10 @@ namespace namu {
 
         //  function's subs are third:
         me.inFrame(*s);
+
+        //  blockExpr is fourth:
+        //      blockExpr shouldn't interact the frame on their side. that's concept.
+        blk.inFrame();
     }
 
     void me::_verifyMgdFuncImplicitReturn(func& me) {
@@ -541,6 +540,7 @@ namespace namu {
     }
 
     void me::onLeave(visitInfo i, func& me) {
+        me.getBlock().outFrame();
         me.outFrame();
         baseObj& meObj = frame::_getMe();
         meObj.outFrame();
@@ -599,13 +599,13 @@ namespace namu {
     }
 
     void me::onLeave(visitInfo i, forExpr& me) {
-        LOG("verify: forExpr: onLeave");
-        me.getBlock().outFrame();
-        _recentLoops.pop_back();
-
         LOG("verify: forExpr: eval Value check: is an array?");
         tstr<arr> eval = me.getEval();
         if(!eval) return _err(me.getPos(), errCode::LOOP_NO_RET_ARR);
+
+        LOG("verify: forExpr: onLeave");
+        me.getBlock().outFrame();
+        _recentLoops.pop_back();
     }
 
     void me::onVisit(visitInfo i, whileExpr& me) {
@@ -614,12 +614,12 @@ namespace namu {
     }
 
     void me::onLeave(visitInfo i, whileExpr& me) {
-        LOG("verify: whileExpr: onLeave");
-        _recentLoops.pop_back();
-
         LOG("verify: whileExpr: eval Value check: is an array?");
         tstr<arr> eval = me.getEval();
         if(!eval) return _err(me.getPos(), errCode::LOOP_NO_RET_ARR);
+
+        LOG("verify: whileExpr: onLeave");
+        _recentLoops.pop_back();
     }
 
     void me::onVisit(visitInfo i, breakExpr& me) {
