@@ -34,7 +34,7 @@ namespace namu {
         int n=0;
         std::string msg;
         each([&](const auto& val) {
-            return msg += val.getType().getName() + (++n >= len() ? "" : ","), true;
+            return msg += val.getEval()->getType().getName() + (++n >= len() ? "" : ","), true;
         });
         return msg;
     }
