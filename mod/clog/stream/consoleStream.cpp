@@ -12,10 +12,10 @@ namespace namu {
     }
 
     nbool me::dump(const char* message) {
-        using std::cout;
+        using std::clog;
         if(super::dump(message)) return true;
 
-        cout << message;
+        clog << message;
         return false;
     }
 }
