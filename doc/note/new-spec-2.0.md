@@ -713,6 +713,148 @@ a := foo(boo(), koo(), hoo())
 // blockExpr은 defAssignExpr의 실행결과 ex가 반환된 것을 보고는 panic에 들어간다.
 // whenExpr이 defAssignExpr을 감싸고 있었다면 상황이 또 달랐을 것이다.
 ```
+## Err 관리 메커니즘
+* 메커니즘을 설계할때의 포인트는 다음과 같다.
+    * err객체냐 exception이냐 하는 것은 class로 구분하는 게 아니라 예상치 못하게 생성되었는가? 여부로 결정된다.
+    * 참고로 native 에서 발생한 에러는 대게 exception이다.
+    * verbose 모드를 키게 되면 에러의 상세한 정보가 출력되어야 한다. 그리고 에러가 생성된 순간에 정보를 출력하기도 해야 한다.
+    * 이 사실로부터 알 수 있는 것은, err 클래스 자체가 자기자신이 `지금 외부 환경을 보니까, 내가 상세한 정보를 찍어야 하나 본데?`
+    * 라고 판단하는 것 보다는, err클래스를 담는 관리자 클래스가 이를 판단하는 게 훨씬 관리가 유리하다.
+    * 이 관리자 클래스는 errReport 클래스이며, 이 클래스를 `verbose`가 적용된 클래스로 교체만 해주면 나머지 코드는 수정할 필요가 없게 된다.
+    * Exception은 handling되지 않으면 즉각적으로 F/C가 되어야 한다. 이를 감지하는 것은 매 line by line으로 실행하는 role을 가진 blockExpr이다.
+    * exception으로 판단된 err객체는 callTrace 정보를 생성해두고 있어야 한다. 이 역시 위의 컨셉대로 유도하면,
+    * err객체 자신이 callTrace를 생성해두는 것이 아니라, errReport가 필요하다고 판단되면 err객체의 callTrace를 생성해두도록 한다.
+    * 이는 err인지 exception인지 구분하는 코드를 없앨 뿐 아니라, 필요한 시점에서만 callTrace 정보를 생성하도록 한다.
+    * native 코드에서 에러가 발생한 경우, 로그를 찍을 것인지 에러객체를 만들것인지를 선택할 수 있어야 한다.
+## Err 관리 수정을 위한 TODOLIST
+* 위에서 부터 아래로 독립적인 Task 순으로 작성한다.
+* 반환형으로 에러를 내보내지 않고도 에러가 발생한 시점이나 발생한 객체들을 전달 할 수 있어야 한다.
+### logger
+* [o] logger의 filters는 dumpFormat에 쓰이지말고, dump()에 넣도록 하자.
+### thread
+* thread는 하나의 실행Unit에 전역적으로 저장되는 객체를 갖는다.
+### frames, errReport, slots
+* [o] thread 는 thread** _get로 관리하는 대신, _set()을 만들자. 더 직관적이다.
+* [o] thread는 _get을 삭제한다.
+* [o] thread에 errReport를 set,get하도록 추가한다.
+* NAMU_E는 기존대로 로그만 찍는 매크로다.
+### verboseGraphVisitor
+* [o] verboseGraphVisitor를 만든다. 이 graphVisitor만 돌려도 알고싶은 모든 정보가 다 기록되도록.
+* [o] 색깔이 왜 안보일까? 색깔을 넣으면 더 좋겠다.
+## src
+* [o] srcFile 이라는 클래스는 nm, cpp source code 파일에 대한 정보를 갖는다.
+* source code가 managed라면 아쉽게도 filename만 가지고 있을 것이다.
+* fileName, path, file의 내용 등이 포함될 수 있다.
+* 나중에 C-REPL을 구현할때 이 srcFile을 compare해서 차이가 나는 부분만을 catch 하는 식으로 갈 것이다.
+* [o] src 객체는 srcFile, name, pos 가 들어가게 된다.
+    * 그리고 아마도 src객체는 srcFile에 등록을 시켜놓아야, srcFile은, 자신이 변동했을때 자신에게 의존하는 orgNode들에게
+      전파할 수 있게 되 것이다.
+    * C-REPL을 구현할때 이 아이디어가 맞는지 다시 생각해보자. 지금은 등록할 필요가 없다.
+* [o] node::getSrc() 를 추가한다.
+* [o] 파서는 이렇게 모든 func과 obj를 만들때 src객체를 새롭게 만들어서 넣어둬야 한다.
+* [o] expr 같이 이름이 없는 것들은 그냥 ""로 넣어둔다.
+
+### dumpable
+* [o] dumpable를 만든다. thread, starter, err, errReport에 넣는다.
+* [o] 용어의 정리: dump는 크래시 등으로 객체정보를 다 쏟아내는 걸 말하자. log는 한줄을 그냥 찍는 거다.
+    * log를 사용하는 클래스에는 logger, err 가 있다.
+
+### err
+* [o] logger::callstack 기능은 제거하자. 사용자는 platformAPI를 바로 쓰도록 하자.
+* [o] err는 일부 메소드를 Managed에 올려야 한다.
+    * err : public baseObj 로 한다.
+    * cast, as, is는 별도로 지원할 필요 없다.
+* [o] err는 생성자에서 `err를 야기시킨 node` 를 하나 인자로 받는다.
+* err는 frame정보를 갖지 않는다. 어느 파일에서 에러가 발생했는지만 기록한다.
+* [o] err가 제공하는 기능은 다음과 같다.
+    1. [o] initCallTraces(): thread::frames로부터 callTrace를 생성해서 vector<callTrace>로 가지고 있는다.
+        * [o] 이 부분은 1번만 호출하면 된다.
+        * [o] errReport.addEx()에서 호출해준다.
+        * [o] verboseErrReport일 경우에는 add() 처럼 일반 에러로써 들어갈 때도 makeCallTraces()를 호출한다.
+    2. [o] platformAPI::callstack 기능을 이용해서 vector<string> 으로 한 걸 한줄한줄 "\tat %s" 로 format 변환한걸 nStr에 담아서
+       가지고 있는다.
+    3. [o] callTrace와 callstack의 결과는 값으로 가지면안된다. err객체 복제될때마다 deepcopy 되니까. tstr<>로 가지도록 하자.
+    4. [o] err::dump()는 다음과 같이 보여줘야 한다.
+        * 예:
+        ```text
+            err23(NO_PROS_ERR): no pros error found!
+                at foo(a int, b flt) in someFile.nm:23
+                at getMnagd(flt, str) in blablaFile.nm:22
+                --------------------------------
+                at obj::run
+                at getExpr::getEval
+                at starter::run
+        ```
+    5. [o] err::log() 는 다음과 같이 보여줘야 한다.
+        ```text
+            err23(NO_PROS_ERR): no pros error found!
+        ```
+    6. [o] 색깔이 적용이 되어야 한다.
+
+* [o] callTraces는 objName, funcName, srcPos 를 갖는다.
+* [o] 이제, err는 managed calltrace를 쉽게 만들 수 있게 되었다.
+    1. frames를 순회하면서,
+        2. frame객체.func.getSrc()를 가져온다. 여기서 name, pos, srcFile.fileName 을 가져오면,
+        ```text
+            at <funcName>(argStr) in <fileName>:<row>
+        ```
+        을 출력하 수 있게 된다.
+
+## errReport
+* [o] errReport는 dump()가 호출되면 각 err에 대해서 err::log()를 호출하도록 한다, add(err)시에는 err::log()를 호출시킨다.
+* [o] verboseErrReport도 add로 에러나 Exception이 들어오면 verboseGraphVisitor로 찍어버린다.
+* [o] verboseErrReport는 dump()시, add()시 err::dump()를 호출한다. callstack도 매번 나오게 된다.
+* [o] cpp에서 발생하는 에러에는 크게 2종류가 있다.
+    1. [o] 로깅만 하고 별도의 기본 값으로 대체가 가능한 것이다.
+           이 경우는 NAMU_W 나 NAMU_E로 로그만 찍는다.
+    2. [o] 익셉션으로써 대처를 해야 하는 것이다.
+        * [o] 이 경우는 thread::getReport()에 err객체를 생성해서 추가한다.
+        * cpp에서 만드는 err객체는 거의 다가 err가 아니라 예상치 못하게 발생한 exception이다.
+        * 다만, 중요한 것은 "exception 발생 ---> F/C " 가 아니다. 바깥 코드에서 `on` 을 통해서 처리를 하고 있을 수도 있다.
+        * [o] errReport는 add()는 에러용, addEx()는 exception으로써 넣는 API 2개를 제공한다.
+            * 하나로 하지 못하는 이유는, exception 이란느 클래스를 만들지 못하기 때문이다.
+            * NAMU에서는 동일한 의미를 뜻하는 err일지라도 예상치 못하게 출현하면 이것은 exception이 된다.
+            * 관리를 위해, 그리고 빠른 exception이 발생했는지 여부를 매번 물어야 하는데 이 속도를 높이기 위해서
+              별도의 함수, 별도의 container를 준비하는 것이다.
+        * [o] exception을 담을 변수는 container여야 한다.
+            * exception이 발생하고 --> 이를 위한 `on` block에서 다시 exception이 발생한느 상황도 있을 수 있기 때문이다.
+        * [o] 그리고 blockExpr은 한줄을 끝낸 뒤에 thread::errReport에게 'exception이 있었나요?' 를 질의하면 된다.
+        * `on`의 문법을 떠올려 보면 알겠지만, 익셉션이 발생할 수있는 `targetExpr`이 on expr 안에 들어가 있는 형태다.
+        * 그러니 한줄을 실행했는데 exception이 생겼다는 것은 이 exception은 이 함수에서는 앞으로도 처리가 불가능한 exception이라는 얘기다.
+        * namu 언어에서는 exception을 발생시킬 수도 있고, 밖에서 이걸 처리할 수도 있지만,
+          exception을 변수에 할당시켜서 exception을 줄인다거나, 다시 함수밖으로 rethrow를 한다거나가 불가능하다.
+        * [o] 따라서 blockExpr은 처음 run() 시점에서 errReport의 exception count를 센다.
+        * [o] 그리고 한줄을 run 한 후의 errReport의 exception count가 변동이 생겼다면, 바로 모든걸 중단시켜버리면 된다.
+            * 이렇게 하면 exception이 발생 ---> 발생한 것을 `on` blockExpr를 통해 처리 ---> 처리 중에 다시 exception 발생 ---> 이번엔 실패
+            ---> 프로그램 바로 중단, 중단한 exception 2개를 모두 출력
+            * 위와 같은 것도 가능해진다.
+        * [o] 만약 `is ...err` 와 같이 exception에 대한 handling을 적어놓은 게 있다면, 이 blockExpr이 끝나고 나서,
+              errReport에 등록된 가장 과거의 exception count를 하나 줄인다.
+        * [o] starter는 중단 된 이유가 exception 때문이었다면 exception을 모두 dump() 시켜버리면 된다.
+
+### starter
+* [o] starter는 main함수를 시작하기 전에 thread::setReport(errReport()) 로 항상 교체해둔다. verbose가 아니다.
+* [o] starter는 signal을 등록한다. SEGfault 가 발생하면 그 signal로 에러객체를 만든다. --> 에러객체.dump()를 한다.
+* [o] F/C가 발생하게 되면 실행중인 모든 걸 verboseGraphVisitor로 다 찍어버린다.
+    * c++에서 signal() 을 사용하면 죽기 직전에 뭔가를 하는게 가능하다.
+    * 단, SIGINT는 windows에서 호출하면 안되는 등, 예외처리가 필요하다.
+* [o] starter는 등록한 signal이 handling 되어서 프로그램을 종료해야 한다고 판단된 경우, 거기서 지역객체로 err를 하나 만들고,
+      그 err::dump()를 호출한다.
+
+## macro
+* [o] NAMU_EX 는 익셉션을 뜻한다. 에러 객체를 생성해서 thread::errReport에 넣어둔다.
+    * 넣는 과정에서 thread::errReport가 verboseErrReport였다면 넣는 순간 에러를 찍는다.
+
+## interpreter
+* [o] interpreter는 다음과 같이 로그Level을 관리한다.
+    * 1. quite(기본값): logger off, errReport객체 사용
+    * 2. verbose: logger on, verboseErrReport(err객체가 add되는 순간, 상세 정보 출력) 객체 사용
+    * verboseFlag는 interpreter.setVerbose(true)만 하면 된다.
+        * 위의 1, 2번의 동작은 모두 interpreter 안쪽에서 처리된다.
+    * test/main.cc 에도 verbose가 이미 있다.
+        * `verbose` 라고 입력을 해야 namuSyntaxTest::setVerbose(true)를 해둔다.
+        * namuSyntaxTest는 interpreter를 내부에서 생성할때 interpreter::setVerbose(_isVerbose) 를 한다.
+* [o] interpreter의 log structure, log level을 따로 관리하지 말고, 그냥 verbose면 다 찍는 걸로 하자.
 * * *
 # 함수
 ## 람다 문법
