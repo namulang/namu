@@ -290,7 +290,7 @@ TEST_F(narrTest, testRangeBasedForLoop) {
 
 TEST_F(narrTest, testEach) {
     narr arr1 {*new nInt(1), *new nByte(100), *new nInt(2)};
-    dumNode dum;
+    mockNode dum;
     arr1.setOwner(dum);
 
     nint sum = 0;

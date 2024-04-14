@@ -4,8 +4,12 @@
 
 namespace namu {
 
-    class dumNode : public node {
-        NAMU(ME(dumNode, node), VISIT())
+    class _nout mockNode : public node {
+        NAMU(ME(mockNode, node), VISIT())
+
+    public:
+        mockNode();
+        mockNode(const node& org);
 
     public:
         const ntype& getType() const override;
@@ -20,5 +24,10 @@ namespace namu {
         str getEval() const override;
 
         clonable* clone() const override;
+
+        nbool isComplete() const override;
+
+    private:
+        str _org;
     };
 }

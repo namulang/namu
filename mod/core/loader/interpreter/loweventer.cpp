@@ -334,7 +334,7 @@ namespace namu {
 
         if(tuple.len() != 1) {
             onErr(errCode::PARANTHESIS_WAS_TUPLE);
-            return new dumNode();
+            return new mockNode();
         }
 
         return &tuple[0];

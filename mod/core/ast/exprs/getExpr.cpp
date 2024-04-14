@@ -2,6 +2,7 @@
 #include "../../frame/thread.hpp"
 #include "../node.inl"
 #include "../../visitor/visitor.hpp"
+#include "../../visitor/graphVisitor.hpp"
 
 namespace namu {
 
@@ -59,7 +60,7 @@ namespace namu {
         if(nul(me)) return NAMU_E("me == null"), priorities();
 
         str evalMe = evalMode ? me.getEval() : me.as<node>();
-        if(!evalMe) return NAMU_E("from == null"), priorities();
+        if(!evalMe) return NAMU_E("me == null"), priorities();
         if(evalMode)
             evalMe = evalMe->as<node>();
 

@@ -11,7 +11,7 @@ namespace namu {
         me::rel();
     }
 
-    me& me::setRoot(node& root) {
+    me& me::setRoot(const node& root) {
         _root.bind(root);
         return *this;
     }

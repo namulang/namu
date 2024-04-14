@@ -3,7 +3,7 @@
 #include "../ast/baseObj.hpp"
 #include "scopeStack.hpp"
 #include "../builtin/res/tpair.hpp"
-#include "../ast/dumNode.hpp"
+#include "../ast/mockNode.hpp"
 
 struct immutableTest;
 struct frameTest;

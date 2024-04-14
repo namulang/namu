@@ -3,6 +3,7 @@
 #include "../../builtin/primitive/nVoid.hpp"
 #include "getExpr.hpp"
 #include "../../visitor/visitor.hpp"
+#include "../mockNode.hpp"
 
 namespace namu {
 
@@ -87,16 +88,6 @@ namespace namu {
         str ret = nul(f) ? sub : f.getRet();
         if(!ret)
             return NAMU_E("ret is null"), str();
-        ret = ret->getEval();
-
-        // clone returning value when eval this:
-        //  think about following code:
-        //      def a
-        //          ...
-        //      b := a()
-        // because getEval() funcs returns the origin object always,
-        // if I don't clone anything here, it'll return origin object of 'a'.
-        // then when verify defAssignExpr it'll be judged to compile error.
-        return (node*) ret->clone();
+        return new mockNode(*ret->getEval());
     }
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../../builtin/primitive.hpp"
-#include "../../../ast/dumNode.hpp"
+#include "../../../ast/mockNode.hpp"
 
 namespace namu {
 
@@ -31,8 +31,8 @@ namespace namu {
         }
 
         static node& toNative(node& it) { return it; }
-        static mgd& onAddParam() { return *new dumNode(); }
-        static mgd& onGetRet() { return *new dumNode(); }
+        static mgd& onAddParam() { return *new mockNode(); }
+        static mgd& onGetRet() { return *new mockNode(); }
         static yes canMarshal();
     };
     template <typename T, typename S>

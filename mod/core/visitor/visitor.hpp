@@ -16,7 +16,7 @@ namespace namu {
         visitor();
 
     public:
-        me& setRoot(node& root);
+        me& setRoot(const node& root);
         node& getRoot();
         const node& getRoot() const NAMU_UNCONST_FUNC(getRoot())
 
