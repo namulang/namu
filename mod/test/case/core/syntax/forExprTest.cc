@@ -471,7 +471,7 @@ TEST_F(forExprTest, evalOfForLoop3) {
                 a1 := a()
                 a1.val = n
                 a1
-            ret res[res.len()].val
+            ret res[res.len() - 1].val
     )SRC").shouldVerified(true);
 
     str res = run();

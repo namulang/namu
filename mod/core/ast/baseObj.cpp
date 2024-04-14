@@ -44,4 +44,8 @@ namespace namu {
 
         frs.del();
     }
+
+    str me::getEval() const {
+        return getOrigin();
+    }
 }
