@@ -47,21 +47,7 @@ namespace namu {
         return *inner;
     }
 
-    str me::run(const args& a) {
-        // TODO: a validness check.
-
-        // find 'main' func:
-        baseFunc& fun = _root->sub<baseFunc>("main"); // TODO: support generic type of str[]
-        if(nul(fun))
-            return NAMU_E("there is no 'main' func."), str();
-
-        thread* prev = *_get();
-        *_get() = this;
-        str res = fun.run(a);
-        *_get() = prev;
-
-        return res;
-    }
+    str me::run(const args& a) { return str(); }
 
     me::thread() {} // for singleton
     me::thread(const node& root): _root(root) {}

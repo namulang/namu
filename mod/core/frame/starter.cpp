@@ -39,8 +39,7 @@ namespace namu {
             return res;
         }
 
-        /* TODO: str[] args
-        if(main.canRun(narr(k*/
+        // TODO: main(str[])
 
         return NAMU_E("couldn't run main func(). it doesn't match any argument"), str();
     }
