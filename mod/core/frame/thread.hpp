@@ -30,7 +30,7 @@ namespace namu {
         friend class starter;
         friend struct ::exprTest;
 
-    private:
+    public:
         thread();
         thread(const node& root);
 
@@ -39,6 +39,9 @@ namespace namu {
         const frame& getNowFrame() const NAMU_UNCONST_FUNC(_getNowFrame())
 
         static thread& get();
+        static void set(thread* new1);
+        static void set(thread& new1);
+        static void set();
         static const instancer& getInstancer();
 
         // node:
@@ -58,12 +61,13 @@ namespace namu {
         frame& _getNowFrame();
 
     private:
-        static thread** _get();
         void _loadBuiltIns(nmap& tray) const;
+        tstr<nmap> _initSlots() const;
 
     private:
+        thread_local static thread* _instance;
+        mutable tstr<nmap> _slots;
         frames _frames;
         str _root;
     };
-
 }
