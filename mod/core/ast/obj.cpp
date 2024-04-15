@@ -70,7 +70,7 @@ namespace namu {
             case 0: return NAMU_W("there is no such ctor."), str();
         }
         /*// TODO: 1. change err management module to use 'err' class, not errCode.
-          //       2. let it dump all ambigious funcs here.
+          //       2. let it log all ambigious funcs here.
           return NAMU_W("")*/
         return NAMU_E("ambigious call found: %s", "TODO:"), str();
     }

@@ -22,9 +22,9 @@ namespace namu {
         return _path;
     }
 
-    nbool me::dump(const char* message) {
+    nbool me::logBypass(const char* message) {
         if(!isInit()) return true;
-        if(super::dump(message)) return true;
+        if(super::logBypass(message)) return true;
 
         _file.open(_path.c_str(), std::fstream::out | std::fstream::app);
         _file << message;

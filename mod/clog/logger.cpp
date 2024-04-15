@@ -42,20 +42,20 @@ namespace namu {
 
     ncnt me::getStreamCount() const { return _streams.size(); }
 
-    nbool me::dump(const nchar* message) {
+    nbool me::logBypass(const nchar* message) {
         if(!isEnable()) return false;
 
         nbool result = false;
         for(auto e : _streams)
-            result |= e->dump(message);
+            result |= e->logBypass(message);
 
         return result;
     }
 
-    nbool me::dumpFormat(const nchar* fmt, ...) {
+    nbool me::logFormatBypass(const nchar* fmt, ...) {
         va_list va;
         va_start(va, fmt);
-        nbool ret = dump(_makeStr(fmt, va).c_str());
+        nbool ret = logBypass(_makeStr(fmt, va).c_str());
         va_end(va);
         return ret;
     }
@@ -108,10 +108,10 @@ namespace namu {
         return *inner;
     }
 
-    nbool me::dumpFormatLog(logLv::level lv, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...) {
-        std::string toDump;
-        toDump += platformAPI::getConsoleFore(platformAPI::BROWN);
-        toDump += _makeStr("%s ", platformAPI::createNowTime("%b %d %Y  %X").c_str());
+    nbool me::log(logLv::level lv, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...) {
+        std::string msg;
+        msg += platformAPI::getConsoleFore(platformAPI::BROWN);
+        msg += _makeStr("%s ", platformAPI::createNowTime("%b %d %Y  %X").c_str());
 
         platformAPI::consoleColor clrLv = platformAPI::WHITE;
         switch(lv) {
@@ -119,22 +119,23 @@ namespace namu {
             case logLv::WARN: clrLv = platformAPI::YELLOW; break;
             case logLv::INFO: clrLv = platformAPI::LIGHTBLUE; break;
         }
-        toDump += platformAPI::getConsoleFore(clrLv);
-        toDump += _makeStr("%s %s ", tag, logLv::getName(lv).c_str());
+        msg += platformAPI::getConsoleFore(clrLv);
+        msg += _makeStr("%s %s ", tag, logLv::getName(lv).c_str());
 
-        toDump += platformAPI::getConsoleFore(platformAPI::GREEN);
-        toDump += _makeStr("<%s::%s#%d> ", filename, func, line);
+        msg += platformAPI::getConsoleFore(platformAPI::GREEN);
+        msg += _makeStr("<%s::%s#%d> ", filename, func, line);
 
-        toDump += platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+        msg += platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
         va_list va;
         va_start(va, fmt);
-        toDump += _makeStr(fmt, va);
+        msg += _makeStr(fmt, va);
         va_end(va);
 
         if(_filters)
-            toDump = _filters->filt(lv, tag, toDump);
-        if(!toDump.empty())
-            return dump(toDump.c_str());
+            msg = _filters->filt(lv, tag, msg);
+
+        if(!msg.empty())
+            return logBypass(msg.c_str());
         return false;
     }
 

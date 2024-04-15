@@ -11,9 +11,9 @@ namespace namu {
         return "consoleStream";
     }
 
-    nbool me::dump(const char* message) {
+    nbool me::logBypass(const char* message) {
         using std::clog;
-        if(super::dump(message)) return true;
+        if(super::logBypass(message)) return true;
 
         clog << message;
         return false;

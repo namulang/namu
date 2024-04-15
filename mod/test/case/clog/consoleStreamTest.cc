@@ -50,9 +50,9 @@ namespace {
     } thisTest;
 }
 
-TEST_F(consoleStreamTest, dumpFormat) {
-    logger::get().dumpFormat("hello");
-    logger::get().dumpFormat("%s " NAMU_TAG " %s <%s::%s#%d> " "hello",
+TEST_F(consoleStreamTest, logFormat) {
+    logger::get().logBypass("hello");
+    logger::get().logFormatBypass("%s " NAMU_TAG " %s <%s::%s#%d> " "hello",
         namu::platformAPI::createNowTime("%b %d %Y  %X").c_str(), "I",
         __FILENAME__, __func__, __LINE__);
 
@@ -68,7 +68,7 @@ TEST_F(consoleStreamTest, macro) {
     ASSERT_TRUE(thisTest::hasLogFile());
 }
 
-TEST_F(consoleStreamTest, debugDumpFormat) {
+TEST_F(consoleStreamTest, debugLogFormat) {
     nbool isDbg = buildFeature::config::get() == buildFeature::DEBUG;
 
     NAMU_DW("if it's debug mode, this msg should be shown.");

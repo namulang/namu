@@ -26,13 +26,13 @@ namespace namu {
         /// modify that all of streams are set to enable or not.
         void setEnable(nbool enable) override;
         ncnt getStreamCount() const;
-        nbool dumpFormat(const nchar* fmt, ...);
-        nbool dumpFormatLog(logLv::level lv, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...);
+        nbool logFormatBypass(const nchar* fmt, ...);
+        nbool log(logLv::level lv, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...);
         nbool pushStream(stream* new_stream);
         static logger& get();
         //  stream:
         const nchar* getName() const override;
-        nbool dump(const nchar* message) override;
+        nbool logBypass(const nchar* message) override;
         nbool isInit() const override;
         void callstack() const;
         void setCallstack(nbool show);

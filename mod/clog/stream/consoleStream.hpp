@@ -13,6 +13,6 @@ namespace namu {
     public:
         //  Stream:
         const char* getName() const override;
-        nbool dump(const char* message) override;
+        nbool logBypass(const char* message) override;
     };
 }

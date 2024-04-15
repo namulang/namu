@@ -13,7 +13,7 @@ namespace namu {
 
     public:
         /// @return true means an error.
-        virtual nbool dump(const nchar* message);
+        virtual nbool logBypass(const nchar* message);
         nbool isNull() const;
         virtual nbool isEnable() const;
         virtual void setEnable(nbool isEnable);

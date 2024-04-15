@@ -98,31 +98,31 @@ namespace namu {
             case logLv::ERR:
                 std::cerr << platformAPI::getConsoleFore(platformAPI::LIGHTRED);
                 if(pos.isOrigin())
-                    log.dumpFormat("err%d(%s)", code, getErrName(code).c_str());
+                    log.logFormatBypass("err%d(%s)", code, getErrName(code).c_str());
                 else
-                    log.dumpFormat("err%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
+                    log.logFormatBypass("err%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
                 std::cerr << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
-                log.dumpFormat(": %s\n", msg.c_str());
+                log.logFormatBypass(": %s\n", msg.c_str());
                 break;
 
             case logLv::WARN:
                 std::cerr << platformAPI::getConsoleFore(platformAPI::YELLOW);
                 if(pos.isOrigin())
-                    log.dumpFormat("warn%d(%s)", code, getErrName(code).c_str());
+                    log.logFormatBypass("warn%d(%s)", code, getErrName(code).c_str());
                 else
-                    log.dumpFormat("warn%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
+                    log.logFormatBypass("warn%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
                 std::cerr << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
-                log.dumpFormat(": %s\n", msg.c_str());
+                log.logFormatBypass(": %s\n", msg.c_str());
                 break;
 
             case logLv::INFO:
                 std::cerr << platformAPI::getConsoleFore(platformAPI::BLUE);
                 if(pos.isOrigin())
-                    log.dumpFormat("info%d(%s)", code, getErrName(code).c_str());
+                    log.logFormatBypass("info%d(%s)", code, getErrName(code).c_str());
                 else
-                    log.dumpFormat("info%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
+                    log.logFormatBypass("info%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
                 std::cerr << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
-                log.dumpFormat(": %s\n", msg.c_str());
+                log.logFormatBypass(": %s\n", msg.c_str());
                 break;
         }
     }

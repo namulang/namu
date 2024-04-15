@@ -7,7 +7,7 @@ namespace namu {
     me::stream(nbool isEnable): _isEnable(isEnable) {}
     me::~stream() {}
 
-    nbool me::dump(const char* message) {
+    nbool me::logBypass(const char* message) {
         return ! _isEnable;
     }
 
