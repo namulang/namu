@@ -52,6 +52,7 @@ build/html/
 build/xml/
 external/
 build/*.tmp
+build/.clangd/
 build/mod/
 build/compile_commands.json
 tags
