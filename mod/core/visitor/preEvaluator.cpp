@@ -5,6 +5,7 @@
 #include "../frame/frameInteract.hpp"
 #include "verifier.hpp"
 #include "../ast/exprs/getGenericExpr.hpp"
+#include "../frame/threadUse.hpp"
 
 namespace namu {
 
@@ -82,6 +83,7 @@ namespace namu {
         NAMU_DI(" ===================================");
         NAMU_DI("          preEvaluationLoop         ");
         NAMU_DI(" ===================================");
+        threadUse thr;
         errReport rpt;
         while(true) {
             errReport e;
