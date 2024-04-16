@@ -1,6 +1,7 @@
 #include "parser.hpp"
 #include "bison/lowscanner.hpp"
 #include "../../ast/slot.hpp"
+#include "../../frame/threadUse.hpp"
 
 YY_DECL;
 
@@ -22,6 +23,7 @@ namespace namu {
     }
 
     tstr<obj> me::parse(const nchar* script) {
+        threadUse thr;
         NAMU_I("parse starts.");
         _eventer.prepareParse();
 

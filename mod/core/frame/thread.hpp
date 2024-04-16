@@ -66,7 +66,6 @@ namespace namu {
 
     private:
         thread_local static thread* _instance;
-        mutable tstr<nmap> _slots;
         frames _frames;
         str _root;
     };

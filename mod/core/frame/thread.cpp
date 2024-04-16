@@ -12,9 +12,10 @@ namespace namu {
     thread_local thread* me::_instance = nullptr;
 
     const nmap& me::getSlots() const {
-        if(!_slots)
-            _slots = _initSlots();
-        return *_slots;
+        static tstr<nmap> _inner;
+        if(!_inner)
+            _inner = _initSlots();
+        return *_inner;
     }
 
     str me::run(const args& a) { return str(); }

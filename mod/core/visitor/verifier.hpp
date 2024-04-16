@@ -9,7 +9,7 @@ struct verifierTest;
 namespace namu {
 
     class loopExpr;
-
+    class thread;
     class _nout verifier : public visitor {
         NAMU(ME(verifier, visitor))
         friend struct ::verifierTest;

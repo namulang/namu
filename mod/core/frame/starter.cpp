@@ -4,7 +4,7 @@
 #include "../ast/slot.hpp"
 #include "../ast/node.inl"
 #include "starter.hpp"
-#include "thread.hpp"
+#include "threadUse.hpp"
 
 namespace namu {
 
@@ -32,6 +32,7 @@ namespace namu {
             return NAMU_E("there is 0 or more than 2 main() found."), str();
 
         if(main.canRun(a)) {
+            threadUse thr;
             _prepareFrame(thread::get()._getFrames());
             NAMU_DI("============== START ================");
             str res = pak.run(MAIN);

@@ -5,6 +5,7 @@
 #include "../builtin/primitive.hpp"
 #include "../ast.hpp"
 #include "../frame/starter.hpp"
+#include "../frame/threadUse.hpp"
 
 namespace namu {
 
@@ -64,6 +65,7 @@ namespace namu {
     }
 
     void me::start() {
+        threadUse thread;
         _prepare();
         super::start();
         _postpare();
