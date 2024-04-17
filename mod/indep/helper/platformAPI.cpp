@@ -29,7 +29,7 @@ namespace namu {
         bool _isAnsiColorTerminal() {
             static vector<const nchar*> samples = {
                 "xterm", "rxvt", "vt100",
-                "linux", "screen",
+                "linux", "screen", "tmux"
             };
             return find_if(samples.begin(), samples.end(), [](const string& e) {
                 string use = getenv("TERM");
@@ -51,7 +51,7 @@ namespace namu {
         return inner;
 #elif NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
         static bool is_terminal_supporting = _isAnsiColorTerminal();
-        if( ! is_terminal_supporting) {
+        if(!is_terminal_supporting) {
             static string inner;
             return inner;
         }
