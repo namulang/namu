@@ -3,6 +3,7 @@
 #include "../builtin/container/mgd/tarr.hpp"
 #include "../builtin/container/native/tnmap.hpp"
 #include "frame.hpp"
+#include "../loader/errReport.hpp"
 
 struct exprTest;
 
@@ -44,6 +45,12 @@ namespace namu {
         static void set();
         static const instancer& getInstancer();
 
+        /// @return runtime errReport instance.
+        ///         what this contains are all runtime err or exceptions.
+        errReport& getReport();
+        const errReport& getReport() const NAMU_UNCONST_FUNC(getReport())
+        void setReport(const errReport& newRpt);
+
         // node:
         nbicontainer& subs() override;
 
@@ -68,5 +75,6 @@ namespace namu {
         thread_local static thread* _instance;
         frames _frames;
         str _root;
+        tstr<errReport> _rpt;
     };
 }

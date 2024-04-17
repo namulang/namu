@@ -20,8 +20,8 @@ namespace namu {
 
     str me::run(const args& a) { return str(); }
 
-    me::thread() {} // for singleton
-    me::thread(const node& root): _root(root) {}
+    me::thread(): _rpt(new errReport()) {} // for singleton
+    me::thread(const node& root): _root(root), _rpt(new errReport()) {}
 
     thread& me::get() {
         return *_instance;
@@ -35,6 +35,14 @@ namespace namu {
 
     const instancer& me::getInstancer() {
         return instancer::get();
+    }
+
+    errReport& me::getReport() {
+        return *_rpt;
+    }
+
+    void me::setReport(const errReport& newRpt) {
+        _rpt.bind(newRpt);
     }
 
     // node:
