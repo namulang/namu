@@ -11,6 +11,8 @@ namespace namu {
         me::rel();
     }
 
+    me::~visitor() {}
+
     me& me::setRoot(const node& root) {
         _root.bind(root);
         return *this;

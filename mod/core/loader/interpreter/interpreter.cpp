@@ -1,9 +1,9 @@
 #include "../../ast/exprs/blockExpr.hpp"
 #include "../../ast/func.hpp"
-#include "../../frame/thread.hpp"
 #include "interpreter.hpp"
 #include "../../visitor/graphVisitor.hpp"
 #include "../../visitor/preEvaluator.hpp"
+#include "../../frame/threadUse.hpp"
 
 namespace namu {
 
@@ -62,6 +62,7 @@ namespace namu {
             return *_slot;
         }
 
+        threadUse thr;
         _parse();
         if(*_rpt)
             return *_slot;

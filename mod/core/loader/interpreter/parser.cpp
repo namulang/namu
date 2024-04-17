@@ -1,7 +1,7 @@
 #include "parser.hpp"
 #include "bison/lowscanner.hpp"
 #include "../../ast/slot.hpp"
-#include "../../frame/threadUse.hpp"
+#include "../../frame/thread.hpp"
 
 YY_DECL;
 
@@ -23,7 +23,11 @@ namespace namu {
     }
 
     tstr<obj> me::parse(const nchar* script) {
-        threadUse thr;
+        if(nul(thread::get())) {
+            _eventer.getReport()->add(err::newErr(errCode::NO_THREAD));
+            return tstr<obj>();
+        }
+
         NAMU_I("parse starts.");
         _eventer.prepareParse();
 

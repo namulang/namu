@@ -14,6 +14,7 @@ namespace namu {
 
     public:
         visitor();
+        virtual ~visitor();
 
     public:
         me& setRoot(const node& root);
