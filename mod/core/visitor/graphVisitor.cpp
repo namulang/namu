@@ -16,7 +16,7 @@ namespace namu {
 
     void me::_drawIndent() {
         for(const char* e : _indents)
-            std::cout << e;
+            std::cout << platformAPI::foreColor(LIGHTGRAY) << e;
     }
 
     void me::_onIndent() {
@@ -33,7 +33,10 @@ namespace namu {
         _drawIndent();
 
         nbool isLast = nul(i.parent) ? true : i.index >= i.len - 1;
-        std::cout << (isLast ? "┗━[" : "┣━[") << i.index << "]: " << visitee.getType().getName() << " \"" << i.name << "\" ";
+        using platformAPI::foreColor;
+        std::cout << foreColor(LIGHTGRAY) << (isLast ? "┗━[" : "┣━[") << foreColor(YELLOW) << i.index << foreColor(LIGHTGRAY) << "]: "
+                  << foreColor(CYAN) << visitee.getType().getName()
+                  << foreColor(LIGHTGRAY) << " \"" << foreColor(LIGHTBLUE) << i.name << foreColor(LIGHTGRAY) << "\" ";
 
         _parentsLast.push_back(isLast);
     }
@@ -45,7 +48,10 @@ namespace namu {
 
     void me::onVisit(visitInfo i, baseFunc& fun) {
         onVisit(i, (node&) fun);
-        std::cout << "params[" << fun.getParams().toStr() << "] " << "ret[" << fun.getRet()->getType().getName() << "]";
+        using platformAPI::foreColor;
+        std::cout << foreColor(MAGENTA) << "params" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << fun.getParams().toStr()
+                  << foreColor(LIGHTGRAY) << "] " << foreColor(MAGENTA) << "ret" << foreColor(LIGHTGRAY) << "["
+                  << foreColor(CYAN) << fun.getRet()->getType().getName() << foreColor(LIGHTGRAY) << "]";
     }
 
     void me::onVisit(visitInfo i, genericObj& o) {
@@ -67,6 +73,9 @@ namespace namu {
         else
             from = me.getType().getName();
 
-        std::cout << " from[" << from << "] name[" << e.getSubName() << "]";
+        using platformAPI::foreColor;
+        std::cout << foreColor(MAGENTA) << " from" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << from
+                  << foreColor(LIGHTGRAY) << "] " << foreColor(MAGENTA) << "name" << foreColor(LIGHTGRAY) << "["
+                  << foreColor(YELLOW) << e.getSubName() << foreColor(LIGHTGRAY) << "]";
     }
 }
