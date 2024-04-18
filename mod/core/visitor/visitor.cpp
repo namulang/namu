@@ -113,12 +113,12 @@ namespace namu {
         node& me = *e._me;
         ncnt len = (nul(args) ? 0 : args.len()) + (nul(me) ? 0 : 1);
         if(!nul(me))
-            me.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
+            me.accept(visitInfo {"me", &e, n++, len, i.depth+1}, *this);
 
         // check arguments:
         if(!nul(args))
             for(auto& elem : e.getSubArgs())
-                elem.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
+                elem.accept(visitInfo {"subArg", &e, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, frame& f) {
@@ -136,19 +136,19 @@ namespace namu {
         node& subject = e.getSubject();
         int len = e.getArgs().len() + (nul(me) ? 0 : 1) + (nul(subject) ? 0 : 1);
         if(!nul(me))
-            me.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
+            me.accept(visitInfo {"me", &e, n++, len, i.depth+1}, *this);
         if(!nul(subject))
-            subject.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
+            subject.accept(visitInfo {"subject", &e, n++, len, i.depth+1}, *this);
 
         for(auto& elem : e.getArgs())
-            elem.accept(visitInfo {"", &e, n++, len, i.depth+1}, *this);
+            elem.accept(visitInfo {"arg", &e, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, func& f) {
         if(_isLog)
             NAMU_DI("func[%s]::onTraverse", i.name.c_str());
 
-        f.getBlock().accept(visitInfo {"", &f, 0, 1, i.depth+1}, *this);
+        f.getBlock().accept(visitInfo {"codes", &f, 0, 1, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, blockExpr& b) {
@@ -181,9 +181,9 @@ namespace namu {
         node& as = (node&) a.getAs();
         ncnt len = (nul(me) ? 0 : 1) + (nul(as) ? 0 : 1);
         if(!nul(me))
-            me.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
+            me.accept(visitInfo {"me", &a, n++, len, i.depth+1}, *this);
         if(!nul(as))
-            as.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
+            as.accept(visitInfo {"as", &a, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, assignExpr& a) {
@@ -195,9 +195,9 @@ namespace namu {
         node& right = (node&) a.getRight();
         ncnt len = (nul(left) ? 0 : 1) + (nul(right) ? 0 : 1);
         if(!nul(left))
-            left.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
+            left.accept(visitInfo {"lhs", &a, n++, len, i.depth+1}, *this);
         if(!nul(right))
-            right.accept(visitInfo {"", &a, n++, len, i.depth+1}, *this);
+            right.accept(visitInfo {"rhs", &a, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, defAssignExpr& d) {
@@ -206,7 +206,7 @@ namespace namu {
 
         node& right = d.getRight();
         if(!nul(right))
-            right.accept(visitInfo {"", &d, 0, 1, i.depth+1}, *this);
+            right.accept(visitInfo {"rhs", &d, 0, 1, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, defPropExpr& d) {
@@ -227,9 +227,9 @@ namespace namu {
         node& right = (node&) f.getRight();
         ncnt len = (nul(left) ? 0 : 1) + (nul(right) ? 0 : 1);
         if(!nul(left))
-            left.accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
+            left.accept(visitInfo {"lhs", &f, n++, len, i.depth+1}, *this);
         if(!nul(right))
-            right.accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
+            right.accept(visitInfo {"rhs", &f, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, forExpr& f) {
@@ -240,8 +240,8 @@ namespace namu {
         ncnt len = nul(con) ? 1 : 2;
         ncnt n = 0;
         if(!nul(con))
-            con.accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
-        f.getBlock().accept(visitInfo {"", &f, n++, len, i.depth+1}, *this);
+            con.accept(visitInfo {"condition", &f, n++, len, i.depth+1}, *this);
+        f.getBlock().accept(visitInfo {"codes", &f, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, retStateExpr& r) {
@@ -256,19 +256,19 @@ namespace namu {
         blockExpr& elseBlk = f.getElseBlk();
         int len = !nul(elseBlk) ? 3 : 2;
 
-        f.getCondition().accept(visitInfo {"", &f, 0, len, i.depth+1}, *this);
+        f.getCondition().accept(visitInfo {"condition", &f, 0, len, i.depth+1}, *this);
 
-        f.getThenBlk().accept(visitInfo {"", &f, 1, len, i.depth+1}, *this);
+        f.getThenBlk().accept(visitInfo {"then", &f, 1, len, i.depth+1}, *this);
         if(!nul(elseBlk))
-            elseBlk.accept(visitInfo {"", &f, 2, len, i.depth+1}, *this);
+            elseBlk.accept(visitInfo {"else", &f, 2, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, whileExpr& w) {
         if(_isLog)
             NAMU_DI("whileExpr[%s]::onTraverse", i.name.c_str());
 
-        w.getCondition().accept(visitInfo {"", &w, 0, 2, i.depth+1}, *this);
-        w.getBlock().accept(visitInfo {"", &w, 1, 2, i.depth+1}, *this);
+        w.getCondition().accept(visitInfo {"condition", &w, 0, 2, i.depth+1}, *this);
+        w.getBlock().accept(visitInfo {"codes", &w, 1, 2, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, defArrayExpr& d) {
