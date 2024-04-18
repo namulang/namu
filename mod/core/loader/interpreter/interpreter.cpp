@@ -158,17 +158,18 @@ namespace namu {
     }
 
     void me::_logFrame(const frame& info) const {
+        using platformAPI::foreColor;
         if(!_isLogStructure) return;
         if(nul(info))
             return std::cout << "    null\n", void();
 
-        std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGREEN) << " - frame:\n";
+        std::cout << foreColor(LIGHTGREEN) << " - frame:\n";
 
         int n=0;
         for(auto e = info.subs().begin(); e ;++e)
             std::cout << "    [" << n++ << "]: '" << e.getKey() << "' " << e.getVal().getType().getName().c_str() << "\n";
 
-        std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+        std::cout << foreColor(LIGHTGRAY);
     }
 
     void me::_log() const {

@@ -109,23 +109,24 @@ namespace namu {
     }
 
     nbool me::log(logLv::level lv, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...) {
+        using platformAPI::foreColor;
         std::string msg;
-        msg += platformAPI::getConsoleFore(platformAPI::BROWN);
+        msg += foreColor(BROWN);
         msg += _makeStr("%s ", platformAPI::createNowTime("%b %d %Y  %X").c_str());
 
-        platformAPI::consoleColor clrLv = platformAPI::WHITE;
+        consoleColor clrLv = WHITE;
         switch(lv) {
-            case logLv::ERR: clrLv = platformAPI::LIGHTRED; break;
-            case logLv::WARN: clrLv = platformAPI::YELLOW; break;
-            case logLv::INFO: clrLv = platformAPI::LIGHTBLUE; break;
+            case logLv::ERR: clrLv = LIGHTRED; break;
+            case logLv::WARN: clrLv = YELLOW; break;
+            case logLv::INFO: clrLv = LIGHTBLUE; break;
         }
-        msg += platformAPI::getConsoleFore(clrLv);
+        msg += foreColor(clrLv);
         msg += _makeStr("%s %s ", tag, logLv::getName(lv).c_str());
 
-        msg += platformAPI::getConsoleFore(platformAPI::GREEN);
+        msg += foreColor(GREEN);
         msg += _makeStr("<%s::%s#%d> ", filename, func, line);
 
-        msg += platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+        msg += foreColor(LIGHTGRAY);
         va_list va;
         va_start(va, fmt);
         msg += _makeStr(fmt, va);

@@ -93,35 +93,36 @@ namespace namu {
     }
 
     void me::log() const {
+        using platformAPI::foreColor;
         auto& log = logger::get();
         switch(fType) {
             case logLv::ERR:
-                std::cerr << platformAPI::getConsoleFore(platformAPI::LIGHTRED);
+                std::cerr << foreColor(LIGHTRED);
                 if(pos.isOrigin())
                     log.logFormatBypass("err%d(%s)", code, getErrName(code).c_str());
                 else
                     log.logFormatBypass("err%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
-                std::cerr << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+                std::cerr << foreColor(LIGHTGRAY);
                 log.logFormatBypass(": %s\n", msg.c_str());
                 break;
 
             case logLv::WARN:
-                std::cerr << platformAPI::getConsoleFore(platformAPI::YELLOW);
+                std::cerr << foreColor(YELLOW);
                 if(pos.isOrigin())
                     log.logFormatBypass("warn%d(%s)", code, getErrName(code).c_str());
                 else
                     log.logFormatBypass("warn%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
-                std::cerr << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+                std::cerr << foreColor(LIGHTGRAY);
                 log.logFormatBypass(": %s\n", msg.c_str());
                 break;
 
             case logLv::INFO:
-                std::cerr << platformAPI::getConsoleFore(platformAPI::BLUE);
+                std::cerr << foreColor(BLUE);
                 if(pos.isOrigin())
                     log.logFormatBypass("info%d(%s)", code, getErrName(code).c_str());
                 else
                     log.logFormatBypass("info%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
-                std::cerr << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+                std::cerr << foreColor(LIGHTGRAY);
                 log.logFormatBypass(": %s\n", msg.c_str());
                 break;
         }

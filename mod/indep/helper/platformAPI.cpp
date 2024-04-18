@@ -20,184 +20,185 @@
 
 namespace namu {
 
-    NAMU_DEF_ME(platformAPI)
-    constexpr nint PATH_MAX_LEN = 256;
-    using namespace std;
+    namespace platformAPI {
+        constexpr nint PATH_MAX_LEN = 256;
+        using namespace std;
 
 #if defined(NAMU_BUILD_PLATFORM_IS_LINUX) || defined(NAMU_BUILD_PLATFORM_IS_MAC)
-    namespace {
-        bool _isAnsiColorTerminal() {
-            static vector<const nchar*> samples = {
-                "xterm", "rxvt", "vt100",
-                "linux", "screen", "tmux"
-            };
-            return find_if(samples.begin(), samples.end(), [](const string& e) {
-                string use = getenv("TERM");
-                return use.find(e) != string::npos;
-            }) != samples.end();
-        }
-    }
-#endif
-
-    const string& me::getConsoleFore(consoleColor fore) {
-#ifdef __EMSCRIPTEN__
-        // TODO: Unreachable code exception raised if we don't handle it.
-        //       find solution not to use this ifdef __EMSCRIPTEN__ block.
-        static string inner = "";
-        return inner;
-#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), platformAPI::BLACK << 4 | fore);
-        static string inner;
-        return inner;
-#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
-        static bool is_terminal_supporting = _isAnsiColorTerminal();
-        if(!is_terminal_supporting) {
-            static string inner;
-            return inner;
-        }
-
-        static vector<string> fores = {
-            "\x1B[0;30m", "\x1B[0;34m", "\x1B[0;32m", "\x1B[0;36m", // black, blue, green, cyan
-            "\x1B[0;31m", "\x1B[0;35m", "\x1B[0;33m", "\x1B[0;37m", // red, purple, yellow, white
-            "\x1B[1;30m", "\x1B[1;34m", "\x1B[1;32m", "\x1B[1;36m", // same ones but more lighter than above.
-            "\x1B[1;31m", "\x1B[1;35m", "\x1B[1;33m", "\x1B[1;37m"
-        };
-        return fores[fore];
-#endif
-    }
-
-    const string& me::getConsoleBack(consoleColor back) {
-        static string inner;
-#if defined(__EMSCRIPTEN__)
-        return inner;
-#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back << 4 | WHITE);
-        return inner;
-
-#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
-        static bool is_terminal_supporting = _isAnsiColorTerminal();
-        if( ! is_terminal_supporting)
-            return inner;
-
-        static vector<string> backs = {
-            "\x1B[0;40m", "\x1B[0;44m", "\x1B[0;42m", "\x1B[0;46m", // black, blue, green, cyan
-            "\x1B[0;41m", "\x1B[0;45m", "\x1B[0;43m", "\x1B[0;47m", // red, purple, yellow, white
-            "\x1B[1;40m", "\x1B[1;44m", "\x1B[1;42m", "\x1B[1;46m", // black, blue, green, cyan
-            "\x1B[1;41m", "\x1B[1;45m", "\x1B[1;43m", "\x1B[1;47m", // red, purple, yellow, white
-        };
-        return backs[back];
-#endif
-    }
-
-    string me::createNowTime(const string& strftime_format) {
-        time_t t = time(0);
-        struct tm* timeinfo = localtime(&t);
-
-        char buffer[80];
-        strftime(buffer, 80, strftime_format.c_str(), timeinfo);
-
-        return buffer;
-    }
-
-    nulong me::getNowMs() {
-#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
-        struct timeval tval;
-        gettimeofday(&tval, NULL);
-        return tval.tv_usec / 1000;
-#else
-        return 0L;
-#endif
-    }
-
-    string me::getExecPath() {
-        nchar res[PATH_MAX_LEN];
-
-#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX
-        nuint count = readlink("/proc/self/exe", res, PATH_MAX_LEN);
-        return string(res, (count > 0) ? count : 0);
-#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
-        nuint size = PATH_MAX_LEN + 1;
-        _NSGetExecutablePath(res, &size);
-        return string(res, size);
-#else
-        return string();
-#endif
-    }
-
-    string me::exec(const string& cmd) {
-#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
-        nchar buf[128] = {0, };
-        string res;
-        shared_ptr<FILE> pipe(popen(cmd.c_str(), "r"), pclose);
-
-        while(!feof(pipe.get()))
-            if(fgets(buf, 128, pipe.get()) != nullptr)
-                res += buf;
-
-        return res;
-#else
-        return "";
-#endif
-    }
-
-    vector<string> me::callstack() {
-        vector<string> ret;
-#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
-
-        constexpr int BT_SIZE = 100;
-        constexpr int CS_SIZE = 10;
-        void* rawCallstacks[BT_SIZE] = {nullptr, };
-
-        int len = backtrace(rawCallstacks, BT_SIZE);
-        char** callstacks = backtrace_symbols(rawCallstacks, len);
-        if(nul(callstacks)) return ret;
-
-        regex re("\\[(.+)\\]");
-        auto path = getExecPath();
-
-        for (int n=0; n < len ; n++) {
-            string sym = callstacks[n];
-            smatch ms;
-
-            if(ret.size() >= CS_SIZE) break;
-            if(regex_search(sym, ms, re)) {
-                string addr(ms[1]);
-                string cmd = "addr2line -i -e " + path + " -f -p -C " + addr;
-                auto demangled = exec(cmd);
-                if(demangled[0] == '?') continue;
-
-                ret.push_back(demangled.substr(0, demangled.size()-1));
+        namespace {
+            bool _isAnsiColorTerminal() {
+                static vector<const nchar*> samples = {
+                    "xterm", "rxvt", "vt100",
+                    "linux", "screen", "tmux"
+                };
+                return find_if(samples.begin(), samples.end(), [](const string& e) {
+                    string use = getenv("TERM");
+                    return use.find(e) != string::npos;
+                }) != samples.end();
             }
         }
-
-        free(callstacks);
 #endif
-        return ret;
-    }
 
+        const string& foreColor(consoleColor fore) {
+#ifdef __EMSCRIPTEN__
+            // TODO: Unreachable code exception raised if we don't handle it.
+            //       find solution not to use this ifdef __EMSCRIPTEN__ block.
+            static string inner = "";
+            return inner;
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), platformAPI::BLACK << 4 | fore);
+            static string inner;
+            return inner;
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+            static bool is_terminal_supporting = _isAnsiColorTerminal();
+            if(!is_terminal_supporting) {
+                static string inner;
+                return inner;
+            }
 
-    string me::demangle(const nchar* org) {
-#if !defined(NAMU_BUILD_PLATFORM_IS_WINDOWS) && !defined(__EMSCRIPTEN__)
-        nchar* demangled = nullptr;
-        int status = 0;
-
-        demangled = ::abi::__cxa_demangle(org, 0, 0, &status);
-        string ret(demangled);
-
-        free(demangled);
-        return ret;
+            static vector<string> fores = {
+                "\x1B[0;30m", "\x1B[0;34m", "\x1B[0;32m", "\x1B[0;36m", // black, blue, green, cyan
+                "\x1B[0;31m", "\x1B[0;35m", "\x1B[0;33m", "\x1B[0;37m", // red, purple, yellow, white
+                "\x1B[1;30m", "\x1B[1;34m", "\x1B[1;32m", "\x1B[1;36m", // same ones but more lighter than above.
+                "\x1B[1;31m", "\x1B[1;35m", "\x1B[1;33m", "\x1B[1;37m"
+            };
+            return fores[fore];
 #endif
-        return string(org);
-    }
+        }
 
-    string me::filterDemangle(const nchar* org) {
-#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
-        string raw(org);
-        int n = raw.rfind(" ");
+        const string& backColor(consoleColor back) {
+            static string inner;
+#if defined(__EMSCRIPTEN__)
+            return inner;
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back << 4 | WHITE);
+            return inner;
+
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+            static bool is_terminal_supporting = _isAnsiColorTerminal();
+            if( ! is_terminal_supporting)
+                return inner;
+
+            static vector<string> backs = {
+                "\x1B[0;40m", "\x1B[0;44m", "\x1B[0;42m", "\x1B[0;46m", // black, blue, green, cyan
+                "\x1B[0;41m", "\x1B[0;45m", "\x1B[0;43m", "\x1B[0;47m", // red, purple, yellow, white
+                "\x1B[1;40m", "\x1B[1;44m", "\x1B[1;42m", "\x1B[1;46m", // black, blue, green, cyan
+                "\x1B[1;41m", "\x1B[1;45m", "\x1B[1;43m", "\x1B[1;47m", // red, purple, yellow, white
+            };
+            return backs[back];
+#endif
+        }
+
+        string createNowTime(const string& strftime_format) {
+            time_t t = time(0);
+            struct tm* timeinfo = localtime(&t);
+
+            char buffer[80];
+            strftime(buffer, 80, strftime_format.c_str(), timeinfo);
+
+            return buffer;
+        }
+
+        nulong getNowMs() {
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+            struct timeval tval;
+            gettimeofday(&tval, NULL);
+            return tval.tv_usec / 1000;
 #else
-        const string& raw = demangle(org);
-        int n = raw.rfind(":");
+            return 0L;
 #endif
-        return raw.substr(n + 1);
+        }
+
+        string getExecPath() {
+            nchar res[PATH_MAX_LEN];
+
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX
+            nuint count = readlink("/proc/self/exe", res, PATH_MAX_LEN);
+            return string(res, (count > 0) ? count : 0);
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+            nuint size = PATH_MAX_LEN + 1;
+            _NSGetExecutablePath(res, &size);
+            return string(res, size);
+#else
+            return string();
+#endif
+        }
+
+        string exec(const string& cmd) {
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+            nchar buf[128] = {0, };
+            string res;
+            shared_ptr<FILE> pipe(popen(cmd.c_str(), "r"), pclose);
+
+            while(!feof(pipe.get()))
+                if(fgets(buf, 128, pipe.get()) != nullptr)
+                    res += buf;
+
+            return res;
+#else
+            return "";
+#endif
+        }
+
+        vector<string> callstack() {
+            vector<string> ret;
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
+
+            constexpr int BT_SIZE = 100;
+            constexpr int CS_SIZE = 10;
+            void* rawCallstacks[BT_SIZE] = {nullptr, };
+
+            int len = backtrace(rawCallstacks, BT_SIZE);
+            char** callstacks = backtrace_symbols(rawCallstacks, len);
+            if(nul(callstacks)) return ret;
+
+            regex re("\\[(.+)\\]");
+            auto path = getExecPath();
+
+            for (int n=0; n < len ; n++) {
+                string sym = callstacks[n];
+                smatch ms;
+
+                if(ret.size() >= CS_SIZE) break;
+                if(regex_search(sym, ms, re)) {
+                    string addr(ms[1]);
+                    string cmd = "addr2line -i -e " + path + " -f -p -C " + addr;
+                    auto demangled = exec(cmd);
+                    if(demangled[0] == '?') continue;
+
+                    ret.push_back(demangled.substr(0, demangled.size()-1));
+                }
+            }
+
+            free(callstacks);
+#endif
+            return ret;
+        }
+
+
+        string demangle(const nchar* org) {
+#if !defined(NAMU_BUILD_PLATFORM_IS_WINDOWS) && !defined(__EMSCRIPTEN__)
+            nchar* demangled = nullptr;
+            int status = 0;
+
+            demangled = ::abi::__cxa_demangle(org, 0, 0, &status);
+            string ret(demangled);
+
+            free(demangled);
+            return ret;
+#endif
+            return string(org);
+        }
+
+        string filterDemangle(const nchar* org) {
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
+            string raw(org);
+            int n = raw.rfind(" ");
+#else
+            const string& raw = demangle(org);
+            int n = raw.rfind(":");
+#endif
+            return raw.substr(n + 1);
+        }
     }
 }
