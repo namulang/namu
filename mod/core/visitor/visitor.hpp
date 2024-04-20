@@ -33,13 +33,13 @@ namespace namu {
 
 #define X(T) \
         virtual void visit(visitInfo i, T& me); \
-        virtual void onVisit(visitInfo i, T& me); \
+        virtual nbool onVisit(visitInfo i, T& me); \
         virtual void onLeave(visitInfo i, T& me);
 #   include "visitee.inl"
 #undef X
 
         virtual void visit(visitInfo i, node& me);
-        virtual void onVisit(visitInfo i, node& me);
+        virtual nbool onVisit(visitInfo i, node& me);
         virtual void onLeave(visitInfo i, node& me);
 
         //  traverse:

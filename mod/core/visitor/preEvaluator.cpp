@@ -31,11 +31,12 @@ namespace namu {
         _preEval();
     }
 
-    void me::onVisit(visitInfo i, obj& me) {
+    nbool me::onVisit(visitInfo i, obj& me) {
         NAMU_DI("preEval: obj: %s", i.name.c_str());
 
         _obj.bind(me);
         me.inFrame();
+        return true;
     }
 
     void me::onLeave(visitInfo i, obj& me) {
@@ -43,7 +44,7 @@ namespace namu {
         _obj.rel();
     }
 
-    void me::onVisit(visitInfo i, func& me) {
+    nbool me::onVisit(visitInfo i, func& me) {
         _func.bind(me);
         me.inFrame();
 
@@ -57,6 +58,7 @@ namespace namu {
         }
 
         me.getBlock().inFrame();
+        return true;
     }
 
     void me::onLeave(visitInfo i, func& me) {
@@ -65,18 +67,19 @@ namespace namu {
         _func.rel();
     }
 
-    void me::onVisit(visitInfo i, getGenericExpr& me) {
+    nbool me::onVisit(visitInfo i, getGenericExpr& me) {
         NAMU_DI("preEval: getGenericExpr:");
 
         // this lets genericObj make a their generic obj.
         obj& genericObj = me.getEval().cast<obj>();
-        if(nul(genericObj)) return;
+        if(nul(genericObj)) return true;
 
         obj& prevObj = *_obj;
         func& prevFunc = *_func;
         genericObj.accept(i, *this);
         _func.bind(prevFunc);
         _obj.bind(prevObj);
+        return true;
     }
 
     void me::_rel() {

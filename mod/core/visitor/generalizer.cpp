@@ -38,16 +38,18 @@ namespace namu {
 
             stmts.set(n, org);
         }
+        return true;
     }
 
-    void me::onVisit(visitInfo i, defPropExpr& me) {
+    nbool me::onVisit(visitInfo i, defPropExpr& me) {
         const node& org = _findOrigin(me.getOrigin());
-        if(nul(org)) return;
+        if(nul(org)) return true;
 
         me.setOrigin(org);
+        return true;
     }
 
-    void me::onVisit(visitInfo i, runExpr& me) {
+    nbool me::onVisit(visitInfo i, runExpr& me) {
         const node* org = &_findOrigin(me.getMe());
         if(!nul(org))
             me.setMe(*org);
@@ -63,9 +65,10 @@ namespace namu {
 
             a.set(n, org);
         }
+        return true;
     }
 
-    void me::onVisit(visitInfo i, params& me) {
+    nbool me::onVisit(visitInfo i, params& me) {
         NAMU_DI("generic: params[%d]", me.len());
 
         for(int n=0; n < me.len(); n++) {
@@ -75,9 +78,10 @@ namespace namu {
 
             p.setOrigin(org);
         }
+        return true;
     }
 
-    void me::onVisit(visitInfo i, ctor& me) {
+    nbool me::onVisit(visitInfo i, ctor& me) {
         baseObj& cast = getRoot().cast<baseObj>();
         if(nul(cast))
             getReport().add(err::newErr(errCode::MAKE_GENERIC_FAIL, i.name.c_str()));
@@ -88,9 +92,10 @@ namespace namu {
         }
 
         onVisit(i, (baseFunc&) me);
+        return true;
     }
 
-    void me::onVisit(visitInfo i, baseFunc& me) {
+    nbool me::onVisit(visitInfo i, baseFunc& me) {
         NAMU_DI("generic: func[%s, %x]", i.name.c_str(), &me);
 
         onVisit(i, (params&) me.getParams());
@@ -103,9 +108,10 @@ namespace namu {
         }
 
         onVisit(i, (baseFunc::super&) me);
+        return true;
     }
 
-    void me::onVisit(visitInfo i, baseObj& me) {
+    nbool me::onVisit(visitInfo i, baseObj& me) {
         nbicontainer& subs = me.subs();
         for(auto e=subs.begin(); e ;++e) {
             const node& org = _findOrigin(e.getVal());
@@ -114,11 +120,11 @@ namespace namu {
             e.setVal(org);
         }
 
-
         onVisit(i, (baseObj::super&) me);
+        return true;
     }
 
-    void me::onVisit(visitInfo i, FBOExpr& me) {
+    nbool me::onVisit(visitInfo i, FBOExpr& me) {
         const node* org = &_findOrigin(me.getLeft());
         if(!nul(org))
             me.setLeft(*org);
@@ -126,16 +132,18 @@ namespace namu {
         org = &_findOrigin(me.getRight());
         if(!nul(org))
             me.setRight(*org);
+        return true;
     }
 
-    void me::onVisit(visitInfo i, getGenericExpr& me) {
+    nbool me::onVisit(visitInfo i, getGenericExpr& me) {
         args& a = *me._args;
-        if(nul(a)) return;
+        if(nul(a)) return true;
 
         for(nint n=0; n < a.len(); n++) {
             const node& org = _findOrigin(a[n]);
             if(!nul(org))
                 a.set(n, org);
         }
+        return true;
     }
 }

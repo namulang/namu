@@ -23,21 +23,24 @@ TEST_F(visitorTest, iterateManuallyConstructedNodes) {
 
         myVisitor(): metFoo1(false), metVal1(false), metFoo2(false), metVal2(false) {}
 
-        void onVisit(visitInfo i, func& fun) override {
+        nbool onVisit(visitInfo i, func& fun) override {
             if(i.name == "foo1")
                 metFoo1 = true;
             if(i.name == "foo2") {
                 metFoo2 = true;
                 EXPECT_TRUE(fun.getRet()->isSub<nFlt>());
             }
+            return true;
         }
-        void onVisit(visitInfo i, nInt& o) override {
+        nbool onVisit(visitInfo i, nInt& o) override {
             if(i.name == "val1")
                 metVal1 = true;
+            return true;
         }
-        void onVisit(visitInfo i, nFlt& o) override {
+        nbool onVisit(visitInfo i, nFlt& o) override {
             if(i.name == "val2")
                 metVal2 = true;
+            return true;
         }
     };
     myVisitor v;

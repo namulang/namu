@@ -9,11 +9,12 @@ namespace namu {
 
     public:
         void start() override;
-        void onVisit(visitInfo i, node& visitee) override;
+        nbool onVisit(visitInfo i, node& visitee) override;
         void onLeave(visitInfo i, node& visitee) override;
-        void onVisit(visitInfo i, baseFunc& fun) override;
-        void onVisit(visitInfo i, genericObj& o) override;
-        void onVisit(visitInfo i, getExpr& e) override;
+        nbool onVisit(visitInfo i, baseFunc& fun) override;
+        nbool onVisit(visitInfo i, genericObj& o) override;
+        nbool onVisit(visitInfo i, getExpr& e) override;
+        nbool onVisit(visitInfo i, runExpr& e) override;
 
     private:
         void _drawIndent();

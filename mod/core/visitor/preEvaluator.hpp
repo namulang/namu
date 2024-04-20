@@ -23,11 +23,11 @@ namespace namu {
 
         using super::onVisit;
 
-        void onVisit(visitInfo i, obj& me) override;
+        nbool onVisit(visitInfo i, obj& me) override;
         void onLeave(visitInfo i, obj& me) override;
-        void onVisit(visitInfo i, func& me) override;
+        nbool onVisit(visitInfo i, func& me) override;
         void onLeave(visitInfo i, func& me) override;
-        void onVisit(visitInfo i, getGenericExpr& me) override;
+        nbool onVisit(visitInfo i, getGenericExpr& me) override;
 
     private:
         void _rel();

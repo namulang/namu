@@ -12,16 +12,16 @@ namespace namu {
         me& add(const param& newParam);
 
         using super::onVisit;
-        void onVisit(visitInfo i, asExpr& me) override;
-        void onVisit(visitInfo i, blockExpr& me) override;
-        void onVisit(visitInfo i, defPropExpr& me) override;
-        void onVisit(visitInfo i, runExpr& me) override;
-        void onVisit(visitInfo i, baseFunc& me) override;
-        void onVisit(visitInfo i, ctor& me) override;
-        void onVisit(visitInfo i, params& me);
-        void onVisit(visitInfo i, FBOExpr& me) override;
-        void onVisit(visitInfo i, baseObj& me) override;
-        void onVisit(visitInfo i, getGenericExpr& me) override;
+        nbool onVisit(visitInfo i, asExpr& me) override;
+        nbool onVisit(visitInfo i, blockExpr& me) override;
+        nbool onVisit(visitInfo i, defPropExpr& me) override;
+        nbool onVisit(visitInfo i, runExpr& me) override;
+        nbool onVisit(visitInfo i, baseFunc& me) override;
+        nbool onVisit(visitInfo i, ctor& me) override;
+        nbool onVisit(visitInfo i, params& me);
+        nbool onVisit(visitInfo i, FBOExpr& me) override;
+        nbool onVisit(visitInfo i, baseObj& me) override;
+        nbool onVisit(visitInfo i, getGenericExpr& me) override;
 
     private:
         const node& _findOrigin(const node& toReplace) const;

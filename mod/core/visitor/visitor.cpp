@@ -40,11 +40,11 @@ namespace namu {
         \
         if(!_markVisited(me)) return; \
         \
-        onVisit(i, me); \
-        onTraverse(i, me); \
+        if(onVisit(i, me)) \
+            onTraverse(i, me); \
         onLeave(i, me); \
     } \
-    void me::onVisit(visitInfo i, T& me) { onVisit(i, (T::super&) me); } \
+    nbool me::onVisit(visitInfo i, T& me) { return onVisit(i, (T::super&) me); } \
     void me::onLeave(visitInfo i, T& me) { onLeave(i, (T::super&) me); }
 
 #   include "visitee.inl"
@@ -69,11 +69,11 @@ namespace namu {
 
         if(!_markVisited(me)) return;
 
-        onVisit(i, me);
-        onTraverse(i, me);
+        if(onVisit(i, me))
+            onTraverse(i, me);
         onLeave(i, me);
     }
-    void me::onVisit(visitInfo i, node& me) {}
+    nbool me::onVisit(visitInfo i, node& me) { return true; }
     void me::onLeave(visitInfo i, node& me) {}
 
     void me::start() {

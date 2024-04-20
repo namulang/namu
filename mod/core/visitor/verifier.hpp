@@ -25,33 +25,33 @@ namespace namu {
 
         void start() override;
 
-        void onVisit(visitInfo i, node& me) override;
-        void onVisit(visitInfo i, asExpr& me) override;
-        void onVisit(visitInfo i, assignExpr& me) override;
-        void onVisit(visitInfo i, blockExpr& me) override;
+        nbool onVisit(visitInfo i, node& me) override;
+        nbool onVisit(visitInfo i, asExpr& me) override;
+        nbool onVisit(visitInfo i, assignExpr& me) override;
+        nbool onVisit(visitInfo i, blockExpr& me) override;
         void onLeave(visitInfo i, blockExpr& me) override;
         void onLeave(visitInfo i, defAssignExpr& me) override;
-        void onVisit(visitInfo i, defPropExpr& me) override;
-        void onVisit(visitInfo i, defSeqExpr& me) override;
-        void onVisit(visitInfo i, defArrayExpr& me) override;
-        void onVisit(visitInfo i, FBOExpr& me) override;
-        void onVisit(visitInfo i, FUOExpr& me) override;
-        void onVisit(visitInfo i, getExpr& me) override;
-        void onVisit(visitInfo i, retExpr& me) override;
-        void onVisit(visitInfo i, runExpr& me) override;
-        void onVisit(visitInfo i, func& me) override;
+        nbool onVisit(visitInfo i, defPropExpr& me) override;
+        nbool onVisit(visitInfo i, defSeqExpr& me) override;
+        nbool onVisit(visitInfo i, defArrayExpr& me) override;
+        nbool onVisit(visitInfo i, FBOExpr& me) override;
+        nbool onVisit(visitInfo i, FUOExpr& me) override;
+        nbool onVisit(visitInfo i, getExpr& me) override;
+        nbool onVisit(visitInfo i, retExpr& me) override;
+        nbool onVisit(visitInfo i, runExpr& me) override;
+        nbool onVisit(visitInfo i, func& me) override;
         void onLeave(visitInfo i, func& me) override;
-        void onVisit(visitInfo i, baseObj& me) override;
+        nbool onVisit(visitInfo i, baseObj& me) override;
         void onLeave(visitInfo i, baseObj& me) override;
-        void onVisit(visitInfo i, genericObj& me) override;
+        nbool onVisit(visitInfo i, genericObj& me) override;
         void onLeave(visitInfo i, genericObj& me) override;
-        void onVisit(visitInfo i, forExpr& me) override;
+        nbool onVisit(visitInfo i, forExpr& me) override;
         void onLeave(visitInfo i, forExpr& me) override;
-        void onVisit(visitInfo i, whileExpr& me) override;
+        nbool onVisit(visitInfo i, whileExpr& me) override;
         void onLeave(visitInfo i, whileExpr& me) override;
-        void onVisit(visitInfo i, breakExpr& me) override;
-        void onVisit(visitInfo i, nextExpr& me) override;
-        void onVisit(visitInfo i, ifExpr& me) override;
+        nbool onVisit(visitInfo i, breakExpr& me) override;
+        nbool onVisit(visitInfo i, nextExpr& me) override;
+        nbool onVisit(visitInfo i, ifExpr& me) override;
 
     private:
         void _prepare();
