@@ -15,6 +15,8 @@ namespace namu {
         nbool onVisit(visitInfo i, genericObj& o) override;
         nbool onVisit(visitInfo i, getExpr& e) override;
         nbool onVisit(visitInfo i, runExpr& e) override;
+        nbool onVisit(visitInfo i, FBOExpr& e) override;
+        nbool onVisit(visitInfo i, FUOExpr& e) override;
 
     private:
         void _drawIndent();

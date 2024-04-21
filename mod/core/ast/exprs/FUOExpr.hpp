@@ -28,8 +28,11 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
 
+        node& getOperand();
+        const node& getOperand() const NAMU_UNCONST_FUNC(getOperand())
         str getEval() const override;
         rule getRule() const;
+        static const nchar* getRuleName(rule r);
 
     private:
         rule _rule;

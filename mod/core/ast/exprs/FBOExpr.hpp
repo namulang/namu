@@ -41,6 +41,7 @@ namespace namu {
         void setRight(const node& new1);
         nbool isLogicalOp() const;
         rule getRule() const;
+        static const nchar* getRuleName(rule r);
 
     private:
         rule _rule;

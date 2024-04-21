@@ -39,11 +39,24 @@ namespace namu {
         return ret;
     }
 
+    node& me::getOperand() {
+        return *_it;
+    }
+
     str me::getEval() const {
         return _it->getEval();
     }
 
     me::rule me::getRule() const {
         return _rule;
+    }
+
+    const nchar* me::getRuleName(rule r) {
+        switch(r) {
+            case POSTFIX_DOUBLE_PLUS: return "++";
+            case POSTFIX_DOUBLE_MINUS: return "--";
+            case BITWISE_NOT: return "~";
+            default: return "";
+        }
     }
 }

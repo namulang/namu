@@ -75,4 +75,27 @@ namespace namu {
     me::rule me::getRule() const {
         return _rule;
     }
+
+    const nchar* me::getRuleName(rule r) {
+        switch(r) {
+            case ADD: return "+";
+            case SUB: return "-";
+            case MUL: return "*";
+            case DIV: return "/";
+            case MOD: return "%";
+            case BITWISE_AND: return "&";
+            case BITWISE_XOR: return "^";
+            case BITWISE_OR: return "|";
+            case LSHIFT: return "<<";
+            case RSHIFT: return ">>";
+            case NE: return "!=";
+            case GT: return ">";
+            case LT: return "<";
+            case GE: return ">=";
+            case LE: return "<=";
+            case AND: return "&&";
+            case OR: return "||";
+            default: return "";
+        }
+    }
 }
