@@ -25,6 +25,15 @@ namespace namu {
     }
 
     nbool me::onVisit(visitInfo i, node& visitee) {
+        _drawFrame(i);
+        using platformAPI::foreColor;
+        std::cout << foreColor(LIGHTRED) << i.name << " "
+                  << foreColor(CYAN) << visitee.getType().getName();
+
+        return !visitee.isSub<arithmeticObj>();
+    }
+
+    void me::_drawFrame(visitInfo i) {
         if(_isStart)
             std::cout << "\n";
         _isStart = true;
@@ -34,12 +43,8 @@ namespace namu {
 
         nbool isLast = nul(i.parent) ? true : i.index >= i.len - 1;
         using platformAPI::foreColor;
-        std::cout << foreColor(LIGHTGRAY) << (isLast ? "┗━[" : "┣━[") << foreColor(YELLOW) << i.index << foreColor(LIGHTGRAY) << "]: "
-                  << foreColor(LIGHTBLUE) << i.name
-                  << foreColor(CYAN) << visitee.getType().getName();
-
+        std::cout << foreColor(LIGHTGRAY) << (isLast ? "┗━[" : "┣━[") << foreColor(YELLOW) << i.index << foreColor(LIGHTGRAY) << "] ";
         _parentsLast.push_back(isLast);
-        return true;
     }
 
     void me::onLeave(visitInfo i, node& visitee) {
@@ -48,12 +53,12 @@ namespace namu {
     }
 
     nbool me::onVisit(visitInfo i, baseFunc& fun) {
-        onVisit(i, (node&) fun);
+        _drawFrame(i);
+
         using platformAPI::foreColor;
-        std::cout << foreColor(LIGHTGRAY) << ": "
-                  << foreColor(MAGENTA) << "params" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << fun.getParams().toStr()
-                  << foreColor(LIGHTGRAY) << "] " << foreColor(MAGENTA) << "ret" << foreColor(LIGHTGRAY) << "["
-                  << foreColor(CYAN) << fun.getRet()->getType().getName() << foreColor(LIGHTGRAY) << "]";
+        std::cout << foreColor(LIGHTBLUE) << i.name
+                  << foreColor(LIGHTGRAY) << "(" << foreColor(CYAN) << fun.getParams().toStr() << foreColor(LIGHTGRAY) << ") "
+                  << foreColor(CYAN) << fun.getRet()->getType().getName();
         return true;
     }
 
@@ -78,7 +83,7 @@ namespace namu {
             from = me.getType().getName();
 
         using platformAPI::foreColor;
-        std::cout << foreColor(LIGHTGRAY) << ": "
+        std::cout << foreColor(LIGHTGRAY) << " -> "
                   << foreColor(MAGENTA) << "from" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << from << foreColor(LIGHTGRAY) << "] "
                   << foreColor(MAGENTA) << "name" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << e.getSubName() << foreColor(LIGHTGRAY) << "] "
                   << foreColor(MAGENTA) << "args" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << e.getSubArgs().toStr() << foreColor(LIGHTGRAY) << "]";
@@ -96,8 +101,7 @@ namespace namu {
             from = me.getType().getName();
 
         using platformAPI::foreColor;
-        std::cout << foreColor(LIGHTGRAY) << ": "
-                  << foreColor(MAGENTA) << "me" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << from << foreColor(LIGHTGRAY) << "] "
+        std::cout << foreColor(LIGHTGRAY) << " -> "
                   << foreColor(MAGENTA) << "args" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << e.getArgs().toStr() << foreColor(LIGHTGRAY) << "]";
         return true;
     }
@@ -106,9 +110,9 @@ namespace namu {
         onVisit(i, (node&) e);
 
         using platformAPI::foreColor;
-        std::cout << foreColor(LIGHTGRAY) << ": "
-                  << foreColor(CYAN) << e.getLeft().getType().getName()
-                  << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule())
+        std::cout << foreColor(LIGHTGRAY) << " -> "
+                  << foreColor(CYAN) << e.getLeft().getType().getName() << " "
+                  << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule()) << " "
                   << foreColor(CYAN) << e.getRight().getType().getName();
 
         return !e.getLeft().isSub<arithmeticObj>() || !e.getRight().isSub<arithmeticObj>();
@@ -119,8 +123,7 @@ namespace namu {
 
         const node& op = e.getOperand();
         using platformAPI::foreColor;
-        std::cout << foreColor(LIGHTGRAY) << ": "
-                  << foreColor(CYAN) << op.getType().getName()
+        std::cout << foreColor(CYAN) << op.getType().getName() << " "
                   << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule());
 
         return !op.isSub<arithmeticObj>();

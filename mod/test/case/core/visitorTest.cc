@@ -76,20 +76,23 @@ TEST_F(visitorTest, visitComplexExpressions) {
         myVisitor(): metO(0), metAsFlt(0), metFlt5(false) {}
 
         using visitor::onVisit;
-        void onVisit(visitInfo i, getExpr& got) override {
+        nbool onVisit(visitInfo i, getExpr& got) override {
             NAMU_DI("subname=%s", got.getSubName().c_str());
             if(got.getSubName() == "o")
                 metO++;
+            return true;
         }
 
-        void onVisit(visitInfo i, asExpr& as) override {
+        nbool onVisit(visitInfo i, asExpr& as) override {
             if(as.getAs().as<node>()->isSub<nInt>())
                 metAsFlt++;
+            return true;
         }
 
-        void onVisit(visitInfo i, nFlt& f) override {
+        nbool onVisit(visitInfo i, nFlt& f) override {
             if(f.get() == 5.0f)
                 metFlt5 = true;
+            return true;
         }
 
         nint metO;
@@ -138,20 +141,22 @@ TEST_F(visitorTest, visitComplexExpressions2) {
         myVisitor(): metInt2(false), metRet(false) {}
 
         using visitor::onVisit;
-        void onVisit(visitInfo i, FBOExpr& fao) override {
+        nbool onVisit(visitInfo i, FBOExpr& fao) override {
             tstr<nInt> num2 = ((node&) fao.getRight()).as<nInt>();
-            if(!num2) return;
+            if(!num2) return true;
 
             if(num2->cast<nint>() == 2)
                 metInt2 = true;
+            return true;
         }
 
-        void onVisit(visitInfo i, assignExpr& a) override {
+        nbool onVisit(visitInfo i, assignExpr& a) override {
             getExpr& leftGet = ((node&) a.getLeft()).cast<getExpr>();
-            if(nul(leftGet)) return;
+            if(nul(leftGet)) return true;
 
-            if(leftGet.getSubName() != "res") return;
+            if(leftGet.getSubName() != "res") return true;
             metRet = true;
+            return true;
         }
 
         nbool metInt2;

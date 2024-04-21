@@ -21,6 +21,7 @@ namespace namu {
     private:
         void _drawIndent();
         void _onIndent();
+        void _drawFrame(visitInfo i);
 
     private:
         std::vector<nbool> _parentsLast;
