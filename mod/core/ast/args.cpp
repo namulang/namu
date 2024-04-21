@@ -1,4 +1,5 @@
 #include "args.hpp"
+#include "exprs/getExpr.hpp"
 
 namespace namu {
 
@@ -30,11 +31,24 @@ namespace namu {
         return ret;
     }
 
+    namespace {
+        std::string getEvalTypeFrom(const node& value) {
+            if(nul(value)) return "null";
+            str eval = value.getEval();
+            if(eval)
+                return eval->getType().getName();
+            const getExpr& cast = value.cast<getExpr>();
+            if(!nul(cast))
+                return cast.getSubName();
+            return value.getType().getName();
+        }
+    }
+
     std::string me::toStr() const {
         int n=0;
         std::string msg;
         each([&](const auto& val) {
-            return msg += val.getEval()->getType().getName() + (++n >= len() ? "" : ","), true;
+            return msg += getEvalTypeFrom(val) + (++n >= len() ? "" : ","), true;
         });
         return msg;
     }
