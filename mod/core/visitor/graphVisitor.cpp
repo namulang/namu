@@ -24,13 +24,19 @@ namespace namu {
         _indents.push_back((isParentLast ? "   " : "┃  "));
     }
 
+    nbool me::onVisit(visitInfo i, nInt& e) { return _onVisitPrimitive<nInt>(i, e); }
+    nbool me::onVisit(visitInfo i, nFlt& e) { return _onVisitPrimitive<nFlt>(i, e); }
+    nbool me::onVisit(visitInfo i, nStr& e) { return _onVisitPrimitive<nStr>(i, e); }
+    nbool me::onVisit(visitInfo i, nChar& e) { return _onVisitPrimitive<nChar>(i, e); }
+    nbool me::onVisit(visitInfo i, nByte& e) { return _onVisitPrimitive<nByte>(i, e); }
+    nbool me::onVisit(visitInfo i, nBool& e) { return _onVisitPrimitive<nBool>(i, e); }
+
     nbool me::onVisit(visitInfo i, node& visitee) {
         _drawFrame(i);
         using platformAPI::foreColor;
         std::clog << foreColor(LIGHTRED) << i.name << " "
                   << foreColor(CYAN) << visitee.getType().getName();
-
-        return !visitee.isSub<arithmeticObj>();
+        return true;
     }
 
     void me::_drawFrame(visitInfo i) {
@@ -102,11 +108,17 @@ namespace namu {
         const node& me = e.getMe();
         if(nul(me))
             from = "frame";
-        else
-            from = me.getType().getName();
+        else {
+            const getExpr& cast = me.cast<getExpr>();
+            if(nul(cast))
+                from = me.getType().getName();
+            else
+                from = cast.getSubName();
+        }
 
         using platformAPI::foreColor;
-        std::clog << foreColor(LIGHTGRAY) << " = run("
+        std::clog << foreColor(LIGHTGRAY) << " = "
+                  << foreColor(MAGENTA) << from << foreColor(LIGHTGRAY) << "("
                   << foreColor(YELLOW) << e.getArgs().toStr() << foreColor(LIGHTGRAY) << ")";
         return true;
     }
@@ -119,9 +131,9 @@ namespace namu {
                   << foreColor(CYAN) << e.getLeft().getType().getName();
         tstr<nStr> leftVal = e.getLeft().as<nStr>();
         if(leftVal)
-            std::clog << foreColor(LIGHTGRAY) << "(" << foreColor(YELLOW) << leftVal->get() << foreColor(LIGHTGRAY) << ") ";
+            std::clog << foreColor(LIGHTGRAY) << "(" << foreColor(YELLOW) << leftVal->get() << foreColor(LIGHTGRAY) << ")";
 
-        std::clog << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule()) << " "
+        std::clog << " " << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule()) << " "
                   << foreColor(CYAN) << e.getRight().getType().getName();
         tstr<nStr> rightVal = e.getRight().as<nStr>();
         if(rightVal)
@@ -135,7 +147,8 @@ namespace namu {
 
         const node& op = e.getOperand();
         using platformAPI::foreColor;
-        std::clog << foreColor(CYAN) << op.getType().getName() << " "
+        std::clog << foreColor(LIGHTGRAY) << " = "
+                  << foreColor(CYAN) << op.getType().getName() << " "
                   << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule());
 
         return !op.isSub<arithmeticObj>();
