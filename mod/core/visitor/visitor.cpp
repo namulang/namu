@@ -34,9 +34,8 @@ namespace namu {
 #define X(T) \
     void me::visit(visitInfo i, T& me) { \
         if(nul(me)) return; \
-        if(_isLog) {\
-            NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str()); \
-        } \
+        if(_isLog) \
+            NAMU_DI("visiting %s[%s]...", me.getType().getName().c_str(), i.name.c_str()); \
         \
         if(!_markVisited(me)) return; \
         \
@@ -65,7 +64,7 @@ namespace namu {
     void me::visit(visitInfo i, node& me) {
         if(nul(me)) return;
         if(_isLog)
-            NAMU_DI("%s[%s].visit()", me.getType().getName().c_str(), i.name.c_str());
+            NAMU_DI("visiting %s[%s]...", me.getType().getName().c_str(), i.name.c_str());
 
         if(!_markVisited(me)) return;
 
@@ -80,7 +79,7 @@ namespace namu {
         if(!_root) return;
 
         _visited.clear();
-        _root->accept(visitInfo {"", nullptr, 0, 1, 1}, *this);
+        _root->accept(visitInfo {"#root", nullptr, 0, 1, 1}, *this);
     }
 
     nbool me::_markVisited(node& me) {
@@ -90,14 +89,21 @@ namespace namu {
     }
 
     void me::onTraverse(visitInfo i, node& me) {
-        if(_isLog)
-            NAMU_DI("node[%s]::onTraverse", i.name.c_str());
-
         nbicontainer& subs = me.subs();
-        int n=0;
-        ncnt len = me.subs().len();
-        auto end = _visited.end();
-        for(auto e=subs.begin(); e ;++e, ++n) {
+        scopes& cast = subs.cast<scopes>();
+        ncnt len = subs.len();
+        if(!nul(cast)) {
+            len = cast.getContainer().len();
+            len += cast.getNext().getContainer().len();
+        }
+        if(len <= 0) return;
+
+        if(_isLog)
+            NAMU_DI("%s(\"%s\").onTraverse(len=%d)", me.getType().getName().c_str(), i.name.c_str(), len);
+
+        auto e = subs.begin();
+        for(int n=0; n < len ;n++, ++e) {
+            NAMU_DI("%s is traversing(%s)...", i.name.c_str(), e.getKey().c_str());
             node& val = e.getVal();
             val.accept(visitInfo {e.getKey(), &me, n, len, i.depth+1}, *this);
         }
@@ -105,7 +111,7 @@ namespace namu {
 
     void me::onTraverse(visitInfo i, getExpr& e) {
         if(_isLog)
-            NAMU_DI("getExpr[%s]::onTraverse", i.name.c_str());
+            NAMU_DI("getExpr(\"%s\").onTraverse()", i.name.c_str());
 
         // check me:
         const args& args = e.getSubArgs();
