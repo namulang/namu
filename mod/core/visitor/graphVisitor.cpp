@@ -86,10 +86,12 @@ namespace namu {
             from = me.getType().getName();
 
         using platformAPI::foreColor;
-        std::clog << foreColor(LIGHTGRAY) << " -> "
-                  << foreColor(MAGENTA) << "from" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << from << foreColor(LIGHTGRAY) << "] "
-                  << foreColor(MAGENTA) << "name" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << e.getSubName() << foreColor(LIGHTGRAY) << "] "
-                  << foreColor(MAGENTA) << "args" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << e.getSubArgs().toStr() << foreColor(LIGHTGRAY) << "]";
+        std::string args = e.getSubArgs().toStr();
+        std::clog << foreColor(LIGHTGRAY) << " = \""
+                  << foreColor(MAGENTA) << from << foreColor(LIGHTGRAY) << "." << foreColor(YELLOW) << e.getSubName();
+        if(!args.empty())
+            std::clog << foreColor(LIGHTGRAY) << "(" << foreColor(CYAN) << args << foreColor(LIGHTGRAY) << ")";
+        std::clog << foreColor(LIGHTGRAY) << "\"";
         return true;
     }
 
@@ -104,8 +106,8 @@ namespace namu {
             from = me.getType().getName();
 
         using platformAPI::foreColor;
-        std::clog << foreColor(LIGHTGRAY) << " -> "
-                  << foreColor(MAGENTA) << "args" << foreColor(LIGHTGRAY) << "[" << foreColor(YELLOW) << e.getArgs().toStr() << foreColor(LIGHTGRAY) << "]";
+        std::clog << foreColor(LIGHTGRAY) << " = run("
+                  << foreColor(YELLOW) << e.getArgs().toStr() << foreColor(LIGHTGRAY) << ")";
         return true;
     }
 
@@ -113,10 +115,17 @@ namespace namu {
         onVisit(i, (node&) e);
 
         using platformAPI::foreColor;
-        std::clog << foreColor(LIGHTGRAY) << " -> "
-                  << foreColor(CYAN) << e.getLeft().getType().getName() << " "
-                  << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule()) << " "
+        std::clog << foreColor(LIGHTGRAY) << " = "
+                  << foreColor(CYAN) << e.getLeft().getType().getName();
+        tstr<nStr> leftVal = e.getLeft().as<nStr>();
+        if(leftVal)
+            std::clog << foreColor(LIGHTGRAY) << "(" << foreColor(YELLOW) << leftVal->get() << foreColor(LIGHTGRAY) << ") ";
+
+        std::clog << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule()) << " "
                   << foreColor(CYAN) << e.getRight().getType().getName();
+        tstr<nStr> rightVal = e.getRight().as<nStr>();
+        if(rightVal)
+            std::clog << foreColor(LIGHTGRAY) << "(" << foreColor(YELLOW) << rightVal->get() << foreColor(LIGHTGRAY) << ")";
 
         return !e.getLeft().isSub<arithmeticObj>() || !e.getRight().isSub<arithmeticObj>();
     }
