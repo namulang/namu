@@ -34,7 +34,7 @@ namespace namu {
             using platformAPI::foreColor;
             std::clog << foreColor(LIGHTRED) << i.name << " "
                       << foreColor(CYAN) << e.getType().getName()
-                      << foreColor(LIGHTGRAY) << "(" << foreColor(YELLOW) << e.get() << foreColor(LIGHTGRAY) << ")";
+                      << foreColor(LIGHTGRAY) << " = " << foreColor(YELLOW) << e.get();
             return false;
         }
 

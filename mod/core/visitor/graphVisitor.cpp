@@ -93,33 +93,38 @@ namespace namu {
 
         using platformAPI::foreColor;
         std::string args = e.getSubArgs().toStr();
-        std::clog << foreColor(LIGHTGRAY) << " = \""
+        std::clog << foreColor(LIGHTGRAY) << " = "
                   << foreColor(MAGENTA) << from << foreColor(LIGHTGRAY) << "." << foreColor(YELLOW) << e.getSubName();
         if(!args.empty())
             std::clog << foreColor(LIGHTGRAY) << "(" << foreColor(CYAN) << args << foreColor(LIGHTGRAY) << ")";
-        std::clog << foreColor(LIGHTGRAY) << "\"";
         return true;
     }
 
     nbool me::onVisit(visitInfo i, runExpr& e) {
         onVisit(i, (node&) e);
 
-        std::string from;
-        const node& me = e.getMe();
-        if(nul(me))
-            from = "frame";
+        std::string me;
+        const node& meExpr = e.getMe();
+        if(nul(meExpr))
+            me = "frame";
         else {
-            const getExpr& cast = me.cast<getExpr>();
+            const getExpr& cast = meExpr.cast<getExpr>();
             if(nul(cast))
-                from = me.getType().getName();
+                me = meExpr.getType().getName();
             else
-                from = cast.getSubName();
+                me = cast.getSubName();
         }
+
+        std::string subName = "??";
+        const getExpr& cast = e.getSubject().cast<getExpr>();
+        if(!nul(cast))
+            subName = cast.getSubName();
 
         using platformAPI::foreColor;
         std::clog << foreColor(LIGHTGRAY) << " = "
-                  << foreColor(MAGENTA) << from << foreColor(LIGHTGRAY) << "("
-                  << foreColor(YELLOW) << e.getArgs().toStr() << foreColor(LIGHTGRAY) << ")";
+                  << foreColor(MAGENTA) << me << foreColor(LIGHTGRAY) << "."
+                  << foreColor(YELLOW) << subName
+                  << foreColor(LIGHTGRAY) << "(" << foreColor(YELLOW) << e.getArgs().toStr() << foreColor(LIGHTGRAY) << ")";
         return true;
     }
 
@@ -150,7 +155,6 @@ namespace namu {
         std::clog << foreColor(LIGHTGRAY) << " = "
                   << foreColor(CYAN) << op.getType().getName() << " "
                   << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule());
-
-        return !op.isSub<arithmeticObj>();
+        return true;
     }
 }
