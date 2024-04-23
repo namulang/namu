@@ -17,6 +17,8 @@ namespace namu {
         nbool onVisit(visitInfo i, runExpr& e) override;
         nbool onVisit(visitInfo i, FBOExpr& e) override;
         nbool onVisit(visitInfo i, FUOExpr& e) override;
+        nbool onVisit(visitInfo i, assignExpr& e) override;
+        nbool onVisit(visitInfo i, defAssignExpr& e) override;
         nbool onVisit(visitInfo i, nInt& e) override;
         nbool onVisit(visitInfo i, nFlt& e) override;
         nbool onVisit(visitInfo i, nStr& e) override;
@@ -38,6 +40,7 @@ namespace namu {
             return false;
         }
         std::string _encodeNewLine(const std::string& msg) const;
+        std::string _getNameFrom(const node& it) const;
 
     private:
         std::vector<nbool> _parentsLast;

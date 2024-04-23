@@ -14,7 +14,9 @@ namespace namu {
     me::runExpr(const node& meObj, const args& a): _me(meObj), _args(a), _subject(meObj) {}
 
     str me::run(const args& a) {
-        str sub = _getSub(getMe().as<node>(), _args);
+        node& me = getMe();
+        if(nul(me)) return NAMU_E("no thread found"), str();
+        str sub = _getSub(me.as<node>(), _args);
         if(!sub) return NAMU_E("_subject.as<node>() returns null"), str();
 
         str ret = sub->run(_args);

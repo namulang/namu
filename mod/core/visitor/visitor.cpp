@@ -285,7 +285,7 @@ namespace namu {
         int len = elems.len(),
             n = 0;
         for(node& e : elems)
-            e.accept(visitInfo {"", &d, n++, len, i.depth+1}, *this);
+            e.accept(visitInfo {"arg" + std::to_string(n), &d, n++, len, i.depth+1}, *this);
     }
 
     void me::onTraverse(visitInfo i, genericObj& g) {
