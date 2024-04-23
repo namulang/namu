@@ -37,6 +37,7 @@ namespace namu {
                       << foreColor(LIGHTGRAY) << " = " << foreColor(YELLOW) << e.get();
             return false;
         }
+        std::string _encodeNewLine(const std::string& msg) const;
 
     private:
         std::vector<nbool> _parentsLast;

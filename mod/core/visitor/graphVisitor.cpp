@@ -1,6 +1,7 @@
 #include "graphVisitor.hpp"
 #include "../ast.hpp"
 #include "../frame/frame.hpp"
+#include <regex>
 
 namespace namu {
 
@@ -26,7 +27,14 @@ namespace namu {
 
     nbool me::onVisit(visitInfo i, nInt& e) { return _onVisitPrimitive<nInt>(i, e); }
     nbool me::onVisit(visitInfo i, nFlt& e) { return _onVisitPrimitive<nFlt>(i, e); }
-    nbool me::onVisit(visitInfo i, nStr& e) { return _onVisitPrimitive<nStr>(i, e); }
+    nbool me::onVisit(visitInfo i, nStr& e) {
+        _drawFrame(i);
+        using platformAPI::foreColor;
+        std::clog << foreColor(LIGHTRED) << i.name << " "
+                  << foreColor(CYAN) << e.getType().getName()
+                  << foreColor(LIGHTGRAY) << " = \"" << foreColor(YELLOW) << _encodeNewLine(e.get()) << foreColor(LIGHTGRAY) << "\"";
+        return false;
+    }
     nbool me::onVisit(visitInfo i, nChar& e) { return _onVisitPrimitive<nChar>(i, e); }
     nbool me::onVisit(visitInfo i, nByte& e) { return _onVisitPrimitive<nByte>(i, e); }
     nbool me::onVisit(visitInfo i, nBool& e) { return _onVisitPrimitive<nBool>(i, e); }
@@ -136,13 +144,13 @@ namespace namu {
                   << foreColor(CYAN) << e.getLeft().getType().getName();
         tstr<nStr> leftVal = e.getLeft().as<nStr>();
         if(leftVal)
-            std::clog << foreColor(LIGHTGRAY) << "(" << foreColor(YELLOW) << leftVal->get() << foreColor(LIGHTGRAY) << ")";
+            std::clog << foreColor(LIGHTGRAY) << "(" << foreColor(YELLOW) << _encodeNewLine(leftVal->get()) << foreColor(LIGHTGRAY) << ")";
 
         std::clog << " " << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule()) << " "
                   << foreColor(CYAN) << e.getRight().getType().getName();
         tstr<nStr> rightVal = e.getRight().as<nStr>();
         if(rightVal)
-            std::clog << foreColor(LIGHTGRAY) << "(" << foreColor(YELLOW) << rightVal->get() << foreColor(LIGHTGRAY) << ")";
+            std::clog << foreColor(LIGHTGRAY) << "(" << foreColor(YELLOW) << _encodeNewLine(rightVal->get()) << foreColor(LIGHTGRAY) << ")";
 
         return !e.getLeft().isSub<arithmeticObj>() || !e.getRight().isSub<arithmeticObj>();
     }
@@ -156,5 +164,9 @@ namespace namu {
                   << foreColor(CYAN) << op.getType().getName() << " "
                   << foreColor(LIGHTGRAY) << e.getRuleName(e.getRule());
         return true;
+    }
+
+    std::string me::_encodeNewLine(const std::string& msg) const {
+        return std::regex_replace(msg, std::regex("\n"), "\\n");
     }
 }
