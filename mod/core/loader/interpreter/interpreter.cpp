@@ -21,8 +21,13 @@ namespace namu {
         return *this;
     }
 
-    me& me::setSrcSupply(const srcSupply& supply) {
-        _srcs.bind(supply);
+    me& me::addSrcSupplies(const srcSupply& supply) {
+        _pser.addSrcSupplies(supply);
+        return *this;
+    }
+
+    me& me::relSrcSupplies() {
+        _pser.relSrcSupplies();
         return *this;
     }
 
@@ -57,11 +62,6 @@ namespace namu {
     }
 
     slot& me::interpret() {
-        if(!_srcs) {
-            _rpt->add(err::newErr(NO_SRC));
-            return *_slot;
-        }
-
         threadUse thr;
         _parse();
         if(*_rpt)
@@ -73,7 +73,7 @@ namespace namu {
         _logFrame(info); std::cout << "\n";
         _logStructure(info); std::cout << "\n";
         _log();
-       
+
         return *_slot;
     }
 
@@ -82,7 +82,6 @@ namespace namu {
         _rpt.rel();
         _veri.rel();
         _pser.rel();
-        _srcs.rel();
         _slot.rel();
     }
 
@@ -98,21 +97,16 @@ namespace namu {
     }
 
     void me::_parse() {
-        while(_srcs->next()) {
-            _pser.rel(); // parser can only take 1 src.
+        NAMU_DI("======================================");
+        NAMU_DI("                parse                 ");
+        NAMU_DI("======================================");
 
-            const char* buf = _srcs->get();
-            NAMU_DI("======================================");
-            NAMU_DI("                parse                 ");
-            NAMU_DI("======================================");
+        _pser.setReport(*_rpt)
+             .setSlot(*_slot)
+             .parse();
 
-            _pser.setReport(*_rpt)
-                 .setSlot(*_slot)
-                 .parse(buf);
-
-            if(!_slot)
-                _slot.bind(_pser.getSlot());
-        }
+        if(!_slot)
+            _slot.bind(_pser.getSlot());
 
         _isParsed = _isPackExist() && !_rpt->hasErr();
     }

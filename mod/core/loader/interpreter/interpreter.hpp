@@ -1,7 +1,6 @@
 #pragma once
 
 #include "parser.hpp"
-#include "srcSupply.hpp"
 #include "../../visitor/verifier.hpp"
 
 namespace namu {
@@ -15,7 +14,8 @@ namespace namu {
     public:
         me& setReport(errReport& report);
         me& setSlot(slot& pak);
-        me& setSrcSupply(const srcSupply& supply);
+        me& addSrcSupplies(const srcSupply& supply);
+        me& relSrcSupplies();
         me& setLogStructure(nbool enable);
         me& setVerbose(nbool isVerbose);
         nbool isParsed() const;
@@ -48,7 +48,6 @@ namespace namu {
         tstr<slot> _slot;
         verifier _veri;
         parser _pser;
-        tstr<srcSupply> _srcs;
         nbool _isParsed;
         nbool _isLogStructure;
         nbool _isVerbose;

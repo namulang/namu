@@ -12,6 +12,7 @@
 #include "../../ast/exprs/exprMaker.hpp"
 #include "../../ast/exprs/FBOExpr.hpp"
 #include "smartDedent.hpp"
+#include "supply/srcSupply.hpp"
 
 namespace namu {
 
@@ -48,14 +49,21 @@ namespace namu {
         obj& getSubPack();
         const obj& getSubPack() const NAMU_UNCONST_FUNC(getSubPack())
 
+        srcSupplies& getSrcSupplies();
+        const srcSupplies& getSrcSupplies() const NAMU_UNCONST_FUNC(getSrcSupplies())
+        me& addSrcSupplies(const srcSupplies& new1);
+        me& relSrcSupplies();
+
         tokenDispatcher& getDispatcher();
         std::vector<ncnt>& getIndents();
         const area& getArea() const;
 
         nbool isInit() const;
 
+        /// parse with given srcSupply instances.
         /// @param script is null terminated cstring.
-        tstr<obj> parse(const nchar* script);
+        /// @return last parsed sub pack.
+        tstr<obj> parse();
 
         template <typename T>
         void setScan() {
@@ -258,5 +266,6 @@ namespace namu {
         std::map<node*, std::string> _nameMap;
         exprMaker _maker;
         smartDedent _dedent;
+        srcSupplies _supplies;
     };
 }

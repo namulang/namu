@@ -996,6 +996,20 @@ namespace namu {
         return *_subpack; // TODO: can I remove subpack variable?
     }
 
+    srcSupplies& me::getSrcSupplies() {
+        return _supplies;
+    }
+
+    me& me::addSrcSupplies(const srcSupplies& new1) {
+        _supplies.add(new1);
+        return *this;
+    }
+
+    me& me::relSrcSupplies() {
+        _supplies.rel();
+        return *this;
+    }
+
     errReport& me::getReport() {
         return *_report;
     }
@@ -1028,6 +1042,7 @@ namespace namu {
         _states.clear();
         _states.push_back(0); // 0 for default state
         _dedent.setEnable(false);
+        _supplies.rel();
         prepareParse();
     }
 
@@ -1055,44 +1070,49 @@ namespace namu {
         return _states.back();
     }
 
-    tstr<obj> me::parse(const nchar* script) {
-        if(nul(thread::get())) {
-            getReport().add(err::newErr(errCode::NO_THREAD));
-            return tstr<obj>();
-        }
+    tstr<obj> me::parse() {
+        if(nul(thread::get()))
+            return getReport().add(err::newErr(errCode::NO_THREAD)), tstr<obj>();
 
-        NAMU_I("parse starts.");
-        prepareParse();
+        const auto& supplies = getSrcSupplies();
+        if(!supplies.isEmpty())
+            return getReport().add(err::newErr(NO_SRC)), tstr<obj>();
 
-        yyscan_t scanner;
-        yylex_init_extra(this, &scanner);
+        NAMU_I("parse starts: %d src will be supplied.", supplies.len());
+        for(const auto& supply : supplies) {
+            prepareParse();
 
-        YY_BUFFER_STATE bufState = yy_scan_string((nchar*) script, scanner); // +2 is for space of END_OF_BUFFER, nullptr.
-        if(!bufState) {
-            getReport().add(err::newErr(errCode::IS_NULL, "bufState")).log();
-            return tstr<obj>();
-        }
+            yyscan_t scanner;
+            yylex_init_extra(this, &scanner);
 
-        // fix Flex Bug here:
-        //  when yy_scan_string get called, it returns bufState after malloc it.
-        //  but some variables wasn't initialized. yy_bs_lineno(used to calculate
-        //  current cursor position) is one of them.
-        bufState->yy_bs_lineno = bufState->yy_bs_column = 0;
-        yy_switch_to_buffer(bufState, scanner);
+            YY_BUFFER_STATE bufState = yy_scan_string((nchar*) supply.onSupplySrc(*this).c_str(), scanner); // +2 is for space of END_OF_BUFFER, nullptr.
+            if(!bufState) {
+                getReport().add(err::newErr(errCode::IS_NULL, "bufState")).log();
+                return tstr<obj>();
+            }
+
+            // fix Flex Bug here:
+            //  when yy_scan_string get called, it returns bufState after malloc it.
+            //  but some variables wasn't initialized. yy_bs_lineno(used to calculate
+            //  current cursor position) is one of them.
+            bufState->yy_bs_lineno = bufState->yy_bs_column = 0;
+            yy_switch_to_buffer(bufState, scanner);
 
 #if YYDEBUG
-        //yyset_debug(1, scanner); // For Flex (no longer a global, but rather a member of yyguts_t)
-        //yydebug = 1;             // For Bison (still global, even in a reentrant parser)
+            //yyset_debug(1, scanner); // For Flex (no longer a global, but rather a member of yyguts_t)
+            //yydebug = 1;             // For Bison (still global, even in a reentrant parser)
 #endif
 
-        int res = yyparse(scanner);
-        if(res) {
-            getReport().add(err::newWarn(errCode::PARSING_HAS_ERR, res)).log();
-            return tstr<obj>();
+            int res = yyparse(scanner);
+            if(res) {
+                getReport().add(err::newWarn(errCode::PARSING_HAS_ERR, res)).log();
+                return tstr<obj>();
+            }
+
+            yy_delete_buffer(bufState, scanner);
+            yylex_destroy(scanner);
         }
 
-        yy_delete_buffer(bufState, scanner);
-        yylex_destroy(scanner);
         return getSubPack();
     }
 }
