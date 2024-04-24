@@ -14,7 +14,7 @@ namespace namu {
         friend class verifier;
         friend class obj;
         friend class defaultMakeCtor;
-        friend class loweventer;
+        friend class parser;
 
     protected:
         /// if you don't give any subs when construct an baseObj, _subs will be assigned to dummy array.

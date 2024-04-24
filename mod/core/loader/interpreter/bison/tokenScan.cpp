@@ -8,12 +8,12 @@ std::string getTokenName(int tok);
 
 namespace namu {
 
-    nint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
+    nint tokenScan::onScan(parser& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
         nbool dum;
         return onScan(eventer, val, loc, scanner, dum);
     }
 
-    nint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
+    nint tokenScan::onScan(parser& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
         tokenDispatcher& disp = eventer.getDispatcher();
         nint tok;
 
@@ -28,7 +28,7 @@ namespace namu {
         return tok;
     }
 
-    nint normalScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
+    nint normalScan::onScan(parser& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
         nint tok = super::onScan(eventer, val, loc, scanner, isBypass);
         switch(tok) {
             case TAB:
@@ -40,7 +40,7 @@ namespace namu {
 
     normalScan* normalScan::_instance = new normalScan();
 
-    nint indentScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
+    nint indentScan::onScan(parser& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
         nint tok = super::onScan(eventer, val, loc, scanner, isBypass);
         switch(tok) {
             case NEWLINE:

@@ -16,7 +16,7 @@ namespace namu {
              CLONE(obj),
              VISIT())
         friend class slot; // for _onRunSub
-        friend class loweventer;
+        friend class parser;
         friend class genericObj; // for _setOrigin(), _setType
         friend class exprMaker;
 

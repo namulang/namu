@@ -5,7 +5,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-function"
 #include "lowparser.hpp"
-#include "../loweventer.hpp"
+#include "../parser.hpp"
 #include <iostream>
 #include <functional>
 #ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
@@ -20,7 +20,7 @@ namespace {
 #define YY_USER_ACTION yylloc->start.row = yylloc->end.row = yyget_lineno(yyscanner); \
                        yylloc->start.col = yylloc->colcnt; yylloc->end.col = yylloc->colcnt+yyleng-1; \
                        yylloc->colcnt += yyleng;
-#define EVENTER (*yyget_extra(yyscanner))
+#define PS (*yyget_extra(yyscanner))
 }
 
 
@@ -29,7 +29,7 @@ namespace {
     ============================================================================================  */
 
 %option reentrant bison-bridge bison-locations
-%option extra-type="namu::loweventer*"
+%option extra-type="namu::parser*"
 %option yylineno
 %option nounistd
 %option noyywrap
@@ -52,12 +52,12 @@ namespace {
 /* actual-pattern: */
 %%
 
-[\%\*\+\-\/\.\{\[\^\|\&\~\!] { return EVENTER.onIgnoreIndent(yytext[0]); }
+[\%\*\+\-\/\.\{\[\^\|\&\~\!] { return PS.onIgnoreIndent(yytext[0]); }
 [\}\]<>\;] { return yytext[0]; }
-[,] { return EVENTER.onTokenComma(yytext[0]); }
-[\:] { return EVENTER.onTokenColon(yytext[0]); }
-[\(] { return EVENTER.onTokenLParan(yytext[0]); }
-[\)] { return EVENTER.onTokenRParan(yytext[0]); }
+[,] { return PS.onTokenComma(yytext[0]); }
+[\:] { return PS.onTokenColon(yytext[0]); }
+[\(] { return PS.onTokenLParan(yytext[0]); }
+[\)] { return PS.onTokenRParan(yytext[0]); }
 \-\- { return DOUBLE_MINUS; }
 \+\+ { return DOUBLE_PLUS; }
 \.\. { return DOUBLE_DOT; }
@@ -88,7 +88,7 @@ namespace {
 
 \n {
     yylloc->colcnt = yylloc->start.col = yylloc->end.col = 0;
-    return EVENTER.onTokenNewLine(NEWLINE);
+    return PS.onTokenNewLine(NEWLINE);
 }
 
 [-]*[[:digit:]]+ {
@@ -185,7 +185,7 @@ false {
 }
 
 \"[^"\\]* { yylval->asStr = new std::string(yytext + 1, yyleng - 1);
-    BEGIN(EVENTER.pushState(escSeq));
+    BEGIN(PS.pushState(escSeq));
 }
 
 <escSeq>[^"\\]+ { yylval->asStr->append(yytext, yyleng); }
@@ -194,7 +194,7 @@ false {
 <escSeq>\\\n    { /* A backslash at the end of the line. Do nothing */ }
 <escSeq>\\.     { (*yylval->asStr) += yytext[1]; }
 <escSeq>\"      {
-    BEGIN(EVENTER.popState());
+    BEGIN(PS.popState());
     return STRVAL;
 }
 
@@ -207,17 +207,17 @@ false {
 \/\/[^\n]* {}
 
 \/\* {
-    BEGIN(EVENTER.pushState(stateComment));
+    BEGIN(PS.pushState(stateComment));
 }
 
 <stateComment>"*/" {
-    BEGIN(EVENTER.popState());
+    BEGIN(PS.popState());
 }
 <stateComment>\n {}
 <stateComment>. {}
 
 . {
-    return EVENTER.onScanUnexpected(yytext);
+    return PS.onScanUnexpected(yytext);
 }
 
 %%
@@ -226,7 +226,7 @@ false {
     ============================================================================================  */
 
 int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner) {
-    namu::loweventer& eventer = EVENTER;
+    namu::parser& eventer = PS;
     if(!eventer.isInit()) // init: tokenScanable
         eventer.setScan<namu::indentScan>();
 

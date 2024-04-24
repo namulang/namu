@@ -5,7 +5,7 @@
     #include <iostream>
     #include <sstream>
     using std::cout;
-    #include "../loweventer.hpp"
+    #include "../parser.hpp"
     #include "../../../builtin.hpp"
     using namespace namu;
 
@@ -18,10 +18,10 @@
               (Current).start.row = (Current).end.row = YYRHSLOC (Rhs, 0).end.row; \
               (Current).start.col = (Current).end.col = YYRHSLOC (Rhs, 0).end.col; \
           } \
-          EVENTER.onSrcArea(Current); \
+          PS.onSrcArea(Current); \
         } while(0)
 
-    #define EVENTER (*yyget_extra(scanner))
+    #define PS (*yyget_extra(scanner))
 }
 
 /*  ============================================================================================
@@ -60,13 +60,13 @@
     extern int yylineno;
     extern char* yytext;
     namespace namu {
-        class loweventer;
+        class parser;
     }
 
     extern "C" {
         int yylex(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         void yyset_lineno(int linenumber, yyscan_t scanner);
-        namu::loweventer* yyget_extra(yyscan_t scanner);
+        namu::parser* yyget_extra(yyscan_t scanner);
         char* yyget_text(yyscan_t scanner);
         void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg);
     }
@@ -218,40 +218,40 @@
 compilation-unit: pack defblock {
                 tstr<obj> pak(*$1);
                 tstr<defBlock> lifeBlock($2);
-                EVENTER.onCompilationUnit(*pak, *lifeBlock);
+                PS.onCompilationUnit(*pak, *lifeBlock);
                 _onEndParse(scanner);
               } | pack {
                 tstr<obj> pak(*$1);
-                EVENTER.onCompilationUnit(*pak);
+                PS.onCompilationUnit(*pak);
                 _onEndParse(scanner);
               }
 
 // basic component:
 unary: postfix { $$ = $1; }
-     | DOUBLE_PLUS unary { $$ = EVENTER.onUnaryDoublePlus(*$2); }
-     | DOUBLE_MINUS unary { $$ = EVENTER.onUnaryDoubleMinus(*$2); }
+     | DOUBLE_PLUS unary { $$ = PS.onUnaryDoublePlus(*$2); }
+     | DOUBLE_MINUS unary { $$ = PS.onUnaryDoubleMinus(*$2); }
      | '+' unary { $$ = $2; }
-     | '-' unary { $$ = EVENTER.onUnaryMinus(*$2); }
-     | '!' unary { $$ = EVENTER.onUnaryNot(*$2); }
-     | '~' unary { $$ = EVENTER.onUnaryBitwiseNot(*$2); }
+     | '-' unary { $$ = PS.onUnaryMinus(*$2); }
+     | '!' unary { $$ = PS.onUnaryNot(*$2); }
+     | '~' unary { $$ = PS.onUnaryBitwiseNot(*$2); }
 
 postfix: primary { $$ = $1; }
-       | postfix DOUBLE_MINUS { $$ = EVENTER.onUnaryPostfixDoubleMinus(*$1); }
-       | postfix DOUBLE_PLUS { $$ = EVENTER.onUnaryPostfixDoublePlus(*$1); }
-       | postfix '.' access { $$ = EVENTER.onGet(*$1, *$3); }
+       | postfix DOUBLE_MINUS { $$ = PS.onUnaryPostfixDoubleMinus(*$1); }
+       | postfix DOUBLE_PLUS { $$ = PS.onUnaryPostfixDoublePlus(*$1); }
+       | postfix '.' access { $$ = PS.onGet(*$1, *$3); }
        | postfix '.' func-call {
-        $$ = EVENTER.onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
+        $$ = PS.onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
      } | func-call { $$ = $1; }
-       | postfix '[' expr-inline9 ']' { $$ = EVENTER.onGetElem(*$1, *$3); }
+       | postfix '[' expr-inline9 ']' { $$ = PS.onGetElem(*$1, *$3); }
 
-primary: INTVAL { $$ = EVENTER.onPrimitive<nInt>($1); }
+primary: INTVAL { $$ = PS.onPrimitive<nInt>($1); }
        | STRVAL {
-        $$ = EVENTER.onPrimitive<nStr>(*$1);
+        $$ = PS.onPrimitive<nStr>(*$1);
         free($1);
-     } | FLTVAL { $$ = EVENTER.onPrimitive<nFlt>($1); }
-       | BOOLVAL { $$ = EVENTER.onPrimitive<nBool>($1); }
-       | CHARVAL { $$ = EVENTER.onPrimitive<nChar>($1); }
-       | tuple { $$ = EVENTER.onParanthesisAsTuple(*$1); }
+     } | FLTVAL { $$ = PS.onPrimitive<nFlt>($1); }
+       | BOOLVAL { $$ = PS.onPrimitive<nBool>($1); }
+       | CHARVAL { $$ = PS.onPrimitive<nChar>($1); }
+       | tuple { $$ = PS.onParanthesisAsTuple(*$1); }
        | NUL {
         // ??
      } | def-array-value { $$ = $1; }
@@ -271,66 +271,66 @@ visibility: '_' '+' {
 //  expr:
 //      inline:
 expr-inline9: expr-inline8 { $$ = $1; }
-          | expr-inline9 LOGICAL_OR expr-inline8 { $$ = EVENTER.onOr(*$1, *$3); }
-          | expr-inline9 LOGICAL_AND expr-inline8 { $$ = EVENTER.onAnd(*$1, *$3); }
+          | expr-inline9 LOGICAL_OR expr-inline8 { $$ = PS.onOr(*$1, *$3); }
+          | expr-inline9 LOGICAL_AND expr-inline8 { $$ = PS.onAnd(*$1, *$3); }
 expr-inline8: expr-inline7 { $$ = $1; }
-          | expr-inline8 LSHIFT expr-inline7 { $$ = EVENTER.onLShift(*$1, *$3); }
-          | expr-inline8 RSHIFT expr-inline7 { $$ = EVENTER.onRShift(*$1, *$3); }
+          | expr-inline8 LSHIFT expr-inline7 { $$ = PS.onLShift(*$1, *$3); }
+          | expr-inline8 RSHIFT expr-inline7 { $$ = PS.onRShift(*$1, *$3); }
 expr-inline7: expr-inline6 { $$ = $1; }
-          | expr-inline6 '>' expr-inline6 { $$ = EVENTER.onGt(*$1, *$3); }
-          | expr-inline6 '<' expr-inline6 { $$ = EVENTER.onLt(*$1, *$3); }
-          | expr-inline6 GE expr-inline6 { $$ = EVENTER.onGe(*$1, *$3); }
-          | expr-inline6 LE expr-inline6 { $$ = EVENTER.onLe(*$1, *$3); }
-          | expr-inline6 EQ expr-inline6 { $$ = EVENTER.onEq(*$1, *$3); }
-          | expr-inline6 NE expr-inline6 { $$ = EVENTER.onNe(*$1, *$3); }
+          | expr-inline6 '>' expr-inline6 { $$ = PS.onGt(*$1, *$3); }
+          | expr-inline6 '<' expr-inline6 { $$ = PS.onLt(*$1, *$3); }
+          | expr-inline6 GE expr-inline6 { $$ = PS.onGe(*$1, *$3); }
+          | expr-inline6 LE expr-inline6 { $$ = PS.onLe(*$1, *$3); }
+          | expr-inline6 EQ expr-inline6 { $$ = PS.onEq(*$1, *$3); }
+          | expr-inline6 NE expr-inline6 { $$ = PS.onNe(*$1, *$3); }
 expr-inline6: expr-inline5 { $$ = $1; }
-          | expr-inline6 '|' expr-inline5 { $$ = EVENTER.onBitwiseOr(*$1, *$3); }
+          | expr-inline6 '|' expr-inline5 { $$ = PS.onBitwiseOr(*$1, *$3); }
           | expr-inline6 IS type {
             // ??
-        } | expr-inline6 _IN_ expr-inline5 { $$ = EVENTER.onIn(*$1, *$3); }
+        } | expr-inline6 _IN_ expr-inline5 { $$ = PS.onIn(*$1, *$3); }
 expr-inline5: expr-inline4 { $$ = $1; }
-          | expr-inline5 '^' expr-inline4 { $$ = EVENTER.onBitwiseXor(*$1, *$3); }
+          | expr-inline5 '^' expr-inline4 { $$ = PS.onBitwiseXor(*$1, *$3); }
 expr-inline4: expr-inline3 { $$ = $1; }
-          | expr-inline4 '&' expr-inline3 { $$ = EVENTER.onBitwiseAnd(*$1, *$3); }
+          | expr-inline4 '&' expr-inline3 { $$ = PS.onBitwiseAnd(*$1, *$3); }
 expr-inline3: expr-inline2 { $$ = $1; }
-          | expr-inline3 '+' expr-inline2 { $$ = EVENTER.onAdd(*$1, *$3); }
-          | expr-inline3 '-' expr-inline2 { $$ = EVENTER.onSub(*$1, *$3); }
+          | expr-inline3 '+' expr-inline2 { $$ = PS.onAdd(*$1, *$3); }
+          | expr-inline3 '-' expr-inline2 { $$ = PS.onSub(*$1, *$3); }
 expr-inline2: expr-inline1 { $$ = $1; }
-          | expr-inline2 '*' expr-inline1 { $$ = EVENTER.onMul(*$1, *$3); }
-          | expr-inline2 '/' expr-inline1 { $$ = EVENTER.onDiv(*$1, *$3); }
-          | expr-inline2 '%' expr-inline1 { $$ = EVENTER.onMod(*$1, *$3); }
+          | expr-inline2 '*' expr-inline1 { $$ = PS.onMul(*$1, *$3); }
+          | expr-inline2 '/' expr-inline1 { $$ = PS.onDiv(*$1, *$3); }
+          | expr-inline2 '%' expr-inline1 { $$ = PS.onMod(*$1, *$3); }
 expr-inline1: unary { $$ = $1; }
-          | expr-inline1 AS type { $$ = EVENTER.onAs(*$1, *$3); }
-          | unary DOUBLE_DOT unary { $$ = EVENTER.onDefSeq(*$1, *$3); }
+          | expr-inline1 AS type { $$ = PS.onAs(*$1, *$3); }
+          | unary DOUBLE_DOT unary { $$ = PS.onDefSeq(*$1, *$3); }
 //      compound:
 expr-compound: if { $$ = $1; }
-             | expr-inline9 ASSIGN expr-compound { $$ = EVENTER.onAssign(*$1, *$3); }
+             | expr-inline9 ASSIGN expr-compound { $$ = PS.onAssign(*$1, *$3); }
              | for { $$ = $1; }
              | while { $$ = $1; }
              | end { $$ = $1; }
 
-block: allstmt { $$ = EVENTER.onBlock(*$1); }
-     | block allstmt { $$ = EVENTER.onBlock($1->cast<blockExpr>(), *$2); }
+block: allstmt { $$ = PS.onBlock(*$1); }
+     | block allstmt { $$ = PS.onBlock($1->cast<blockExpr>(), *$2); }
 
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
            | ':' allstmt-chain NEWLINE { $$ = $2; }
-           | ':' all-expr-compound { $$ = EVENTER.onBlock(*$2); }
+           | ':' all-expr-compound { $$ = PS.onBlock(*$2); }
            | ':' allstmt-chain ';' all-expr-compound {
-            $$ = EVENTER.onBlock($2->cast<blockExpr>(), *$4);
-         } | ':' ';' NEWLINE { $$ = EVENTER.onBlock(); }
+            $$ = PS.onBlock($2->cast<blockExpr>(), *$4);
+         } | ':' ';' NEWLINE { $$ = PS.onBlock(); }
 
 indentDefBlock: NEWLINE INDENT defblock DEDENT { $$ = $3; }
               | ':' def-stmt-chain NEWLINE { $$ = $2; }
-              | ':' def-expr-compound { $$ = EVENTER.onDefBlock(*$2); }
+              | ':' def-expr-compound { $$ = PS.onDefBlock(*$2); }
               | ':' def-stmt-chain ';' def-expr-compound {
                 str exprLife($4);
-                $$ = EVENTER.onDefBlock(*$2, *exprLife);
-            } | ':' ';' NEWLINE { $$ = EVENTER.onDefBlock(); }
+                $$ = PS.onDefBlock(*$2, *exprLife);
+            } | ':' ';' NEWLINE { $$ = PS.onDefBlock(); }
 
-defblock: def-stmt { $$ = EVENTER.onDefBlock(*$1); }
+defblock: def-stmt { $$ = PS.onDefBlock(*$1); }
         | defblock def-stmt {
         str lifeStmt($2);
-        $$ = EVENTER.onDefBlock(*$1, *lifeStmt);
+        $$ = PS.onDefBlock(*$1, *lifeStmt);
       }
 
 declBlock: access NEWLINE {
@@ -349,12 +349,12 @@ indentDeclBlock: NEWLINE INDENT declBlock DEDENT {
 //  stmt:
 //      normal:
 expr-inline: expr-inline9 { $$ = $1; }
-         | expr-inline9 ASSIGN expr-inline { $$ = EVENTER.onAssign(*$1, *$3); }
-         | expr-inline9 ADD_ASSIGN expr-inline9 { $$ = EVENTER.onAddAssign(*$1, *$3); }
-         | expr-inline9 SUB_ASSIGN expr-inline9 { $$ = EVENTER.onSubAssign(*$1, *$3); }
-         | expr-inline9 MUL_ASSIGN expr-inline9 { $$ = EVENTER.onMulAssign(*$1, *$3); }
-         | expr-inline9 DIV_ASSIGN expr-inline9 { $$ = EVENTER.onDivAssign(*$1, *$3); }
-         | expr-inline9 MOD_ASSIGN expr-inline9 { $$ = EVENTER.onModAssign(*$1, *$3); }
+         | expr-inline9 ASSIGN expr-inline { $$ = PS.onAssign(*$1, *$3); }
+         | expr-inline9 ADD_ASSIGN expr-inline9 { $$ = PS.onAddAssign(*$1, *$3); }
+         | expr-inline9 SUB_ASSIGN expr-inline9 { $$ = PS.onSubAssign(*$1, *$3); }
+         | expr-inline9 MUL_ASSIGN expr-inline9 { $$ = PS.onMulAssign(*$1, *$3); }
+         | expr-inline9 DIV_ASSIGN expr-inline9 { $$ = PS.onDivAssign(*$1, *$3); }
+         | expr-inline9 MOD_ASSIGN expr-inline9 { $$ = PS.onModAssign(*$1, *$3); }
          | ret-inline { $$ = $1; }
          | break { $$ = $1; }
          | next { $$ = $1; }
@@ -375,10 +375,10 @@ def-expr-compound: with-compound { $$ = $1; }
                  | def-prop-compound { $$ = $1; }
 def-stmt: def-expr-inline NEWLINE { $$ = $1; }
         | def-expr-compound { $$ = $1; }
-def-stmt-chain: def-expr-inline { $$ = EVENTER.onDefBlock(*$1); }
+def-stmt-chain: def-expr-inline { $$ = PS.onDefBlock(*$1); }
               | def-stmt-chain ';' def-expr-inline {
                 str lifeItem($3);
-                $$ = EVENTER.onDefBlock(*$1, *lifeItem);
+                $$ = PS.onDefBlock(*$1, *lifeItem);
             }
 
 //      all:
@@ -386,9 +386,9 @@ all-expr-compound: expr-compound { $$ = $1; }
                  | def-expr-compound { $$ = $1; }
 allstmt: stmt { $$ = $1; }
        | def-stmt { $$ = $1; }
-allstmt-chain: allstmt-chain-item { $$ = EVENTER.onBlock(*$1); }
+allstmt-chain: allstmt-chain-item { $$ = PS.onBlock(*$1); }
              | allstmt-chain ';' allstmt-chain-item {
-                $$ = EVENTER.onBlock($1->cast<blockExpr>(), *$3);
+                $$ = PS.onBlock($1->cast<blockExpr>(), *$3);
            }
 allstmt-chain-item: expr-inline { $$ = $1; }
                   | def-expr-inline { $$ = $1; }
@@ -398,82 +398,82 @@ access: call-access { $$ = $1; }
       | type { $$ = $1; }
 call-access: type params {
             tstr<narr> paramsLife(*$2);
-            $$ = EVENTER.onCallAccess(*$1, *paramsLife);
+            $$ = PS.onCallAccess(*$1, *paramsLife);
          }
 
 //  func:
 func-call: type func-call-tuple {
         tstr<narr> argsLife($2);
         str typeLife($1);
-        $$ = EVENTER.onRunExpr(*typeLife, *argsLife);
+        $$ = PS.onRunExpr(*typeLife, *argsLife);
       }
 
 //  tuple:
 tuple: '(' tuple-items ')' { $$ = $2; }
-     | '(' ')' { $$ = EVENTER.onTuple(); }
+     | '(' ')' { $$ = PS.onTuple(); }
 tuple-item: expr-inline9 { $$ = $1; }
           | expr-compound { $$ = $1; }
-tuple-items: tuple-item { $$ = EVENTER.onTuple(*$1); }
-           | tuple-items ',' tuple-item { $$ = EVENTER.onTuple(*$1, *$3); }
+tuple-items: tuple-item { $$ = PS.onTuple(*$1); }
+           | tuple-items ',' tuple-item { $$ = PS.onTuple(*$1, *$3); }
 func-call-tuple: '(' func-call-tuple-items ')' { $$ = $2; }
-               | '(' ')' { $$ = EVENTER.onFuncCallTuple(); }
+               | '(' ')' { $$ = PS.onFuncCallTuple(); }
 func-call-tuple-item: expr-inline9 { $$ = $1; }
                     | expr-compound { $$ = $1; }
                     | lambda {
                         // ??
                   }
 func-call-tuple-items: func-call-tuple-item {
-                        $$ = EVENTER.onFuncCallTuple(*$1);
+                        $$ = PS.onFuncCallTuple(*$1);
                    } | func-call-tuple-items ',' func-call-tuple-item {
-                        $$ = EVENTER.onFuncCallTuple(*$1, *$3);
+                        $$ = PS.onFuncCallTuple(*$1, *$3);
                    }
-params: '(' _VOID_ ')' { $$ = EVENTER.onParams(); }
+params: '(' _VOID_ ')' { $$ = PS.onParams(); }
       | '(' param-items ')' { $$ = $2; }
 param-items: def-prop-without-value {
-            $$ = EVENTER.onParams($1->cast<defPropExpr>());
+            $$ = PS.onParams($1->cast<defPropExpr>());
          } | param-items ',' def-prop-without-value {
-            $$ = EVENTER.onParams(*$1, $3->cast<defPropExpr>());
+            $$ = PS.onParams(*$1, $3->cast<defPropExpr>());
          }
 
 //  type:
-type: _VOID_ { $$ = EVENTER.onPrimitive<nVoid>(); }
-    | _INT_ { $$ = EVENTER.onPrimitive<nInt>(); }
-    | _BYTE_ { $$ = EVENTER.onPrimitive<nByte>(); }
-    | _CHAR_ { $$ = EVENTER.onPrimitive<nChar>(); }
-    | _STR_ { $$ = EVENTER.onPrimitive<nStr>(); }
-    | _BOOL_ { $$ = EVENTER.onPrimitive<nBool>(); }
-    | FLT { $$ = EVENTER.onPrimitive<nFlt>(); }
+type: _VOID_ { $$ = PS.onPrimitive<nVoid>(); }
+    | _INT_ { $$ = PS.onPrimitive<nInt>(); }
+    | _BYTE_ { $$ = PS.onPrimitive<nByte>(); }
+    | _CHAR_ { $$ = PS.onPrimitive<nChar>(); }
+    | _STR_ { $$ = PS.onPrimitive<nStr>(); }
+    | _BOOL_ { $$ = PS.onPrimitive<nBool>(); }
+    | FLT { $$ = PS.onPrimitive<nFlt>(); }
     | NAME {
-        $$ = EVENTER.onGet(*$1);
+        $$ = PS.onGet(*$1);
         free($1);
-  } | type OPEN_CLOSE_SQUARE_BRACKET { $$ = EVENTER.onGetArray(*$1); }
+  } | type OPEN_CLOSE_SQUARE_BRACKET { $$ = PS.onGetArray(*$1); }
     | NAME typeparams {
         tstr<args> argsLife($2);
-        $$ = EVENTER.onGetGeneric(*$1, *argsLife);
+        $$ = PS.onGetGeneric(*$1, *argsLife);
         free($1);
   }
 
 typeparams: '<' typenames '>' { $$ = $2; }
-typenames: type { $$ = EVENTER.onTypeNames(*$1); }
-         | typenames ',' type { $$ = EVENTER.onTypeNames(*$1, *$3); }
+typenames: type { $$ = PS.onTypeNames(*$1); }
+         | typenames ',' type { $$ = PS.onTypeNames(*$1, *$3); }
 
 //  keyword:
 //      branch:
 if: IF expr-inline9 indentblock {
-    $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>());
+    $$ = PS.onIf(*$2, $3->cast<blockExpr>());
 } | IF expr-inline9 indentblock _ELSE_ indentblock {
-    $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>(), $5->cast<blockExpr>());
+    $$ = PS.onIf(*$2, $3->cast<blockExpr>(), $5->cast<blockExpr>());
 } | IF expr-inline9 indentblock _ELSE_ if {
-    $$ = EVENTER.onIf(*$2, $3->cast<blockExpr>(), $5->cast<ifExpr>());
+    $$ = PS.onIf(*$2, $3->cast<blockExpr>(), $5->cast<ifExpr>());
 }
 
-ret-inline: RET { $$ = EVENTER.onRet(); }
-          | RET expr-inline9 { $$ = EVENTER.onRet(*$2); }
-ret-compound: RET expr-compound { $$ = EVENTER.onRet(*$2); }
+ret-inline: RET { $$ = PS.onRet(); }
+          | RET expr-inline9 { $$ = PS.onRet(*$2); }
+ret-compound: RET expr-compound { $$ = PS.onRet(*$2); }
 
-next: NEXT { $$ = EVENTER.onNext(); }
+next: NEXT { $$ = PS.onNext(); }
 
-break: BREAK { $$ = EVENTER.onBreak(); }
+break: BREAK { $$ = PS.onBreak(); }
 
 matching: expr-inline9 NEWLINE INDENT matchers DEDENT {
             // ??
@@ -510,11 +510,11 @@ matcher-equal-rhs: expr-inline9 {
 
 //      loop:
 while: _WHILE_ expr-inline9 indentblock {
-     $$ = EVENTER.onWhile(*$2, $3->cast<blockExpr>());
+     $$ = PS.onWhile(*$2, $3->cast<blockExpr>());
    }
 
 for: FOR NAME _IN_ expr-inline9 indentblock {
-    $$ = EVENTER.onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
+    $$ = PS.onFor(std::string(*$2), *$4, $5->cast<blockExpr>());
     free($2);
  }
 
@@ -523,11 +523,11 @@ for: FOR NAME _IN_ expr-inline9 indentblock {
 def-prop-inline: def-prop-without-value { $$ = $1; }
               | def-prop-value { $$ = $1; }
 def-prop-without-value: NAME type { // exp means 'explicitly'
-                        $$ = EVENTER.onDefVar(*$1, *$2);
+                        $$ = PS.onDefVar(*$1, *$2);
                         free($1);
                    }
 def-prop-value: NAME DEFASSIGN expr-inline9 {
-              $$ = EVENTER.onDefAssign(*$1, *$3);
+              $$ = PS.onDefAssign(*$1, *$3);
               free($1);
           }
 def-prop-accessor: NEWLINE INDENT def-prop-accessor-items DEDENT {
@@ -544,7 +544,7 @@ def-prop-accessor-items: def-prop-accessor-item {
                      }
 
 def-prop-compound: NAME DEFASSIGN expr-compound {
-                    $$ = EVENTER.onDefAssign(*$1, *$3);
+                    $$ = PS.onDefAssign(*$1, *$3);
                     free($1);
                } | def-prop-inline def-prop-accessor {
                     // ??
@@ -553,13 +553,13 @@ def-prop-compound: NAME DEFASSIGN expr-compound {
 //          func:
 abstract-func: call-access type {
                 str accessLife(*$1);
-                $$ = EVENTER.onAbstractFunc(accessLife->cast<getExpr>(), *$2);
+                $$ = PS.onAbstractFunc(accessLife->cast<getExpr>(), *$2);
            } | type '(' ')' type {
-                $$ = EVENTER.onAbstractFunc(*$1, *$4);
+                $$ = PS.onAbstractFunc(*$1, *$4);
            }
 
 def-func: abstract-func indentblock {
-        $$ = EVENTER.onFunc($1->cast<func>(), $2->cast<blockExpr>());
+        $$ = PS.onFunc($1->cast<func>(), $2->cast<blockExpr>());
      }
 
 end: END indentblock {
@@ -589,17 +589,17 @@ lambda-deduction: tuple indentblock {
 def-obj: def-obj-default { $$ = $1; }
        | def-obj-default-generic { $$ = $1; }
 def-obj-default: DEF NAME indentDefBlock {
-                $$ = EVENTER.onDefObj(std::string(*$2), *$3);
+                $$ = PS.onDefObj(std::string(*$2), *$3);
                 free($2);
              }
 def-obj-default-generic: DEF NAME typeparams indentDefBlock {
                         tstr<args> argsLife($3);
-                        $$ = EVENTER.onDefObjGeneric(*$2, *argsLife, *$4);
+                        $$ = PS.onDefObjGeneric(*$2, *argsLife, *$4);
                         free($2);
                      }
 
 //              container:
-def-array-value: '{' tuple-items '}' { $$ = EVENTER.onDefArray(*$2); }
+def-array-value: '{' tuple-items '}' { $$ = PS.onDefArray(*$2); }
 
 //              with:
 with-inline: WITH expr-inline9 {
@@ -613,8 +613,8 @@ with-compound: with-inline indentblock {
            }
 
 //  predefined-type:
-pack: PACK postfix NEWLINE { $$ = EVENTER.onPack(*$2); }
-    | %empty { $$ = EVENTER.onPack(); }
+pack: PACK postfix NEWLINE { $$ = PS.onPack(*$2); }
+    | %empty { $$ = PS.onPack(); }
 
 
 %%
@@ -643,14 +643,14 @@ static std::string traceErr(const yypcontext_t* ctx, yyscan_t scanner) {
 // it means that error recovery has been failed already.
 static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     yysymbol_kind_t symbol = yypcontext_token(ctx);
-    EVENTER.onSrcArea(*yypcontext_location(ctx));
-    EVENTER.onParseErr(traceErr(ctx, scanner), yysymbol_name(symbol));
+    PS.onSrcArea(*yypcontext_location(ctx));
+    PS.onParseErr(traceErr(ctx, scanner), yysymbol_name(symbol));
 
     return _onEndParse(scanner), 0;
 }
 
 void _onEndParse(yyscan_t scanner) {
-    EVENTER.onEndParse();
+    PS.onEndParse();
     yyset_lineno(0, scanner);
 }
 
@@ -663,5 +663,5 @@ std::string getTokenName(int tok) {
 
 // errors except syntax will come here. for instance, when available memory doesn't exist.
 void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
-    EVENTER.onErr(errCode::MSG, msg);
+    PS.onErr(errCode::MSG, msg);
 }
