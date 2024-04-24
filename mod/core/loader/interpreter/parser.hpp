@@ -37,13 +37,25 @@ namespace namu {
         parser();
 
     public:
-        tstr<slot>& getSlot();
-        tstr<obj>& getSubPack();
-        tstr<errReport>& getReport();
+        slot& getSlot();
+        const slot& getSlot() const NAMU_UNCONST_FUNC(getSlot())
+        me& setSlot(const slot& tray);
+
+        errReport& getReport();
+        const errReport& getReport() const NAMU_UNCONST_FUNC(getReport())
+        me& setReport(errReport& rpt);
+
+        obj& getSubPack();
+        const obj& getSubPack() const NAMU_UNCONST_FUNC(getSubPack())
+
         tokenDispatcher& getDispatcher();
         std::vector<ncnt>& getIndents();
         const area& getArea() const;
+
         nbool isInit() const;
+
+        /// @param script is null terminated cstring.
+        tstr<obj> parse(const nchar* script);
 
         template <typename T>
         void setScan() {
@@ -61,7 +73,7 @@ namespace namu {
         // events:
         //  scan:
         using super::onScan;
-        nint onScan(parser& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) override;
+        nint onScan(parser& ps, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) override;
         nint onTokenEndOfFile();
         nint onTokenColon(nint tok);
         nint onTokenNewLine(nint tok);

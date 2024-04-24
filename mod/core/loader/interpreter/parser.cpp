@@ -1,5 +1,6 @@
 #include "parser.hpp"
 #include "bison/lowparser.hpp"
+#include "bison/lowscanner.hpp"
 #include "../../ast.hpp"
 #include "../../ast/func.hpp"
 #include "../../builtin/primitive.hpp"
@@ -982,16 +983,26 @@ namespace namu {
 
     me::parser() { rel(); }
 
-    tstr<slot>& me::getSlot() {
-        return _slot;
+    slot& me::getSlot() {
+        return *_slot;
     }
 
-    tstr<obj>& me::getSubPack() {
-        return _subpack; // TODO: can I remove subpack variable?
+    me& me::setSlot(const slot& tray) {
+        _slot.bind(tray);
+        return *this;
     }
 
-    tstr<errReport>& me::getReport() {
-        return _report;
+    obj& me::getSubPack() {
+        return *_subpack; // TODO: can I remove subpack variable?
+    }
+
+    errReport& me::getReport() {
+        return *_report;
+    }
+
+    me& me::setReport(errReport& rpt) {
+        _report.bind(rpt);
+        return *this;
     }
 
     tokenDispatcher& me::getDispatcher() {
@@ -1042,5 +1053,46 @@ namespace namu {
         _states.pop_back();
         NAMU_I("pop state %d <- %d", _states.back(), previous);
         return _states.back();
+    }
+
+    tstr<obj> me::parse(const nchar* script) {
+        if(nul(thread::get())) {
+            getReport().add(err::newErr(errCode::NO_THREAD));
+            return tstr<obj>();
+        }
+
+        NAMU_I("parse starts.");
+        prepareParse();
+
+        yyscan_t scanner;
+        yylex_init_extra(this, &scanner);
+
+        YY_BUFFER_STATE bufState = yy_scan_string((nchar*) script, scanner); // +2 is for space of END_OF_BUFFER, nullptr.
+        if(!bufState) {
+            getReport().add(err::newErr(errCode::IS_NULL, "bufState")).log();
+            return tstr<obj>();
+        }
+
+        // fix Flex Bug here:
+        //  when yy_scan_string get called, it returns bufState after malloc it.
+        //  but some variables wasn't initialized. yy_bs_lineno(used to calculate
+        //  current cursor position) is one of them.
+        bufState->yy_bs_lineno = bufState->yy_bs_column = 0;
+        yy_switch_to_buffer(bufState, scanner);
+
+#if YYDEBUG
+        //yyset_debug(1, scanner); // For Flex (no longer a global, but rather a member of yyguts_t)
+        //yydebug = 1;             // For Bison (still global, even in a reentrant parser)
+#endif
+
+        int res = yyparse(scanner);
+        if(res) {
+            getReport().add(err::newWarn(errCode::PARSING_HAS_ERR, res)).log();
+            return tstr<obj>();
+        }
+
+        yy_delete_buffer(bufState, scanner);
+        yylex_destroy(scanner);
+        return getSubPack();
     }
 }

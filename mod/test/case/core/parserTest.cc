@@ -5,7 +5,7 @@ using namespace namu;
 struct parserTest : public namuSyntaxTest {};
 
 TEST_F(parserTest, testHelloWorld) {
-    repParser p;
+    parser p;
     const nchar* stringScript = R"SRC(
         main() void
             console.print("hello world!")

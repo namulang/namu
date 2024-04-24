@@ -1,6 +1,6 @@
 #pragma once
 
-#include "repParser.hpp"
+#include "parser.hpp"
 #include "srcSupply.hpp"
 #include "../../visitor/verifier.hpp"
 
@@ -47,7 +47,7 @@ namespace namu {
         tstr<errReport> _rpt;
         tstr<slot> _slot;
         verifier _veri;
-        repParser _pser;
+        parser _pser;
         tstr<srcSupply> _srcs;
         nbool _isParsed;
         nbool _isLogStructure;

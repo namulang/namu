@@ -15,8 +15,8 @@ namespace namu {
         NAMU(ADT(tokenScan))
 
     public:
-        nint onScan(parser& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
-        virtual nint onScan(parser& eventer, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool& isBypass);
+        nint onScan(parser& ps, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
+        virtual nint onScan(parser& ps, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool& isBypass);
 
     private:
         nbool _useSmartDedent;
@@ -28,7 +28,7 @@ namespace namu {
 
     public:
         using super::onScan;
-        nint onScan(parser& eventer, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool& isBypass) override;
+        nint onScan(parser& ps, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool& isBypass) override;
 
     private:
         static normalScan* _instance;
@@ -40,7 +40,7 @@ namespace namu {
 
     public:
         using super::onScan;
-        nint onScan(parser& eventer, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool& isBypass) override;
+        nint onScan(parser& ps, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool& isBypass) override;
 
     private:
         nint _onIndent(parser& ev, ncnt col, nint tok);

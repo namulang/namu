@@ -8,19 +8,19 @@ std::string getTokenName(int tok);
 
 namespace namu {
 
-    nint tokenScan::onScan(parser& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
+    nint tokenScan::onScan(parser& ps, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
         nbool dum;
-        return onScan(eventer, val, loc, scanner, dum);
+        return onScan(ps, val, loc, scanner, dum);
     }
 
-    nint tokenScan::onScan(parser& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
-        tokenDispatcher& disp = eventer.getDispatcher();
+    nint tokenScan::onScan(parser& ps, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
+        tokenDispatcher& disp = ps.getDispatcher();
         nint tok;
 
         if(!(isBypass = disp.pop(tok)))
             tok = yylexOrigin(val, loc, scanner);
         if(tok == ENDOFFILE)
-            tok = eventer.onTokenEndOfFile();
+            tok = ps.onTokenEndOfFile();
 
         std::string tokName = getTokenName(tok);
         NAMU_DI("%s: dispatcher[%d]%s(token: \"%s\" [%d]) at %d,%d", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner",
@@ -28,8 +28,8 @@ namespace namu {
         return tok;
     }
 
-    nint normalScan::onScan(parser& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
-        nint tok = super::onScan(eventer, val, loc, scanner, isBypass);
+    nint normalScan::onScan(parser& ps, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
+        nint tok = super::onScan(ps, val, loc, scanner, isBypass);
         switch(tok) {
             case TAB:
                 return SCAN_AGAIN;
@@ -40,8 +40,8 @@ namespace namu {
 
     normalScan* normalScan::_instance = new normalScan();
 
-    nint indentScan::onScan(parser& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
-        nint tok = super::onScan(eventer, val, loc, scanner, isBypass);
+    nint indentScan::onScan(parser& ps, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
+        nint tok = super::onScan(ps, val, loc, scanner, isBypass);
         switch(tok) {
             case NEWLINE:
                 if(!isBypass) {
@@ -51,11 +51,11 @@ namespace namu {
                 break;
         }
 
-        eventer.setScan<normalScan>();
+        ps.setScan<normalScan>();
         if(isBypass) return tok;
 
         ncnt cur = loc->start.col;
-        std::vector<ncnt>& ind = eventer.getIndents();
+        std::vector<ncnt>& ind = ps.getIndents();
         if(ind.size() == 0) {
             NAMU_DI("indentScan: initial indent lv: %d", cur);
             ind.push_back(cur);
@@ -65,9 +65,9 @@ namespace namu {
         NAMU_DI("indentScan: column check: cur[%d] prev[%d]", cur, prev);
 
         if(cur > prev)
-            return eventer.onIndent(cur, tok);
+            return ps.onIndent(cur, tok);
         else if(cur < prev)
-            return eventer.onDedent(cur, tok);
+            return ps.onDedent(cur, tok);
 
         return tok;
     }
