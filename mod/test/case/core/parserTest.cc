@@ -12,9 +12,11 @@ TEST_F(parserTest, testHelloWorld) {
     )SRC";
     std::string script(stringScript);
 
-    tstr<obj> rootBinder = p.parse(script.c_str());
+    tstr<obj> rootBinder = p.addSupply(*new bufSupply(script)).parse();
     ASSERT_TRUE(rootBinder);
-    rootBinder = p.parse(stringScript);
+    rootBinder = p.relSupplies()
+                  .addSupply(*new bufSupply(stringScript))
+                  .parse();
     ASSERT_TRUE(rootBinder);
 
     slot s((manifest()));
@@ -24,9 +26,9 @@ TEST_F(parserTest, testHelloWorld) {
     shares.add("hello", new nStr("hello"));
     ASSERT_TRUE(shares.len() == 1);
 
-    p.parse(script.c_str());
+    p.relSupplies().addSupply(*new bufSupply(script)).parse();
     ASSERT_EQ(shares.len(), 4); // @ctor*2 + main + 'hello': @preCtor doesn't exist.
-    p.parse(script.c_str());
+    p.relSupplies().addSupply(*new bufSupply(script)).parse();
     ASSERT_EQ(shares.len(), 5); // add func main on every parse() call.
 
     ASSERT_TRUE(shares.get<nStr>("hello") == nStr("hello"));

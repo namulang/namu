@@ -14,8 +14,8 @@ namespace namu {
     public:
         me& setReport(errReport& report);
         me& setSlot(slot& pak);
-        me& addSrcSupplies(const srcSupply& supply);
-        me& relSrcSupplies();
+        me& addSupply(const srcSupply& supply);
+        me& relSupplies();
         me& setLogStructure(nbool enable);
         me& setVerbose(nbool isVerbose);
         nbool isParsed() const;

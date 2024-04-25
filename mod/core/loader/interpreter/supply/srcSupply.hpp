@@ -11,7 +11,10 @@ namespace namu {
 
     public:
         /// @return true if there is no more data to process.
-        virtual const std::string& onSupplySrc(parser& ps) const = 0;
+        virtual void* onSupplySrc(parser& ps, void* scanner) const = 0;
+
+    protected:
+        void* _scanString(parser& ps, const nchar* src, void* scanner) const;
     };
 
     typedef tnarr<srcSupply> srcSupplies;

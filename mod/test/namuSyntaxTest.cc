@@ -42,12 +42,9 @@ namuSyntaxTest& me::make(const namu::manifest& mani) {
 }
 
 namuSyntaxTest& me::parse(const namu::nchar* src) {
-    std::vector<std::string> srcs;
-    srcs.push_back(src);
-    namu::bufferSrcSupply buf(srcs);
     namu::nbool isVerbose = namu::logger::get().isEnable();
 
-    _ip.setSrcSupply(buf)
+    _ip.addSupply(*new namu::bufSupply(std::string(src)))
        .setLogStructure(isVerbose)
        .setVerbose(isVerbose)
        .setReport(_rpt)

@@ -32,6 +32,7 @@ PAIRX(UNEXPECTED_TOK,               "unexpected token '%s' found")
 PAIRX(WRONG_INDENT_LV,              "invalid indentation level found. expected %d columns but it was %d. I'm assuming you were trying to give %d columns")
 PAIRX(PARSING_HAS_ERR,              "parsing has done. but something went wrong: %d")
 PAIRX(NO_SRC,                       "source code not provided")
+PAIRX(SRC_EMPTY,                    "source code was empty string.")
 
 // pack:
 PAIRX(PACK_ONLY_ALLOW_VAR_ACCESS,   "variable path only allowed when you define a pack")

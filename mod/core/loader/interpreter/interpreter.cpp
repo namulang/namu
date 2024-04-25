@@ -21,13 +21,13 @@ namespace namu {
         return *this;
     }
 
-    me& me::addSrcSupplies(const srcSupply& supply) {
-        _pser.addSrcSupplies(supply);
+    me& me::addSupply(const srcSupply& supply) {
+        _pser.addSupply(supply);
         return *this;
     }
 
-    me& me::relSrcSupplies() {
-        _pser.relSrcSupplies();
+    me& me::relSupplies() {
+        _pser.relSupplies();
         return *this;
     }
 

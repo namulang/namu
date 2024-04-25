@@ -1000,12 +1000,12 @@ namespace namu {
         return _supplies;
     }
 
-    me& me::addSrcSupplies(const srcSupplies& new1) {
+    me& me::addSupply(const srcSupply& new1) {
         _supplies.add(new1);
         return *this;
     }
 
-    me& me::relSrcSupplies() {
+    me& me::relSupplies() {
         _supplies.rel();
         return *this;
     }
@@ -1085,7 +1085,7 @@ namespace namu {
             yyscan_t scanner;
             yylex_init_extra(this, &scanner);
 
-            YY_BUFFER_STATE bufState = yy_scan_string((nchar*) supply.onSupplySrc(*this).c_str(), scanner); // +2 is for space of END_OF_BUFFER, nullptr.
+            YY_BUFFER_STATE bufState = (YY_BUFFER_STATE) supply.onSupplySrc(*this, scanner);
             if(!bufState) {
                 getReport().add(err::newErr(errCode::IS_NULL, "bufState")).log();
                 return tstr<obj>();

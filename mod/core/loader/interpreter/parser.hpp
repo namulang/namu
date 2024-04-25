@@ -33,6 +33,7 @@ namespace namu {
     class _nout parser : public tokenScan {
         NAMU(CLASS(parser, tokenScan))
         friend class tokenScanModable;
+        friend class srcSupply;
 
     public:
         parser();
@@ -51,8 +52,8 @@ namespace namu {
 
         srcSupplies& getSrcSupplies();
         const srcSupplies& getSrcSupplies() const NAMU_UNCONST_FUNC(getSrcSupplies())
-        me& addSrcSupplies(const srcSupplies& new1);
-        me& relSrcSupplies();
+        me& addSupply(const srcSupply& new1);
+        me& relSupplies();
 
         tokenDispatcher& getDispatcher();
         std::vector<ncnt>& getIndents();
@@ -230,6 +231,9 @@ namespace namu {
         runExpr* onIn(const node& it, const node& container);
 
         void onParseErr(const std::string& msg, const nchar* symbolName);
+
+    protected:
+        void* _scanString(const std::string& src, void* scanner);
 
     private:
         nint _onTokenEndOfInlineBlock(nint tok);
