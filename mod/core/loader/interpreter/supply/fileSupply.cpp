@@ -13,8 +13,12 @@ namespace namu {
             // there is no file.
             return ps.getReport().add(err::newErr(errCode::FILE_NOT_OPEN, _path.c_str())), nullptr;
 
-        std::stringstream buffer;
-        buffer << fout.rdbuf();
-        return _scanString(ps, buffer.str().c_str(), scanner);
+        std::stringstream buf;
+        buf << fout.rdbuf();
+        std::string codes = buf.str();
+        void* ret = _scanString(ps, codes.c_str(), scanner);
+        if(ret)
+            _getMaker(ps).setSrcFile(*new srcFile(_path, codes));
+        return ret;
     }
 }

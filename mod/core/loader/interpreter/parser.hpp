@@ -234,6 +234,7 @@ namespace namu {
 
     protected:
         void* _scanString(const std::string& src, void* scanner);
+        exprMaker& _getMaker();
 
     private:
         nint _onTokenEndOfInlineBlock(nint tok);

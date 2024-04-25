@@ -1,11 +1,12 @@
-#include "src.hpp"
+#include "srcFile.hpp"
 #include "visitor/visitor.hpp"
 
 namespace namu {
 
-    NAMU(DEF_ME(src), DEF_VISIT())
+    NAMU(DEF_ME(srcFile), DEF_VISIT())
 
-    me::src(const std::string& fileName): _fileName(fileName) {}
+    me::srcFile(const std::string& fileName, const std::string& contents):
+        _fileName(fileName), _contents(contents) {}
 
     priority me::prioritize(const args& a) const {
         return NO_MATCH;
@@ -22,5 +23,9 @@ namespace namu {
 
     const std::string& me::getFileName() const {
         return _fileName;
+    }
+
+    const std::string& me::getContents() const {
+        return _contents;
     }
 }

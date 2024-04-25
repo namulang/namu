@@ -9,7 +9,7 @@ namespace namu {
 
     public:
         exprMaker();
-        exprMaker(const src& s, ncnt row, ncnt col);
+        exprMaker(const srcFile& s, ncnt row, ncnt col);
 
     public:
         me& addRow();
@@ -19,24 +19,23 @@ namespace namu {
 
         me& setRow(ncnt row);
         me& setCol(ncnt col);
-        me& setSrc(const src& s);
+        me& setSrcFile(const srcFile& s);
 
         void rel();
 
         const point& getPos() const;
-        const src& getSrc() const;
+        const srcFile& getSrcFile() const;
 
         template <typename T, typename... Args>
         T* make(const Args&... args) const {
             T* ret = new T(args...);
-            if(_src)
-                ret->_setSrc(*_src);
-            ret->_setPos(_pos);
+            if(_file)
+                ret->_setSrc(*new src(*_file, _pos));
             return ret;
         }
 
     private:
-        tstr<src> _src;
+        tstr<srcFile> _file;
         point _pos;
     };
 }

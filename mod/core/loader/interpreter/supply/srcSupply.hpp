@@ -6,6 +6,7 @@
 namespace namu {
 
     class parser;
+    class exprMaker;
     class _nout srcSupply : public instance {
         NAMU(ADT(srcSupply, instance))
 
@@ -15,6 +16,7 @@ namespace namu {
 
     protected:
         void* _scanString(parser& ps, const nchar* src, void* scanner) const;
+        exprMaker& _getMaker(parser& ps) const;
     };
 
     typedef tnarr<srcSupply> srcSupplies;

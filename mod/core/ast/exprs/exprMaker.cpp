@@ -6,8 +6,8 @@ namespace namu {
 
     me::exprMaker() {}
 
-    me::exprMaker(const src& s, ncnt row, ncnt col) {
-        setSrc(s);
+    me::exprMaker(const srcFile& s, ncnt row, ncnt col) {
+        setSrcFile(s);
         setCol(row);
         setCol(col);
     }
@@ -38,13 +38,13 @@ namespace namu {
         return *this;
     }
 
-    me& me::setSrc(const src& s) {
-        _src.bind(s);
+    me& me::setSrcFile(const srcFile& s) {
+        _file.bind(s);
         return *this;
     }
 
     void me::rel() {
-        _src.rel();
+        _file.rel();
         _pos.rel();
     }
 
@@ -52,7 +52,7 @@ namespace namu {
         return _pos;
     }
 
-    const src& me::getSrc() const {
-        return *_src;
+    const srcFile& me::getSrcFile() const {
+        return *_file;
     }
 }

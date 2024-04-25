@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../../loader/pack/opaquePackLoading.hpp"
-#include "../../../ast/src.hpp"
+#include "../../../ast/src/src.hpp"
 #include "../../../ast/slot.hpp"
 
 namespace namu {

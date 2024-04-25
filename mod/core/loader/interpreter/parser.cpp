@@ -1043,6 +1043,7 @@ namespace namu {
         _states.push_back(0); // 0 for default state
         _dedent.setEnable(false);
         _supplies.rel();
+        _maker.rel();
         prepareParse();
     }
 
@@ -1053,8 +1054,7 @@ namespace namu {
         _dispatcher.rel();
         _indents.clear();
         _srcArea.rel();
-        _maker.rel();
-        _maker.setSrc(*new src("__filename__"));
+        _maker.setRow(0).setCol(0);
     }
 
     int me::pushState(int newState) {
@@ -1114,5 +1114,9 @@ namespace namu {
         }
 
         return getSubPack();
+    }
+
+    exprMaker& me::_getMaker() {
+        return _maker;
     }
 }

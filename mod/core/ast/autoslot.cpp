@@ -64,7 +64,7 @@ namespace namu {
             _srcs.add(*res);
         }
         _state = PARSED;
-        return tstr<srcs>(_srcs);
+        return _srcs;
     }
 
     nbool me::verify(errReport& rpt, obj& pak) {
