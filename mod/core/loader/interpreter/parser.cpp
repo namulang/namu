@@ -1075,7 +1075,7 @@ namespace namu {
             return getReport().add(err::newErr(errCode::NO_THREAD)), tstr<obj>();
 
         const auto& supplies = getSrcSupplies();
-        if(!supplies.isEmpty())
+        if(supplies.isEmpty())
             return getReport().add(err::newErr(NO_SRC)), tstr<obj>();
 
         NAMU_I("parse starts: %d src will be supplied.", supplies.len());
