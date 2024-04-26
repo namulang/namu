@@ -5,12 +5,18 @@
 namespace namu {
     class _nout src : public instance {
         NAMU(CLASS(src, instance))
+        friend class parser;
 
     public:
         src(const srcFile& file, const point& pos);
 
+    public:
         const srcFile& getFile() const;
         const point& getPos() const;
+
+    protected:
+        virtual void _setFile(const srcFile& new1);
+        virtual void _setPos(const point& new1);
 
     private:
         tstr<srcFile> _file;
