@@ -4,6 +4,9 @@
 
 namespace namu {
     struct _nout point {
+        point();
+
+    public:
         point& operator++();
 
     public:
