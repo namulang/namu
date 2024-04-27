@@ -4,8 +4,6 @@ namespace namu {
 
     NAMU(DEF_ME(point))
 
-    me::point(): row(0), col(0) {}
-
     nbool me::isOrigin() const {
         return row == 0 && col == 0;
     }

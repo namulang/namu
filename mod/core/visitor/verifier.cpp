@@ -65,7 +65,7 @@ namespace namu {
 
     void me::start() {
         if(nul(thread::get())) {
-            _err(errCode::NO_THREAD);
+            _errMsg(errCode::NO_THREAD);
             return;
         }
 

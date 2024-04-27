@@ -64,14 +64,11 @@ namespace namu {
         void _rel();
         void _report(err* new1);
 
-        template <typename... Args> void _err(Args... args);
-        template <typename... Args> void _err(const point& pos, errCode code, Args... args);
+        template <typename... Args> void _errMsg(Args... args);
         template <typename... Args> void _err(const node& it, errCode code, Args... args);
-        template <typename... Args> void _warn(Args... args);
-        template <typename... Args> void _warn(const point& pos, errCode code, Args... args);
+        template <typename... Args> void _warnMsg(Args... args);
         template <typename... Args> void _warn(const node& it, errCode code, Args... args);
-        template <typename... Args> void _info(Args... args);
-        template <typename... Args> void _info(const point& pos, errCode code, Args... args);
+        template <typename... Args> void _infoMsg(Args... args);
         template <typename... Args> void _info(const node& it, errCode code, Args... args);
 
     private:

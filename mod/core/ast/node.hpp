@@ -20,7 +20,7 @@ namespace namu {
     /// node provides common API to manipulate its sub nodes.
     class _nout node : public instance, public frameInteractable {
         NAMU(ADT(node, instance))
-        friend class parser; // for _setSrc()
+        friend class exprMaker; // for _setSrc
 
     public:
         node& operator[](const std::string& name);

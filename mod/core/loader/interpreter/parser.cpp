@@ -573,7 +573,7 @@ namespace namu {
 
     node* me::onGetArray(node& elemType) {
         NAMU_DI("tokenEvent: onGetArray(%s)", elemType.getType().getName().c_str());
-        if(elemType.isSub<nVoid>()) onErr(elemType, errCode::ELEM_TYPE_NOT_VOID);
+        if(elemType.isSub<nVoid>()) onErr(elemType.getSrc().getPos(), errCode::ELEM_TYPE_NOT_VOID);
         return new arr(elemType);
     }
 
