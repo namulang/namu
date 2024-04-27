@@ -59,10 +59,6 @@ namespace namu {
             return _val;
         }
 
-        const point& getPos() const override {
-            return _pos;
-        }
-
         using super::cast;
         void* cast(const type& to) override {
             if(to == ttype<T>::get())
@@ -92,11 +88,7 @@ namespace namu {
         virtual void _onMakeSubs(scope& tray) const = 0;
 
     private:
-        void _setPos(const point& new1) override { _pos = new1; }
-
-    private:
         T _val;
-        point _pos;
     };
 
     template <>
@@ -106,10 +98,6 @@ namespace namu {
     public:
         const super& getOrigin() const override {
             return *this;
-        }
-
-        const point& getPos() const override {
-            return _pos;
         }
 
         using super::subs;
@@ -130,11 +118,5 @@ namespace namu {
         }
 
         virtual void _onMakeSubs(scope& tray) const = 0;
-
-    private:
-        void _setPos(const point& new1) override { _pos = new1; }
-
-    private:
-        point _pos;
     };
 }

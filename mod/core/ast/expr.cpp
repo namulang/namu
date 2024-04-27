@@ -41,15 +41,7 @@ namespace namu {
         return *_src;
     }
 
-    const point& me::getPos() const {
-        return _pos;
-    }
-
     void me::_setSrc(const src& newSrc) {
         _src.bind(newSrc);
-    }
-
-    void me::_setPos(const point& newPos) {
-        _pos = newPos;
     }
 }

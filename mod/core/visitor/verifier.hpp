@@ -66,10 +66,13 @@ namespace namu {
 
         template <typename... Args> void _err(Args... args);
         template <typename... Args> void _err(const point& pos, errCode code, Args... args);
+        template <typename... Args> void _err(const node& it, errCode code, Args... args);
         template <typename... Args> void _warn(Args... args);
         template <typename... Args> void _warn(const point& pos, errCode code, Args... args);
+        template <typename... Args> void _warn(const node& it, errCode code, Args... args);
         template <typename... Args> void _info(Args... args);
         template <typename... Args> void _info(const point& pos, errCode code, Args... args);
+        template <typename... Args> void _info(const node& it, errCode code, Args... args);
 
     private:
         tstr<frame> _frame;

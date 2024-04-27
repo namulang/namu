@@ -36,14 +36,6 @@ namespace namu {
         return str();
     }
 
-    void me::_setSrc(const src& newSrc) {
-        _src.bind(newSrc);
-    }
-
-    void me::_setPos(const point& new1) {
-        _pos = new1;
-    }
-
     nbicontainer& me::subs() {
         static scope inner;
         return inner;

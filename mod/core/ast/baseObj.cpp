@@ -48,4 +48,12 @@ namespace namu {
     str me::getEval() const {
         return getOrigin();
     }
+
+    const src& me::getSrc() const {
+        return *_src;
+    }
+
+    void me::_setSrc(const src& s) {
+        _src.bind(s);
+    }
 }

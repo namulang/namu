@@ -3,6 +3,7 @@
 #include "../type/as.hpp"
 #include "args.hpp"
 #include "../visitor/visitor.hpp"
+#include "src/dumSrc.hpp"
 
 namespace namu {
 
@@ -76,11 +77,6 @@ namespace namu {
         return sub.run(a);
     }
 
-    const point& me::getPos() const {
-        static point inner;
-        return inner;
-    }
-
     clonable* me::deepClone() const {
         return (me*) clone();
     }
@@ -93,5 +89,10 @@ namespace namu {
 
     void me::outFrame() {}
 
-    void me::_setPos(const point& new1) {}
+    const src& me::getSrc() const {
+        static dumSrc inner;
+        return inner;
+    }
+
+    void me::_setSrc(const src& s) {}
 }

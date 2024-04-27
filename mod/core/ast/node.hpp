@@ -15,11 +15,12 @@ namespace namu {
     class visitor;
     struct visitInfo;
     class baseObj;
+    class src;
 
     /// node provides common API to manipulate its sub nodes.
     class _nout node : public instance, public frameInteractable {
         NAMU(ADT(node, instance))
-        friend class parser; // for _setPos()
+        friend class parser; // for _setSrc()
 
     public:
         node& operator[](const std::string& name);
@@ -93,7 +94,7 @@ namespace namu {
         str asImpli(const typeProvidable& to) const;
         virtual str asImpli(const type& to) const;
 
-        virtual const point& getPos() const;
+        virtual const src& getSrc() const;
 
         clonable* deepClone() const override;
 
@@ -123,8 +124,8 @@ namespace namu {
 
     protected:
         virtual str _onRunSub(node& sub, const args& a);
+        virtual void _setSrc(const src& s);
 
     private:
-        virtual void _setPos(const point& new1);
     };
 }

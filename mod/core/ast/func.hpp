@@ -33,8 +33,6 @@ namespace namu {
         using super::run;
         str run(const args& a) override;
 
-        const point& getPos() const override;
-
         using super::inFrame;
         void inFrame(const bicontainable& args) override;
         void outFrame() override;
@@ -43,8 +41,6 @@ namespace namu {
 
     private:
         scope* _evalArgs(const ucontainable& args);
-
-        void _setPos(const point& new1) override;
 
         str _postprocess(str ret);
 

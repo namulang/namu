@@ -24,12 +24,24 @@ namespace namu {
         _report(err::newWarn(pos, code, args...));
     }
     template <typename... Args>
+    void ME::_warn(const node& it, errCode code, Args... args) {
+        _report(err::newWarn(it.getSrc().getPos(), code, args...));
+    }
+    template <typename... Args>
     void ME::_err(const point& pos, errCode code, Args... args) {
         _report(err::newErr(pos, code, args...));
     }
     template <typename... Args>
+    void ME::_err(const node& it, errCode code, Args... args) {
+        _report(err::newErr(it.getSrc().getPos(), code, args...));
+    }
+    template <typename... Args>
     void ME::_info(const point& pos, errCode code, Args... args) {
         _report(err::newInfo(pos, code, args...));
+    }
+    template <typename... Args>
+    void ME::_info(const node& it, errCode code, Args... args) {
+        _report(err::newInfo(it.getSrc().getPos(), code, args...));
     }
 
 #undef ME

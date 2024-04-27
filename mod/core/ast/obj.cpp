@@ -16,7 +16,6 @@ namespace namu {
         _shares.bind(*rhs._shares);
         _subs.bind(_makeNewSubs());
         _org = rhs._org;
-        _pos = rhs._pos;
         _type = rhs._type;
         _src = rhs._src;
         // complete attribute is unique:
@@ -101,24 +100,12 @@ namespace namu {
         return *_org;
     }
 
-    const point& me::getPos() const {
-        return _pos;
-    }
-
     nbool me::isComplete() const {
         return _isComplete;
     }
 
     void me::_setComplete(nbool isComplete) {
         _isComplete = isComplete;
-    }
-
-    void me::_setSrc(const src& newSrc) {
-        _src.bind(newSrc);
-    }
-
-    void me::_setPos(const point& new1) {
-        _pos = new1;
     }
 
     scopes* me::_makeNewSubs() {

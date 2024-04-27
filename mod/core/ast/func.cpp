@@ -50,10 +50,6 @@ namespace namu {
         }
     }
 
-    const point& me::getPos() const {
-        return _pos;
-    }
-
     str me::_postprocess(str ret) {
         frame& fr = thread::get()._getNowFrame();
         node* retVal = &fr.getRet();
@@ -82,10 +78,6 @@ namespace namu {
             ret->add(p.getName(), *evaluated);
         }
         return ret;
-    }
-
-    void me::_setPos(const point& new1) {
-        _pos = new1;
     }
 
     void me::inFrame(const bicontainable& args) {

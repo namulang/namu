@@ -4,7 +4,7 @@ namespace namu {
 
     NAMU(DEF_ME(exprMaker))
 
-    me::exprMaker() {}
+    me::exprMaker(): _pos {0, 0} {}
 
     me::exprMaker(const srcFile& s, ncnt row, ncnt col) {
         setSrcFile(s);

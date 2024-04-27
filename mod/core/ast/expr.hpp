@@ -35,12 +35,10 @@ namespace namu {
         /// it should not take any argument to run()
         using super::prioritize;
         priority prioritize(const args& a) const override;
-        const src& getSrc() const;
-        const point& getPos() const override;
+        const src& getSrc() const override;
 
     private:
-        void _setSrc(const src& newSrc);
-        void _setPos(const point& newPos) override;
+        void _setSrc(const src& newSrc) override;
 
     protected:
         tstr<src> _src;

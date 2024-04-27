@@ -42,7 +42,6 @@ namespace namu {
         scope& getOwns();
         const scope& getOwns() const NAMU_UNCONST_FUNC(getOwns())
         const obj& getOrigin() const override;
-        const point& getPos() const override;
 
         clonable* deepClone() const override;
         typedef ntype metaType;
@@ -60,11 +59,7 @@ namespace namu {
 
         void _setComplete(nbool isComplete);
 
-        void _setSrc(const src& newSrc);
-        void _setPos(const point& new1) override;
-
     private:
-        tstr<src> _src;
         tstr<scopes> _subs;
         tstr<scopes> _shares;
         tstr<scope> _owns;

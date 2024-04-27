@@ -35,11 +35,17 @@ namespace namu {
 
         str getEval() const override;
 
+        const src& getSrc() const override;
+
     protected:
         str _onRunSub(node& sub, const args& a) override;
+        void _setSrc(const src& s) override;
 
     public:
          inline static const string CTOR_NAME = "@ctor";
          inline static const string PRECTOR_NAME = "@preCtor";
+
+    protected:
+        tstr<src> _src;
     };
 }
