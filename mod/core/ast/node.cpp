@@ -3,7 +3,7 @@
 #include "../type/as.hpp"
 #include "args.hpp"
 #include "../visitor/visitor.hpp"
-#include "src/dumSrc.hpp"
+#include "src/src.hpp"
 
 namespace namu {
 
@@ -90,7 +90,7 @@ namespace namu {
     void me::outFrame() {}
 
     const src& me::getSrc() const {
-        static dumSrc inner;
+        static src inner;
         return inner;
     }
 
