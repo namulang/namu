@@ -26,11 +26,20 @@ namespace namu {
         const point& getPos() const;
         const srcFile& getSrcFile() const;
 
+        /// when you birth your child, you must name it.
+        template <typename T, typename... Args>
+        T* birth(const std::string& name, const Args&... args) const {
+            T* ret = new T(args...);
+            if(_file)
+                ret->_setSrc(*new src(*_file, name, _pos));
+            return ret;
+        }
+
         template <typename T, typename... Args>
         T* make(const Args&... args) const {
             T* ret = new T(args...);
             if(_file)
-                ret->_setSrc(*new src(*_file, _pos));
+                ret->_setSrc(*new src(*_file, "", _pos));
             return ret;
         }
 

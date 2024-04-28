@@ -13,5 +13,6 @@ namespace namu {
     protected:
         void _setFile(const srcFile& new1) override;
         void _setPos(const point& new1) override;
+        void _setName(const std::string& new1) override;
     };
 }

@@ -247,12 +247,10 @@ namespace namu {
         void _onRes(err* new1);
         params _asParams(const args& exprs);
 
-        void _onPushName(const std::string& name, node& n);
-        std::string _onPopName(node& n);
-
         nbool _onInjectObjSubs(obj& it, defBlock& blk);
         nbool _onInjectCtor(obj& it, defBlock& blk);
         std::vector<std::string> _extractParamTypeNames(const args& types);
+        std::string _joinVectorString(const std::vector<std::string>& container) const;
         const node& _onDefArrayType(const narr& items);
         std::vector<std::string> _toDotnames(const node& path);
         void _onCompilationUnit(obj& subpack, defBlock& blk);
@@ -268,7 +266,6 @@ namespace namu {
         area _srcArea;
         tstr<scope> _filescope;
         std::vector<nint> _states;
-        std::map<node*, std::string> _nameMap;
         exprMaker _maker;
         smartDedent _dedent;
         srcSupplies _supplies;

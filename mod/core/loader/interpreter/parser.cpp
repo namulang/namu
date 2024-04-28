@@ -247,7 +247,7 @@ namespace namu {
             return &s;
         }
 
-        s.asScope->add(_onPopName(stmt), &stmt);
+        s.asScope->add(stmt.getSrc().getName(), &stmt);
         return &s;
     }
 
@@ -296,9 +296,7 @@ namespace namu {
         NAMU_DI("tokenEvent: onAbstractFunc(access: %s(%d), retType:%s)",
                 access.getSubName().c_str(), access.getSubArgs().len(), retType.getType().getName().c_str());
 
-        func* ret = _maker.make<func>(_asParams(access.getSubArgs()), retType);
-        _onPushName(access.getSubName(), *ret);
-        return ret;
+        return _maker.birth<func>(access.getSubName(), _asParams(access.getSubArgs()), retType);
     }
 
     func* me::onAbstractFunc(node& it, const node& retType) {
@@ -392,12 +390,10 @@ namespace namu {
     obj* me::onDefObj(const std::string& name, defBlock& blk) {
         NAMU_DI("tokenEvent: onDefObj(%s, defBlock[%x])", name.c_str(), &blk);
 
-        obj& ret = *_maker.make<obj>(new mgdType(name));
+        obj& ret = *_maker.birth<obj>(name, new mgdType(name));
         ret._setComplete(false);
         _onInjectObjSubs(ret, blk);
         ret.getShares().link(_subpack->subs());
-
-        _onPushName(name, ret);
         return &ret;
     }
 
@@ -440,13 +436,23 @@ namespace namu {
         NAMU_DI("tokenEvent: onDefObjGeneric(%s, type.len[%d], defBlock[%x]", name.c_str(),
                 typeParams.len(), &blk);
 
-        obj& org = *_maker.make<obj>(new mgdType(name, typeParams));
+        obj& org = *_maker.birth<obj>(name, new mgdType(name, typeParams));
         org._setComplete(false);
         _onInjectObjSubs(org, blk);
         org.getShares().link(_subpack->subs());
 
-        node* ret = _maker.make<genericObj>(org, _extractParamTypeNames(typeParams));
-        _onPushName(name, *ret);
+        std::vector<std::string> paramNames = _extractParamTypeNames(typeParams);
+        std::string paramName = _joinVectorString(paramNames);
+        return _maker.birth<genericObj>(name, org, paramNames);
+    }
+
+    std::string me::_joinVectorString(const std::vector<std::string>& container) const {
+        std::string ret;
+        for(ncnt n=0; n < container.size(); n++) {
+            ret += container[n];
+            if(n > 0)
+                ret += ", ";
+        }
         return ret;
     }
 
@@ -588,16 +594,6 @@ namespace namu {
     node* me::onGetGeneric(const std::string& genericObjName, const args& typeParams) {
         NAMU_DI("tokenEvent: onGetGeneric(%s, params.len[%d])", genericObjName.c_str(), typeParams.len());
         return _maker.make<getGenericExpr>(genericObjName, typeParams);
-    }
-
-    void me::_onPushName(const std::string& name, node& n) {
-        _nameMap[&n] = name;
-    }
-
-    std::string me::_onPopName(node& n) {
-        std::string ret = _nameMap[&n];
-        _nameMap.erase(&n);
-        return ret;
     }
 
     runExpr* me::onRunExpr(node& trg, const narr& a) {
@@ -1037,7 +1033,6 @@ namespace namu {
     void me::rel() {
         _report.bind(dummyErrReport::singletone);
         _slot.rel();
-        _nameMap.clear();
         _states.clear();
         _states.push_back(0); // 0 for default state
         _dedent.setEnable(false);
