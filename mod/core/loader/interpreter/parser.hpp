@@ -97,12 +97,12 @@ namespace namu {
         void onSrcArea(const area& area);
 
         //  err:
-        template <typename... Args> void onErr(Args... args) { _onRes(err::newErr(args...)); }
-        template <typename... Args> void onWarn(Args... args) { _onRes(err::newWarn(args...)); }
-        template <typename... Args> void onInfo(Args... args) { _onRes(err::newInfo(args...)); }
-        template <typename... Args> void onSrcErr(Args... args) { _onRes(err::newErr(getArea().start, args...)); }
-        template <typename... Args> void onSrcWarn(Args... args) { _onRes(err::newWarn(getArea().start, args...)); }
-        template <typename... Args> void onSrcInfo(Args... args) { _onRes(err::newInfo(getArea().start, args...)); }
+        template <typename... Args> void error(Args... args) { _report(err::newErr(args...)); }
+        template <typename... Args> void warn(Args... args) { _report(err::newWarn(args...)); }
+        template <typename... Args> void info(Args... args) { _report(err::newInfo(args...)); }
+        template <typename... Args> void srcError(Args... args) { _report(err::newErr(getArea().start, args...)); }
+        template <typename... Args> void srcWarn(Args... args) { _report(err::newWarn(getArea().start, args...)); }
+        template <typename... Args> void srcInfo(Args... args) { _report(err::newInfo(getArea().start, args...)); }
 
         //  operator:
         //      dot:
@@ -244,7 +244,7 @@ namespace namu {
         runExpr* _onRunExpr(node& type, const args& a);
 
         nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
-        void _onRes(err* new1);
+        void _report(err* new1);
         params _asParams(const args& exprs);
 
         nbool _onInjectObjSubs(obj& it, defBlock& blk);
@@ -260,7 +260,7 @@ namespace namu {
         nbool _isIgnoreWhitespace;
         tokenDispatcher _dispatcher;
         std::vector<ncnt> _indents;
-        tstr<errReport> _report;
+        tstr<errReport> _rpt;
         tstr<slot> _slot;
         tstr<obj> _subpack;
         area _srcArea;

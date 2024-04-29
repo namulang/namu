@@ -127,7 +127,7 @@ namespace namu {
     }
 
     nchar me::onScanUnexpected(const nchar* token) {
-        onSrcErr(errCode::UNEXPECTED_TOK, token);
+        srcError(errCode::UNEXPECTED_TOK, token);
         return token[0];
     }
 
@@ -158,7 +158,7 @@ namespace namu {
 
         const std::string& realName = _slot->getManifest().name;
         if(realName != firstName)
-            return onErr(errCode::PACK_NOT_MATCH, firstName.c_str(), realName.c_str()), e;
+            return error(errCode::PACK_NOT_MATCH, firstName.c_str(), realName.c_str()), e;
 
         // pack syntax rule #2:
         //  middle name automatically created if not exist.
@@ -193,7 +193,7 @@ namespace namu {
 
         const std::string& name = _slot->getManifest().name;
         if(name != manifest::DEFAULT_NAME)
-            return onErr(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), &newSlot->getPack();
+            return error(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), &newSlot->getPack();
 
         return onSubPack(newSlot->getPack()); // this is a default pack containing name as '{default}'.
     }
@@ -206,7 +206,7 @@ namespace namu {
     blockExpr* me::onBlock(blockExpr& blk, const node& stmt) {
         NAMU_DI("tokenEvent: onBlock(blk, %s)", stmt.getType().getName().c_str());
         if(nul(blk))
-            return onSrcErr(errCode::IS_NULL, "blk"), _maker.make<blockExpr>();
+            return srcError(errCode::IS_NULL, "blk"), _maker.make<blockExpr>();
 
         blk.getStmts().add(stmt);
         NAMU_DI("tokenEvent: onBlock(%d).add(%s)", blk.getStmts().len(), stmt.getType().getName().c_str());
@@ -231,7 +231,7 @@ namespace namu {
     defBlock* me::onDefBlock(defBlock& s, node& stmt) {
         NAMU_DI("tokenEvent: onDefBlock(s, %s)", stmt.getType().getName().c_str());
         if(nul(s))
-            return onSrcErr(errCode::IS_NULL, "s"), new defBlock();
+            return srcError(errCode::IS_NULL, "s"), new defBlock();
 
         defPropExpr& defProp = stmt.cast<defPropExpr>();
         if(!nul(defProp)) {
@@ -274,9 +274,9 @@ namespace namu {
         _maker.setRow(_srcArea.start.row).setCol(_srcArea.start.col);
     }
 
-    void me::_onRes(err* new1) {
+    void me::_report(err* new1) {
         new1->log();
-        _report->add(new1);
+        _rpt->add(new1);
     }
 
     params me::_asParams(const args& as) {
@@ -284,7 +284,7 @@ namespace namu {
         for(auto& a : as) {
             tstr<defPropExpr> defProp(a.cast<defPropExpr>());
             if(!defProp)
-                return onSrcErr(errCode::PARAM_HAS_VAL), ret;
+                return srcError(errCode::PARAM_HAS_VAL), ret;
 
             ret.add(new param(defProp->getName(), defProp->getOrigin()));
         }
@@ -331,7 +331,7 @@ namespace namu {
         NAMU_DI("tokenEnvent: onParanthesisAsTuple(%x.size=%d)", &tuple, tuple.len());
 
         if(tuple.len() != 1) {
-            onErr(errCode::PARANTHESIS_WAS_TUPLE);
+            error(errCode::PARANTHESIS_WAS_TUPLE);
             return new mockNode();
         }
 
@@ -403,9 +403,8 @@ namespace namu {
             // all args should be getExpr instances.
             const getExpr& cast = a.cast<getExpr>();
             if(nul(cast))
-                return onSrcErr(errCode::SHOULD_TYPE_PARAM_NAME, a.getType().getName().c_str()),
+                return srcError(errCode::SHOULD_TYPE_PARAM_NAME, a.getType().getName().c_str()),
                        std::vector<std::string>();
-
             ret.push_back(cast.getSubName());
         }
 
@@ -416,7 +415,7 @@ namespace namu {
         std::vector<string> ret;
         const getExpr* iter = &path.cast<getExpr>();
         if(nul(iter)) {
-            onErr(errCode::PACK_ONLY_ALLOW_VAR_ACCESS);
+            error(errCode::PACK_ONLY_ALLOW_VAR_ACCESS);
             return std::vector<string>();
         }
 
@@ -424,7 +423,7 @@ namespace namu {
             ret.push_back(iter->getSubName());
             const node& next = iter->getMe();
             if(!nul(next) && !next.is<getExpr>()) {
-                onErr(errCode::PACK_ONLY_ALLOW_VAR_ACCESS);
+                error(errCode::PACK_ONLY_ALLOW_VAR_ACCESS);
                 return std::vector<string>();
             }
             iter = &next.cast<getExpr>();
@@ -472,7 +471,7 @@ namespace namu {
 
     void me::_onCompilationUnit(obj& subpack, defBlock& blk) {
         if(nul(subpack))
-            return onErr(errCode::NO_PACK_TRAY), void();
+            return error(errCode::NO_PACK_TRAY), void();
 
         _onInjectObjSubs(subpack, blk);
 
@@ -556,7 +555,7 @@ namespace namu {
     node* me::onGet(node& from, node& it) {
         getExpr& cast = it.cast<getExpr>();
         if(nul(cast)) {
-            onErr(errCode::IDENTIFIER_ONLY, it.getType().getName().c_str());
+            error(errCode::IDENTIFIER_ONLY, it.getType().getName().c_str());
             return &from;
         }
 
@@ -569,7 +568,7 @@ namespace namu {
         getExpr& cast = it.cast<getExpr>();
         if(nul(cast)) {
             // it can be generic or primitive values. track it, leave as specific errs.
-            onErr(errCode::IDENTIFIER_ONLY, it.getType().getName().c_str());
+            error(errCode::IDENTIFIER_ONLY, it.getType().getName().c_str());
             return new getExpr("");
         }
 
@@ -579,7 +578,7 @@ namespace namu {
 
     node* me::onGetArray(node& elemType) {
         NAMU_DI("tokenEvent: onGetArray(%s)", elemType.getType().getName().c_str());
-        if(elemType.isSub<nVoid>()) onErr(elemType.getSrc().getPos(), errCode::ELEM_TYPE_NOT_VOID);
+        if(elemType.isSub<nVoid>()) error(elemType.getSrc().getPos(), errCode::ELEM_TYPE_NOT_VOID);
         return new arr(elemType);
     }
 
@@ -973,7 +972,7 @@ namespace namu {
     }
 
     void me::onParseErr(const std::string& msg, const nchar* symbolName) {
-        onErr(_srcArea.start, errCode::SYNTAX_ERR, msg.c_str(), symbolName);
+        error(_srcArea.start, errCode::SYNTAX_ERR, msg.c_str(), symbolName);
     }
 
     me::parser() { rel(); }
@@ -1006,11 +1005,11 @@ namespace namu {
     }
 
     errReport& me::getReport() {
-        return *_report;
+        return *_rpt;
     }
 
     me& me::setReport(errReport& rpt) {
-        _report.bind(rpt);
+        _rpt.bind(rpt);
         return *this;
     }
 
@@ -1031,7 +1030,7 @@ namespace namu {
     }
 
     void me::rel() {
-        _report.bind(dummyErrReport::singletone);
+        _rpt.bind(dummyErrReport::singletone);
         _slot.rel();
         _states.clear();
         _states.push_back(0); // 0 for default state
@@ -1066,11 +1065,11 @@ namespace namu {
 
     tstr<obj> me::parse() {
         if(nul(thread::get()))
-            return getReport().add(err::newErr(errCode::NO_THREAD)), tstr<obj>();
+            return error(errCode::NO_THREAD), tstr<obj>();
 
         const auto& supplies = getSrcSupplies();
         if(supplies.isEmpty())
-            return getReport().add(err::newErr(NO_SRC)), tstr<obj>();
+            return error(NO_SRC), tstr<obj>();
 
         NAMU_I("parse starts: %d src will be supplied.", supplies.len());
         for(const auto& supply : supplies) {
@@ -1081,7 +1080,7 @@ namespace namu {
 
             YY_BUFFER_STATE bufState = (YY_BUFFER_STATE) supply.onSupplySrc(*this, scanner);
             if(!bufState) {
-                getReport().add(err::newErr(errCode::IS_NULL, "bufState")).log();
+                error(errCode::IS_NULL, "bufState");
                 return tstr<obj>();
             }
 
@@ -1099,7 +1098,7 @@ namespace namu {
 
             int res = yyparse(scanner);
             if(res) {
-                getReport().add(err::newWarn(errCode::PARSING_HAS_ERR, res)).log();
+                warn(errCode::PARSING_HAS_ERR, res);
                 return tstr<obj>();
             }
 

@@ -11,7 +11,7 @@ namespace namu {
         _report(err::newWarn(args...));
     }
     template <typename... Args>
-    void ME::_errMsg(Args... args) {
+    void ME::_errorMsg(Args... args) {
         _report(err::newErr(args...));
     }
     template <typename... Args>
@@ -24,7 +24,7 @@ namespace namu {
         _report(err::newWarn(it.getSrc().getPos(), code, args...));
     }
     template <typename... Args>
-    void ME::_err(const node& it, errCode code, Args... args) {
+    void ME::_error(const node& it, errCode code, Args... args) {
         _report(err::newErr(it.getSrc().getPos(), code, args...));
     }
     template <typename... Args>
