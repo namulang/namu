@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../loader/pack/opaquePackLoading.hpp"
+#include "../../../loader/pack/trustPackLoading.hpp"
 #include "../../../ast/src/src.hpp"
 #include "../../../ast/slot.hpp"
 
@@ -13,8 +13,8 @@ namespace namu {
 #endif
     typedef std::vector<libHandle> libHandles;
 
-    class _nout cppPackLoading : public opaquePackLoading{
-        NAMU(CLASS(cppPackLoading, opaquePackLoading))
+    class _nout cppPackLoading : public trustPackLoading{
+        NAMU(CLASS(cppPackLoading, trustPackLoading))
         typedef void (*entrypointFunc)(bicontainable*);
 
     public:

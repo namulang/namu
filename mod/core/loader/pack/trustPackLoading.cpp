@@ -1,8 +1,8 @@
-#include "opaquePackLoading.hpp"
+#include "trustPackLoading.hpp"
 
 namespace namu {
 
-    NAMU_DEF_ME(opaquePackLoading)
+    NAMU_DEF_ME(trustPackLoading)
 
     nbool me::verify(errReport& rpt, obj& pak) {
         return true;

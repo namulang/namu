@@ -5,8 +5,8 @@
 namespace namu {
 
     class errReport;
-    class _nout opaquePackLoading : public packLoading {
-        NAMU(ADT(opaquePackLoading, packLoading))
+    class _nout trustPackLoading : public packLoading {
+        NAMU(ADT(trustPackLoading, packLoading))
 
     public:
         nbool verify(errReport& rpt, obj& pak) override;
