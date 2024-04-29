@@ -2,7 +2,7 @@
 
 #include "../builtin/container/mgd/tarr.hpp"
 #include "../builtin/container/native/tnmap.hpp"
-#include "frame.hpp"
+#include "frames.hpp"
 #include "../loader/errReport.hpp"
 
 struct exprTest;
@@ -10,9 +10,7 @@ struct exprTest;
 namespace namu {
 
     class slotLoader;
-    typedef tnarr<frame> frames;
-
-    class _nout thread : public node {
+    class _nout thread : public node, public dumpable {
         NAMU(CLASS(thread, node))
         friend class verifier; // for frames
         friend class baseObj; // for frames.
@@ -62,6 +60,8 @@ namespace namu {
         /// @return slot instances loaded by internal system.
         ///         you can cast these to 'slot' types.
         const nmap& getSlots() const;
+
+        void dump() const override;
 
     protected:
         frames& _getFrames();

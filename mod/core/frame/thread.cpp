@@ -106,4 +106,8 @@ namespace namu {
 #endif
         return ret;
     }
+
+    void me::dump() const {
+        // TODO:
+    }
 }

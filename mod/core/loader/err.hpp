@@ -4,6 +4,7 @@
 #include "../ast/point.hpp"
 #include "../common/namuMetaExtension.hpp"
 #include "../type/ntype.hpp"
+#include "../type/dumpable.hpp"
 #include <unordered_map>
 
 namespace namu {
@@ -11,7 +12,7 @@ namespace namu {
     typedef std::unordered_map<nidx, std::string> msgMap;
 
     class pos;
-    struct _nout err : public instance {
+    struct _nout err : public instance, public dumpable {
         NAMU(CLASS(err, instance))
 
     public:
@@ -35,6 +36,8 @@ namespace namu {
         static err* newWarn(const point& src, int code, ...);
         static err* newInfo(int code, ...);
         static err* newInfo(const point& src, int code, ...);
+
+        void dump() const override;
 
     public:
         logLv::level fType;

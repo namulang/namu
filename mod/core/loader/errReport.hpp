@@ -2,11 +2,12 @@
 
 #include "err.hpp"
 #include "../type/ntype.hpp"
+#include "../type/dumpable.hpp"
 #include "../common.hpp"
 
 namespace namu {
 
-    class _nout errReport : public instance {
+    class _nout errReport : public instance, public dumpable {
         NAMU(CLASS(errReport, instance))
 
     public:
@@ -32,6 +33,7 @@ namespace namu {
         std::vector<tstr<err>>::const_iterator end() const;
 
         void log() const;
+        void dump() const override;
 
         void rel();
 

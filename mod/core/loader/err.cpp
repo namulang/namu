@@ -133,6 +133,10 @@ namespace namu {
             log();
     }
 
+    void me::dump() const {
+        // TODO:
+    }
+
     dummyErr::dummyErr(): super(logLv::ERR, 0) {}
 
     void dummyErr::log() const {}

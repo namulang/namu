@@ -76,6 +76,11 @@ namespace namu {
             elem->log();
     }
 
+    void me::dump() const {
+        for(auto& elem : _errs)
+            elem->dump();
+    }
+
     void me::rel() {
         _errs.clear();
     }

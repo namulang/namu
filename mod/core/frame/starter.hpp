@@ -4,8 +4,7 @@
 #include "../ast/slot.hpp"
 
 namespace namu {
-
-    typedef tnarr<frame> frames;
+    class frames;
     class _nout starter : public node {
         NAMU(CLASS(starter, node))
 
