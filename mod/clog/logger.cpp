@@ -140,10 +140,8 @@ namespace namu {
         return false;
     }
 
-    me::logger() : super(), _showCallstack(true) {}
-    me::logger(const me& rhs) : super(rhs) {
-        _showCallstack = rhs._showCallstack;
-    }
+    me::logger() : super() {}
+    me::logger(const me& rhs) : super(rhs) {}
 
     nbool me::isEnable() const {
         for(stream* s : _streams)
@@ -154,17 +152,6 @@ namespace namu {
     void me::setEnable(nbool enable) {
         for(stream* s : _streams)
             s->setEnable(enable);
-    }
-
-    void me::callstack() const {
-        if(!_showCallstack) return;
-        std::vector<std::string> cs = platformAPI::callstack();
-        for(const auto& e : cs)
-            NAMU_E("\tat %s", e.c_str());
-    }
-
-    void me::setCallstack(nbool show) {
-        _showCallstack = show;
     }
 
     void me::setFilters(const filters& newFilters) {

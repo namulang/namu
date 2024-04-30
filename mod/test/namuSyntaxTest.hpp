@@ -15,9 +15,7 @@ struct namuSyntaxTest : public namuTest {
     namuSyntaxTest& make(const std::string& name);
     namuSyntaxTest& make();
     namuSyntaxTest& make(const namu::manifest& mani);
-
     namuSyntaxTest& parse(const namu::nchar* src);
-
     namuSyntaxTest& negative();
 
     namu::nbool shouldParsed(namu::nbool well);

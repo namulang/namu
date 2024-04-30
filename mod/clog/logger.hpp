@@ -34,9 +34,6 @@ namespace namu {
         const nchar* getName() const override;
         nbool logBypass(const nchar* message) override;
         nbool isInit() const override;
-        void callstack() const;
-        void setCallstack(nbool show);
-        nbool isShowCallstack() const { return _showCallstack; }
         //  filter:
         void setFilters(const filters& newFilters);
         void setFilters();
@@ -56,6 +53,5 @@ namespace namu {
     private:
         std::vector<stream*> _streams;
         const filters* _filters;
-        nbool _showCallstack;
     };
 }

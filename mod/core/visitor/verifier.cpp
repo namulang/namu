@@ -47,10 +47,9 @@ namespace namu {
         getReport().add(new1);
         if(!isLog()) return;
 
-        new1->log();
         switch(new1->fType) {
-            case logLv::ERR: NAMU_CALLSTACK();
-            case logLv::WARN: _leaveErrFrame(); break;
+            case logLv::ERR: new1->dump(); _leaveErrFrame(); break;
+            case logLv::WARN: new1->log(); _leaveErrFrame(); break;
             default:;
         }
     }

@@ -26,5 +26,3 @@
 #   define NAMU_DW(fmt, ...)
 #   define NAMU_DI(fmt, ...)
 #endif
-
-#define NAMU_CALLSTACK() ::namu::logger::get().callstack()
