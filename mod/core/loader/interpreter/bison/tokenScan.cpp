@@ -8,11 +8,6 @@ std::string getTokenName(int tok);
 
 namespace namu {
 
-    nint tokenScan::onScan(parser& ps, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
-        nbool dum;
-        return onScan(ps, val, loc, scanner, dum);
-    }
-
     nint tokenScan::onScan(parser& ps, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
         tokenDispatcher& disp = ps.getDispatcher();
         nint tok;

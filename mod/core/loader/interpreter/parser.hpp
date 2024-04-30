@@ -4,7 +4,7 @@
 #include <functional>
 #include "../../ast/node.hpp"
 #include "tokenDispatcher.hpp"
-#include "bison/tokenScan.hpp"
+#include "tokenScanable.hpp"
 #include "../errReport.hpp"
 #include "../../ast/slot.hpp"
 #include "../../ast/params.hpp"
@@ -30,9 +30,8 @@ namespace namu {
     class FUOExpr;
     class defPropExpr;
 
-    class _nout parser : public tokenScan {
-        NAMU(CLASS(parser, tokenScan))
-        friend class tokenScanModable;
+    class _nout parser : public tokenScanable {
+        NAMU(CLASS(parser))
         friend class srcSupply;
 
     public:
@@ -81,7 +80,7 @@ namespace namu {
 
         // events:
         //  scan:
-        using super::onScan;
+        using tokenScanable::onScan;
         nint onScan(parser& ps, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) override;
         nint onTokenEndOfFile();
         nint onTokenColon(nint tok);

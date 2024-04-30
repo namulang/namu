@@ -7,6 +7,7 @@
 #include "../../frame/thread.hpp"
 #include "../../ast/genericObj.hpp"
 #include "../../type/mgdType.hpp"
+#include "bison/tokenScan.hpp"
 
 namespace namu {
 
