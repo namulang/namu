@@ -29,6 +29,7 @@ namespace namu {
     class ifExpr;
     class FUOExpr;
     class defPropExpr;
+    class tokenScan;
 
     class _nout parser : public tokenScanable {
         NAMU(CLASS(parser))

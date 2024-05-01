@@ -1,4 +1,4 @@
 #pragma once
 
-#include "interpreter/interpreter.hpp"
-#include "interpreter/supply.hpp"
+#include "worker/interpreter.hpp"
+#include "worker/supply.hpp"
