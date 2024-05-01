@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../type/ntype.hpp"
+#include "../tokenScanable.hpp"
 
 typedef union YYSTYPE YYSTYPE;
 typedef struct lloc YYLTYPE;
@@ -11,12 +11,12 @@ namespace namu {
     class parser;
     class tokenDispatcher;
 
-    class _nout tokenScan : public typeProvidable, public clonable {
+    class _nout tokenScan : public tokenScanable, public typeProvidable, public clonable {
         NAMU(ADT(tokenScan))
 
     public:
-        nint onScan(parser& ps, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
-        virtual nint onScan(parser& ps, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool& isBypass);
+        using tokenScanable::onScan;
+        virtual nint onScan(parser& ps, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool& isBypass) override;
 
     private:
         nbool _useSmartDedent;

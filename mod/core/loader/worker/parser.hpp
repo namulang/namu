@@ -4,7 +4,7 @@
 #include <functional>
 #include "../../ast/node.hpp"
 #include "tokenDispatcher.hpp"
-#include "tokenScanable.hpp"
+#include "bison/tokenScan.hpp"
 #include "../errReport.hpp"
 #include "../../ast/slot.hpp"
 #include "../../ast/params.hpp"
@@ -29,7 +29,6 @@ namespace namu {
     class ifExpr;
     class FUOExpr;
     class defPropExpr;
-    class tokenScan;
 
     class _nout parser : public tokenScanable {
         NAMU(CLASS(parser))
