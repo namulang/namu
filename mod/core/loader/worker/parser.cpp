@@ -406,6 +406,7 @@ namespace namu {
             if(nul(cast))
                 return srcError(errCode::SHOULD_TYPE_PARAM_NAME, a.getType().getName().c_str()),
                        std::vector<std::string>();
+
             ret.push_back(cast.getSubName());
         }
 
@@ -1021,7 +1022,6 @@ namespace namu {
     std::vector<ncnt>& me::getIndents() {
         return _indents;
     }
-
     const area& me::getArea() const {
         return _srcArea;
     }
@@ -1056,6 +1056,7 @@ namespace namu {
         _states.push_back(newState);
         return _states.back();
     }
+
 
     int me::popState() {
         int previous = _states.back();
