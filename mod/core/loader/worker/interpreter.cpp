@@ -102,11 +102,11 @@ namespace namu {
         NAMU_DI("======================================");
 
         _pser.setReport(*_rpt)
-             .setSlot(*_slot)
-             .parse();
+             .setTask(*_slot)
+             .work();
 
         if(!_slot)
-            _slot.bind(_pser.getSlot());
+            _slot.bind(_pser.getTask());
 
         _isParsed = _isPackExist() && !_rpt->hasErr();
     }

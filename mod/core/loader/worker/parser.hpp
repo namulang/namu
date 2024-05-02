@@ -13,6 +13,7 @@
 #include "../../ast/exprs/FBOExpr.hpp"
 #include "smartDedent.hpp"
 #include "supply/srcSupply.hpp"
+#include "worker.hpp"
 
 namespace namu {
 
@@ -30,22 +31,15 @@ namespace namu {
     class FUOExpr;
     class defPropExpr;
 
-    class _nout parser : public tokenScanable {
-        NAMU(CLASS(parser))
+    class _nout parser : public worker<tstr<obj>, slot>, public tokenScanable {
+        typedef worker<tstr<obj>, slot> __super5;
+        NAMU(CLASS(parser, __super5))
         friend class srcSupply;
 
     public:
         parser();
 
     public:
-        slot& getSlot();
-        const slot& getSlot() const NAMU_UNCONST_FUNC(getSlot())
-        me& setSlot(const slot& tray);
-
-        errReport& getReport();
-        const errReport& getReport() const NAMU_UNCONST_FUNC(getReport())
-        me& setReport(errReport& rpt);
-
         obj& getSubPack();
         const obj& getSubPack() const NAMU_UNCONST_FUNC(getSubPack())
 
@@ -56,14 +50,8 @@ namespace namu {
 
         tokenDispatcher& getDispatcher();
         std::vector<ncnt>& getIndents();
-        const area& getArea() const;
 
         nbool isInit() const;
-
-        /// parse with given srcSupply instances.
-        /// @param script is null terminated cstring.
-        /// @return last parsed sub pack.
-        tstr<obj> parse();
 
         template <typename T>
         void setScan() {
@@ -72,8 +60,7 @@ namespace namu {
             _mode = T::_instance;
         }
 
-        void rel();
-        void prepareParse();
+        void rel() override;
 
         int pushState(int newState);
         int popState();
@@ -92,17 +79,9 @@ namespace namu {
         nint onDedent(ncnt col, nint tok);
         nint onIgnoreIndent(nint tok);
         nchar onScanUnexpected(const nchar* token);
-        void onEndParse();
         void onSrcArea(const area& area);
 
         //  err:
-        template <typename... Args> void error(Args... args) { _report(err::newErr(args...)); }
-        template <typename... Args> void warn(Args... args) { _report(err::newWarn(args...)); }
-        template <typename... Args> void info(Args... args) { _report(err::newInfo(args...)); }
-        template <typename... Args> void srcError(Args... args) { _report(err::newErr(getArea().start, args...)); }
-        template <typename... Args> void srcWarn(Args... args) { _report(err::newWarn(getArea().start, args...)); }
-        template <typename... Args> void srcInfo(Args... args) { _report(err::newInfo(getArea().start, args...)); }
-
         //  operator:
         //      dot:
         node* onGet(const std::string& name);
@@ -234,6 +213,13 @@ namespace namu {
     protected:
         void* _scanString(const std::string& src, void* scanner);
         exprMaker& _getMaker();
+        void _prepare() override;
+        void _onEndWork() override;
+
+        /// parse with given srcSupply instances.
+        /// @param script is null terminated cstring.
+        /// @return last parsed sub pack.
+        tstr<obj> _onWork() override;
 
     private:
         nint _onTokenEndOfInlineBlock(nint tok);
@@ -259,10 +245,7 @@ namespace namu {
         nbool _isIgnoreWhitespace;
         tokenDispatcher _dispatcher;
         std::vector<ncnt> _indents;
-        tstr<errReport> _rpt;
-        tstr<slot> _slot;
         tstr<obj> _subpack;
-        area _srcArea;
         tstr<scope> _filescope;
         std::vector<nint> _states;
         exprMaker _maker;

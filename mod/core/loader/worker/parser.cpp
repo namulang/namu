@@ -104,7 +104,7 @@ namespace namu {
         _indents.pop_back();
         nint now = _indents.back();
         if(now < col)
-            onSrcWarn(errCode::WRONG_INDENT_LV, col, now, now);
+            posWarn(errCode::WRONG_INDENT_LV, col, now, now);
 
         while(_indents.back() > col) {
             NAMU_DI("tokenEvent: onDedent: indentlv become %d -> %d",
@@ -128,7 +128,7 @@ namespace namu {
     }
 
     nchar me::onScanUnexpected(const nchar* token) {
-        srcError(errCode::UNEXPECTED_TOK, token);
+        posError(errCode::UNEXPECTED_TOK, token);
         return token[0];
     }
 
@@ -138,12 +138,12 @@ namespace namu {
         return tok;
     }
 
-    void me::onEndParse() {
+    void me::_onEndWork() {
 #if NAMU_IS_DBG
         const point& pt = getArea().start;
-        NAMU_DI("tokenEvent: onEndParse(%d,%d)", pt.row, pt.col);
+        NAMU_DI("tokenEvent: _onEndWork(%d,%d)", pt.row, pt.col);
 #endif
-        _srcArea.rel();
+        super::_onEndWork();
     }
 
     obj* me::onPack(const node& path) {
@@ -153,11 +153,11 @@ namespace namu {
         // pack syntax rule #1:
         //  if there is no specified name of pack, I create an one.
         const std::string& firstName = dotnames[0];
-        if(!_slot)
-            _slot.bind(new slot(manifest(firstName)));
-        obj* e = &_slot->getPack();
+        if(nul(getTask()))
+            _setTask(new slot(manifest(firstName)));
+        obj* e = &getTask().getPack();
 
-        const std::string& realName = _slot->getManifest().name;
+        const std::string& realName = getTask().getManifest().name;
         if(realName != firstName)
             return error(errCode::PACK_NOT_MATCH, firstName.c_str(), realName.c_str()), e;
 
@@ -188,15 +188,15 @@ namespace namu {
     obj* me::onPack() {
         NAMU_DI("tokenEvent: onPack()");
 
-        slot* newSlot = &_slot.get();
-        if(nul(newSlot))
-            _slot.bind(newSlot = new slot(manifest()));
+        if(nul(getTask()))
+            _setTask(new slot(manifest()));
 
-        const std::string& name = _slot->getManifest().name;
+        auto& newSlot = getTask();
+        const std::string& name = getTask().getManifest().name;
         if(name != manifest::DEFAULT_NAME)
-            return error(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), &newSlot->getPack();
+            return error(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), &newSlot.getPack();
 
-        return onSubPack(newSlot->getPack()); // this is a default pack containing name as '{default}'.
+        return onSubPack(newSlot.getPack()); // this is a default pack containing name as '{default}'.
     }
 
     blockExpr* me::onBlock(const node& stmt) {
@@ -207,7 +207,7 @@ namespace namu {
     blockExpr* me::onBlock(blockExpr& blk, const node& stmt) {
         NAMU_DI("tokenEvent: onBlock(blk, %s)", stmt.getType().getName().c_str());
         if(nul(blk))
-            return srcError(errCode::IS_NULL, "blk"), _maker.make<blockExpr>();
+            return posError(errCode::IS_NULL, "blk"), _maker.make<blockExpr>();
 
         blk.getStmts().add(stmt);
         NAMU_DI("tokenEvent: onBlock(%d).add(%s)", blk.getStmts().len(), stmt.getType().getName().c_str());
@@ -232,7 +232,7 @@ namespace namu {
     defBlock* me::onDefBlock(defBlock& s, node& stmt) {
         NAMU_DI("tokenEvent: onDefBlock(s, %s)", stmt.getType().getName().c_str());
         if(nul(s))
-            return srcError(errCode::IS_NULL, "s"), new defBlock();
+            return posError(errCode::IS_NULL, "s"), new defBlock();
 
         defPropExpr& defProp = stmt.cast<defPropExpr>();
         if(!nul(defProp)) {
@@ -269,15 +269,11 @@ namespace namu {
         return _maker.make<defSeqExpr>(start, end);
     }
 
-    void me::onSrcArea(const area& area) {
-        _srcArea = area;
-        ++_srcArea;
-        _maker.setRow(_srcArea.start.row).setCol(_srcArea.start.col);
-    }
-
-    void me::_report(err* new1) {
-        new1->log();
-        _rpt->add(new1);
+    void me::onSrcArea(const area& new1) {
+        area& prev = _getArea();
+        prev = new1;
+        ++prev;
+        _maker.setRow(prev.start.row).setCol(prev.start.col);
     }
 
     params me::_asParams(const args& as) {
@@ -285,7 +281,7 @@ namespace namu {
         for(auto& a : as) {
             tstr<defPropExpr> defProp(a.cast<defPropExpr>());
             if(!defProp)
-                return srcError(errCode::PARAM_HAS_VAL), ret;
+                return posError(errCode::PARAM_HAS_VAL), ret;
 
             ret.add(new param(defProp->getName(), defProp->getOrigin()));
         }
@@ -404,7 +400,7 @@ namespace namu {
             // all args should be getExpr instances.
             const getExpr& cast = a.cast<getExpr>();
             if(nul(cast))
-                return srcError(errCode::SHOULD_TYPE_PARAM_NAME, a.getType().getName().c_str()),
+                return posError(errCode::SHOULD_TYPE_PARAM_NAME, a.getType().getName().c_str()),
                        std::vector<std::string>();
 
             ret.push_back(cast.getSubName());
@@ -974,19 +970,10 @@ namespace namu {
     }
 
     void me::onParseErr(const std::string& msg, const nchar* symbolName) {
-        error(_srcArea.start, errCode::SYNTAX_ERR, msg.c_str(), symbolName);
+        error(getArea().start, errCode::SYNTAX_ERR, msg.c_str(), symbolName);
     }
 
     me::parser() { rel(); }
-
-    slot& me::getSlot() {
-        return *_slot;
-    }
-
-    me& me::setSlot(const slot& tray) {
-        _slot.bind(tray);
-        return *this;
-    }
 
     obj& me::getSubPack() {
         return *_subpack; // TODO: can I remove subpack variable?
@@ -1006,15 +993,6 @@ namespace namu {
         return *this;
     }
 
-    errReport& me::getReport() {
-        return *_rpt;
-    }
-
-    me& me::setReport(errReport& rpt) {
-        _rpt.bind(rpt);
-        return *this;
-    }
-
     tokenDispatcher& me::getDispatcher() {
         return _dispatcher;
     }
@@ -1022,32 +1000,30 @@ namespace namu {
     std::vector<ncnt>& me::getIndents() {
         return _indents;
     }
-    const area& me::getArea() const {
-        return _srcArea;
-    }
-
     nbool me::isInit() const {
         return _mode;
     }
 
     void me::rel() {
-        _rpt.bind(dummyErrReport::singletone);
+        super::rel();
+
         _slot.rel();
         _states.clear();
         _states.push_back(0); // 0 for default state
         _dedent.setEnable(false);
         _supplies.rel();
         _maker.rel();
-        prepareParse();
+        _prepare();
     }
 
-    void me::prepareParse() {
+    void me::_prepare() {
+        super::_prepare();
+
         _mode = nullptr;
         _subpack.rel();
         _isIgnoreWhitespace = false;
         _dispatcher.rel();
         _indents.clear();
-        _srcArea.rel();
         _maker.setRow(0).setCol(0);
     }
 
@@ -1065,7 +1041,7 @@ namespace namu {
         return _states.back();
     }
 
-    tstr<obj> me::parse() {
+    tstr<obj> me::_onWork() {
         if(nul(thread::get()))
             return error(errCode::NO_THREAD), tstr<obj>();
 
@@ -1075,7 +1051,7 @@ namespace namu {
 
         NAMU_I("parse starts: %d src will be supplied.", supplies.len());
         for(const auto& supply : supplies) {
-            prepareParse();
+            _prepare();
 
             yyscan_t scanner;
             yylex_init_extra(this, &scanner);

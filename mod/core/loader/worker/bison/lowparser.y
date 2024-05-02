@@ -650,7 +650,6 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
 }
 
 void _onEndParse(yyscan_t scanner) {
-    PS.onEndParse();
     yyset_lineno(0, scanner);
 }
 

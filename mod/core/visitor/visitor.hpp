@@ -17,10 +17,6 @@ namespace namu {
         virtual ~visitor();
 
     public:
-        me& setRoot(const node& root);
-        node& getRoot();
-        const node& getRoot() const NAMU_UNCONST_FUNC(getRoot())
-
         me& setLog(nbool toShow);
         nbool isLog() const;
 
