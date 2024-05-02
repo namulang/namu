@@ -66,7 +66,7 @@ TEST_F(exprTest, simpleGetExpr) {
     getExpr exp(bridge.get(), "main", narr(*new nStr()));
     errReport rep;
     verifier veri;
-    veri.setReport(rep).setRoot(exp).start();
+    veri.setReport(rep).setTask(exp).work();
     /*TODO: uncomment this
     ASSERT_TRUE(rep); // should have some errors.*/
     setLine(exp, 1, 1);
@@ -76,7 +76,7 @@ TEST_F(exprTest, simpleGetExpr) {
 
     baseFunc& f = bridge->sub<baseFunc>("main");
     ASSERT_FALSE(nul(f));
-    veri.setRoot(exp).start();
+    veri.setTask(exp).work();
     ASSERT_FALSE(rep);
 
     str res = exp.run();
@@ -92,13 +92,13 @@ TEST_F(exprTest, simpleGetExprNegative) {
     setLine(exp, 1, 1);
     errReport rep;
     verifier veri;
-    veri.setReport(rep).setRoot(exp).start();
+    veri.setReport(rep).setTask(exp).work();
     ASSERT_TRUE(rep); // should have some errs.
 
     getExpr exp2(bridge.get(), "main", narr(*new nStr()));
     setLine(exp2, 1, 1);
     rep.rel();
-    veri.setRoot(exp).start();
+    veri.setTask(exp).work();
     ASSERT_TRUE(rep);
 }
 
@@ -107,12 +107,12 @@ TEST_F(exprTest, simpleRunExprWithoutMeObjNegative) {
     runExpr exp1(nulOf<node>(), bridge->sub("main"), narr(*new nStr("kniz!")));
     errReport rep;
     verifier veri;
-    veri.setReport(rep).setRoot(exp1).start();
+    veri.setReport(rep).setTask(exp1).work();
     ASSERT_TRUE(rep);
 
     setLine(exp1, 1, 1);
     rep.rel();
-    veri.setReport(rep).setRoot(exp1).start();
+    veri.setReport(rep).setTask(exp1).work();
     ASSERT_TRUE(rep);
 }
 
@@ -126,14 +126,14 @@ TEST_F(exprTest, simpleRunExpr) {
 
     errReport rep;
     verifier veri;
-    veri.setReport(rep).setRoot(exp1).start();
+    veri.setReport(rep).setTask(exp1).work();
     /*TODO: expr parser didn't put col & row on AST yet
      *      uncomment these after the patch
     ASSERT_TRUE(rep);*/
 
     setLine(exp1, 1, 1);
     rep.rel();
-    veri.setReport(rep).setRoot(exp1).start();
+    veri.setReport(rep).setTask(exp1).work();
     ASSERT_FALSE(rep);
     ASSERT_FALSE(helloWorld::isRun);
 
@@ -152,7 +152,7 @@ TEST_F(exprTest, simpleRunExprNegative) {
     setLine(exp1, 1, 1);
     errReport rep;
     verifier veri;
-    veri.setReport(rep).setRoot(exp1).start();
+    veri.setReport(rep).setTask(exp1).work();
     ASSERT_TRUE(rep);
 
     ASSERT_FALSE(helloWorld::isRun);

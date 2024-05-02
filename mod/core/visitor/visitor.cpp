@@ -11,17 +11,6 @@ namespace namu {
         me::rel();
     }
 
-    me::~visitor() {}
-
-    me& me::setRoot(const node& root) {
-        _root.bind(root);
-        return *this;
-    }
-
-    node& me::getRoot() {
-        return *_root;
-    }
-
     me& me::setLog(nbool toShow) {
         _isLog = toShow;
         return *this;
@@ -49,17 +38,10 @@ namespace namu {
 #   include "visitee.inl"
 #undef X
 
-    void me::rel() {
-        setReport(dummyErrReport::singletone);
+    void me::_prepare() {
+        super::_prepare();
         _visited.clear();
     }
-
-    me& me::setReport(errReport& rpt) {
-        _rpt.bind(rpt);
-        return *this;
-    }
-
-    errReport& me::getReport() { return *_rpt; }
 
     void me::visit(visitInfo i, node& me) {
         if(nul(me)) return;
@@ -75,11 +57,11 @@ namespace namu {
     nbool me::onVisit(visitInfo i, node& me) { return true; }
     void me::onLeave(visitInfo i, node& me) {}
 
-    void me::start() {
-        if(!_root) return;
+    void me::_onWork() {
+        if(nul(getTask())) return;
 
         _visited.clear();
-        _root->accept(visitInfo {"#root", nullptr, 0, 1, 1}, *this);
+        getTask().accept(visitInfo {"#root", nullptr, 0, 1, 1}, *this);
     }
 
     nbool me::_markVisited(node& me) {

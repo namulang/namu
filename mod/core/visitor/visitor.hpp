@@ -1,7 +1,7 @@
 #pragma once
 
 #include "visitInfo.hpp"
-#include "../loader/errReport.hpp"
+#include "../loader/worker/worker.hpp"
 
 namespace namu {
 
@@ -9,23 +9,16 @@ namespace namu {
 #define X(T) class T;
 #   include "visitee.inl"
 #undef X
-    class _nout visitor {
-        NAMU(ME(visitor))
+    class _nout visitor : public worker<void, node> {
+        typedef worker<void, node> __super6;
+        NAMU(ME(visitor, __super6))
 
     public:
         visitor();
-        virtual ~visitor();
 
     public:
         me& setLog(nbool toShow);
         nbool isLog() const;
-
-        me& setReport(errReport& rpt);
-        errReport& getReport();
-
-        virtual void start();
-
-        virtual void rel();
 
 #define X(T) \
         virtual void visit(visitInfo i, T& me); \
@@ -61,14 +54,16 @@ namespace namu {
         virtual void onTraverse(visitInfo i, defArrayExpr& d);
         virtual void onTraverse(visitInfo i, genericObj& g);
 
+    protected:
+        void _onWork() override;
+        void _prepare() override;
+
     private:
         /// @return false if the node is already visited.
         nbool _markVisited(node& me);
 
     private:
-        tstr<errReport> _rpt;
         nbool _isLog;
-        str _root;
         // value will be true if key is visited func or obj:
         //  obj usually has huge subs and was chained to its subpack. but subpack also has the
         //  obj as its one of subs, so visitor will fall in the infinite recursive loop.

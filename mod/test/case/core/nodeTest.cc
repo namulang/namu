@@ -181,7 +181,7 @@ TEST_F(nodeTest, ShouldNotSameNameVariableIntoSubs) {
     ASSERT_EQ(c.sub<nInt>("age").get(), 22);
     errReport rpt;
     verifier v;
-    v.setReport(rpt).setRoot(c).start();
+    v.setReport(rpt).setTask(c).work();
     ASSERT_FALSE(rpt);
 
     c.subs().add("age1", new nInt(22));

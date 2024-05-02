@@ -219,8 +219,8 @@ namespace namu {
 
         generalizer g;
         g.add(*new param(TYPENAME, getType().getBeans()[0]))
-         .setRoot(*this)
-         .start();
+         .setTask(*this)
+         .work();
 
         return *clone;
     }

@@ -122,8 +122,8 @@ namespace namu {
         preEvaluator evaler;
         evaler.setReport(*_rpt)
               .setLog(false)
-              .setRoot(_slot->getPack())
-              .start();
+              .setTask(_slot->getPack())
+              .work();
     }
 
     void me::_verify() {
@@ -137,8 +137,8 @@ namespace namu {
         // verify:
         _veri.setReport(*_rpt)
              .setLog(true)
-             .setRoot(_slot->getPack())
-             .start();
+             .setTask(_slot->getPack())
+             .work();
     }
 
     void me::_logStructure(frame& info) {
@@ -146,8 +146,8 @@ namespace namu {
 
         if(!nul(_pser.getSubPack()) && _slot) {
             std::cout << " - structure:\n";
-            graphVisitor().setRoot(_slot->getPack())
-                          .start();
+            graphVisitor().setTask(_slot->getPack())
+                          .work();
         }
     }
 

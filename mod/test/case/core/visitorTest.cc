@@ -49,7 +49,7 @@ TEST_F(visitorTest, iterateManuallyConstructedNodes) {
     ASSERT_FALSE(v.metVal1);
     ASSERT_FALSE(v.metVal2);
 
-    v.setRoot(o2).start();
+    v.setTask(o2).work();
 
     ASSERT_TRUE(v.metFoo1);
     ASSERT_TRUE(v.metFoo2);
@@ -101,7 +101,7 @@ TEST_F(visitorTest, visitComplexExpressions) {
     };
 
     myVisitor v;
-    v.setRoot(root).start();
+    v.setTask(root).work();
     ASSERT_EQ(v.metO, 2);
     ASSERT_EQ(v.metAsFlt, 1);
     ASSERT_TRUE(v.metFlt5);
@@ -164,7 +164,7 @@ TEST_F(visitorTest, visitComplexExpressions2) {
     };
 
     myVisitor v;
-    v.setRoot(root).start();
+    v.setTask(root).work();
     ASSERT_TRUE(v.metInt2);
     ASSERT_TRUE(v.metRet);
 }
