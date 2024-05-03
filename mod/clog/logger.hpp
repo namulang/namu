@@ -2,10 +2,9 @@
 
 #include "stream/stream.hpp"
 #include "filter/filters.hpp"
+#include "enablesZone.hpp"
 
 namespace namu {
-
-    typedef std::vector<nbool> enables;
 
     class _nout logger : public stream {
         NAMU_ME(logger, stream)
