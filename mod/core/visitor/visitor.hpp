@@ -17,9 +17,6 @@ namespace namu {
         visitor();
 
     public:
-        me& setLog(nbool toShow);
-        nbool isLog() const;
-
 #define X(T) \
         virtual void visit(visitInfo i, T& me); \
         virtual nbool onVisit(visitInfo i, T& me); \
@@ -63,7 +60,6 @@ namespace namu {
         nbool _markVisited(node& me);
 
     private:
-        nbool _isLog;
         // value will be true if key is visited func or obj:
         //  obj usually has huge subs and was chained to its subpack. but subpack also has the
         //  obj as its one of subs, so visitor will fall in the infinite recursive loop.

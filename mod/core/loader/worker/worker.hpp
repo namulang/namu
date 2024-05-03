@@ -9,9 +9,27 @@ namespace namu {
         NAMU(ADT(worker))
 
     public:
+        enum logFlag {
+            LOG_ON_EX = 1, // logs the err instance when it just got reported.
+            CSTACK_ON_EX = 1 << 2, // leave callstack from an err instance when it just got reported.
+            GUARD = 1 << 3, // logs when func in, out.
+            INTERNAL = 1 << 4, // logs all except above case.
+            LOG_ON_END = 1 << 5, // log all report info when the work ends.
+            CSTACK_ON_END = 1 << 6, // leave callstack for all report info when the work ends.
+            DEFAULT = LOG_ON_EX & CSTACK_ON_EX & GUARD & INTERNAL & LOG_ON_END
+        };
+
+    public:
+        worker();
+
+    public:
         errReport& getReport();
         const errReport& getReport() const NAMU_UNCONST_FUNC(getReport())
         me& setReport(errReport& rpt);
+
+        me& setFlag(nint newFlag);
+        me& clearFlag(nint clear);
+        nbool isFlag(nint flag);
 
         me& setTask(const T& root);
         T& getTask();
@@ -44,8 +62,12 @@ namespace namu {
         void _setTask(const T* new1);
 
     private:
+        void _rel();
+
+    private:
         tstr<errReport> _rpt;
         area _area;
         tstr<T> _task;
+        nint _logFlag;
     };
 }
