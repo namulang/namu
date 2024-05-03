@@ -5,6 +5,8 @@
 
 namespace namu {
 
+    typedef std::vector<nbool> enables;
+
     class _nout logger : public stream {
         NAMU_ME(logger, stream)
 
@@ -25,6 +27,8 @@ namespace namu {
 
         /// modify that all of streams are set to enable or not.
         void setEnable(nbool enable) override;
+        enables getEnables() const;
+        void setEnables(const enables& enbs);
         ncnt getStreamCount() const;
         nbool logFormatBypass(const nchar* fmt, ...);
         nbool log(logLv::level lv, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...);

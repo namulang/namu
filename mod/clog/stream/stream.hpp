@@ -16,6 +16,7 @@ namespace namu {
         virtual nbool logBypass(const nchar* message);
         nbool isNull() const;
         virtual nbool isEnable() const;
+        /// @return previous set value.
         virtual void setEnable(nbool isEnable);
         virtual const nchar* getName() const = 0;
         virtual nbool init();

@@ -154,6 +154,20 @@ namespace namu {
             s->setEnable(enable);
     }
 
+    enables me::getEnables() const {
+        enables ret;
+        for(stream* s : _streams)
+            ret.push_back(s->isEnable());
+        return ret;
+    }
+
+    void me::setEnables(const enables& enbs) {
+        if(enbs.size() != _streams.size()) return;
+
+        for(nidx n=0; n < enbs.size() ;n++)
+            _streams[n]->setEnable(enbs[n]);
+    }
+
     void me::setFilters(const filters& newFilters) {
         _filters = &newFilters;
     }
