@@ -65,17 +65,39 @@ namespace namu {
     TEMPLATE
     void ME::_onEndWork() {
         _area.rel();
+
+        if(isFlag(DUMP_ON_END))
+            _rpt->dump();
+        else if(isFlag(LOG_ON_END))
+            _rpt->log();
     }
 
     TEMPLATE
     R ME::work() {
-        NAMU_I("====================");
-        NAMU_I("%s.work()...", getType().getName().c_str());
-        R ret = _onWork();
-        NAMU_I("--------------------");
-        NAMU_I("%s._onEndWork()...");
+        if(isFlag(GUARD)) {
+            NAMU_I("====================");
+            NAMU_I("%s.work()...", getType().getName().c_str());
+        }
+
+        enablesZone prev;
+        R ret;
+        {
+            enablesZone internal;
+            if(!isFlag(INTERNAL)) logger::get().setEnable(false);
+            ret = _onWork();
+        }
+
+        if(isFlag(GUARD)) {
+            NAMU_I("--------------------");
+            NAMU_I("%s._onEndWork()...");
+        }
+
+        prev.setPrev();
         _onEndWork();
-        NAMU_I("====================");
+
+        if(isFlag(GUARD))
+            NAMU_I("====================");
+        return ret;
     }
 
     TEMPLATE void ME::_setTask(const T& new1) { _task.bind(new1); }

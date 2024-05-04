@@ -11,4 +11,8 @@ namespace namu {
     me::~enablesZone() {
         logger::get().setEnables(_enables);
     }
+
+    const enables& me::getPrev() const { return _enables; }
+
+    void me::setPrev() { logger::get().setEnables(getPrev()); }
 }
