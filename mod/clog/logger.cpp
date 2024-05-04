@@ -7,11 +7,14 @@ namespace namu {
     NAMU_DEF_ME(logger)
     typedef std::string string;
 
-    const nchar* me::getName() const { return "logger"; }
-    const stream& me::operator[](nidx n) const { return getStream(n); }
+    const std::string& me::getName() const {
+        static std::string inner("logger");
+        return inner;
+    }
+
     stream& me::operator[](nidx n) { return getStream(n); }
-    const stream& me::operator[](const nchar* message) const { return getStream(message); }
-    stream& me::operator[](const nchar* message) { return getStream(message); }
+    stream& me::operator[](const nchar* msg) { return getStream(msg); }
+    stream& me::operator[](const std::string& msg) { return getStream(msg); }
 
     stream& me::getStream(nidx n) {
         if(n < 0 || n >= getStreamCount())
@@ -20,24 +23,16 @@ namespace namu {
         return *_streams[n];
     }
 
-    const stream& me::getStream(nidx n) const {
-        NAMU_UNCONST()
-        return unconst.getStream(n);
-    }
-
-    const stream& me::getStream(const nchar* c_message) const {
-        string message = c_message;
+    stream& me::getStream(const std::string& msg) {
         for(auto e : _streams)
-            if(string(e->getName()) == message)
+            if(string(e->getName()) == msg)
                 return *e;
 
         return nulOf<stream>();
     }
 
-    stream& me::getStream(const nchar* message) {
-        const me* consted = this;
-
-        return const_cast<stream&>(consted->getStream(message));
+    stream& me::getStream(const nchar* msg) {
+        return getStream(std::string(msg));
     }
 
     ncnt me::getStreamCount() const { return _streams.size(); }

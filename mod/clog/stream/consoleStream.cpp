@@ -7,8 +7,9 @@ namespace namu {
 
     me::consoleStream(): super(false) {}
 
-    const char* me::getName() const {
-        return "consoleStream";
+    const std::string& me::getName() const {
+        static std::string inner("consoleStream");
+        return inner;
     }
 
     nbool me::logBypass(const char* message) {

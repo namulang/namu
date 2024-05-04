@@ -12,7 +12,7 @@ namespace namu {
 
     public:
         //  Stream:
-        const char* getName() const override;
+        const std::string& getName() const override;
         nbool logBypass(const char* message) override;
     };
 }

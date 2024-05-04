@@ -18,7 +18,7 @@ namespace namu {
         virtual nbool isEnable() const;
         /// @return previous set value.
         virtual void setEnable(nbool isEnable);
-        virtual const nchar* getName() const = 0;
+        virtual const std::string& getName() const = 0;
         virtual nbool init();
         virtual nbool isInit() const;
         virtual nbool rel();

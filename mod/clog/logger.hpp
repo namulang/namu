@@ -11,16 +11,20 @@ namespace namu {
 
     public:
         //  Logger:
-        const stream& operator[](nidx n) const;
         stream& operator[](nidx n);
-        const stream& operator[](const nchar* message) const;
-        stream& operator[](const nchar* message);
+        const stream& operator[](nidx n) const NAMU_UNCONST_FUNC(operator[](n))
+        stream& operator[](const nchar* msg);
+        const stream& operator[](const nchar* msg) const NAMU_UNCONST_FUNC(operator[](msg))
+        stream& operator[](const std::string& msg);
+        const stream& operator[](const std::string& msg) const NAMU_UNCONST_FUNC(operator[](msg))
 
     public:
         stream& getStream(nidx n);
-        const stream& getStream(nidx n) const;
-        const stream& getStream(const nchar* c_message) const;
-        stream& getStream(const nchar* message);
+        const stream& getStream(nidx n) const NAMU_UNCONST_FUNC(getStream(n))
+        stream& getStream(const nchar* msg);
+        const stream& getStream(const nchar* msg) const NAMU_UNCONST_FUNC(getStream(msg))
+        stream& getStream(const std::string& msg);
+        const stream& getStream(const std::string& msg) const NAMU_UNCONST_FUNC(getStream(msg))
 
         nbool isEnable() const override;
 
@@ -34,7 +38,7 @@ namespace namu {
         nbool pushStream(stream* new_stream);
         static logger& get();
         //  stream:
-        const nchar* getName() const override;
+        const std::string& getName() const override;
         nbool logBypass(const nchar* message) override;
         nbool isInit() const override;
         //  filter:

@@ -8,8 +8,9 @@ namespace namu {
     me::fileLogStream() {}
     me::fileLogStream(const string& new_path): stream(), _path(new_path) {}
 
-    const char* me::getName() const {
-        return "fileLogStream";
+    const std::string& me::getName() const {
+        static std::string inner("fileLogStream");
+        return inner;
     }
 
     nbool me::setPath(const string& new_path) {
