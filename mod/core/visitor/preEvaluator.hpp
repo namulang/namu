@@ -19,8 +19,6 @@ namespace namu {
     public:
         void rel() override;
 
-        void start() override;
-
         using super::onVisit;
 
         nbool onVisit(visitInfo i, obj& me) override;
@@ -29,12 +27,15 @@ namespace namu {
         void onLeave(visitInfo i, func& me) override;
         nbool onVisit(visitInfo i, getGenericExpr& me) override;
 
+    protected:
+        void _onWork() override;
+
     private:
         void _rel();
-        void _preEval();
         void _preEvalStack(errReport& rpt);
         nbool _preEvalFunc(errReport& rpt, evaluation& eval);
         void _delPreCtors();
+        void _preEval();
 
     private:
         std::vector<evaluation> _stack;

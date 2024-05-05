@@ -5,33 +5,34 @@
 
 namespace namu {
 
-    class _nout interpreter : public typeProvidable, public clonable {
-        NAMU(CLASS(interpreter))
+    class _nout interpreter : public worker<tstr<slot>, slot> {
+        typedef worker<slot, slot> __super7;
+        NAMU(CLASS(interpreter, __super7))
+
+    public:
+        enum logFlag2 {
+            LOG_STRUCTURE = 1 << 7,
+            LOG_GRAPH_ON_EX = 1 << 8
+        };
 
     public:
         interpreter();
 
     public:
-        me& setReport(errReport& report);
-        me& setSlot(slot& pak);
         me& addSupply(const srcSupply& supply);
         me& relSupplies();
         me& setLogStructure(nbool enable);
-        me& setVerbose(nbool isVerbose);
         nbool isParsed() const;
         nbool isVerified() const;
         node& getSubPack();
         const node& getSubPack() const NAMU_UNCONST_FUNC(getSubPack())
-        slot& getSlot();
-        const slot& getSlot() const NAMU_UNCONST_FUNC(getSlot())
-        errReport& getReport();
-        const errReport& getReport() const NAMU_UNCONST_FUNC(getReport())
 
-        slot& interpret();
-
-        void rel();
+        void rel() override;
 
         void log() const;
+
+    protected:
+        tstr<slot> _onWork() override;
 
     private:
         nbool _isPackExist();
@@ -44,12 +45,9 @@ namespace namu {
         void _log() const;
 
     private:
-        tstr<errReport> _rpt;
         tstr<slot> _slot;
         verifier _veri;
         parser _pser;
         nbool _isParsed;
-        nbool _isLogStructure;
-        nbool _isVerbose;
     };
 }

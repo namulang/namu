@@ -82,7 +82,7 @@ namespace namu {
     }
 
     nbool me::onVisit(visitInfo i, ctor& me) {
-        baseObj& cast = getRoot().cast<baseObj>();
+        baseObj& cast = getTask().cast<baseObj>();
         if(nul(cast))
             getReport().add(err::newErr(errCode::MAKE_GENERIC_FAIL, i.name.c_str()));
         else {

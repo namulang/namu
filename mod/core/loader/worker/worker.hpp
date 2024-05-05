@@ -31,6 +31,7 @@ namespace namu {
         me& setFlag(nint newFlag);
         me& clearFlag(nint clear);
         nbool isFlag(nint flag);
+        nint getFlag() const;
 
         me& setTask(const T& root);
         T& getTask();
@@ -45,6 +46,8 @@ namespace namu {
         R work();
 
         const area& getArea() const NAMU_UNCONST_FUNC(_getArea())
+
+        nbool isOk() const;
 
     protected:
         virtual void _prepare();

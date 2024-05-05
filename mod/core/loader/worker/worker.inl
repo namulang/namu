@@ -20,17 +20,13 @@ namespace namu {
         _logFlag |= newFlag;
         return *this;
     }
-
     TEMPLATE
     ME& ME::clearFlag(nint clear) {
         _logFlag &= ~clear;
         return *this;
     }
-
-    TEMPLATE
-    nbool ME::isFlag(nint flag) {
-        return (_logFlag & flag) == flag;
-    }
+    TEMPLATE nbool ME::isFlag(nint flag) { return (_logFlag & flag) == flag; }
+    TEMPLATE nint ME::getFlag() const { return _logFlag; }
 
     TEMPLATE
     ME& ME::setTask(const T& task) {
@@ -64,6 +60,8 @@ namespace namu {
     }
 
     TEMPLATE area& ME::_getArea() { return _area; }
+
+    TEMPLATE nbool ME::isOk() const { return _rpt->hasErr(); }
 
     TEMPLATE
     void ME::_onEndWork() {
