@@ -4,6 +4,7 @@
 #include "../errReport.hpp"
 
 namespace namu {
+
     template <typename R, typename T>
     class _nout worker : public typeProvidable, public clonable {
         NAMU(ADT(worker))
@@ -38,13 +39,10 @@ namespace namu {
         template <typename... Args> void error(Args... args) { _report(err::newErr(args...)); }
         template <typename... Args> void warn(Args... args) { _report(err::newWarn(args...)); }
         template <typename... Args> void info(Args... args) { _report(err::newInfo(args...)); }
-        template <typename... Args> void posError(Args... args) { _report(err::newErr(getArea().start, args...)); }
-        template <typename... Args> void posWarn(Args... args) { _report(err::newWarn(getArea().start, args...)); }
-        template <typename... Args> void posInfo(Args... args) { _report(err::newInfo(getArea().start, args...)); }
 
         virtual void rel();
 
-        virtual R work();
+        R work();
 
         const area& getArea() const NAMU_UNCONST_FUNC(_getArea())
 

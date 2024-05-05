@@ -210,6 +210,10 @@ namespace namu {
 
         void onParseErr(const std::string& msg, const nchar* symbolName);
 
+        template <typename... Args> void posError(Args... args) { _report(err::newErr(getArea().start, args...)); }
+        template <typename... Args> void posWarn(Args... args) { _report(err::newWarn(getArea().start, args...)); }
+        template <typename... Args> void posInfo(Args... args) { _report(err::newInfo(getArea().start, args...)); }
+
     protected:
         void* _scanString(const std::string& src, void* scanner);
         exprMaker& _getMaker();

@@ -56,8 +56,11 @@ namespace namu {
 
     TEMPLATE
     void ME::_report(err* e) {
-        e->log();
         _rpt->add(e);
+        if(isFlag(LOG_ON_EX))
+            e->log();
+        else if(isFlag(DUMP_ON_EX))
+            e->dump();
     }
 
     TEMPLATE area& ME::_getArea() { return _area; }

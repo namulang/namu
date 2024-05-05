@@ -2,6 +2,8 @@
 
 #include "visitInfo.hpp"
 #include "../loader/worker/worker.hpp"
+#include "../ast/node.hpp"
+#include "../ast/src.hpp"
 
 namespace namu {
 
@@ -12,9 +14,6 @@ namespace namu {
     class _nout visitor : public worker<void, node> {
         typedef worker<void, node> __super6;
         NAMU(ME(visitor, __super6))
-
-    public:
-        visitor();
 
     public:
 #define X(T) \
@@ -51,6 +50,24 @@ namespace namu {
         virtual void onTraverse(visitInfo i, defArrayExpr& d);
         virtual void onTraverse(visitInfo i, genericObj& g);
 
+        using super::warn;
+        template <typename... Args>
+        void warn(const node& it, errCode code, Args... args) {
+            _report(err::newWarn(it.getSrc().getPos(), code, args...));
+        }
+
+        using super::error;
+        template <typename... Args>
+        void error(const node& it, errCode code, Args... args) {
+            _report(err::newErr(it.getSrc().getPos(), code, args...));
+        }
+
+        using super::info;
+        template <typename... Args>
+        void info(const node& it, errCode code, Args... args) {
+            _report(err::newInfo(it.getSrc().getPos(), code, args...));
+        }
+
     protected:
         void _onWork() override;
         void _prepare() override;
@@ -58,6 +75,7 @@ namespace namu {
     private:
         /// @return false if the node is already visited.
         nbool _markVisited(node& me);
+        void _rel();
 
     private:
         // value will be true if key is visited func or obj:

@@ -21,10 +21,6 @@ namespace namu {
     public:
         void rel() override;
 
-        frame& getErrFrame();
-
-        void start() override;
-
         nbool onVisit(visitInfo i, node& me) override;
         nbool onVisit(visitInfo i, asExpr& me) override;
         nbool onVisit(visitInfo i, assignExpr& me) override;
@@ -53,26 +49,20 @@ namespace namu {
         nbool onVisit(visitInfo i, nextExpr& me) override;
         nbool onVisit(visitInfo i, ifExpr& me) override;
 
+    protected:
+        void _onWork() override;
+        void _onEndWork() override;
+        void _prepare() override;
+
     private:
-        void _prepare();
         void _postpare();
         std::string _asStr(const params& ps);
 
         // @param newInfo is not a heap instance.
-        void _leaveErrFrame();
         void _verifyMgdFuncImplicitReturn(func& me);
         void _rel();
-        void _report(err* new1);
-
-        template <typename... Args> void _errorMsg(Args... args);
-        template <typename... Args> void _error(const node& it, errCode code, Args... args);
-        template <typename... Args> void _warnMsg(Args... args);
-        template <typename... Args> void _warn(const node& it, errCode code, Args... args);
-        template <typename... Args> void _infoMsg(Args... args);
-        template <typename... Args> void _info(const node& it, errCode code, Args... args);
 
     private:
-        tstr<frame> _frame;
         std::vector<baseObj*> _us; // multiple 'me'
         std::vector<loopExpr*> _recentLoops;
     };
