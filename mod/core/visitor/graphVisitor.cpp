@@ -9,10 +9,10 @@ namespace namu {
     using platformAPI::foreColor;
     using namespace std;
 
-    void me::start() {
+    void me::_onWork() {
         _parentsLast.push_back(true);
         _isStart = false;
-        super::start();
+        super::_onWork();
 
         clog << "\n";
     }
@@ -61,9 +61,6 @@ namespace namu {
     }
 
     void me::onLeave(visitInfo i, node& visitee) {
-        if(isLog())
-            NAMU_DI("%s.onLeave(name=%s parent=%s, index=%d, depth=%d)",
-                   visitee.getType().getName().c_str(), i.name.c_str(), i.parent->getType().getName().c_str(), i.index, i.depth);
         _indents.pop_back();
         _parentsLast.pop_back();
     }

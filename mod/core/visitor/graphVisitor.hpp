@@ -8,7 +8,6 @@ namespace namu {
         NAMU(ME(graphVisitor, visitor))
 
     public:
-        void start() override;
         nbool onVisit(visitInfo i, node& visitee) override;
         void onLeave(visitInfo i, node& visitee) override;
         nbool onVisit(visitInfo i, baseFunc& fun) override;
@@ -25,6 +24,9 @@ namespace namu {
         nbool onVisit(visitInfo i, nChar& e) override;
         nbool onVisit(visitInfo i, nByte& e) override;
         nbool onVisit(visitInfo i, nBool& e) override;
+
+    protected:
+        void _onWork() override;
 
     private:
         void _drawIndent();
