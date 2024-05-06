@@ -22,7 +22,7 @@ namespace namu {
     }
 
     nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip) const {
-        ip.setVerbose(true);
+        ip.setFlag(interpreter::DEFAULT | interpreter::LOG_STRUCTURE);
         return true;
     }
 }

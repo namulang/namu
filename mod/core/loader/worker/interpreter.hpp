@@ -28,8 +28,6 @@ namespace namu {
 
         void rel() override;
 
-        void log() const;
-
     protected:
         void _onEndWork() override;
 

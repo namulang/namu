@@ -4,6 +4,7 @@
 #include "../../visitor/graphVisitor.hpp"
 #include "../../visitor/preEvaluator.hpp"
 #include "../../frame/threadUse.hpp"
+#include "worker.inl"
 
 namespace namu {
 

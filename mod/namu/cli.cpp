@@ -48,7 +48,7 @@ namespace namu {
         nbool prev = strm.isEnable();
 
         strm.setEnable(true);
-        ip.log();
+        ip.getReport().log();
         strm.setEnable(prev);
         return _res;
     }

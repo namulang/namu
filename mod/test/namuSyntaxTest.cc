@@ -16,11 +16,11 @@ const namu::node& me::getSubPack() const {
 }
 
 namu::slot& me::getSlot() {
-    return _ip.getSlot();
+    return _ip.getTask();
 }
 
 const namu::slot& me::getSlot() const {
-    return _ip.getSlot();
+    return _ip.getTask();
 }
 
 namu::errReport& me::getReport() {
@@ -37,23 +37,26 @@ namuSyntaxTest& me::make() {
 
 namuSyntaxTest& me::make(const namu::manifest& mani) {
     _rel();
-    _ip.setSlot(*new namu::slot(mani));
+    _ip.setTask(*new namu::slot(mani));
     return *this;
 }
 
 namuSyntaxTest& me::parse(const namu::nchar* src) {
+    using namu::interpreter;
     namu::nbool isVerbose = namu::logger::get().isEnable();
+    int flag = isVerbose ? interpreter::DEFAULT | interpreter::LOG_STRUCTURE:
+        interpreter::DUMP_ON_EX | interpreter::LOG_ON_END;
 
     _ip.addSupply(*new namu::bufSupply(std::string(src)))
-       .setLogStructure(isVerbose)
-       .setVerbose(isVerbose)
+       .setFlag(flag)
        .setReport(_rpt)
-       .interpret();
+       .work();
     return *this;
 }
 
 namuSyntaxTest& me::negative() {
-    namuTest::negative();
+    typedef namu::interpreter ip;
+    _ip.clearFlag(ip::LOG_STRUCTURE | ip::LOG_ON_EX | ip::DUMP_ON_EX | ip::LOG_ON_END | ip::DUMP_ON_END);
     return *this;
 }
 

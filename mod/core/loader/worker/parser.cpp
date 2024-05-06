@@ -8,6 +8,7 @@
 #include "../../ast/genericObj.hpp"
 #include "../../type/mgdType.hpp"
 #include "bison/tokenScan.hpp"
+#include "worker.inl"
 
 namespace namu {
 

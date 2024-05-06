@@ -2,6 +2,7 @@
 #include "../ast.hpp"
 #include "../frame/frame.hpp"
 #include "../builtin.hpp"
+#include "../loader/worker/worker.inl"
 
 namespace namu {
 

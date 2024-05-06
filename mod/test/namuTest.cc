@@ -4,17 +4,10 @@ typedef namuTest me;
 
 void me::SetUp() {
     _assertVault();
-    _prevShowCallstack = namu::logger::get().isShowCallstack();
 }
 
 void me::TearDown() {
     _assertVault();
-    namu::logger::get().setCallstack(_prevShowCallstack);
-}
-
-namuTest& me::negative() {
-    namu::logger::get().setCallstack(false);
-    return *this;
 }
 
 namu::instance::vault& me::_getVault() {

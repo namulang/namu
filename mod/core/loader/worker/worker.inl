@@ -2,6 +2,15 @@
 
 namespace namu {
 
+    template <typename R, typename T>
+    struct workerAdapter {
+        static R adaptWork(worker<R, T>& w);
+    };
+    template <typename T>
+    struct workerAdapter<void, T> {
+        static void adaptWork(worker<void, T>& w);
+    };
+
 #define TEMPLATE template <typename R, typename T>
 #define ME worker<R, T>
 
