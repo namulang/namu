@@ -2,8 +2,8 @@
 
 namespace namu {
 
-#define ME worker<R, T>
 #define TEMPLATE template <typename R, typename T>
+#define ME worker<R, T>
 
     TEMPLATE ME::worker() { _rel(); }
 
@@ -75,35 +75,74 @@ namespace namu {
 
     TEMPLATE
     R ME::work() {
-        if(isFlag(GUARD)) {
+        return workerAdapter<R, T>::adaptWork(*this);
+    }
+
+    TEMPLATE void ME::_setTask(const T& new1) { _task.bind(new1); }
+    TEMPLATE void ME::_setTask(const T* new1) { _setTask(*new1); }
+
+#undef ME
+#define ME workerAdapter<R, T>
+
+    TEMPLATE
+    R ME::adaptWork(worker<R, T>& w) {
+        if(w.isFlag(worker<R, T>::GUARD)) {
             NAMU_I("====================");
-            NAMU_I("%s.work()...", getType().getName().c_str());
+            NAMU_I("%s.work()...", w.getType().getName().c_str());
         }
 
         enablesZone prev;
         R ret;
         {
             enablesZone internal;
-            if(!isFlag(INTERNAL)) logger::get().setEnable(false);
-            ret = _onWork();
+            if(!w.isFlag(worker<R, T>::INTERNAL)) logger::get().setEnable(false);
+            ret = w._onWork();
         }
 
-        if(isFlag(GUARD)) {
+        if(w.isFlag(worker<R, T>::GUARD)) {
             NAMU_I("--------------------");
             NAMU_I("%s._onEndWork()...");
         }
 
         prev.setPrev();
-        _onEndWork();
+        w._onEndWork();
 
-        if(isFlag(GUARD))
+        if(w.isFlag(worker<R, T>::GUARD))
             NAMU_I("====================");
         return ret;
     }
 
-    TEMPLATE void ME::_setTask(const T& new1) { _task.bind(new1); }
-    TEMPLATE void ME::_setTask(const T* new1) { _setTask(*new1); }
-
-#undef TEMPLATE
 #undef ME
+#undef TEMPLATE
+#define TEMPLATE template <typename T>
+#define ME workerAdapter<void, T>
+
+    TEMPLATE
+    void ME::adaptWork(worker<void, T>& w) {
+        if(w.isFlag(worker<void, T>::GUARD)) {
+            NAMU_I("====================");
+            NAMU_I("%s.work()...", w.getType().getName().c_str());
+        }
+
+        enablesZone prev;
+        {
+            enablesZone internal;
+            if(!w.isFlag(worker<void, T>::INTERNAL)) logger::get().setEnable(false);
+            w._onWork();
+        }
+
+        if(w.isFlag(worker<void, T>::GUARD)) {
+            NAMU_I("--------------------");
+            NAMU_I("%s._onEndWork()...");
+        }
+
+        prev.setPrev();
+        w._onEndWork();
+
+        if(w.isFlag(worker<void, T>::GUARD))
+            NAMU_I("====================");
+    }
+
+#undef ME
+#undef TEMPLATE
 }

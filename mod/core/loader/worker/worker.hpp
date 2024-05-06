@@ -6,8 +6,10 @@
 namespace namu {
 
     template <typename R, typename T>
-    class _nout worker : public typeProvidable, public clonable {
+    class worker : public typeProvidable, public clonable {
         NAMU(ADT(worker))
+        template <typename R1, typename T1>
+        friend class workerAdapter;
 
     public:
         enum logFlag {
@@ -72,5 +74,14 @@ namespace namu {
         area _area;
         tstr<T> _task;
         nint _logFlag;
+    };
+
+    template <typename R, typename T>
+    struct workerAdapter {
+        static R adaptWork(worker<R, T>& w);
+    };
+    template <typename T>
+    struct workerAdapter<void, T> {
+        static void adaptWork(worker<void, T>& w);
     };
 }
