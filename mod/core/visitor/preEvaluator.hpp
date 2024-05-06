@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout preEvaluator : public visitor {
-        NAMU(ME(preEvaluator, visitor))
+        NAMU(CLASS(preEvaluator, visitor))
 
         struct _nout evaluation {
             tweak<obj> me;

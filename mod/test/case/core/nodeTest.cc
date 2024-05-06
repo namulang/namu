@@ -188,13 +188,13 @@ TEST_F(nodeTest, ShouldNotSameNameVariableIntoSubs) {
     ASSERT_EQ(c.subs().len(), 2);
     ASSERT_EQ(c.subAll<nInt>("age1")[0].get(), 22);
 
-    v.setRoot(c).start();
+    v.setTask(c).work();
     ASSERT_FALSE(rpt);
 
     c.subs().add("age", new nInt(23));
     ASSERT_EQ(c.subs().len(), 3);
     ASSERT_EQ(c.subAll<nInt>("age").len(), 2);
-    v.setRoot(c).start();
+    v.setTask(c).work();
     ASSERT_TRUE(rpt);
 }
 

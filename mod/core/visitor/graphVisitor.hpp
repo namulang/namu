@@ -5,7 +5,7 @@
 namespace namu {
 
     class _nout graphVisitor : public visitor {
-        NAMU(ME(graphVisitor, visitor))
+        NAMU(CLASS(graphVisitor, visitor))
 
     public:
         nbool onVisit(visitInfo i, node& visitee) override;

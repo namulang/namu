@@ -1007,7 +1007,6 @@ namespace namu {
     void me::rel() {
         super::rel();
 
-        _slot.rel();
         _states.clear();
         _states.push_back(0); // 0 for default state
         _dedent.setEnable(false);

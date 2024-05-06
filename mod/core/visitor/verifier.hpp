@@ -11,7 +11,7 @@ namespace namu {
     class loopExpr;
     class thread;
     class _nout verifier : public visitor {
-        NAMU(ME(verifier, visitor))
+        NAMU(CLASS(verifier, visitor))
         friend struct ::verifierTest;
         friend class genericObj;
 

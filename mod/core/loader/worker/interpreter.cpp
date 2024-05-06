@@ -51,16 +51,14 @@ namespace namu {
     }
 
     void me::rel() {
-        super::rel();
-
+        this->super::rel();
         _isParsed = false;
         _veri.rel();
         _pser.rel();
-        _slot.rel();
     }
 
     nbool me::_isPackExist() {
-        return !nul(_pser.getSubPack()) && _slot;
+        return !nul(_pser.getSubPack()) && !nul(getTask());
     }
 
     void me::_parse() {
@@ -72,8 +70,8 @@ namespace namu {
              .setTask(getTask())
              .work();
 
-        if(!_slot)
-            _slot.bind(_pser.getTask());
+        if(nul(getTask()))
+            setTask(_pser.getTask());
 
         _isParsed = _isPackExist() && _pser.isOk();
     }
@@ -83,7 +81,7 @@ namespace namu {
         NAMU_DI("                preEval               ");
         NAMU_DI("======================================");
 
-        if(!_slot)
+        if(nul(getTask()))
             return NAMU_E("_slot is null"), void();
 
         preEvaluator evaler;
@@ -98,7 +96,7 @@ namespace namu {
         NAMU_DI("                verify                ");
         NAMU_DI("======================================");
 
-        if(!_slot)
+        if(nul(getTask()))
             return NAMU_E("_slot is null"), void();
 
         // verify:
@@ -108,13 +106,10 @@ namespace namu {
              .work();
     }
 
-    void me::_logStructure(frame& info) {
+    void me::_logStructure() {
         if(!isFlag(LOG_STRUCTURE)) return;
-
-        if(!nul(_pser.getSubPack()) && _slot) {
-            std::cout << " - structure:\n";
-            graphVisitor().setTask(getTask().getPack())
-                          .work();
-        }
+        if(!nul(_pser.getSubPack()) || nul(getTask())) return;
+        graphVisitor().setTask(getTask().getPack())
+                      .work();
     }
 }

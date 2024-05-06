@@ -97,7 +97,7 @@ namespace namu {
         for(auto& e : a)
             g.add(*new param(_paramNames[n++], e));
 
-        g.setRoot(*ret).start();
+        g.setTask(*ret).work();
         NAMU_DI("=========================");
         return ret;
     }

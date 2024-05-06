@@ -13,7 +13,7 @@ namespace namu {
 #undef X
     class _nout visitor : public worker<void, node> {
         typedef worker<void, node> __super6;
-        NAMU(ME(visitor, __super6))
+        NAMU(CLASS(visitor, __super6))
 
     public:
 #define X(T) \

@@ -6,7 +6,7 @@
 namespace namu {
 
     class _nout interpreter : public worker<tstr<slot>, slot> {
-        typedef worker<slot, slot> __super7;
+        typedef worker<tstr<slot>, slot> __super7;
         NAMU(CLASS(interpreter, __super7))
 
     public:
@@ -32,7 +32,7 @@ namespace namu {
         void log() const;
 
     protected:
-        tstr<slot> _onWork() override;
+        void _onEndWork() override;
 
     private:
         nbool _isPackExist();
@@ -40,12 +40,10 @@ namespace namu {
         void _parse();
         void _preEval();
         void _verify();
-        void _logStructure(frame& info);
-        void _logFrame(const frame& info) const;
+        void _logStructure();
         void _log() const;
 
     private:
-        tstr<slot> _slot;
         verifier _veri;
         parser _pser;
         nbool _isParsed;
