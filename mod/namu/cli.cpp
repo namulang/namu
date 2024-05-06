@@ -18,7 +18,7 @@ namespace namu {
                 break;
         }
 
-        ip.interpret();
+        ip.work();
 
         if(!ip.isVerified())
             return _finish(ip);

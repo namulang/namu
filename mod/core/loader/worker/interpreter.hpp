@@ -21,7 +21,6 @@ namespace namu {
     public:
         me& addSupply(const srcSupply& supply);
         me& relSupplies();
-        me& setLogStructure(nbool enable);
         nbool isParsed() const;
         nbool isVerified() const;
         node& getSubPack();

@@ -52,19 +52,17 @@ namespace namu {
 
         using super::warn;
         template <typename... Args>
-        void warn(const node& it, errCode code, Args... args) {
+        void posWarn(errCode code, const node& it, Args... args) {
             _report(err::newWarn(it.getSrc().getPos(), code, args...));
         }
 
-        using super::error;
         template <typename... Args>
-        void error(const node& it, errCode code, Args... args) {
+        void posError(errCode code, const node& it, Args... args) {
             _report(err::newErr(it.getSrc().getPos(), code, args...));
         }
 
-        using super::info;
         template <typename... Args>
-        void info(const node& it, errCode code, Args... args) {
+        void posInfo(errCode code, const node& it, Args... args) {
             _report(err::newInfo(it.getSrc().getPos(), code, args...));
         }
 

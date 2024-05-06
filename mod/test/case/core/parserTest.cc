@@ -12,23 +12,23 @@ TEST_F(parserTest, testHelloWorld) {
     )SRC";
     std::string script(stringScript);
 
-    tstr<obj> rootBinder = p.addSupply(*new bufSupply(script)).parse();
+    tstr<obj> rootBinder = p.addSupply(*new bufSupply(script)).work();
     ASSERT_TRUE(rootBinder);
     rootBinder = p.relSupplies()
                   .addSupply(*new bufSupply(stringScript))
-                  .parse();
+                  .work();
     ASSERT_TRUE(rootBinder);
 
     slot s((manifest()));
     scope& shares = (scope&) (((scopes&) s.subs()).getNext().getContainer());
     ASSERT_FALSE(nul(shares));
-    p.setSlot(s);
+    p.setTask(s);
     shares.add("hello", new nStr("hello"));
     ASSERT_TRUE(shares.len() == 1);
 
-    p.relSupplies().addSupply(*new bufSupply(script)).parse();
+    p.relSupplies().addSupply(*new bufSupply(script)).work();
     ASSERT_EQ(shares.len(), 4); // @ctor*2 + main + 'hello': @preCtor doesn't exist.
-    p.relSupplies().addSupply(*new bufSupply(script)).parse();
+    p.relSupplies().addSupply(*new bufSupply(script)).work();
     ASSERT_EQ(shares.len(), 5); // add func main on every parse() call.
 
     ASSERT_TRUE(shares.get<nStr>("hello") == nStr("hello"));

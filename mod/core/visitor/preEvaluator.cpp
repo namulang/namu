@@ -26,7 +26,7 @@ namespace namu {
 
     void me::_onWork() {
         if(nul(thread::get())) {
-            error(err::newErr(errCode::NO_THREAD));
+            error(errCode::NO_THREAD);
             return;
         }
         super::_onWork();

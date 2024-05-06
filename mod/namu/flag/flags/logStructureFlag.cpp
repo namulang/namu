@@ -21,7 +21,7 @@ namespace namu {
     }
 
     nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip) const {
-        ip.setLogStructure(true);
+        ip.setFlag(interpreter::LOG_STRUCTURE);
         return true;
     }
 }
