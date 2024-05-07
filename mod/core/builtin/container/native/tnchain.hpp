@@ -20,7 +20,7 @@ namespace namu {
 #include "../iter/nchainIteration.hpp"
 
     public:
-        tnchain();
+        tnchain(): _map(new defaultContainer()) {}
         explicit tnchain(const super& arr): _map(arr) {}
         explicit tnchain(const super* arr): _map(arr) {}
 

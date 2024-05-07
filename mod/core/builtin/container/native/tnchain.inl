@@ -9,9 +9,6 @@ namespace namu {
 #define ME tnchain<K, V, defaultContainer>
 
     TEMPL
-    ME::tnchain(): _map(new defaultContainer()) {}
-
-    TEMPL
     nbool ME::has(const K& key) const {
         for(tstr<me> e(this); e ;e.bind(e->getNext()))
             if(e->getContainer().has(key))

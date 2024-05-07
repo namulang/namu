@@ -5,6 +5,8 @@
 #include "../common/namuMetaExtension.hpp"
 #include "../type/ntype.hpp"
 #include "../type/dumpable.hpp"
+#include "../builtin/container/native/tnbicontainer.hpp"
+#include "../frame/callstack.hpp"
 #include <unordered_map>
 
 namespace namu {
@@ -12,6 +14,7 @@ namespace namu {
     typedef std::unordered_map<nidx, std::string> msgMap;
 
     class pos;
+    class scopes;
     struct _nout err : public instance, public dumpable {
         NAMU(CLASS(err, instance))
 
@@ -27,6 +30,9 @@ namespace namu {
     public:
         virtual void log() const;
         void dbgLog() const;
+
+        const callstack& getStack() const;
+        void logStack() const;
 
         static const std::string& getErrMsg(errCode code);
         static const std::string& getErrName(errCode code);
@@ -44,10 +50,12 @@ namespace namu {
         errCode code;
         std::string msg;
         point pos;
+        callstack _stack;
         static constexpr nint BASE_TEST_CODE = 99999990; // not to be duplicated.
 
     private:
         std::string _format(const std::string& fmt, va_list args);
+        const scopes& _extractStack() const;
     };
 
     struct _nout dummyErr : public err {

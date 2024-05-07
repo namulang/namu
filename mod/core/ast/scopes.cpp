@@ -2,7 +2,7 @@
 #include "../builtin/container/native/tnchain.inl"
 
 namespace namu {
-    
+
     NAMU(DEF_ME(scopes))
 
     me::scopes() {}
