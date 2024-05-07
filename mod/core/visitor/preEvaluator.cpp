@@ -6,6 +6,7 @@
 #include "verifier.hpp"
 #include "../ast/exprs/getGenericExpr.hpp"
 #include "../frame/thread.hpp"
+#include "../loader/worker/worker.inl"
 
 namespace namu {
 
@@ -147,7 +148,7 @@ namespace namu {
                         verifier v;
                         v.setReport(rpt)
                          .setTask(stmts[n])
-                         .setFlag(getFlag() & (LOG_ON_EX | DUMP_ON_EX))
+                         .setFlag(LOG_ON_EX | DUMP_ON_EX)
                          .work();
 
                         if(rpt.len() > prevErrCnt) {

@@ -1,5 +1,6 @@
 #include "generalizer.hpp"
 #include "../ast.hpp"
+#include "../loader/worker/worker.inl"
 
 namespace namu {
 

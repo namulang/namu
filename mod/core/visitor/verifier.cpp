@@ -5,6 +5,7 @@
 #include "../builtin/primitive.hpp"
 #include "../ast.hpp"
 #include "../frame/starter.hpp"
+#include "../loader/worker/worker.inl"
 
 namespace namu {
 
@@ -31,8 +32,6 @@ namespace namu {
             return false;
         }
     }
-
-    me::verifier() { rel(); }
 
     void me::_onWork() {
         if(nul(thread::get())) {

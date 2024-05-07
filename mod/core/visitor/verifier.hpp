@@ -16,11 +16,6 @@ namespace namu {
         friend class genericObj;
 
     public:
-        verifier();
-
-    public:
-        void rel() override;
-
         nbool onVisit(visitInfo i, node& me) override;
         nbool onVisit(visitInfo i, asExpr& me) override;
         nbool onVisit(visitInfo i, assignExpr& me) override;
@@ -60,7 +55,6 @@ namespace namu {
 
         // @param newInfo is not a heap instance.
         void _verifyMgdFuncImplicitReturn(func& me);
-        void _rel();
 
     private:
         std::vector<baseObj*> _us; // multiple 'me'

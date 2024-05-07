@@ -87,7 +87,7 @@ namespace namu {
 
         preEvaluator evaler;
         evaler.setReport(getReport())
-              .setFlag(0)
+              .setFlag(getFlag())
               .setTask(getTask().getPack())
               .work();
     }

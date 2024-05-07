@@ -1,6 +1,7 @@
 #include "graphVisitor.hpp"
 #include "../ast.hpp"
 #include "../frame/frame.hpp"
+#include "../loader/worker/worker.inl"
 #include <regex>
 
 namespace namu {

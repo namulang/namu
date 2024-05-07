@@ -1087,6 +1087,13 @@ namespace namu {
         return getSubPack();
     }
 
+    void me::_report(err* new1) {
+        errReport& rpt = getReport();
+        if(nul(rpt)) return;
+
+        rpt.add(new1);
+    }
+
     exprMaker& me::_getMaker() {
         return _maker;
     }

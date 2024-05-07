@@ -31,7 +31,8 @@ namespace namu {
         me& setReport(errReport& rpt);
 
         me& setFlag(nint newFlag);
-        me& clearFlag(nint clear);
+        me& addFlag(nint flag);
+        me& delFlag(nint clear);
         nbool isFlag(nint flag);
         nint getFlag() const;
 

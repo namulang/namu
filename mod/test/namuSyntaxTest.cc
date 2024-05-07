@@ -56,7 +56,7 @@ namuSyntaxTest& me::parse(const namu::nchar* src) {
 
 namuSyntaxTest& me::negative() {
     typedef namu::interpreter ip;
-    _ip.clearFlag(ip::LOG_STRUCTURE | ip::LOG_ON_EX | ip::DUMP_ON_EX | ip::LOG_ON_END | ip::DUMP_ON_END);
+    _ip.delFlag(ip::LOG_STRUCTURE | ip::LOG_ON_EX | ip::DUMP_ON_EX | ip::LOG_ON_END | ip::DUMP_ON_END);
     return *this;
 }
 

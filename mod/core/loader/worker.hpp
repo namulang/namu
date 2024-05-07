@@ -2,3 +2,4 @@
 
 #include "worker/interpreter.hpp"
 #include "worker/supply.hpp"
+#include "worker/worker.inl"

@@ -40,7 +40,6 @@ TEST_F(frameTest, testAccessFrame) {
 }
 
 TEST_F(frameTest, testFrameManipulateChainObjNegative) {
-    negative();
     frame& fr = getFrames()[getFrames().len() - 1];
     scopeStack& ss = getScopeStack(fr);
     ASSERT_FALSE(ss.getBottom().isBind());

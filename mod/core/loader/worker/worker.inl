@@ -26,12 +26,18 @@ namespace namu {
 
     TEMPLATE
     ME& ME::setFlag(nint newFlag) {
+        _logFlag = newFlag;
+        return *this;
+    }
+
+    TEMPLATE
+    ME& ME::addFlag(nint newFlag) {
         _logFlag |= newFlag;
         return *this;
     }
     TEMPLATE
-    ME& ME::clearFlag(nint clear) {
-        _logFlag &= ~clear;
+    ME& ME::delFlag(nint clear) {
+        _logFlag |= ~clear;
         return *this;
     }
     TEMPLATE nbool ME::isFlag(nint flag) { return (_logFlag & flag) == flag; }
