@@ -21,4 +21,6 @@ namespace namu {
     private:
         weak _owner;
     };
+
+    typedef tnchain<std::string, node, scope> nchain;
 }

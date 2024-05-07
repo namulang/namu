@@ -12,7 +12,7 @@ namespace namu {
         NAMU(CLASS(calltrace, instance))
 
     public:
-        calltrace(const tnchain<std::string, node, scope>& scope);
+        calltrace(const nchain& scope);
         calltrace();
 
     public:
@@ -26,6 +26,9 @@ namespace namu {
         NAMU(CLASS(callstack, instance))
 
     public:
+        callstack(const nchain& scope);
+
+    public:
         nbicontainer::iter begin() const;
         const calltraces& getTraces() const;
         void dump() const override;
@@ -34,7 +37,7 @@ namespace namu {
     private:
 
     private:
-        tstr<scopes> _stack;
+        tstr<nchain> _stack;
         mutable tstr<calltraces> _traces;
     };
 }

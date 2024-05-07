@@ -128,6 +128,4 @@ namespace namu {
         tstr<super> _map;
         tstr<me> _next;
     };
-
-    typedef tnchain<std::string, node> nchain;
 }

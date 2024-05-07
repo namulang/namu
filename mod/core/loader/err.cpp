@@ -69,9 +69,7 @@ namespace namu {
 
 #undef _EXPAND_VA
 
-    me::err(logLv::level t, nint newCode): super(), fType(t), code((errCode) newCode) {
-        _stack.setStack(_extractStack());
-    }
+    me::err(logLv::level t, nint newCode): super(), fType(t), code((errCode) newCode), _stack(_extractStack()) {}
 
     me::err(logLv::level t, nint newCode, va_list args): super(), fType(t), code((errCode) newCode) {
         msg = _format(getErrMsg(code), args);

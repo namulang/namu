@@ -9,8 +9,8 @@
 namespace namu {
 
     calltrace::calltrace() {}
-    calltrace::calltrace(const tnchain<std::string, node, scope>& scope) {
-        it.bind(scope.getOwner());
+    calltrace::calltrace(const nchain& owner) {
+        it.bind(owner.getOwner());
         if(it) {
             const src& s = it->getSrc();
             at = s.getName();
@@ -24,6 +24,8 @@ namespace namu {
 
     NAMU(DEF_ME(callstack))
 
+    me::callstack(const nchain& scope): _stack(scope) {}
+
     nbicontainer::iter me::begin() const {
         if(!_stack) return nbicontainer::iter();
         return _stack->begin();
@@ -32,12 +34,13 @@ namespace namu {
     const calltraces& me::getTraces() const {
         if(!_traces) {
             calltraces* ret = new calltraces();
-            const tnchain<std::string, node, scope>* e = _stack ? &_stack.get() : nullptr;
+            const nchain* e = _stack ? &_stack.get() : nullptr;
             while(e) {
                 ret->add(new calltrace(*e));
                 e = &e->getNext();
             }
-            _traces.bind(ret);
+
+        _traces.bind(ret);
         }
         return *_traces;
     }
