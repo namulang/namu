@@ -3,20 +3,20 @@
 #include "../builtin/container/native/tnbicontainer.hpp"
 #include "../builtin/container/native/tnarr.hpp"
 #include "../type/dumpable.hpp"
-#include "../ast/scope.hpp"
-#include "../ast/scopes.hpp"
+#include "../frame/frames.hpp"
 
 namespace namu {
 
+    class frame;
+    class frames;
     class _nout calltrace : public instance {
         NAMU(CLASS(calltrace, instance))
 
     public:
-        calltrace(const nchain& scope);
-        calltrace();
+        calltrace(const frame& newFrame);
 
     public:
-        str it;
+        tstr<frame> fr;
         std::string at;
         std::string in;
     };
@@ -26,18 +26,18 @@ namespace namu {
         NAMU(CLASS(callstack, instance))
 
     public:
-        callstack(const nchain& scope);
+        callstack();
 
     public:
-        nbicontainer::iter begin() const;
+        tucontainable<frame>::iter begin() const;
+        tucontainable<frame>::iter end() const;
+
         const calltraces& getTraces() const;
         void dump() const override;
-        void setStack(const scopes& stack);
+        void setStack(const frames& frs);
 
     private:
-
-    private:
-        tstr<nchain> _stack;
+        frames _stacks;
         mutable tstr<calltraces> _traces;
     };
 }

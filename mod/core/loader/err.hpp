@@ -7,6 +7,7 @@
 #include "../type/dumpable.hpp"
 #include "../builtin/container/native/tnbicontainer.hpp"
 #include "../frame/callstack.hpp"
+#include "../frame/frame.hpp"
 #include <unordered_map>
 
 namespace namu {
@@ -55,7 +56,6 @@ namespace namu {
 
     private:
         std::string _format(const std::string& fmt, va_list args);
-        const scopes& _extractStack() const;
     };
 
     struct _nout dummyErr : public err {

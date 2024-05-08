@@ -8,40 +8,36 @@
 
 namespace namu {
 
-    calltrace::calltrace() {}
-    calltrace::calltrace(const nchain& owner) {
-        it.bind(owner.getOwner());
-        if(!it) return;
-        const src& s = it->getSrc();
-        if(nul(s)) return;
+    calltrace::calltrace(const frame& newFrame) {
+        fr.bind(newFrame);
+        if(!fr) return;
+        const baseFunc& f = fr->getFunc();
+        if(nul(f)) return;
 
-        at = s.getName();
-        const baseFunc& cast = it->cast<baseFunc>();
-        if(!nul(cast))
-            at += "(" + cast.getParams().toStr() + ")";
-
-        in = s.getFile().getFileName() + ":" + std::to_string(s.getPos().row);
+        const src& s = f.getSrc();
+        at = s.getName() + "(" + f.getParams().toStr() + ")";
+        const srcFile& file = s.getFile();
+        if(!nul(file))
+            in = file.getFileName() + ":" + std::to_string(s.getPos().row);
     }
 
     NAMU(DEF_ME(callstack))
 
-    me::callstack(const nchain& scope): _stack(scope) {}
+    me::callstack() {}
 
-    nbicontainer::iter me::begin() const {
-        if(!_stack) return nbicontainer::iter();
-        return _stack->begin();
+    tucontainable<frame>::iter me::begin() const {
+        return _stacks.begin();
+    }
+
+    tucontainable<frame>::iter me::end() const {
+        return _stacks.end();
     }
 
     const calltraces& me::getTraces() const {
         if(!_traces) {
-            calltraces* ret = new calltraces();
-            const nchain* e = _stack ? &_stack.get() : nullptr;
-            while(e) {
-                ret->add(new calltrace(*e));
-                e = &e->getNext();
-            }
-
-        _traces.bind(ret);
+            _traces.bind(new calltraces());
+            for(const auto& fr : *this)
+                _traces->add(new calltrace(fr));
         }
         return *_traces;
     }
@@ -51,8 +47,9 @@ namespace namu {
             NAMU_E("\tat %s in %s", c.at.c_str(), c.in.c_str());
     }
 
-    void me::setStack(const scopes& stack) {
-        _stack.bind(stack);
+    void me::setStack(const frames& stack) {
+        _stacks.rel();
+        _stacks.add(stack);
         _traces.rel();
     }
 }

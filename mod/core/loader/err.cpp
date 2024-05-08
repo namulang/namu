@@ -69,15 +69,19 @@ namespace namu {
 
 #undef _EXPAND_VA
 
-    me::err(logLv::level t, nint newCode): super(), fType(t), code((errCode) newCode), _stack(_extractStack()) {}
+    me::err(logLv::level t, nint newCode): super(), fType(t), code((errCode) newCode) {
+        _stack.setStack(thread::get().getFrames());
+    }
 
-    me::err(logLv::level t, nint newCode, va_list args): super(), fType(t), code((errCode) newCode), _stack(_extractStack()) {
+    me::err(logLv::level t, nint newCode, va_list args): super(), fType(t), code((errCode) newCode) {
         msg = _format(getErrMsg(code), args);
+        _stack.setStack(thread::get().getFrames());
     }
 
     me::err(logLv::level t, const point& ps, nint newCode, va_list args)
-        : super(), fType(t), code((errCode) newCode), pos(ps), _stack(_extractStack()) {
+        : super(), fType(t), code((errCode) newCode), pos(ps) {
         msg = _format(getErrMsg(code), args);
+        _stack.setStack(thread::get().getFrames());
     }
 
     nbool me::operator==(const me& rhs) const {
@@ -147,14 +151,6 @@ namespace namu {
 
         return buf;
     }
-
-    const scopes& me::_extractStack() const {
-        const frame& fr = thread::get().getNowFrame();
-        if(nul(fr)) return nulOf<scopes>();
-
-        return fr.subs().cast<scopes>();
-    }
-
 
     dummyErr::dummyErr(): super(logLv::ERR, 0) {}
 

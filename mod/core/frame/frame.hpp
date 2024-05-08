@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../ast/baseObj.hpp"
+#include "../ast/baseFunc.hpp"
 #include "scopeStack.hpp"
 #include "../builtin/res/tpair.hpp"
 #include "../ast/mockNode.hpp"
