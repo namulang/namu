@@ -19,7 +19,7 @@ namespace namu {
             INTERNAL = 1 << 4, // logs all except above case.
             LOG_ON_END = 1 << 5, // log all report info when the work ends.
             DUMP_ON_END = 1 << 6, // log and leave callstack for all report info when the work ends.
-            DEFAULT = DUMP_ON_EX & GUARD & INTERNAL & LOG_ON_END
+            DEFAULT = DUMP_ON_EX | GUARD | INTERNAL | LOG_ON_END
         };
 
     public:

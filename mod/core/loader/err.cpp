@@ -71,15 +71,13 @@ namespace namu {
 
     me::err(logLv::level t, nint newCode): super(), fType(t), code((errCode) newCode), _stack(_extractStack()) {}
 
-    me::err(logLv::level t, nint newCode, va_list args): super(), fType(t), code((errCode) newCode) {
+    me::err(logLv::level t, nint newCode, va_list args): super(), fType(t), code((errCode) newCode), _stack(_extractStack()) {
         msg = _format(getErrMsg(code), args);
-        _stack.setStack(_extractStack());
     }
 
     me::err(logLv::level t, const point& ps, nint newCode, va_list args)
-        : super(), fType(t), code((errCode) newCode), pos(ps) {
+        : super(), fType(t), code((errCode) newCode), pos(ps), _stack(_extractStack()) {
         msg = _format(getErrMsg(code), args);
-        _stack.setStack(_extractStack());
     }
 
     nbool me::operator==(const me& rhs) const {
