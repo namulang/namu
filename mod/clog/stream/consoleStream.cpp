@@ -5,7 +5,7 @@ namespace namu {
 
     NAMU_DEF_ME(consoleStream)
 
-    me::consoleStream(): super(false) {}
+    me::consoleStream(): super(true) {}
 
     const std::string& me::getName() const {
         static std::string inner("consoleStream");
