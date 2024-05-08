@@ -11,15 +11,16 @@ namespace namu {
     calltrace::calltrace() {}
     calltrace::calltrace(const nchain& owner) {
         it.bind(owner.getOwner());
-        if(it) {
-            const src& s = it->getSrc();
-            at = s.getName();
-            const baseFunc& cast = it->cast<baseFunc>();
-            if(!nul(cast))
-                at += "(" + cast.getParams().toStr() + ")";
+        if(!it) return;
+        const src& s = it->getSrc();
+        if(nul(s)) return;
 
-            in = s.getFile().getFileName() + ":" + std::to_string(s.getPos().row);
-        }
+        at = s.getName();
+        const baseFunc& cast = it->cast<baseFunc>();
+        if(!nul(cast))
+            at += "(" + cast.getParams().toStr() + ")";
+
+        in = s.getFile().getFileName() + ":" + std::to_string(s.getPos().row);
     }
 
     NAMU(DEF_ME(callstack))
