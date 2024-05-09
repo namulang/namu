@@ -115,13 +115,11 @@ namespace namu {
             case logLv::WARN: clrLv = YELLOW; break;
             case logLv::INFO: clrLv = LIGHTBLUE; break;
         }
-        msg += foreColor(clrLv);
-        msg += _makeStr("%s %s ", tag, logLv::getName(lv).c_str());
+        msg += _makeStr("%s%s %s%s <%s::%s#%d> %s",
+            tag, foreColor(clrLv).c_str(), logLv::getName(lv).c_str(), foreColor(GREEN).c_str(),
+            filename, func, line, foreColor(LIGHTGRAY).c_str()
+        );
 
-        msg += foreColor(GREEN);
-        msg += _makeStr("<%s::%s#%d> ", filename, func, line);
-
-        msg += foreColor(LIGHTGRAY);
         va_list va;
         va_start(va, fmt);
         msg += _makeStr(fmt, va);
