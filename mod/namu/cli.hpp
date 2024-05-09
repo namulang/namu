@@ -12,9 +12,6 @@ namespace namu {
         nint getRes() const;
 
     private:
-        nint _finish(interpreter& ip);
-
-    private:
         nint _res;
     };
 }

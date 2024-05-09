@@ -37,7 +37,7 @@ namespace namu {
     }
     TEMPLATE
     ME& ME::delFlag(nint clear) {
-        _logFlag |= ~clear;
+        _logFlag &= ~clear;
         return *this;
     }
     TEMPLATE nbool ME::isFlag(nint flag) { return (_logFlag & flag) == flag; }
@@ -101,10 +101,8 @@ namespace namu {
 
     TEMPLATE
     R ME::adaptWork(worker<R, T>& w) {
-        if(w.isFlag(worker<R, T>::GUARD)) {
-            NAMU_I("====================");
-            NAMU_I("%s.work()...", w.getType().getName().c_str());
-        }
+        if(w.isFlag(worker<R, T>::GUARD))
+            NAMU_I("|=== %s.work()... ==============|", w.getType().getName().c_str());
 
         enablesZone prev;
         R ret;
@@ -114,16 +112,14 @@ namespace namu {
             ret = w._onWork();
         }
 
-        if(w.isFlag(worker<R, T>::GUARD)) {
-            NAMU_I("--------------------");
-            NAMU_I("%s._onEndWork()...");
-        }
+        if(w.isFlag(worker<R, T>::GUARD))
+            NAMU_I("|--- %s._onEndWork()... --------|", w.getType().getName().c_str());
 
         prev.setPrev();
         w._onEndWork();
 
         if(w.isFlag(worker<R, T>::GUARD))
-            NAMU_I("====================");
+            NAMU_I("|=== %s ends! ==================|", w.getType().getName().c_str());
         return ret;
     }
 
@@ -134,10 +130,8 @@ namespace namu {
 
     TEMPLATE
     void ME::adaptWork(worker<void, T>& w) {
-        if(w.isFlag(worker<void, T>::GUARD)) {
-            NAMU_I("====================");
-            NAMU_I("%s.work()...", w.getType().getName().c_str());
-        }
+        if(w.isFlag(worker<void, T>::GUARD))
+            NAMU_I("|=== %s.work()... ==============|", w.getType().getName().c_str());
 
         enablesZone prev;
         {
@@ -146,16 +140,14 @@ namespace namu {
             w._onWork();
         }
 
-        if(w.isFlag(worker<void, T>::GUARD)) {
-            NAMU_I("--------------------");
-            NAMU_I("%s._onEndWork()...");
-        }
+        if(w.isFlag(worker<void, T>::GUARD))
+            NAMU_I("|--- %s._onEndWork()... --------|", w.getType().getName().c_str());
 
         prev.setPrev();
         w._onEndWork();
 
         if(w.isFlag(worker<void, T>::GUARD))
-            NAMU_I("====================");
+            NAMU_I("|=== %s ends! ==================|", w.getType().getName().c_str());
     }
 
 #undef ME

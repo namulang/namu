@@ -21,7 +21,7 @@ namespace namu {
         ip.work();
 
         if(!ip.isVerified())
-            return _finish(ip);
+            return _res;
 
         starter s;
         str res = s.run(args((baseObj&) ip.getSubPack()));
@@ -36,20 +36,10 @@ namespace namu {
 #endif
         if(rpt) // has an err
             _res = -1;
-        return _finish(ip);
-    }
-
-    nint me::getRes() const {
         return _res;
     }
 
-    nint me::_finish(interpreter& ip) {
-        stream& strm = logger::get()["consoleStream"];
-        nbool prev = strm.isEnable();
-
-        strm.setEnable(true);
-        ip.getReport().log();
-        strm.setEnable(prev);
+    nint me::getRes() const {
         return _res;
     }
 

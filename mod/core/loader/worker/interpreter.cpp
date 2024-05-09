@@ -102,8 +102,10 @@ namespace namu {
 
         // verify:
         _veri.setReport(getReport())
-             .setFlag(getFlag())
-             .setTask(getTask().getPack())
+             .setFlag(getFlag());
+        if(getFlag() & (LOG_ON_END | DUMP_ON_END))
+            _veri.delFlag(LOG_ON_END | DUMP_ON_END);
+        _veri.setTask(getTask().getPack())
              .work();
     }
 
