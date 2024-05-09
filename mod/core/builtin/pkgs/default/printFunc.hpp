@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../../ast/baseFunc.hpp"
+#include "../../../ast/baseFunc.hpp"
+#include "../../../ast/params.hpp"
 
 namespace namu {
 

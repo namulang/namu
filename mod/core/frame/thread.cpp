@@ -3,7 +3,7 @@
 #include "../loader/errReport.hpp"
 #include "../ast/node.inl"
 #include "../ast/baseFunc.hpp"
-#include "../builtin/func.hpp"
+#include "../builtin/pkgs/default/defaultPack.hpp"
 
 namespace namu {
 
@@ -69,8 +69,7 @@ namespace namu {
     }
 
     void me::_loadBuiltIns(nmap& tray) const {
-        tray.add("print", *new printFunc<nStr>());
-        tray.add("input", *new inputFunc());
+        tray.add(defaultPack().subs());
     }
 
     tstr<nmap> me::_initSlots() const {

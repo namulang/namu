@@ -1,5 +1,5 @@
 #include "inputFunc.hpp"
-#include "../primitive/nStr.hpp"
+#include "../../primitive/nStr.hpp"
 #include <iostream>
 #ifdef __EMSCRIPTEN__
 #   include <emscripten/emscripten.h>
