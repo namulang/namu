@@ -96,35 +96,27 @@ namespace namu {
         auto& log = logger::get();
         switch(fType) {
             case logLv::ERR:
-                std::cerr << foreColor(LIGHTRED);
                 if(pos.isOrigin())
-                    log.logFormatBypass("err%d(%s)", code, getErrName(code).c_str());
+                    log.logFormatBypass("%serr%d(%s)", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str());
                 else
-                    log.logFormatBypass("err%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
-                std::cerr << foreColor(LIGHTGRAY);
-                log.logFormatBypass(": %s\n", msg.c_str());
+                    log.logFormatBypass("%serr%d(%s) %d:%d", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str(), pos.row, pos.col);
                 break;
 
             case logLv::WARN:
-                std::cerr << foreColor(YELLOW);
                 if(pos.isOrigin())
-                    log.logFormatBypass("warn%d(%s)", code, getErrName(code).c_str());
+                    log.logFormatBypass("%swarn%d(%s)", foreColor(YELLOW).c_str(), code, getErrName(code).c_str());
                 else
-                    log.logFormatBypass("warn%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
-                std::cerr << foreColor(LIGHTGRAY);
-                log.logFormatBypass(": %s\n", msg.c_str());
+                    log.logFormatBypass("%swarn%d(%s) %d:%d", foreColor(YELLOW).c_str(), code, getErrName(code).c_str(), pos.row, pos.col);
                 break;
 
             case logLv::INFO:
-                std::cerr << foreColor(BLUE);
                 if(pos.isOrigin())
-                    log.logFormatBypass("info%d(%s)", code, getErrName(code).c_str());
+                    log.logFormatBypass("%sinfo%d(%s)", foreColor(BLUE).c_str(), code, getErrName(code).c_str());
                 else
-                    log.logFormatBypass("info%d(%s) %d:%d", code, getErrName(code).c_str(), pos.row, pos.col);
-                std::cerr << foreColor(LIGHTGRAY);
-                log.logFormatBypass(": %s\n", msg.c_str());
+                    log.logFormatBypass("%sinfo%d(%s) %d:%d", foreColor(BLUE).c_str(), code, getErrName(code).c_str(), pos.row, pos.col);
                 break;
         }
+        log.logFormatBypass("%s: %s\n", foreColor(LIGHTGRAY).c_str(), msg.c_str());
     }
 
     void me::dbgLog() const {

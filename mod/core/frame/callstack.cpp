@@ -43,8 +43,12 @@ namespace namu {
     }
 
     void me::dump() const {
-        for(const auto& c : getTraces())
-            NAMU_E("\tat %s in %s", c.at.c_str(), c.in.c_str());
+        using platformAPI::foreColor;
+        auto& log = logger::get();
+        for(const auto& c : getTraces()) {
+            log.logFormatBypass("\tat %s%s %sin %s%s%s\n", foreColor(YELLOW).c_str(), c.at.c_str(), foreColor(LIGHTGRAY).c_str(),
+                                foreColor(GREEN).c_str(), c.in.c_str(), foreColor(LIGHTGRAY).c_str());
+        }
     }
 
     void me::setStack(const frames& stack) {
