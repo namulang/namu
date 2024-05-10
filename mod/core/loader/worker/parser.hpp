@@ -30,7 +30,6 @@ namespace namu {
     class ifExpr;
     class FUOExpr;
     class defPropExpr;
-
     class _nout parser : public worker<tstr<obj>, slot>, public tokenScanable {
         typedef worker<tstr<obj>, slot> __super5;
         NAMU(CLASS(parser, __super5))

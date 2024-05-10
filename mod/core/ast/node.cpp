@@ -7,6 +7,10 @@
 
 namespace namu {
 
+    template class _nout tnarr<node>;
+    template class _nout tucontainable<node>;
+    template class _nout tbicontainable<std::string, node>;
+
     NAMU(DEF_ME(node), DEF_VISIT())
 
     node& me::operator[](const std::string& name) {

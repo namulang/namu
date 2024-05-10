@@ -11,6 +11,7 @@ namespace namu {
 #define X(T) class T;
 #   include "visitee.inl"
 #undef X
+
     class _nout visitor : public worker<void, node> {
         typedef worker<void, node> __super6;
         NAMU(CLASS(visitor, __super6))

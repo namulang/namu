@@ -24,7 +24,6 @@ namespace namu {
 #else
             DEFAULT = DUMP_ON_EX | LOG_ON_END
 #endif
-
         };
 
     public:

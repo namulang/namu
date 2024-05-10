@@ -13,6 +13,8 @@
 namespace namu {
 
     using std::string;
+    template class _nout worker<tstr<obj>, slot>;
+
     NAMU_DEF_ME(parser)
 
     namespace {

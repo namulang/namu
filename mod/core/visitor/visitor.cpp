@@ -6,6 +6,8 @@
 
 namespace namu {
 
+    template class _nout worker<void, node>;
+
     NAMU_DEF_ME(visitor)
 
 #define X(T) \

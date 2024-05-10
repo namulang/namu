@@ -44,7 +44,7 @@ namespace namu {
     class tmatches : public tnarr<T> {
         NAMU(CLASS(tmatches, tnarr<T>))
         template <typename E> friend class tpriorities;
-        
+
     public:
         tmatches();
         /// @param  elems   instances to derived type of T.

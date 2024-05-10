@@ -8,6 +8,8 @@
 
 namespace namu {
 
+    template class _nout worker<tstr<slot>, slot>;
+
     NAMU_DEF_ME(interpreter)
 
     me::interpreter(): _isParsed(false) {}

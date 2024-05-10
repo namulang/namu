@@ -46,7 +46,9 @@ namespace namu {
 
     TEMPLATE
     T& ME::sub(const std::string& name) {
+#if NAMU_IS_DBG
         ncnt n = 0;
+#endif
         return subs().get<T>([&](const std::string& key, const T& val, node& owner) {
             std::string ownerName = nul(owner) ? "null" : owner.getType().getName();
             NAMU_DI("sub: [%d/%d] %s --> %s.%s",
@@ -60,7 +62,9 @@ namespace namu {
         if(nul(a))
             return sub<T>(name);
 
+#if NAMU_IS_DBG
         ncnt n = 0;
+#endif
         std::string argStr = a.toStr();
         return subs().get<T>([&](const std::string& key, const T& val, node& owner) {
             priority p = NO_MATCH;
@@ -75,7 +79,9 @@ namespace namu {
 
     TEMPLATE
     tnarr<T, strTactic> ME::subAll() const {
+#if NAMU_IS_DBG
         ncnt n = 0;
+#endif
         return subs().template getAll<T>([&](const std::string& key, const T& val) {
             NAMU_DI("subAll: [%d/%d] 'any' --> %s = %d",
                     n++, subs().len(), key.c_str(), EXACT_MATCH);
@@ -85,7 +91,9 @@ namespace namu {
 
     TEMPLATE
     tnarr<T, strTactic> ME::subAll(const std::string& name) const {
+#if NAMU_IS_DBG
         ncnt n = 0;
+#endif
         return subs().getAll<T>([&](const std::string& key, const T& val) {
             NAMU_DI("subAll: [%d/%d] %s --> %s = %d",
                     n++, subs().len(), name.c_str(), key.c_str(), EXACT_MATCH);
@@ -99,7 +107,9 @@ namespace namu {
         //  so if priority of sub was same level, I need to keep the priority of original container.
         if(nul(a)) return NAMU_W("a == null"), tpriorities<T>();
 
+#if NAMU_IS_DBG
         ncnt n = 0;
+#endif
         std::string argStr = a.toStr();
         tprioritiesBucket<T> ps;
         subs().each<T>([&](const auto& key, const T& val, node& owner) {
