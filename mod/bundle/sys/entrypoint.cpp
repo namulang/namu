@@ -31,7 +31,7 @@ struct con {
 };
 
 extern "C" _nout void namu_bridge_cpp_entrypoint(bicontainable* tray) {
-    tray->add("con", tcppBridge<con>::def()
+    tray->add("con", tcppBridge<con>::def(new con())
         .func("say", &con::say)
         .func("add", &con::add)
         .func("print", &con::print)

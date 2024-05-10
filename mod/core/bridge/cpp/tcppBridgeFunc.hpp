@@ -41,7 +41,13 @@ namespace namu {
             return _ret.bind(newRet);
         }
 
-        const params& getParams() const override;
+        const params& getParams() const override {
+            if(!_params) {
+                _params.bind(new params());
+                (_params->add(new param("", Marshaling<Args, S, tifSub<Args, node>::is>::onAddParam())), ...);
+            }
+            return *_params;
+        }
 
         clonable* deepClone() const override {
             me* ret = (me*) clone();

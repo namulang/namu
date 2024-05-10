@@ -8,19 +8,6 @@
 namespace namu {
 
 #define TEMPL template <typename Ret, typename T, typename S, template <typename, typename, nbool> class Marshaling, typename... Args>
-#define ME tcppBridgeFuncBase<Ret, T, S, Marshaling, Args...>
-
-    TEMPL
-    const params& ME::getParams() const {
-        if(!_params) {
-            _params.bind(new params());
-            (_params->add(new param("", Marshaling<Args, S, tifSub<Args, node>::is>::onAddParam())), ...);
-        }
-
-        return *_params;
-    }
-
-#undef ME
 #define ME tcppBridgeFunc<Ret, T, S, Marshaling, Args...>
 
     TEMPL

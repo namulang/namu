@@ -35,10 +35,15 @@ namespace namu {
         tcppBridge(const me& rhs): super(rhs) {
             _real = nul(rhs._real) ? nullptr : new T(*rhs._real);
         }
+        ~tcppBridge() override {
+            if(_real)
+                delete _real;
+        }
 
     public:
-        static me& def() {
-            me* ret = new me(new T());
+        // TODO: remove parameter of this func, making 'real' should be handled as a ctor, not here.
+        static me& def(T* real) {
+            me* ret = new me(real);
             // TODO: need to handle ctor with argument properly.
             ret->subs().add(baseObj::CTOR_NAME, new defaultCtor(*ret));
             ret->subs().add(baseObj::CTOR_NAME, new defaultCopyCtor(*ret));

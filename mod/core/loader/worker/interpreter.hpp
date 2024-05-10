@@ -30,6 +30,7 @@ namespace namu {
 
     protected:
         void _onEndWork() override;
+        tstr<slot> _onWork() override;
 
     private:
         nbool _isPackExist();

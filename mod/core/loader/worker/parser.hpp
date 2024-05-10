@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-#include <functional>
 #include "../../ast/node.hpp"
 #include "tokenDispatcher.hpp"
 #include "bison/tokenScan.hpp"

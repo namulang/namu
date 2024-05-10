@@ -7,7 +7,6 @@
 #include "lowparser.hpp"
 #include "../parser.hpp"
 #include <iostream>
-#include <functional>
 #ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
 #   define YY_NO_UNISTD_H 1
 #endif
