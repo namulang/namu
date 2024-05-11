@@ -46,6 +46,10 @@ namespace namu {
 
         void dump() const override;
 
+    private:
+        std::string _format(const std::string& fmt, va_list args);
+        void _logNativeStack() const;
+
     public:
         logLv::level fType;
         errCode code;
@@ -53,9 +57,6 @@ namespace namu {
         point pos;
         callstack _stack;
         static constexpr nint BASE_TEST_CODE = 99999990; // not to be duplicated.
-
-    private:
-        std::string _format(const std::string& fmt, va_list args);
     };
 
     struct _nout dummyErr : public err {

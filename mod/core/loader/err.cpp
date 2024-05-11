@@ -130,6 +130,19 @@ namespace namu {
 
     void me::logStack() const {
         _stack.dump();
+        _logNativeStack();
+    }
+
+    void me::_logNativeStack() const {
+        auto native = platformAPI::callstack();
+        if(native.size() <= 0) return;
+
+        logger& log = logger::get();
+        using platformAPI::foreColor;
+        log.logFormatBypass("\t%s----------------------------------%s\n", foreColor(BROWN).c_str(), foreColor(LIGHTGRAY).c_str());
+        for(const std::string& trace : native) {
+            log.logFormatBypass("\tat %s%s%s\n", foreColor(BLUE).c_str(), trace.c_str(), foreColor(LIGHTGRAY).c_str());
+        }
     }
 
     void me::dump() const {

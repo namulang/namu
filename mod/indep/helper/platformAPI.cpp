@@ -12,6 +12,7 @@
 #   include <cxxabi.h>
 #   include <regex>
 #   include <sys/time.h>
+#   include <dlfcn.h> // for dladdr()
 #endif
 #if NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
 #   include <mach-o/dyld.h>
@@ -145,26 +146,17 @@ namespace namu {
 #if NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
 
             constexpr int BT_SIZE = 100;
-            constexpr int CS_SIZE = 10;
             void* rawCallstacks[BT_SIZE] = {nullptr, };
 
             int len = backtrace(rawCallstacks, BT_SIZE);
             char** callstacks = backtrace_symbols(rawCallstacks, len);
             if(nul(callstacks)) return ret;
 
-            regex re("\\[(.+)\\]");
-            auto path = getExecPath();
-
             for (int n=0; n < len ; n++) {
-                string sym = callstacks[n];
-                smatch ms;
-
-                if(ret.size() >= CS_SIZE) break;
-                if(regex_search(sym, ms, re)) {
-                    string addr(ms[1]);
-                    string cmd = "addr2line -i -e " + path + " -f -p -C " + addr;
-                    auto demangled = exec(cmd);
-                    if(demangled[0] == '?') continue;
+                Dl_info info;
+                if(dladdr(rawCallstacks[n], &info)) {
+                    auto demangled = demangle(info.dli_sname);
+                    if(demangled[0] == '?' || demangled[0] == '\0') continue;
 
                     ret.push_back(demangled.substr(0, demangled.size()-1));
                 }
@@ -175,15 +167,14 @@ namespace namu {
             return ret;
         }
 
-
         string demangle(const nchar* org) {
 #if !defined(NAMU_BUILD_PLATFORM_IS_WINDOWS) && !defined(__EMSCRIPTEN__)
             nchar* demangled = nullptr;
             int status = 0;
+            if(nul(org)) org = "";
 
             demangled = ::abi::__cxa_demangle(org, 0, 0, &status);
-            string ret(demangled);
-
+            string ret(status == 0 ? demangled : org);
             free(demangled);
             return ret;
 #endif
