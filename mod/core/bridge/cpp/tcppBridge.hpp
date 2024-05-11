@@ -26,17 +26,19 @@ namespace namu {
         friend class tcppBridgeFunc;
 
     public:
-        tcppBridge(): super(new mgdType(ttype<T>::get().getName())), _real(nullptr) {
+        tcppBridge(): super(new mgdType(ttype<T>::get().getName())), _real(nullptr), _ownReal(false) {
             _subs.bind(new scope());
         }
-        tcppBridge(T* real): super(new mgdType(ttype<T>::get().getName())), _real(real) {
+        tcppBridge(T* real): super(new mgdType(ttype<T>::get().getName())), _real(real), _ownReal(true) {
             _subs.bind(new scope());
         }
         tcppBridge(const me& rhs): super(rhs) {
             _real = nul(rhs._real) ? nullptr : new T(*rhs._real);
+            _ownReal = false;
+            _subs = rhs._subs;
         }
         ~tcppBridge() override {
-            if(_real)
+            if(_ownReal && _real)
                 delete _real;
         }
 
@@ -85,6 +87,7 @@ namespace namu {
 
     private:
         T* _real;
+        nbool _ownReal;
         tstr<scope> _subs;
     };
 }
