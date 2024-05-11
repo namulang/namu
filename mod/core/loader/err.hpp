@@ -23,6 +23,7 @@ namespace namu {
         err(logLv::level t, nint newCode);
         err(logLv::level t, nint newCode, va_list args);
         err(logLv::level t, const point& ps, nint newCode, va_list args);
+        err(const me& rhs);
 
     public:
         nbool operator==(const me& rhs) const;

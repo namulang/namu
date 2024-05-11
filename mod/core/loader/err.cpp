@@ -84,6 +84,12 @@ namespace namu {
         _stack.setStack(thread::get().getFrames());
     }
 
+    me::err(const me& rhs): fType(rhs.fType), code(rhs.code), msg(rhs.msg) {
+        if(rhs._stack.hasTraces())
+            _stack = rhs._stack;
+        _stack.setStack(thread::get().getFrames());
+    }
+
     nbool me::operator==(const me& rhs) const {
         return fType == rhs.fType && code == rhs.code && code == rhs.code;
     }

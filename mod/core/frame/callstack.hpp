@@ -33,6 +33,7 @@ namespace namu {
         tucontainable<frame>::iter end() const;
 
         const calltraces& getTraces() const;
+        nbool hasTraces() const;
         void dump() const override;
         void setStack(const frames& frs);
 

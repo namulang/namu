@@ -42,6 +42,10 @@ namespace namu {
         return *_traces;
     }
 
+    nbool me::hasTraces() const {
+        return _stacks.len() > 0;
+    }
+
     void me::dump() const {
         using platformAPI::foreColor;
         auto& log = logger::get();
