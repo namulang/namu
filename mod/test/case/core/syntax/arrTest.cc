@@ -687,3 +687,31 @@ TEST_F(arrTest, setFieldOfElemAfterGetIt1) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 22);
 }
+
+TEST_F(arrTest, outOfBoundExOccurs) {
+    make().parse(R"SRC(
+        def A
+            arr str[]
+            foo() str
+                arr.add("hello")
+                arr[2] // ex occurs here!
+        main() void
+            a A
+            print(a.foo())
+    )SRC").shouldVerified(true);
+
+    {
+        auto& a = getSubPack().sub("A");
+        threadUse th;
+        str res = a.run("foo");
+        ASSERT_TRUE(res);
+        err& cast = res->cast<err>();
+        ASSERT_FALSE(nul(cast));
+        ASSERT_EQ(cast.fType, logLv::ERR);
+        ASSERT_EQ(cast.code, errCode::OUT_OF_RANGE);
+    }
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_NE(res.cast<nint>(), 0); // which means, program ended with error code.
+}
