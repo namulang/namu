@@ -41,33 +41,67 @@ namespace namu {
         return msg[code];
     }
 
-#define _EXPAND_VA(EXPR) \
-        va_list args; \
-        va_start(args, code); \
-        err* ret = EXPR; \
-        va_end(args); \
-        return ret
-
     err* me::newErr(int code, ...) {
-        _EXPAND_VA(new err(logLv::ERR, code, args));
+        va_list args;
+        va_start(args, code);
+        err* ret = newErr(code, args);
+        va_end(args);
+        return ret;
+    }
+    err* me::newErr(int code, va_list args) {
+        return new err(logLv::ERR, code, args);
     }
     err* me::newErr(const point& pos, int code, ...) {
-        _EXPAND_VA(new err(logLv::ERR, pos, code, args));
+        va_list args;
+        va_start(args, code);
+        err* ret = newErr(pos, code, args);
+        va_end(args);
+        return ret;
+    }
+    err* me::newErr(const point& pos, int code, va_list args) {
+        return new err(logLv::ERR, pos, code, args);
     }
     err* me::newWarn(int code, ...) {
-        _EXPAND_VA(new err(logLv::WARN, code, args));
+        va_list args;
+        va_start(args, code);
+        err* ret = newWarn(code, args);
+        va_end(args);
+        return ret;
+    }
+    err* me::newWarn(int code, va_list args) {
+        return new err(logLv::WARN, code, args);
     }
     err* me::newWarn(const point& pos, int code, ...) {
-        _EXPAND_VA(new err(logLv::WARN, pos, code, args));
+        va_list args;
+        va_start(args, code);
+        err* ret = newWarn(pos, code, args);
+        va_end(args);
+        return ret;
+    }
+    err* me::newWarn(const point& pos, int code, va_list args) {
+        return new err(logLv::WARN, pos, code, args);
     }
     err* me::newInfo(int code, ...) {
-        _EXPAND_VA(new err(logLv::INFO, code, args));
+        va_list args;
+        va_start(args, code);
+        err* ret = newInfo(code, args);
+        va_end(args);
+        return ret;
+    }
+    err* me::newInfo(int code, va_list args) {
+        return new err(logLv::INFO, code, args);
     }
     err* me::newInfo(const point& pos, int code, ...) {
-        _EXPAND_VA(new err(logLv::INFO, pos, code, args));
+        va_list args;
+        va_start(args, code);
+        err* ret = newInfo(pos, code, args);
+        va_end(args);
+        return ret;
+    }
+    err* me::newInfo(const point& pos, int code, va_list args) {
+        return new err(logLv::INFO, pos, code, args);
     }
 
-#undef _EXPAND_VA
 
     me::err(logLv::level t, nint newCode): super(), fType(t), code((errCode) newCode) {
         _stack.setStack(thread::get().getFrames());

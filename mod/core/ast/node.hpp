@@ -18,7 +18,7 @@ namespace namu {
     class src;
 
     /// node provides common API to manipulate its sub nodes.
-    class _nout node : public instance, public frameInteractable {
+    class _nout node : public instance, public frameInteractable, public exceptional {
         NAMU(ADT(node, instance))
         friend class exprMaker; // for _setSrc
 

@@ -39,11 +39,17 @@ namespace namu {
         static const std::string& getErrMsg(errCode code);
         static const std::string& getErrName(errCode code);
         static err* newErr(int code, ...);
+        static err* newErr(int code, va_list args);
         static err* newErr(const point& src, int code, ...);
+        static err* newErr(const point& src, int code, va_list args);
         static err* newWarn(int code, ...);
+        static err* newWarn(int code, va_list args);
         static err* newWarn(const point& src, int code, ...);
+        static err* newWarn(const point& src, int code, va_list args);
         static err* newInfo(int code, ...);
+        static err* newInfo(int code, va_list args);
         static err* newInfo(const point& src, int code, ...);
+        static err* newInfo(const point& src, int code, va_list args);
 
         void dump() const override;
 

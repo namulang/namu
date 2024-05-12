@@ -112,6 +112,7 @@ PAIRX(ELEM_TYPE_DEDUCED_NULL,       "elem type has been deduced to null")
 PAIRX(ELEM_TYPE_DEDUCED_WRONG,      "elem type has been deduced to %s type")
 PAIRX(ELEM_TYPE_NOT_VOID,           "elem type shouldn't be the void type")
 PAIRX(CONTAINER_IS_NULL,            "there is no container")
+PAIRX(OUT_OF_RANGE,                 "given index '%d' is out of range. container's length is %d")
 
 // operator:
 PAIRX(STRING_IS_NOT_PROPER_TO_OP,   "string type isn't suitable to this operators.")

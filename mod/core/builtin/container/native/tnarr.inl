@@ -3,15 +3,19 @@
 #include "tnarr.hpp"
 #include "../../../ast/node.hpp"
 #include "tnucontainer.inl"
+#include "../../../loader/errCode.hpp"
 
 namespace namu {
+
+    class thread;
+    struct err;
 
 #define TEMPL template <typename T, typename TACTIC>
 #define ME tnarr<T, TACTIC>
 
     TEMPL
     T& ME::get(nidx n) {
-        if(!has(n)) return nulOf<T>();
+        if(!has(n)) return NAMU_EX(errCode::OUT_OF_RANGE, n, len()), nulOf<T>();
 
         binder& ret = _vec[n];
         return (T&) *ret;
