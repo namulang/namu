@@ -5,6 +5,7 @@
 namespace namu {
 
     class visitor;
+    class errReport;
 
     class _nout blockExpr : public expr {
         NAMU(CLASS(blockExpr, expr, expr::exprType), VISIT())
@@ -28,6 +29,9 @@ namespace namu {
         void outFrame() override;
 
         clonable* deepClone() const override;
+
+    private:
+        void _onOccurEx(const errReport& ex, nidx after);
 
     private:
         narr _exprs;

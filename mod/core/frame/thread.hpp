@@ -43,11 +43,10 @@ namespace namu {
         static void set();
         static const instancer& getInstancer();
 
-        /// @return runtime errReport instance.
-        ///         what this contains are all runtime err or exceptions.
-        errReport& getReport();
-        const errReport& getReport() const NAMU_UNCONST_FUNC(getReport())
-        void setReport(const errReport& newRpt);
+        /// @return exception errReport instance.
+        ///         what this contains are all runtime err and exceptions.
+        errReport& getEx();
+        const errReport& getEx() const NAMU_UNCONST_FUNC(getEx())
 
         // node:
         nbicontainer& subs() override;
@@ -75,6 +74,6 @@ namespace namu {
         thread_local static thread* _instance;
         frames _frames;
         str _root;
-        tstr<errReport> _rpt;
+        errReport _ex;
     };
 }
