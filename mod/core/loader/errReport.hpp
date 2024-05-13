@@ -18,8 +18,11 @@ namespace namu {
 
     public:
         nbool hasErr() const;
+        nbool hasErr(nidx since) const;
         nbool hasWarn() const;
+        nbool hasWarn(nidx since) const;
         nbool has(logLv::level type) const;
+        nbool has(logLv::level type, nidx since) const;
 
         const err& get(nidx n) const;
 

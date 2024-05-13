@@ -64,7 +64,7 @@ namespace namu {
         for(auto& e : _exprs) {
             ret = e.as<node>(); // if e is expr, it runs(). if not, it returns itself.
             if(ex.len() > exN) {
-                _onOccurEx(ex, exN);
+                NAMU_DI("%s exception found in block.\n", ret->getType().getName().c_str());
                 return ret; // this might be err instance.
                             // so it's not the return type of what the func told, but it's okay.
                             // all derived err object can be assigned to any type.
@@ -72,14 +72,6 @@ namespace namu {
             if(ret && ret->isSub<retState>()) break;
         }
         return ret;
-    }
-
-    void me::_onOccurEx(const errReport& ex, nidx after) {
-        NAMU_E("oops, exception occurs:\n");
-        for(nidx n=after; n < ex.len() ;n++) {
-            const err& e = ex[n];
-            e.dump();
-        }
     }
 
     str me::getEval() const {

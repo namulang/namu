@@ -14,32 +14,24 @@ namespace namu {
         return true;
     }
 
-    nbool me::operator!=(const me& rhs) const {
-        return !operator==(rhs);
-    }
+    nbool me::operator!=(const me& rhs) const { return !operator==(rhs); }
+    const err& me::operator[](nidx n) const { return get(n); }
+    me::operator nbool() const { return hasErr(); }
 
-    const err& me::operator[](nidx n) const {
-        return get(n);
-    }
+    nbool me::hasErr() const { return has(logLv::ERR); }
+    nbool me::hasErr(nidx since) const { return has(logLv::ERR, since); }
 
-    me::operator nbool() const {
-        return hasErr();
-    }
+    nbool me::hasWarn() const { return has(logLv::WARN); }
+    nbool me::hasWarn(nidx since) const { return has(logLv::WARN, since); }
 
-    nbool me::hasErr() const {
-        return has(logLv::ERR);
-    }
-
-    nbool me::hasWarn() const {
-        return has(logLv::WARN);
-    }
-
-    nbool me::has(logLv::level type) const {
-        for(auto& elem : _errs)
-            if(elem->fType == type)
+    nbool me::has(logLv::level type, nidx since) const {
+        if (since < 0) since = 0;
+        for(nidx n=since; n < _errs.size() ;n++)
+            if(_errs[n]->fType == type)
                 return true;
         return false;
     }
+    nbool me::has(logLv::level type) const { return has(type, 0); }
 
     const err& me::get(nidx n) const {
         return *_errs[n];

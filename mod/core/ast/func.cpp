@@ -41,22 +41,23 @@ namespace namu {
         if(nul(meObj)) return NAMU_E("meObj == null"), str();
 
         str ret;
+        nidx exN = thread::get().getEx().len() - 1;
         frameInteract f1(meObj); {
             frameInteract f2(*this, s); {
                 frameInteract f3(*_blk); {
-                    return _postprocess(_blk->run());
+                    return _postprocess(_blk->run(), exN);
                 }
             }
         }
     }
 
-    str me::_postprocess(str ret) {
+    str me::_postprocess(str ret, nidx exN) {
         frame& fr = thread::get()._getNowFrame();
         node* retVal = &fr.getRet();
         if(nul(retVal)) retVal = &ret.get();
         if(nul(retVal)) return NAMU_E("retVal == null"), str();
-
-        ret = retVal->as(*getRet()->as<node>());
+        if(!thread::get().getEx().hasErr(exN)) // if I got new exception, I just return it.
+            ret = retVal->as(*getRet()->as<node>());
         fr.setRet();
         return ret;
     }

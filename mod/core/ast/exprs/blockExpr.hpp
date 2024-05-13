@@ -31,9 +31,6 @@ namespace namu {
         clonable* deepClone() const override;
 
     private:
-        void _onOccurEx(const errReport& ex, nidx after);
-
-    private:
         narr _exprs;
     };
 }
