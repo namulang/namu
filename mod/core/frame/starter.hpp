@@ -22,5 +22,6 @@ namespace namu {
     private:
         node& _findMain(node& pak, const args& a);
         void _prepareFrame(frames& fr);
+        str _postprocess(str res);
     };
 }

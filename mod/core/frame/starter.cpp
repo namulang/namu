@@ -35,7 +35,7 @@ namespace namu {
             threadUse thr;
             _prepareFrame(thread::get()._getFrames());
             NAMU_DI("============== START ================");
-            str res = pak.run(MAIN);
+            str res = _postprocess(pak.run(MAIN));
             NAMU_DI("=====================================");
             return res;
         }
@@ -43,6 +43,15 @@ namespace namu {
         // TODO: main(str[])
 
         return NAMU_E("couldn't run main func(). it doesn't match any argument"), str();
+    }
+
+    str me::_postprocess(str res) {
+        errReport& ex = thread::get().getEx();
+        if(ex) {
+            NAMU_E("unhandled exception found:");
+            ex.dump();
+        }
+        return res;
     }
 
     void me::_prepareFrame(frames& fr) {

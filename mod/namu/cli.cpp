@@ -26,8 +26,12 @@ namespace namu {
         starter s;
         str res = s.run(args((baseObj&) ip.getSubPack()));
         _res = 0;
-        if(res && res->isSub<nInt>())
-            _res = res->cast<nint>();
+        if(res) {
+            if(res->isSub<nInt>())
+                _res = res->cast<nint>();
+            else if(res->isSub<err>())
+                _res = -1;
+        }
 
 #ifdef __EMSCRIPTEN__
         // I don't know the detail reason but if user doesn't put '\n' at the
