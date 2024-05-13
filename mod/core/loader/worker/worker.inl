@@ -106,6 +106,8 @@ namespace namu {
         if(w.isFlag(worker<R, T>::GUARD))
             NAMU_I("|=== %s.work()... ==============|", w.getType().getName().c_str());
 
+        w._prepare();
+
         enablesZone prev;
         R ret;
         {
@@ -134,6 +136,8 @@ namespace namu {
     void ME::adaptWork(worker<void, T>& w) {
         if(w.isFlag(worker<void, T>::GUARD))
             NAMU_I("|=== %s.work()... ==============|", w.getType().getName().c_str());
+
+        w._prepare();
 
         enablesZone prev;
         {
