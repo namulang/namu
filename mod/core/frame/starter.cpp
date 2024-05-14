@@ -10,22 +10,28 @@ namespace namu {
 
     NAMU_DEF_ME(starter)
 
-    nbicontainer& me::subs() {
-        static dumScope inner;
-        return inner;
+    me& me::setPack(node& pak) {
+        _pak.bind(pak);
+        return *this;
     }
 
-    priority me::prioritize(const args& a) const {
-        return nul(a.getMe()) ? NO_MATCH : EXACT_MATCH;
+    node& me::getPack() { return *_pak; }
+
+    void me::_prepare() {
+        super::_prepare();
+        if(nul(getTask()))
+            setTask(*new args());
     }
 
-    str me::run(const args& a) {
-        if(!canRun(a)) return NAMU_E("arguments doesn't have proper 'me'"), str();
+    str me::_onWork() {
+        args& a = getTask();
 
         // TODO: don't use static variable '_cache':
         //  instead, put cache onto origin object, and if arr instance is origin, remove the cache.
         arr::_cache.clear();
-        node& pak = a.getMe();
+        node& pak = getPack();
+        if(nul(pak)) return NAMU_E("there is no pack!"), str();
+
         NAMU_I("run a pack");
         node& main = _findMain(pak, args());
         if(nul(main))

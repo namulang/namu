@@ -73,11 +73,7 @@ namu::nbool me::shouldVerified(namu::nbool expect) {
 }
 
 namu::str me::run() {
-    namu::starter s;
-    namu::args a;
-    a.setMe(getSubPack());
-
-    return s.run(a);
+    return namu::starter().setPack(getSubPack()).work();
 }
 
 void me::_rel() {

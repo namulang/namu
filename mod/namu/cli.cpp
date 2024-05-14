@@ -23,8 +23,7 @@ namespace namu {
         if(!ip.isVerified())
             return _res;
 
-        starter s;
-        str res = s.run(args((baseObj&) ip.getSubPack()));
+        str res = starter().setPack(ip.getSubPack()).work();
         _res = 0;
         if(res) {
             if(res->isSub<nInt>())
