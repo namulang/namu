@@ -8,7 +8,7 @@ namespace namu {
 
     public:
         threadUse();
-        threadUse(const node& ast);
+        threadUse(const errReport& new1);
         ~threadUse();
 
     public:

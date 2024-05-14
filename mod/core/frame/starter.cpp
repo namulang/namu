@@ -21,6 +21,8 @@ namespace namu {
         super::_prepare();
         if(nul(getTask()))
             setTask(*new args());
+        if(nul(getReport()))
+            setReport(*new errReport());
     }
 
     str me::_onWork() {
@@ -38,11 +40,11 @@ namespace namu {
             return NAMU_E("there is 0 or more than 2 main() found."), str();
 
         if(main.canRun(a)) {
-            threadUse thr;
+            threadUse thr(getReport());
             _prepareFrame(thread::get()._getFrames());
-            NAMU_DI("============== START ================");
+            NAMU_DI("-------------- START ----------------");
             str res = _postprocess(pak.run(MAIN));
-            NAMU_DI("=====================================");
+            NAMU_DI("-------------------------------------");
             return res;
         }
 

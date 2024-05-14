@@ -6,7 +6,7 @@ namespace namu {
     me::threadUse(): _thr() {
         use();
     }
-    me::threadUse(const node& ast): _thr(ast) {
+    me::threadUse(const errReport& new1): _thr(new1) {
         use();
     }
     me::~threadUse() {

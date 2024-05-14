@@ -31,7 +31,7 @@ namespace namu {
 
     public:
         thread();
-        thread(const node& root);
+        thread(const errReport& new1);
 
     public:
         const frames& getFrames() const NAMU_UNCONST_FUNC(_getFrames())
@@ -47,6 +47,7 @@ namespace namu {
         ///         what this contains are all runtime err and exceptions.
         errReport& getEx();
         const errReport& getEx() const NAMU_UNCONST_FUNC(getEx())
+        void setEx(const errReport& new1);
 
         // node:
         nbicontainer& subs() override;
@@ -73,7 +74,6 @@ namespace namu {
     private:
         thread_local static thread* _instance;
         frames _frames;
-        str _root;
-        errReport _ex;
+        tstr<errReport> _ex;
     };
 }

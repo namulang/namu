@@ -4,6 +4,7 @@
 #include "../ast/node.inl"
 #include "../ast/baseFunc.hpp"
 #include "../builtin/pkgs/default/defaultPack.hpp"
+#include "../ast/dumScope.hpp"
 
 namespace namu {
 
@@ -20,8 +21,8 @@ namespace namu {
 
     str me::run(const args& a) { return str(); }
 
-    me::thread() {} // for singleton
-    me::thread(const node& root): _root(root) {}
+    me::thread(): _ex(new errReport()) {} // for singleton
+    me::thread(const errReport& ex): _ex(ex) {}
 
     thread& me::get() {
         return *_instance;
@@ -37,15 +38,13 @@ namespace namu {
         return instancer::get();
     }
 
-    errReport& me::getEx() {
-        return _ex;
-    }
+    errReport& me::getEx() { return *_ex; }
+    void me::setEx(const errReport& new1) { _ex.bind(new1); }
 
     // node:
     nbicontainer& me::subs() {
-        if(!_root) return nulOf<nbicontainer>();
-
-        return _root->subs();
+        static dumScope inner;
+        return inner;
     }
 
     priority me::prioritize(const args& a) const {
