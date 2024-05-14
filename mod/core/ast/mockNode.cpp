@@ -44,4 +44,8 @@ namespace namu {
     nbool me::isComplete() const {
         return true; // always. this's the main reason why I use this class.
     }
+
+    node& me::getTarget() {
+        return *_org;
+    }
 }

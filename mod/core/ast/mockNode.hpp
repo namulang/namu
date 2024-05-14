@@ -27,6 +27,9 @@ namespace namu {
 
         nbool isComplete() const override;
 
+        node& getTarget();
+        const node& getTarget() const NAMU_UNCONST_FUNC(getTarget());
+
     private:
         str _org;
     };
