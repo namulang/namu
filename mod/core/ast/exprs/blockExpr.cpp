@@ -63,7 +63,7 @@ namespace namu {
         nidx exN = ex.len() - 1; // blockExpr will judge exception occurs when exN is changed to after running one of its stmt.
         for(auto& e : _exprs) {
             ret = e.as<node>(); // if e is expr, it runs(). if not, it returns itself.
-            if(ex.len() > exN) {
+            if(ex.len() > (exN + 1)) {
                 NAMU_DI("%s exception found in block.\n", ret->getType().getName().c_str());
                 return *ex.last(); // return last err instance I got.
                                    // so it's not the return type of what the func told, but it's okay.

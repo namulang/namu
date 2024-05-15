@@ -21,7 +21,7 @@ namespace namu {
         super::_prepare();
         if(nul(getTask()))
             setTask(*new args());
-        if(nul(getReport()))
+        if(getReport().isSub<dummyErrReport>())
             setReport(*new errReport());
     }
 
