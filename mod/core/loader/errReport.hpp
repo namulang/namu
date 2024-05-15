@@ -33,6 +33,7 @@ namespace namu {
         void add(const me& rhs);
 
         std::vector<tstr<err>>::const_iterator begin() const;
+        std::vector<tstr<err>>::const_iterator last() const;
         std::vector<tstr<err>>::const_iterator end() const;
 
         void log() const;

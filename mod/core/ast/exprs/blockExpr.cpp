@@ -65,9 +65,9 @@ namespace namu {
             ret = e.as<node>(); // if e is expr, it runs(). if not, it returns itself.
             if(ex.len() > exN) {
                 NAMU_DI("%s exception found in block.\n", ret->getType().getName().c_str());
-                return ret; // this might be err instance.
-                            // so it's not the return type of what the func told, but it's okay.
-                            // all derived err object can be assigned to any type.
+                return *ex.last(); // return last err instance I got.
+                                   // so it's not the return type of what the func told, but it's okay.
+                                   // all derived err object can be assigned to any type.
             }
             if(ret && ret->isSub<retState>()) break;
         }

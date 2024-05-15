@@ -59,6 +59,10 @@ namespace namu {
         return _errs.begin();
     }
 
+    std::vector<tstr<err>>::const_iterator me::last() const {
+        return end() - 1;
+    }
+
     std::vector<tstr<err>>::const_iterator me::end() const {
         return _errs.end();
     }
