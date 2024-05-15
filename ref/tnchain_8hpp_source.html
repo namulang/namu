@@ -72,32 +72,32 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;tnmap.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../../ast/node.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">class </span>node;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> K, <span class="keyword">typename</span> V, <span class="keyword">typename</span> defaultContainer = tnmap&lt;K, V&gt;&gt;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1tnchain.html">tnchain</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1tnbicontainer.html">tnbicontainer</a>&lt;K, V&gt; {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnbicontainer.html">tnbicontainer&lt;K, V&gt;</a> <a class="code" href="classnamu_1_1tnbicontainer.html">_super_</a>;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnchain.html">tnchain&lt;K, V, defaultContainer&gt;</a> <a class="code" href="classnamu_1_1tnchain.html">_me_</a>;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">class </span>node;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> K, <span class="keyword">typename</span> V, <span class="keyword">typename</span> _defaultContainer = tnmap&lt;K, V&gt;&gt;</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html">    9</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1tnchain.html">tnchain</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1tnbicontainer.html">tnbicontainer</a>&lt;K, V&gt; {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnbicontainer.html">tnbicontainer&lt;K, V&gt;</a> <a class="code" href="classnamu_1_1tnbicontainer.html">_super_</a>;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnchain.html">tnchain&lt;K, V, _defaultContainer&gt;</a> <a class="code" href="classnamu_1_1tnchain.html">_me_</a>;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1tnchain.html">_me_</a>, <a class="code" href="classnamu_1_1tnbicontainer.html">_super_</a>))</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1tnchain.html">_me_</a>, <a class="code" href="classnamu_1_1tnbicontainer.html">_super_</a>))</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> super::iter <a class="code" href="classiter.html">iter</a>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> super::iteration <a class="code" href="classiteration.html">iteration</a>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classchain_iteration.html">chainIteration</a>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;../iter/nchainIteration.hpp&quot;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classnamu_1_1tnchain.html">tnchain</a>();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1tnchain.html">tnchain</a>(<span class="keyword">const</span> super&amp; <a class="code" href="classnamu_1_1arr.html">arr</a>): _map(<a class="code" href="classnamu_1_1arr.html">arr</a>) {}</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1tnchain.html">tnchain</a>(<span class="keyword">const</span> super* <a class="code" href="classnamu_1_1arr.html">arr</a>): _map(<a class="code" href="classnamu_1_1arr.html">arr</a>) {}</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="comment">// has:</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        nbool has(<span class="keyword">const</span> K&amp; key) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> super::iter <a class="code" href="classiter.html">iter</a>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> super::iteration <a class="code" href="classiteration.html">iteration</a>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classchain_iteration.html">chainIteration</a>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">typedef</span> _defaultContainer defaultContainer;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;../iter/nchainIteration.hpp&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnamu_1_1tnchain.html">tnchain</a>(): _map(<span class="keyword">new</span> defaultContainer()) {}</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1tnchain.html">tnchain</a>(<span class="keyword">const</span> super&amp; <a class="code" href="classnamu_1_1arr.html">arr</a>): _map(<a class="code" href="classnamu_1_1arr.html">arr</a>) {}</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1tnchain.html">tnchain</a>(<span class="keyword">const</span> super&amp; org, <span class="keyword">const</span> me&amp; <a class="code" href="classchain_iteration.html#a4c8ff27d24722f4ca59ae2653777fc57">next</a>): _map(org), _next(<a class="code" href="classchain_iteration.html#a4c8ff27d24722f4ca59ae2653777fc57">next</a>) {}</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="comment">// has:</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        nbool has(<span class="keyword">const</span> K&amp; key) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        nbool has(<span class="keyword">const</span> V&amp; val) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="comment">// len:</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        ncnt len() <span class="keyword">const override</span>;</div>
@@ -117,9 +117,9 @@ $(function() {
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="comment">// del:</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">using</span> super::del;</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#af14fc19fcc47070e3151cbd3b59dcdc2">   49</a></span>&#160;        nbool <a class="code" href="classnamu_1_1tnchain.html#af14fc19fcc47070e3151cbd3b59dcdc2">del</a>(<span class="keyword">const</span> K&amp; at) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        nbool <a class="code" href="classnamu_1_1tnchain.html#af14fc19fcc47070e3151cbd3b59dcdc2">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; at) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        nbool <a class="code" href="classnamu_1_1tnchain.html#af14fc19fcc47070e3151cbd3b59dcdc2">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; end) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#a133e924593d394fb970c4bfdff44301f">   49</a></span>&#160;        nbool <a class="code" href="classnamu_1_1tnchain.html#a133e924593d394fb970c4bfdff44301f">del</a>(<span class="keyword">const</span> K&amp; at) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        nbool <a class="code" href="classnamu_1_1tnchain.html#a133e924593d394fb970c4bfdff44301f">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; at) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        nbool <a class="code" href="classnamu_1_1tnchain.html#a133e924593d394fb970c4bfdff44301f">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; end) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="comment">// etc:</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">void</span> rel() <span class="keyword">override</span>;</div>
@@ -135,75 +135,61 @@ $(function() {
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">const</span> me&amp; getNext()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordflow">return</span> *_next;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#a91cafbb1fff506616027ee66ccba59d9">   72</a></span>&#160;        <a class="code" href="classnamu_1_1clonable.html">clonable</a>* <a class="code" href="classnamu_1_1tnchain.html#a91cafbb1fff506616027ee66ccba59d9">deepClone</a>()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            me* ret = <a class="code" href="classnamu_1_1tnchain.html#a46c967f84bfaa560a34b7d376127eaf7">wrap</a>(((super*) getContainer().<a class="code" href="classnamu_1_1tnchain.html#a91cafbb1fff506616027ee66ccba59d9">deepClone</a>())-&gt;<span class="keyword">template</span> cast&lt;super&gt;());</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            ret-&gt;link(getNext());</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#a46c967f84bfaa560a34b7d376127eaf7">   84</a></span>&#160;        <span class="keyword">static</span> T* <a class="code" href="classnamu_1_1tnchain.html#a46c967f84bfaa560a34b7d376127eaf7">wrap</a>(<span class="keyword">const</span> super&amp; toShallowWrap);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keyword">virtual</span> me* <a class="code" href="classnamu_1_1tnchain.html#a46c967f84bfaa560a34b7d376127eaf7">wrap</a>(<span class="keyword">const</span> super&amp; toShallowWrap)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> wrap&lt;me&gt;(toShallowWrap); }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        me* <a class="code" href="classnamu_1_1tnchain.html#a46c967f84bfaa560a34b7d376127eaf7">wrap</a>(<span class="keyword">const</span> super* toShallowWrap)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classnamu_1_1tnchain.html#a46c967f84bfaa560a34b7d376127eaf7">wrap</a>(*toShallowWrap); }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#a44ea4c6af381c560fc41ed7e98de791a">   90</a></span>&#160;        <span class="keyword">virtual</span> me* <a class="code" href="classnamu_1_1tnchain.html#a44ea4c6af381c560fc41ed7e98de791a">wrapDeep</a>(<span class="keyword">const</span> super&amp; toDeepWrap)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> wrapDeep&lt;me&gt;(toDeepWrap); }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        me* <a class="code" href="classnamu_1_1tnchain.html#a44ea4c6af381c560fc41ed7e98de791a">wrapDeep</a>(<span class="keyword">const</span> super* toDeepWrap)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classnamu_1_1tnchain.html#a44ea4c6af381c560fc41ed7e98de791a">wrapDeep</a>(*toDeepWrap); }</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#a80f0ad56821740e4fd5d9ac0ba849992">   68</a></span>&#160;        me&amp; <a class="code" href="classnamu_1_1tnchain.html#a80f0ad56821740e4fd5d9ac0ba849992">getTail</a>();</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#a99bfc20b768b06d3072446129ea0a3ba">   69</a></span>&#160;        <span class="keyword">const</span> me&amp; <a class="code" href="classnamu_1_1tnchain.html#a99bfc20b768b06d3072446129ea0a3ba">getTail</a>() const NAMU_UNCONST_FUNC(<a class="code" href="classnamu_1_1tnchain.html#a80f0ad56821740e4fd5d9ac0ba849992">getTail</a>())</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="classnamu_1_1clonable.html">clonable</a>* cloneDeep() const override;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        template &lt;typename T&gt;</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#a398a0fea3a3a7754cd4c4fbd7a8e0858">   82</a></span>&#160;        static T* <a class="code" href="classnamu_1_1tnchain.html#a398a0fea3a3a7754cd4c4fbd7a8e0858">wrap</a>(const super&amp; toShallowWrap);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#adef0d20944e0c04555ba7da8c0570da6">   88</a></span>&#160;        me* <a class="code" href="classnamu_1_1tnchain.html#ad44147c916c57530a31f11ae995e2f1d">cloneChain</a>(const super&amp; until) const;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        me* <a class="code" href="classnamu_1_1tnchain.html#ad44147c916c57530a31f11ae995e2f1d">cloneChain</a>(const me&amp; until) const;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#ad44147c916c57530a31f11ae995e2f1d">   91</a></span>&#160;        me* <a class="code" href="classnamu_1_1tnchain.html#ad44147c916c57530a31f11ae995e2f1d">cloneChain</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="classnamu_1_1tnchain.html#ad44147c916c57530a31f11ae995e2f1d">cloneChain</a>(nulOf&lt;me&gt;()); }</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keyword">static</span> T* <a class="code" href="classnamu_1_1tnchain.html#a44ea4c6af381c560fc41ed7e98de791a">wrapDeep</a>(<span class="keyword">const</span> super&amp; toDeepWrap) {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            T* innerChn = me::wrap&lt;T&gt;(toDeepWrap);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            T* ret = <span class="keyword">new</span> T();</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            ret-&gt;_map.bind(innerChn);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(ncnt step)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="comment">// TODO: optimize using containerIteration</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            me* unconst = <span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <a class="code" href="classiteration.html">iteration</a>* ret = <span class="keyword">new</span> <a class="code" href="classchain_iteration.html">chainIteration</a>(*unconst, _map-&gt;begin());</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            ret-&gt;<a class="code" href="classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f">next</a>(step);</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(ncnt step)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="comment">// TODO: optimize using containerIteration</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            me* unconst = <span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <a class="code" href="classiteration.html">iteration</a>* ret = <span class="keyword">new</span> <a class="code" href="classchain_iteration.html">chainIteration</a>(*unconst, _map-&gt;begin());</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            ret-&gt;<a class="code" href="classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f">next</a>(step);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(<span class="keyword">const</span> K&amp; key)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            me* unconst = <span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classchain_iteration.html">chainIteration</a>(*unconst, _map-&gt;iterate(key), key);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        }</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordtype">void</span> _getAll(<span class="keyword">const</span> K&amp; key, narr&amp; tray) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(<span class="keyword">const</span> K&amp; key)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            me* unconst = <span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classchain_iteration.html">chainIteration</a>(*unconst, _map-&gt;iterate(key), key);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordtype">void</span> _getAll(<span class="keyword">const</span> K&amp; key, narr&amp; tray) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="classiter.html">iter</a>&amp; _getMapIterFromChainIter(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; wrapper) {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="keywordflow">if</span>(!wrapper._step-&gt;getType().template isSub&lt;chainIteration&gt;()) <span class="keywordflow">return</span> nulOf&lt;iter&gt;();</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <a class="code" href="classchain_iteration.html">chainIteration</a>&amp; cast = (<a class="code" href="classchain_iteration.html">chainIteration</a>&amp;) *wrapper._step;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="keywordflow">if</span>(nul(cast)) <span class="keywordflow">return</span> nulOf&lt;iter&gt;();</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordflow">return</span> cast._iter;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        }</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <a class="code" href="classiter.html">iter</a>&amp; _getMapIterFromChainIter(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; wrapper) {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <span class="keywordflow">if</span>(!wrapper._step-&gt;getType().template isSub&lt;chainIteration&gt;()) <span class="keywordflow">return</span> nulOf&lt;iter&gt;();</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <a class="code" href="classchain_iteration.html">chainIteration</a>&amp; cast = (<a class="code" href="classchain_iteration.html">chainIteration</a>&amp;) *wrapper._step;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <span class="keywordflow">if</span>(nul(cast)) <span class="keywordflow">return</span> nulOf&lt;iter&gt;();</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            <span class="keywordflow">return</span> cast._iter;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        }</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        tstr&lt;super&gt; _map;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        tstr&lt;me&gt; _next;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    };</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keyword">typedef</span> tnchain&lt;std::string, node&gt; nchain;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        tstr&lt;super&gt; _map;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        tstr&lt;me&gt; _next;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    };</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
 <div class="ttc" id="aclasschain_iteration_html"><div class="ttname"><a href="classchain_iteration.html">chainIteration</a></div><div class="ttdef"><b>Definition:</b> nchainIteration.hpp:3</div></div>
+<div class="ttc" id="aclasschain_iteration_html_a4c8ff27d24722f4ca59ae2653777fc57"><div class="ttname"><a href="classchain_iteration.html#a4c8ff27d24722f4ca59ae2653777fc57">chainIteration::next</a></div><div class="ttdeci">ncnt next(ncnt step) override</div><div class="ttdef"><b>Definition:</b> nchainIteration.hpp:17</div></div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
 <div class="ttc" id="aclassiterable_html_af3fe3f73cc02ce60a46b93d6e630798f"><div class="ttname"><a href="classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f">iterable::next</a></div><div class="ttdeci">virtual ncnt next(ncnt step)=0</div></div>
 <div class="ttc" id="aclassiteration_html"><div class="ttname"><a href="classiteration.html">iteration</a></div><div class="ttdef"><b>Definition:</b> biteration.hpp:4</div></div>
 <div class="ttc" id="aclassnamu_1_1arr_html"><div class="ttname"><a href="classnamu_1_1arr.html">namu::arr</a></div><div class="ttdef"><b>Definition:</b> arr.hpp:12</div></div>
 <div class="ttc" id="aclassnamu_1_1clonable_html"><div class="ttname"><a href="classnamu_1_1clonable.html">namu::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1tnchain_html"><div class="ttname"><a href="classnamu_1_1tnchain.html">namu::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:10</div></div>
-<div class="ttc" id="aclassnamu_1_1tnchain_html_a44ea4c6af381c560fc41ed7e98de791a"><div class="ttname"><a href="classnamu_1_1tnchain.html#a44ea4c6af381c560fc41ed7e98de791a">namu::tnchain::wrapDeep</a></div><div class="ttdeci">virtual me * wrapDeep(const super &amp;toDeepWrap) const</div><div class="ttdoc">wrap given container no matter what it is.</div><div class="ttdef"><b>Definition:</b> tnchain.hpp:90</div></div>
-<div class="ttc" id="aclassnamu_1_1tnchain_html_a46c967f84bfaa560a34b7d376127eaf7"><div class="ttname"><a href="classnamu_1_1tnchain.html#a46c967f84bfaa560a34b7d376127eaf7">namu::tnchain::wrap</a></div><div class="ttdeci">static T * wrap(const super &amp;toShallowWrap)</div></div>
-<div class="ttc" id="aclassnamu_1_1tnchain_html_a91cafbb1fff506616027ee66ccba59d9"><div class="ttname"><a href="classnamu_1_1tnchain.html#a91cafbb1fff506616027ee66ccba59d9">namu::tnchain::deepClone</a></div><div class="ttdeci">clonable * deepClone() const override</div><div class="ttdef"><b>Definition:</b> tnchain.hpp:72</div></div>
-<div class="ttc" id="aclassnamu_1_1tnchain_html_af14fc19fcc47070e3151cbd3b59dcdc2"><div class="ttname"><a href="classnamu_1_1tnchain.html#af14fc19fcc47070e3151cbd3b59dcdc2">namu::tnchain::del</a></div><div class="ttdeci">nbool del(const K &amp;at) override</div><div class="ttdoc">delete last element if exists.</div></div>
+<div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:9</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html"><div class="ttname"><a href="classnamu_1_1tnchain.html">namu::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:9</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html_a133e924593d394fb970c4bfdff44301f"><div class="ttname"><a href="classnamu_1_1tnchain.html#a133e924593d394fb970c4bfdff44301f">namu::tnchain::del</a></div><div class="ttdeci">nbool del(const K &amp;at) override</div><div class="ttdoc">delete last element if exists.</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html_a398a0fea3a3a7754cd4c4fbd7a8e0858"><div class="ttname"><a href="classnamu_1_1tnchain.html#a398a0fea3a3a7754cd4c4fbd7a8e0858">namu::tnchain::wrap</a></div><div class="ttdeci">static T * wrap(const super &amp;toShallowWrap)</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html_a80f0ad56821740e4fd5d9ac0ba849992"><div class="ttname"><a href="classnamu_1_1tnchain.html#a80f0ad56821740e4fd5d9ac0ba849992">namu::tnchain::getTail</a></div><div class="ttdeci">me &amp; getTail()</div><div class="ttdoc">return most not null next element of this chain.</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html_a99bfc20b768b06d3072446129ea0a3ba"><div class="ttname"><a href="classnamu_1_1tnchain.html#a99bfc20b768b06d3072446129ea0a3ba">namu::tnchain::getTail</a></div><div class="ttdeci">const me &amp; getTail() const NAMU_UNCONST_FUNC(getTail()) clonable *cloneDeep() const override</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html_ad44147c916c57530a31f11ae995e2f1d"><div class="ttname"><a href="classnamu_1_1tnchain.html#ad44147c916c57530a31f11ae995e2f1d">namu::tnchain::cloneChain</a></div><div class="ttdeci">me * cloneChain() const</div><div class="ttdoc">mock all of this chain until 'next' is null.</div><div class="ttdef"><b>Definition:</b> tnchain.hpp:91</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; me &gt;</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

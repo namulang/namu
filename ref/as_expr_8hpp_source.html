@@ -83,34 +83,32 @@ $(function() {
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1as_expr.html">asExpr</a>, <a class="code" href="classnamu_1_1expr.html">expr</a>, <a class="code" href="classnamu_1_1expr_1_1expr_type.html">expr::exprType</a>), VISIT())</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnamu_1_1verifier.html">verifier</a>;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnamu_1_1func.html">func</a>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">typedef</span> scopes::iter <a class="code" href="classiter.html">iter</a>;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="classnamu_1_1as_expr.html">asExpr</a>(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; me, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; as);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">using</span> super::run;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classnamu_1_1as_expr.html#abfa263e5fbd2fbc0478c817a3851f455">   23</a></span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> <a class="code" href="classnamu_1_1as_expr.html#abfa263e5fbd2fbc0478c817a3851f455">getEval</a>() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getMe() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getAs() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordtype">void</span> setAs(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; new1);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <a class="code" href="classnamu_1_1clonable.html">clonable</a>* deepClone() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _me;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _as;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    };</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
-<div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classnamu_1_1as_expr.html">asExpr</a>(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; me, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; as);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">using</span> super::run;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classnamu_1_1as_expr.html#abfa263e5fbd2fbc0478c817a3851f455">   22</a></span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> <a class="code" href="classnamu_1_1as_expr.html#abfa263e5fbd2fbc0478c817a3851f455">getEval</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getMe() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getAs() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">void</span> setAs(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; new1);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classnamu_1_1clonable.html">clonable</a>* cloneDeep() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _me;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _as;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    };</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1as_expr_html"><div class="ttname"><a href="classnamu_1_1as_expr.html">namu::asExpr</a></div><div class="ttdef"><b>Definition:</b> asExpr.hpp:11</div></div>
 <div class="ttc" id="aclassnamu_1_1as_expr_html_abfa263e5fbd2fbc0478c817a3851f455"><div class="ttname"><a href="classnamu_1_1as_expr.html#abfa263e5fbd2fbc0478c817a3851f455">namu::asExpr::getEval</a></div><div class="ttdeci">str getEval() const override</div></div>
 <div class="ttc" id="aclassnamu_1_1clonable_html"><div class="ttname"><a href="classnamu_1_1clonable.html">namu::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classnamu_1_1expr_1_1expr_type.html">namu::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:14</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
-<div class="ttc" id="aclassnamu_1_1func_html"><div class="ttname"><a href="classnamu_1_1func.html">namu::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:13</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:20</div></div>
+<div class="ttc" id="aclassnamu_1_1func_html"><div class="ttname"><a href="classnamu_1_1func.html">namu::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:11</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclassnamu_1_1verifier_html"><div class="ttname"><a href="classnamu_1_1verifier.html">namu::verifier</a></div><div class="ttdef"><b>Definition:</b> verifier.hpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->

@@ -73,25 +73,26 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;param.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../builtin/container/native/tnarr.inl&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnamu_1_1params.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1params.html">params</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1tnarr.html">tnarr</a>&lt;param&gt; {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1params.html">params</a>, <a class="code" href="classnamu_1_1tnarr.html">tnarr&lt;param&gt;</a>))</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Es&gt;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classnamu_1_1params.html#ab6b2984f36d4a128028cac15b5d9c800">   14</a></span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1params.html#ab6b2984f36d4a128028cac15b5d9c800">params</a>(<span class="keyword">const</span> Es&amp;... elems) {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            static_assert(areBaseOfT&lt;param, Es...&gt;::value, <span class="stringliteral">&quot;some of type of args are not base of type &#39;T&#39;&quot;</span>);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            add( { (<a class="code" href="classnamu_1_1param.html">param</a>*) &amp;elems... } );</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        }</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        std::string toStr() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    };</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../ast/scope.hpp&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnamu_1_1params.html">    8</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1params.html">params</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1tnarr.html">tnarr</a>&lt;param&gt; {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1params.html">params</a>, <a class="code" href="classnamu_1_1tnarr.html">tnarr&lt;param&gt;</a>))</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Es&gt;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classnamu_1_1params.html#ab6b2984f36d4a128028cac15b5d9c800">   15</a></span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1params.html#ab6b2984f36d4a128028cac15b5d9c800">params</a>(<span class="keyword">const</span> Es&amp;... elems) {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            static_assert(areBaseOfT&lt;param, Es...&gt;::value, <span class="stringliteral">&quot;some of type of args are not base of type &#39;T&#39;&quot;</span>);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            add( { (<a class="code" href="classnamu_1_1param.html">param</a>*) &amp;elems... } );</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        }</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        std::string toStr() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    };</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1param_html"><div class="ttname"><a href="classnamu_1_1param.html">namu::param</a></div><div class="ttdef"><b>Definition:</b> param.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1params_html"><div class="ttname"><a href="classnamu_1_1params.html">namu::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1params_html_ab6b2984f36d4a128028cac15b5d9c800"><div class="ttname"><a href="classnamu_1_1params.html#ab6b2984f36d4a128028cac15b5d9c800">namu::params::params</a></div><div class="ttdeci">params(const Es &amp;... elems)</div><div class="ttdef"><b>Definition:</b> params.hpp:14</div></div>
+<div class="ttc" id="aclassnamu_1_1params_html"><div class="ttname"><a href="classnamu_1_1params.html">namu::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1params_html_ab6b2984f36d4a128028cac15b5d9c800"><div class="ttname"><a href="classnamu_1_1params.html#ab6b2984f36d4a128028cac15b5d9c800">namu::params::params</a></div><div class="ttdeci">params(const Es &amp;... elems)</div><div class="ttdef"><b>Definition:</b> params.hpp:15</div></div>
 <div class="ttc" id="aclassnamu_1_1tnarr_html"><div class="ttname"><a href="classnamu_1_1tnarr.html">namu::tnarr</a></div><div class="ttdef"><b>Definition:</b> tnarr.hpp:9</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

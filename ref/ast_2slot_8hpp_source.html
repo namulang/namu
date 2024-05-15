@@ -97,9 +97,9 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">tnarr&lt;me&gt;</a>&amp; getDependents() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">using</span> super::subs;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; subs() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classnamu_1_1tnchain.html">scope</a>&amp; subs() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        priority prioritize(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        priorType prioritize(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">using</span> super::run;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
@@ -128,14 +128,14 @@ $(function() {
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnbicontainer.html">tnbicontainer&lt;std::string, slot&gt;</a> <a class="code" href="classnamu_1_1tnbicontainer.html">slotContainer</a>;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:20</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
 <div class="ttc" id="aclassnamu_1_1obj_html"><div class="ttname"><a href="classnamu_1_1obj.html">namu::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:13</div></div>
 <div class="ttc" id="aclassnamu_1_1slot_html"><div class="ttname"><a href="classnamu_1_1slot.html">namu::slot</a></div><div class="ttdef"><b>Definition:</b> slot.hpp:11</div></div>
 <div class="ttc" id="aclassnamu_1_1slot_html_a50c34983f46fa9f76580ffaa5baa7c4b"><div class="ttname"><a href="classnamu_1_1slot.html#a50c34983f46fa9f76580ffaa5baa7c4b">namu::slot::getEval</a></div><div class="ttdeci">str getEval() const override</div></div>
 <div class="ttc" id="aclassnamu_1_1tnarr_html"><div class="ttname"><a href="classnamu_1_1tnarr.html">namu::tnarr&lt; me &gt;</a></div></div>
-<div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1tnchain_html"><div class="ttname"><a href="classnamu_1_1tnchain.html">namu::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:10</div></div>
-<div class="ttc" id="aclassnamu_1_1tnmap_html"><div class="ttname"><a href="classnamu_1_1tnmap.html">namu::tnmap</a></div><div class="ttdef"><b>Definition:</b> tnmap.hpp:9</div></div>
+<div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:9</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html"><div class="ttname"><a href="classnamu_1_1tnchain.html">namu::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></div></div>
+<div class="ttc" id="aclassnamu_1_1tnmap_html"><div class="ttname"><a href="classnamu_1_1tnmap.html">namu::tnmap</a></div><div class="ttdef"><b>Definition:</b> tnmap.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="astructnamu_1_1manifest_html"><div class="ttname"><a href="structnamu_1_1manifest.html">namu::manifest</a></div><div class="ttdef"><b>Definition:</b> manifest.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->

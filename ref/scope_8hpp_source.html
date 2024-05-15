@@ -72,31 +72,10 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../builtin/container/native/tnchain.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;immutableTactic.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;node.hpp&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>namu {</div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnamu_1_1scope.html">    8</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1scope.html">scope</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1tnmap.html">tnmap</a>&lt;std::string, node, immutableTactic&gt; {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnmap.html">tnmap&lt;std::string, node, immutableTactic&gt;</a> <a class="code" href="classnamu_1_1tnmap.html">__super1</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1scope.html">scope</a>, <a class="code" href="classnamu_1_1tnmap.html">__super1</a>))</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classnamu_1_1scope.html">scope</a>();</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <a class="code" href="classnamu_1_1scope.html">scope</a>(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; owner);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>&amp; getOwner() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keywordtype">void</span> setOwner(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; owner) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        me* deepClone() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnamu_1_1tweak.html">weak</a> _owner;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    };</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:20</div></div>
-<div class="ttc" id="aclassnamu_1_1scope_html"><div class="ttname"><a href="classnamu_1_1scope.html">namu::scope</a></div><div class="ttdef"><b>Definition:</b> scope.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1tnmap_html"><div class="ttname"><a href="classnamu_1_1tnmap.html">namu::tnmap</a></div><div class="ttdef"><b>Definition:</b> tnmap.hpp:9</div></div>
-<div class="ttc" id="aclassnamu_1_1tweak_html"><div class="ttname"><a href="classnamu_1_1tweak.html">namu::tweak&lt; node &gt;</a></div></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    <span class="keyword">typedef</span> tnchain&lt;std::string, node, tnmap&lt;std::string, node, immutableTactic&gt;&gt; scope;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -94,72 +94,80 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnamu_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classnamu_1_1tcpp_bridge.html">tcppBridge</a>(): super(<span class="keyword">new</span> <a class="code" href="classnamu_1_1mgd_type.html">mgdType</a>(<a class="code" href="classnamu_1_1ttype.html">ttype&lt;T&gt;::get</a>().getName())), _real(<span class="keyword">nullptr</span>) {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            _subs.bind(<span class="keyword">new</span> <a class="code" href="classnamu_1_1scope.html">scope</a>());</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classnamu_1_1tcpp_bridge.html">tcppBridge</a>(): super(<span class="keyword">new</span> <a class="code" href="classnamu_1_1mgd_type.html">mgdType</a>(<a class="code" href="classnamu_1_1ttype.html">ttype&lt;T&gt;::get</a>().getName())), _real(<span class="keyword">nullptr</span>), _ownReal(<span class="keyword">false</span>) {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            _subs.bind(<span class="keyword">new</span> <a class="code" href="classnamu_1_1tnchain.html">scope</a>());</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        }</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classnamu_1_1tcpp_bridge.html">tcppBridge</a>(T* real): super(<span class="keyword">new</span> <a class="code" href="classnamu_1_1mgd_type.html">mgdType</a>(<a class="code" href="classnamu_1_1ttype.html">ttype&lt;T&gt;::get</a>().getName())), _real(real) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            _subs.bind(<span class="keyword">new</span> <a class="code" href="classnamu_1_1scope.html">scope</a>());</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classnamu_1_1tcpp_bridge.html">tcppBridge</a>(T* real): super(<span class="keyword">new</span> <a class="code" href="classnamu_1_1mgd_type.html">mgdType</a>(<a class="code" href="classnamu_1_1ttype.html">ttype&lt;T&gt;::get</a>().getName())), _real(real), _ownReal(<span class="keyword">true</span>) {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            _subs.bind(<span class="keyword">new</span> <a class="code" href="classnamu_1_1tnchain.html">scope</a>());</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        }</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <a class="code" href="classnamu_1_1tcpp_bridge.html">tcppBridge</a>(<span class="keyword">const</span> me&amp; rhs): super(rhs) {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            _real = nul(rhs._real) ? nullptr : <span class="keyword">new</span> T(*rhs._real);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">static</span> me&amp; def() {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            me* ret = <span class="keyword">new</span> me(<span class="keyword">new</span> T());</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="comment">// TODO: need to handle ctor with argument properly.</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            ret-&gt;subs().add(baseObj::CTOR_NAME, <span class="keyword">new</span> <a class="code" href="classnamu_1_1default_ctor.html">defaultCtor</a>(*ret));</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            ret-&gt;subs().add(baseObj::CTOR_NAME, <span class="keyword">new</span> <a class="code" href="classnamu_1_1default_copy_ctor.html">defaultCopyCtor</a>(*ret));</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordflow">return</span> *ret;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        }</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">using</span> super::subs;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; subs()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> *_subs; }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ret, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        me&amp; <a class="code" href="classnamu_1_1func.html">func</a>(<span class="keyword">const</span> std::string&amp; name, Ret(T::*fptr)(Args...)) { <span class="keywordflow">return</span> funcNonConst(name, fptr); }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ret, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        me&amp; <a class="code" href="classnamu_1_1func.html">func</a>(<span class="keyword">const</span> std::string&amp; name, Ret(T::* fptr)(Args...) <span class="keyword">const</span>) { <span class="keywordflow">return</span> funcConst(name, fptr); }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ret, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        me&amp; funcNonConst(<span class="keyword">const</span> std::string&amp; name, Ret(T::* fptr)(Args...)) {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            subs().add(name, <span class="keyword">new</span> <a class="code" href="classnamu_1_1tcpp_bridge_func.html">tcppBridgeFunc&lt;Ret, T, S, tmarshaling, Args...&gt;</a>(fptr));</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ret, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        me&amp; funcConst(<span class="keyword">const</span> std::string&amp; name, Ret(T::* fptr)(Args...) <span class="keyword">const</span>) {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            subs().add(name, <span class="keyword">new</span> <a class="code" href="classnamu_1_1tcpp_bridge_func.html">tcppBridgeFunc&lt;Ret, T, S, tmarshaling, Args...&gt;</a>((Ret(T::*)(Args...)) fptr));</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        T&amp; get() {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">return</span> *_real;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keyword">const</span> T&amp; get()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">return</span> *_real;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        }</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1obj.html">obj</a>&amp; getOrigin()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="comment">// if an object doesn&#39;t have owned sub nodes it means that all instances of that classes</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="comment">// are same and origin simulteneously.</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="comment">// TODO: add defaultCtor</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            _ownReal = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            _subs = rhs._subs;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        ~<a class="code" href="classnamu_1_1tcpp_bridge.html">tcppBridge</a>()<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordflow">if</span>(_ownReal &amp;&amp; _real)</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                <span class="keyword">delete</span> _real;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="comment">// TODO: remove parameter of this func, making &#39;real&#39; should be handled as a ctor, not here.</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">static</span> me&amp; def() { <span class="keywordflow">return</span> def(<span class="keyword">new</span> T()); }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">static</span> me&amp; def(T* real) {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            me* ret = <span class="keyword">new</span> me(real);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="comment">// TODO: need to handle ctor with argument properly.</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            ret-&gt;subs().add(baseObj::CTOR_NAME, <span class="keyword">new</span> <a class="code" href="classnamu_1_1default_ctor.html">defaultCtor</a>(*ret));</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            ret-&gt;subs().add(baseObj::CTOR_NAME, <span class="keyword">new</span> <a class="code" href="classnamu_1_1default_copy_ctor.html">defaultCopyCtor</a>(*ret));</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordflow">return</span> *ret;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">using</span> super::subs;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="classnamu_1_1tnchain.html">scope</a>&amp; subs()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> *_subs; }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ret, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        me&amp; <a class="code" href="classnamu_1_1func.html">func</a>(<span class="keyword">const</span> std::string&amp; name, Ret(T::*fptr)(Args...)) { <span class="keywordflow">return</span> funcNonConst(name, fptr); }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ret, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        me&amp; <a class="code" href="classnamu_1_1func.html">func</a>(<span class="keyword">const</span> std::string&amp; name, Ret(T::* fptr)(Args...) <span class="keyword">const</span>) { <span class="keywordflow">return</span> funcConst(name, fptr); }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ret, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        me&amp; funcNonConst(<span class="keyword">const</span> std::string&amp; name, Ret(T::* fptr)(Args...)) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            subs().add(name, <span class="keyword">new</span> <a class="code" href="classnamu_1_1tcpp_bridge_func.html">tcppBridgeFunc&lt;Ret, T, S, tmarshaling, Args...&gt;</a>(fptr));</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ret, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        me&amp; funcConst(<span class="keyword">const</span> std::string&amp; name, Ret(T::* fptr)(Args...) <span class="keyword">const</span>) {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            subs().add(name, <span class="keyword">new</span> <a class="code" href="classnamu_1_1tcpp_bridge_func.html">tcppBridgeFunc&lt;Ret, T, S, tmarshaling, Args...&gt;</a>((Ret(T::*)(Args...)) fptr));</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        T&amp; get() {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordflow">return</span> *_real;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">const</span> T&amp; get()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">return</span> *_real;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        T* _real;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;scope&gt;</a> _subs;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    };</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1obj.html">obj</a>&amp; getOrigin()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="comment">// if an object doesn&#39;t have owned sub nodes it means that all instances of that classes</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="comment">// are same and origin simulteneously.</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="comment">// TODO: add defaultCtor</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        T* _real;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        nbool _ownReal;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;scope&gt;</a> _subs;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    };</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1default_copy_ctor_html"><div class="ttname"><a href="classnamu_1_1default_copy_ctor.html">namu::defaultCopyCtor</a></div><div class="ttdef"><b>Definition:</b> defaultCopyCtor.hpp:10</div></div>
 <div class="ttc" id="aclassnamu_1_1default_ctor_html"><div class="ttname"><a href="classnamu_1_1default_ctor.html">namu::defaultCtor</a></div><div class="ttdef"><b>Definition:</b> defaultCtor.hpp:9</div></div>
-<div class="ttc" id="aclassnamu_1_1func_html"><div class="ttname"><a href="classnamu_1_1func.html">namu::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:13</div></div>
+<div class="ttc" id="aclassnamu_1_1func_html"><div class="ttname"><a href="classnamu_1_1func.html">namu::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:11</div></div>
 <div class="ttc" id="aclassnamu_1_1mgd_type_html"><div class="ttname"><a href="classnamu_1_1mgd_type.html">namu::mgdType</a></div><div class="ttdef"><b>Definition:</b> mgdType.hpp:12</div></div>
 <div class="ttc" id="aclassnamu_1_1obj_html"><div class="ttname"><a href="classnamu_1_1obj.html">namu::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:13</div></div>
-<div class="ttc" id="aclassnamu_1_1scope_html"><div class="ttname"><a href="classnamu_1_1scope.html">namu::scope</a></div><div class="ttdef"><b>Definition:</b> scope.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1tcpp_bridge_func_html"><div class="ttname"><a href="classnamu_1_1tcpp_bridge_func.html">namu::tcppBridgeFunc</a></div><div class="ttdef"><b>Definition:</b> tcppBridgeFunc.hpp:84</div></div>
+<div class="ttc" id="aclassnamu_1_1tcpp_bridge_func_html"><div class="ttname"><a href="classnamu_1_1tcpp_bridge_func.html">namu::tcppBridgeFunc</a></div><div class="ttdef"><b>Definition:</b> tcppBridgeFunc.hpp:90</div></div>
 <div class="ttc" id="aclassnamu_1_1tcpp_bridge_html"><div class="ttname"><a href="classnamu_1_1tcpp_bridge.html">namu::tcppBridge</a></div><div class="ttdef"><b>Definition:</b> tcppBridge.hpp:16</div></div>
-<div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html"><div class="ttname"><a href="classnamu_1_1tnchain.html">namu::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1ttype_html"><div class="ttname"><a href="classnamu_1_1ttype.html">namu::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:15</div></div>
 </div><!-- fragment --></div><!-- contents -->

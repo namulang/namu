@@ -75,32 +75,28 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnamu_1_1platform_a_p_i.html">    8</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1platform_a_p_i.html">platformAPI</a> {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NAMU_ME(<a class="code" href="classnamu_1_1platform_a_p_i.html">platformAPI</a>)</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">enum</span> consoleColor {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            CONSOLE_COLOR_START = 0,</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            BLACK=CONSOLE_COLOR_START, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN,</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            LIGHTGRAY, DARKGRAY, LIGHTBLUE, LIGHTGREEN, LIGHTCYAN, LIGHTRED,</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            LIGHTMAGENTA, YELLOW,</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            CONSOLE_COLOR_END,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            WHITE = CONSOLE_COLOR_END</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        };</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::string&amp; getConsoleFore(consoleColor fore);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::string&amp; getConsoleBack(consoleColor back);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">static</span> std::string createNowTime(<span class="keyword">const</span> std::string&amp; strftime_format);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">static</span> std::vector&lt;std::string&gt; callstack();</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">static</span> std::string demangle(<span class="keyword">const</span> nchar* org);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">static</span> std::string filterDemangle(<span class="keyword">const</span> nchar* org);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">static</span> std::string getExecPath();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">static</span> std::string exec(<span class="keyword">const</span> std::string&amp; cmd);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">static</span> nulong getNowMs();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    };</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1platform_a_p_i_html"><div class="ttname"><a href="classnamu_1_1platform_a_p_i.html">namu::platformAPI</a></div><div class="ttdef"><b>Definition:</b> platformAPI.hpp:8</div></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">enum</span> consoleColor {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        CONSOLE_COLOR_START = 0,</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        BLACK=CONSOLE_COLOR_START, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN,</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        LIGHTGRAY, DARKGRAY, LIGHTBLUE, LIGHTGREEN, LIGHTCYAN, LIGHTRED,</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        LIGHTMAGENTA, YELLOW,</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        CONSOLE_COLOR_END,</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        WHITE = CONSOLE_COLOR_END</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    };</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">namespace </span>platformAPI {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        _nout <span class="keyword">const</span> std::string&amp; foreColor(consoleColor fore);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        _nout <span class="keyword">const</span> std::string&amp; backColor(consoleColor back);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        _nout std::string createNowTime(<span class="keyword">const</span> std::string&amp; strftime_format);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        _nout std::vector&lt;std::string&gt; callstack();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        _nout std::string demangle(<span class="keyword">const</span> nchar* org);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        _nout std::string filterDemangle(<span class="keyword">const</span> nchar* org);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        _nout std::string getExecPath();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        _nout std::string exec(<span class="keyword">const</span> std::string&amp; cmd);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        _nout nulong getNowMs();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        _nout std::string toAddrId(<span class="keywordtype">void</span>* inst);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    };</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

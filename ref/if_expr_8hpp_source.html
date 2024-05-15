@@ -85,13 +85,13 @@ $(function() {
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <a class="code" href="classnamu_1_1if_expr.html">ifExpr</a>(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; exp, <span class="keyword">const</span> <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; thenBlk, <span class="keyword">const</span> <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; elseBlk);</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; getThenBlk() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getThenBlk())</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; getThenBlk();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">void</span> setThenBlk(<span class="keyword">const</span> <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; newThen);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; getThen() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getThen())</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; getThen();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">void</span> setThen(<span class="keyword">const</span> <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; newThen);</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; getElseBlk() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getElseBlk())</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; getElseBlk();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">void</span> setElseBlk(<span class="keyword">const</span> <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; newElse);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; getElse() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getElse())</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; getElse();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">void</span> setElse(<span class="keyword">const</span> <a class="code" href="classnamu_1_1block_expr.html">blockExpr</a>&amp; newElse);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getCondition() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getCondition())</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>&amp; getCondition();</div>
@@ -104,17 +104,17 @@ $(function() {
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _expr;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;blockExpr&gt;</a> _thenBlk;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;blockExpr&gt;</a> _elseBlk;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;blockExpr&gt;</a> _then;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;blockExpr&gt;</a> _else;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    };</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1block_expr_html"><div class="ttname"><a href="classnamu_1_1block_expr.html">namu::blockExpr</a></div><div class="ttdef"><b>Definition:</b> blockExpr.hpp:9</div></div>
+<div class="ttc" id="aclassnamu_1_1block_expr_html"><div class="ttname"><a href="classnamu_1_1block_expr.html">namu::blockExpr</a></div><div class="ttdef"><b>Definition:</b> blockExpr.hpp:10</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classnamu_1_1expr_1_1expr_type.html">namu::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:14</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
 <div class="ttc" id="aclassnamu_1_1if_expr_html"><div class="ttname"><a href="classnamu_1_1if_expr.html">namu::ifExpr</a></div><div class="ttdef"><b>Definition:</b> ifExpr.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1if_expr_html_af26f72698dee9b002074401f22f25d6b"><div class="ttname"><a href="classnamu_1_1if_expr.html#af26f72698dee9b002074401f22f25d6b">namu::ifExpr::getEval</a></div><div class="ttdeci">str getEval() const override</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:20</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclassnamu_1_1verifier_html"><div class="ttname"><a href="classnamu_1_1verifier.html">namu::verifier</a></div><div class="ttdef"><b>Definition:</b> verifier.hpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->

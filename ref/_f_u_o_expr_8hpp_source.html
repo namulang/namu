@@ -99,20 +99,22 @@ $(function() {
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">using</span> super::run;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classnamu_1_1_f_u_o_expr.html#a6b032346458a5f3031cccb1bef65e7b6">   31</a></span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> <a class="code" href="classnamu_1_1_f_u_o_expr.html#a6b032346458a5f3031cccb1bef65e7b6">getEval</a>() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        rule getRule() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        rule _rule;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _it;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    };</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>&amp; getOperand();</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getOperand() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getOperand())</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> getEval() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        rule getRule() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> nchar* getRuleName(rule r);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        rule _rule;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _it;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    };</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1_f_u_o_expr_html"><div class="ttname"><a href="classnamu_1_1_f_u_o_expr.html">namu::FUOExpr</a></div><div class="ttdef"><b>Definition:</b> FUOExpr.hpp:13</div></div>
-<div class="ttc" id="aclassnamu_1_1_f_u_o_expr_html_a6b032346458a5f3031cccb1bef65e7b6"><div class="ttname"><a href="classnamu_1_1_f_u_o_expr.html#a6b032346458a5f3031cccb1bef65e7b6">namu::FUOExpr::getEval</a></div><div class="ttdeci">str getEval() const override</div></div>
 <div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classnamu_1_1expr_1_1expr_type.html">namu::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:14</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:20</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

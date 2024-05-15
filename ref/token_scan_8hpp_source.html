@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>namu: /home/runner/work/namu/namu/mod/core/loader/interpreter/bison/tokenScan.hpp Source File</title>
+<title>namu: /home/runner/work/namu/namu/mod/core/loader/worker/bison/tokenScan.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_81012edf5ad7491088324f5f1efbb7fa.html">core</a></li><li class="navelem"><a class="el" href="dir_a78d4a8d33b1a8b18fa67f3db22d7e2c.html">loader</a></li><li class="navelem"><a class="el" href="dir_792c1eeb5ba7d55348ef48c8445d5014.html">interpreter</a></li><li class="navelem"><a class="el" href="dir_f27bfcb40d9c87198fbb40dbe7711360.html">bison</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_81012edf5ad7491088324f5f1efbb7fa.html">core</a></li><li class="navelem"><a class="el" href="dir_a78d4a8d33b1a8b18fa67f3db22d7e2c.html">loader</a></li><li class="navelem"><a class="el" href="dir_1b7410291b6d6f700e49013355245602.html">worker</a></li><li class="navelem"><a class="el" href="dir_40a52dcc77f8418aa197b0fe60ff684e.html">bison</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -71,7 +71,7 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../../../type/ntype.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../tokenScanable.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">typedef</span> <span class="keyword">union </span>YYSTYPE YYSTYPE;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>lloc YYLTYPE;</div>
@@ -79,15 +79,15 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">class </span>loweventer;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">class </span>parser;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">class </span>tokenDispatcher;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classnamu_1_1token_scan.html">   14</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1token_scan.html">tokenScan</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1type_providable.html">typeProvidable</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1clonable.html">clonable</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classnamu_1_1token_scan.html">   14</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1token_scan.html">tokenScan</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1token_scanable.html">tokenScanable</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1type_providable.html">typeProvidable</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1clonable.html">clonable</a> {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1token_scan.html">tokenScan</a>))</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        nint onScan(<a class="code" href="classnamu_1_1loweventer.html">loweventer</a>&amp; eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">virtual</span> nint onScan(<a class="code" href="classnamu_1_1loweventer.html">loweventer</a>&amp; eventer, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool&amp; isBypass);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">using</span> tokenScanable::onScan;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">virtual</span> nint onScan(<a class="code" href="classnamu_1_1parser.html">parser</a>&amp; ps, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool&amp; isBypass) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        nbool _useSmartDedent;</div>
@@ -95,11 +95,11 @@ $(function() {
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classnamu_1_1normal_scan.html">   25</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1normal_scan.html">normalScan</a>: <span class="keyword">public</span> <a class="code" href="classnamu_1_1token_scan.html">tokenScan</a> {</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1normal_scan.html">normalScan</a>, <a class="code" href="classnamu_1_1token_scan.html">tokenScan</a>))</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnamu_1_1loweventer.html">loweventer</a>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnamu_1_1parser.html">parser</a>;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keyword">using</span> super::onScan;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        nint onScan(<a class="code" href="classnamu_1_1loweventer.html">loweventer</a>&amp; eventer, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool&amp; isBypass) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        nint onScan(<a class="code" href="classnamu_1_1parser.html">parser</a>&amp; ps, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool&amp; isBypass) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1normal_scan.html">normalScan</a>* _instance;</div>
@@ -107,15 +107,15 @@ $(function() {
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classnamu_1_1indent_scan.html">   37</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1indent_scan.html">indentScan</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1token_scan.html">tokenScan</a> {</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1indent_scan.html">indentScan</a>, <a class="code" href="classnamu_1_1token_scan.html">tokenScan</a>))</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnamu_1_1loweventer.html">loweventer</a>;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnamu_1_1parser.html">parser</a>;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">using</span> super::onScan;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        nint onScan(<a class="code" href="classnamu_1_1loweventer.html">loweventer</a>&amp; eventer, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool&amp; isBypass) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        nint onScan(<a class="code" href="classnamu_1_1parser.html">parser</a>&amp; ps, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, nbool&amp; isBypass) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        nint _onIndent(<a class="code" href="classnamu_1_1loweventer.html">loweventer</a>&amp; ev, ncnt col, nint tok);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        nint _onDedent(<a class="code" href="classnamu_1_1loweventer.html">loweventer</a>&amp; ev, ncnt col, nint tok);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        nint _onIndent(<a class="code" href="classnamu_1_1parser.html">parser</a>&amp; ev, ncnt col, nint tok);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        nint _onDedent(<a class="code" href="classnamu_1_1parser.html">parser</a>&amp; ev, ncnt col, nint tok);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1indent_scan.html">indentScan</a>* _instance;</div>
@@ -123,9 +123,10 @@ $(function() {
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1clonable_html"><div class="ttname"><a href="classnamu_1_1clonable.html">namu::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1indent_scan_html"><div class="ttname"><a href="classnamu_1_1indent_scan.html">namu::indentScan</a></div><div class="ttdef"><b>Definition:</b> tokenScan.hpp:37</div></div>
-<div class="ttc" id="aclassnamu_1_1loweventer_html"><div class="ttname"><a href="classnamu_1_1loweventer.html">namu::loweventer</a></div><div class="ttdef"><b>Definition:</b> loweventer.hpp:32</div></div>
 <div class="ttc" id="aclassnamu_1_1normal_scan_html"><div class="ttname"><a href="classnamu_1_1normal_scan.html">namu::normalScan</a></div><div class="ttdef"><b>Definition:</b> tokenScan.hpp:25</div></div>
+<div class="ttc" id="aclassnamu_1_1parser_html"><div class="ttname"><a href="classnamu_1_1parser.html">namu::parser</a></div><div class="ttdef"><b>Definition:</b> parser.hpp:31</div></div>
 <div class="ttc" id="aclassnamu_1_1token_scan_html"><div class="ttname"><a href="classnamu_1_1token_scan.html">namu::tokenScan</a></div><div class="ttdef"><b>Definition:</b> tokenScan.hpp:14</div></div>
+<div class="ttc" id="aclassnamu_1_1token_scanable_html"><div class="ttname"><a href="classnamu_1_1token_scanable.html">namu::tokenScanable</a></div><div class="ttdef"><b>Definition:</b> tokenScanable.hpp:12</div></div>
 <div class="ttc" id="aclassnamu_1_1type_providable_html"><div class="ttname"><a href="classnamu_1_1type_providable.html">namu::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:6</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

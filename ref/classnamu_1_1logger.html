@@ -68,6 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classnamu_1_1logger-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">namu::logger Class Reference</div>  </div>
@@ -85,66 +86,45 @@ Inheritance diagram for namu::logger:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5b858a54acfd7afd3f0343d7bbd99303"><td class="memItemLeft" align="right" valign="top"><a id="a5b858a54acfd7afd3f0343d7bbd99303"></a>
-const <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (nidx n) const</td></tr>
-<tr class="separator:a5b858a54acfd7afd3f0343d7bbd99303"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18b48125422392730a67a18ca22a5c40"><td class="memItemLeft" align="right" valign="top"><a id="a18b48125422392730a67a18ca22a5c40"></a>
 <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (nidx n)</td></tr>
 <tr class="separator:a18b48125422392730a67a18ca22a5c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a630fc8162d31100b71221d0221b235"><td class="memItemLeft" align="right" valign="top"><a id="a0a630fc8162d31100b71221d0221b235"></a>
-const <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const nchar *message) const</td></tr>
-<tr class="separator:a0a630fc8162d31100b71221d0221b235"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af94bd672d60a7360f1d2f2fdbe4b117e"><td class="memItemLeft" align="right" valign="top"><a id="af94bd672d60a7360f1d2f2fdbe4b117e"></a>
-<a class="el" href="classnamu_1_1stream.html">stream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const nchar *message)</td></tr>
-<tr class="separator:af94bd672d60a7360f1d2f2fdbe4b117e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60bdbef1176864f58cf778852eaa34be"><td class="memItemLeft" align="right" valign="top"><a id="a60bdbef1176864f58cf778852eaa34be"></a>
-<a class="el" href="classnamu_1_1stream.html">stream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getStream</b> (nidx n)</td></tr>
-<tr class="separator:a60bdbef1176864f58cf778852eaa34be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0697a8e1cb2e6dadbad657726e82923"><td class="memItemLeft" align="right" valign="top"><a id="ae0697a8e1cb2e6dadbad657726e82923"></a>
-const <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getStream</b> (nidx n) const</td></tr>
-<tr class="separator:ae0697a8e1cb2e6dadbad657726e82923"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a686b5e37c491b60ccea89a8e85629a"><td class="memItemLeft" align="right" valign="top"><a id="a6a686b5e37c491b60ccea89a8e85629a"></a>
-const <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getStream</b> (const nchar *c_message) const</td></tr>
-<tr class="separator:a6a686b5e37c491b60ccea89a8e85629a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac471b6bb306141a411778db473a7ef2a"><td class="memItemLeft" align="right" valign="top"><a id="ac471b6bb306141a411778db473a7ef2a"></a>
-<a class="el" href="classnamu_1_1stream.html">stream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getStream</b> (const nchar *message)</td></tr>
-<tr class="separator:ac471b6bb306141a411778db473a7ef2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af68c685f98c81c55c79c821882c65eff"><td class="memItemLeft" align="right" valign="top"><a id="af68c685f98c81c55c79c821882c65eff"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isEnable</b> () const override</td></tr>
-<tr class="separator:af68c685f98c81c55c79c821882c65eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add042fe7f12707b825103959b10e5527"><td class="memItemLeft" align="right" valign="top"><a id="add042fe7f12707b825103959b10e5527"></a>
+const <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (nidx n) const NAMU_UNCONST_FUNC(operator[](n)) <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;operator[](const nchar *msg)</td></tr>
+<tr class="separator:add042fe7f12707b825103959b10e5527"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae399107dbda0ce035cf9b77cc4a5299c"><td class="memItemLeft" align="right" valign="top"><a id="ae399107dbda0ce035cf9b77cc4a5299c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1logger.html#ae399107dbda0ce035cf9b77cc4a5299c">setEnable</a> (nbool enable) override</td></tr>
 <tr class="memdesc:ae399107dbda0ce035cf9b77cc4a5299c"><td class="mdescLeft">&#160;</td><td class="mdescRight">modify that all of streams are set to enable or not. <br /></td></tr>
 <tr class="separator:ae399107dbda0ce035cf9b77cc4a5299c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af669b4c31cc92923435a908a671e4d1a"><td class="memItemLeft" align="right" valign="top"><a id="af669b4c31cc92923435a908a671e4d1a"></a>
+enables&#160;</td><td class="memItemRight" valign="bottom"><b>getEnables</b> () const</td></tr>
+<tr class="separator:af669b4c31cc92923435a908a671e4d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3625c6330b06a3e748571b9bdbce5baa"><td class="memItemLeft" align="right" valign="top"><a id="a3625c6330b06a3e748571b9bdbce5baa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setEnables</b> (const enables &amp;enbs)</td></tr>
+<tr class="separator:a3625c6330b06a3e748571b9bdbce5baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa20e109295195a76c1589dbe8eb083d"><td class="memItemLeft" align="right" valign="top"><a id="afa20e109295195a76c1589dbe8eb083d"></a>
 ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>getStreamCount</b> () const</td></tr>
 <tr class="separator:afa20e109295195a76c1589dbe8eb083d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a972f000958eb2f6ee6c4f11da90dd482"><td class="memItemLeft" align="right" valign="top"><a id="a972f000958eb2f6ee6c4f11da90dd482"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>dumpFormat</b> (const nchar *fmt,...)</td></tr>
-<tr class="separator:a972f000958eb2f6ee6c4f11da90dd482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6665d33dee16de8b0ce42be556810be3"><td class="memItemLeft" align="right" valign="top"><a id="a6665d33dee16de8b0ce42be556810be3"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>dumpFormatLog</b> (logLv::level lv, const nchar *tag, const nchar *filename, const nchar *<a class="el" href="classnamu_1_1func.html">func</a>, int line, const nchar *fmt,...)</td></tr>
-<tr class="separator:a6665d33dee16de8b0ce42be556810be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42f300109de3882cf633967043722c03"><td class="memItemLeft" align="right" valign="top"><a id="a42f300109de3882cf633967043722c03"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>logFormatBypass</b> (const nchar *fmt,...)</td></tr>
+<tr class="separator:a42f300109de3882cf633967043722c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5e9f44c796acc9d99328d8439754e9b"><td class="memItemLeft" align="right" valign="top"><a id="ac5e9f44c796acc9d99328d8439754e9b"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>log</b> (logLv::level lv, const nchar *tag, const nchar *filename, const nchar *<a class="el" href="classnamu_1_1func.html">func</a>, int line, const nchar *fmt,...)</td></tr>
+<tr class="separator:ac5e9f44c796acc9d99328d8439754e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2135e267cbfb72dbfe97bc964b3dbd6a"><td class="memItemLeft" align="right" valign="top"><a id="a2135e267cbfb72dbfe97bc964b3dbd6a"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>pushStream</b> (<a class="el" href="classnamu_1_1stream.html">stream</a> *new_stream)</td></tr>
 <tr class="separator:a2135e267cbfb72dbfe97bc964b3dbd6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10d39e97ec16bda5d82c0b52adc17d67"><td class="memItemLeft" align="right" valign="top"><a id="a10d39e97ec16bda5d82c0b52adc17d67"></a>
-const nchar *&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const override</td></tr>
-<tr class="separator:a10d39e97ec16bda5d82c0b52adc17d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2371bdd583d70be3298ec4458e66d5c"><td class="memItemLeft" align="right" valign="top">nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1logger.html#ad2371bdd583d70be3298ec4458e66d5c">dump</a> (const nchar *message) override</td></tr>
-<tr class="separator:ad2371bdd583d70be3298ec4458e66d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d5587ba06ce8cce2ed864fb51a13461"><td class="memItemLeft" align="right" valign="top"><a id="a7d5587ba06ce8cce2ed864fb51a13461"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const override</td></tr>
+<tr class="separator:a7d5587ba06ce8cce2ed864fb51a13461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad52c16eb775903e3aa0df276ba85057b"><td class="memItemLeft" align="right" valign="top">nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnamu_1_1logger.html#ad52c16eb775903e3aa0df276ba85057b">logBypass</a> (const nchar *message) override</td></tr>
+<tr class="separator:ad52c16eb775903e3aa0df276ba85057b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a010c6c4b622d377de212e810c1581df1"><td class="memItemLeft" align="right" valign="top"><a id="a010c6c4b622d377de212e810c1581df1"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>logBypass</b> (const std::string &amp;msg)</td></tr>
+<tr class="separator:a010c6c4b622d377de212e810c1581df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae461e03ce2ef13e4c060d7859f8967b"><td class="memItemLeft" align="right" valign="top"><a id="aae461e03ce2ef13e4c060d7859f8967b"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isInit</b> () const override</td></tr>
 <tr class="separator:aae461e03ce2ef13e4c060d7859f8967b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a641259068764d70ac99698ab00eacf28"><td class="memItemLeft" align="right" valign="top"><a id="a641259068764d70ac99698ab00eacf28"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>callstack</b> () const</td></tr>
-<tr class="separator:a641259068764d70ac99698ab00eacf28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b5a5091b35499ac532385ea53bcf40b"><td class="memItemLeft" align="right" valign="top"><a id="a9b5a5091b35499ac532385ea53bcf40b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setCallstack</b> (nbool show)</td></tr>
-<tr class="separator:a9b5a5091b35499ac532385ea53bcf40b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bcfb20738c6764070b38cf5fdf80b5c"><td class="memItemLeft" align="right" valign="top"><a id="a9bcfb20738c6764070b38cf5fdf80b5c"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isShowCallstack</b> () const</td></tr>
-<tr class="separator:a9bcfb20738c6764070b38cf5fdf80b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dfa9a38963f580fa7b86196704c4afa"><td class="memItemLeft" align="right" valign="top"><a id="a5dfa9a38963f580fa7b86196704c4afa"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setFilters</b> (const <a class="el" href="classnamu_1_1filters.html">filters</a> &amp;newFilters)</td></tr>
 <tr class="separator:a5dfa9a38963f580fa7b86196704c4afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,16 +141,28 @@ const <a class="el" href="classnamu_1_1filters.html">filters</a> &amp;&#160;</td
 <tr class="memitem:a5e5fc7a5d98a3a83b0dd156f796d653d inherit pub_methods_classnamu_1_1stream"><td class="memItemLeft" align="right" valign="top"><a id="a5e5fc7a5d98a3a83b0dd156f796d653d"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isNull</b> () const</td></tr>
 <tr class="separator:a5e5fc7a5d98a3a83b0dd156f796d653d inherit pub_methods_classnamu_1_1stream"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20d87694c2e7ad8774e61c21d0327b87 inherit pub_methods_classnamu_1_1stream"><td class="memItemLeft" align="right" valign="top"><a id="a20d87694c2e7ad8774e61c21d0327b87"></a>
+virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isEnable</b> () const</td></tr>
+<tr class="separator:a20d87694c2e7ad8774e61c21d0327b87 inherit pub_methods_classnamu_1_1stream"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:af8261698b0c6aa3be50e4c6c27b88d37"><td class="memItemLeft" align="right" valign="top"><a id="af8261698b0c6aa3be50e4c6c27b88d37"></a>
 static <a class="el" href="classnamu_1_1logger.html">logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()</td></tr>
 <tr class="separator:af8261698b0c6aa3be50e4c6c27b88d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a1513b4e9a9c9bf51d4496d217e632973"><td class="memItemLeft" align="right" valign="top"><a id="a1513b4e9a9c9bf51d4496d217e632973"></a>
+const <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;operator[](const nchar *msg) const NAMU_UNCONST_FUNC(operator[](msg)) <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;operator[](const std const <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;operator[](const std::string &amp;msg) const NAMU_UNCONST_FUNC(operator[](msg)) public const <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getStream</b> (nidx n) const NAMU_UNCONST_FUNC(getStream(n)) <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;getStream(const nchar *msg)</td></tr>
+<tr class="separator:a1513b4e9a9c9bf51d4496d217e632973"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac10a6eaaa9b8a62beee12ae7830a190f"><td class="memItemLeft" align="right" valign="top"><a id="ac10a6eaaa9b8a62beee12ae7830a190f"></a>
+const <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;getStream(const nchar *msg) const NAMU_UNCONST_FUNC(getStream(msg)) <a class="el" href="classnamu_1_1stream.html">stream</a> &amp;getStream(const std const <a class="el" href="classnamu_1_1stream.html">stream</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getStream</b> )(const std::string &amp;msg) const NAMU_UNCONST_FUNC(getStream(msg)) nbool isEnable() const override</td></tr>
+<tr class="separator:ac10a6eaaa9b8a62beee12ae7830a190f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad2371bdd583d70be3298ec4458e66d5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2371bdd583d70be3298ec4458e66d5c">&#9670;&nbsp;</a></span>dump()</h2>
+<a id="ad52c16eb775903e3aa0df276ba85057b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad52c16eb775903e3aa0df276ba85057b">&#9670;&nbsp;</a></span>logBypass()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -179,7 +171,7 @@ static <a class="el" href="classnamu_1_1logger.html">logger</a> &amp;&#160;</td>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">nbool namu::logger::dump </td>
+          <td class="memname">nbool namu::logger::logBypass </td>
           <td>(</td>
           <td class="paramtype">const nchar *&#160;</td>
           <td class="paramname"><em>message</em></td><td>)</td>
@@ -194,7 +186,7 @@ static <a class="el" href="classnamu_1_1logger.html">logger</a> &amp;&#160;</td>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>true means an error. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classnamu_1_1stream.html#a0740bfd86a10b5902b1a438a17d055aa">namu::stream</a>.</p>
+<p>Reimplemented from <a class="el" href="classnamu_1_1stream.html#a10b0d9da0d3beb3d4eedf6ca672d2858">namu::stream</a>.</p>
 
 </div>
 </div>

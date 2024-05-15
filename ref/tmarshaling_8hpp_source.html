@@ -72,13 +72,13 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../../../builtin/primitive.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../../ast/dumNode.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../../ast/mockNode.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="structnamu_1_1marshal_err.html">    8</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1marshal_err.html">marshalErr</a> {};</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> S&gt; <span class="keyword">class </span><a class="code" href="classnamu_1_1tcpp_bridge.html">tcppBridge</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span><a class="code" href="classnamu_1_1tarr.html">tarr</a>;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> defaultElemType&gt; <span class="keyword">class </span><a class="code" href="classnamu_1_1tarr.html">tarr</a>;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1arr.html">arr</a>;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    template &lt;typename T, typename S, nbool isNode = tifSub&lt;T, node&gt;::is&gt;</div>
@@ -102,8 +102,8 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        }</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; toNative(<a class="code" href="classnamu_1_1node.html">node</a>&amp; it) { <span class="keywordflow">return</span> it; }</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1node.html">mgd</a>&amp; onAddParam() { <span class="keywordflow">return</span> *<span class="keyword">new</span> <a class="code" href="classnamu_1_1dum_node.html">dumNode</a>(); }</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1node.html">mgd</a>&amp; onGetRet() { <span class="keywordflow">return</span> *<span class="keyword">new</span> <a class="code" href="classnamu_1_1dum_node.html">dumNode</a>(); }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1node.html">mgd</a>&amp; onAddParam() { <span class="keywordflow">return</span> *<span class="keyword">new</span> <a class="code" href="classnamu_1_1mock_node.html">mockNode</a>(); }</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1node.html">mgd</a>&amp; onGetRet() { <span class="keywordflow">return</span> *<span class="keyword">new</span> <a class="code" href="classnamu_1_1mock_node.html">mockNode</a>(); }</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">static</span> yes canMarshal();</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    };</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> S&gt;</div>
@@ -158,14 +158,14 @@ $(function() {
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1tcpp_bridge.html">mgd</a>&amp; onGetRet() { <span class="keywordflow">return</span> *<span class="keyword">new</span> <a class="code" href="classnamu_1_1tcpp_bridge.html">mgd</a>(); }</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keyword">static</span> yes canMarshal();</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    };</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> S&gt;</div>
-<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structnamu_1_1tmarshaling_3_01tarr_3_01_t_01_4_00_01_s_00_01true_01_4.html">   91</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tmarshaling.html">tmarshaling</a>&lt;<a class="code" href="classnamu_1_1tarr.html">tarr</a>&lt;T&gt;, S, true&gt; : <span class="keyword">public</span> <a class="code" href="structnamu_1_1meta_if.html">metaIf</a> {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> E, <span class="keyword">typename</span> S&gt;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structnamu_1_1tmarshaling_3_01tarr_3_01_t_00_01_e_01_4_00_01_s_00_01true_01_4.html">   91</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tmarshaling.html">tmarshaling</a>&lt;<a class="code" href="classnamu_1_1tarr.html">tarr</a>&lt;T, E&gt;, S, true&gt; : <span class="keyword">public</span> <a class="code" href="structnamu_1_1meta_if.html">metaIf</a> {</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1arr.html">arr</a> <a class="code" href="classnamu_1_1arr.html">mgd</a>;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1tarr.html">tarr&lt;T&gt;</a> toNative(<a class="code" href="classnamu_1_1node.html">node</a>&amp; it);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1tarr.html">tarr&lt;T, E&gt;</a> toNative(<a class="code" href="classnamu_1_1node.html">node</a>&amp; it);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1tstr.html">str</a> toMgd(E* it);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E2&gt;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1tstr.html">str</a> toMgd(E2* it);</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1arr.html">mgd</a>&amp; onAddParam();</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1arr.html">mgd</a>&amp; onGetRet();</div>
@@ -207,9 +207,9 @@ $(function() {
 <div class="line"><a name="l00136"></a><span class="lineno"><a class="line" href="structnamu_1_1tmarshaling_3_01void_00_01_s_00_01false_01_4.html">  136</a></span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> S&gt; <span class="keyword">struct </span>_nout <a class="code" href="structnamu_1_1tmarshaling.html">tmarshaling</a>&lt;void, S, false&gt; : <span class="keyword">public</span> <a class="code" href="structnamu_1_1tnormal_marshaling.html">tnormalMarshaling</a>&lt;void, S, nVoid&gt; {};</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
 <div class="ttc" id="aclassnamu_1_1arr_html"><div class="ttname"><a href="classnamu_1_1arr.html">namu::arr</a></div><div class="ttdef"><b>Definition:</b> arr.hpp:12</div></div>
-<div class="ttc" id="aclassnamu_1_1dum_node_html"><div class="ttname"><a href="classnamu_1_1dum_node.html">namu::dumNode</a></div><div class="ttdef"><b>Definition:</b> dumNode.hpp:7</div></div>
+<div class="ttc" id="aclassnamu_1_1mock_node_html"><div class="ttname"><a href="classnamu_1_1mock_node.html">namu::mockNode</a></div><div class="ttdef"><b>Definition:</b> mockNode.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1n_void_html"><div class="ttname"><a href="classnamu_1_1n_void.html">namu::nVoid</a></div><div class="ttdef"><b>Definition:</b> nVoid.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:20</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
 <div class="ttc" id="aclassnamu_1_1tarr_html"><div class="ttname"><a href="classnamu_1_1tarr.html">namu::tarr</a></div><div class="ttdef"><b>Definition:</b> tarr.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1tcpp_bridge_html"><div class="ttname"><a href="classnamu_1_1tcpp_bridge.html">namu::tcppBridge</a></div><div class="ttdef"><b>Definition:</b> tcppBridge.hpp:16</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>

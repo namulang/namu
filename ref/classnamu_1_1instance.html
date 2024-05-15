@@ -86,20 +86,21 @@ Inheritance diagram for namu::instance:</div>
 <area href="classnamu_1_1clonable.html" alt="namu::clonable" shape="rect" coords="201,0,392,24"/>
 <area href="classnamu_1_1tnucontainer.html" alt="namu::tnucontainer&lt; T &gt;" shape="rect" coords="301,112,492,136"/>
 <area href="classnamu_1_1tnucontainer.html" alt="namu::tnucontainer&lt; nInt, nInt &gt;" shape="rect" coords="301,168,492,192"/>
-<area href="classnamu_1_1def_block.html" alt="namu::defBlock" shape="rect" coords="301,224,492,248"/>
-<area href="structnamu_1_1err.html" alt="namu::err" shape="rect" coords="301,280,492,304"/>
-<area href="classnamu_1_1err_report.html" alt="namu::errReport" shape="rect" coords="301,336,492,360"/>
-<area href="classnamu_1_1flag.html" alt="namu::flag" shape="rect" coords="301,392,492,416"/>
-<area href="classnamu_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="namu::node" shape="rect" coords="301,448,492,472"/>
-<area href="classnamu_1_1pack_loading.html" alt="namu::packLoading" shape="rect" coords="301,504,492,528"/>
-<area href="classnamu_1_1param.html" alt="namu::param" shape="rect" coords="301,560,492,584"/>
-<area href="classnamu_1_1ret_state.html" alt="namu::retState" shape="rect" coords="301,616,492,640"/>
-<area href="classnamu_1_1scope_stack.html" alt="namu::scopeStack" shape="rect" coords="301,672,492,696"/>
+<area href="classnamu_1_1callstack.html" alt="namu::callstack" shape="rect" coords="301,224,492,248"/>
+<area href="classnamu_1_1calltrace.html" alt="namu::calltrace" shape="rect" coords="301,280,492,304"/>
+<area href="classnamu_1_1def_block.html" alt="namu::defBlock" shape="rect" coords="301,336,492,360"/>
+<area href="classnamu_1_1err_report.html" alt="namu::errReport" shape="rect" coords="301,392,492,416"/>
+<area href="classnamu_1_1flag.html" alt="namu::flag" shape="rect" coords="301,448,492,472"/>
+<area href="classnamu_1_1loop_expr_1_1loop.html" alt="namu::loopExpr::loop" shape="rect" coords="301,504,492,528"/>
+<area href="classnamu_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="namu::node" shape="rect" coords="301,560,492,584"/>
+<area href="classnamu_1_1pack_loading.html" alt="namu::packLoading" shape="rect" coords="301,616,492,640"/>
+<area href="classnamu_1_1param.html" alt="namu::param" shape="rect" coords="301,672,492,696"/>
 <area href="classnamu_1_1sobj.html" alt="namu::sobj" shape="rect" coords="301,728,492,752"/>
-<area href="classnamu_1_1src_supply.html" alt="namu::srcSupply" shape="rect" coords="301,784,492,808"/>
-<area href="classnamu_1_1tnbicontainer.html" alt="namu::tnbicontainer&lt; K, V &gt;" shape="rect" coords="301,840,492,864"/>
-<area href="classnamu_1_1tnucontainer.html" alt="namu::tnucontainer&lt; T, R &gt;" shape="rect" coords="301,896,492,920"/>
-<area href="structnamu_1_1tprior.html" alt="namu::tprior&lt; T &gt;" shape="rect" coords="301,952,492,976"/>
+<area href="classnamu_1_1src.html" alt="namu::src" shape="rect" coords="301,784,492,808"/>
+<area href="classnamu_1_1src_supply.html" alt="namu::srcSupply" shape="rect" coords="301,840,492,864"/>
+<area href="classnamu_1_1tnbicontainer.html" alt="namu::tnbicontainer&lt; K, V &gt;" shape="rect" coords="301,896,492,920"/>
+<area href="classnamu_1_1tnucontainer.html" alt="namu::tnucontainer&lt; T, R &gt;" shape="rect" coords="301,952,492,976"/>
+<area href="structnamu_1_1tprior.html" alt="namu::tprior&lt; T &gt;" shape="rect" coords="301,1008,492,1032"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -170,9 +171,9 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a1b3d8d988bc1e3dce587d2065d6f7a71 inherit pub_methods_classnamu_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a1b3d8d988bc1e3dce587d2065d6f7a71"></a>
 virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () const =0</td></tr>
 <tr class="separator:a1b3d8d988bc1e3dce587d2065d6f7a71 inherit pub_methods_classnamu_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abecd1e8dda9cd69979ba7349471bebc0 inherit pub_methods_classnamu_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="abecd1e8dda9cd69979ba7349471bebc0"></a>
-virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>deepClone</b> () const</td></tr>
-<tr class="separator:abecd1e8dda9cd69979ba7349471bebc0 inherit pub_methods_classnamu_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95583d6b938f6aa88afd835e9a67a70c inherit pub_methods_classnamu_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a95583d6b938f6aa88afd835e9a67a70c"></a>
+virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>cloneDeep</b> () const</td></tr>
+<tr class="separator:a95583d6b938f6aa88afd835e9a67a70c inherit pub_methods_classnamu_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>

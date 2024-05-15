@@ -87,12 +87,9 @@ Inheritance diagram for namu::tprior&lt; T &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a619b915368e33594f992030d368cbc88"><td class="memItemLeft" align="right" valign="top"><a id="a619b915368e33594f992030d368cbc88"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>tprior</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;newElem, priority newLv)</td></tr>
-<tr class="separator:a619b915368e33594f992030d368cbc88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af67eb3a67daa6ca8c7350b4b05927e4d"><td class="memItemLeft" align="right" valign="top"><a id="af67eb3a67daa6ca8c7350b4b05927e4d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>tprior</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;newElem, const <a class="el" href="classnamu_1_1node.html">node</a> &amp;newOwner, priority newLv)</td></tr>
-<tr class="separator:af67eb3a67daa6ca8c7350b4b05927e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15d48a138036426a00303c651b3b1a3e"><td class="memItemLeft" align="right" valign="top"><a id="a15d48a138036426a00303c651b3b1a3e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>tprior</b> (const <a class="el" href="classnamu_1_1node.html">node</a> &amp;newElem, priorType <a class="el" href="classnamu_1_1type.html">type</a>, ncnt lv)</td></tr>
+<tr class="separator:a15d48a138036426a00303c651b3b1a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac78747126a9b87a4be46fa521d9e04ea"><td class="memItemLeft" align="right" valign="top"><a id="ac78747126a9b87a4be46fa521d9e04ea"></a>
 T *&#160;</td><td class="memItemRight" valign="bottom"><b>operator-&gt;</b> ()</td></tr>
 <tr class="separator:ac78747126a9b87a4be46fa521d9e04ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,21 +164,21 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a1b3d8d988bc1e3dce587d2065d6f7a71 inherit pub_methods_classnamu_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a1b3d8d988bc1e3dce587d2065d6f7a71"></a>
 virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () const =0</td></tr>
 <tr class="separator:a1b3d8d988bc1e3dce587d2065d6f7a71 inherit pub_methods_classnamu_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abecd1e8dda9cd69979ba7349471bebc0 inherit pub_methods_classnamu_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="abecd1e8dda9cd69979ba7349471bebc0"></a>
-virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>deepClone</b> () const</td></tr>
-<tr class="separator:abecd1e8dda9cd69979ba7349471bebc0 inherit pub_methods_classnamu_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95583d6b938f6aa88afd835e9a67a70c inherit pub_methods_classnamu_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a95583d6b938f6aa88afd835e9a67a70c"></a>
+virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>cloneDeep</b> () const</td></tr>
+<tr class="separator:a95583d6b938f6aa88afd835e9a67a70c inherit pub_methods_classnamu_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:aebb5576c47c0dd0d8fca793428ca1218"><td class="memItemLeft" align="right" valign="top"><a id="aebb5576c47c0dd0d8fca793428ca1218"></a>
 <a class="el" href="classnamu_1_1tstr.html">tstr</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>elem</b></td></tr>
 <tr class="separator:aebb5576c47c0dd0d8fca793428ca1218"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f1dc2d022f93620258a97b800a0d695"><td class="memItemLeft" align="right" valign="top"><a id="a9f1dc2d022f93620258a97b800a0d695"></a>
-<a class="el" href="classnamu_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>owner</b></td></tr>
-<tr class="separator:a9f1dc2d022f93620258a97b800a0d695"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a135163213475a4f299a47679bd33b31b"><td class="memItemLeft" align="right" valign="top"><a id="a135163213475a4f299a47679bd33b31b"></a>
-priority&#160;</td><td class="memItemRight" valign="bottom"><b>lv</b></td></tr>
-<tr class="separator:a135163213475a4f299a47679bd33b31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0c9d7a90b027ca76fe99f67251885a7"><td class="memItemLeft" align="right" valign="top"><a id="ac0c9d7a90b027ca76fe99f67251885a7"></a>
+priorType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
+<tr class="separator:ac0c9d7a90b027ca76fe99f67251885a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dd37a9f0c40ac762416ccd13d738883"><td class="memItemLeft" align="right" valign="top"><a id="a7dd37a9f0c40ac762416ccd13d738883"></a>
+ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>lv</b></td></tr>
+<tr class="separator:a7dd37a9f0c40ac762416ccd13d738883"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

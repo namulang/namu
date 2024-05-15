@@ -87,7 +87,7 @@ $(function() {
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">const</span> std::string ME = <span class="stringliteral">&quot;me&quot;</span>;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        priority prioritize(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        priorType prioritize(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classnamu_1_1base_func.html#ac316e87db008720afeb93bed70ff05a8">   27</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classnamu_1_1params.html">params</a>&amp; <a class="code" href="classnamu_1_1base_func.html#ac316e87db008720afeb93bed70ff05a8">getParams</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
@@ -97,7 +97,7 @@ $(function() {
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        nbool _isNatureNumber(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; it) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        priority _prioritize(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1param.html">param</a>, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; arg) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        priorType _prioritize(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; <a class="code" href="classnamu_1_1param.html">param</a>, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; arg) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    };</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnarr.html">tnarr&lt;baseFunc&gt;</a> <a class="code" href="classnamu_1_1tnarr.html">funcs</a>;</div>
@@ -108,9 +108,9 @@ $(function() {
 <div class="ttc" id="aclassnamu_1_1base_func_html_a73e6a05d7790269a6bf007c98ac2b1b4"><div class="ttname"><a href="classnamu_1_1base_func.html#a73e6a05d7790269a6bf007c98ac2b1b4">namu::baseFunc::getRet</a></div><div class="ttdeci">virtual str getRet() const =0</div></div>
 <div class="ttc" id="aclassnamu_1_1base_func_html_ac316e87db008720afeb93bed70ff05a8"><div class="ttname"><a href="classnamu_1_1base_func.html#ac316e87db008720afeb93bed70ff05a8">namu::baseFunc::getParams</a></div><div class="ttdeci">virtual const params &amp; getParams() const</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:20</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
 <div class="ttc" id="aclassnamu_1_1param_html"><div class="ttname"><a href="classnamu_1_1param.html">namu::param</a></div><div class="ttdef"><b>Definition:</b> param.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1params_html"><div class="ttname"><a href="classnamu_1_1params.html">namu::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:7</div></div>
+<div class="ttc" id="aclassnamu_1_1params_html"><div class="ttname"><a href="classnamu_1_1params.html">namu::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1tnarr_html"><div class="ttname"><a href="classnamu_1_1tnarr.html">namu::tnarr</a></div><div class="ttdef"><b>Definition:</b> tnarr.hpp:9</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
