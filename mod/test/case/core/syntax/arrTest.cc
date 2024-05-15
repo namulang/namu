@@ -700,18 +700,19 @@ TEST_F(arrTest, outOfBoundExOccurs) {
             print(a.foo())
     )SRC").shouldVerified(true);
 
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_TRUE(nul(res.cast<nint>())); // which means, program ended with error code.
+
     {
-        auto& a = getSubPack().sub("A");
+        auto& A = getSubPack().sub("A"); // A.arr is mockNode
+        str a((node*) A.clone()); // now, a.arr is not mockNode, but obj.
         threadUse th;
-        str res = a.run("foo");
+        str res = a->run("foo");
         ASSERT_TRUE(res);
         err& cast = res->cast<err>();
         ASSERT_FALSE(nul(cast));
         ASSERT_EQ(cast.fType, logLv::ERR);
         ASSERT_EQ(cast.code, errCode::OUT_OF_RANGE);
     }
-
-    str res = run();
-    ASSERT_TRUE(res);
-    ASSERT_NE(res.cast<nint>(), 0); // which means, program ended with error code.
 }
