@@ -32,7 +32,7 @@ namespace {
 }
 
 TEST_F(bridgeCPPTest, testNormalWrapping) {
-    tstr<tcppBridge<kniz>> bridge(tcppBridge<kniz>::def(new kniz())
+    tstr<tcppBridge<kniz>> bridge(tcppBridge<kniz>::def()
         .func<int, string>("say", &kniz::say));
         // TODO: how to handle void return & void parameter
         //.func<void, void>(&kniz::say);
@@ -45,7 +45,7 @@ TEST_F(bridgeCPPTest, testNormalWrapping) {
 }
 
 TEST_F(bridgeCPPTest, testFuncDoesntHaveObjNegative) {
-    tstr<tcppBridge<kniz>> bridge(tcppBridge<kniz>::def(new kniz())
+    tstr<tcppBridge<kniz>> bridge(tcppBridge<kniz>::def()
         .func<int, string>("say", &kniz::say));
         // TODO: how to handle void return & void parameter
         //.func<void, void>(&kniz::say);
@@ -62,7 +62,7 @@ TEST_F(bridgeCPPTest, testFuncDoesntHaveObjNegative) {
 }
 
 TEST_F(bridgeCPPTest, testHasName) {
-    tstr<obj> bridge(tcppBridge<kniz>::def(new kniz())
+    tstr<obj> bridge(tcppBridge<kniz>::def()
         .func<int, string>("say", &kniz::say));
     nmap m;
     ASSERT_TRUE(bridge);
@@ -93,11 +93,11 @@ namespace {
 }
 
 TEST_F(bridgeCPPTest, passObj) {
-    str winBridge(tcppBridge<window>::def(new window())
+    str winBridge(tcppBridge<window>::def()
             .func("getX", &window::getX)
             .func("getY", &window::getY)
             .func("setY", &window::setY));
-    str winOpenGL(tcppBridge<openGL>::def(new openGL())
+    str winOpenGL(tcppBridge<openGL>::def()
             .func("init", &openGL::init));
 
     winBridge->run("setY", args{ narr{*new nInt(20)}});
@@ -107,12 +107,12 @@ TEST_F(bridgeCPPTest, passObj) {
 }
 
 TEST_F(bridgeCPPTest, returnObj) {
-    str winBridge(tcppBridge<window>::def(new window())
+    str winBridge(tcppBridge<window>::def()
             .func("getX", &window::getX)
             .func("getY", &window::getY)
             .func("setY", &window::setY)
             .func("new1", &window::new1));
-    str winOpenGL(tcppBridge<openGL>::def(new openGL())
+    str winOpenGL(tcppBridge<openGL>::def()
             .func("init", &openGL::init));
 
     str newWin = winBridge->run("new1", args{ narr{*new nInt(15)}});
@@ -135,11 +135,11 @@ namespace {
 }
 
 TEST_F(bridgeCPPTest, passArray) {
-    str mgrBridge(tcppBridge<windowManager>::def(new windowManager())
+    str mgrBridge(tcppBridge<windowManager>::def()
             .func("add", &windowManager::add)
             .func("del", &windowManager::del));
 
-    tstr<tcppBridge<narr>> narrBridge(tcppBridge<narr>::def(new narr()));
+    tstr<tcppBridge<narr>> narrBridge(tcppBridge<narr>::def());
     narrBridge->get().add(*new nInt(0));
     narrBridge->get().add(*new nInt(1));
     narrBridge->get().add(*new nInt(2));
@@ -175,7 +175,7 @@ TEST_F(bridgeCPPTest, passRawObj) {
     myObj o1;
     o1.age = 5;
 
-    str stg(tcppBridge<stage>::def(new stage())
+    str stg(tcppBridge<stage>::def()
         .func("foo", &stage::foo));
     str res = stg->run("foo", args{narr{o1}});
     ASSERT_TRUE(res);
@@ -217,7 +217,7 @@ TEST_F(bridgeCPPTest, passArr) {
     ASSERT_EQ(a.add(*yourobj), false);
     a.add(new myObj(3));
 
-    str testobj(tcppBridge<testObj>::def(new testObj())
+    str testobj(tcppBridge<testObj>::def()
         .func("updateLen", &testObj::updateLen)
         .func("sumOfLen", &testObj::sumOfLen));
     str res = testobj->run("updateLen", args{narr{a}});

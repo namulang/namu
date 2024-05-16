@@ -44,6 +44,7 @@ namespace namu {
 
     public:
         // TODO: remove parameter of this func, making 'real' should be handled as a ctor, not here.
+        static me& def() { return def(new T()); }
         static me& def(T* real) {
             me* ret = new me(real);
             // TODO: need to handle ctor with argument properly.
