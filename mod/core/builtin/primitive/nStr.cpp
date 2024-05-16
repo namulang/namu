@@ -13,8 +13,8 @@
 namespace namu {
 
     namespace {
-        class lenFunc : public APIBridge<nStr, nInt> {
-            typedef APIBridge<nStr, nInt> __super__;
+        class lenFunc : public tApiBridge<nStr, nInt> {
+            typedef tApiBridge<nStr, nInt> __super__;
             NAMU(CLASS(lenFunc, __super__))
 
         protected:
@@ -23,8 +23,8 @@ namespace namu {
             }
         };
 
-        class getFunc : public APIBridge<nStr, nChar> {
-            typedef APIBridge<nStr, nStr> __super__;
+        class getFunc : public tApiBridge<nStr, nChar> {
+            typedef tApiBridge<nStr, nStr> __super__;
             NAMU(CLASS(getFunc, __super__))
 
         protected:
@@ -48,8 +48,8 @@ namespace namu {
             }
         };
 
-        class getSeqFunc : public APIBridge<nStr, nStr> {
-            typedef APIBridge<nStr, nStr> __super__;
+        class getSeqFunc : public tApiBridge<nStr, nStr> {
+            typedef tApiBridge<nStr, nStr> __super__;
             NAMU(CLASS(getSeqFunc, __super__))
 
         protected:
