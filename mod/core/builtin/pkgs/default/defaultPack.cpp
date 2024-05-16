@@ -5,6 +5,7 @@
 #include "../../../loader/err.hpp"
 #include "../../../bridge/cpp/tcppBridge.hpp"
 #include "../../../bridge/cpp/tcppBridgeFunc.inl"
+#include "../../../loader/err.hpp"
 
 namespace namu {
     NAMU(DEF_ME(defaultPack))
@@ -14,9 +15,7 @@ namespace namu {
         if(inner.len() <= 0) {
             inner.add("input", new inputFunc());
             inner.add("print", new printFunc<nStr>());
-            inner.add("err", tcppBridge<err>::def(new err(logLv::ERR, errCode::UNKNOWN))
-                .func("log", &err::log)
-                .func("logStack", &err::logStack));
+            inner.add("err", err::singletone());
         }
         return inner;
     }

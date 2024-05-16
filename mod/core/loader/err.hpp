@@ -16,8 +16,8 @@ namespace namu {
 
     class pos;
     class scopes;
-    struct _nout err : public instance, public dumpable {
-        NAMU(CLASS(err, instance))
+    struct _nout err : public baseObj, public dumpable {
+        NAMU(CLASS(err, baseObj))
 
     public:
         err(logLv::level t, nint newCode);
@@ -30,12 +30,20 @@ namespace namu {
         nbool operator!=(const me& rhs) const;
 
     public:
+        using super::subs;
+        nbicontainer& subs() override;
+        using super::run;
+        str run(const args& a) override;
+
+        const baseObj& getOrigin() const override;
+
         virtual void log() const;
         void dbgLog() const;
 
         const callstack& getStack() const;
         void logStack() const;
 
+        static const err& singletone();
         static const std::string& getErrMsg(errCode code);
         static const std::string& getErrName(errCode code);
         static err* newErr(int code, ...);

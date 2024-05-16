@@ -2,6 +2,8 @@
 #include "err.hpp"
 #include "../frame/frame.hpp"
 #include "../frame/thread.hpp"
+#include "../bridge/cpp/tApiBridge.hpp"
+#include "../ast/defaultCopyCtor.hpp"
 
 namespace namu {
 
@@ -9,6 +11,49 @@ namespace namu {
 
     namespace {
         constexpr nint MAX_BUF = 512;
+
+        class logFunc : public tApiBridge<err, nVoid> {
+            typedef tApiBridge<err, void> __super9;
+            NAMU(CLASS(logFunc, __super9))
+
+        public:
+            const params& getParams() const override {
+                static params inner;
+                return inner;
+            }
+
+        protected:
+            str _onRun(err& cast, const args& a) const override {
+                if(a.len() > 0) return str();
+
+                cast.log();
+                return str(nVoid::singletone());
+            }
+        };
+
+        class logStackFunc : public tApiBridge<err, nVoid> {
+            typedef tApiBridge<err, void> __super10;
+            NAMU(CLASS(logStackFunc, __super10))
+
+        public:
+            const params& getParams() const override {
+                static params inner;
+                return inner;
+            }
+
+        protected:
+            str _onRun(err& cast, const args& a) const override {
+                if(a.len() > 0) return str();
+
+                cast.logStack();
+                return str(nVoid::singletone());
+            }
+        };
+    }
+
+    const err& me::singletone() {
+        static me inner(logLv::ERR, errCode::UNKNOWN);
+        return inner;
     }
 
     const std::string& err::getErrMsg(errCode code) {
@@ -130,6 +175,31 @@ namespace namu {
     nbool me::operator!=(const me& rhs) const {
         return !operator==(rhs);
     }
+
+    nbicontainer& me::subs() {
+        static scope inner(singletone());
+        if(inner.len() <= 0) {
+            inner.add("log", new logFunc());
+            inner.add("logStack", new logStackFunc());
+            inner.add(baseObj::CTOR_NAME, new defaultCopyCtor(singletone()));
+        }
+        return inner;
+    }
+
+    str me::run(const args& a) {
+        tpriorities<baseFunc> p = subAll<baseFunc>(baseObj::CTOR_NAME, a);
+        auto matches = p.getMatches();
+        switch(matches.len()) {
+            case 1: return run(baseObj::CTOR_NAME, a);
+            case 0: return NAMU_W("there is no such ctor."), str();
+        }
+        /*// TODO: 1. change err management module to use 'err' class, not errCode.
+          //       2. let it log all ambigious funcs here.
+          return NAMU_W("")*/
+        return NAMU_E("ambigious call found: %s", "TODO:"), str();
+    }
+
+    const baseObj& me::getOrigin() const { return singletone(); }
 
     void me::log() const {
         using platformAPI::foreColor;
