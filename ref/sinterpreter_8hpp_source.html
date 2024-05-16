@@ -73,25 +73,25 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../ast.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnamu_1_1sinterpreter.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1sinterpreter.html">sinterpreter</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NAMU_ME(<a class="code" href="classnamu_1_1sinterpreter.html">sinterpreter</a>)</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnm_1_1sinterpreter.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1sinterpreter.html">sinterpreter</a> {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NM_ME(<a class="code" href="classnm_1_1sinterpreter.html">sinterpreter</a>)</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1tstr.html">tstr&lt;sobj&gt;</a> interp(<span class="keyword">const</span> nchar* script);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1tstr.html">tstr&lt;sobj&gt;</a> interp(<span class="keyword">const</span> std::string&amp; script);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1tstr.html">tstr&lt;sobj&gt;</a> interpFile(<span class="keyword">const</span> nchar* path);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1tstr.html">tstr&lt;sobj&gt;</a> interpFile(<span class="keyword">const</span> std::string&amp; path);</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnm_1_1tstr.html">tstr&lt;sobj&gt;</a> interp(<span class="keyword">const</span> nchar* script);</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnm_1_1tstr.html">tstr&lt;sobj&gt;</a> interp(<span class="keyword">const</span> std::string&amp; script);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnm_1_1tstr.html">tstr&lt;sobj&gt;</a> interpFile(<span class="keyword">const</span> nchar* path);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnm_1_1tstr.html">tstr&lt;sobj&gt;</a> interpFile(<span class="keyword">const</span> std::string&amp; path);</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::string&amp; getFileName();</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">static</span> std::string _extractFileName(<span class="keyword">const</span> std::string&amp; path);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1tstr.html">tstr&lt;sobj&gt;</a> _runParser();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnm_1_1tstr.html">tstr&lt;sobj&gt;</a> _runParser();</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    };</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1sinterpreter_html"><div class="ttname"><a href="classnamu_1_1sinterpreter.html">namu::sinterpreter</a></div><div class="ttdef"><b>Definition:</b> sinterpreter.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1sinterpreter_html"><div class="ttname"><a href="classnm_1_1sinterpreter.html">nm::sinterpreter</a></div><div class="ttdef"><b>Definition:</b> sinterpreter.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

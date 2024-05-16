@@ -73,20 +73,20 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnamu_1_1stream.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1stream.html">stream</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NAMU_ME(<a class="code" href="classnamu_1_1stream.html">stream</a>)</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnm_1_1stream.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1stream.html">stream</a> {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NM_ME(<a class="code" href="classnm_1_1stream.html">stream</a>)</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <a class="code" href="classnamu_1_1stream.html">stream</a>(nbool isEnable = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="classnamu_1_1stream.html">stream</a>();</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <a class="code" href="classnm_1_1stream.html">stream</a>(nbool isEnable = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="classnm_1_1stream.html">stream</a>();</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classnamu_1_1stream.html#a10b0d9da0d3beb3d4eedf6ca672d2858">   16</a></span>&#160;        <span class="keyword">virtual</span> nbool <a class="code" href="classnamu_1_1stream.html#a10b0d9da0d3beb3d4eedf6ca672d2858">logBypass</a>(<span class="keyword">const</span> nchar* message);</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classnm_1_1stream.html#a21f40773d9f143e709662086c5581c6e">   16</a></span>&#160;        <span class="keyword">virtual</span> nbool <a class="code" href="classnm_1_1stream.html#a21f40773d9f143e709662086c5581c6e">logBypass</a>(<span class="keyword">const</span> nchar* message);</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        nbool isNull() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">virtual</span> nbool isEnable() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classnamu_1_1stream.html#a8a9926842b21037d6d8789ed6d194e15">   20</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classnamu_1_1stream.html#a8a9926842b21037d6d8789ed6d194e15">setEnable</a>(nbool isEnable);</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classnm_1_1stream.html#a0f75abbdb37218ebecb5491e0b574b62">   20</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classnm_1_1stream.html#a0f75abbdb37218ebecb5491e0b574b62">setEnable</a>(nbool isEnable);</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> std::string&amp; getName() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">virtual</span> nbool init();</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">virtual</span> nbool isInit() <span class="keyword">const</span>;</div>
@@ -96,9 +96,9 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        nbool _isEnable;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    };</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1stream_html"><div class="ttname"><a href="classnamu_1_1stream.html">namu::stream</a></div><div class="ttdef"><b>Definition:</b> stream.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1stream_html_a10b0d9da0d3beb3d4eedf6ca672d2858"><div class="ttname"><a href="classnamu_1_1stream.html#a10b0d9da0d3beb3d4eedf6ca672d2858">namu::stream::logBypass</a></div><div class="ttdeci">virtual nbool logBypass(const nchar *message)</div></div>
-<div class="ttc" id="aclassnamu_1_1stream_html_a8a9926842b21037d6d8789ed6d194e15"><div class="ttname"><a href="classnamu_1_1stream.html#a8a9926842b21037d6d8789ed6d194e15">namu::stream::setEnable</a></div><div class="ttdeci">virtual void setEnable(nbool isEnable)</div></div>
+<div class="ttc" id="aclassnm_1_1stream_html"><div class="ttname"><a href="classnm_1_1stream.html">nm::stream</a></div><div class="ttdef"><b>Definition:</b> stream.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1stream_html_a0f75abbdb37218ebecb5491e0b574b62"><div class="ttname"><a href="classnm_1_1stream.html#a0f75abbdb37218ebecb5491e0b574b62">nm::stream::setEnable</a></div><div class="ttdeci">virtual void setEnable(nbool isEnable)</div></div>
+<div class="ttc" id="aclassnm_1_1stream_html_a21f40773d9f143e709662086c5581c6e"><div class="ttname"><a href="classnm_1_1stream.html#a21f40773d9f143e709662086c5581c6e">nm::stream::logBypass</a></div><div class="ttdeci">virtual nbool logBypass(const nchar *message)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

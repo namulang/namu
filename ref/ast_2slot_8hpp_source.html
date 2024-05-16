@@ -75,69 +75,69 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../loader/errReport.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;obj.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">class </span>visitor;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classnamu_1_1slot.html">   11</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1slot.html">slot</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1node.html">node</a> {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1slot.html">slot</a>, <a class="code" href="classnamu_1_1node.html">node</a>), VISIT())</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classnm_1_1slot.html">   11</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1slot.html">slot</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1node.html">node</a> {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1slot.html">slot</a>, <a class="code" href="classnm_1_1node.html">node</a>), VISIT())</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classnamu_1_1slot.html">slot</a>(<span class="keyword">const</span> <a class="code" href="structnamu_1_1manifest.html">manifest</a>&amp; <a class="code" href="structnamu_1_1manifest.html">manifest</a>);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classnamu_1_1slot.html">slot</a>(<span class="keyword">const</span> <a class="code" href="structnamu_1_1manifest.html">manifest</a>&amp; <a class="code" href="structnamu_1_1manifest.html">manifest</a>, <span class="keyword">const</span> <a class="code" href="classnamu_1_1obj.html">obj</a>&amp; pack);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classnm_1_1slot.html">slot</a>(<span class="keyword">const</span> <a class="code" href="structnm_1_1manifest.html">manifest</a>&amp; <a class="code" href="structnm_1_1manifest.html">manifest</a>);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classnm_1_1slot.html">slot</a>(<span class="keyword">const</span> <a class="code" href="structnm_1_1manifest.html">manifest</a>&amp; <a class="code" href="structnm_1_1manifest.html">manifest</a>, <span class="keyword">const</span> <a class="code" href="classnm_1_1obj.html">obj</a>&amp; pack);</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="structnamu_1_1manifest.html">manifest</a>&amp; getManifest();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">const</span> <a class="code" href="structnamu_1_1manifest.html">manifest</a>&amp; getManifest() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="structnm_1_1manifest.html">manifest</a>&amp; getManifest();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">const</span> <a class="code" href="structnm_1_1manifest.html">manifest</a>&amp; getManifest() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        nbool isValid() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnamu_1_1obj.html">obj</a>&amp; getPack();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1obj.html">obj</a>&amp; getPack() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getPack())</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnm_1_1obj.html">obj</a>&amp; getPack();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1obj.html">obj</a>&amp; getPack() <span class="keyword">const</span> NM_CONST_FUNC(getPack())</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">void</span> rel() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">void</span> addDependent(me&amp; dependent);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">tnarr&lt;me&gt;</a>&amp; getDependents() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1tnarr.html">tnarr&lt;me&gt;</a>&amp; getDependents() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">using</span> super::subs;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classnamu_1_1tnchain.html">scope</a>&amp; subs() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classnm_1_1tnchain.html">scope</a>&amp; subs() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        priorType prioritize(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        priorType prioritize(<span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; a) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">using</span> super::run;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classnamu_1_1slot.html#a50c34983f46fa9f76580ffaa5baa7c4b">   36</a></span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> <a class="code" href="classnamu_1_1slot.html#a50c34983f46fa9f76580ffaa5baa7c4b">getEval</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classnm_1_1slot.html#afc9ab78c448c1a10b8c01483f4ed91bc">   36</a></span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> <a class="code" href="classnm_1_1slot.html#afc9ab78c448c1a10b8c01483f4ed91bc">getEval</a>() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">virtual</span> nbool _invalidate();</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">void</span> _setValid(nbool valid);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnamu_1_1tstr.html">str</a> _onRunSub(<a class="code" href="classnamu_1_1node.html">node</a>&amp; sub, <span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnm_1_1tstr.html">str</a> _onRunSub(<a class="code" href="classnm_1_1node.html">node</a>&amp; sub, <span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">void</span> _rel();</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;obj&gt;</a> _pak;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr&lt;obj&gt;</a> _pak;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="structnamu_1_1manifest.html">manifest</a> _manifest;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="structnm_1_1manifest.html">manifest</a> _manifest;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        nbool _isValid;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <a class="code" href="classnamu_1_1tnarr.html">tnarr&lt;me&gt;</a> _dependents;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">tnarr&lt;me&gt;</a> _dependents;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    };</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnmap.html">tnmap&lt;std::string, slot&gt;</a> <a class="code" href="classnamu_1_1tnmap.html">slots</a>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnchain.html">tnchain&lt;std::string, slot&gt;</a> <a class="code" href="classnamu_1_1tnchain.html">slotChain</a>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnbicontainer.html">tnbicontainer&lt;std::string, slot&gt;</a> <a class="code" href="classnamu_1_1tnbicontainer.html">slotContainer</a>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tnmap.html">tnmap&lt;std::string, slot&gt;</a> <a class="code" href="classnm_1_1tnmap.html">slots</a>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tnchain.html">tnchain&lt;std::string, slot&gt;</a> <a class="code" href="classnm_1_1tnchain.html">slotChain</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tnbicontainer.html">tnbicontainer&lt;std::string, slot&gt;</a> <a class="code" href="classnm_1_1tnbicontainer.html">slotContainer</a>;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
-<div class="ttc" id="aclassnamu_1_1obj_html"><div class="ttname"><a href="classnamu_1_1obj.html">namu::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:13</div></div>
-<div class="ttc" id="aclassnamu_1_1slot_html"><div class="ttname"><a href="classnamu_1_1slot.html">namu::slot</a></div><div class="ttdef"><b>Definition:</b> slot.hpp:11</div></div>
-<div class="ttc" id="aclassnamu_1_1slot_html_a50c34983f46fa9f76580ffaa5baa7c4b"><div class="ttname"><a href="classnamu_1_1slot.html#a50c34983f46fa9f76580ffaa5baa7c4b">namu::slot::getEval</a></div><div class="ttdeci">str getEval() const override</div></div>
-<div class="ttc" id="aclassnamu_1_1tnarr_html"><div class="ttname"><a href="classnamu_1_1tnarr.html">namu::tnarr&lt; me &gt;</a></div></div>
-<div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:9</div></div>
-<div class="ttc" id="aclassnamu_1_1tnchain_html"><div class="ttname"><a href="classnamu_1_1tnchain.html">namu::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></div></div>
-<div class="ttc" id="aclassnamu_1_1tnmap_html"><div class="ttname"><a href="classnamu_1_1tnmap.html">namu::tnmap</a></div><div class="ttdef"><b>Definition:</b> tnmap.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
-<div class="ttc" id="astructnamu_1_1manifest_html"><div class="ttname"><a href="structnamu_1_1manifest.html">namu::manifest</a></div><div class="ttdef"><b>Definition:</b> manifest.hpp:22</div></div>
+<div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
+<div class="ttc" id="aclassnm_1_1obj_html"><div class="ttname"><a href="classnm_1_1obj.html">nm::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:13</div></div>
+<div class="ttc" id="aclassnm_1_1slot_html"><div class="ttname"><a href="classnm_1_1slot.html">nm::slot</a></div><div class="ttdef"><b>Definition:</b> slot.hpp:11</div></div>
+<div class="ttc" id="aclassnm_1_1slot_html_afc9ab78c448c1a10b8c01483f4ed91bc"><div class="ttname"><a href="classnm_1_1slot.html#afc9ab78c448c1a10b8c01483f4ed91bc">nm::slot::getEval</a></div><div class="ttdeci">str getEval() const override</div></div>
+<div class="ttc" id="aclassnm_1_1tnarr_html"><div class="ttname"><a href="classnm_1_1tnarr.html">nm::tnarr&lt; me &gt;</a></div></div>
+<div class="ttc" id="aclassnm_1_1tnbicontainer_html"><div class="ttname"><a href="classnm_1_1tnbicontainer.html">nm::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1tnchain_html"><div class="ttname"><a href="classnm_1_1tnchain.html">nm::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></div></div>
+<div class="ttc" id="aclassnm_1_1tnmap_html"><div class="ttname"><a href="classnm_1_1tnmap.html">nm::tnmap</a></div><div class="ttdef"><b>Definition:</b> tnmap.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr&lt; node &gt;</a></div></div>
+<div class="ttc" id="astructnm_1_1manifest_html"><div class="ttname"><a href="structnm_1_1manifest.html">nm::manifest</a></div><div class="ttdef"><b>Definition:</b> manifest.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

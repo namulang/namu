@@ -74,7 +74,7 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// nested class of tbicontainable.hpp:</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">//  this file allows to be refered by &#39;tbicontainable.hpp&#39; file only.</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="classiter.html">    5</a></span>&#160;<span class="keyword">class </span><a class="code" href="classiter.html">iter</a> : <span class="keyword">public</span> <a class="code" href="classiterable.html">iterable</a>, <span class="keyword">public</span> clonable, <span class="keyword">public</span> typeProvidable {</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    NAMU(CLASS(<a class="code" href="classiter.html">iter</a>))</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    NM(CLASS(<a class="code" href="classiter.html">iter</a>))</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classiteration.html">iteration</a>;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> K1, <span class="keyword">typename</span> V1, <span class="keyword">typename</span> defaultContainer1&gt; <span class="keyword">friend</span> <span class="keyword">class </span>tnchain;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> K1, <span class="keyword">typename</span> V1, <span class="keyword">typename</span> TACTIC&gt; <span class="keyword">friend</span> <span class="keyword">class </span>tnmap;</div>
@@ -91,8 +91,8 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    me&amp; operator+=(ncnt step);</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    V&amp; operator*();</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    V* operator-&gt;();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">const</span> V&amp; operator*() <span class="keyword">const</span> NAMU_UNCONST_FUNC(<span class="keyword">operator</span>*())</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">const</span> V* operator-&gt;() <span class="keyword">const</span> NAMU_UNCONST_FUNC(operator-&gt;())</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">const</span> V&amp; operator*() <span class="keyword">const</span> NM_CONST_FUNC(<span class="keyword">operator</span>*())</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">const</span> V* operator-&gt;() <span class="keyword">const</span> NM_CONST_FUNC(operator-&gt;())</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">explicit</span> <span class="keyword">operator</span> nbool() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    nbool isFrom(<span class="keyword">const</span> tbicontainable&amp; it) <span class="keyword">const override</span>;</div>
@@ -118,7 +118,7 @@ $(function() {
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    tbicontainable&lt;K, V&gt;&amp; getContainer() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">const</span> tbicontainable&lt;K, V&gt;&amp; getContainer() const NAMU_UNCONST_FUNC(getContainer());</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">const</span> tbicontainable&lt;K, V&gt;&amp; getContainer() const NM_CONST_FUNC(getContainer());</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;private:</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    me&amp; _assign(const me&amp; rhs);</div>

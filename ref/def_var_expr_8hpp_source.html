@@ -75,49 +75,49 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../param.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../scope.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>namu {</div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnamu_1_1def_var_expr.html">    8</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1def_var_expr.html">defVarExpr</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1expr.html">expr</a> {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1def_var_expr.html">defVarExpr</a>, <a class="code" href="classnamu_1_1expr.html">expr</a>), VISIT())</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>nm {</div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnm_1_1def_var_expr.html">    8</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1def_var_expr.html">defVarExpr</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1expr.html">expr</a> {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NM(ADT(<a class="code" href="classnm_1_1def_var_expr.html">defVarExpr</a>, <a class="code" href="classnm_1_1expr.html">expr</a>), VISIT())</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <a class="code" href="classnamu_1_1def_var_expr.html">defVarExpr</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; rhs);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classnamu_1_1def_var_expr.html">defVarExpr</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; rhs, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; to);</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <a class="code" href="classnm_1_1def_var_expr.html">defVarExpr</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; rhs);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classnm_1_1def_var_expr.html">defVarExpr</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; rhs, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; to);</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">using</span> super::run;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">const</span> std::string&amp; getName() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>&amp; getRight();</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getRight() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getRight())</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">void</span> setRight(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; rhs);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>&amp; getRight();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getRight() <span class="keyword">const</span> NM_CONST_FUNC(getRight())</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">void</span> setRight(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; rhs);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>&amp; getTo();</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; getTo() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getTo())</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>&amp; getTo();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getTo() <span class="keyword">const</span> NM_CONST_FUNC(getTo())</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        nbool isToFrame() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> setTo(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; to);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> setTo(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; to);</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classnamu_1_1def_var_expr.html#a2ddd5dcc38d9649a84b70da0b1bb6e76">   30</a></span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> <a class="code" href="classnamu_1_1def_var_expr.html#a2ddd5dcc38d9649a84b70da0b1bb6e76">getEval</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classnm_1_1def_var_expr.html#a868486dc19313ef161c1369515d68038">   30</a></span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> <a class="code" href="classnm_1_1def_var_expr.html#a868486dc19313ef161c1369515d68038">getEval</a>() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classnamu_1_1clonable.html">clonable</a>* cloneDeep() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classnm_1_1clonable.html">clonable</a>* cloneDeep() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnamu_1_1tstr.html">str</a> _onMakeNew() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnm_1_1tstr.html">str</a> _onMakeNew() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        std::string _name;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _rhs;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> _to;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _rhs;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _to;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    };</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1clonable_html"><div class="ttname"><a href="classnamu_1_1clonable.html">namu::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1def_var_expr_html"><div class="ttname"><a href="classnamu_1_1def_var_expr.html">namu::defVarExpr</a></div><div class="ttdef"><b>Definition:</b> defVarExpr.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1def_var_expr_html_a2ddd5dcc38d9649a84b70da0b1bb6e76"><div class="ttname"><a href="classnamu_1_1def_var_expr.html#a2ddd5dcc38d9649a84b70da0b1bb6e76">namu::defVarExpr::getEval</a></div><div class="ttdeci">str getEval() const override</div></div>
-<div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
-<div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
+<div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1def_var_expr_html"><div class="ttname"><a href="classnm_1_1def_var_expr.html">nm::defVarExpr</a></div><div class="ttdef"><b>Definition:</b> defVarExpr.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1def_var_expr_html_a868486dc19313ef161c1369515d68038"><div class="ttname"><a href="classnm_1_1def_var_expr.html#a868486dc19313ef161c1369515d68038">nm::defVarExpr::getEval</a></div><div class="ttdeci">str getEval() const override</div></div>
+<div class="ttc" id="aclassnm_1_1expr_html"><div class="ttname"><a href="classnm_1_1expr.html">nm::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr&lt; node &gt;</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

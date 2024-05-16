@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wrap_741',['wrap',['../classnamu_1_1tnchain.html#a398a0fea3a3a7754cd4c4fbd7a8e0858',1,'namu::tnchain']]]
+  ['wrap_741',['wrap',['../classnm_1_1tnchain.html#a57d0733b10aeec49dc0ee2b469455409',1,'nm::tnchain']]]
 ];

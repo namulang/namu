@@ -73,28 +73,28 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">class </span>node;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> K, <span class="keyword">typename</span> V&gt; <span class="keyword">class </span>tbicontainable;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">typedef</span> tbicontainable&lt;std::string, node&gt; bicontainable;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classnamu_1_1frame_interactable.html">   11</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1frame_interactable.html">frameInteractable</a> {</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classnm_1_1frame_interactable.html">   11</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1frame_interactable.html">frameInteractable</a> {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> inFrame(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnamu_1_1args.html">args</a>) = 0;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> inFrame(<span class="keyword">const</span> <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) = 0;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keywordtype">void</span> inFrame() {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            inFrame(nulOf&lt;bicontainable&gt;());</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        }</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> outFrame(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnamu_1_1args.html">args</a>) = 0;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> outFrame(<span class="keyword">const</span> <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) = 0;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">void</span> outFrame() {</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            outFrame(nulOf&lt;bicontainable&gt;());</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        }</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    };</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1args_html"><div class="ttname"><a href="classnamu_1_1args.html">namu::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1frame_interactable_html"><div class="ttname"><a href="classnamu_1_1frame_interactable.html">namu::frameInteractable</a></div><div class="ttdef"><b>Definition:</b> frameInteractable.hpp:11</div></div>
-<div class="ttc" id="aclassnamu_1_1tbicontainable_html"><div class="ttname"><a href="classnamu_1_1tbicontainable.html">namu::tbicontainable</a></div><div class="ttdef"><b>Definition:</b> tbicontainable.hpp:15</div></div>
+<div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1frame_interactable_html"><div class="ttname"><a href="classnm_1_1frame_interactable.html">nm::frameInteractable</a></div><div class="ttdef"><b>Definition:</b> frameInteractable.hpp:11</div></div>
+<div class="ttc" id="aclassnm_1_1tbicontainable_html"><div class="ttname"><a href="classnm_1_1tbicontainable.html">nm::tbicontainable</a></div><div class="ttdef"><b>Definition:</b> tbicontainable.hpp:15</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

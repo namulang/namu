@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['rel_728',['rel',['../classnamu_1_1autoslot.html#a73c85124ea9f59bfecfc482356a86e17',1,'namu::autoslot::rel()'],['../classnamu_1_1node.html#a2f0b986e1fae7fd99d2c257fbfe607b8',1,'namu::node::rel()'],['../classnamu_1_1frame.html#a89141d4f7c8ba638c4d6bcbbb94621bf',1,'namu::frame::rel()'],['../classnamu_1_1thread.html#ad946cb8d5ab1ffad634aa98ce349954a',1,'namu::thread::rel()']]],
-  ['resize_729',['resize',['../classnamu_1_1chunks.html#a0511779e9a49944dcf821df4669c54eb',1,'namu::chunks']]]
+  ['rel_728',['rel',['../classnm_1_1autoslot.html#a43c15dba55d0d59c4fd3a6d5d3677386',1,'nm::autoslot::rel()'],['../classnm_1_1node.html#a0bb02642191b4ed25621251170d4f227',1,'nm::node::rel()'],['../classnm_1_1frame.html#a3d8ba382b63faabac202303ec2c09888',1,'nm::frame::rel()'],['../classnm_1_1thread.html#add40739f655dd3879d43bf3e37db3fca',1,'nm::thread::rel()']]],
+  ['resize_729',['resize',['../classnm_1_1chunks.html#ac6dc039c7fbe70b027087a490824bc50',1,'nm::chunks']]]
 ];

@@ -77,24 +77,24 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;../../ast/dumScope.hpp&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;../../ast/src/dumSrc.hpp&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classnamu_1_1primitive_obj.html">   12</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1primitive_obj.html">primitiveObj</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a> {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1primitive_obj.html">primitiveObj</a>, <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a>))</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classnm_1_1primitive_obj.html">   12</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnm_1_1primitive_obj.html">primitiveObj</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1arithmetic_obj.html">arithmeticObj</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        NM(ADT(<a class="code" href="classnm_1_1primitive_obj.html">primitiveObj</a>, <a class="code" href="classnm_1_1arithmetic_obj.html">arithmeticObj</a>))</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">typedef</span> T trait;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E, <span class="keyword">typename</span> RAW&gt;</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classnamu_1_1primitive_obj_1_1as_primitive.html">   18</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classnamu_1_1primitive_obj_1_1as_primitive.html">asPrimitive</a> : <span class="keyword">public</span> <a class="code" href="structnamu_1_1tas.html">tas</a>&lt;E&gt; {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <a class="code" href="classnamu_1_1tstr.html">str</a> as(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; me, <span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="classnamu_1_1tstr.html">str</a>(<span class="keyword">new</span> E(me.cast&lt;RAW&gt;()));</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classnm_1_1primitive_obj_1_1as_primitive.html">   18</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classnm_1_1primitive_obj_1_1as_primitive.html">asPrimitive</a> : <span class="keyword">public</span> <a class="code" href="structnm_1_1tas.html">tas</a>&lt;E&gt; {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <a class="code" href="classnm_1_1tstr.html">str</a> as(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; me, <span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="classnm_1_1tstr.html">str</a>(<span class="keyword">new</span> E(me.cast&lt;RAW&gt;()));</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            }</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        };</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classnamu_1_1primitive_obj.html">primitiveObj</a>(): _val() {}</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classnamu_1_1primitive_obj.html">primitiveObj</a>(<span class="keyword">const</span> T&amp; val): _val(val) {}</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classnm_1_1primitive_obj.html">primitiveObj</a>(): _val() {}</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classnm_1_1primitive_obj.html">primitiveObj</a>(<span class="keyword">const</span> T&amp; val): _val(val) {}</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        T&amp; get() {</div>
@@ -137,8 +137,8 @@ $(function() {
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    };</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classnamu_1_1primitive_obj_3_01void_01_4.html">   69</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1primitive_obj.html">primitiveObj</a>&lt;void&gt; : <span class="keyword">public</span> <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a> {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        NAMU(ADT(<a class="code" href="classnamu_1_1primitive_obj.html">primitiveObj</a>, <a class="code" href="classnamu_1_1arithmetic_obj.html">arithmeticObj</a>))</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classnm_1_1primitive_obj_3_01void_01_4.html">   69</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnm_1_1primitive_obj.html">primitiveObj</a>&lt;void&gt; : <span class="keyword">public</span> <a class="code" href="classnm_1_1arithmetic_obj.html">arithmeticObj</a> {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        NM(ADT(<a class="code" href="classnm_1_1primitive_obj.html">primitiveObj</a>, <a class="code" href="classnm_1_1arithmetic_obj.html">arithmeticObj</a>))</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">const</span> super&amp; getOrigin()<span class="keyword"> const override </span>{</div>
@@ -146,35 +146,35 @@ $(function() {
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        }</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">using</span> super::subs;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="classnamu_1_1tnchain.html">scope</a>&amp; subs()<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnamu_1_1tstr.html">tstr&lt;scope&gt;</a> inner;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="classnm_1_1tnchain.html">scope</a>&amp; subs()<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnm_1_1tstr.html">tstr&lt;scope&gt;</a> inner;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="keywordflow">if</span>(!inner) {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                <a class="code" href="classnamu_1_1tnchain.html">scope</a>* scapegoat = <span class="keyword">new</span> <a class="code" href="classnamu_1_1tnchain.html">scope</a>();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                <a class="code" href="classnm_1_1tnchain.html">scope</a>* scapegoat = <span class="keyword">new</span> <a class="code" href="classnm_1_1tnchain.html">scope</a>();</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                _onMakeSubs(*scapegoat);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                inner.bind(<span class="keyword">new</span> <a class="code" href="classnamu_1_1dum_scope.html">dumScope</a>(*scapegoat));</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                inner.bind(<span class="keyword">new</span> <a class="code" href="classnm_1_1dum_scope.html">dumScope</a>(*scapegoat));</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            }</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">return</span> *inner;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        nbool _onSame(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type_providable.html">typeProvidable</a>&amp; rhs)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        nbool _onSame(<span class="keyword">const</span> <a class="code" href="classnm_1_1type_providable.html">typeProvidable</a>&amp; rhs)<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keywordflow">return</span> !nul(rhs);</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        }</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> _onMakeSubs(<a class="code" href="classnamu_1_1tnchain.html">scope</a>&amp; tray) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> _onMakeSubs(<a class="code" href="classnm_1_1tnchain.html">scope</a>&amp; tray) <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    };</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1arithmetic_obj_html"><div class="ttname"><a href="classnamu_1_1arithmetic_obj.html">namu::arithmeticObj</a></div><div class="ttdef"><b>Definition:</b> arithmeticObj.hpp:8</div></div>
-<div class="ttc" id="aclassnamu_1_1dum_scope_html"><div class="ttname"><a href="classnamu_1_1dum_scope.html">namu::dumScope</a></div><div class="ttdef"><b>Definition:</b> dumScope.hpp:6</div></div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
-<div class="ttc" id="aclassnamu_1_1primitive_obj_1_1as_primitive_html"><div class="ttname"><a href="classnamu_1_1primitive_obj_1_1as_primitive.html">namu::primitiveObj::asPrimitive</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:18</div></div>
-<div class="ttc" id="aclassnamu_1_1primitive_obj_html"><div class="ttname"><a href="classnamu_1_1primitive_obj.html">namu::primitiveObj</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:12</div></div>
-<div class="ttc" id="aclassnamu_1_1tnchain_html"><div class="ttname"><a href="classnamu_1_1tnchain.html">namu::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></div></div>
-<div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
-<div class="ttc" id="aclassnamu_1_1type_html"><div class="ttname"><a href="classnamu_1_1type.html">namu::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1type_providable_html"><div class="ttname"><a href="classnamu_1_1type_providable.html">namu::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:6</div></div>
-<div class="ttc" id="astructnamu_1_1tas_html"><div class="ttname"><a href="structnamu_1_1tas.html">namu::tas</a></div><div class="ttdef"><b>Definition:</b> tas.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1arithmetic_obj_html"><div class="ttname"><a href="classnm_1_1arithmetic_obj.html">nm::arithmeticObj</a></div><div class="ttdef"><b>Definition:</b> arithmeticObj.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1dum_scope_html"><div class="ttname"><a href="classnm_1_1dum_scope.html">nm::dumScope</a></div><div class="ttdef"><b>Definition:</b> dumScope.hpp:6</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
+<div class="ttc" id="aclassnm_1_1primitive_obj_1_1as_primitive_html"><div class="ttname"><a href="classnm_1_1primitive_obj_1_1as_primitive.html">nm::primitiveObj::asPrimitive</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:18</div></div>
+<div class="ttc" id="aclassnm_1_1primitive_obj_html"><div class="ttname"><a href="classnm_1_1primitive_obj.html">nm::primitiveObj</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:12</div></div>
+<div class="ttc" id="aclassnm_1_1tnchain_html"><div class="ttname"><a href="classnm_1_1tnchain.html">nm::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr&lt; node &gt;</a></div></div>
+<div class="ttc" id="aclassnm_1_1type_html"><div class="ttname"><a href="classnm_1_1type.html">nm::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1type_providable_html"><div class="ttname"><a href="classnm_1_1type_providable.html">nm::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:6</div></div>
+<div class="ttc" id="astructnm_1_1tas_html"><div class="ttname"><a href="structnm_1_1tas.html">nm::tas</a></div><div class="ttdef"><b>Definition:</b> tas.hpp:9</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

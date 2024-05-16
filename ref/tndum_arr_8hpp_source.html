@@ -73,24 +73,24 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;tnarr.inl&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TACTIC = strTactic&gt;</div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnamu_1_1tndum_arr.html">    8</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1tndum_arr.html">tndumArr</a>: <span class="keyword">public</span> <a class="code" href="classnamu_1_1tnarr.html">tnarr</a>&lt;T, TACTIC&gt; {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnarr.html">tnarr&lt;T, TACTIC&gt;</a> <a class="code" href="classnamu_1_1tnarr.html">_super_</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        NAMU(CLASS(<a class="code" href="classnamu_1_1tndum_arr.html">tndumArr</a>, <a class="code" href="classnamu_1_1tnarr.html">_super_</a>))</div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnm_1_1tndum_arr.html">    8</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnm_1_1tndum_arr.html">tndumArr</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1tnarr.html">tnarr</a>&lt;T, TACTIC&gt; {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tnarr.html">tnarr&lt;T, TACTIC&gt;</a> <a class="code" href="classnm_1_1tnarr.html">_super_</a>;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1tndum_arr.html">tndumArr</a>, <a class="code" href="classnm_1_1tnarr.html">_super_</a>))</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classnamu_1_1tndum_arr.html">tndumArr</a>() {}</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <a class="code" href="classnamu_1_1tndum_arr.html">tndumArr</a>(<span class="keyword">const</span> super&amp; rhs): super(rhs) {}</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classnm_1_1tndum_arr.html">tndumArr</a>() {}</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <a class="code" href="classnm_1_1tndum_arr.html">tndumArr</a>(<span class="keyword">const</span> super&amp; rhs): super(rhs) {}</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="comment">// add:</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">using</span> super::add;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        nbool add(<span class="keyword">const</span> <span class="keyword">typename</span> super::iter&amp; e, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; new1)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        nbool add(<span class="keyword">const</span> <span class="keyword">typename</span> super::iter&amp; e, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; new1)<span class="keyword"> override </span>{</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        }</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        nbool add(nidx n, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; new1)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        nbool add(nidx n, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; new1)<span class="keyword"> override </span>{</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        }</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
@@ -98,11 +98,11 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">static</span> me singletone;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    };</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tndum_arr.html">tndumArr&lt;node, strTactic&gt;</a> <a class="code" href="classnamu_1_1tndum_arr.html">ndumArr</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tndum_arr.html">tndumArr&lt;node, strTactic&gt;</a> <a class="code" href="classnm_1_1tndum_arr.html">ndumArr</a>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
-<div class="ttc" id="aclassnamu_1_1tnarr_html"><div class="ttname"><a href="classnamu_1_1tnarr.html">namu::tnarr</a></div><div class="ttdef"><b>Definition:</b> tnarr.hpp:9</div></div>
-<div class="ttc" id="aclassnamu_1_1tndum_arr_html"><div class="ttname"><a href="classnamu_1_1tndum_arr.html">namu::tndumArr</a></div><div class="ttdef"><b>Definition:</b> tndumArr.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
+<div class="ttc" id="aclassnm_1_1tnarr_html"><div class="ttname"><a href="classnm_1_1tnarr.html">nm::tnarr</a></div><div class="ttdef"><b>Definition:</b> tnarr.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1tndum_arr_html"><div class="ttname"><a href="classnm_1_1tndum_arr.html">nm::tndumArr</a></div><div class="ttdef"><b>Definition:</b> tndumArr.hpp:8</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

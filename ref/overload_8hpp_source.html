@@ -81,16 +81,16 @@ $(function() {
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//          #define MyMacro_0() 100</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">//          #define MyMacro_1(x) (x)+5</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//          #define MyMacro_2(x, y) (x)+(y)</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">//          #define MyMacro(...)    NAMU_OVERLOAD(MyMacro, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">//          #define MyMacro(...)    NM_OVERLOAD(MyMacro, __VA_ARGS__)</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">//          //  using:</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">//          cout &lt;&lt; MyMacro(5) &lt;&lt; &quot;, &quot; &lt;&lt; MyMacro(3, 5) &lt;&lt; &quot;, &quot; &lt;&lt; MyMacro() &lt;&lt; &quot;\n&quot;;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//      output:</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//          10, 8, 100</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define _OVERLOAD(macro_name, argcount) NAMU_CONCAT(macro_name, argcount)</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define NAMU_OVERLOAD(macro_name, ...)   \</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">    _OVERLOAD(macro_name, NAMU_CONCAT(_, NAMU_ARGCNT(__VA_ARGS__)))(__VA_ARGS__)</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define _OVERLOAD(macro_name, argcount) NM_CONCAT(macro_name, argcount)</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define NM_OVERLOAD(macro_name, ...)   \</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">    _OVERLOAD(macro_name, NM_CONCAT(_, NM_ARGCNT(__VA_ARGS__)))(__VA_ARGS__)</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

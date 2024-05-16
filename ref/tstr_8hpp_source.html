@@ -74,32 +74,32 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;tweak.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;strTactic.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TACTIC = strTactic&gt;</div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classnamu_1_1tstr.html">    9</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1tstr.html">tstr</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1tweak.html">tweak</a>&lt;T, TACTIC&gt; {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tweak.html">tweak&lt;T, TACTIC&gt;</a> <a class="code" href="classnamu_1_1tweak.html">_super_</a>;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        NAMU_ME(<a class="code" href="classnamu_1_1tstr.html">tstr</a>, <a class="code" href="classnamu_1_1tweak.html">_super_</a>)</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        NAMU_INIT_META(me)</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classnm_1_1tstr.html">    9</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnm_1_1tstr.html">tstr</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1tweak.html">tweak</a>&lt;T, TACTIC&gt; {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tweak.html">tweak&lt;T, TACTIC&gt;</a> <a class="code" href="classnm_1_1tweak.html">_super_</a>;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        NM_ME(<a class="code" href="classnm_1_1tstr.html">tstr</a>, <a class="code" href="classnm_1_1tweak.html">_super_</a>)</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        NM_INIT_META(me)</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span>ref;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="comment">//  tstr:</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr</a>();</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classnamu_1_1tstr.html#a103b945a25ac15fb296f7e617cbca009">   20</a></span>&#160;        <a class="code" href="classnamu_1_1tstr.html#a103b945a25ac15fb296f7e617cbca009">tstr</a>(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; subtype);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr</a>(<span class="keyword">const</span> T&amp; it);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr</a>(<span class="keyword">const</span> T* it);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr</a>(<span class="keyword">const</span> me&amp; rhs);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr</a>(<span class="keyword">const</span> <a class="code" href="classnamu_1_1binder.html">binder</a>&amp; rhs);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr</a>();</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classnm_1_1tstr.html#a6c6f97a4cb1cf504ab8cbb80f54d40ec">   20</a></span>&#160;        <a class="code" href="classnm_1_1tstr.html#a6c6f97a4cb1cf504ab8cbb80f54d40ec">tstr</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; subtype);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr</a>(<span class="keyword">const</span> T&amp; it);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr</a>(<span class="keyword">const</span> T* it);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr</a>(<span class="keyword">const</span> me&amp; rhs);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1binder.html">binder</a>&amp; rhs);</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">using</span> super::operator=;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    };</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1binder_html"><div class="ttname"><a href="classnamu_1_1binder.html">namu::binder</a></div><div class="ttdef"><b>Definition:</b> binder.hpp:53</div></div>
-<div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
-<div class="ttc" id="aclassnamu_1_1tstr_html_a103b945a25ac15fb296f7e617cbca009"><div class="ttname"><a href="classnamu_1_1tstr.html#a103b945a25ac15fb296f7e617cbca009">namu::tstr::tstr</a></div><div class="ttdeci">tstr(const type &amp;subtype)</div></div>
-<div class="ttc" id="aclassnamu_1_1tweak_html"><div class="ttname"><a href="classnamu_1_1tweak.html">namu::tweak</a></div><div class="ttdef"><b>Definition:</b> tweak.hpp:9</div></div>
-<div class="ttc" id="aclassnamu_1_1type_html"><div class="ttname"><a href="classnamu_1_1type.html">namu::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1binder_html"><div class="ttname"><a href="classnm_1_1binder.html">nm::binder</a></div><div class="ttdef"><b>Definition:</b> binder.hpp:53</div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html_a6c6f97a4cb1cf504ab8cbb80f54d40ec"><div class="ttname"><a href="classnm_1_1tstr.html#a6c6f97a4cb1cf504ab8cbb80f54d40ec">nm::tstr::tstr</a></div><div class="ttdeci">tstr(const type &amp;subtype)</div></div>
+<div class="ttc" id="aclassnm_1_1tweak_html"><div class="ttname"><a href="classnm_1_1tweak.html">nm::tweak</a></div><div class="ttdef"><b>Definition:</b> tweak.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1type_html"><div class="ttname"><a href="classnm_1_1type.html">nm::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

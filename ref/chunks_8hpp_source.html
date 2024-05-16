@@ -73,35 +73,35 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;chunk.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnamu_1_1chunks.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1chunks.html">chunks</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1allocator.html">allocator</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NAMU_ME(<a class="code" href="classnamu_1_1chunks.html">chunks</a>, <a class="code" href="classnamu_1_1allocator.html">allocator</a>)</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NAMU_INIT_META(me)</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnm_1_1chunks.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1chunks.html">chunks</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1allocator.html">allocator</a> {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NM_ME(<a class="code" href="classnm_1_1chunks.html">chunks</a>, <a class="code" href="classnm_1_1allocator.html">allocator</a>)</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NM_INIT_META(me)</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="comment">//  chunks:</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1chunks.html">chunks</a>(ncnt blkbyte = 0);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="classnamu_1_1chunks.html">chunks</a>();</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnm_1_1chunks.html">chunks</a>(ncnt blkbyte = 0);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="classnm_1_1chunks.html">chunks</a>();</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classnamu_1_1chunk.html">chunk</a>&amp; operator[](nidx n);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1chunk.html">chunk</a>&amp; operator[](nidx n) <span class="keyword">const</span> NAMU_UNCONST_FUNC(<span class="keyword">operator</span>[](n))</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classnamu_1_1chunk.html">chunk</a>&amp; operator[](<span class="keyword">const</span> <a class="code" href="classnamu_1_1instance.html">instance</a>&amp; inst);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1chunk.html">chunk</a>&amp; operator[](<span class="keyword">const</span> <a class="code" href="classnamu_1_1instance.html">instance</a>&amp; inst) <span class="keyword">const</span> NAMU_UNCONST_FUNC(<span class="keyword">operator</span>[](inst))</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classnm_1_1chunk.html">chunk</a>&amp; operator[](nidx n);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1chunk.html">chunk</a>&amp; operator[](nidx n) <span class="keyword">const</span> NM_CONST_FUNC(<span class="keyword">operator</span>[](n))</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classnm_1_1chunk.html">chunk</a>&amp; operator[](<span class="keyword">const</span> <a class="code" href="classnm_1_1instance.html">instance</a>&amp; inst);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1chunk.html">chunk</a>&amp; operator[](<span class="keyword">const</span> <a class="code" href="classnm_1_1instance.html">instance</a>&amp; inst) <span class="keyword">const</span> NM_CONST_FUNC(<span class="keyword">operator</span>[](inst))</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="comment">//  chunks:</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <a class="code" href="classnamu_1_1chunk.html">chunk</a>&amp; get(nidx n);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classnamu_1_1chunk.html">chunk</a>&amp; get(<span class="keyword">const</span> <a class="code" href="classnamu_1_1instance.html">instance</a>&amp; it);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1chunk.html">chunk</a>&amp; get(nidx n) <span class="keyword">const</span> NAMU_UNCONST_FUNC(get(n))</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1chunk.html">chunk</a>&amp; get(<span class="keyword">const</span> <a class="code" href="classnamu_1_1instance.html">instance</a>&amp; it) <span class="keyword">const</span> NAMU_UNCONST_FUNC(get(it))</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <a class="code" href="classnm_1_1chunk.html">chunk</a>&amp; get(nidx n);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classnm_1_1chunk.html">chunk</a>&amp; get(<span class="keyword">const</span> <a class="code" href="classnm_1_1instance.html">instance</a>&amp; it);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1chunk.html">chunk</a>&amp; get(nidx n) <span class="keyword">const</span> NM_CONST_FUNC(get(n))</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1chunk.html">chunk</a>&amp; get(<span class="keyword">const</span> <a class="code" href="classnm_1_1instance.html">instance</a>&amp; it) <span class="keyword">const</span> NM_CONST_FUNC(get(it))</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="comment">//  allocator:</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">void</span>* new1() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        nbool del(<span class="keywordtype">void</span>* pt, ncnt sz) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classnamu_1_1chunks.html#a0511779e9a49944dcf821df4669c54eb">   34</a></span>&#160;        <span class="keyword">virtual</span> nbool <a class="code" href="classnamu_1_1chunks.html#a0511779e9a49944dcf821df4669c54eb">resize</a>(ncnt new1);</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classnm_1_1chunks.html#ac6dc039c7fbe70b027087a490824bc50">   34</a></span>&#160;        <span class="keyword">virtual</span> nbool <a class="code" href="classnm_1_1chunks.html#ac6dc039c7fbe70b027087a490824bc50">resize</a>(ncnt new1);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="comment">//  MemoryHaver:</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        nbool has(<span class="keyword">const</span> <a class="code" href="classnamu_1_1instance.html">instance</a>&amp; it) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        nbool has(<span class="keyword">const</span> <a class="code" href="classnm_1_1instance.html">instance</a>&amp; it) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        ncnt len() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        ncnt size() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        nbool rel() <span class="keyword">override</span>;</div>
@@ -117,11 +117,11 @@ $(function() {
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">int</span> _s;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    };</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
-<div class="ttc" id="aclassnamu_1_1allocator_html"><div class="ttname"><a href="classnamu_1_1allocator.html">namu::allocator</a></div><div class="ttdef"><b>Definition:</b> allocator.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1chunk_html"><div class="ttname"><a href="classnamu_1_1chunk.html">namu::chunk</a></div><div class="ttdef"><b>Definition:</b> chunk.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1chunks_html"><div class="ttname"><a href="classnamu_1_1chunks.html">namu::chunks</a></div><div class="ttdef"><b>Definition:</b> chunks.hpp:7</div></div>
-<div class="ttc" id="aclassnamu_1_1chunks_html_a0511779e9a49944dcf821df4669c54eb"><div class="ttname"><a href="classnamu_1_1chunks.html#a0511779e9a49944dcf821df4669c54eb">namu::chunks::resize</a></div><div class="ttdeci">virtual nbool resize(ncnt new1)</div></div>
-<div class="ttc" id="aclassnamu_1_1instance_html"><div class="ttname"><a href="classnamu_1_1instance.html">namu::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:14</div></div>
+<div class="ttc" id="aclassnm_1_1allocator_html"><div class="ttname"><a href="classnm_1_1allocator.html">nm::allocator</a></div><div class="ttdef"><b>Definition:</b> allocator.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1chunk_html"><div class="ttname"><a href="classnm_1_1chunk.html">nm::chunk</a></div><div class="ttdef"><b>Definition:</b> chunk.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1chunks_html"><div class="ttname"><a href="classnm_1_1chunks.html">nm::chunks</a></div><div class="ttdef"><b>Definition:</b> chunks.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1chunks_html_ac6dc039c7fbe70b027087a490824bc50"><div class="ttname"><a href="classnm_1_1chunks.html#ac6dc039c7fbe70b027087a490824bc50">nm::chunks::resize</a></div><div class="ttdeci">virtual nbool resize(ncnt new1)</div></div>
+<div class="ttc" id="aclassnm_1_1instance_html"><div class="ttname"><a href="classnm_1_1instance.html">nm::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
