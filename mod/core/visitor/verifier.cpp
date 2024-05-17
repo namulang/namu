@@ -249,8 +249,8 @@ namespace namu {
         if(!eval->canRun(args()))
             posError(errCode::DONT_HAVE_CTOR, me, name.c_str());
         else {
-            nbool res = me._where ? me._where->add(name.c_str(), (node*) eval->clone()) : thread::get()._getNowFrame()
-                    .pushLocal(name, (node*) eval->clone());
+            node* new1 = new mockNode(*eval);
+            nbool res = me._where ? me._where->add(name.c_str(), new1) : thread::get()._getNowFrame().pushLocal(name, new1);
             if(!res)
                 NAMU_I("verify: defPropExpr: define variable %s is failed.", name.c_str());
         }

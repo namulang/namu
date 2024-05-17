@@ -33,8 +33,6 @@ namespace namu {
         void inFrame(const bicontainable& args) override;
         void outFrame() override;
 
-        str getEval() const override;
-
         const src& getSrc() const override;
 
     protected:

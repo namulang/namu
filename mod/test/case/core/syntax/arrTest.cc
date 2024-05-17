@@ -703,6 +703,9 @@ TEST_F(arrTest, outOfBoundExOccurs) {
     str res = run();
     ASSERT_TRUE(res);
     ASSERT_TRUE(nul(res.cast<nint>())); // which means, program ended with error code.
+    err& resErr = res.cast<err>();
+    ASSERT_FALSE(nul(resErr));
+    ASSERT_EQ(resErr.code, errCode::OUT_OF_RANGE);
 
     {
         auto& A = getSubPack().sub("A"); // A.arr is mockNode

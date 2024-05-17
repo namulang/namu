@@ -25,11 +25,6 @@ namespace namu {
         return str();
     }
 
-    str me::getEval() const {
-        if(_org) return _org->getEval();
-        return str();
-    }
-
     clonable* me::clone() const {
         if(_org) return _org->clone();
         return new me(*this);
