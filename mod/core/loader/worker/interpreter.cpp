@@ -47,12 +47,6 @@ namespace namu {
         return getTask();
     }
 
-    void me::_onEndWork() {
-        super::_onEndWork();
-        if(isFlag(LOG_STRUCTURE))
-            _logStructure();
-    }
-
     void me::rel() {
         this->super::rel();
         _isParsed = false;
@@ -77,6 +71,9 @@ namespace namu {
             setTask(_pser.getTask());
 
         _isParsed = _isPackExist() && _pser.isOk();
+
+        if(isFlag(LOG_STRUCTURE))
+            graphVisitor().setFlag(0).setTask(getTask()).work();
     }
 
     void me::_preEval() {
@@ -92,6 +89,9 @@ namespace namu {
               .setFlag(getFlag())
               .setTask(getTask().getPack())
               .work();
+
+        if(isFlag(LOG_STRUCTURE))
+            graphVisitor().setFlag(0).setTask(getTask()).work();
     }
 
     void me::_verify() {
@@ -109,12 +109,7 @@ namespace namu {
             _veri.delFlag(LOG_ON_END | DUMP_ON_END);
         _veri.setTask(getTask().getPack())
              .work();
-    }
-
-    void me::_logStructure() {
-        if(!isFlag(LOG_STRUCTURE)) return;
-        if(!nul(_pser.getSubPack()) || nul(getTask())) return;
-        graphVisitor().setTask(getTask().getPack())
-                      .work();
+        if(isFlag(LOG_STRUCTURE) && !nul(_pser.getSubPack()) && !nul(getTask())) return;
+            graphVisitor().setFlag(0).setTask(getTask()).work();
     }
 }

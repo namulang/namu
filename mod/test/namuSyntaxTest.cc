@@ -44,7 +44,7 @@ namuSyntaxTest& me::make(const namu::manifest& mani) {
 namuSyntaxTest& me::parse(const namu::nchar* src) {
     using namu::interpreter;
     namu::nbool isVerbose = namu::logger::get().isEnable();
-    int flag = isVerbose ? interpreter::DEFAULT | interpreter::LOG_STRUCTURE:
+    int flag = isVerbose ? interpreter::DEFAULT | interpreter::LOG_STRUCTURE | interpreter::GUARD:
         interpreter::DUMP_ON_EX | interpreter::LOG_ON_END;
 
     _ip.addSupply(*new namu::bufSupply(std::string(src)))

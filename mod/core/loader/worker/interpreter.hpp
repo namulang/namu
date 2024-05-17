@@ -29,7 +29,6 @@ namespace namu {
         void rel() override;
 
     protected:
-        void _onEndWork() override;
         tstr<slot> _onWork() override;
 
     private:
@@ -38,7 +37,6 @@ namespace namu {
         void _parse();
         void _preEval();
         void _verify();
-        void _logStructure();
         void _log() const;
 
     private:
