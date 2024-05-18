@@ -23,6 +23,9 @@ namespace namu {
         str getEval() const override;
 
     private:
+        nbool _isEx(const node& got, const node& funcRet);
+
+    private:
         str _ret;
     };
 }

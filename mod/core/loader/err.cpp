@@ -181,6 +181,7 @@ namespace namu {
         if(inner.len() <= 0) {
             inner.add("log", new logFunc());
             inner.add("logStack", new logStackFunc());
+            inner.add(baseObj::CTOR_NAME, new defaultCtor(singletone()));
             inner.add(baseObj::CTOR_NAME, new defaultCopyCtor(singletone()));
         }
         return inner;

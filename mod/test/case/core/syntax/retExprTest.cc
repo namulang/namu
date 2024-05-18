@@ -132,3 +132,18 @@ TEST_F(retExprTest, retIsNotExpressionNegative) {
             foo(ret 3)
     )SRC").shouldParsed(false);
 }
+
+TEST_F(retExprTest, retException) {
+    make().parse(R"SRC(
+        foo(n int) int
+            ret err()
+        main() void
+            print(foo(2) as str)
+            print(foo(5) as str)
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_FALSE(nul(res));
+    err& cast = res.cast<err>();
+    ASSERT_FALSE(nul(cast));
+}

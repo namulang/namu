@@ -375,7 +375,7 @@ namespace namu {
         NAMU_I("verify: retExpr: checks return[%s] == func[%s]", myType.getName().c_str(),
             fType.getName().c_str());
 
-        if(!myType.isImpli(fType))
+        if(!myType.isSub<err>() && !myType.isImpli(fType))
             return posError(errCode::RET_TYPE_NOT_MATCH, me, myType.getName().c_str(), fType.getName().c_str()), true;
         return true;
     }
@@ -536,7 +536,7 @@ namespace namu {
         if(!lastEval) return posError(NO_RET_TYPE, lastStmt);
         const ntype& lastType = lastEval->getType(); // to get type of expr, always uses evalType.
         if(nul(lastType)) return posError(NO_RET_TYPE, lastStmt);
-        if(!lastType.isImpli(retType)) return posError(errCode::RET_TYPE_NOT_MATCH, lastStmt, lastType.getName().c_str(),
+        if(!lastType.isSub<err>() && !lastType.isImpli(retType)) return posError(errCode::RET_TYPE_NOT_MATCH, lastStmt, lastType.getName().c_str(),
                 retType.getName().c_str());
     }
 

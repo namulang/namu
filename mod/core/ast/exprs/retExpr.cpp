@@ -15,8 +15,18 @@ namespace namu {
         if(_ret->isSub<baseObj>()) return _ret; // case: obj
 
         str ret = _ret->as<node>(); // case: expr
-        thread::get()._getNowFrame().setRet(*ret);
+        thread& thr = thread::get();
+        auto& fr = thr._getNowFrame();
+        str fRet = fr.getFunc().getRet();
+        if(_isEx(*ret, *fRet)) {
+            thr.getEx().add(ret->cast<err>());
+        }
+        fr.setRet(*ret);
         return ret;
+    }
+
+    nbool me::_isEx(const node& got, const node& funcRet) {
+        return got.isSub<err>() && !funcRet.isSub<err>();
     }
 
     node& me::getRet() {
