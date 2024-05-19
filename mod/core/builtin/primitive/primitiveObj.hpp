@@ -4,6 +4,7 @@
 #include "../../ast/func.hpp"
 #include "../../ast/scope.hpp"
 #include "../../ast/dumScope.hpp"
+#include "../../ast/src/dumSrc.hpp"
 
 namespace namu {
 

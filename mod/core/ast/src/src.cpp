@@ -3,14 +3,8 @@
 namespace namu {
     NAMU(DEF_ME(src))
 
-    namespace {
-        static srcFile _inner("no_name", "");
-    }
-
     me::src(const srcFile& file, const std::string& name, const point& pos):
         _file(file), _name(name), _pos(pos) {}
-
-    me::src(): _file(_inner), _name(""), _pos {0, 0} {}
 
     const srcFile& me::getFile() const {
         return *_file;

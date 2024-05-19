@@ -6,12 +6,13 @@
 #include "args.hpp"
 #include "baseFunc.hpp"
 #include "node.inl"
+#include "src/dumSrc.hpp"
 
 namespace namu {
 
     NAMU(DEF_ME(baseObj))
 
-    me::baseObj() {}
+    me::baseObj(): _src(dumSrc::singletone()) {}
 
     str me::_onRunSub(node& sub, const args& a) {
         a.setMe(*this);

@@ -9,7 +9,6 @@ namespace namu {
 
     public:
         src(const srcFile& file, const std::string& name, const point& pos);
-        src();
 
     public:
         const srcFile& getFile() const;
