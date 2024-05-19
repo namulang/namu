@@ -4,7 +4,8 @@ typedef namuSyntaxTest me;
 
 void me::TearDown() {
     namuTest::TearDown();
-    _rel();
+    _src = "";
+    _ip.rel();
 }
 
 namu::node& me::getSubPack() {
@@ -73,7 +74,7 @@ namu::nbool me::shouldVerified(namu::nbool expect) {
 }
 
 namu::str me::run() {
-    return namu::starter().setPack(getSubPack()).work();
+    return namu::starter().setPack(getSubPack()).setReport(_rpt).work();
 }
 
 void me::_rel() {

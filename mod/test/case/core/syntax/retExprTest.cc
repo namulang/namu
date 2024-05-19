@@ -146,4 +146,61 @@ TEST_F(retExprTest, retException) {
     ASSERT_FALSE(nul(res));
     err& cast = res.cast<err>();
     ASSERT_FALSE(nul(cast));
+
+    const auto& ex = getReport();
+    ASSERT_FALSE(nul(ex));
+    ASSERT_TRUE(ex.len() > 0);
+    ASSERT_EQ(ex.len(), 1);
+}
+
+TEST_F(retExprTest, retExceptionNoThrowAgain) {
+    make().parse(R"SRC(
+        foo(n int) int
+            ret err()
+        main() int
+            foo(3)
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_FALSE(nul(res));
+    err& cast = res.cast<err>();
+    ASSERT_FALSE(nul(cast));
+
+    const auto& ex = getReport();
+    ASSERT_FALSE(nul(ex));
+    ASSERT_EQ(ex.len(), 1);
+}
+
+TEST_F(retExprTest, retExceptionNoThrowAgain2) {
+    make().parse(R"SRC(
+        foo(n int) int
+            ret err()
+        main() int
+            ret foo(3)
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_FALSE(nul(res));
+    err& cast = res.cast<err>();
+    ASSERT_FALSE(nul(cast));
+
+    const auto& ex = getReport();
+    ASSERT_FALSE(nul(ex));
+    ASSERT_EQ(ex.len(), 1);
+}
+
+TEST_F(retExprTest, f) {
+    make().parse(R"SRC(
+        age := 22
+        def a
+            age := 11
+            foo() void
+                print(age as str)
+        main() int
+            ret a().foo()
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 11);
 }

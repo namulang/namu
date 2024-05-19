@@ -67,8 +67,8 @@ namespace namu {
                 tstr<err> last = *ex.last();
                 NAMU_DI("err%d: '%s' exception found in block.\n", last->code, last->msg.c_str());
                 return last; // return last err instance I got.
-                                   // so it's not the return type of what the func told, but it's okay.
-                                   // all derived err object can be assigned to any type.
+                             // so it's not the return type of what the func told, but it's okay.
+                             // all derived err object can be assigned to any type.
             }
             if(ret && ret->isSub<retState>()) break;
         }
