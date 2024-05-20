@@ -149,6 +149,7 @@ namespace namu {
 
 
     me::err(logLv::level t, nint newCode): super(), fType(t), code((errCode) newCode) {
+        msg = getErrMsg(code);
         _stack.setStack(thread::get().getFrames());
     }
 
