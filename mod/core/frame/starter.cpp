@@ -5,6 +5,7 @@
 #include "../ast/node.inl"
 #include "starter.hpp"
 #include "threadUse.hpp"
+#include <csignal>
 
 namespace namu {
 
@@ -23,6 +24,7 @@ namespace namu {
             setTask(*new args());
         if(getReport().isSub<dummyErrReport>())
             setReport(*new errReport());
+        _setSignal();
     }
 
     str me::_onWork() {
@@ -54,6 +56,7 @@ namespace namu {
     }
 
     str me::_postprocess(str res) {
+        _relSignal();
         errReport& ex = thread::get().getEx();
         if(ex) {
             NAMU_E("unhandled exception found:");
@@ -73,5 +76,19 @@ namespace namu {
             NAMU_E("couldn't find main().");
 
         return ret;
+    }
+
+    void me::_setSignal() {
+        NAMU_I("plant signal handler.");
+        _handler = [&](const err& e) {
+            logger::get().logBypass("unexpected exception found: ");
+            e.dump();
+            // signaler will *terminate* the process after all.
+        };
+        signaler::singletone().addSignal(_handler);
+    }
+
+    void me::_relSignal() {
+        signaler::singletone().delSignal(_handler);
     }
 }

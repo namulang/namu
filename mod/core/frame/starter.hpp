@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../loader/worker/worker.inl"
+#include "signaler.hpp"
 
 namespace namu {
     class frames;
@@ -24,8 +25,12 @@ namespace namu {
         node& _findMain(node& pak, const args& a);
         void _prepareFrame(frames& fr);
         str _postprocess(str res);
+        void _relSignal();
+        void _setSignal(void(*fptr)(int));
+        void _setSignal();
 
     private:
         str _pak;
+        sigHandler _handler;
     };
 }
