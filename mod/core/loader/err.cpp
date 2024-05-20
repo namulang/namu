@@ -208,23 +208,26 @@ namespace namu {
         switch(fType) {
             case logLv::ERR:
                 if(pos.isOrigin())
-                    log.logFormatBypass("%serr%d(%s)", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str());
+                    log.logFormatBypass("%serr%d(%s): %s", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str(), msg.c_str());
                 else
-                    log.logFormatBypass("%serr%d(%s) %d:%d", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str(), pos.row, pos.col);
+                    log.logFormatBypass("%serr%d(%s) row %d col %d: ", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str(),
+                                        pos.row, pos.col, msg.c_str());
                 break;
 
             case logLv::WARN:
                 if(pos.isOrigin())
-                    log.logFormatBypass("%swarn%d(%s)", foreColor(YELLOW).c_str(), code, getErrName(code).c_str());
+                    log.logFormatBypass("%swarn%d(%s): %s", foreColor(YELLOW).c_str(), code, getErrName(code).c_str(), msg.c_str());
                 else
-                    log.logFormatBypass("%swarn%d(%s) %d:%d", foreColor(YELLOW).c_str(), code, getErrName(code).c_str(), pos.row, pos.col);
+                    log.logFormatBypass("%swarn%d(%s) row %d col %d: %s", foreColor(YELLOW).c_str(), code, getErrName(code).c_str(),
+                                        pos.row, pos.col, msg.c_str());
                 break;
 
             case logLv::INFO:
                 if(pos.isOrigin())
-                    log.logFormatBypass("%sinfo%d(%s)", foreColor(BLUE).c_str(), code, getErrName(code).c_str());
+                    log.logFormatBypass("%sinfo%d(%s): %s", foreColor(BLUE).c_str(), code, getErrName(code).c_str(), msg.c_str());
                 else
-                    log.logFormatBypass("%sinfo%d(%s) %d:%d", foreColor(BLUE).c_str(), code, getErrName(code).c_str(), pos.row, pos.col);
+                    log.logFormatBypass("%sinfo%d(%s) row %d col %d: %s", foreColor(BLUE).c_str(), code, getErrName(code).c_str(),
+                                        pos.row, pos.col, msg.c_str());
                 break;
         }
         log.logFormatBypass("%s: %s\n", foreColor(LIGHTGRAY).c_str(), msg.c_str());

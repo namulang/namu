@@ -122,7 +122,7 @@ PAIRX(PARANTHESIS_WAS_TUPLE,        "paranthesis was tuple only contains 1 expre
 PAIRX(NO_THREAD,                    "there is no thread registered.")
 
 // signal:
-PAIRX(SIG_SEGV,                 "segmentation fault")
+PAIRX(SIG_SEGV,                     "segmentation fault")
 PAIRX(SIG_INT,                      "external interrupt")
 PAIRX(SIG_ILL,                      "invalid program image")
 PAIRX(SIG_ABORT,                    "abonormal termination condition")

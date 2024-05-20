@@ -52,7 +52,6 @@ namespace namu {
         for(sigHandler handler : _closures)
             handler(*e);
 
-        if(code == SIGINT) return;
         _closures.clear();
         exit(EXIT_FAILURE);
     }
