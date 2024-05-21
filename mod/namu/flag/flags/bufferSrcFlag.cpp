@@ -23,7 +23,7 @@ namespace namu {
         return 1;
     }
 
-    nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip) const {
+    nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip, starter& s) const {
         if(tray.size() < 2) return NAMU_E("invalid flagArgument size < 2"), false;
 
         ip.addSupply(*new bufSupply(tray[1]));

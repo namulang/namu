@@ -5,7 +5,7 @@ namespace namu {
 
     NAMU_DEF_ME(flag)
 
-    nbool me::take(interpreter& ip, cli& c, flagArgs& a) const {
+    nbool me::take(interpreter& ip, starter& s, cli& c, flagArgs& a) const {
         std::regex re(_getRegExpr());
         std::vector<int> del;
         flagArgs tray;
@@ -23,7 +23,7 @@ namespace namu {
         }
         if(tray.empty()) return false;
 
-        nbool res = _onTake(tray, c, ip);
+        nbool res = _onTake(tray, c, ip, s);
         if(!res) return false;
 
         _delArgs(a, del);

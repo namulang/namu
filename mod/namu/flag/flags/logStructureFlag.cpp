@@ -20,7 +20,7 @@ namespace namu {
         return "^\\-ls$";
     }
 
-    nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip) const {
+    nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip, starter& s) const {
         ip.addFlag(interpreter::LOG_STRUCTURE);
         return true;
     }

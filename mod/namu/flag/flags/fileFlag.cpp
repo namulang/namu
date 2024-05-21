@@ -20,7 +20,7 @@ namespace namu {
         return "[\\\\\\w\\.\\/:\\-\\(\\)\\d]+\\.nm$";
     }
 
-    nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip) const {
+    nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip, starter& s) const {
         for(const auto& filePath : tray)
             ip.addSupply(*new fileSupply(filePath));
         return true;

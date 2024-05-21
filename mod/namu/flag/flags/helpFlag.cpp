@@ -19,7 +19,7 @@ namespace namu {
 
 
 
-    nbool helpFlag::_onTake(const flagArgs& tray, cli& c, interpreter& ip) const {
+    nbool helpFlag::_onTake(const flagArgs& tray, cli& c, interpreter& ip, starter& s) const {
         _printUsage();
 
         const flags& opts = c.getFlags();

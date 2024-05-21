@@ -39,7 +39,7 @@ namespace namu {
         if(_closures.size() <= 0)
             _setSignal(_onSignal);
         _closures.push_back(closure);
-        NAMU_I("total %d signal handler planted.", _closures.size());
+        NAMU_DI("total %d signal handler planted.", _closures.size());
     }
 
     void me::onSignal(nint code) {
@@ -60,7 +60,7 @@ namespace namu {
         _closures.erase(std::remove_if(_closures.begin(), _closures.end(), [&](sigHandler elem) { return &elem == &closure; }), _closures.end());
         if(_closures.size() <= 0)
             _setSignal(SIG_DFL);
-        NAMU_I("signal handler deleted. total %d handlers remains", _closures.size());
+        NAMU_DI("signal handler deleted. total %d handlers remains", _closures.size());
     }
 
     void me::_setSignal(void(*csignalHandler)(nint)) {

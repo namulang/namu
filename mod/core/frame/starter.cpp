@@ -79,10 +79,12 @@ namespace namu {
     }
 
     void me::_setSignal() {
-        NAMU_I("plant signal handler.");
         _handler = [&](const err& e) {
+            enablesZone zone;
+            // TODO: setEnable(true);
             logger::get().logBypass("unexpected exception found: ");
             e.dump();
+
             // signaler will *terminate* the process after all.
         };
         signaler::singletone().addSignal(_handler);

@@ -15,6 +15,6 @@ namespace namu {
     protected:
         const nchar* _getRegExpr() const override;
 
-        nbool _onTake(const flagArgs& tray, cli& c, interpreter& ip) const override;
+        nbool _onTake(const flagArgs& tray, cli& c, interpreter& ip, starter& s) const override;
     };
 }

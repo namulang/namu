@@ -9,10 +9,12 @@ namespace namu {
         _res = -1;
         interpreter ip;
         errReport rpt;
-        ip.setReport(rpt);
+        ip.setReport(rpt).setFlag(interpreter::DUMP_ON_EX | interpreter::LOG_ON_END);
+        starter s;
+        s.setFlag(starter::DUMP_ON_EX | starter::LOG_ON_END);
 
         for(const auto& op : getFlags()) {
-            op->take(ip, *this, a);
+            op->take(ip, s, *this, a);
 
             if(a.size() <= 0)
                 break;
@@ -23,7 +25,7 @@ namespace namu {
         if(!ip.isVerified())
             return _res;
 
-        str res = starter().setPack(ip.getSubPack()).work();
+        str res = s.setPack(ip.getSubPack()).work();
         _res = 0;
         if(res) {
             if(res->isSub<nInt>())

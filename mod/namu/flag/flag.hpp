@@ -15,7 +15,7 @@ namespace namu {
         virtual const nchar* getDescription() const = 0;
 
         /// @return how many argument taken by this flag.
-        virtual nbool take(interpreter& ip, cli& c, flagArgs& a) const;
+        virtual nbool take(interpreter& ip, starter& s, cli& c, flagArgs& a) const;
 
     protected:
         /// when this flag matched to one of args, the value of returning this func will be
@@ -25,7 +25,7 @@ namespace namu {
         void _delArgs(flagArgs& a, std::vector<int> indices) const;
 
         virtual const nchar* _getRegExpr() const = 0;
-        virtual nbool _onTake(const flagArgs& tray, cli& c, interpreter& ip) const = 0;
+        virtual nbool _onTake(const flagArgs& tray, cli& c, interpreter& ip, starter& s) const = 0;
     };
 
     typedef std::vector<tstr<flag>> flags;
