@@ -209,26 +209,26 @@ namespace namu {
         switch(fType) {
             case logLv::ERR:
                 if(pos.isOrigin())
-                    log.logFormatBypass("%serr%d(%s): %s", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str(), msg.c_str());
+                    log.logFormatBypass("%serr%d(%s)", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str());
                 else
-                    log.logFormatBypass("%serr%d(%s) row %d col %d: ", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str(),
-                                        pos.row, pos.col, msg.c_str());
+                    log.logFormatBypass("%serr%d(%s) row %d col", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str(),
+                                        pos.row, pos.col);
                 break;
 
             case logLv::WARN:
                 if(pos.isOrigin())
-                    log.logFormatBypass("%swarn%d(%s): %s", foreColor(YELLOW).c_str(), code, getErrName(code).c_str(), msg.c_str());
+                    log.logFormatBypass("%swarn%d(%s)", foreColor(YELLOW).c_str(), code, getErrName(code).c_str());
                 else
-                    log.logFormatBypass("%swarn%d(%s) row %d col %d: %s", foreColor(YELLOW).c_str(), code, getErrName(code).c_str(),
-                                        pos.row, pos.col, msg.c_str());
+                    log.logFormatBypass("%swarn%d(%s) row %d col %d", foreColor(YELLOW).c_str(), code, getErrName(code).c_str(),
+                                        pos.row, pos.col);
                 break;
 
             case logLv::INFO:
                 if(pos.isOrigin())
-                    log.logFormatBypass("%sinfo%d(%s): %s", foreColor(BLUE).c_str(), code, getErrName(code).c_str(), msg.c_str());
+                    log.logFormatBypass("%sinfo%d(%s)", foreColor(BLUE).c_str(), code, getErrName(code).c_str());
                 else
-                    log.logFormatBypass("%sinfo%d(%s) row %d col %d: %s", foreColor(BLUE).c_str(), code, getErrName(code).c_str(),
-                                        pos.row, pos.col, msg.c_str());
+                    log.logFormatBypass("%sinfo%d(%s) row %d col", foreColor(BLUE).c_str(), code, getErrName(code).c_str(),
+                                        pos.row, pos.col);
                 break;
         }
         log.logFormatBypass("%s: %s\n", foreColor(LIGHTGRAY).c_str(), msg.c_str());
@@ -245,7 +245,8 @@ namespace namu {
 
     void me::logStack() const {
         _stack.dump();
-        _logNativeStack();
+        if(buildFeature::config::isDbg())
+            _logNativeStack();
     }
 
     void me::_logNativeStack() const {
