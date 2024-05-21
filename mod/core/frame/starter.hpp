@@ -10,6 +10,12 @@ namespace namu {
         NAMU(CLASS(starter, __super8))
 
     public:
+        enum logFlag3 {
+            LOG_STRUCTURE = 1 << 7,
+            LOG_GRAPH_ON_EX = 1 << 8
+        };
+
+    public:
         static inline const std::string MAIN = "main";
 
     public:

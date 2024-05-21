@@ -23,7 +23,7 @@ namespace namu {
 
     nbool me::_onTake(const flagArgs& tray, cli& c, interpreter& ip, starter& s) const {
         ip.setFlag(interpreter::DEFAULT | interpreter::LOG_STRUCTURE);
-        s.setFlag(starter::DEFAULT);
+        s.setFlag(starter::DEFAULT | starter::LOG_GRAPH_ON_EX);
         return true;
     }
 }

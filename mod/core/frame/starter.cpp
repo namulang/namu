@@ -6,6 +6,7 @@
 #include "starter.hpp"
 #include "threadUse.hpp"
 #include <csignal>
+#include "../visitor/graphVisitor.hpp"
 
 namespace namu {
 
@@ -82,8 +83,14 @@ namespace namu {
         _handler = [&](const err& e) {
             enablesZone zone;
             // TODO: setEnable(true);
-            logger::get().logBypass("unexpected exception found: ");
+            logger& log = logger::get();
+            log.logBypass("unexpected exception found: ");
             e.dump();
+
+            if(isFlag(starter::LOG_GRAPH_ON_EX)) {
+                log.logBypass("\ngraph:\n");
+                graphVisitor().setFlag(0).setTask(getPack()).work();
+            }
 
             // signaler will *terminate* the process after all.
         };
