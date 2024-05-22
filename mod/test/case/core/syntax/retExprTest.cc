@@ -189,13 +189,13 @@ TEST_F(retExprTest, retExceptionNoThrowAgain2) {
     ASSERT_EQ(ex.len(), 1);
 }
 
-TEST_F(retExprTest, f) {
+TEST_F(retExprTest, variableDuplication) {
     make().parse(R"SRC(
         age := 22
         def a
             age := 11
-            foo() void
-                print(age as str)
+            foo() int
+                ret age
         main() int
             ret a().foo()
     )SRC").shouldVerified(true);
