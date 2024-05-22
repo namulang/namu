@@ -109,7 +109,7 @@ namespace namu {
             _veri.delFlag(LOG_ON_END | DUMP_ON_END);
         _veri.setTask(getTask().getPack())
              .work();
-        if(isFlag(LOG_STRUCTURE) && !nul(_pser.getSubPack()) && !nul(getTask())) return;
+        if(isFlag(LOG_STRUCTURE) && !nul(_pser.getSubPack()) && !nul(getTask()))
             graphVisitor().setFlag(0).setTask(getTask()).work();
     }
 }

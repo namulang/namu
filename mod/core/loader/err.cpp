@@ -211,7 +211,7 @@ namespace namu {
                 if(pos.isOrigin())
                     log.logFormatBypass("%serr%d(%s)", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str());
                 else
-                    log.logFormatBypass("%serr%d(%s) row %d col", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str(),
+                    log.logFormatBypass("%serr%d(%s) row%d col%d", foreColor(LIGHTRED).c_str(), code, getErrName(code).c_str(),
                                         pos.row, pos.col);
                 break;
 
@@ -219,7 +219,7 @@ namespace namu {
                 if(pos.isOrigin())
                     log.logFormatBypass("%swarn%d(%s)", foreColor(YELLOW).c_str(), code, getErrName(code).c_str());
                 else
-                    log.logFormatBypass("%swarn%d(%s) row %d col %d", foreColor(YELLOW).c_str(), code, getErrName(code).c_str(),
+                    log.logFormatBypass("%swarn%d(%s) row%d col%d", foreColor(YELLOW).c_str(), code, getErrName(code).c_str(),
                                         pos.row, pos.col);
                 break;
 
@@ -227,7 +227,7 @@ namespace namu {
                 if(pos.isOrigin())
                     log.logFormatBypass("%sinfo%d(%s)", foreColor(BLUE).c_str(), code, getErrName(code).c_str());
                 else
-                    log.logFormatBypass("%sinfo%d(%s) row %d col", foreColor(BLUE).c_str(), code, getErrName(code).c_str(),
+                    log.logFormatBypass("%sinfo%d(%s) row%d col%d", foreColor(BLUE).c_str(), code, getErrName(code).c_str(),
                                         pos.row, pos.col);
                 break;
         }
@@ -247,6 +247,7 @@ namespace namu {
         _stack.dump();
         if(buildFeature::config::isDbg())
             _logNativeStack();
+        logger::get().logBypass("\n");
     }
 
     void me::_logNativeStack() const {
