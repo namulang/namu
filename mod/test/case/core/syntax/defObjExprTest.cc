@@ -221,3 +221,19 @@ TEST_F(defObjExprTest, preCtorReversedSequence) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<nint>(), 3);
 }
+
+TEST_F(defObjExprTest, variableDuplication) {
+    make().parse(R"SRC(
+        age := 22
+        def a
+            age := 33
+            foo() int
+                ret age
+        main() int
+            ret a().foo()
+    )SRC").shouldVerified(true);
+
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<nint>(), 33);
+}
