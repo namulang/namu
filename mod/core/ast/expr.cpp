@@ -38,6 +38,7 @@ namespace namu {
     }
 
     const src& me::getSrc() const {
+        if(!_src) return super::getSrc();
         return *_src;
     }
 
