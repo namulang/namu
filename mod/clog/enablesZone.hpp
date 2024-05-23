@@ -17,6 +17,9 @@ namespace namu {
         const enables& getPrev() const;
         void setPrev();
 
+        void setEnable(nbool newVal);
+        void setEnable(const std::string& streamName, nbool newVal);
+
     private:
         enables _enables;
     };
