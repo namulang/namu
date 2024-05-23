@@ -90,46 +90,29 @@ namespace namu {
     }
 
     TEMPLATE
-    tnarr<T, strTactic> ME::subAll(const std::string& name) const {
-#if NAMU_IS_DBG
-        ncnt n = 0;
-#endif
-        return subs().getAll<T>([&](const std::string& key, const T& val) {
-            NAMU_DI("subAll: [%d/%d] %s --> %s = %d",
-                    n++, subs().len(), name.c_str(), key.c_str(), EXACT_MATCH);
-            return key == name;
-        });
+    tpriorities<T> ME::subAll(const std::string& name) const {
+        return subAll<T>(name, nulOf<args>());
     }
 
     TEMPLATE
     tpriorities<T> ME::subAll(const std::string& name, const args& a) const {
         // subs is arranged already to its scope:
         //  so if priority of sub was same level, I need to keep the priority of original container.
-        if(nul(a)) return NAMU_W("a == null"), tpriorities<T>();
 
 #if NAMU_IS_DBG
         ncnt n = 0;
 #endif
-        std::string argStr = a.toStr();
+        std::string argStr = !nul(a) ? a.toStr() : "";
         tprioritiesBucket<T> ps;
         subs().each<T>([&](const auto& key, const T& val, node& owner) {
             priority p = NO_MATCH;
             std::string ownerName = nul(owner) ? "null" : owner.getType().getName();
             if(key == name) {
-                p = val.prioritize(a);
+                p = !nul(a) ? val.prioritize(a) : EXACT_MATCH;
                 if(p != NO_MATCH)
                     ps.push_back(*new tprior<T>(val, owner, p));
             }
-            NAMU_DI("subAll: [%d/%d] %s(%s) --> %s.%s = %d",
-                    n++, subs().len(), name.c_str(), argStr.c_str(), ownerName.c_str(), key.c_str(), p);
-            /* TODO: this code is required?
-            const baseObj& o = sub.template cast<baseObj>();
-            if(!nul(o)) {
-                auto subs = sub.template subAll<T>(baseObj::CTOR_NAME, a);
-                for(const tprior<T>& p : subs)
-                    ps.push_back(p);
-                continue;
-            }*/
+            NAMU_DI("subAll: [%d/%d] %s(%s) --> %s.%s = %d", n++, subs().len(), name.c_str(), argStr.c_str(), ownerName.c_str(), key.c_str(), p);
             return true;
         });
         return ps.join();

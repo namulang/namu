@@ -57,12 +57,12 @@ namespace namu {
         template <typename T = me> const T& sub(const std::string& name, const args& a) const NAMU_UNCONST_FUNC(sub<T>(name, a))
 
         template <typename T>
-        tnarr<T> subAll(std::function<nbool(const std::string&, const T&)> l) const {
+        tnarr<T, strTactic> subAll(std::function<nbool(const std::string&, const T&)> l) const {
             return subs().getAll<T>(l);
         }
 
         template <typename T = me> tnarr<T, strTactic> subAll() const;
-        template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name) const;
+        template <typename T = me> tpriorities<T> subAll(const std::string& name) const;
         template <typename T = me> tpriorities<T> subAll(const std::string& name, const args& a) const;
 
         bool canRun(const args& a) const;

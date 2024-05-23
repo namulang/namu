@@ -94,12 +94,11 @@ namespace {
 
         for(int n=0; n < funcNameSize; n++) {
             const char* name = funcNames[n];
-            if(fr.subAll(name).len() != 1)
+            if(!fr.subAll(name).getMatches().isMatched())
                 return NAMU_I("fr.sub(%s) is 0 or +2 founds", name), false;
         }
 
-        auto foundfunc = fr.subAll(name);
-        if(foundfunc.len() != 1)
+        if(fr.subAll(name).getMatches().isMatched())
             return NAMU_I("couldn't find %s func on frame(%x)", name.c_str(), &fr), false;
 
         return true;
