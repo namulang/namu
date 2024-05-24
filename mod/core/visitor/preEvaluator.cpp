@@ -148,7 +148,7 @@ namespace namu {
                         verifier v;
                         v.setReport(rpt)
                          .setTask(stmts[n])
-                         .setFlag(LOG_ON_EX | DUMP_ON_EX)
+                         .setFlag((LOG_ON_EX | DUMP_ON_EX) & (getFlag()))
                          .work();
 
                         if(rpt.len() > prevErrCnt) {

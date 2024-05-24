@@ -70,10 +70,14 @@ namespace namu {
     TEMPLATE
     void ME::_report(err* e) {
         _rpt->add(e);
-        if(isFlag(LOG_ON_EX))
+        if(isFlag(LOG_ON_EX)) {
+            enablesZone zone(true);
             e->log();
-        else if(isFlag(DUMP_ON_EX))
+        }
+        else if(isFlag(DUMP_ON_EX)) {
+            enablesZone zone(true);
             e->dump();
+        }
     }
 
     TEMPLATE area& ME::_getArea() { return _area; }
@@ -108,18 +112,15 @@ namespace namu {
 
         w._prepare();
 
-        enablesZone prev;
         R ret;
-        {
-            enablesZone internal;
-            if(!w.isFlag(worker<R, T>::INTERNAL)) logger::get().setEnable(false);
-            ret = w._onWork();
-        }
+        enablesZone internal;
+        if(!w.isFlag(worker<R, T>::INTERNAL)) internal.setEnable(false);
+        ret = w._onWork();
+        internal.setPrev().rel();
 
         if(w.isFlag(worker<R, T>::GUARD))
             NAMU_I("|--- %s._onEndWork()... --------|", w.getType().getName().c_str());
 
-        prev.setPrev();
         w._onEndWork();
 
         if(w.isFlag(worker<R, T>::GUARD))
