@@ -8,6 +8,11 @@ namespace namu {
         _enables = logger::get().getEnables();
     }
 
+    me::enablesZone(nbool newVal) {
+        _enables = logger::get().getEnables();
+        setEnable(newVal);
+    }
+
     me::~enablesZone() {
         logger::get().setEnables(_enables);
     }

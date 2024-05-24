@@ -11,6 +11,7 @@ namespace namu {
 
     public:
         enablesZone();
+        enablesZone(nbool newVal);
         ~enablesZone();
 
     public:
