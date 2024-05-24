@@ -19,14 +19,23 @@ namespace namu {
 
     const enables& me::getPrev() const { return _enables; }
 
-    void me::setPrev() { logger::get().setEnables(getPrev()); }
-
-    void me::setEnable(nbool newVal) {
-        logger::get().setEnable(newVal);
+    me& me::setPrev() {
+        logger::get().setEnables(getPrev());
+        return *this;
     }
-    void me::setEnable(const std::string& streamName, nbool newVal) {
+    me& me::rel() {
+        _enables.clear();
+        return *this;
+    }
+
+    me& me::setEnable(nbool newVal) {
+        logger::get().setEnable(newVal);
+        return *this;
+    }
+    me& me::setEnable(const std::string& streamName, nbool newVal) {
         auto& stream = logger::get().getStream(streamName.c_str());
         if(!nul(stream))
             stream.setEnable(newVal);
+        return *this;
     }
 }

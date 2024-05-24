@@ -155,7 +155,7 @@ namespace namu {
     }
 
     void me::setEnables(const enables& enbs) {
-        if(enbs.size() != _streams.size()) return;
+        if(enbs.size() <= 0 || enbs.size() != _streams.size()) return;
 
         for(auto e : enbs) {
             auto& s = getStream(e.first);
