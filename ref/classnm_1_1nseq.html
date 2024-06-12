@@ -92,12 +92,12 @@ Inheritance diagram for nm::nseq:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae6a1aad937f10a3e435d2e28b7e4ed2a"><td class="memItemLeft" align="right" valign="top"><a id="ae6a1aad937f10a3e435d2e28b7e4ed2a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>nseq</b> (<a class="el" href="classnm_1_1n_int.html">nInt</a> start, <a class="el" href="classnm_1_1n_int.html">nInt</a> end)</td></tr>
-<tr class="separator:ae6a1aad937f10a3e435d2e28b7e4ed2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38b0168c0bea67efda625ec42acc5aa8"><td class="memItemLeft" align="right" valign="top"><a id="a38b0168c0bea67efda625ec42acc5aa8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>nseq</b> (<a class="el" href="classnm_1_1n_int.html">nInt</a> start, <a class="el" href="classnm_1_1n_int.html">nInt</a> end, <a class="el" href="classnm_1_1n_int.html">nInt</a> step)</td></tr>
-<tr class="separator:a38b0168c0bea67efda625ec42acc5aa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3386366a97d9453cc42b944cb43f78c8"><td class="memItemLeft" align="right" valign="top"><a id="a3386366a97d9453cc42b944cb43f78c8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>nseq</b> (const <a class="el" href="classnm_1_1n_int.html">nInt</a> &amp;start, const <a class="el" href="classnm_1_1n_int.html">nInt</a> &amp;end)</td></tr>
+<tr class="separator:a3386366a97d9453cc42b944cb43f78c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fad64fcd0cb6c69954291c526813857"><td class="memItemLeft" align="right" valign="top"><a id="a7fad64fcd0cb6c69954291c526813857"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>nseq</b> (const <a class="el" href="classnm_1_1n_int.html">nInt</a> &amp;start, const <a class="el" href="classnm_1_1n_int.html">nInt</a> &amp;end, const <a class="el" href="classnm_1_1n_int.html">nInt</a> &amp;step)</td></tr>
+<tr class="separator:a7fad64fcd0cb6c69954291c526813857"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1250cf57075154a35099e2549874a672"><td class="memItemLeft" align="right" valign="top"><a id="a1250cf57075154a35099e2549874a672"></a>
 virtual <a class="el" href="classnm_1_1n_int.html">nInt</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (nidx n) override</td></tr>
 <tr class="separator:a1250cf57075154a35099e2549874a672"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,12 +129,12 @@ nbool&#160;</td><td class="memItemRight" valign="bottom"><b>has</b> (nidx n) con
 <tr class="memitem:a351e930881eeff9a608dd80f50073f6f inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a351e930881eeff9a608dd80f50073f6f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> (const me &amp;rhs)</td></tr>
 <tr class="separator:a351e930881eeff9a608dd80f50073f6f inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf8927f874e5c11ce24fb26dc3cb6a4b inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="aaf8927f874e5c11ce24fb26dc3cb6a4b"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>operator new</b> (size_t sz)</td></tr>
-<tr class="separator:aaf8927f874e5c11ce24fb26dc3cb6a4b inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9d54809a6bbd71dcba879de0ab67794 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="aa9d54809a6bbd71dcba879de0ab67794"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>operator delete</b> (void *pt, size_t sz)</td></tr>
-<tr class="separator:aa9d54809a6bbd71dcba879de0ab67794 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aece867800776c810dee79133751b3644 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="aece867800776c810dee79133751b3644"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>operator new</b> (size_t sz) noexcept</td></tr>
+<tr class="separator:aece867800776c810dee79133751b3644 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41020388f3adfd36c4dcfa9e30eb00e9 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a41020388f3adfd36c4dcfa9e30eb00e9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>operator delete</b> (void *pt, size_t sz) noexcept</td></tr>
+<tr class="separator:a41020388f3adfd36c4dcfa9e30eb00e9 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a027faa4a17ea1a29315361d5a5f67a05 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a027faa4a17ea1a29315361d5a5f67a05"></a>
 virtual <a class="el" href="structnm_1_1id.html">id</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getId</b> () const</td></tr>
 <tr class="separator:a027faa4a17ea1a29315361d5a5f67a05 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -105,6 +105,9 @@ const <a class="el" href="classnm_1_1node.html">node</a> &amp;&#160;</td><td cla
 <tr class="memitem:a9f530d3a34331be25607b71e67ec6897"><td class="memItemLeft" align="right" valign="top"><a id="a9f530d3a34331be25607b71e67ec6897"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setOrigin</b> (const <a class="el" href="classnm_1_1node.html">node</a> &amp;newType)</td></tr>
 <tr class="separator:a9f530d3a34331be25607b71e67ec6897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6eb22d141191ad5e628acd3b105d6b8"><td class="memItemLeft" align="right" valign="top"><a id="ad6eb22d141191ad5e628acd3b105d6b8"></a>
+<a class="el" href="classnm_1_1clonable.html">clonable</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>cloneDeep</b> () const override</td></tr>
+<tr class="separator:ad6eb22d141191ad5e628acd3b105d6b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1instance')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1instance.html">nm::instance</a></td></tr>
 <tr class="memitem:a0a106bce4bfaad1ef5c52d195fd17176 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a0a106bce4bfaad1ef5c52d195fd17176"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> (<a class="el" href="structnm_1_1id.html">id</a> newId)</td></tr>
@@ -112,12 +115,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setOrigin</b> (const 
 <tr class="memitem:a351e930881eeff9a608dd80f50073f6f inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a351e930881eeff9a608dd80f50073f6f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> (const me &amp;rhs)</td></tr>
 <tr class="separator:a351e930881eeff9a608dd80f50073f6f inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf8927f874e5c11ce24fb26dc3cb6a4b inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="aaf8927f874e5c11ce24fb26dc3cb6a4b"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>operator new</b> (size_t sz)</td></tr>
-<tr class="separator:aaf8927f874e5c11ce24fb26dc3cb6a4b inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9d54809a6bbd71dcba879de0ab67794 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="aa9d54809a6bbd71dcba879de0ab67794"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>operator delete</b> (void *pt, size_t sz)</td></tr>
-<tr class="separator:aa9d54809a6bbd71dcba879de0ab67794 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aece867800776c810dee79133751b3644 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="aece867800776c810dee79133751b3644"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>operator new</b> (size_t sz) noexcept</td></tr>
+<tr class="separator:aece867800776c810dee79133751b3644 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41020388f3adfd36c4dcfa9e30eb00e9 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a41020388f3adfd36c4dcfa9e30eb00e9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>operator delete</b> (void *pt, size_t sz) noexcept</td></tr>
+<tr class="separator:a41020388f3adfd36c4dcfa9e30eb00e9 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a027faa4a17ea1a29315361d5a5f67a05 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a027faa4a17ea1a29315361d5a5f67a05"></a>
 virtual <a class="el" href="structnm_1_1id.html">id</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getId</b> () const</td></tr>
 <tr class="separator:a027faa4a17ea1a29315361d5a5f67a05 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,9 +169,6 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a54e3129852076fab93439335c22a33f6 inherit pub_methods_classnm_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a54e3129852076fab93439335c22a33f6"></a>
 virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () const =0</td></tr>
 <tr class="separator:a54e3129852076fab93439335c22a33f6 inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64d602598cec3f135806a0db01de02a0 inherit pub_methods_classnm_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a64d602598cec3f135806a0db01de02a0"></a>
-virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>cloneDeep</b> () const</td></tr>
-<tr class="separator:a64d602598cec3f135806a0db01de02a0 inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>

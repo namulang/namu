@@ -1,12 +1,11 @@
 var searchData=
 [
-  ['date_45',['date',['../structnm_1_1build_feature_1_1date.html',1,'nm::buildFeature']]],
-  ['deduce_46',['deduce',['../classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5',1,'nm::ntype::deduce(const ntype &amp;l, const ntype &amp;r)'],['../classnm_1_1ntype.html#a448b1fc53f9ff631c5743c885906db42',1,'nm::ntype::deduce(const ntype &amp;r) const'],['../classnm_1_1node.html#a4de81c810205dc15770515a4ccf71074',1,'nm::node::deduce()']]],
-  ['defarrayexpr_47',['defArrayExpr',['../classnm_1_1def_array_expr.html',1,'nm']]],
-  ['defassignexpr_48',['defAssignExpr',['../classnm_1_1def_assign_expr.html',1,'nm']]],
-  ['defaultcopyctor_49',['defaultCopyCtor',['../classnm_1_1default_copy_ctor.html',1,'nm']]],
-  ['defaultctor_50',['defaultCtor',['../classnm_1_1default_ctor.html',1,'nm']]],
-  ['defaultpack_51',['defaultPack',['../classnm_1_1default_pack.html',1,'nm']]],
+  ['date_46',['date',['../structnm_1_1build_feature_1_1date.html',1,'nm::buildFeature']]],
+  ['deduce_47',['deduce',['../classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5',1,'nm::ntype::deduce(const ntype &amp;l, const ntype &amp;r)'],['../classnm_1_1ntype.html#a448b1fc53f9ff631c5743c885906db42',1,'nm::ntype::deduce(const ntype &amp;r) const'],['../classnm_1_1node.html#a4de81c810205dc15770515a4ccf71074',1,'nm::node::deduce()']]],
+  ['defarrayexpr_48',['defArrayExpr',['../classnm_1_1def_array_expr.html',1,'nm']]],
+  ['defassignexpr_49',['defAssignExpr',['../classnm_1_1def_assign_expr.html',1,'nm']]],
+  ['defaultcopyctor_50',['defaultCopyCtor',['../classnm_1_1default_copy_ctor.html',1,'nm']]],
+  ['defaultctor_51',['defaultCtor',['../classnm_1_1default_ctor.html',1,'nm']]],
   ['defaultsigzone_52',['defaultSigZone',['../classnm_1_1default_sig_zone.html',1,'nm']]],
   ['defblock_53',['defBlock',['../classnm_1_1def_block.html',1,'nm']]],
   ['defpropexpr_54',['defPropExpr',['../classnm_1_1def_prop_expr.html',1,'nm']]],

@@ -68,7 +68,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classnm_1_1ntype-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">nm::ntype Class Reference</div>  </div>
@@ -142,9 +142,12 @@ const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;&#160;</td><td c
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:aafdd498b3daa2ff288d3151acab4b02a"><td class="memTemplItemLeft" align="right" valign="top">const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>deduce</b> () const</td></tr>
 <tr class="separator:aafdd498b3daa2ff288d3151acab4b02a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59a633fe8b0315bcbb04dd1c013daac8"><td class="memItemLeft" align="right" valign="top"><a id="a59a633fe8b0315bcbb04dd1c013daac8"></a>
-virtual const <a class="el" href="classnm_1_1tnarr.html">narr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getBeans</b> () const NM_CONST_FUNC(getBeans()) <a class="el" href="classnm_1_1tnarr.html">narr</a> &amp;getBeans()</td></tr>
-<tr class="separator:a59a633fe8b0315bcbb04dd1c013daac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a204fd8c4510513df0d050d9edd18f1e2"><td class="memItemLeft" align="right" valign="top"><a id="a204fd8c4510513df0d050d9edd18f1e2"></a>
+virtual const <a class="el" href="classnm_1_1tnarr.html">narr</a> &amp;virtual getBeans() const NM_CONST_FUNC(_getBeans()) protected const <a class="el" href="classnm_1_1ases.html">ases</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getAses</b> () const</td></tr>
+<tr class="separator:a204fd8c4510513df0d050d9edd18f1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2641ae389a7083dff70f0f1ccc66658a"><td class="memItemLeft" align="right" valign="top"><a id="a2641ae389a7083dff70f0f1ccc66658a"></a>
+<a class="el" href="classnm_1_1tnarr.html">narr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getBeans</b> ()</td></tr>
+<tr class="separator:a2641ae389a7083dff70f0f1ccc66658a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1type"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1type')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1type.html">nm::type</a></td></tr>
 <tr class="memitem:a8c5d1e4e98a5b751c88b134be840e297 inherit pub_methods_classnm_1_1type"><td class="memItemLeft" align="right" valign="top"><a id="a8c5d1e4e98a5b751c88b134be840e297"></a>
 virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const me &amp;rhs) const</td></tr>
@@ -216,14 +219,20 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a819b24f2993a813b4ee1b9cecd0fd4b5"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5">deduce</a> (const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;l, const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;r)</td></tr>
 <tr class="separator:a819b24f2993a813b4ee1b9cecd0fd4b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a5fbf5809ced84c207c6338f2213c13f2"><td class="memItemLeft" align="right" valign="top"><a id="a5fbf5809ced84c207c6338f2213c13f2"></a>
-virtual const <a class="el" href="classnm_1_1ases.html">ases</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getImpliAses</b> () const</td></tr>
-<tr class="separator:a5fbf5809ced84c207c6338f2213c13f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7492c7d5a763bac2ed4f94d227d9cc2"><td class="memItemLeft" align="right" valign="top"><a id="ad7492c7d5a763bac2ed4f94d227d9cc2"></a>
-virtual const <a class="el" href="classnm_1_1ases.html">ases</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getAses</b> () const</td></tr>
-<tr class="separator:ad7492c7d5a763bac2ed4f94d227d9cc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a1bf6a178f0afed8f5cd9ffe4339eaaeb"><td class="memItemLeft" align="right" valign="top"><a id="a1bf6a178f0afed8f5cd9ffe4339eaaeb"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>seq</b></td></tr>
+<tr class="separator:a1bf6a178f0afed8f5cd9ffe4339eaaeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab842a4772495c33748e0e6a7d4d07c1f"><td class="memItemLeft" align="right" valign="top"><a id="ab842a4772495c33748e0e6a7d4d07c1f"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>arr</b></td></tr>
+<tr class="separator:ab842a4772495c33748e0e6a7d4d07c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ab7c001275ccb143c7af1a9c5c88387"><td class="memItemLeft" align="right" valign="top"><a id="a8ab7c001275ccb143c7af1a9c5c88387"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>genericOrigin</b></td></tr>
+<tr class="separator:a8ab7c001275ccb143c7af1a9c5c88387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_classnm_1_1type"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classnm_1_1type')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classnm_1_1type.html">nm::type</a></td></tr>
 <tr class="memitem:a187697a5a1ce4abbd726c83d32609911 inherit pro_methods_classnm_1_1type"><td class="memItemLeft" align="right" valign="top"><a id="a187697a5a1ce4abbd726c83d32609911"></a>
 virtual types &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getSubs</b> ()=0</td></tr>

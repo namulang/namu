@@ -107,13 +107,13 @@ $(function() {
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#define __NM__DECL_VISIT_1(SUPER) \</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">        public: \</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">            using SUPER::accept; \</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">            void accept(visitInfo i, visitor&amp; v) override; \</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">            void accept(const visitInfo&amp; i, visitor&amp; v) override; \</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">        private:</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define __NM__DECL_VISIT(...) NM_OVERLOAD(__NM__DECL_VISIT, __VA_ARGS__)</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define __NM__DECL_DEF_VISIT_0() __NM__DECL_DEF_VISIT_1(me)</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#define __NM__DECL_DEF_VISIT_1(ME) \</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">            void ME::accept(visitInfo i, visitor&amp; v) { \</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">            void ME::accept(const visitInfo&amp; i, visitor&amp; v) { \</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">                v.visit(i, *this); \</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">            }</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#define __NM__DECL_DEF_VISIT(...) NM_OVERLOAD(__NM__DECL_DEF_VISIT, __VA_ARGS__)</span></div>

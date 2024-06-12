@@ -82,7 +82,9 @@ $(function() {
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keywordtype">void</span> ex(nint code, ...);</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keywordtype">void</span> ex(<span class="keyword">const</span> <a class="code" href="structnm_1_1point.html">point</a>&amp; <a class="code" href="classnm_1_1src.html">src</a>, <span class="keywordtype">int</span> code, ...);</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    };</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define NM_EX(code, ...) this-&gt;ex(code, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1exceptional_html"><div class="ttname"><a href="classnm_1_1exceptional.html">nm::exceptional</a></div><div class="ttdef"><b>Definition:</b> exceptional.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1src_html"><div class="ttname"><a href="classnm_1_1src.html">nm::src</a></div><div class="ttdef"><b>Definition:</b> src.hpp:6</div></div>
 <div class="ttc" id="astructnm_1_1point_html"><div class="ttname"><a href="structnm_1_1point.html">nm::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>

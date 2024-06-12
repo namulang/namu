@@ -98,11 +98,12 @@ Inheritance diagram for nm::node:</div>
 <area href="classnm_1_1slot.html" alt="nm::slot" shape="rect" coords="710,168,842,192"/>
 <area href="classnm_1_1src_file.html" title="srcFile represents src file of namulang source codes." alt="nm::srcFile" shape="rect" coords="852,168,984,192"/>
 <area href="classnm_1_1thread.html" alt="nm::thread" shape="rect" coords="994,168,1126,192"/>
-<area href="classnm_1_1arithmetic_obj.html" alt="nm::arithmeticObj" shape="rect" coords="142,224,274,248"/>
-<area href="classnm_1_1default_pack.html" alt="nm::defaultPack" shape="rect" coords="142,280,274,304"/>
+<area href="classnm_1_1tbridge.html" alt="nm::tbridge&lt; narr &gt;" shape="rect" coords="142,224,274,248"/>
+<area href="classnm_1_1arithmetic_obj.html" alt="nm::arithmeticObj" shape="rect" coords="142,280,274,304"/>
 <area href="structnm_1_1err.html" alt="nm::err" shape="rect" coords="142,336,274,360"/>
-<area href="classnm_1_1generic_obj.html" alt="nm::genericObj" shape="rect" coords="142,392,274,416"/>
+<area href="classnm_1_1generic_origin.html" alt="nm::genericOrigin" shape="rect" coords="142,392,274,416"/>
 <area href="classnm_1_1obj.html" alt="nm::obj" shape="rect" coords="142,448,274,472"/>
+<area href="classnm_1_1tbridge.html" alt="nm::tbridge&lt; T &gt;" shape="rect" coords="142,504,274,528"/>
 <area href="classnm_1_1_f_b_o_expr.html" alt="nm::FBOExpr" shape="rect" coords="426,224,558,248"/>
 <area href="classnm_1_1_f_b_o_expr.html" alt="nm::FBOExpr" shape="rect" coords="426,280,558,304"/>
 <area href="classnm_1_1_f_u_o_expr.html" alt="nm::FUOExpr" shape="rect" coords="426,336,558,360"/>
@@ -241,9 +242,9 @@ virtual const <a class="el" href="classnm_1_1src.html">src</a> &amp;&#160;</td><
 <tr class="separator:af56cea85d24ce2972b6e8c4af3ba1f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf6e9ca023760db52a62bb04387d4e74"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1node.html#acf6e9ca023760db52a62bb04387d4e74">getEval</a> () const</td></tr>
 <tr class="separator:acf6e9ca023760db52a62bb04387d4e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5189b2a5248468252e8ed8862561b595"><td class="memItemLeft" align="right" valign="top"><a id="a5189b2a5248468252e8ed8862561b595"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>accept</b> (<a class="el" href="structnm_1_1visit_info.html">visitInfo</a> i, <a class="el" href="classnm_1_1visitor.html">visitor</a> &amp;v)</td></tr>
-<tr class="separator:a5189b2a5248468252e8ed8862561b595"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a544a2ab3cb84e9502ad88b62710f586a"><td class="memItemLeft" align="right" valign="top"><a id="a544a2ab3cb84e9502ad88b62710f586a"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>accept</b> (const <a class="el" href="structnm_1_1visit_info.html">visitInfo</a> &amp;i, <a class="el" href="classnm_1_1visitor.html">visitor</a> &amp;v)</td></tr>
+<tr class="separator:a544a2ab3cb84e9502ad88b62710f586a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae477113bd7543ca5a15ecf857ebc3a4c"><td class="memItemLeft" align="right" valign="top"><a id="ae477113bd7543ca5a15ecf857ebc3a4c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>inFrame</b> (const <a class="el" href="classnm_1_1tbicontainable.html">bicontainable</a> &amp;<a class="el" href="classnm_1_1args.html">args</a>) override</td></tr>
 <tr class="separator:ae477113bd7543ca5a15ecf857ebc3a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -269,12 +270,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>outFrame</b> ()</td><
 <tr class="memitem:a351e930881eeff9a608dd80f50073f6f inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a351e930881eeff9a608dd80f50073f6f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> (const me &amp;rhs)</td></tr>
 <tr class="separator:a351e930881eeff9a608dd80f50073f6f inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf8927f874e5c11ce24fb26dc3cb6a4b inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="aaf8927f874e5c11ce24fb26dc3cb6a4b"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>operator new</b> (size_t sz)</td></tr>
-<tr class="separator:aaf8927f874e5c11ce24fb26dc3cb6a4b inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9d54809a6bbd71dcba879de0ab67794 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="aa9d54809a6bbd71dcba879de0ab67794"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>operator delete</b> (void *pt, size_t sz)</td></tr>
-<tr class="separator:aa9d54809a6bbd71dcba879de0ab67794 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aece867800776c810dee79133751b3644 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="aece867800776c810dee79133751b3644"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>operator new</b> (size_t sz) noexcept</td></tr>
+<tr class="separator:aece867800776c810dee79133751b3644 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41020388f3adfd36c4dcfa9e30eb00e9 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a41020388f3adfd36c4dcfa9e30eb00e9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>operator delete</b> (void *pt, size_t sz) noexcept</td></tr>
+<tr class="separator:a41020388f3adfd36c4dcfa9e30eb00e9 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a027faa4a17ea1a29315361d5a5f67a05 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a027faa4a17ea1a29315361d5a5f67a05"></a>
 virtual <a class="el" href="structnm_1_1id.html">id</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getId</b> () const</td></tr>
 <tr class="separator:a027faa4a17ea1a29315361d5a5f67a05 inherit pub_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -427,7 +428,7 @@ static <a class="el" href="classnm_1_1instancer.html">instancer</a> &amp;&#160;<
 <p>for example, the 'expr' class has derived from this node class. and if an user call the funcs to get type of it, class 'ntype' of 'expr' will be returned. but if that user call the '<a class="el" href="classnm_1_1node.html#acf6e9ca023760db52a62bb04387d4e74">getEval()</a>' then the 'expr' object evaluate its terms and returns it as a node from the output. it could be an integer if it was 'addExpr' and all terms are constructed with integers.</p>
 <p>and also this func requires frames. means that you have to interact frame first before call this func. </p><dl class="section remark"><dt>Remarks</dt><dd>some derived class of node may require to call this function first by verifier. if you call this function without calling verifier previously will damage then process. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classnm_1_1t_api_bridge.html#a3b89a9faacea451e0ec7fe503f68b11c">nm::tApiBridge&lt; T, Ret &gt;</a>, <a class="el" href="classnm_1_1slot.html#afc9ab78c448c1a10b8c01483f4ed91bc">nm::slot</a>, <a class="el" href="classnm_1_1generic_obj.html#af4fd52682b7850c2c88ee6a0f7fa0c37">nm::genericObj</a>, <a class="el" href="classnm_1_1run_expr.html#a25b6558413d49f2ee687614f5fbda5e3">nm::runExpr</a>, <a class="el" href="classnm_1_1ret_expr.html#a8f8648f79dcef65fc1c06ba247bef6a9">nm::retExpr</a>, <a class="el" href="classnm_1_1loop_expr.html#a6fd5ccc28125b50c32f3feb126c8a040">nm::loopExpr</a>, <a class="el" href="classnm_1_1if_expr.html#a3f49dc0852c1714eb37788ddbe59a7b8">nm::ifExpr</a>, <a class="el" href="classnm_1_1get_expr.html#aebb16778d5d990f44233f9ee0a43b5f6">nm::getExpr</a>, <a class="el" href="classnm_1_1_f_b_o_expr.html#a849b3870f2f1604c4212ce6c09767b1e">nm::FBOExpr</a>, <a class="el" href="classnm_1_1_f_b_o_expr.html#a849b3870f2f1604c4212ce6c09767b1e">nm::FBOExpr</a>, <a class="el" href="classnm_1_1def_var_expr.html#a868486dc19313ef161c1369515d68038">nm::defVarExpr</a>, <a class="el" href="classnm_1_1def_seq_expr.html#a47813beca7df500ba0525fd5d909335e">nm::defSeqExpr</a>, <a class="el" href="classnm_1_1def_array_expr.html#af3dd0d2f15d2693c90656b8d76ded1c0">nm::defArrayExpr</a>, <a class="el" href="classnm_1_1block_expr.html#aa32612b7e8905764545611bc13e3849b">nm::blockExpr</a>, <a class="el" href="classnm_1_1assign_expr.html#a320e8be87581d7ff3ef6def13dbd5335">nm::assignExpr</a>, <a class="el" href="classnm_1_1as_expr.html#a986c19db51ae0c8364b5004b7dc070c3">nm::asExpr</a>, and <a class="el" href="classnm_1_1ctor.html#a46a74f8ed5d4e50e60f4dc01afadda39">nm::ctor</a>.</p>
+<p>Reimplemented in <a class="el" href="classnm_1_1slot.html#afc9ab78c448c1a10b8c01483f4ed91bc">nm::slot</a>, <a class="el" href="classnm_1_1generic_origin.html#ada313fde72dc60598fe5b50e462ade34">nm::genericOrigin</a>, <a class="el" href="classnm_1_1run_expr.html#a25b6558413d49f2ee687614f5fbda5e3">nm::runExpr</a>, <a class="el" href="classnm_1_1ret_expr.html#a8f8648f79dcef65fc1c06ba247bef6a9">nm::retExpr</a>, <a class="el" href="classnm_1_1loop_expr.html#a6fd5ccc28125b50c32f3feb126c8a040">nm::loopExpr</a>, <a class="el" href="classnm_1_1if_expr.html#a3f49dc0852c1714eb37788ddbe59a7b8">nm::ifExpr</a>, <a class="el" href="classnm_1_1get_expr.html#aebb16778d5d990f44233f9ee0a43b5f6">nm::getExpr</a>, <a class="el" href="classnm_1_1_f_b_o_expr.html#a849b3870f2f1604c4212ce6c09767b1e">nm::FBOExpr</a>, <a class="el" href="classnm_1_1_f_b_o_expr.html#a849b3870f2f1604c4212ce6c09767b1e">nm::FBOExpr</a>, <a class="el" href="classnm_1_1def_var_expr.html#a868486dc19313ef161c1369515d68038">nm::defVarExpr</a>, <a class="el" href="classnm_1_1def_seq_expr.html#a47813beca7df500ba0525fd5d909335e">nm::defSeqExpr</a>, <a class="el" href="classnm_1_1def_array_expr.html#af3dd0d2f15d2693c90656b8d76ded1c0">nm::defArrayExpr</a>, <a class="el" href="classnm_1_1block_expr.html#aa32612b7e8905764545611bc13e3849b">nm::blockExpr</a>, <a class="el" href="classnm_1_1assign_expr.html#a320e8be87581d7ff3ef6def13dbd5335">nm::assignExpr</a>, <a class="el" href="classnm_1_1as_expr.html#a986c19db51ae0c8364b5004b7dc070c3">nm::asExpr</a>, and <a class="el" href="classnm_1_1ctor.html#a46a74f8ed5d4e50e60f4dc01afadda39">nm::ctor</a>.</p>
 
 </div>
 </div>

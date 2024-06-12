@@ -108,9 +108,12 @@ V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> ()</
 <tr class="memitem:a5a5eb28224fe6a89973edf6138d65e61"><td class="memItemLeft" align="right" valign="top"><a id="a5a5eb28224fe6a89973edf6138d65e61"></a>
 V *&#160;</td><td class="memItemRight" valign="bottom"><b>operator-&gt;</b> ()</td></tr>
 <tr class="separator:a5a5eb28224fe6a89973edf6138d65e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4e24405c40ca57a3020cc8af786ae0b"><td class="memItemLeft" align="right" valign="top"><a id="ae4e24405c40ca57a3020cc8af786ae0b"></a>
-const V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> () const NM_CONST_FUNC(operator*()) const V *operator-&gt;() const NM_CONST_FUNC(operator-&gt;()) explicit operator nbool() const</td></tr>
-<tr class="separator:ae4e24405c40ca57a3020cc8af786ae0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af89046e8e4786db952f464e8ffaa7d0c"><td class="memItemLeft" align="right" valign="top"><a id="af89046e8e4786db952f464e8ffaa7d0c"></a>
+const V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> () const NM_CONST_FUNC(operator*()) const V *operator-&gt;() const NM_CONST_FUNC(operator-&gt;()) me &amp;operator=(const me &amp;rhs)</td></tr>
+<tr class="separator:af89046e8e4786db952f464e8ffaa7d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3748f105e00ca6707e478ab3f9763384"><td class="memItemLeft" align="right" valign="top"><a id="a3748f105e00ca6707e478ab3f9763384"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator nbool</b> () const</td></tr>
+<tr class="separator:a3748f105e00ca6707e478ab3f9763384"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8027ffe1ff2fe38ad40c44fa7fba879"><td class="memItemLeft" align="right" valign="top"><a id="ad8027ffe1ff2fe38ad40c44fa7fba879"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isFrom</b> (const tbicontainable &amp;it) const override</td></tr>
 <tr class="separator:ad8027ffe1ff2fe38ad40c44fa7fba879"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,9 +142,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setVal</b> (const V &
 <tr class="memitem:ae24a219ab00f726934d81233ed4eda36"><td class="memItemLeft" align="right" valign="top"><a id="ae24a219ab00f726934d81233ed4eda36"></a>
 tbicontainable&lt; K, V &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getContainer</b> () override</td></tr>
 <tr class="separator:ae24a219ab00f726934d81233ed4eda36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70918585b05824170cb60d417a2a9fb1"><td class="memItemLeft" align="right" valign="top"><a id="a70918585b05824170cb60d417a2a9fb1"></a>
-const tbicontainable&lt; K, V &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getContainer</b> () const NM_CONST_FUNC(getContainer())</td></tr>
-<tr class="separator:a70918585b05824170cb60d417a2a9fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bef8138acf6a73d48048e557b061462"><td class="memItemLeft" align="right" valign="top"><a id="a9bef8138acf6a73d48048e557b061462"></a>
+const tbicontainable&lt; K, V &gt; &amp;getContainer() const NM_CONST_FUNC(getContainer()) private nbool&#160;</td><td class="memItemRight" valign="bottom"><b>_onSame</b> (const typeProvidable &amp;rhs) const override</td></tr>
+<tr class="separator:a9bef8138acf6a73d48048e557b061462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49fac8ab2f41f3fe8a63450e1dd60a84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84">_nextToMatchParamType</a> ()</td></tr>
+<tr class="separator:a49fac8ab2f41f3fe8a63450e1dd60a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a864281d9c3d1396b3c523820429fdfc7"><td class="memItemLeft" align="right" valign="top"><a id="a864281d9c3d1396b3c523820429fdfc7"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>iter</b> (<a class="el" href="classiteration.html">iteration</a> *newStep)</td></tr>
 <tr class="separator:a864281d9c3d1396b3c523820429fdfc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,6 +168,9 @@ me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (n
 <tr class="memitem:ad35108e4693779407c13ce986975f91e"><td class="memItemLeft" align="right" valign="top"><a id="ad35108e4693779407c13ce986975f91e"></a>
 R&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> ()</td></tr>
 <tr class="separator:ad35108e4693779407c13ce986975f91e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3748f105e00ca6707e478ab3f9763384"><td class="memItemLeft" align="right" valign="top"><a id="a3748f105e00ca6707e478ab3f9763384"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator nbool</b> () const</td></tr>
+<tr class="separator:a3748f105e00ca6707e478ab3f9763384"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25d5c7f8c6e2808824448f2f0729cc74"><td class="memItemLeft" align="right" valign="top"><a id="a25d5c7f8c6e2808824448f2f0729cc74"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isFrom</b> (const tucontainable &amp;it) const override</td></tr>
 <tr class="separator:a25d5c7f8c6e2808824448f2f0729cc74"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,9 +189,11 @@ template&lt;typename E &gt; </td></tr>
 <tr class="memitem:a63e2f360181359276c7a292749423dd4"><td class="memItemLeft" align="right" valign="top"><a id="a63e2f360181359276c7a292749423dd4"></a>
 tucontainable&lt; T, R &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getContainer</b> () override</td></tr>
 <tr class="separator:a63e2f360181359276c7a292749423dd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4904a01ea3d976563ae2f8360c1e3c92"><td class="memItemLeft" align="right" valign="top"><a id="a4904a01ea3d976563ae2f8360c1e3c92"></a>
-const tucontainable&lt; T, R &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getContainer</b> () const NM_CONST_FUNC(getContainer())</td></tr>
-<tr class="separator:a4904a01ea3d976563ae2f8360c1e3c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad84d87a67b73bfe59aadfa512d04598a"><td class="memItemLeft" align="right" valign="top"><a id="ad84d87a67b73bfe59aadfa512d04598a"></a>
+const tucontainable&lt; T, R &gt; &amp;getContainer() const NM_CONST_FUNC(getContainer()) private nbool&#160;</td><td class="memItemRight" valign="bottom"><b>_onSame</b> (const typeProvidable &amp;rhs) const override</td></tr>
+<tr class="separator:ad84d87a67b73bfe59aadfa512d04598a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49fac8ab2f41f3fe8a63450e1dd60a84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84">_nextToMatchParamType</a> ()</td></tr>
+<tr class="separator:a49fac8ab2f41f3fe8a63450e1dd60a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8d4bac39742f27fa61d0489c8714226"><td class="memItemLeft" align="right" valign="top"><a id="ac8d4bac39742f27fa61d0489c8714226"></a>
 virtual V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getVal</b> ()=0</td></tr>
 <tr class="separator:ac8d4bac39742f27fa61d0489c8714226"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,9 +222,9 @@ const R&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> () const N
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a094127641ea239b3fe5f052b3a941559"><td class="memItemLeft" align="right" valign="top"><a id="a094127641ea239b3fe5f052b3a941559"></a>
-const R operator*() const NM_CONST_FUNC(operator*()) typename std const std::remove_reference&lt; R &gt;::type *&#160;</td><td class="memItemRight" valign="bottom"><b>operator-&gt;</b> () const NM_CONST_FUNC(operator-&gt;()) explicit operator nbool() const</td></tr>
-<tr class="separator:a094127641ea239b3fe5f052b3a941559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a418bbaae7aadbf64fa25ba521d65d682"><td class="memItemLeft" align="right" valign="top"><a id="a418bbaae7aadbf64fa25ba521d65d682"></a>
+const R operator*() const NM_CONST_FUNC(operator*()) typename std const std::remove_reference&lt; R &gt;::type *&#160;</td><td class="memItemRight" valign="bottom"><b>operator-&gt;</b> () const NM_CONST_FUNC(operator-&gt;()) me &amp;operator=(const me &amp;rhs)</td></tr>
+<tr class="separator:a418bbaae7aadbf64fa25ba521d65d682"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -245,6 +255,42 @@ template&lt;typename K , typename V , typename defaultContainer &gt; </td></tr>
 <tr class="separator:a17d404d4b0589a29a9e9357962ef5221"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a49fac8ab2f41f3fe8a63450e1dd60a84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49fac8ab2f41f3fe8a63450e1dd60a84">&#9670;&nbsp;</a></span>_nextToMatchParamType() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void iter::_nextToMatchParamType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>iterates until points to object of compatible type to given parameterized type T. iter should be alwyas stable state which points to object of proper type. </p>
+
+</div>
+</div>
+<a id="a49fac8ab2f41f3fe8a63450e1dd60a84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49fac8ab2f41f3fe8a63450e1dd60a84">&#9670;&nbsp;</a></span>_nextToMatchParamType() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void iter::_nextToMatchParamType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>iterates until points to object of compatible type to given parameterized type T. iter should be alwyas stable state which points to object of proper type. </p>
+
+</div>
+</div>
 <a id="a79b17f1cb6a7aa6d8b595dac778f73ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a79b17f1cb6a7aa6d8b595dac778f73ab">&#9670;&nbsp;</a></span>next() <span class="overload">[1/2]</span></h2>
 

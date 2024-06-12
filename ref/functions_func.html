@@ -67,6 +67,9 @@ $(function() {
 <li>_get()
 : <a class="el" href="classnm_1_1chunk.html#ab03319a25d5c0d96bcdf57f3e05931bb">nm::chunk</a>
 </li>
+<li>_nextToMatchParamType()
+: <a class="el" href="classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84">iter</a>
+</li>
 <li>_onContinuousArgCount()
 : <a class="el" href="classnm_1_1buffer_src_flag.html#acf71eab51fcc33adbcc58bec6f99ffa5">nm::bufferSrcFlag</a>
 , <a class="el" href="classnm_1_1flag.html#a72adb68cecdb71ed49c04e19232ac2ae">nm::flag</a>
@@ -80,7 +83,7 @@ $(function() {
 <h3><a id="index_a"></a>- a -</h3><ul>
 <li>add()
 : <a class="el" href="classnm_1_1arr.html#a7e0ffe593f5a590e6da477971a280e7a">nm::arr</a>
-, <a class="el" href="classnm_1_1frame.html#a6137a93445540b1eb3355766aa9973a5">nm::frame</a>
+, <a class="el" href="classnm_1_1frame.html#a2c55518aa6ca7b45b121864be30d5795">nm::frame</a>
 , <a class="el" href="classnm_1_1tarrayable.html#a0a96ce7930e52c4ea306c99310a0b8f0">nm::tarrayable&lt; T, R &gt;</a>
 , <a class="el" href="classnm_1_1tdum_arr.html#a9df9b94664117c5e68795050aa70d365">nm::tdumArr&lt; T, defaultElemType &gt;</a>
 , <a class="el" href="classnm_1_1tnarr.html#afdee69c7073d354f670fdb63bc4c0a30">nm::tnarr&lt; T, TACTIC &gt;</a>
@@ -90,7 +93,7 @@ $(function() {
 
 <h3><a id="index_b"></a>- b -</h3><ul>
 <li>baseObj()
-: <a class="el" href="classnm_1_1base_obj.html#a1509b9bed7e09864c527e7293896cac2">nm::baseObj</a>
+: <a class="el" href="classnm_1_1base_obj.html#a7de0646246fd7c82c8a9bdb7a4a5a925">nm::baseObj</a>
 </li>
 <li>birth()
 : <a class="el" href="classnm_1_1expr_maker.html#a1a3edec6b1f3f1f8d4370838faf4ac51">nm::exprMaker</a>
@@ -136,8 +139,8 @@ $(function() {
 
 <h3><a id="index_g"></a>- g -</h3><ul>
 <li>get()
-: <a class="el" href="classnm_1_1tmatches.html#ad831d5fccfca42a9b7584c2aff82e670">nm::tmatches&lt; T &gt;</a>
-, <a class="el" href="structnm_1_1tprior.html#a3d660569cc778c746b91f4be3401c698">nm::tprior&lt; T &gt;</a>
+: <a class="el" href="structnm_1_1tprior.html#a3d660569cc778c746b91f4be3401c698">nm::tprior&lt; T &gt;</a>
+, <a class="el" href="classnm_1_1tpriorities.html#a95b6f4191b03687cfb90e290a5696512">nm::tpriorities&lt; T &gt;</a>
 </li>
 <li>getArgs()
 : <a class="el" href="classnm_1_1get_expr.html#a9881e794ecea16c1041b1300e0fb3aed">nm::getExpr</a>
@@ -151,7 +154,7 @@ $(function() {
 , <a class="el" href="classnm_1_1def_seq_expr.html#a47813beca7df500ba0525fd5d909335e">nm::defSeqExpr</a>
 , <a class="el" href="classnm_1_1def_var_expr.html#a868486dc19313ef161c1369515d68038">nm::defVarExpr</a>
 , <a class="el" href="classnm_1_1_f_b_o_expr.html#a849b3870f2f1604c4212ce6c09767b1e">nm::FBOExpr</a>
-, <a class="el" href="classnm_1_1generic_obj.html#af4fd52682b7850c2c88ee6a0f7fa0c37">nm::genericObj</a>
+, <a class="el" href="classnm_1_1generic_origin.html#ada313fde72dc60598fe5b50e462ade34">nm::genericOrigin</a>
 , <a class="el" href="classnm_1_1get_expr.html#aebb16778d5d990f44233f9ee0a43b5f6">nm::getExpr</a>
 , <a class="el" href="classnm_1_1if_expr.html#a3f49dc0852c1714eb37788ddbe59a7b8">nm::ifExpr</a>
 , <a class="el" href="classnm_1_1loop_expr.html#a6fd5ccc28125b50c32f3feb126c8a040">nm::loopExpr</a>
@@ -159,7 +162,6 @@ $(function() {
 , <a class="el" href="classnm_1_1ret_expr.html#a8f8648f79dcef65fc1c06ba247bef6a9">nm::retExpr</a>
 , <a class="el" href="classnm_1_1run_expr.html#a25b6558413d49f2ee687614f5fbda5e3">nm::runExpr</a>
 , <a class="el" href="classnm_1_1slot.html#afc9ab78c448c1a10b8c01483f4ed91bc">nm::slot</a>
-, <a class="el" href="classnm_1_1t_api_bridge.html#a3b89a9faacea451e0ec7fe503f68b11c">nm::tApiBridge&lt; T, Ret &gt;</a>
 </li>
 <li>getEx()
 : <a class="el" href="classnm_1_1thread.html#a6aed1dfff53fb1e5c614c2d9cbe3b801">nm::thread</a>
@@ -167,16 +169,15 @@ $(function() {
 <li>getLeafs()
 : <a class="el" href="classnm_1_1type.html#a19575a7ff97372a2206398b1b2fbffd0">nm::type</a>
 </li>
-<li>getMatches()
-: <a class="el" href="classnm_1_1tpriorities.html#ac40843182b4c448ec640d82c67bbbfb2">nm::tpriorities&lt; T &gt;</a>
-</li>
 <li>getParams()
 : <a class="el" href="classnm_1_1base_func.html#a72c3feaf8fc5a0f4b29d506e2dc2c762">nm::baseFunc</a>
 , <a class="el" href="classnm_1_1default_copy_ctor.html#a1f6db745634a49780a00b956dee0d0dc">nm::defaultCopyCtor</a>
 , <a class="el" href="classnm_1_1func.html#a03f87719fb8f3f1cab5dabe6eda05aaa">nm::func</a>
 , <a class="el" href="classnm_1_1input_func.html#aafa862e0b2be29fef95fb476e7185b64">nm::inputFunc</a>
 , <a class="el" href="classnm_1_1print_func.html#a11cfc637a92888969fa8715d11b6b6ca">nm::printFunc&lt; T &gt;</a>
-, <a class="el" href="classnm_1_1tcpp_bridge_func_base.html#a924d6ece292ea3a4880d8c3a27923947">nm::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;</a>
+, <a class="el" href="classnm_1_1tbase_bridge_func.html#af116796e13d4c470cdb39208915ff796">nm::tbaseBridgeFunc&lt; Ret, T, Marshaling, Args &gt;</a>
+, <a class="el" href="classnm_1_1tbridge_closure.html#a3c23406f2754419836182484e45521d1">nm::tbridgeClosure&lt; Ret, T, Marshaling, Args &gt;</a>
+, <a class="el" href="classnm_1_1tbridge_closure_3_01void_00_01_t_00_01_marshaling_00_01_args_8_8_8_01_4.html#aa34b6cc8de960094674b78c39d3000ef">nm::tbridgeClosure&lt; void, T, Marshaling, Args... &gt;</a>
 </li>
 <li>getRet()
 : <a class="el" href="classnm_1_1base_func.html#a9592c8446217aedc31d5448e750c6d7a">nm::baseFunc</a>
@@ -184,8 +185,12 @@ $(function() {
 , <a class="el" href="classnm_1_1func.html#a497c30f69365e32a24b0b5548b08a0db">nm::func</a>
 , <a class="el" href="classnm_1_1input_func.html#ac1775b1c3ae8f575a47c0b2f3edc5620">nm::inputFunc</a>
 , <a class="el" href="classnm_1_1print_func.html#a99e429a9bd84b27648e79076dc17fcc6">nm::printFunc&lt; T &gt;</a>
-, <a class="el" href="classnm_1_1t_api_bridge.html#a500bbd54c3faf57fbceb4aa8f47e8134">nm::tApiBridge&lt; T, Ret &gt;</a>
-, <a class="el" href="classnm_1_1tcpp_bridge_func_base.html#a33ef8a8fb49bf4039dcbf6b562c4897f">nm::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;</a>
+, <a class="el" href="classnm_1_1tbridge_closure.html#a60ad9c3d2b14ecf7ffcd61e4e030410f">nm::tbridgeClosure&lt; Ret, T, Marshaling, Args &gt;</a>
+, <a class="el" href="classnm_1_1tbridge_closure_3_01void_00_01_t_00_01_marshaling_00_01_args_8_8_8_01_4.html#a6fac59cf7466af659dae4b4764aa3c3a">nm::tbridgeClosure&lt; void, T, Marshaling, Args... &gt;</a>
+, <a class="el" href="classnm_1_1tbridge_func.html#a40eaabfdce614342dc61a9db1fdee3d9">nm::tbridgeFunc&lt; Ret, T, isBaseObj, Marshaling, Args &gt;</a>
+, <a class="el" href="classnm_1_1tbridge_func_3_01_ret_00_01_t_00_01true_00_01_marshaling_00_01_args_8_8_8_01_4.html#a0f62555d332d3cedf6140835ab24c318">nm::tbridgeFunc&lt; Ret, T, true, Marshaling, Args... &gt;</a>
+, <a class="el" href="classnm_1_1tbridge_func_3_01void_00_01_t_00_01false_00_01_marshaling_00_01_args_8_8_8_01_4.html#aa016f9346d07eda97947aeb1e07caebd">nm::tbridgeFunc&lt; void, T, false, Marshaling, Args... &gt;</a>
+, <a class="el" href="classnm_1_1tbridge_func_3_01void_00_01_t_00_01true_00_01_marshaling_00_01_args_8_8_8_01_4.html#a87bde07066202082926f34bf0975d191">nm::tbridgeFunc&lt; void, T, true, Marshaling, Args... &gt;</a>
 </li>
 <li>getSlots()
 : <a class="el" href="classnm_1_1thread.html#ae99f6382e93b3f7c1ac1ccf21a2bc4d0">nm::thread</a>
@@ -293,7 +298,7 @@ $(function() {
 <li>setRet()
 : <a class="el" href="classnm_1_1base_func.html#ae09318f64da8c779d395676434bb954c">nm::baseFunc</a>
 , <a class="el" href="classnm_1_1func.html#a7d5455766ae916352b307d79d6b1b001">nm::func</a>
-, <a class="el" href="classnm_1_1tcpp_bridge_func_base.html#ac3ee34482b9fcd52e8c9c75e60c92fed">nm::tcppBridgeFuncBase&lt; Ret, T, S, Marshaling, Args &gt;</a>
+, <a class="el" href="classnm_1_1tbase_bridge_func.html#abaa66bf9a3d5a76f30451f2d7900852a">nm::tbaseBridgeFunc&lt; Ret, T, Marshaling, Args &gt;</a>
 </li>
 <li>substr()
 : <a class="el" href="classnm_1_1n_str.html#af7a7065859176780cc14b87019636900">nm::nStr</a>
@@ -305,8 +310,11 @@ $(function() {
 <li>take()
 : <a class="el" href="classnm_1_1flag.html#adcd2011fff664c34466d1fd208c03d1f">nm::flag</a>
 </li>
-<li>tmatches()
-: <a class="el" href="classnm_1_1tmatches.html#abf58c39fab240f5c9f053b30e92a777a">nm::tmatches&lt; T &gt;</a>
+<li>tbaseBridgeFunc()
+: <a class="el" href="classnm_1_1tbase_bridge_func.html#a74365455934008dc211f6cd890b38dd4">nm::tbaseBridgeFunc&lt; Ret, T, Marshaling, Args &gt;</a>
+</li>
+<li>tbridge()
+: <a class="el" href="classnm_1_1tbridge.html#a0e84fa4e77f19c684ec714b133fbd075">nm::tbridge&lt; T &gt;</a>
 </li>
 <li>tnarr()
 : <a class="el" href="classnm_1_1tnarr.html#a789c53f54f3e76cef25e8cf67e66c1d4">nm::tnarr&lt; T, TACTIC &gt;</a>
