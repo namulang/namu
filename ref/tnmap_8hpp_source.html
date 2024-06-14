@@ -76,7 +76,7 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> K, <span class="keyword">typename</span> V, <span class="keyword">typename</span> TACTIC = strTactic&gt;</div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnm_1_1tnmap.html">    8</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnm_1_1tnmap.html">tnmap</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1tnbicontainer.html">tnbicontainer</a>&lt;K, V&gt; {</div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnm_1_1tnmap.html">    8</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnm_1_1tnmap.html">tnmap</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1tnbicontainer.html">tnbicontainer</a>&lt;K, V&gt; {</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tnbicontainer.html">tnbicontainer&lt;K, V&gt;</a> <a class="code" href="classnm_1_1tnbicontainer.html">_super_</a>;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1tnmap.html">tnmap</a>, <a class="code" href="classnm_1_1tnbicontainer.html">_super_</a>))</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
@@ -123,36 +123,39 @@ $(function() {
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(ncnt step)<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            me* unconst = <span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <a class="code" href="classiteration.html">iteration</a>* ret = <span class="keyword">new</span> <a class="code" href="classnmap_iteration.html">nmapIteration</a>(*unconst, unconst-&gt;_map.begin(), unconst-&gt;_map.end());</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            ret-&gt;next(step);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(<span class="keyword">const</span> K&amp; key)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            me* unconst = <span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classnmap_iteration.html">nmapIteration</a>(*unconst, unconst-&gt;_map.lower_bound(key), unconst-&gt;_map.upper_bound(key));</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">void</span> _getAll(<span class="keyword">const</span> K&amp; key, narr&amp; tray) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="classnmap_iteration.html">nmapIteration</a>&amp; _getIterationFrom(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; it) {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">if</span>(nul(it)) <span class="keywordflow">return</span> nulOf&lt;nmapIteration&gt;();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keywordflow">if</span>(!it.isFrom(*<span class="keyword">this</span>)) <span class="keywordflow">return</span> nulOf&lt;nmapIteration&gt;();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordflow">return</span> (<a class="code" href="classnmap_iteration.html">nmapIteration</a>&amp;) *it._step;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        cmap _map;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    };</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <a class="code" href="classiteration.html">iteration</a>* ret =</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <span class="keyword">new</span> <a class="code" href="classnmap_iteration.html">nmapIteration</a>(*unconst, unconst-&gt;_map.begin(), unconst-&gt;_map.end());</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            ret-&gt;next(step);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(<span class="keyword">const</span> K&amp; key)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            me* unconst = <span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classnmap_iteration.html">nmapIteration</a>(*unconst, unconst-&gt;_map.lower_bound(key),</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                unconst-&gt;_map.upper_bound(key));</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">void</span> _getAll(<span class="keyword">const</span> K&amp; key, narr&amp; tray) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="classnmap_iteration.html">nmapIteration</a>&amp; _getIterationFrom(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; it) {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordflow">if</span>(nul(it)) <span class="keywordflow">return</span> nulOf&lt;nmapIteration&gt;();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordflow">if</span>(!it.isFrom(*<span class="keyword">this</span>)) <span class="keywordflow">return</span> nulOf&lt;nmapIteration&gt;();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordflow">return</span> (<a class="code" href="classnmap_iteration.html">nmapIteration</a>&amp;) *it._step;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        cmap _map;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    };</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
 <div class="ttc" id="aclassiteration_html"><div class="ttname"><a href="classiteration.html">iteration</a></div><div class="ttdef"><b>Definition:</b> biteration.hpp:4</div></div>
 <div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
-<div class="ttc" id="aclassnm_1_1tnbicontainer_html"><div class="ttname"><a href="classnm_1_1tnbicontainer.html">nm::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1tnbicontainer_html"><div class="ttname"><a href="classnm_1_1tnbicontainer.html">nm::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1tnmap_html"><div class="ttname"><a href="classnm_1_1tnmap.html">nm::tnmap</a></div><div class="ttdef"><b>Definition:</b> tnmap.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1tnmap_html_a636d81adc0b6cc2bf097a55ca05a2c15"><div class="ttname"><a href="classnm_1_1tnmap.html#a636d81adc0b6cc2bf097a55ca05a2c15">nm::tnmap::del</a></div><div class="ttdeci">nbool del(const K &amp;it) override</div><div class="ttdoc">delete last element if exists.</div></div>
 <div class="ttc" id="aclassnm_1_1tnmap_html_ae3f184564c9b1a03d2a8c006bec2f66e"><div class="ttname"><a href="classnm_1_1tnmap.html#ae3f184564c9b1a03d2a8c006bec2f66e">nm::tnmap::cloneDeep</a></div><div class="ttdeci">clonable * cloneDeep() const override</div></div>
-<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
 <div class="ttc" id="aclassnmap_iteration_html"><div class="ttname"><a href="classnmap_iteration.html">nmapIteration</a></div><div class="ttdef"><b>Definition:</b> nmapIteration.hpp:3</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

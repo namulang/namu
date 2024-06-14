@@ -80,7 +80,7 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TACTIC&gt; <span class="keyword">class </span>tnarr;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">typedef</span> tnarr&lt;node, strTactic&gt; narr;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html">   12</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1ntype.html">ntype</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1type.html">type</a> {</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html">   12</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1ntype.html">ntype</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1type.html">type</a> {</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        NM_ME(<a class="code" href="classnm_1_1ntype.html">ntype</a>, <a class="code" href="classnm_1_1type.html">type</a>)</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">typedef</span> std::map&lt;const ntype*, const ntype*&gt; deducer;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">typedef</span> std::map&lt;const ntype*, deducer&gt; deducers;</div>
@@ -100,61 +100,56 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="comment">// ntype:</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"></span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html#ad16bb5534df66d9b96b7c952102caa13">   34</a></span>&#160;        nbool <a class="code" href="classnm_1_1ntype.html#ad16bb5534df66d9b96b7c952102caa13">isImpli</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">return</span> this-&gt;isImpli(<a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>());</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">virtual</span> nbool isImpli(<span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; to) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        nbool isImpli(<span class="keyword">const</span> <a class="code" href="classnm_1_1type_providable.html">typeProvidable</a>&amp; to) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr&lt;T&gt;</a> asImpli(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; it)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordflow">return</span> this-&gt;asImpli(<a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>());</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">virtual</span> str asImpli(<span class="keyword">const</span> node&amp; from, <span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html#ab03216a32307ef18d67776cf5c159262">   47</a></span>&#160;        <span class="keyword">virtual</span> nbool <a class="code" href="classnm_1_1ntype.html#ab03216a32307ef18d67776cf5c159262">isCustom</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html#ad16bb5534df66d9b96b7c952102caa13">   33</a></span>&#160;<span class="comment"></span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; nbool <a class="code" href="classnm_1_1ntype.html#ad16bb5534df66d9b96b7c952102caa13">isImpli</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;<a class="code" href="classnm_1_1ntype.html#ad16bb5534df66d9b96b7c952102caa13">isImpli</a>(<a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>()); }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">virtual</span> nbool isImpli(<span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; to) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        nbool isImpli(<span class="keyword">const</span> <a class="code" href="classnm_1_1type_providable.html">typeProvidable</a>&amp; to) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <a class="code" href="classnm_1_1tstr.html">tstr&lt;T&gt;</a> asImpli(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; it)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">return</span> this-&gt;asImpli(<a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>());</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">virtual</span> str asImpli(<span class="keyword">const</span> node&amp; from, <span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html#ab03216a32307ef18d67776cf5c159262">   45</a></span>&#160;        <span class="keyword">virtual</span> nbool <a class="code" href="classnm_1_1ntype.html#ab03216a32307ef18d67776cf5c159262">isCustom</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; nbool is()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;is(<a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>()); }</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        nbool is()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="keywordflow">return</span> this-&gt;is(<a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>());</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        nbool is(<span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        nbool is(<span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; tstr&lt;T&gt; as(<span class="keyword">const</span> node&amp; it)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keywordflow">return</span> this-&gt;as(it, ttype&lt;T&gt;::get());</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        }</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        tstr&lt;T&gt; as(<span class="keyword">const</span> node&amp; it)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordflow">return</span> this-&gt;as(it, ttype&lt;T&gt;::get());</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        str as(<span class="keyword">const</span> node&amp; from, <span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">virtual</span> nbool isImmutable() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html#a448b1fc53f9ff631c5743c885906db42">   63</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; <a class="code" href="classnm_1_1ntype.html#a448b1fc53f9ff631c5743c885906db42">deduce</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; r) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; deduce(<span class="keyword">const</span> <a class="code" href="classnm_1_1type_providable.html">typeProvidable</a>&amp; r) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; deduce()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">return</span> deduce(<a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>());</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5">   70</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; <a class="code" href="classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5">deduce</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; l, <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; r);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; getBeans() const NM_CONST_FUNC(_getBeans())</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    protected:</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="comment">// ntype:</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        virtual const <a class="code" href="classnm_1_1ases.html">ases</a>&amp; _getImpliAses() const;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        virtual const <a class="code" href="classnm_1_1ases.html">ases</a>&amp; _getAses() const;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; _getBeans();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        str as(<span class="keyword">const</span> node&amp; from, <span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keyword">virtual</span> nbool isImmutable() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html#a448b1fc53f9ff631c5743c885906db42">   59</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; <a class="code" href="classnm_1_1ntype.html#a448b1fc53f9ff631c5743c885906db42">deduce</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; r) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; deduce(<span class="keyword">const</span> <a class="code" href="classnm_1_1type_providable.html">typeProvidable</a>&amp; r) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; deduce()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> deduce(<a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>()); }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5">   65</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; <a class="code" href="classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5">deduce</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; l, <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; r);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; getBeans() const NM_CONST_FUNC(_getBeans())</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    protected:</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="comment">// ntype:</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        virtual const <a class="code" href="classnm_1_1ases.html">ases</a>&amp; _getImpliAses() const;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        virtual const <a class="code" href="classnm_1_1ases.html">ases</a>&amp; _getAses() const;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; _getBeans();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    private:</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        static deducers* _makeDeducers();</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        static const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; _deduceSuperType(const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; l, const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; r);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        me&amp; _assign(const me&amp; rhs);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    private:</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        static deducers* _makeDeducers();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        static const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; _deduceSuperType(const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; l, const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; r);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        me&amp; _assign(const me&amp; rhs);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    private:</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">narr</a>* _beans;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    };</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    typedef std::vector&lt;const <a class="code" href="classnm_1_1ntype.html">ntype</a>*&gt; ntypes;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">narr</a>* _beans;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    };</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    typedef std::vector&lt;const <a class="code" href="classnm_1_1ntype.html">ntype</a>*&gt; ntypes;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1arr_html"><div class="ttname"><a href="classnm_1_1arr.html">nm::arr</a></div><div class="ttdef"><b>Definition:</b> arr.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1ases_html"><div class="ttname"><a href="classnm_1_1ases.html">nm::ases</a></div><div class="ttdef"><b>Definition:</b> ases.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1generic_origin_html"><div class="ttname"><a href="classnm_1_1generic_origin.html">nm::genericOrigin</a></div><div class="ttdef"><b>Definition:</b> genericOrigin.hpp:10</div></div>
@@ -162,14 +157,14 @@ $(function() {
 <div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html_a448b1fc53f9ff631c5743c885906db42"><div class="ttname"><a href="classnm_1_1ntype.html#a448b1fc53f9ff631c5743c885906db42">nm::ntype::deduce</a></div><div class="ttdeci">const ntype &amp; deduce(const ntype &amp;r) const</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html_a819b24f2993a813b4ee1b9cecd0fd4b5"><div class="ttname"><a href="classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5">nm::ntype::deduce</a></div><div class="ttdeci">static const ntype &amp; deduce(const ntype &amp;l, const ntype &amp;r)</div></div>
-<div class="ttc" id="aclassnm_1_1ntype_html_ab03216a32307ef18d67776cf5c159262"><div class="ttname"><a href="classnm_1_1ntype.html#ab03216a32307ef18d67776cf5c159262">nm::ntype::isCustom</a></div><div class="ttdeci">virtual nbool isCustom() const</div><div class="ttdef"><b>Definition:</b> ntype.hpp:47</div></div>
-<div class="ttc" id="aclassnm_1_1ntype_html_ad16bb5534df66d9b96b7c952102caa13"><div class="ttname"><a href="classnm_1_1ntype.html#ad16bb5534df66d9b96b7c952102caa13">nm::ntype::isImpli</a></div><div class="ttdeci">nbool isImpli() const</div><div class="ttdoc">whether variable 'it' can be a subtype of T</div><div class="ttdef"><b>Definition:</b> ntype.hpp:34</div></div>
-<div class="ttc" id="aclassnm_1_1seq_html"><div class="ttname"><a href="classnm_1_1seq.html">nm::seq</a></div><div class="ttdef"><b>Definition:</b> seq.hpp:14</div></div>
+<div class="ttc" id="aclassnm_1_1ntype_html_ab03216a32307ef18d67776cf5c159262"><div class="ttname"><a href="classnm_1_1ntype.html#ab03216a32307ef18d67776cf5c159262">nm::ntype::isCustom</a></div><div class="ttdeci">virtual nbool isCustom() const</div><div class="ttdef"><b>Definition:</b> ntype.hpp:45</div></div>
+<div class="ttc" id="aclassnm_1_1ntype_html_ad16bb5534df66d9b96b7c952102caa13"><div class="ttname"><a href="classnm_1_1ntype.html#ad16bb5534df66d9b96b7c952102caa13">nm::ntype::isImpli</a></div><div class="ttdeci">nbool isImpli() const</div><div class="ttdoc">whether variable 'it' can be a subtype of T</div><div class="ttdef"><b>Definition:</b> ntype.hpp:33</div></div>
+<div class="ttc" id="aclassnm_1_1seq_html"><div class="ttname"><a href="classnm_1_1seq.html">nm::seq</a></div><div class="ttdef"><b>Definition:</b> seq.hpp:16</div></div>
 <div class="ttc" id="aclassnm_1_1tnarr_html"><div class="ttname"><a href="classnm_1_1tnarr.html">nm::tnarr&lt; node &gt;</a></div></div>
-<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
-<div class="ttc" id="aclassnm_1_1ttype_html"><div class="ttname"><a href="classnm_1_1ttype.html">nm::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:15</div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1ttype_html"><div class="ttname"><a href="classnm_1_1ttype.html">nm::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:14</div></div>
 <div class="ttc" id="aclassnm_1_1type_html"><div class="ttname"><a href="classnm_1_1type.html">nm::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:7</div></div>
-<div class="ttc" id="aclassnm_1_1type_providable_html"><div class="ttname"><a href="classnm_1_1type_providable.html">nm::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:6</div></div>
+<div class="ttc" id="aclassnm_1_1type_providable_html"><div class="ttname"><a href="classnm_1_1type_providable.html">nm::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

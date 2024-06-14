@@ -75,7 +75,7 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnm_1_1graph_visitor.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1graph_visitor.html">graphVisitor</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1visitor.html">visitor</a> {</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnm_1_1graph_visitor.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1graph_visitor.html">graphVisitor</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1visitor.html">visitor</a> {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1graph_visitor.html">graphVisitor</a>, <a class="code" href="classnm_1_1visitor.html">visitor</a>))</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
@@ -103,24 +103,25 @@ $(function() {
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordtype">void</span> _drawIndent();</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordtype">void</span> _onIndent();</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordtype">void</span> _drawFrame(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        nbool _onVisitPrimitive(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, T&amp; e) {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; nbool _onVisitPrimitive(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, T&amp; e) {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            _drawFrame(i);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keyword">using</span> platformAPI::foreColor;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            std::clog &lt;&lt; foreColor(LIGHTRED) &lt;&lt; i.name &lt;&lt; <span class="stringliteral">&quot; &quot;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                      &lt;&lt; foreColor(CYAN) &lt;&lt; e.getType().getName()</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                      &lt;&lt; foreColor(LIGHTGRAY) &lt;&lt; <span class="stringliteral">&quot; = &quot;</span> &lt;&lt; foreColor(YELLOW) &lt;&lt; e.get();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            std::clog &lt;&lt; foreColor(LIGHTRED) &lt;&lt; i.name &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; foreColor(CYAN)</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                      &lt;&lt; e.getType().getName() &lt;&lt; foreColor(LIGHTGRAY) &lt;&lt; <span class="stringliteral">&quot; = &quot;</span> &lt;&lt; foreColor(YELLOW)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                      &lt;&lt; e.get();</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        std::string _encodeNewLine(<span class="keyword">const</span> std::string&amp; msg) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::string _getNameFrom(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; it) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        std::vector&lt;nbool&gt; _parentsLast;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        std::vector&lt;const char*&gt; _indents;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        nbool _isStart;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    };</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::string _encodeNewLine(<span class="keyword">const</span> std::string&amp; msg) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        std::string _getNameFrom(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; it) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        std::vector&lt;nbool&gt; _parentsLast;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::vector&lt;const char*&gt; _indents;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        nbool _isStart;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    };</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1_f_b_o_expr_html"><div class="ttname"><a href="classnm_1_1_f_b_o_expr.html">nm::FBOExpr</a></div><div class="ttdef"><b>Definition:</b> FAOExpr.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1_f_u_o_expr_html"><div class="ttname"><a href="classnm_1_1_f_u_o_expr.html">nm::FUOExpr</a></div><div class="ttdef"><b>Definition:</b> FUOExpr.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1assign_expr_html"><div class="ttname"><a href="classnm_1_1assign_expr.html">nm::assignExpr</a></div><div class="ttdef"><b>Definition:</b> assignExpr.hpp:11</div></div>

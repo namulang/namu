@@ -71,20 +71,19 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;obj.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../type/mgdType.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../type/mgdType.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;obj.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">class </span>src;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classnm_1_1origin.html">   19</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1origin.html">origin</a> final : <span class="keyword">public</span> <a class="code" href="classnm_1_1obj.html">obj</a> {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        NM(ME(<a class="code" href="classnm_1_1origin.html">origin</a>, <a class="code" href="classnm_1_1obj.html">obj</a>),</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;           INIT_META(<a class="code" href="classnm_1_1origin.html">origin</a>),</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;           CLONE(<a class="code" href="classnm_1_1origin.html">origin</a>))</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">class </span>src;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classnm_1_1origin.html">   21</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1origin.html">origin</a> final: <span class="keyword">public</span> <a class="code" href="classnm_1_1obj.html">obj</a> {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        NM(ME(<a class="code" href="classnm_1_1origin.html">origin</a>, <a class="code" href="classnm_1_1obj.html">obj</a>), INIT_META(<a class="code" href="classnm_1_1origin.html">origin</a>), CLONE(<a class="code" href="classnm_1_1origin.html">origin</a>))</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnm_1_1generic_origin.html">genericOrigin</a>; <span class="comment">// for _setOrigin(), _setType</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnm_1_1slot.html">slot</a>; <span class="comment">// for _onRunSub</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnm_1_1slot.html">slot</a>;          <span class="comment">// for _onRunSub</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnm_1_1pre_evaluator.html">preEvaluator</a>;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnm_1_1expr_maker.html">exprMaker</a>;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnm_1_1parser.html">parser</a>;</div>
@@ -117,7 +116,7 @@ $(function() {
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr&lt;obj&gt;</a> _subpack;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr&lt;src&gt;</a> _src;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    };</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1base_obj_html"><div class="ttname"><a href="classnm_1_1base_obj.html">nm::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:15</div></div>
 <div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1expr_maker_html"><div class="ttname"><a href="classnm_1_1expr_maker.html">nm::exprMaker</a></div><div class="ttdef"><b>Definition:</b> exprMaker.hpp:7</div></div>
@@ -125,13 +124,13 @@ $(function() {
 <div class="ttc" id="aclassnm_1_1mgd_type_html"><div class="ttname"><a href="classnm_1_1mgd_type.html">nm::mgdType</a></div><div class="ttdef"><b>Definition:</b> mgdType.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1obj_html"><div class="ttname"><a href="classnm_1_1obj.html">nm::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:14</div></div>
-<div class="ttc" id="aclassnm_1_1origin_html"><div class="ttname"><a href="classnm_1_1origin.html">nm::origin</a></div><div class="ttdef"><b>Definition:</b> origin.hpp:19</div></div>
-<div class="ttc" id="aclassnm_1_1parser_html"><div class="ttname"><a href="classnm_1_1parser.html">nm::parser</a></div><div class="ttdef"><b>Definition:</b> parser.hpp:33</div></div>
+<div class="ttc" id="aclassnm_1_1origin_html"><div class="ttname"><a href="classnm_1_1origin.html">nm::origin</a></div><div class="ttdef"><b>Definition:</b> origin.hpp:21</div></div>
+<div class="ttc" id="aclassnm_1_1parser_html"><div class="ttname"><a href="classnm_1_1parser.html">nm::parser</a></div><div class="ttdef"><b>Definition:</b> parser.hpp:34</div></div>
 <div class="ttc" id="aclassnm_1_1pre_evaluator_html"><div class="ttname"><a href="classnm_1_1pre_evaluator.html">nm::preEvaluator</a></div><div class="ttdef"><b>Definition:</b> preEvaluator.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1slot_html"><div class="ttname"><a href="classnm_1_1slot.html">nm::slot</a></div><div class="ttdef"><b>Definition:</b> slot.hpp:11</div></div>
 <div class="ttc" id="aclassnm_1_1src_html"><div class="ttname"><a href="classnm_1_1src.html">nm::src</a></div><div class="ttdef"><b>Definition:</b> src.hpp:6</div></div>
 <div class="ttc" id="aclassnm_1_1tnchain_html"><div class="ttname"><a href="classnm_1_1tnchain.html">nm::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></div></div>
-<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

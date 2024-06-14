@@ -78,30 +78,34 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnm_1_1tbridge_ctor.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnm_1_1tbridge_ctor.html">tbridgeCtor</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1tbridge_func.html">tbridgeFunc</a>&lt;T, T, tifSub&lt;typename tadaptiveSuper&lt;T&gt;::super, baseObj&gt;::is, tmarshaling, Args...&gt; {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tbridge_func.html">tbridgeFunc&lt;T, T, tifSub&lt;typename tadaptiveSuper&lt;T&gt;::super</a>, <a class="code" href="classnm_1_1base_obj.html">baseObj</a>&gt;::is, <a class="code" href="structnm_1_1tmarshaling.html">tmarshaling</a>, Args...&gt; <a class="code" href="classnm_1_1tbridge_func.html">__super9</a>;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1tbridge_ctor.html">tbridgeCtor</a>, <a class="code" href="classnm_1_1tbridge_func.html">__super9</a>))</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classnm_1_1tbridge_ctor.html">tbridgeCtor</a>(): super(<span class="keyword">nullptr</span>) {}</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _runNative(<a class="code" href="classnm_1_1args.html">args</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <span class="keywordflow">return</span> _marshal(<a class="code" href="classnm_1_1args.html">args</a>, std::index_sequence_for&lt;Args...&gt;());</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        }</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span>... index&gt;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _marshal(<a class="code" href="classnm_1_1args.html">args</a>&amp; a, std::index_sequence&lt;index...&gt;) {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="structnm_1_1tmarshaling.html">tmarshaling&lt;T*, tifSub&lt;T, node&gt;::is</a>&gt;::toMgd(<span class="keyword">new</span> T(<a class="code" href="structnm_1_1tmarshaling.html">tmarshaling</a>&lt;Args, <a class="code" href="structnm_1_1tif_sub.html">tifSub&lt;Args, node&gt;::is</a>&gt;::toNative(a[index])...));</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    };</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnm_1_1tbridge_ctor.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnm_1_1tbridge_ctor.html">tbridgeCtor</a></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        : <span class="keyword">public</span> <a class="code" href="classnm_1_1tbridge_func.html">tbridgeFunc</a>&lt;T, T, tifSub&lt;typename tadaptiveSuper&lt;T&gt;::super, baseObj&gt;::is,</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;              tmarshaling, Args...&gt; {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tbridge_func.html">tbridgeFunc&lt;T, T, tifSub&lt;typename tadaptiveSuper&lt;T&gt;::super</a>, <a class="code" href="classnm_1_1base_obj.html">baseObj</a>&gt;::is,</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <a class="code" href="structnm_1_1tmarshaling.html">tmarshaling</a>, Args...&gt;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            <a class="code" href="classnm_1_1tbridge_func.html">__super9</a>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1tbridge_ctor.html">tbridgeCtor</a>, <a class="code" href="classnm_1_1tbridge_func.html">__super9</a>))</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classnm_1_1tbridge_ctor.html">tbridgeCtor</a>(): super(<span class="keyword">nullptr</span>) {}</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _runNative(<a class="code" href="classnm_1_1args.html">args</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keywordflow">return</span> _marshal(<a class="code" href="classnm_1_1args.html">args</a>, std::index_sequence_for&lt;Args...&gt;());</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        }</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span>... index&gt; <a class="code" href="classnm_1_1tstr.html">str</a> _marshal(<a class="code" href="classnm_1_1args.html">args</a>&amp; a, std::index_sequence&lt;index...&gt;) {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="structnm_1_1tmarshaling.html">tmarshaling&lt;T*, tifSub&lt;T, node&gt;::is</a>&gt;::toMgd(</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                <span class="keyword">new</span> T(<a class="code" href="structnm_1_1tmarshaling.html">tmarshaling</a>&lt;Args, <a class="code" href="structnm_1_1tif_sub.html">tifSub&lt;Args, node&gt;::is</a>&gt;::toNative(a[index])...));</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        }</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    };</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1base_obj_html"><div class="ttname"><a href="classnm_1_1base_obj.html">nm::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:15</div></div>
-<div class="ttc" id="aclassnm_1_1tbridge_ctor_html"><div class="ttname"><a href="classnm_1_1tbridge_ctor.html">nm::tbridgeCtor</a></div><div class="ttdef"><b>Definition:</b> tbridgeCtor.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1tbridge_func_html"><div class="ttname"><a href="classnm_1_1tbridge_func.html">nm::tbridgeFunc</a></div><div class="ttdef"><b>Definition:</b> tbridgeFunc.hpp:90</div></div>
+<div class="ttc" id="aclassnm_1_1tbridge_ctor_html"><div class="ttname"><a href="classnm_1_1tbridge_ctor.html">nm::tbridgeCtor</a></div><div class="ttdef"><b>Definition:</b> tbridgeCtor.hpp:12</div></div>
+<div class="ttc" id="aclassnm_1_1tbridge_func_html"><div class="ttname"><a href="classnm_1_1tbridge_func.html">nm::tbridgeFunc</a></div><div class="ttdef"><b>Definition:</b> tbridgeFunc.hpp:89</div></div>
 <div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr&lt; node &gt;</a></div></div>
-<div class="ttc" id="astructnm_1_1tif_sub_html"><div class="ttname"><a href="structnm_1_1tif_sub.html">nm::tifSub</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:34</div></div>
+<div class="ttc" id="astructnm_1_1tif_sub_html"><div class="ttname"><a href="structnm_1_1tif_sub.html">nm::tifSub</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:31</div></div>
 <div class="ttc" id="astructnm_1_1tmarshaling_html"><div class="ttname"><a href="structnm_1_1tmarshaling.html">nm::tmarshaling</a></div><div class="ttdef"><b>Definition:</b> tmarshaling.hpp:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

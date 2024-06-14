@@ -72,13 +72,13 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../../../ast/node.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;tnucontainer.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../primitive/nInt.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../tarrayable.hpp&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;../../primitive/nInt.hpp&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;tnucontainer.hpp&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnm_1_1nseq.html">   10</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1nseq.html">nseq</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1tnucontainer.html">tnucontainer</a>&lt;nInt, nInt&gt;, <span class="keyword">public</span> <a class="code" href="classnm_1_1tarrayable.html">tarrayable</a>&lt;nInt, nInt&gt; {</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnm_1_1nseq.html">   10</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1nseq.html">nseq</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1tnucontainer.html">tnucontainer</a>&lt;nInt, nInt&gt;, <span class="keyword">public</span> <a class="code" href="classnm_1_1tarrayable.html">tarrayable</a>&lt;nInt, nInt&gt; {</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tnucontainer.html">tnucontainer&lt;nInt, nInt&gt;</a> <a class="code" href="classnm_1_1tnucontainer.html">_super3</a>;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1nseq.html">nseq</a>, <a class="code" href="classnm_1_1tnucontainer.html">_super3</a>))</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnm_1_1seq.html">seq</a>;</div>
@@ -135,14 +135,14 @@ $(function() {
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <a class="code" href="classnm_1_1n_int.html">nInt</a> _end;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="classnm_1_1n_int.html">nInt</a> _step;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    };</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
 <div class="ttc" id="aclassiteration_html"><div class="ttname"><a href="classiteration.html">iteration</a></div><div class="ttdef"><b>Definition:</b> biteration.hpp:4</div></div>
 <div class="ttc" id="aclassnm_1_1n_int_html"><div class="ttname"><a href="classnm_1_1n_int.html">nm::nInt</a></div><div class="ttdef"><b>Definition:</b> nInt.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1nseq_html"><div class="ttname"><a href="classnm_1_1nseq.html">nm::nseq</a></div><div class="ttdef"><b>Definition:</b> nseq.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1seq_html"><div class="ttname"><a href="classnm_1_1seq.html">nm::seq</a></div><div class="ttdef"><b>Definition:</b> seq.hpp:14</div></div>
-<div class="ttc" id="aclassnm_1_1tarrayable_html"><div class="ttname"><a href="classnm_1_1tarrayable.html">nm::tarrayable</a></div><div class="ttdef"><b>Definition:</b> tarrayable.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1tnucontainer_html"><div class="ttname"><a href="classnm_1_1tnucontainer.html">nm::tnucontainer</a></div><div class="ttdef"><b>Definition:</b> tnucontainer.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1seq_html"><div class="ttname"><a href="classnm_1_1seq.html">nm::seq</a></div><div class="ttdef"><b>Definition:</b> seq.hpp:16</div></div>
+<div class="ttc" id="aclassnm_1_1tarrayable_html"><div class="ttname"><a href="classnm_1_1tarrayable.html">nm::tarrayable</a></div><div class="ttdef"><b>Definition:</b> tarrayable.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1tnucontainer_html"><div class="ttname"><a href="classnm_1_1tnucontainer.html">nm::tnucontainer</a></div><div class="ttdef"><b>Definition:</b> tnucontainer.hpp:8</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

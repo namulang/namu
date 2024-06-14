@@ -82,11 +82,13 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">virtual</span> V&amp; getVal() = 0;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">const</span> V&amp; getVal() const NM_CONST_FUNC(getVal())</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    virtual <span class="keywordtype">void</span> setVal(const V&amp; newVal) = 0;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">void</span> setVal(const V* newVal) { <span class="keywordflow">return</span> setVal(*newVal); }</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">virtual</span> nbool isFrom(<span class="keyword">const</span> tbicontainable&amp; it) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">virtual</span> tbicontainable&lt;K, V&gt;&amp; getContainer() = 0;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">const</span> tbicontainable&lt;K, V&gt;&amp; getContainer() const NM_CONST_FUNC(getContainer())</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;};</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">void</span> setVal(const V* newVal) { <span class="keywordflow">return</span> setVal(*newVal); }</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">virtual</span> nbool isFrom(<span class="keyword">const</span> tbicontainable&amp; it) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">virtual</span> tbicontainable&lt;K, V&gt;&amp; getContainer() = 0;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">const</span> tbicontainable&lt;K, V&gt;&amp; getContainer() const NM_CONST_FUNC(getContainer())</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;};</div>
 <div class="ttc" id="aclassiterable_html"><div class="ttname"><a href="classiterable.html">iterable</a></div><div class="ttdef"><b>Definition:</b> biterable.hpp:2</div></div>
 <div class="ttc" id="aclassiterable_html_af3fe3f73cc02ce60a46b93d6e630798f"><div class="ttname"><a href="classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f">iterable::next</a></div><div class="ttdeci">virtual ncnt next(ncnt step)=0</div></div>
 </div><!-- fragment --></div><!-- contents -->

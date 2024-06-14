@@ -71,12 +71,12 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;parser.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../visitor/verifier.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../../visitor/verifier.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;parser.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnm_1_1interpreter.html">    8</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1interpreter.html">interpreter</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1worker.html">worker</a>&lt;tstr&lt;slot&gt;, slot&gt; {</div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnm_1_1interpreter.html">    8</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1interpreter.html">interpreter</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1worker.html">worker</a>&lt;tstr&lt;slot&gt;, slot&gt; {</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnm_1_1worker.html">worker&lt;tstr&lt;slot&gt;</a>, <a class="code" href="classnm_1_1slot.html">slot</a>&gt; <a class="code" href="classnm_1_1worker.html">__super7</a>;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1interpreter.html">interpreter</a>, <a class="code" href="classnm_1_1worker.html">__super7</a>))</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
@@ -116,15 +116,15 @@ $(function() {
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <a class="code" href="classnm_1_1parser.html">parser</a> _pser;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        nbool _isParsed;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    };</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1interpreter_html"><div class="ttname"><a href="classnm_1_1interpreter.html">nm::interpreter</a></div><div class="ttdef"><b>Definition:</b> interpreter.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1obj_html"><div class="ttname"><a href="classnm_1_1obj.html">nm::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:14</div></div>
-<div class="ttc" id="aclassnm_1_1parser_html"><div class="ttname"><a href="classnm_1_1parser.html">nm::parser</a></div><div class="ttdef"><b>Definition:</b> parser.hpp:33</div></div>
+<div class="ttc" id="aclassnm_1_1parser_html"><div class="ttname"><a href="classnm_1_1parser.html">nm::parser</a></div><div class="ttdef"><b>Definition:</b> parser.hpp:34</div></div>
 <div class="ttc" id="aclassnm_1_1slot_html"><div class="ttname"><a href="classnm_1_1slot.html">nm::slot</a></div><div class="ttdef"><b>Definition:</b> slot.hpp:11</div></div>
-<div class="ttc" id="aclassnm_1_1src_supply_html"><div class="ttname"><a href="classnm_1_1src_supply.html">nm::srcSupply</a></div><div class="ttdef"><b>Definition:</b> srcSupply.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
-<div class="ttc" id="aclassnm_1_1verifier_html"><div class="ttname"><a href="classnm_1_1verifier.html">nm::verifier</a></div><div class="ttdef"><b>Definition:</b> verifier.hpp:13</div></div>
-<div class="ttc" id="aclassnm_1_1worker_html"><div class="ttname"><a href="classnm_1_1worker.html">nm::worker</a></div><div class="ttdef"><b>Definition:</b> worker.hpp:9</div></div>
+<div class="ttc" id="aclassnm_1_1src_supply_html"><div class="ttname"><a href="classnm_1_1src_supply.html">nm::srcSupply</a></div><div class="ttdef"><b>Definition:</b> srcSupply.hpp:11</div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1verifier_html"><div class="ttname"><a href="classnm_1_1verifier.html">nm::verifier</a></div><div class="ttdef"><b>Definition:</b> verifier.hpp:14</div></div>
+<div class="ttc" id="aclassnm_1_1worker_html"><div class="ttname"><a href="classnm_1_1worker.html">nm::worker</a></div><div class="ttdef"><b>Definition:</b> worker.hpp:8</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

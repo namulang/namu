@@ -75,7 +75,7 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnm_1_1expr_maker.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1expr_maker.html">exprMaker</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1type_providable.html">typeProvidable</a>, <span class="keyword">public</span> <a class="code" href="classnm_1_1clonable.html">clonable</a> {</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnm_1_1expr_maker.html">    7</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1expr_maker.html">exprMaker</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1type_providable.html">typeProvidable</a>, <span class="keyword">public</span> <a class="code" href="classnm_1_1clonable.html">clonable</a> {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1expr_maker.html">exprMaker</a>))</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
@@ -100,31 +100,28 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
 <div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classnm_1_1expr_maker.html#a1a3edec6b1f3f1f8d4370838faf4ac51">   31</a></span>&#160;        T* <a class="code" href="classnm_1_1expr_maker.html#a1a3edec6b1f3f1f8d4370838faf4ac51">birth</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> Args&amp;... <a class="code" href="classnm_1_1args.html">args</a>)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            T* ret = <span class="keyword">new</span> T(<a class="code" href="classnm_1_1args.html">args</a>...);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keywordflow">if</span>(_file)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                ret-&gt;_setSrc(*<span class="keyword">new</span> <a class="code" href="classnm_1_1src.html">src</a>(*_file, name, _pos));</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        T* make(<span class="keyword">const</span> Args&amp;... <a class="code" href="classnm_1_1args.html">args</a>)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            T* ret = <span class="keyword">new</span> T(<a class="code" href="classnm_1_1args.html">args</a>...);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordflow">if</span>(_file)</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                ret-&gt;_setSrc(*<span class="keyword">new</span> <a class="code" href="classnm_1_1src.html">src</a>(*_file, <span class="stringliteral">&quot;&quot;</span>, _pos));</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        tstr&lt;srcFile&gt; _file;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        point _pos;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    };</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keywordflow">if</span>(_file) ret-&gt;_setSrc(*<span class="keyword">new</span> <a class="code" href="classnm_1_1src.html">src</a>(*_file, name, _pos));</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt; T* make(<span class="keyword">const</span> Args&amp;... <a class="code" href="classnm_1_1args.html">args</a>)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            T* ret = <span class="keyword">new</span> T(<a class="code" href="classnm_1_1args.html">args</a>...);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">if</span>(_file) ret-&gt;_setSrc(*<span class="keyword">new</span> <a class="code" href="classnm_1_1src.html">src</a>(*_file, <span class="stringliteral">&quot;&quot;</span>, _pos));</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        tstr&lt;srcFile&gt; _file;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        point _pos;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    };</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1expr_maker_html"><div class="ttname"><a href="classnm_1_1expr_maker.html">nm::exprMaker</a></div><div class="ttdef"><b>Definition:</b> exprMaker.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1expr_maker_html_a1a3edec6b1f3f1f8d4370838faf4ac51"><div class="ttname"><a href="classnm_1_1expr_maker.html#a1a3edec6b1f3f1f8d4370838faf4ac51">nm::exprMaker::birth</a></div><div class="ttdeci">T * birth(const std::string &amp;name, const Args &amp;... args) const</div><div class="ttdoc">when you birth your child, you must name it.</div><div class="ttdef"><b>Definition:</b> exprMaker.hpp:31</div></div>
 <div class="ttc" id="aclassnm_1_1src_file_html"><div class="ttname"><a href="classnm_1_1src_file.html">nm::srcFile</a></div><div class="ttdoc">srcFile represents src file of namulang source codes.</div><div class="ttdef"><b>Definition:</b> srcFile.hpp:9</div></div>
 <div class="ttc" id="aclassnm_1_1src_html"><div class="ttname"><a href="classnm_1_1src.html">nm::src</a></div><div class="ttdef"><b>Definition:</b> src.hpp:6</div></div>
-<div class="ttc" id="aclassnm_1_1type_providable_html"><div class="ttname"><a href="classnm_1_1type_providable.html">nm::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:6</div></div>
+<div class="ttc" id="aclassnm_1_1type_providable_html"><div class="ttname"><a href="classnm_1_1type_providable.html">nm::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:7</div></div>
 <div class="ttc" id="astructnm_1_1point_html"><div class="ttname"><a href="structnm_1_1point.html">nm::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

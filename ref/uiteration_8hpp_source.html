@@ -72,15 +72,13 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;uiterable.hpp&quot;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// nested class of tucontainable.hpp</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">class </span><a class="code" href="classiteration.html">iteration</a> : <span class="keyword">public</span> instance, <span class="keyword">public</span> <a class="code" href="classiterable.html">iterable</a> {</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">class </span><a class="code" href="classiteration.html">iteration</a>: <span class="keyword">public</span> instance, <span class="keyword">public</span> <a class="code" href="classiterable.html">iterable</a> {</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    NM(ADT(<a class="code" href="classiteration.html">iteration</a>, instance))</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classiter.html">iter</a>;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    nbool isFrom(<span class="keyword">const</span> tucontainable&amp; rhs)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keywordflow">return</span> &amp;this-&gt;getContainer() == &amp;rhs;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    }</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;};</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    nbool isFrom(<span class="keyword">const</span> tucontainable&amp; rhs)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> &amp;this-&gt;getContainer() == &amp;rhs; }</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;};</div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
 <div class="ttc" id="aclassiterable_html"><div class="ttname"><a href="classiterable.html">iterable</a></div><div class="ttdef"><b>Definition:</b> biterable.hpp:2</div></div>
 <div class="ttc" id="aclassiteration_html"><div class="ttname"><a href="classiteration.html">iteration</a></div><div class="ttdef"><b>Definition:</b> biteration.hpp:4</div></div>

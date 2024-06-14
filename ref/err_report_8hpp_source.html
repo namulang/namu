@@ -71,14 +71,14 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;err.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../type/ntype.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../type/dumpable.hpp&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../type/dumpable.hpp&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../type/ntype.hpp&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;err.hpp&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnm_1_1err_report.html">   10</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1err_report.html">errReport</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classnm_1_1dumpable.html">dumpable</a> {</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnm_1_1err_report.html">   10</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1err_report.html">errReport</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classnm_1_1dumpable.html">dumpable</a> {</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1err_report.html">errReport</a>, <a class="code" href="classnm_1_1instance.html">instance</a>))</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">public</span>:</div>
@@ -119,7 +119,7 @@ $(function() {
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        std::vector&lt;tstr&lt;err&gt;&gt; _errs;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    };</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classnm_1_1dummy_err_report.html">   51</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1dummy_err_report.html">dummyErrReport</a> : <span class="keyword">public</span> <a class="code" href="classnm_1_1err_report.html">errReport</a> {</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classnm_1_1dummy_err_report.html">   51</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1dummy_err_report.html">dummyErrReport</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1err_report.html">errReport</a> {</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1dummy_err_report.html">dummyErrReport</a>, <a class="code" href="classnm_1_1err_report.html">errReport</a>))</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">public</span>:</div>
@@ -127,13 +127,13 @@ $(function() {
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keyword">static</span> me singletone;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    };</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1dummy_err_report_html"><div class="ttname"><a href="classnm_1_1dummy_err_report.html">nm::dummyErrReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:51</div></div>
 <div class="ttc" id="aclassnm_1_1dumpable_html"><div class="ttname"><a href="classnm_1_1dumpable.html">nm::dumpable</a></div><div class="ttdef"><b>Definition:</b> dumpable.hpp:6</div></div>
 <div class="ttc" id="aclassnm_1_1err_report_html"><div class="ttname"><a href="classnm_1_1err_report.html">nm::errReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1instance_html"><div class="ttname"><a href="classnm_1_1instance.html">nm::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:14</div></div>
+<div class="ttc" id="aclassnm_1_1instance_html"><div class="ttname"><a href="classnm_1_1instance.html">nm::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:15</div></div>
 <div class="ttc" id="aclassnm_1_1type_html"><div class="ttname"><a href="classnm_1_1type.html">nm::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:7</div></div>
-<div class="ttc" id="astructnm_1_1err_html"><div class="ttname"><a href="structnm_1_1err.html">nm::err</a></div><div class="ttdef"><b>Definition:</b> err.hpp:18</div></div>
+<div class="ttc" id="astructnm_1_1err_html"><div class="ttname"><a href="structnm_1_1err.html">nm::err</a></div><div class="ttdef"><b>Definition:</b> err.hpp:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
