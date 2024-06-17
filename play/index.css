@@ -66,6 +66,10 @@ label#lb_verbose {
     margin-right: 20px;
 }
 
+label.bin_ver {
+    font-size: smaller;
+}
+
 .scrollbar::-webkit-scrollbar {
   width: 6px;
 }
