@@ -86,17 +86,17 @@ $(function() {
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                zone.setEnable(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                <a class="code" href="classnm_1_1logger.html">logger</a>&amp; log = logger::get();</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                log.<a class="code" href="classnm_1_1logger.html#a775d4b6c59f068d7c2716cdff923b671">logBypass</a>(<span class="stringliteral">&quot;\n* * *\n&quot;</span>);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                log.<a class="code" href="classnm_1_1logger.html#a775d4b6c59f068d7c2716cdff923b671">logBypass</a>(<span class="stringliteral">&quot;unexpected exception found: &quot;</span>);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                log.logBypass(<span class="stringliteral">&quot;\n* * *\n&quot;</span>);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                log.logBypass(<span class="stringliteral">&quot;unexpected exception found: &quot;</span>);</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                e.dump();</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="classnm_1_1worker.html">worker</a>.isFlag(W::LOG_STRUCTURE)) {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                    log.<a class="code" href="classnm_1_1logger.html#a775d4b6c59f068d7c2716cdff923b671">logBypass</a>(<span class="stringliteral">&quot;\ncurrent frames:\n&quot;</span>);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                    log.logBypass(<span class="stringliteral">&quot;\ncurrent frames:\n&quot;</span>);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                    thread::get().getFrames();</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                }</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                <span class="keywordflow">if</span>(<a class="code" href="classnm_1_1worker.html">worker</a>.isFlag(W::LOG_GRAPH_ON_EX)) {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                    log.<a class="code" href="classnm_1_1logger.html#a775d4b6c59f068d7c2716cdff923b671">logBypass</a>(<span class="stringliteral">&quot;\ngraph:\n&quot;</span>);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;                    log.logBypass(<span class="stringliteral">&quot;\ngraph:\n&quot;</span>);</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                    <a class="code" href="classnm_1_1graph_visitor.html">graphVisitor</a>().setFlag(0).setTask(<a class="code" href="classnm_1_1worker.html">worker</a>.getTask()).work();</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;                }</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
@@ -108,7 +108,6 @@ $(function() {
 <div class="ttc" id="aclassnm_1_1enables_zone_html"><div class="ttname"><a href="classnm_1_1enables_zone.html">nm::enablesZone</a></div><div class="ttdef"><b>Definition:</b> enablesZone.hpp:9</div></div>
 <div class="ttc" id="aclassnm_1_1graph_visitor_html"><div class="ttname"><a href="classnm_1_1graph_visitor.html">nm::graphVisitor</a></div><div class="ttdef"><b>Definition:</b> graphVisitor.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1logger_html"><div class="ttname"><a href="classnm_1_1logger.html">nm::logger</a></div><div class="ttdef"><b>Definition:</b> logger.hpp:9</div></div>
-<div class="ttc" id="aclassnm_1_1logger_html_a775d4b6c59f068d7c2716cdff923b671"><div class="ttname"><a href="classnm_1_1logger.html#a775d4b6c59f068d7c2716cdff923b671">nm::logger::logBypass</a></div><div class="ttdeci">nbool logBypass(const nchar *message) override</div></div>
 <div class="ttc" id="aclassnm_1_1sig_zone_html"><div class="ttname"><a href="classnm_1_1sig_zone.html">nm::sigZone</a></div><div class="ttdef"><b>Definition:</b> sigZone.hpp:6</div></div>
 <div class="ttc" id="aclassnm_1_1worker_html"><div class="ttname"><a href="classnm_1_1worker.html">nm::worker</a></div><div class="ttdef"><b>Definition:</b> worker.hpp:8</div></div>
 <div class="ttc" id="astructnm_1_1err_html"><div class="ttname"><a href="structnm_1_1err.html">nm::err</a></div><div class="ttdef"><b>Definition:</b> err.hpp:20</div></div>
