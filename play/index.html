@@ -19,8 +19,8 @@ permalink: play/
     }
 
     function runScript(frameId, srcId) {
-        var bottom = document.getElementById('bottom_pane');
-        bottom.style.setProperty('height', '140px');
+        var bottom = document.getElementById('result');
+        bottom.style.display = 'block';
 
         runNamuTextArea(frameId, srcId);
         showCloseButton();
@@ -35,8 +35,8 @@ permalink: play/
         const close = document.getElementById('bt-close');
         close.style.setProperty('display', 'hidden');
 
-        var bottom = document.getElementById('bottom_pane');
-        bottom.style.setProperty('height', '0px');
+        var bottom = document.getElementById('result');
+        bottom.style.display = 'none';
     }
 
     function onchangeSrc(value) {
@@ -72,7 +72,7 @@ main() void
 </script>
 <script type='text/javascript' src='namu-starter.js'></script>
 <div id="top_pane">
-  <label class="bin_ver">power by</label>
+  <div class="bin_ver">powered by</div>
   <a class="bin_ver" href="https://github.com/namulang/namu/releases/tag/v0.2.7">namu v0.2.7</a>
   <select id='dd-srcs' onchange='onchangeSrc(this.value)'>
       <option value='hello-world'>hello world!</option>
@@ -82,16 +82,18 @@ main() void
   <label id='lb_verbose' for='verbose'>verbose</label>
   <input type='button' id='runbt' value='▶' onclick='runScript("namu", "src");'/>
 </div>
-<div id="mid_pane">
-    <textarea class='scrollbar' id='src' onkeydown='inputTab(this)'></textarea>
-</div>
 <div id="bottom_pane">
-    <img src='../assets/images/output.svg' />
-    <b>output</b>
-    <input type='button' id='bt-close' value='×' onclick='onclickCloseButton();'/>
-    {% raw %}
-    <iframe scrolling=no id='namu' src='namu.html'> </iframe>
-    {% endraw %}
+  <div id="codepad">
+      <textarea class='scrollbar' id='src' onkeydown='inputTab(this)'></textarea>
+  </div>
+  <div id="result">
+      <img src='../assets/images/output.svg' />
+      <b>output</b>
+      <input type='button' id='bt-close' value='×' onclick='onclickCloseButton();'/>
+      {% raw %}
+      <iframe scrolling=no id='namu' src='namu.html'> </iframe>
+      {% endraw %}
+  </div>
 </div>
 <script>
     onchangeSrc('hello-world');

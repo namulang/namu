@@ -29,18 +29,56 @@ div#top_pane {
     text-align: right;
     padding-right: 20px;
 }
-div#mid_pane {
+
+div.initial-content {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 950px) {
+  div#bottom_pane {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+  }
+
+  div#codepad{
     width: 100%;
     background-color: #152330;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+  }
+
+  div#result{
+    width:100%;
+    flex: 1 1 auto;
+    background-color: #204261;
+    display: none;
+  }
 }
 
-div#bottom_pane {
+@media screen and (max-width: 950px) {
+  div#bottom_pane {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+
+  div#codepad{
+    width: 100%;
+    background-color: #152330;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  div#result{
     width:100%;
-    height: 0px;
+    height: 140px;
     background-color: #204261;
+    display: none;
+  }
 }
 
 div.search-content {
@@ -48,12 +86,6 @@ div.search-content {
     display: none;
     height: 0px;
 }
-
-div.initial-content {
-    display: flex;
-    flex-direction: column;
-}
-
 @font-face {
     font-family: 'Retro Gaming';
     font-style: 'normal';
@@ -66,8 +98,9 @@ label#lb_verbose {
     margin-right: 20px;
 }
 
-label.bin_ver {
+.bin_ver {
     font-size: smaller;
+    display: contents;
 }
 
 .scrollbar::-webkit-scrollbar {
@@ -124,11 +157,11 @@ input#bt-close:hover {
     background-color: #F3EDDB;
 }
 
-div#bottom_pane b {
+div#result b {
     color: #fff;
 }
 
-div#bottom_pane img {
+div#result img {
     margin-left: 20px;
     margin-right: 5px;
     width: 20px;
