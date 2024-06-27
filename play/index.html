@@ -2,99 +2,37 @@
 layout: page
 permalink: play/
 ---
-
 <link rel="stylesheet" type="text/css" href="index.css" />
-<script>
-    function inputTab(textArea) {
-        if (event.key == 'Tab') {
-            event.preventDefault();
-            var start = textArea.selectionStart;
-            var end = textArea.selectionEnd;
-
-            textArea.value = textArea.value.substring(0, start) + "    " + textArea.value.substring(end);
-
-            // put caret at right position again
-            textArea.selectionStart = textArea.selectionEnd = start + 4;
-          }
-    }
-
-    function runScript(frameId, srcId) {
-        var bottom = document.getElementById('result');
-        bottom.style.display = 'block';
-
-        runNamuTextArea(frameId, srcId);
-        showCloseButton();
-    }
-
-    function showCloseButton() {
-        const close = document.getElementById('bt-close');
-        close.style.setProperty('display', 'block');
-    }
-
-    function onclickCloseButton() {
-        const close = document.getElementById('bt-close');
-        close.style.setProperty('display', 'hidden');
-
-        var bottom = document.getElementById('result');
-        bottom.style.display = 'none';
-    }
-
-    function onchangeSrc(value) {
-        var codepad = document.getElementById('src');
-        switch(value) {
-            case 'hello-world': codepad.value = `
-// Hello, I'm Namu language.
-// Please edit your code freely and press button in the top right to run.
-// Refer to the 'guide' section above for more syntax.
-main() void
-    print("hello world!")`;
-                break;
-
-
-            case 'bow-to-everyone': codepad.value = `
-def person
-    name := "default"
-    bow() str
-        print("hello. I'm " + name + "\\n")
-        name
-
-main() void
-    mike := person()
-    mike.name = "mike"
-
-    last := for p in {mike, mike(), mike(mike)}
-        p.bow()
-
-    print("and second one was " + last[1])`;
-                break;
-        }
-    }
-</script>
+<link rel="stylesheet" type="text/css" href="highlightjs-theme-namu.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://github.com/namulang/highlightjs-namu/releases/latest/download/highlightjs-namu-min.js"></script>
 <script type='text/javascript' src='namu-starter.js'></script>
-<div id="top_pane">
-  <div class="bin_ver">powered by</div>
-  <a class="bin_ver" href="https://github.com/namulang/namu/releases/tag/v0.2.7">namu v0.2.7</a>
-  <select id='dd-srcs' onchange='onchangeSrc(this.value)'>
-      <option value='hello-world'>hello world!</option>
-      <option value='bow-to-everyone'>bow to mike's</option>
-  </select>
-  <input type='checkbox' id='verbose' />
-  <label id='lb_verbose' for='verbose'>verbose</label>
-  <input type='button' id='runbt' value='▶' onclick='runScript("namu", "src");'/>
-</div>
-<div id="bottom_pane">
-  <div id="codepad">
-      <textarea class='scrollbar' id='src' onkeydown='inputTab(this)'></textarea>
+<div class="initial-content">
+  <div id="top_pane">
+    <div class="bin_ver">powered by</div>
+    <a class="bin_ver" href="https://github.com/namulang/namu/releases/tag/v0.2.7">namu v0.2.7</a>
+    <select id='dd-srcs' onchange='onchangeSrc(this.value)'>
+        <option value='hello-world'>hello world!</option>
+        <option value='bow-to-everyone'>bow to mike's</option>
+    </select>
+    <input type='checkbox' id='verbose' />
+    <label id='lb_verbose' for='verbose'>verbose</label>
+    <input type='button' id='runbt' value='▶' onclick='runScript("namu", "ta_codepad");'/>
   </div>
-  <div id="result">
-      <img src='../assets/images/output.svg' />
-      <b>output</b>
-      <input type='button' id='bt-close' value='×' onclick='onclickCloseButton();'/>
-      {% raw %}
-      <iframe scrolling=no id='namu' src='namu.html'> </iframe>
-      {% endraw %}
+  <div id="bottom_pane">
+    <div id="codepad">
+      <textarea id="ta_codepad" class='scrollbar' id='src' onkeydown='inputTab(this)' onkeyup='highlight(this)'></textarea>
+      <pre id="pre_codepad">
+        <code class="language-namu"></code>
+      </pre>
+    </div>
+    <div id="result">
+        <img src='../assets/images/output.svg' />
+        <b>output</b>
+        <input type='button' id='bt-close' value='×' onclick='onclickCloseButton();'/>
+        {% raw %}
+        <iframe scrolling=no id='namu' src='namu.html'> </iframe>
+        {% endraw %}
+    </div>
   </div>
 </div>
-<script>
-    onchangeSrc('hello-world');
-</script>

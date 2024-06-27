@@ -1,0 +1,52 @@
+pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 1em
+}
+code.hljs {
+    padding:3px 5px
+}
+.hljs {
+    color: #8ba88c;
+    background: #152330
+}
+.hljs-comment, .hljs-quote {
+    color: #40514e;
+    font-style:italic
+}
+.hljs-doctag, .hljs-formula, .hljs-keyword {
+    color: #8CC540;
+}
+.hljs-deletion, .hljs-name, .hljs-section, .hljs-selector-tag, .hljs-subst {
+    color:#e06c75
+}
+.hljs-literal {
+    color:#56b6c2
+}
+.hljs-operator {
+    color:#3d4e5f
+}
+.hljs-type {
+    color:#d9bda4
+}
+.hljs-addition, .hljs-attribute, .hljs-meta .hljs-string, .hljs-regexp, .hljs-string {
+    color:#cb7267
+}
+.hljs-number {
+    color:#b9a999
+}
+.hljs-bullet, .hljs-link, .hljs-meta, .hljs-selector-id, .hljs-symbol, .hljs-title {
+    color:#3070a5
+}
+.hljs-built_in, .hljs-class .hljs-title, .hljs-title.class_ {
+    color:#d9bda4
+}
+.hljs-emphasis {
+    font-style:italic
+}
+.hljs-strong {
+    font-weight:700
+}
+.hljs-link {
+    text-decoration:underline
+}
