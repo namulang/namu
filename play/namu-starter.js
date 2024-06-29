@@ -48,7 +48,7 @@ function resizeCodePad() {
     let preStyle = window.getComputedStyle(document.getElementById('pre_codepad'))
     //ta.style.paddingLeft = (pre.offsetLeft + 50) + "px";
     //ta.style.paddingTop = pre.offsetRight + "px";
-    ta.style.width = pre.offsetWidth;
+    ta.style.width = pre.offsetWidth + "px";
     ta.style.height = preStyle.height;
 }
 
