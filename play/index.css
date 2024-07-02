@@ -18,7 +18,7 @@ div.initial-content {
 div#codepad textarea, div#codepad pre {
     font-family: Retro Gaming;
     line-height: 1em;
-    font-size: 15px;
+    font-size: x-large;
     background-color: transparent;
     word-break: break-all;
     white-space: break-spaces;
@@ -60,7 +60,7 @@ pre#pre_codepad {
     z-index: 0;
     margin: 0;
     text-overflow: ellipsis;
-    color: #618162;
+    color: #9f9f9f;
 }
 
 pre#pre_codepad span {
@@ -117,7 +117,7 @@ label#lb_verbose {
 }
 
 .scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 8px;
 }
 
 .scrollbar::-webkit-scrollbar-track {
