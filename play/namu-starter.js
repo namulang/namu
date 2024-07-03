@@ -1,6 +1,54 @@
+let examples = {
+  'hello-world': `# Hello, I'm Namu language.
+# Please edit your code freely and press button in the top right to run.
+# Refer to the 'guide' section above for more syntax.
+main() void
+    print("hello world!")`,
+
+  'bow-to-everyone': `def person
+    name := "default"
+    bow() str
+        print("hello. I'm " + name + "\\n")
+        name
+
+main() void
+    mike := person()
+    mike.name = "mike"
+
+    last := for p in {mike, mike(), mike(mike)}
+        p.bow()
+
+    print("and second one was " + last[1])`
+};
+
+var isEditingYourCodes = true;
+
+function updateCode(code) {
+    document.getElementById('ta_codepad').value = code;
+    highlight(document.getElementById("ta_codepad"))
+}
+
+function loadStorage() {
+  if(typeof(Storage) == undefined) return;
+
+  var src = localStorage.getItem("src") || examples['hello-world']
+  updateCode(src);
+}
+
+function saveStorage() {
+  if(typeof(Storage) == undefined) return;
+
+  let src = document.getElementById('ta_codepad').value;
+  localStorage.setItem("src", src);
+}
+
 window.addEventListener('resize', function(event) {
   resizeCodePad();
 }, true);
+
+window.onbeforeunload = function() {
+  if(isEditingYourCodes) saveStorage();
+}
 
 function highlight(ta) {
     let highlighted = hljs.highlight(ta.value, { language: "namu"}).value
@@ -62,39 +110,22 @@ function resizeCodePad() {
 }
 
 function onchangeSrc(value) {
-    var codepad = document.getElementById('ta_codepad');
-    switch(value) {
-        case 'hello-world': codepad.value = `
-# Hello, I'm Namu language.
-# Please edit your code freely and press button in the top right to run.
-# Refer to the 'guide' section above for more syntax.
-main() void
-    print("hello world!")`;
-            break;
-
-
-        case 'bow-to-everyone': codepad.value = `
-def person
-    name := "default"
-    bow() str
-        print("hello. I'm " + name + "\\n")
-        name
-
-main() void
-    mike := person()
-    mike.name = "mike"
-
-    last := for p in {mike, mike(), mike(mike)}
-        p.bow()
-
-    print("and second one was " + last[1])`;
-            break;
+    if(value == "your-codes") {
+      isEditingYourCodes = true;
+      return loadStorage();
     }
-    highlight(document.getElementById("ta_codepad"))
+
+    if(isEditingYourCodes) saveStorage();
+    isEditingYourCodes = false;
+
+    let example = examples[value];
+    if(example == undefined) return;
+
+    updateCode(example);
 }
 
 window.onload = function() {
-  onchangeSrc('hello-world');
+  loadStorage();
   resizeCodePad();
 
   var ta = document.getElementById('ta_codepad');
