@@ -51,7 +51,8 @@ function resizeCodePad() {
     let top_height = top_pane.offsetTop + top_pane.offsetHeight;
     let bottom_height = document.getElementById("footer")?.offsetHeight || 0;
     let window_height = window.innerHeight;
-    let codepad_height = window_height - (top_height + bottom_height) + "px";
+    let result_height = window.innerWidth <= 950 ? document.getElementById('result').offsetHeight : 0;
+    let codepad_height = window_height - (top_height + bottom_height + result_height) + "px";
 
     ta.style.maxHeight = codepad_height;
     ta.style.height = codepad_height;
