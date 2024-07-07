@@ -85,21 +85,28 @@ $(function() {
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <a class="code" href="classnm_1_1args.html">args</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; rhs);</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classnm_1_1args.html">args</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1base_obj.html">baseObj</a>&amp; me, <span class="keyword">const</span> <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; rhs);</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classnm_1_1args.html#adca653c6e95bc3966e5447bc3d0451ac">   19</a></span>&#160;        <span class="keyword">const</span> me&amp; <a class="code" href="classnm_1_1args.html#adca653c6e95bc3966e5447bc3d0451ac">setMe</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; me) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>&amp; getMe() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnm_1_1clonable.html">clonable</a>* cloneDeep() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classnm_1_1args.html#aa0375e5a2afd11de1e5877e62ab7606f">   25</a></span>&#160;        std::string <a class="code" href="classnm_1_1args.html#aa0375e5a2afd11de1e5877e62ab7606f">toStr</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">mutable</span> <a class="code" href="classnm_1_1tstr.html">str</a> _me;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    };</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classnm_1_1args.html#ae58af392cb51ac8555486655f507ac6d">   20</a></span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Es&gt; <span class="keyword">explicit</span> <a class="code" href="classnm_1_1args.html#ae58af392cb51ac8555486655f507ac6d">args</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1base_obj.html">baseObj</a>&amp; me, <span class="keyword">const</span> Es&amp;... elems): _me(me) {</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            static_assert(areBaseOfT&lt;node, Es...&gt;::value,</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                <span class="stringliteral">&quot;some of type of args are not base of type &#39;node&#39;&quot;</span>);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            add({(<a class="code" href="classnm_1_1node.html">node</a>*) &amp;elems...});</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        }</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classnm_1_1args.html#adca653c6e95bc3966e5447bc3d0451ac">   28</a></span>&#160;        <span class="keyword">const</span> me&amp; <a class="code" href="classnm_1_1args.html#adca653c6e95bc3966e5447bc3d0451ac">setMe</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; me) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>&amp; getMe() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="classnm_1_1clonable.html">clonable</a>* cloneDeep() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classnm_1_1args.html#aa0375e5a2afd11de1e5877e62ab7606f">   34</a></span>&#160;        std::string <a class="code" href="classnm_1_1args.html#aa0375e5a2afd11de1e5877e62ab7606f">toStr</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">mutable</span> <a class="code" href="classnm_1_1tstr.html">str</a> _me;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    };</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1args_html_aa0375e5a2afd11de1e5877e62ab7606f"><div class="ttname"><a href="classnm_1_1args.html#aa0375e5a2afd11de1e5877e62ab7606f">nm::args::toStr</a></div><div class="ttdeci">std::string toStr() const</div></div>
 <div class="ttc" id="aclassnm_1_1args_html_adca653c6e95bc3966e5447bc3d0451ac"><div class="ttname"><a href="classnm_1_1args.html#adca653c6e95bc3966e5447bc3d0451ac">nm::args::setMe</a></div><div class="ttdeci">const me &amp; setMe(const node &amp;me) const</div></div>
+<div class="ttc" id="aclassnm_1_1args_html_ae58af392cb51ac8555486655f507ac6d"><div class="ttname"><a href="classnm_1_1args.html#ae58af392cb51ac8555486655f507ac6d">nm::args::args</a></div><div class="ttdeci">args(const baseObj &amp;me, const Es &amp;... elems)</div><div class="ttdef"><b>Definition:</b> args.hpp:20</div></div>
 <div class="ttc" id="aclassnm_1_1base_obj_html"><div class="ttname"><a href="classnm_1_1base_obj.html">nm::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:15</div></div>
 <div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>

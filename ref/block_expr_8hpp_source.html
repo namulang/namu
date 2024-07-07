@@ -92,20 +92,22 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">using</span> super::run;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; a) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classnm_1_1block_expr.html#aa32612b7e8905764545611bc13e3849b">   23</a></span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> <a class="code" href="classnm_1_1block_expr.html#aa32612b7e8905764545611bc13e3849b">getEval</a>() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; getStmts() const NM_CONST_FUNC(getStmts())</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; getStmts();</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        using super::inFrame;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> inFrame(const <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) override;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        using super::outFrame;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordtype">void</span> outFrame(const <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) override;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classnm_1_1clonable.html">clonable</a>* cloneDeep() const override;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    private:</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">narr</a> _exprs;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    };</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">void</span> setEval(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; newEval);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; getStmts() const NM_CONST_FUNC(getStmts())</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; getStmts();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        using super::inFrame;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">void</span> inFrame(const <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) override;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        using super::outFrame;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordtype">void</span> outFrame(const <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) override;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="classnm_1_1clonable.html">clonable</a>* cloneDeep() const override;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    private:</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">narr</a> _exprs;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _eval;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    };</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1block_expr_html"><div class="ttname"><a href="classnm_1_1block_expr.html">nm::blockExpr</a></div><div class="ttdef"><b>Definition:</b> blockExpr.hpp:10</div></div>
 <div class="ttc" id="aclassnm_1_1block_expr_html_aa32612b7e8905764545611bc13e3849b"><div class="ttname"><a href="classnm_1_1block_expr.html#aa32612b7e8905764545611bc13e3849b">nm::blockExpr::getEval</a></div><div class="ttdeci">str getEval() const override</div></div>
@@ -113,6 +115,7 @@ $(function() {
 <div class="ttc" id="aclassnm_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classnm_1_1expr_1_1expr_type.html">nm::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:14</div></div>
 <div class="ttc" id="aclassnm_1_1expr_html"><div class="ttname"><a href="classnm_1_1expr.html">nm::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
 <div class="ttc" id="aclassnm_1_1func_html"><div class="ttname"><a href="classnm_1_1func.html">nm::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:12</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
 <div class="ttc" id="aclassnm_1_1tbicontainable_html"><div class="ttname"><a href="classnm_1_1tbicontainable.html">nm::tbicontainable</a></div><div class="ttdef"><b>Definition:</b> tbicontainable.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1tnarr_html"><div class="ttname"><a href="classnm_1_1tnarr.html">nm::tnarr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr&lt; node &gt;</a></div></div>

@@ -108,10 +108,10 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> del();</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">virtual</span> nbool setMe(<span class="keyword">const</span> <a class="code" href="classnm_1_1base_obj.html">baseObj</a>&amp; <a class="code" href="classnm_1_1obj.html">obj</a>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">virtual</span> nbool setMe(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; <a class="code" href="classnm_1_1obj.html">obj</a>); <span class="comment">// &#39;me&#39; can be a mockNode during verification.</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">void</span> setMe();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1base_obj.html">baseObj</a>&amp; getMe() const NM_CONST_FUNC(getMe())</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <a class="code" href="classnm_1_1base_obj.html">baseObj</a>&amp; getMe();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getMe() const NM_CONST_FUNC(getMe())</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>&amp; getMe();</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="classnm_1_1tnchain.html">scope</a>&amp; getLocals();</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        const <a class="code" href="classnm_1_1tnchain.html">scope</a>&amp; getLocals() const NM_CONST_FUNC(getLocals())</div>
@@ -148,7 +148,7 @@ $(function() {
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        const <a class="code" href="structnm_1_1scope_register.html">scopeRegister</a>&amp; _getTop() const NM_CONST_FUNC(_getTop())</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    private:</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr</a>&lt;<a class="code" href="classnm_1_1base_obj.html">baseObj</a>&gt; _me;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _me;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr</a>&lt;<a class="code" href="classnm_1_1base_func.html">baseFunc</a>&gt; _func;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        std::vector&lt;<a class="code" href="structnm_1_1scope_register.html">scopeRegister</a>&gt; _stack;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        mutable <a class="code" href="classnm_1_1tstr.html">str</a> _ret;</div>
