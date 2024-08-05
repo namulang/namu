@@ -78,20 +78,18 @@ Inheritance diagram for nm::typeProvidable:</div>
  <div class="center">
   <img src="classnm_1_1type_providable.png" usemap="#nm::typeProvidable_map" alt=""/>
   <map id="nm::typeProvidable_map" name="nm::typeProvidable_map">
-<area href="structnm_1_1tas.html" alt="nm::tas&lt; E &gt;" shape="rect" coords="195,56,380,80"/>
-<area href="classnm_1_1worker.html" alt="nm::worker&lt; void, node &gt;" shape="rect" coords="195,112,380,136"/>
-<area href="classnm_1_1worker.html" alt="nm::worker&lt; str, args &gt;" shape="rect" coords="195,168,380,192"/>
-<area href="classnm_1_1worker.html" alt="nm::worker&lt; tstr&lt; obj &gt;, slot &gt;" shape="rect" coords="195,224,380,248"/>
-<area href="classnm_1_1worker.html" alt="nm::worker&lt; tstr&lt; slot &gt;, slot &gt;" shape="rect" coords="195,280,380,304"/>
-<area href="classnm_1_1bind_tag.html" alt="nm::bindTag" shape="rect" coords="195,336,380,360"/>
-<area href="classnm_1_1binder.html" alt="nm::binder" shape="rect" coords="195,392,380,416"/>
-<area href="classnm_1_1expr_maker.html" alt="nm::exprMaker" shape="rect" coords="195,448,380,472"/>
-<area href="classnm_1_1instance.html" alt="nm::instance" shape="rect" coords="195,504,380,528"/>
-<area href="classnm_1_1slot_loader.html" alt="nm::slotLoader" shape="rect" coords="195,560,380,584"/>
-<area href="classnm_1_1smart_dedent.html" alt="nm::smartDedent" shape="rect" coords="195,616,380,640"/>
-<area href="structnm_1_1tas.html" alt="nm::tas&lt; T &gt;" shape="rect" coords="195,672,380,696"/>
-<area href="classnm_1_1token_scan.html" alt="nm::tokenScan" shape="rect" coords="195,728,380,752"/>
-<area href="classnm_1_1worker.html" alt="nm::worker&lt; R, T &gt;" shape="rect" coords="195,784,380,808"/>
+<area href="classnm_1_1worker.html" alt="nm::worker&lt; void, node &gt;" shape="rect" coords="195,56,380,80"/>
+<area href="classnm_1_1worker.html" alt="nm::worker&lt; str, node &gt;" shape="rect" coords="195,112,380,136"/>
+<area href="classnm_1_1worker.html" alt="nm::worker&lt; str, slot &gt;" shape="rect" coords="195,168,380,192"/>
+<area href="classnm_1_1worker.html" alt="nm::worker&lt; tstr&lt; slot &gt;, slot &gt;" shape="rect" coords="195,224,380,248"/>
+<area href="classnm_1_1bind_tag.html" alt="nm::bindTag" shape="rect" coords="195,280,380,304"/>
+<area href="classnm_1_1binder.html" alt="nm::binder" shape="rect" coords="195,336,380,360"/>
+<area href="classnm_1_1expr_maker.html" alt="nm::exprMaker" shape="rect" coords="195,392,380,416"/>
+<area href="classnm_1_1instance.html" alt="nm::instance" shape="rect" coords="195,448,380,472"/>
+<area href="classnm_1_1slot_loader.html" alt="nm::slotLoader" shape="rect" coords="195,504,380,528"/>
+<area href="classnm_1_1smart_dedent.html" alt="nm::smartDedent" shape="rect" coords="195,560,380,584"/>
+<area href="classnm_1_1token_scan.html" alt="nm::tokenScan" shape="rect" coords="195,616,380,640"/>
+<area href="classnm_1_1worker.html" alt="nm::worker&lt; R, T &gt;" shape="rect" coords="195,672,380,696"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -109,12 +107,15 @@ virtual const <a class="el" href="classnm_1_1type.html">type</a> &amp;&#160;</td
 <tr class="memitem:a83c9d959c74bf6fcbad3efcbdc349ba0"><td class="memItemLeft" align="right" valign="top"><a id="a83c9d959c74bf6fcbad3efcbdc349ba0"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;it) const</td></tr>
 <tr class="separator:a83c9d959c74bf6fcbad3efcbdc349ba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1be139a8bbeccb9f7b11a96553838d87"><td class="memItemLeft" align="right" valign="top"><a id="a1be139a8bbeccb9f7b11a96553838d87"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classnm_1_1type_providable.html">typeProvidable</a> &amp;it) const</td></tr>
-<tr class="separator:a1be139a8bbeccb9f7b11a96553838d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c861a4e4e567416823d5fdd08fc0b10"><td class="memItemLeft" align="right" valign="top"><a id="a1c861a4e4e567416823d5fdd08fc0b10"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const me &amp;it) const</td></tr>
+<tr class="separator:a1c861a4e4e567416823d5fdd08fc0b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a26957c9e54edf7ec6c6a89169025c9"><td class="memItemLeft" align="right" valign="top"><a id="a8a26957c9e54edf7ec6c6a89169025c9"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSuper</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;it) const</td></tr>
 <tr class="separator:a8a26957c9e54edf7ec6c6a89169025c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4555ac5c163e7d3fefb9e9de0ba662c"><td class="memItemLeft" align="right" valign="top"><a id="ad4555ac5c163e7d3fefb9e9de0ba662c"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSuper</b> (const me &amp;it) const</td></tr>
+<tr class="separator:ad4555ac5c163e7d3fefb9e9de0ba662c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fc4bc15cb9baaffd8b4e8da91982440"><td class="memTemplParams" colspan="2"><a id="a7fc4bc15cb9baaffd8b4e8da91982440"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a7fc4bc15cb9baaffd8b4e8da91982440"><td class="memTemplItemLeft" align="right" valign="top">nbool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>isSub</b> () const</td></tr>

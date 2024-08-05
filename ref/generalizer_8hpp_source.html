@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>namu: /home/runner/work/namu/namu/mod/core/visitor/generalizer.hpp Source File</title>
+<title>namu: /home/runner/work/namu/namu/mod/core/worker/visitor/generalizer.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_81012edf5ad7491088324f5f1efbb7fa.html">core</a></li><li class="navelem"><a class="el" href="dir_8f3dd371c1f08f9a6d0d310c8a55e8b3.html">visitor</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_81012edf5ad7491088324f5f1efbb7fa.html">core</a></li><li class="navelem"><a class="el" href="dir_d14968da0b93f6e304e27fa3fb70b353.html">worker</a></li><li class="navelem"><a class="el" href="dir_41cc085b77c3a70d757f3328c4c43c90.html">visitor</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -71,7 +71,7 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../ast/params.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../../ast/params.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;visitor.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>nm {</div>
@@ -88,29 +88,31 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1def_var_expr.html">defVarExpr</a>&amp; me) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1run_expr.html">runExpr</a>&amp; me) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1base_func.html">baseFunc</a>&amp; me) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1base_ctor.html">baseCtor</a>&amp; me) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1params.html">params</a>&amp; me);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1_f_b_o_expr.html">FBOExpr</a>&amp; me) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1base_obj.html">baseObj</a>&amp; me) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1get_generic_expr.html">getGenericExpr</a>&amp; me) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; _findOrigin(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; toReplace) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classnm_1_1params.html">params</a> _params;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    };</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1ctor.html">ctor</a>&amp; me) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1base_ctor.html">baseCtor</a>&amp; me) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1params.html">params</a>&amp; me);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1_f_b_o_expr.html">FBOExpr</a>&amp; me) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1base_obj.html">baseObj</a>&amp; me) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        nbool onVisit(<span class="keyword">const</span> <a class="code" href="structnm_1_1visit_info.html">visitInfo</a>&amp; i, <a class="code" href="classnm_1_1get_generic_expr.html">getGenericExpr</a>&amp; me) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; _findOrigin(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; toReplace) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="classnm_1_1params.html">params</a> _params;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    };</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1_f_b_o_expr_html"><div class="ttname"><a href="classnm_1_1_f_b_o_expr.html">nm::FBOExpr</a></div><div class="ttdef"><b>Definition:</b> FAOExpr.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1as_expr_html"><div class="ttname"><a href="classnm_1_1as_expr.html">nm::asExpr</a></div><div class="ttdef"><b>Definition:</b> asExpr.hpp:11</div></div>
 <div class="ttc" id="aclassnm_1_1base_ctor_html"><div class="ttname"><a href="classnm_1_1base_ctor.html">nm::baseCtor</a></div><div class="ttdef"><b>Definition:</b> baseCtor.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1base_func_html"><div class="ttname"><a href="classnm_1_1base_func.html">nm::baseFunc</a></div><div class="ttdef"><b>Definition:</b> baseFunc.hpp:12</div></div>
-<div class="ttc" id="aclassnm_1_1base_obj_html"><div class="ttname"><a href="classnm_1_1base_obj.html">nm::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:15</div></div>
+<div class="ttc" id="aclassnm_1_1base_obj_html"><div class="ttname"><a href="classnm_1_1base_obj.html">nm::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:19</div></div>
 <div class="ttc" id="aclassnm_1_1block_expr_html"><div class="ttname"><a href="classnm_1_1block_expr.html">nm::blockExpr</a></div><div class="ttdef"><b>Definition:</b> blockExpr.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1def_var_expr_html"><div class="ttname"><a href="classnm_1_1def_var_expr.html">nm::defVarExpr</a></div><div class="ttdef"><b>Definition:</b> defVarExpr.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1ctor_html"><div class="ttname"><a href="classnm_1_1ctor.html">nm::ctor</a></div><div class="ttdef"><b>Definition:</b> ctor.hpp:6</div></div>
+<div class="ttc" id="aclassnm_1_1def_var_expr_html"><div class="ttname"><a href="classnm_1_1def_var_expr.html">nm::defVarExpr</a></div><div class="ttdef"><b>Definition:</b> defVarExpr.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1generalizer_html"><div class="ttname"><a href="classnm_1_1generalizer.html">nm::generalizer</a></div><div class="ttdef"><b>Definition:</b> generalizer.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1get_generic_expr_html"><div class="ttname"><a href="classnm_1_1get_generic_expr.html">nm::getGenericExpr</a></div><div class="ttdef"><b>Definition:</b> getGenericExpr.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>
 <div class="ttc" id="aclassnm_1_1param_html"><div class="ttname"><a href="classnm_1_1param.html">nm::param</a></div><div class="ttdef"><b>Definition:</b> param.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1params_html"><div class="ttname"><a href="classnm_1_1params.html">nm::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1run_expr_html"><div class="ttname"><a href="classnm_1_1run_expr.html">nm::runExpr</a></div><div class="ttdef"><b>Definition:</b> runExpr.hpp:9</div></div>

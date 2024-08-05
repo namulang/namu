@@ -74,8 +74,8 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;ttypeBase.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classnm_1_1ttype.html">   14</a></span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span><a class="code" href="classnm_1_1ttype.html">ttype</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1ttype_base.html">ttypeBase</a>&lt;T, typename tmetaTypeDef&lt;T&gt;::is&gt; {};</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classnm_1_1ttype.html">   14</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnm_1_1ttype.html">ttype</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1ttype_base.html">ttypeBase</a>&lt;T, typename tmetaTypeDef&lt;T, tifHasMetaTypeDef&lt;T&gt;::is&gt;::is&gt; {};</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1ttype_base_html"><div class="ttname"><a href="classnm_1_1ttype_base.html">nm::ttypeBase</a></div><div class="ttdef"><b>Definition:</b> ttypeBase.hpp:15</div></div>
 <div class="ttc" id="aclassnm_1_1ttype_html"><div class="ttname"><a href="classnm_1_1ttype.html">nm::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:14</div></div>

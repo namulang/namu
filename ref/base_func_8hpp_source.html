@@ -84,31 +84,41 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        NM(ADT(<a class="code" href="classnm_1_1base_func.html">baseFunc</a>, <a class="code" href="classnm_1_1expr.html">expr</a>), VISIT())</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">const</span> std::string ME = <span class="stringliteral">&quot;me&quot;</span>;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        priorType prioritize(<span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; a) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classnm_1_1base_func.html#a72c3feaf8fc5a0f4b29d506e2dc2c762">   27</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classnm_1_1params.html">params</a>&amp; <a class="code" href="classnm_1_1base_func.html#a72c3feaf8fc5a0f4b29d506e2dc2c762">getParams</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classnm_1_1base_func.html#a9592c8446217aedc31d5448e750c6d7a">   38</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnm_1_1tstr.html">str</a> <a class="code" href="classnm_1_1base_func.html#a9592c8446217aedc31d5448e750c6d7a">getRet</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classnm_1_1base_func.html#ae09318f64da8c779d395676434bb954c">   41</a></span>&#160;        <span class="keyword">virtual</span> nbool <a class="code" href="classnm_1_1base_func.html#ae09318f64da8c779d395676434bb954c">setRet</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; newRet);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        nbool _isNatureNumber(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; it) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        priorType _prioritize(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; <a class="code" href="classnm_1_1param.html">param</a>, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; arg) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    };</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tnarr.html">tnarr&lt;baseFunc&gt;</a> <a class="code" href="classnm_1_1tnarr.html">funcs</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classnm_1_1base_func.html">baseFunc</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classnm_1_1base_func.html">baseFunc</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1modifier.html">modifier</a>&amp; mod);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        priorType prioritize(<span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; a) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classnm_1_1base_func.html#a72c3feaf8fc5a0f4b29d506e2dc2c762">   28</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classnm_1_1params.html">params</a>&amp; <a class="code" href="classnm_1_1base_func.html#a72c3feaf8fc5a0f4b29d506e2dc2c762">getParams</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classnm_1_1base_func.html#a9592c8446217aedc31d5448e750c6d7a">   39</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnm_1_1tstr.html">str</a> <a class="code" href="classnm_1_1base_func.html#a9592c8446217aedc31d5448e750c6d7a">getRet</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classnm_1_1base_func.html#ae09318f64da8c779d395676434bb954c">   42</a></span>&#160;        <span class="keyword">virtual</span> nbool <a class="code" href="classnm_1_1base_func.html#ae09318f64da8c779d395676434bb954c">setRet</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; newRet);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1modifier.html">modifier</a>&amp; getModifier() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        nbool _isNatureNumber(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; it) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        priorType _prioritize(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; <a class="code" href="classnm_1_1param.html">param</a>, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; arg) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr&lt;modifier&gt;</a> _mod;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">const</span> std::string ME = <span class="stringliteral">&quot;me&quot;</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    };</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classnm_1_1tnarr.html">tnarr&lt;baseFunc&gt;</a> <a class="code" href="classnm_1_1tnarr.html">funcs</a>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1base_func_html"><div class="ttname"><a href="classnm_1_1base_func.html">nm::baseFunc</a></div><div class="ttdef"><b>Definition:</b> baseFunc.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1base_func_html_a72c3feaf8fc5a0f4b29d506e2dc2c762"><div class="ttname"><a href="classnm_1_1base_func.html#a72c3feaf8fc5a0f4b29d506e2dc2c762">nm::baseFunc::getParams</a></div><div class="ttdeci">virtual const params &amp; getParams() const</div></div>
 <div class="ttc" id="aclassnm_1_1base_func_html_a9592c8446217aedc31d5448e750c6d7a"><div class="ttname"><a href="classnm_1_1base_func.html#a9592c8446217aedc31d5448e750c6d7a">nm::baseFunc::getRet</a></div><div class="ttdeci">virtual str getRet() const =0</div></div>
 <div class="ttc" id="aclassnm_1_1base_func_html_ae09318f64da8c779d395676434bb954c"><div class="ttname"><a href="classnm_1_1base_func.html#ae09318f64da8c779d395676434bb954c">nm::baseFunc::setRet</a></div><div class="ttdeci">virtual nbool setRet(const node &amp;newRet)</div></div>
 <div class="ttc" id="aclassnm_1_1expr_html"><div class="ttname"><a href="classnm_1_1expr.html">nm::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:11</div></div>
-<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:21</div></div>
+<div class="ttc" id="aclassnm_1_1modifier_html"><div class="ttname"><a href="classnm_1_1modifier.html">nm::modifier</a></div><div class="ttdef"><b>Definition:</b> modifier.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>
 <div class="ttc" id="aclassnm_1_1param_html"><div class="ttname"><a href="classnm_1_1param.html">nm::param</a></div><div class="ttdef"><b>Definition:</b> param.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1params_html"><div class="ttname"><a href="classnm_1_1params.html">nm::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1tnarr_html"><div class="ttname"><a href="classnm_1_1tnarr.html">nm::tnarr</a></div><div class="ttdef"><b>Definition:</b> tnarr.hpp:9</div></div>

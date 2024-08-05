@@ -152,7 +152,7 @@ $(function() {
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="comment">// TODO: optimize using containerIteration</span></div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            me* unconst = <span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <a class="code" href="classiteration.html">iteration</a>* ret = <span class="keyword">new</span> <a class="code" href="classchain_iteration.html">chainIteration</a>(*unconst, _map-&gt;begin());</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            ret-&gt;next(step);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            ret-&gt;<a class="code" href="classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f">next</a>(step);</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        }</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
@@ -180,6 +180,7 @@ $(function() {
 <div class="ttc" id="aclasschain_iteration_html"><div class="ttname"><a href="classchain_iteration.html">chainIteration</a></div><div class="ttdef"><b>Definition:</b> nchainIteration.hpp:3</div></div>
 <div class="ttc" id="aclasschain_iteration_html_a4c8ff27d24722f4ca59ae2653777fc57"><div class="ttname"><a href="classchain_iteration.html#a4c8ff27d24722f4ca59ae2653777fc57">chainIteration::next</a></div><div class="ttdeci">ncnt next(ncnt step) override</div><div class="ttdef"><b>Definition:</b> nchainIteration.hpp:15</div></div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
+<div class="ttc" id="aclassiterable_html_af3fe3f73cc02ce60a46b93d6e630798f"><div class="ttname"><a href="classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f">iterable::next</a></div><div class="ttdeci">virtual ncnt next(ncnt step)=0</div></div>
 <div class="ttc" id="aclassiteration_html"><div class="ttname"><a href="classiteration.html">iteration</a></div><div class="ttdef"><b>Definition:</b> biteration.hpp:4</div></div>
 <div class="ttc" id="aclassnm_1_1arr_html"><div class="ttname"><a href="classnm_1_1arr.html">nm::arr</a></div><div class="ttdef"><b>Definition:</b> arr.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
