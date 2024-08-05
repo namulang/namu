@@ -115,9 +115,10 @@ Inheritance diagram for nm::node:</div>
 <area href="classnm_1_1def_var_expr.html" alt="nm::defVarExpr" shape="rect" coords="426,728,558,752"/>
 <area href="classnm_1_1get_expr.html" alt="nm::getExpr" shape="rect" coords="426,784,558,808"/>
 <area href="classnm_1_1if_expr.html" alt="nm::ifExpr" shape="rect" coords="426,840,558,864"/>
-<area href="classnm_1_1loop_expr.html" alt="nm::loopExpr" shape="rect" coords="426,896,558,920"/>
-<area href="classnm_1_1ret_state_expr.html" alt="nm::retStateExpr" shape="rect" coords="426,952,558,976"/>
-<area href="classnm_1_1run_expr.html" alt="nm::runExpr" shape="rect" coords="426,1008,558,1032"/>
+<area href="classnm_1_1is_expr.html" alt="nm::isExpr" shape="rect" coords="426,896,558,920"/>
+<area href="classnm_1_1loop_expr.html" alt="nm::loopExpr" shape="rect" coords="426,952,558,976"/>
+<area href="classnm_1_1ret_state_expr.html" alt="nm::retStateExpr" shape="rect" coords="426,1008,558,1032"/>
+<area href="classnm_1_1run_expr.html" alt="nm::runExpr" shape="rect" coords="426,1064,558,1088"/>
 <area href="classnm_1_1autoslot.html" alt="nm::autoslot" shape="rect" coords="710,224,842,248"/>
   </map>
 </div></div>
@@ -250,6 +251,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>inFrame</b> (const <a
 <tr class="memitem:ac63320ea2281c6b3a5c2cce349ed7827"><td class="memItemLeft" align="right" valign="top"><a id="ac63320ea2281c6b3a5c2cce349ed7827"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>outFrame</b> (const <a class="el" href="classnm_1_1tbicontainable.html">bicontainable</a> &amp;<a class="el" href="classnm_1_1args.html">args</a>) override</td></tr>
 <tr class="separator:ac63320ea2281c6b3a5c2cce349ed7827"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad35b6901c609591fc49b47d7ac8c6c4c"><td class="memItemLeft" align="right" valign="top"><a id="ad35b6901c609591fc49b47d7ac8c6c4c"></a>
+virtual const <a class="el" href="classnm_1_1modifier.html">modifier</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getModifier</b> () const</td></tr>
+<tr class="separator:ad35b6901c609591fc49b47d7ac8c6c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78f453301e493d7bb95446afbe1b8a10"><td class="memItemLeft" align="right" valign="top"><a id="a78f453301e493d7bb95446afbe1b8a10"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>inFrame</b> (const <a class="el" href="classnm_1_1tbicontainable.html">bicontainable</a> &amp;<a class="el" href="classnm_1_1args.html">args</a>)=0</td></tr>
 <tr class="separator:a78f453301e493d7bb95446afbe1b8a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -297,12 +301,15 @@ virtual const <a class="el" href="classnm_1_1type.html">type</a> &amp;&#160;</td
 <tr class="memitem:a83c9d959c74bf6fcbad3efcbdc349ba0 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a83c9d959c74bf6fcbad3efcbdc349ba0"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;it) const</td></tr>
 <tr class="separator:a83c9d959c74bf6fcbad3efcbdc349ba0 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1be139a8bbeccb9f7b11a96553838d87 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a1be139a8bbeccb9f7b11a96553838d87"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classnm_1_1type_providable.html">typeProvidable</a> &amp;it) const</td></tr>
-<tr class="separator:a1be139a8bbeccb9f7b11a96553838d87 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c861a4e4e567416823d5fdd08fc0b10 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a1c861a4e4e567416823d5fdd08fc0b10"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const me &amp;it) const</td></tr>
+<tr class="separator:a1c861a4e4e567416823d5fdd08fc0b10 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a26957c9e54edf7ec6c6a89169025c9 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a8a26957c9e54edf7ec6c6a89169025c9"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSuper</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;it) const</td></tr>
 <tr class="separator:a8a26957c9e54edf7ec6c6a89169025c9 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4555ac5c163e7d3fefb9e9de0ba662c inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="ad4555ac5c163e7d3fefb9e9de0ba662c"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSuper</b> (const me &amp;it) const</td></tr>
+<tr class="separator:ad4555ac5c163e7d3fefb9e9de0ba662c inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fc4bc15cb9baaffd8b4e8da91982440 inherit pub_methods_classnm_1_1type_providable"><td class="memTemplParams" colspan="2"><a id="a7fc4bc15cb9baaffd8b4e8da91982440"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a7fc4bc15cb9baaffd8b4e8da91982440 inherit pub_methods_classnm_1_1type_providable"><td class="memTemplItemLeft" align="right" valign="top">nbool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>isSub</b> () const</td></tr>
@@ -420,7 +427,7 @@ static <a class="el" href="classnm_1_1instancer.html">instancer</a> &amp;&#160;<
 <p>for example, the 'expr' class has derived from this node class. and if an user call the funcs to get type of it, class 'ntype' of 'expr' will be returned. but if that user call the '<a class="el" href="classnm_1_1node.html#acf6e9ca023760db52a62bb04387d4e74">getEval()</a>' then the 'expr' object evaluate its terms and returns it as a node from the output. it could be an integer if it was 'addExpr' and all terms are constructed with integers.</p>
 <p>and also this func requires frames. means that you have to interact frame first before call this func. </p><dl class="section remark"><dt>Remarks</dt><dd>some derived class of node may require to call this function first by verifier. if you call this function without calling verifier previously will damage then process. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classnm_1_1slot.html#afc9ab78c448c1a10b8c01483f4ed91bc">nm::slot</a>, <a class="el" href="classnm_1_1generic_origin.html#ada313fde72dc60598fe5b50e462ade34">nm::genericOrigin</a>, <a class="el" href="classnm_1_1run_expr.html#a25b6558413d49f2ee687614f5fbda5e3">nm::runExpr</a>, <a class="el" href="classnm_1_1ret_expr.html#a8f8648f79dcef65fc1c06ba247bef6a9">nm::retExpr</a>, <a class="el" href="classnm_1_1loop_expr.html#a6fd5ccc28125b50c32f3feb126c8a040">nm::loopExpr</a>, <a class="el" href="classnm_1_1if_expr.html#a3f49dc0852c1714eb37788ddbe59a7b8">nm::ifExpr</a>, <a class="el" href="classnm_1_1get_expr.html#aebb16778d5d990f44233f9ee0a43b5f6">nm::getExpr</a>, <a class="el" href="classnm_1_1_f_b_o_expr.html#a849b3870f2f1604c4212ce6c09767b1e">nm::FBOExpr</a>, <a class="el" href="classnm_1_1_f_b_o_expr.html#a849b3870f2f1604c4212ce6c09767b1e">nm::FBOExpr</a>, <a class="el" href="classnm_1_1def_var_expr.html#a868486dc19313ef161c1369515d68038">nm::defVarExpr</a>, <a class="el" href="classnm_1_1def_seq_expr.html#a47813beca7df500ba0525fd5d909335e">nm::defSeqExpr</a>, <a class="el" href="classnm_1_1def_array_expr.html#af3dd0d2f15d2693c90656b8d76ded1c0">nm::defArrayExpr</a>, <a class="el" href="classnm_1_1block_expr.html#aa32612b7e8905764545611bc13e3849b">nm::blockExpr</a>, <a class="el" href="classnm_1_1assign_expr.html#a320e8be87581d7ff3ef6def13dbd5335">nm::assignExpr</a>, <a class="el" href="classnm_1_1as_expr.html#a986c19db51ae0c8364b5004b7dc070c3">nm::asExpr</a>, <a class="el" href="classnm_1_1ctor.html#a46a74f8ed5d4e50e60f4dc01afadda39">nm::ctor</a>, and <a class="el" href="classnm_1_1base_ctor.html#a8dc9b6b092c4b3f438a7dc10e7e759f9">nm::baseCtor</a>.</p>
+<p>Reimplemented in <a class="el" href="classnm_1_1slot.html#afc9ab78c448c1a10b8c01483f4ed91bc">nm::slot</a>, <a class="el" href="classnm_1_1generic_origin.html#ada313fde72dc60598fe5b50e462ade34">nm::genericOrigin</a>, <a class="el" href="classnm_1_1run_expr.html#a25b6558413d49f2ee687614f5fbda5e3">nm::runExpr</a>, <a class="el" href="classnm_1_1ret_expr.html#a8f8648f79dcef65fc1c06ba247bef6a9">nm::retExpr</a>, <a class="el" href="classnm_1_1loop_expr.html#a6fd5ccc28125b50c32f3feb126c8a040">nm::loopExpr</a>, <a class="el" href="classnm_1_1is_expr.html#af7754c745c4563363365aaf768f5a0e6">nm::isExpr</a>, <a class="el" href="classnm_1_1if_expr.html#a3f49dc0852c1714eb37788ddbe59a7b8">nm::ifExpr</a>, <a class="el" href="classnm_1_1get_expr.html#aebb16778d5d990f44233f9ee0a43b5f6">nm::getExpr</a>, <a class="el" href="classnm_1_1_f_b_o_expr.html#a849b3870f2f1604c4212ce6c09767b1e">nm::FBOExpr</a>, <a class="el" href="classnm_1_1_f_b_o_expr.html#a849b3870f2f1604c4212ce6c09767b1e">nm::FBOExpr</a>, <a class="el" href="classnm_1_1def_var_expr.html#a868486dc19313ef161c1369515d68038">nm::defVarExpr</a>, <a class="el" href="classnm_1_1def_seq_expr.html#a47813beca7df500ba0525fd5d909335e">nm::defSeqExpr</a>, <a class="el" href="classnm_1_1def_array_expr.html#af3dd0d2f15d2693c90656b8d76ded1c0">nm::defArrayExpr</a>, <a class="el" href="classnm_1_1block_expr.html#aa32612b7e8905764545611bc13e3849b">nm::blockExpr</a>, <a class="el" href="classnm_1_1assign_expr.html#a320e8be87581d7ff3ef6def13dbd5335">nm::assignExpr</a>, <a class="el" href="classnm_1_1as_expr.html#a986c19db51ae0c8364b5004b7dc070c3">nm::asExpr</a>, <a class="el" href="classnm_1_1ctor.html#a46a74f8ed5d4e50e60f4dc01afadda39">nm::ctor</a>, and <a class="el" href="classnm_1_1base_ctor.html#a8dc9b6b092c4b3f438a7dc10e7e759f9">nm::baseCtor</a>.</p>
 
 </div>
 </div>
@@ -448,7 +455,7 @@ static <a class="el" href="classnm_1_1instancer.html">instancer</a> &amp;&#160;<
 </div><div class="memdoc">
 <p>returns whether this instance is complete or not. if some instance is incomplete, it means that it's not accessible on namulang source codes. </p>
 
-<p>Reimplemented in <a class="el" href="classnm_1_1obj.html#a130d4f53889122b6eff6761403cdd024">nm::obj</a>, and <a class="el" href="classnm_1_1mock_node.html#acbace73c0cc71433c1c936101f6f93a5">nm::mockNode</a>.</p>
+<p>Reimplemented in <a class="el" href="classnm_1_1origin.html#a69f2353df63f7256e83f9a26a69c8d9f">nm::origin</a>, <a class="el" href="classnm_1_1obj.html#a130d4f53889122b6eff6761403cdd024">nm::obj</a>, and <a class="el" href="classnm_1_1mock_node.html#acbace73c0cc71433c1c936101f6f93a5">nm::mockNode</a>.</p>
 
 </div>
 </div>

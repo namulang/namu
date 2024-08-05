@@ -77,20 +77,15 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">class </span>ntype;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="structnm_1_1tas.html">    9</a></span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span><a class="code" href="structnm_1_1tas.html">tas</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1asable.html">asable</a>, <span class="keyword">public</span> <a class="code" href="classnm_1_1type_providable.html">typeProvidable</a> {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="structnm_1_1tas.html">tas</a>() {}</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; getType()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>(); }</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        nbool is(<span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> getType() == to; }</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    };</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="structnm_1_1tas.html">    9</a></span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span><a class="code" href="structnm_1_1tas.html">tas</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1asable.html">asable</a> {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="structnm_1_1tas.html">tas</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        nbool is(<span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> to == <a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>(); }</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    };</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1asable_html"><div class="ttname"><a href="classnm_1_1asable.html">nm::asable</a></div><div class="ttdef"><b>Definition:</b> asable.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1ttype_html"><div class="ttname"><a href="classnm_1_1ttype.html">nm::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:14</div></div>
 <div class="ttc" id="aclassnm_1_1type_html"><div class="ttname"><a href="classnm_1_1type.html">nm::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:7</div></div>
-<div class="ttc" id="aclassnm_1_1type_providable_html"><div class="ttname"><a href="classnm_1_1type_providable.html">nm::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:7</div></div>
 <div class="ttc" id="astructnm_1_1tas_html"><div class="ttname"><a href="structnm_1_1tas.html">nm::tas</a></div><div class="ttdef"><b>Definition:</b> tas.hpp:9</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -80,10 +80,11 @@ Inheritance diagram for nm::nInt:</div>
  <div class="center">
   <img src="classnm_1_1n_int.png" usemap="#nm::nInt_map" alt=""/>
   <map id="nm::nInt_map" name="nm::nInt_map">
-<area href="classnm_1_1primitive_obj.html" alt="nm::primitiveObj&lt; nint &gt;" shape="rect" coords="155,280,300,304"/>
-<area href="classnm_1_1arithmetic_obj.html" alt="nm::arithmeticObj" shape="rect" coords="155,224,300,248"/>
-<area href="classnm_1_1base_obj.html" title="baseObj handles frame injection event of all objects." alt="nm::baseObj" shape="rect" coords="155,168,300,192"/>
+<area href="classnm_1_1primitive_obj.html" alt="nm::primitiveObj&lt; nint &gt;" shape="rect" coords="232,280,377,304"/>
+<area href="classnm_1_1arithmetic_obj.html" alt="nm::arithmeticObj" shape="rect" coords="232,224,377,248"/>
+<area href="classnm_1_1base_obj.html" title="baseObj handles frame injection event of all objects." alt="nm::baseObj" shape="rect" coords="232,168,377,192"/>
 <area href="classnm_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="nm::node" shape="rect" coords="155,112,300,136"/>
+<area href="classnm_1_1statable.html" alt="nm::statable" shape="rect" coords="310,112,455,136"/>
 <area href="classnm_1_1instance.html" alt="nm::instance" shape="rect" coords="77,56,222,80"/>
 <area href="classnm_1_1frame_interactable.html" alt="nm::frameInteractable" shape="rect" coords="232,56,377,80"/>
 <area href="classnm_1_1type_providable.html" alt="nm::typeProvidable" shape="rect" coords="0,0,145,24"/>
@@ -96,13 +97,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8a48b03e4ea1b5d69542f6c3976ede0c"><td class="memItemLeft" align="right" valign="top"><a id="a8a48b03e4ea1b5d69542f6c3976ede0c"></a>
 <a class="el" href="classnm_1_1tstr.html">tstr</a>&lt; <a class="el" href="classnm_1_1arithmetic_obj.html">arithmeticObj</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bitwiseNot</b> () const override</td></tr>
 <tr class="separator:a8a48b03e4ea1b5d69542f6c3976ede0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed41943e1a1f9f80241b7c284dd2ddd7"><td class="memItemLeft" align="right" valign="top"><a id="aed41943e1a1f9f80241b7c284dd2ddd7"></a>
-const <a class="el" href="classnm_1_1base_obj.html">baseObj</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getOrigin</b> () const override</td></tr>
-<tr class="separator:aed41943e1a1f9f80241b7c284dd2ddd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1primitive_obj"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1primitive_obj')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1primitive_obj.html">nm::primitiveObj&lt; nint &gt;</a></td></tr>
-<tr class="memitem:ac9f2f1a574b51934d06b116ede356946 inherit pub_methods_classnm_1_1primitive_obj"><td class="memItemLeft" align="right" valign="top"><a id="ac9f2f1a574b51934d06b116ede356946"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>primitiveObj</b> (const nint &amp;val)</td></tr>
-<tr class="separator:ac9f2f1a574b51934d06b116ede356946 inherit pub_methods_classnm_1_1primitive_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafb790ebccfb775db7ad60745ef071ed inherit pub_methods_classnm_1_1primitive_obj"><td class="memItemLeft" align="right" valign="top"><a id="aafb790ebccfb775db7ad60745ef071ed"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>primitiveObj</b> (const <a class="el" href="classnm_1_1base_obj.html">baseObj</a> &amp;org)</td></tr>
+<tr class="separator:aafb790ebccfb775db7ad60745ef071ed inherit pub_methods_classnm_1_1primitive_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0df7b7126054fea0e11ad21db87618cb inherit pub_methods_classnm_1_1primitive_obj"><td class="memItemLeft" align="right" valign="top"><a id="a0df7b7126054fea0e11ad21db87618cb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>primitiveObj</b> (const nint &amp;val, const <a class="el" href="classnm_1_1base_obj.html">baseObj</a> &amp;org)</td></tr>
+<tr class="separator:a0df7b7126054fea0e11ad21db87618cb inherit pub_methods_classnm_1_1primitive_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70e3c22d76ce33724f1bd2d71f931537 inherit pub_methods_classnm_1_1primitive_obj"><td class="memItemLeft" align="right" valign="top"><a id="a70e3c22d76ce33724f1bd2d71f931537"></a>
 nint &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()</td></tr>
 <tr class="separator:a70e3c22d76ce33724f1bd2d71f931537 inherit pub_methods_classnm_1_1primitive_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -112,13 +113,10 @@ const nint &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (
 <tr class="memitem:a6a6b5a85c1335788030ffdf82fb3b3c5 inherit pub_methods_classnm_1_1primitive_obj"><td class="memItemLeft" align="right" valign="top"><a id="a6a6b5a85c1335788030ffdf82fb3b3c5"></a>
 void *&#160;</td><td class="memItemRight" valign="bottom"><b>cast</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;to) override</td></tr>
 <tr class="separator:a6a6b5a85c1335788030ffdf82fb3b3c5 inherit pub_methods_classnm_1_1primitive_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac517e478e3c192b558e4e2c02b2a9b0d inherit pub_methods_classnm_1_1primitive_obj"><td class="memItemLeft" align="right" valign="top"><a id="ac517e478e3c192b558e4e2c02b2a9b0d"></a>
-<a class="el" href="classnm_1_1tnchain.html">scope</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>subs</b> () override</td></tr>
-<tr class="separator:ac517e478e3c192b558e4e2c02b2a9b0d inherit pub_methods_classnm_1_1primitive_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1arithmetic_obj"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1arithmetic_obj')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1arithmetic_obj.html">nm::arithmeticObj</a></td></tr>
-<tr class="memitem:a369d4c53edc6e0f9c6dba4673355643f inherit pub_methods_classnm_1_1arithmetic_obj"><td class="memItemLeft" align="right" valign="top"><a id="a369d4c53edc6e0f9c6dba4673355643f"></a>
-<a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classnm_1_1args.html">args</a> &amp;a) override</td></tr>
-<tr class="separator:a369d4c53edc6e0f9c6dba4673355643f inherit pub_methods_classnm_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe2c1b4c2b5248d967f8145562b6f0c7 inherit pub_methods_classnm_1_1arithmetic_obj"><td class="memItemLeft" align="right" valign="top"><a id="afe2c1b4c2b5248d967f8145562b6f0c7"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>arithmeticObj</b> (const <a class="el" href="classnm_1_1base_obj.html">baseObj</a> &amp;org)</td></tr>
+<tr class="separator:afe2c1b4c2b5248d967f8145562b6f0c7 inherit pub_methods_classnm_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26811771d35204e965eae638b570652f inherit pub_methods_classnm_1_1arithmetic_obj"><td class="memItemLeft" align="right" valign="top"><a id="a26811771d35204e965eae638b570652f"></a>
 <a class="el" href="classnm_1_1tstr.html">tstr</a>&lt; me &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const me &amp;rhs) const</td></tr>
 <tr class="separator:a26811771d35204e965eae638b570652f inherit pub_methods_classnm_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,28 +175,43 @@ nbool&#160;</td><td class="memItemRight" valign="bottom"><b>logicalOr</b> (const
 <a class="el" href="classnm_1_1tstr.html">tstr</a>&lt; me &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1arithmetic_obj.html#ac18a66bbc8ecd929ac8ea82aebd7833c">mov</a> (const me &amp;rhs)</td></tr>
 <tr class="memdesc:ac18a66bbc8ecd929ac8ea82aebd7833c inherit pub_methods_classnm_1_1arithmetic_obj"><td class="mdescLeft">&#160;</td><td class="mdescRight">same to 'assign'. <br /></td></tr>
 <tr class="separator:ac18a66bbc8ecd929ac8ea82aebd7833c inherit pub_methods_classnm_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a433441dcda4e32cbf49731ab81cee3d1 inherit pub_methods_classnm_1_1arithmetic_obj"><td class="memItemLeft" align="right" valign="top"><a id="a433441dcda4e32cbf49731ab81cee3d1"></a>
-const <a class="el" href="classnm_1_1src.html">src</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSrc</b> () const override</td></tr>
-<tr class="separator:a433441dcda4e32cbf49731ab81cee3d1 inherit pub_methods_classnm_1_1arithmetic_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1base_obj"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1base_obj')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1base_obj.html">nm::baseObj</a></td></tr>
+<tr class="memitem:a280ff2e662abc33e6822236d84bf7f05 inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a280ff2e662abc33e6822236d84bf7f05"></a>
+<a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classnm_1_1args.html">args</a> &amp;a) override</td></tr>
+<tr class="separator:a280ff2e662abc33e6822236d84bf7f05 inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a355ff07e13a1127163c055276c6c4c17 inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a355ff07e13a1127163c055276c6c4c17"></a>
+<a class="el" href="classnm_1_1tnchain.html">scope</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>subs</b> () override</td></tr>
+<tr class="separator:a355ff07e13a1127163c055276c6c4c17 inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a508b61bdef0b9373e769d8ab649710a4 inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a508b61bdef0b9373e769d8ab649710a4"></a>
+state&#160;</td><td class="memItemRight" valign="bottom"><b>getState</b> () const override</td></tr>
+<tr class="separator:a508b61bdef0b9373e769d8ab649710a4 inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a862dfc1c702752bf6c15d45be199dccd inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a862dfc1c702752bf6c15d45be199dccd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setState</b> (state new1) override</td></tr>
+<tr class="separator:a862dfc1c702752bf6c15d45be199dccd inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e5c32b70d300d56d331744c5080f8ed inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a6e5c32b70d300d56d331744c5080f8ed"></a>
 priorType&#160;</td><td class="memItemRight" valign="bottom"><b>prioritize</b> (const <a class="el" href="classnm_1_1args.html">args</a> &amp;a) const override</td></tr>
 <tr class="separator:a6e5c32b70d300d56d331744c5080f8ed inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8eccbc67f953ae094e22522b4638a4e inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="ac8eccbc67f953ae094e22522b4638a4e"></a>
+virtual const <a class="el" href="classnm_1_1base_obj.html">baseObj</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getOrigin</b> () const</td></tr>
+<tr class="separator:ac8eccbc67f953ae094e22522b4638a4e inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac83c355045ef557cd30eb7c3bb14bb77 inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="ac83c355045ef557cd30eb7c3bb14bb77"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>inFrame</b> (const <a class="el" href="classnm_1_1tbicontainable.html">bicontainable</a> &amp;<a class="el" href="classnm_1_1args.html">args</a>) override</td></tr>
 <tr class="separator:ac83c355045ef557cd30eb7c3bb14bb77 inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a697c82e29d6862abe50b643a31f7f0d7 inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a697c82e29d6862abe50b643a31f7f0d7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>outFrame</b> (const <a class="el" href="classnm_1_1tbicontainable.html">bicontainable</a> &amp;<a class="el" href="classnm_1_1args.html">args</a>) override</td></tr>
 <tr class="separator:a697c82e29d6862abe50b643a31f7f0d7 inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae59b85ab2d1e998f9e4562a251f3b240 inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="ae59b85ab2d1e998f9e4562a251f3b240"></a>
-virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isPreEvaluated</b> () const</td></tr>
-<tr class="separator:ae59b85ab2d1e998f9e4562a251f3b240 inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ff4861066f5c5ef5adffd78c3a4906f inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a5ff4861066f5c5ef5adffd78c3a4906f"></a>
-virtual const <a class="el" href="classnm_1_1obj.html">obj</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSubPack</b> () const</td></tr>
-<tr class="separator:a5ff4861066f5c5ef5adffd78c3a4906f inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4570b6c15ccd93c1372bc80dcd3ee0b inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="af4570b6c15ccd93c1372bc80dcd3ee0b"></a>
+const <a class="el" href="classnm_1_1src.html">src</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSrc</b> () const override</td></tr>
+<tr class="separator:af4570b6c15ccd93c1372bc80dcd3ee0b inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa01a905fc4c80bd645f0bef8f27edaba inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="aa01a905fc4c80bd645f0bef8f27edaba"></a>
+virtual const <a class="el" href="classnm_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSubPack</b> () const</td></tr>
+<tr class="separator:aa01a905fc4c80bd645f0bef8f27edaba inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a188bd3c33516fb935e737c87bf2b46a9 inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a188bd3c33516fb935e737c87bf2b46a9"></a>
 virtual <a class="el" href="classnm_1_1base_obj.html">baseObj</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>make</b> () const</td></tr>
 <tr class="separator:a188bd3c33516fb935e737c87bf2b46a9 inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12b49fd0f108502cd65d3321b88c9ed6 inherit pub_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a12b49fd0f108502cd65d3321b88c9ed6"></a>
+const <a class="el" href="classnm_1_1modifier.html">modifier</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getModifier</b> () const override</td></tr>
+<tr class="separator:a12b49fd0f108502cd65d3321b88c9ed6 inherit pub_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1node"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1node')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1node.html">nm::node</a></td></tr>
 <tr class="memitem:a3820fb14829b78e0446c44d60bf71c99 inherit pub_methods_classnm_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a3820fb14829b78e0446c44d60bf71c99"></a>
 <a class="el" href="classnm_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const std::string &amp;name)</td></tr>
@@ -361,12 +374,15 @@ virtual const <a class="el" href="classnm_1_1type.html">type</a> &amp;&#160;</td
 <tr class="memitem:a83c9d959c74bf6fcbad3efcbdc349ba0 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a83c9d959c74bf6fcbad3efcbdc349ba0"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;it) const</td></tr>
 <tr class="separator:a83c9d959c74bf6fcbad3efcbdc349ba0 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1be139a8bbeccb9f7b11a96553838d87 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a1be139a8bbeccb9f7b11a96553838d87"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classnm_1_1type_providable.html">typeProvidable</a> &amp;it) const</td></tr>
-<tr class="separator:a1be139a8bbeccb9f7b11a96553838d87 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c861a4e4e567416823d5fdd08fc0b10 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a1c861a4e4e567416823d5fdd08fc0b10"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const me &amp;it) const</td></tr>
+<tr class="separator:a1c861a4e4e567416823d5fdd08fc0b10 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a26957c9e54edf7ec6c6a89169025c9 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a8a26957c9e54edf7ec6c6a89169025c9"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSuper</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;it) const</td></tr>
 <tr class="separator:a8a26957c9e54edf7ec6c6a89169025c9 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4555ac5c163e7d3fefb9e9de0ba662c inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="ad4555ac5c163e7d3fefb9e9de0ba662c"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSuper</b> (const me &amp;it) const</td></tr>
+<tr class="separator:ad4555ac5c163e7d3fefb9e9de0ba662c inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fc4bc15cb9baaffd8b4e8da91982440 inherit pub_methods_classnm_1_1type_providable"><td class="memTemplParams" colspan="2"><a id="a7fc4bc15cb9baaffd8b4e8da91982440"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a7fc4bc15cb9baaffd8b4e8da91982440 inherit pub_methods_classnm_1_1type_providable"><td class="memTemplItemLeft" align="right" valign="top">nbool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>isSub</b> () const</td></tr>
@@ -397,9 +413,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>outFrame</b> ()</td><
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a030b31a6a848d5106d64dfefde31d4d3"><td class="memItemLeft" align="right" valign="top"><a id="a030b31a6a848d5106d64dfefde31d4d3"></a>
-<a class="el" href="classnm_1_1tnchain.html">scope</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeSubs</b> () const override</td></tr>
-<tr class="separator:a030b31a6a848d5106d64dfefde31d4d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4396699f5856ab9034ca9640eed55b97"><td class="memItemLeft" align="right" valign="top"><a id="a4396699f5856ab9034ca9640eed55b97"></a>
 <a class="el" href="classnm_1_1tstr.html">tstr</a>&lt; <a class="el" href="classnm_1_1arithmetic_obj.html">arithmeticObj</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_add</b> (const <a class="el" href="classnm_1_1arithmetic_obj.html">arithmeticObj</a> &amp;rhs, nbool reversed) const override</td></tr>
 <tr class="separator:a4396699f5856ab9034ca9640eed55b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -464,6 +477,9 @@ nbool&#160;</td><td class="memItemRight" valign="bottom"><b>_onSame</b> (const <
 <tr class="inherit_header pro_methods_classnm_1_1base_obj"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classnm_1_1base_obj')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classnm_1_1base_obj.html">nm::baseObj</a></td></tr>
 <tr class="memitem:a7de0646246fd7c82c8a9bdb7a4a5a925 inherit pro_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1base_obj.html#a7de0646246fd7c82c8a9bdb7a4a5a925">baseObj</a> ()=default</td></tr>
 <tr class="separator:a7de0646246fd7c82c8a9bdb7a4a5a925 inherit pro_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae752f0c1e23fe2ab65e583f46874774e inherit pro_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="ae752f0c1e23fe2ab65e583f46874774e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>baseObj</b> (const <a class="el" href="classnm_1_1base_obj.html">baseObj</a> &amp;org, nbool)</td></tr>
+<tr class="separator:ae752f0c1e23fe2ab65e583f46874774e inherit pro_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6db2b3fc6612c0feb26fc2870a1a7b41 inherit pro_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a6db2b3fc6612c0feb26fc2870a1a7b41"></a>
 <a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_onRunSub</b> (<a class="el" href="classnm_1_1node.html">node</a> &amp;sub, const <a class="el" href="classnm_1_1args.html">args</a> &amp;a) override</td></tr>
 <tr class="separator:a6db2b3fc6612c0feb26fc2870a1a7b41 inherit pro_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -473,6 +489,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>_setSrc</b> (const <a
 <tr class="memitem:a3c044cd33569368a1714b3da9bb083a8 inherit pro_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a3c044cd33569368a1714b3da9bb083a8"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>_inFrame</b> (<a class="el" href="classnm_1_1frame.html">frame</a> &amp;fr, const <a class="el" href="classnm_1_1tbicontainable.html">bicontainable</a> &amp;<a class="el" href="classnm_1_1args.html">args</a>)</td></tr>
 <tr class="separator:a3c044cd33569368a1714b3da9bb083a8 inherit pro_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae40a4bb04c23e2f29caa434538df9bb inherit pro_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="aae40a4bb04c23e2f29caa434538df9bb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_setOrigin</b> (const <a class="el" href="classnm_1_1base_obj.html">baseObj</a> &amp;newOrg)</td></tr>
+<tr class="separator:aae40a4bb04c23e2f29caa434538df9bb inherit pro_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0a5200a5d83e1bd26ee8a4d0d13717a inherit pro_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="ad0a5200a5d83e1bd26ee8a4d0d13717a"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>_setType</b> (const <a class="el" href="classnm_1_1mgd_type.html">mgdType</a> &amp;new1)</td></tr>
+<tr class="separator:ad0a5200a5d83e1bd26ee8a4d0d13717a inherit pro_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6127e83eafb6a4b3d9e36dbfc16bf6d1 inherit pro_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a6127e83eafb6a4b3d9e36dbfc16bf6d1"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>_setModifier</b> (const <a class="el" href="classnm_1_1modifier.html">modifier</a> &amp;mod)</td></tr>
+<tr class="separator:a6127e83eafb6a4b3d9e36dbfc16bf6d1 inherit pro_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae299ea4ec51588992eb2fd6f8bad799b inherit pro_methods_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="ae299ea4ec51588992eb2fd6f8bad799b"></a>
+virtual <a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_onBeforeCtor</b> ()</td></tr>
+<tr class="separator:ae299ea4ec51588992eb2fd6f8bad799b inherit pro_methods_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classnm_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classnm_1_1instance')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classnm_1_1instance.html">nm::instance</a></td></tr>
 <tr class="memitem:a3866d1ca0e414499312a18fa1056593b inherit pro_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a3866d1ca0e414499312a18fa1056593b"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>_setId</b> (<a class="el" href="structnm_1_1id.html">id</a> new1)</td></tr>
@@ -488,9 +516,12 @@ const <a class="el" href="classnm_1_1node.html">node</a> &amp;operator[](const s
 <tr class="memitem:a2432b0c6b76a944a366ef4433b83b0b9 inherit pub_static_attribs_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a2432b0c6b76a944a366ef4433b83b0b9"></a>
 static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>CTOR_NAME</b> = &quot;@ctor&quot;</td></tr>
 <tr class="separator:a2432b0c6b76a944a366ef4433b83b0b9 inherit pub_static_attribs_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4527529424a3c183800c03a74b5fa928 inherit pub_static_attribs_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a4527529424a3c183800c03a74b5fa928"></a>
-static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>PRECTOR_NAME</b> = &quot;@preCtor&quot;</td></tr>
-<tr class="separator:a4527529424a3c183800c03a74b5fa928 inherit pub_static_attribs_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47785e363e3e0b184dd6121ff7725ea2 inherit pub_static_attribs_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a47785e363e3e0b184dd6121ff7725ea2"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>COMMON_NAME</b> = &quot;@common&quot;</td></tr>
+<tr class="separator:a47785e363e3e0b184dd6121ff7725ea2 inherit pub_static_attribs_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2a128c97f7fe5d2079c051c4e80b319 inherit pub_static_attribs_classnm_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="af2a128c97f7fe5d2079c051c4e80b319"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>EXPAND_NAME</b> = &quot;@expand&quot;</td></tr>
+<tr class="separator:af2a128c97f7fe5d2079c051c4e80b319 inherit pub_static_attribs_classnm_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_static_methods_classnm_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_classnm_1_1instance')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="classnm_1_1instance.html">nm::instance</a></td></tr>
 <tr class="memitem:a50b04268c6f2246e36620e1b2c06460f inherit pro_static_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a50b04268c6f2246e36620e1b2c06460f"></a>
 static <a class="el" href="classnm_1_1instancer.html">instancer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getMgr</b> ()</td></tr>
