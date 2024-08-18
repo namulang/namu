@@ -110,12 +110,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a53f0d272ce7848ca1ef643e312e2c703"><td class="memItemLeft" align="right" valign="top"><a id="a53f0d272ce7848ca1ef643e312e2c703"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>tnchain</b> (const super &amp;org, const me &amp;next)</td></tr>
 <tr class="separator:a53f0d272ce7848ca1ef643e312e2c703"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a768e040620ae9b57342e950c39b5215c"><td class="memItemLeft" align="right" valign="top"><a id="a768e040620ae9b57342e950c39b5215c"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>has</b> (const K &amp;key) const override</td></tr>
-<tr class="separator:a768e040620ae9b57342e950c39b5215c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac66502c76e47e9e2a2262c60411129dd"><td class="memItemLeft" align="right" valign="top"><a id="ac66502c76e47e9e2a2262c60411129dd"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>has</b> (const V &amp;val) const override</td></tr>
-<tr class="separator:ac66502c76e47e9e2a2262c60411129dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f483debb9767620672552a2e84a6a9c"><td class="memItemLeft" align="right" valign="top"><a id="a3f483debb9767620672552a2e84a6a9c"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>in</b> (const K &amp;key) const override</td></tr>
+<tr class="separator:a3f483debb9767620672552a2e84a6a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f4fed2c3ced6a554b21443bdad114d2"><td class="memItemLeft" align="right" valign="top"><a id="a5f4fed2c3ced6a554b21443bdad114d2"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>in</b> (const V &amp;val) const override</td></tr>
+<tr class="separator:a5f4fed2c3ced6a554b21443bdad114d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad959edc10bb8420a14770693046c105b"><td class="memItemLeft" align="right" valign="top"><a id="ad959edc10bb8420a14770693046c105b"></a>
 ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>len</b> () const override</td></tr>
 <tr class="separator:ad959edc10bb8420a14770693046c105b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,8 +166,8 @@ const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getNext</b>
 me &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a62c80faa54037e9b73821626f8cab689">getTail</a> ()</td></tr>
 <tr class="memdesc:a62c80faa54037e9b73821626f8cab689"><td class="mdescLeft">&#160;</td><td class="mdescRight">return most not null next element of this chain. <br /></td></tr>
 <tr class="separator:a62c80faa54037e9b73821626f8cab689"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d5c0a36b098ffc98a05759b99710698"><td class="memItemLeft" align="right" valign="top">const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a6d5c0a36b098ffc98a05759b99710698">getTail</a> () const NM_CONST_FUNC(getTail()) <a class="el" href="classnm_1_1clonable.html">clonable</a> *cloneDeep() const override</td></tr>
-<tr class="separator:a6d5c0a36b098ffc98a05759b99710698"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29fa2297de84e3ce5c5d73e56cb13b04"><td class="memItemLeft" align="right" valign="top">const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a29fa2297de84e3ce5c5d73e56cb13b04">getTail</a> () const NM_CONST_FUNC(getTail()) void onCloneDeep(const <a class="el" href="classnm_1_1clonable.html">clonable</a> &amp;from) override</td></tr>
+<tr class="separator:a29fa2297de84e3ce5c5d73e56cb13b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e145f92ed739e90999e14590d8779eb"><td class="memItemLeft" align="right" valign="top">me *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a3e145f92ed739e90999e14590d8779eb">cloneChain</a> (const super &amp;until) const</td></tr>
 <tr class="separator:a3e145f92ed739e90999e14590d8779eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57e05facc47da7e757fabd59080ffd7b"><td class="memItemLeft" align="right" valign="top"><a id="a57e05facc47da7e757fabd59080ffd7b"></a>
@@ -244,6 +244,9 @@ virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () 
 <tr class="memitem:a64d602598cec3f135806a0db01de02a0 inherit pub_methods_classnm_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a64d602598cec3f135806a0db01de02a0"></a>
 virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>cloneDeep</b> () const</td></tr>
 <tr class="separator:a64d602598cec3f135806a0db01de02a0 inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e39c59bd59ed90f9651e50954d60dee inherit pub_methods_classnm_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a2e39c59bd59ed90f9651e50954d60dee"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onCloneDeep</b> (const me &amp;from)</td></tr>
+<tr class="separator:a2e39c59bd59ed90f9651e50954d60dee inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1tbicontainable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1tbicontainable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1tbicontainable.html">nm::tbicontainable&lt; K, V &gt;</a></td></tr>
 <tr class="memitem:afeb490c202d4b6457fd78a7ece8c9506 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="afeb490c202d4b6457fd78a7ece8c9506"></a>
 V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const K &amp;key)</td></tr>
@@ -366,8 +369,8 @@ template&lt;typename K , typename V , typename _defaultContainer  = tnmap&lt;K, 
 
 </div>
 </div>
-<a id="a6d5c0a36b098ffc98a05759b99710698"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d5c0a36b098ffc98a05759b99710698">&#9670;&nbsp;</a></span>getTail()</h2>
+<a id="a29fa2297de84e3ce5c5d73e56cb13b04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29fa2297de84e3ce5c5d73e56cb13b04">&#9670;&nbsp;</a></span>getTail()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -381,7 +384,7 @@ template&lt;typename K , typename V , typename _defaultContainer  = tnmap&lt;K, 
           <td class="memname">const me&amp; <a class="el" href="classnm_1_1tnchain.html">nm::tnchain</a>&lt; K, V, _defaultContainer &gt;::getTail </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td> const &amp;</td>
         </tr>
       </table>
   </td>

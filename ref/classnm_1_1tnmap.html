@@ -115,12 +115,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3383c6bb93af5b16e1b98addd34b165f"><td class="memItemLeft" align="right" valign="top"><a id="a3383c6bb93af5b16e1b98addd34b165f"></a>
 ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>len</b> () const override</td></tr>
 <tr class="separator:a3383c6bb93af5b16e1b98addd34b165f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0e2ee18b1b227736b50482011a2cb75"><td class="memItemLeft" align="right" valign="top"><a id="af0e2ee18b1b227736b50482011a2cb75"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>has</b> (const K &amp;key) const override</td></tr>
-<tr class="separator:af0e2ee18b1b227736b50482011a2cb75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeb0925027038f6c657dfa58ecad3cb5"><td class="memItemLeft" align="right" valign="top"><a id="aaeb0925027038f6c657dfa58ecad3cb5"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>has</b> (const V &amp;val) const override</td></tr>
-<tr class="separator:aaeb0925027038f6c657dfa58ecad3cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a838329fe3cc46c1fc3f74c358e05d260"><td class="memItemLeft" align="right" valign="top"><a id="a838329fe3cc46c1fc3f74c358e05d260"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>in</b> (const K &amp;key) const override</td></tr>
+<tr class="separator:a838329fe3cc46c1fc3f74c358e05d260"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3914a88e8fcae99863733d0f56015a0"><td class="memItemLeft" align="right" valign="top"><a id="ad3914a88e8fcae99863733d0f56015a0"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>in</b> (const V &amp;val) const override</td></tr>
+<tr class="separator:ad3914a88e8fcae99863733d0f56015a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1da54882a2d719755700e965e512f0be"><td class="memItemLeft" align="right" valign="top"><a id="a1da54882a2d719755700e965e512f0be"></a>
 V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (const K &amp;key) override</td></tr>
 <tr class="separator:a1da54882a2d719755700e965e512f0be"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,8 +140,8 @@ nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a cl
 <tr class="memitem:aea228b569f8c80f75d474a3e2709a0d9"><td class="memItemLeft" align="right" valign="top"><a id="aea228b569f8c80f75d474a3e2709a0d9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>rel</b> () override</td></tr>
 <tr class="separator:aea228b569f8c80f75d474a3e2709a0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3f184564c9b1a03d2a8c006bec2f66e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classnm_1_1clonable.html">clonable</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnmap.html#ae3f184564c9b1a03d2a8c006bec2f66e">cloneDeep</a> () const override</td></tr>
-<tr class="separator:ae3f184564c9b1a03d2a8c006bec2f66e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a14f7a398d06df8cc621f22808960be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnmap.html#a0a14f7a398d06df8cc621f22808960be">onCloneDeep</a> (const <a class="el" href="classnm_1_1clonable.html">clonable</a> &amp;from) override</td></tr>
+<tr class="separator:a0a14f7a398d06df8cc621f22808960be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1instance')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1instance.html">nm::instance</a></td></tr>
 <tr class="memitem:a0a106bce4bfaad1ef5c52d195fd17176 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a0a106bce4bfaad1ef5c52d195fd17176"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> (<a class="el" href="structnm_1_1id.html">id</a> newId)</td></tr>
@@ -206,6 +206,12 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a54e3129852076fab93439335c22a33f6 inherit pub_methods_classnm_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a54e3129852076fab93439335c22a33f6"></a>
 virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () const =0</td></tr>
 <tr class="separator:a54e3129852076fab93439335c22a33f6 inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64d602598cec3f135806a0db01de02a0 inherit pub_methods_classnm_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a64d602598cec3f135806a0db01de02a0"></a>
+virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>cloneDeep</b> () const</td></tr>
+<tr class="separator:a64d602598cec3f135806a0db01de02a0 inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e39c59bd59ed90f9651e50954d60dee inherit pub_methods_classnm_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a2e39c59bd59ed90f9651e50954d60dee"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onCloneDeep</b> (const me &amp;from)</td></tr>
+<tr class="separator:a2e39c59bd59ed90f9651e50954d60dee inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1tbicontainable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1tbicontainable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1tbicontainable.html">nm::tbicontainable&lt; K, V &gt;</a></td></tr>
 <tr class="memitem:afeb490c202d4b6457fd78a7ece8c9506 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="afeb490c202d4b6457fd78a7ece8c9506"></a>
 V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const K &amp;key)</td></tr>
@@ -300,8 +306,8 @@ static <a class="el" href="classnm_1_1instancer.html">instancer</a> &amp;&#160;<
 <tr class="separator:a50b04268c6f2246e36620e1b2c06460f inherit pro_static_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae3f184564c9b1a03d2a8c006bec2f66e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae3f184564c9b1a03d2a8c006bec2f66e">&#9670;&nbsp;</a></span>cloneDeep()</h2>
+<a id="a0a14f7a398d06df8cc621f22808960be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a14f7a398d06df8cc621f22808960be">&#9670;&nbsp;</a></span>onCloneDeep()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -312,21 +318,20 @@ template&lt;typename K , typename V , typename TACTIC  = strTactic&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classnm_1_1clonable.html">clonable</a>* <a class="el" href="classnm_1_1tnmap.html">nm::tnmap</a>&lt; K, V, TACTIC &gt;::cloneDeep </td>
+          <td class="memname">void <a class="el" href="classnm_1_1tnmap.html">nm::tnmap</a>&lt; K, V, TACTIC &gt;::onCloneDeep </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype">const <a class="el" href="classnm_1_1clonable.html">clonable</a> &amp;&#160;</td>
+          <td class="paramname"><em>from</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <dl class="section remark"><dt>Remarks</dt><dd>unlike 'clone()' func, this does deepcopy. so, the output isFrom completely different instance compared to 'this'. however, it doesn't mean that deepcopy for each element. </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classnm_1_1clonable.html">nm::clonable</a>.</p>
 
 </div>
 </div>

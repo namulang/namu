@@ -81,16 +81,17 @@ Inheritance diagram for nm::tarrayable&lt; T, R &gt;:</div>
  <div class="center">
   <img src="classnm_1_1tarrayable.png" usemap="#nm::tarrayable_3C_20T_2C_20R_20_3E_map" alt=""/>
   <map id="nm::tarrayable_3C_20T_2C_20R_20_3E_map" name="nm::tarrayable_3C_20T_2C_20R_20_3E_map">
-<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; V1, nm::strTactic &gt;" shape="rect" coords="190,56,370,80"/>
-<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; calltrace &gt;" shape="rect" coords="190,112,370,136"/>
-<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; me &gt;" shape="rect" coords="190,168,370,192"/>
-<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; srcSupply &gt;" shape="rect" coords="190,224,370,248"/>
-<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; src &gt;" shape="rect" coords="190,280,370,304"/>
-<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; T, nm::strTactic &gt;" shape="rect" coords="190,336,370,360"/>
-<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; T, strTactic &gt;" shape="rect" coords="190,392,370,416"/>
-<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; param &gt;" shape="rect" coords="190,448,370,472"/>
-<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; frame &gt;" shape="rect" coords="190,504,370,528"/>
-<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; T, TACTIC &gt;" shape="rect" coords="190,560,370,584"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; V1, nm::strTactic &gt;" shape="rect" coords="199,56,388,80"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; endExpr, strTactic &gt;" shape="rect" coords="199,112,388,136"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; calltrace &gt;" shape="rect" coords="199,168,388,192"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; me &gt;" shape="rect" coords="199,224,388,248"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; srcSupply &gt;" shape="rect" coords="199,280,388,304"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; src &gt;" shape="rect" coords="199,336,388,360"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; T, nm::strTactic &gt;" shape="rect" coords="199,392,388,416"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; T, strTactic &gt;" shape="rect" coords="199,448,388,472"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; param &gt;" shape="rect" coords="199,504,388,528"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; frame &gt;" shape="rect" coords="199,560,388,584"/>
+<area href="classnm_1_1tnarr.html" alt="nm::tnarr&lt; T, TACTIC &gt;" shape="rect" coords="199,616,388,640"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -102,9 +103,9 @@ virtual R&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (
 <tr class="memitem:a6c24bef55556875786e616e09c06a45c"><td class="memItemLeft" align="right" valign="top"><a id="a6c24bef55556875786e616e09c06a45c"></a>
 const R&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (nidx n) const</td></tr>
 <tr class="separator:a6c24bef55556875786e616e09c06a45c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61c8e5f94a4bfafc80a97f3607b3ab6a"><td class="memItemLeft" align="right" valign="top"><a id="a61c8e5f94a4bfafc80a97f3607b3ab6a"></a>
-virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>has</b> (nidx n) const =0</td></tr>
-<tr class="separator:a61c8e5f94a4bfafc80a97f3607b3ab6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e3060aa8b009a9dce9b01c764412c8c"><td class="memItemLeft" align="right" valign="top"><a id="a9e3060aa8b009a9dce9b01c764412c8c"></a>
+virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>in</b> (nidx n) const =0</td></tr>
+<tr class="separator:a9e3060aa8b009a9dce9b01c764412c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a522fefbf89c5336e7fc19fd80e5ee5da"><td class="memItemLeft" align="right" valign="top"><a id="a522fefbf89c5336e7fc19fd80e5ee5da"></a>
 virtual R&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (nidx n)=0</td></tr>
 <tr class="separator:a522fefbf89c5336e7fc19fd80e5ee5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -202,7 +203,7 @@ template&lt;typename T , typename R  = T&amp;&gt; </div>
 </div><div class="memdoc">
 <p>delete last element if exists. </p><dl class="section return"><dt>Returns</dt><dd>true if element got deleted successfully. </dd></dl>
 
-<p>Implemented in <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; T, TACTIC &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; V1, nm::strTactic &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; node &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; calltrace &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; me &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; srcSupply &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; src &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; T, nm::strTactic &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; T, strTactic &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; param &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; frame &gt;</a>, and <a class="el" href="classnm_1_1arr.html#a1e11ca338c770b41d37470a17c447d6b">nm::arr</a>.</p>
+<p>Implemented in <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; T, TACTIC &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; V1, nm::strTactic &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; endExpr, strTactic &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; node &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; calltrace &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; me &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; srcSupply &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; src &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; T, nm::strTactic &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; T, strTactic &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; param &gt;</a>, <a class="el" href="classnm_1_1tnarr.html#a313a5a21e313700f0878938b3df1d0fc">nm::tnarr&lt; frame &gt;</a>, and <a class="el" href="classnm_1_1arr.html#a1e11ca338c770b41d37470a17c447d6b">nm::arr</a>.</p>
 
 </div>
 </div>

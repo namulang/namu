@@ -93,7 +93,7 @@ $(function() {
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="classnm_1_1tucontainable.html">tucontainable&lt;node&gt;::iter</a> <a class="code" href="classiter.html">iter</a>;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="classnm_1_1tucontainable.html">tucontainable&lt;node&gt;::iteration</a> <a class="code" href="classiteration.html">iteration</a>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">typedef</span> std::map&lt;const type*, tstr&lt;scope&gt;&gt; cache;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">typedef</span> std::map&lt;std::string, tstr&lt;scope&gt;&gt; cache;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnm_1_1starter.html">starter</a>; <span class="comment">// for _cache</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">friend</span> struct ::arrTest;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
@@ -114,7 +114,7 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        ncnt len() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        nbool has(nidx n) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        nbool in(nidx n) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="comment">//  get:</span></div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnm_1_1tarrayable.html">tarrayable&lt;node&gt;::get</a>;</div>
@@ -182,7 +182,7 @@ $(function() {
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keyword">static</span> <span class="keyword">inline</span> cache _cache;</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keyword">mutable</span> <a class="code" href="classnm_1_1tstr.html">tstr&lt;baseObj&gt;</a> _org;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <a class="code" href="classnm_1_1ttype.html">ttype&lt;arr&gt;</a> _type;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <a class="code" href="classnm_1_1mgd_type.html">mgdType</a> _type;</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    };</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
@@ -191,15 +191,15 @@ $(function() {
 <div class="ttc" id="aclassnm_1_1arr_html_a1e11ca338c770b41d37470a17c447d6b"><div class="ttname"><a href="classnm_1_1arr.html#a1e11ca338c770b41d37470a17c447d6b">nm::arr::del</a></div><div class="ttdeci">nbool del(nidx n) override</div></div>
 <div class="ttc" id="aclassnm_1_1arr_html_a7e0ffe593f5a590e6da477971a280e7a"><div class="ttname"><a href="classnm_1_1arr.html#a7e0ffe593f5a590e6da477971a280e7a">nm::arr::add</a></div><div class="ttdeci">nbool add(nidx n, const node &amp;new1) override</div></div>
 <div class="ttc" id="aclassnm_1_1base_obj_html"><div class="ttname"><a href="classnm_1_1base_obj.html">nm::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:19</div></div>
+<div class="ttc" id="aclassnm_1_1mgd_type_html"><div class="ttname"><a href="classnm_1_1mgd_type.html">nm::mgdType</a></div><div class="ttdef"><b>Definition:</b> mgdType.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>
-<div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:12</div></div>
+<div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1starter_html"><div class="ttname"><a href="classnm_1_1starter.html">nm::starter</a></div><div class="ttdef"><b>Definition:</b> starter.hpp:10</div></div>
 <div class="ttc" id="aclassnm_1_1tarrayable_html"><div class="ttname"><a href="classnm_1_1tarrayable.html">nm::tarrayable</a></div><div class="ttdef"><b>Definition:</b> tarrayable.hpp:9</div></div>
 <div class="ttc" id="aclassnm_1_1tbridge_html"><div class="ttname"><a href="classnm_1_1tbridge.html">nm::tbridge</a></div><div class="ttdef"><b>Definition:</b> tbridge.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1tnarr_html"><div class="ttname"><a href="classnm_1_1tnarr.html">nm::tnarr</a></div><div class="ttdef"><b>Definition:</b> tnarr.hpp:9</div></div>
 <div class="ttc" id="aclassnm_1_1tnchain_html"><div class="ttname"><a href="classnm_1_1tnchain.html">nm::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></div></div>
 <div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
-<div class="ttc" id="aclassnm_1_1ttype_html"><div class="ttname"><a href="classnm_1_1ttype.html">nm::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:14</div></div>
 <div class="ttc" id="aclassnm_1_1tucontainable_html"><div class="ttname"><a href="classnm_1_1tucontainable.html">nm::tucontainable</a></div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

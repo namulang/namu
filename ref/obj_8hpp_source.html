@@ -105,54 +105,55 @@ $(function() {
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr&lt;nbicontainer&gt;</a> mySubs() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        state getState() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <a class="code" href="classnm_1_1tnchain.html">scope</a>&amp; getShares();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1tnchain.html">scope</a>&amp; getShares() <span class="keyword">const</span> NM_CONST_FUNC(getShares())</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        scope::super&amp; getOwns();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">const</span> scope::super&amp; getOwns() <span class="keyword">const</span> NM_CONST_FUNC(getOwns())</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; getType() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classnm_1_1obj.html#a130d4f53889122b6eff6761403cdd024">   47</a></span>&#160;        nbool <a class="code" href="classnm_1_1obj.html#a130d4f53889122b6eff6761403cdd024">isComplete</a>() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="classnm_1_1clonable.html">clonable</a>* cloneDeep() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getCallComplete();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getCallComplete() const NM_CONST_FUNC(getCallComplete())</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    protected:</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordtype">void</span> _inFrame(<a class="code" href="classnm_1_1frame.html">frame</a>&amp; fr, const <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) override;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _onBeforeCtor() override;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    private:</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        me&amp; _assign(const me&amp; rhs);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    private:</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr</a>&lt;<a class="code" href="classnm_1_1tnchain.html">scope</a>&gt; _subs;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    };</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#ifdef NM_BUILD_PLATFORM_IS_WINDOWS</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">// f***ing annoying another MSVC bug here:</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="comment">//  first of all, I&#39;m so sorry to start my slang. but I couldn&#39;t help spitting it out after</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">//  I used plenty hours of heading to the ground.</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">//</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">//  I don&#39;t know why, but unless define below variable here, I&#39;ll observe that the</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">//  member-variable</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">//  &#39;_subs&#39; above was tried to be instantiated but failed.</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="comment">//  error message said that &#39;You&#39;ve used undefined type &quot;identifiertstr&lt;scope&gt;&quot;&#39;.</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">//  however, MSVC definately knows about tstr&lt;T&gt; and scope types.</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="comment">//</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="comment">//  clang, gcc didn&#39;t complain about this.</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">namespace </span>{</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">inline</span> <a class="code" href="classnm_1_1tnchain.html">scope</a> a3;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;} <span class="comment">// namespace nm</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">void</span> setState(state new1) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classnm_1_1tnchain.html">scope</a>&amp; getShares();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1tnchain.html">scope</a>&amp; getShares() <span class="keyword">const</span> NM_CONST_FUNC(getShares())</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        scope::super&amp; getOwns();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">const</span> scope::super&amp; getOwns() <span class="keyword">const</span> NM_CONST_FUNC(getOwns())</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; getType() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classnm_1_1obj.html#a130d4f53889122b6eff6761403cdd024">   48</a></span>&#160;        nbool <a class="code" href="classnm_1_1obj.html#a130d4f53889122b6eff6761403cdd024">isComplete</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordtype">void</span> onCloneDeep(<span class="keyword">const</span> <a class="code" href="classnm_1_1clonable.html">clonable</a>&amp; from) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getCallComplete();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getCallComplete() const NM_CONST_FUNC(getCallComplete())</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    protected:</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordtype">void</span> _inFrame(<a class="code" href="classnm_1_1frame.html">frame</a>&amp; fr, const <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) override;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _onBeforeCtor() override;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    private:</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        me&amp; _assign(const me&amp; rhs);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    private:</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr</a>&lt;<a class="code" href="classnm_1_1tnchain.html">scope</a>&gt; _subs;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    };</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#ifdef NM_BUILD_PLATFORM_IS_WINDOWS</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="comment">// f***ing annoying another MSVC bug here:</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">//  first of all, I&#39;m so sorry to start my slang. but I couldn&#39;t help spitting it out after</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">//  I used plenty hours of heading to the ground.</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">//</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">//  I don&#39;t know why, but unless define below variable here, I&#39;ll observe that the</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">//  member-variable</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="comment">//  &#39;_subs&#39; above was tried to be instantiated but failed.</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">//  error message said that &#39;You&#39;ve used undefined type &quot;identifiertstr&lt;scope&gt;&quot;&#39;.</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="comment">//  however, MSVC definately knows about tstr&lt;T&gt; and scope types.</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="comment">//</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">//  clang, gcc didn&#39;t complain about this.</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">namespace </span>{</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">inline</span> <a class="code" href="classnm_1_1tnchain.html">scope</a> a3;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1base_obj_html"><div class="ttname"><a href="classnm_1_1base_obj.html">nm::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:19</div></div>
 <div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1frame_html"><div class="ttname"><a href="classnm_1_1frame.html">nm::frame</a></div><div class="ttdef"><b>Definition:</b> frame.hpp:22</div></div>
 <div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>
-<div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:12</div></div>
+<div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1obj_html"><div class="ttname"><a href="classnm_1_1obj.html">nm::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:16</div></div>
 <div class="ttc" id="aclassnm_1_1obj_html_a130d4f53889122b6eff6761403cdd024"><div class="ttname"><a href="classnm_1_1obj.html#a130d4f53889122b6eff6761403cdd024">nm::obj::isComplete</a></div><div class="ttdeci">nbool isComplete() const override</div></div>
 <div class="ttc" id="aclassnm_1_1slot_html"><div class="ttname"><a href="classnm_1_1slot.html">nm::slot</a></div><div class="ttdef"><b>Definition:</b> slot.hpp:11</div></div>

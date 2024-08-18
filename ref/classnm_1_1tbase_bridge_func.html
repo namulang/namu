@@ -97,22 +97,25 @@ Inheritance diagram for nm::tbaseBridgeFunc&lt; Ret, T, Marshaling, Args &gt;:</
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a74365455934008dc211f6cd890b38dd4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tbase_bridge_func.html#a74365455934008dc211f6cd890b38dd4">tbaseBridgeFunc</a> (fptrType fptr)</td></tr>
 <tr class="separator:a74365455934008dc211f6cd890b38dd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95d92986cbbb29649e634e9b8e8293b0"><td class="memItemLeft" align="right" valign="top"><a id="a95d92986cbbb29649e634e9b8e8293b0"></a>
+const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getType</b> () const override</td></tr>
+<tr class="separator:a95d92986cbbb29649e634e9b8e8293b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff3519c0bbc53b658574f058340f03ef"><td class="memItemLeft" align="right" valign="top"><a id="aff3519c0bbc53b658574f058340f03ef"></a>
 <a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classnm_1_1args.html">args</a> &amp;a) override</td></tr>
 <tr class="separator:aff3519c0bbc53b658574f058340f03ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaa66bf9a3d5a76f30451f2d7900852a"><td class="memItemLeft" align="right" valign="top">nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tbase_bridge_func.html#abaa66bf9a3d5a76f30451f2d7900852a">setRet</a> (const <a class="el" href="classnm_1_1node.html">node</a> &amp;newRet) override</td></tr>
 <tr class="separator:abaa66bf9a3d5a76f30451f2d7900852a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af116796e13d4c470cdb39208915ff796"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classnm_1_1params.html">params</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tbase_bridge_func.html#af116796e13d4c470cdb39208915ff796">getParams</a> () const override</td></tr>
-<tr class="separator:af116796e13d4c470cdb39208915ff796"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9019f5b63b9cc3dd47624873bac96893"><td class="memItemLeft" align="right" valign="top"><a id="a9019f5b63b9cc3dd47624873bac96893"></a>
-<a class="el" href="classnm_1_1clonable.html">clonable</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>cloneDeep</b> () const override</td></tr>
-<tr class="separator:a9019f5b63b9cc3dd47624873bac96893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75881912d7deb95031bcdfc13f81c3c2"><td class="memItemLeft" align="right" valign="top"><a id="a75881912d7deb95031bcdfc13f81c3c2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>onCloneDeep</b> (const <a class="el" href="classnm_1_1clonable.html">clonable</a> &amp;from) override</td></tr>
+<tr class="separator:a75881912d7deb95031bcdfc13f81c3c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1base_func"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1base_func')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1base_func.html">nm::baseFunc</a></td></tr>
 <tr class="memitem:a8b55bbaf624e140e1a85acbbaa5aa8d0 inherit pub_methods_classnm_1_1base_func"><td class="memItemLeft" align="right" valign="top"><a id="a8b55bbaf624e140e1a85acbbaa5aa8d0"></a>
 priorType&#160;</td><td class="memItemRight" valign="bottom"><b>prioritize</b> (const <a class="el" href="classnm_1_1args.html">args</a> &amp;a) const override</td></tr>
 <tr class="separator:a8b55bbaf624e140e1a85acbbaa5aa8d0 inherit pub_methods_classnm_1_1base_func"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9592c8446217aedc31d5448e750c6d7a inherit pub_methods_classnm_1_1base_func"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1base_func.html#a9592c8446217aedc31d5448e750c6d7a">getRet</a> () const =0</td></tr>
-<tr class="separator:a9592c8446217aedc31d5448e750c6d7a inherit pub_methods_classnm_1_1base_func"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a403ba38bdb01b5e0baa77c15c52c345e inherit pub_methods_classnm_1_1base_func"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classnm_1_1params.html">params</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1base_func.html#a403ba38bdb01b5e0baa77c15c52c345e">getParams</a> ()</td></tr>
+<tr class="separator:a403ba38bdb01b5e0baa77c15c52c345e inherit pub_methods_classnm_1_1base_func"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58dabb286e1a1492f7ce9e2043bf2187 inherit pub_methods_classnm_1_1base_func"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classnm_1_1params.html">params</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1base_func.html#a58dabb286e1a1492f7ce9e2043bf2187">getParams</a> () const NM_CONST_FUNC(getParams()) virtual <a class="el" href="classnm_1_1tstr.html">str</a> getRet() const =0</td></tr>
+<tr class="separator:a58dabb286e1a1492f7ce9e2043bf2187 inherit pub_methods_classnm_1_1base_func"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae233269e0e608f2ae6482aeed9764b8b inherit pub_methods_classnm_1_1base_func"><td class="memItemLeft" align="right" valign="top"><a id="ae233269e0e608f2ae6482aeed9764b8b"></a>
 const <a class="el" href="classnm_1_1modifier.html">modifier</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getModifier</b> () const override</td></tr>
 <tr class="separator:ae233269e0e608f2ae6482aeed9764b8b inherit pub_methods_classnm_1_1base_func"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,9 +126,9 @@ const <a class="el" href="classnm_1_1modifier.html">modifier</a> &amp;&#160;</td
 <tr class="memitem:a64655d3e3da757464e41d4b83c19c208 inherit pub_methods_classnm_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a64655d3e3da757464e41d4b83c19c208"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isImpli</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;to) const override</td></tr>
 <tr class="separator:a64655d3e3da757464e41d4b83c19c208 inherit pub_methods_classnm_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ef51288f2591d9364b5a5a6c63d37e4 inherit pub_methods_classnm_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a8ef51288f2591d9364b5a5a6c63d37e4"></a>
-virtual <a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>asImpli</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;to) const override</td></tr>
-<tr class="separator:a8ef51288f2591d9364b5a5a6c63d37e4 inherit pub_methods_classnm_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76f1b9c078ec00510d0c79b727186803 inherit pub_methods_classnm_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a76f1b9c078ec00510d0c79b727186803"></a>
+<a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>asImpli</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;to) const override</td></tr>
+<tr class="separator:a76f1b9c078ec00510d0c79b727186803 inherit pub_methods_classnm_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3fa9a8676bb3138ef3025135aab92fa inherit pub_methods_classnm_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="ac3fa9a8676bb3138ef3025135aab92fa"></a>
 priorType&#160;</td><td class="memItemRight" valign="bottom"><b>prioritize</b> (const <a class="el" href="classnm_1_1args.html">args</a> &amp;a) const override</td></tr>
 <tr class="separator:ac3fa9a8676bb3138ef3025135aab92fa inherit pub_methods_classnm_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -279,9 +282,6 @@ nbool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (cons
 <tr class="memitem:a032b666cf858be16bffdbd6641685ca0 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a032b666cf858be16bffdbd6641685ca0"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const me &amp;rhs) const</td></tr>
 <tr class="separator:a032b666cf858be16bffdbd6641685ca0 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa318cc2470ce7cf3ae0d1ce39336e2b8 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="aa318cc2470ce7cf3ae0d1ce39336e2b8"></a>
-virtual const <a class="el" href="classnm_1_1type.html">type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getType</b> () const =0</td></tr>
-<tr class="separator:aa318cc2470ce7cf3ae0d1ce39336e2b8 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83c9d959c74bf6fcbad3efcbdc349ba0 inherit pub_methods_classnm_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a83c9d959c74bf6fcbad3efcbdc349ba0"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;it) const</td></tr>
 <tr class="separator:a83c9d959c74bf6fcbad3efcbdc349ba0 inherit pub_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -314,6 +314,12 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a54e3129852076fab93439335c22a33f6 inherit pub_methods_classnm_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a54e3129852076fab93439335c22a33f6"></a>
 virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () const =0</td></tr>
 <tr class="separator:a54e3129852076fab93439335c22a33f6 inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64d602598cec3f135806a0db01de02a0 inherit pub_methods_classnm_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a64d602598cec3f135806a0db01de02a0"></a>
+virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>cloneDeep</b> () const</td></tr>
+<tr class="separator:a64d602598cec3f135806a0db01de02a0 inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e39c59bd59ed90f9651e50954d60dee inherit pub_methods_classnm_1_1clonable"><td class="memItemLeft" align="right" valign="top"><a id="a2e39c59bd59ed90f9651e50954d60dee"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onCloneDeep</b> (const me &amp;from)</td></tr>
+<tr class="separator:a2e39c59bd59ed90f9651e50954d60dee inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1frame_interactable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1frame_interactable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1frame_interactable.html">nm::frameInteractable</a></td></tr>
 <tr class="memitem:a4be8a56024553fedabd9ff2ef1be046f inherit pub_methods_classnm_1_1frame_interactable"><td class="memItemLeft" align="right" valign="top"><a id="a4be8a56024553fedabd9ff2ef1be046f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>inFrame</b> ()</td></tr>
@@ -347,12 +353,12 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a55ba76511ca7b79d8f6e9335110ce4d6"><td class="memItemLeft" align="right" valign="top"><a id="a55ba76511ca7b79d8f6e9335110ce4d6"></a>
 fptrType&#160;</td><td class="memItemRight" valign="bottom"><b>_fptr</b></td></tr>
 <tr class="separator:a55ba76511ca7b79d8f6e9335110ce4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a189f45c11eaf20951fa6b95238ef0d"><td class="memItemLeft" align="right" valign="top"><a id="a9a189f45c11eaf20951fa6b95238ef0d"></a>
-<a class="el" href="classnm_1_1tstr.html">tstr</a>&lt; <a class="el" href="classnm_1_1params.html">params</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_params</b></td></tr>
-<tr class="separator:a9a189f45c11eaf20951fa6b95238ef0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c7fc4e5d2f37207fe2a8967cdac2b8a"><td class="memItemLeft" align="right" valign="top"><a id="a7c7fc4e5d2f37207fe2a8967cdac2b8a"></a>
 <a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_ret</b></td></tr>
 <tr class="separator:a7c7fc4e5d2f37207fe2a8967cdac2b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf159dc3c0821deed81008570c95bfee"><td class="memItemLeft" align="right" valign="top"><a id="adf159dc3c0821deed81008570c95bfee"></a>
+<a class="el" href="classnm_1_1mgd_type.html">mgdType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_type</b></td></tr>
+<tr class="separator:adf159dc3c0821deed81008570c95bfee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classnm_1_1expr"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classnm_1_1expr')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classnm_1_1expr.html">nm::expr</a></td></tr>
 <tr class="memitem:a41bec6e05e8dcc5f26772ea1cace1e0c inherit pro_attribs_classnm_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a41bec6e05e8dcc5f26772ea1cace1e0c"></a>
 <a class="el" href="classnm_1_1tstr.html">tstr</a>&lt; <a class="el" href="classnm_1_1src.html">src</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_src</b></td></tr>
@@ -364,9 +370,9 @@ fptrType&#160;</td><td class="memItemRight" valign="bottom"><b>_fptr</b></td></t
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_attribs_classnm_1_1node"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classnm_1_1node')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classnm_1_1node.html">nm::node</a></td></tr>
-<tr class="memitem:ae588c029a36978ee5ec9a26a421ec37d inherit pub_attribs_classnm_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="ae588c029a36978ee5ec9a26a421ec37d"></a>
-const <a class="el" href="classnm_1_1node.html">node</a> &amp;operator[](const std::string &amp;name) const NM_CONST_FUNC(operator[](name)) public nbool&#160;</td><td class="memItemRight" valign="bottom"><b>has</b> (const <a class="el" href="classnm_1_1node.html">node</a> *elem) const</td></tr>
-<tr class="separator:ae588c029a36978ee5ec9a26a421ec37d inherit pub_attribs_classnm_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27ca000ce7c02afcf566be97e740eb05 inherit pub_attribs_classnm_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a27ca000ce7c02afcf566be97e740eb05"></a>
+const <a class="el" href="classnm_1_1node.html">node</a> &amp;operator[](const std::string &amp;name) const NM_CONST_FUNC(operator[](name)) public nbool&#160;</td><td class="memItemRight" valign="bottom"><b>in</b> (const <a class="el" href="classnm_1_1node.html">node</a> *elem) const</td></tr>
+<tr class="separator:a27ca000ce7c02afcf566be97e740eb05 inherit pub_attribs_classnm_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_attribs_classnm_1_1base_func"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classnm_1_1base_func')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classnm_1_1base_func.html">nm::baseFunc</a></td></tr>
 <tr class="memitem:acb3a8676b95b5e07a60faf84fb8949fa inherit pub_static_attribs_classnm_1_1base_func"><td class="memItemLeft" align="right" valign="top"><a id="acb3a8676b95b5e07a60faf84fb8949fa"></a>
 static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ME</b> = &quot;me&quot;</td></tr>
@@ -412,37 +418,6 @@ template&lt;typename Ret , typename T , template&lt; typename, nbool &gt; class 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="af116796e13d4c470cdb39208915ff796"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af116796e13d4c470cdb39208915ff796">&#9670;&nbsp;</a></span>getParams()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Ret , typename T , template&lt; typename, nbool &gt; class Marshaling, typename... Args&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="classnm_1_1params.html">params</a>&amp; <a class="el" href="classnm_1_1tbase_bridge_func.html">nm::tbaseBridgeFunc</a>&lt; Ret, T, Marshaling, Args &gt;::getParams </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>parameters of run() func. parameter is just a type. and I don't care about the value of each parameters. that is the reason why I uses a ref to represents parameter.</dd></dl>
-<p>I need the name and which types should be casted and binded from given arguments are matters. </p>
-
-<p>Reimplemented from <a class="el" href="classnm_1_1base_func.html#a72c3feaf8fc5a0f4b29d506e2dc2c762">nm::baseFunc</a>.</p>
-
-</div>
-</div>
 <a id="abaa66bf9a3d5a76f30451f2d7900852a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abaa66bf9a3d5a76f30451f2d7900852a">&#9670;&nbsp;</a></span>setRet()</h2>
 

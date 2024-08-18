@@ -77,15 +77,15 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnm_1_1print_func.html">    8</a></span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1print_func.html">printFunc</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1base_func.html">baseFunc</a> {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NM(CLASS(<a class="code" href="classnm_1_1print_func.html">printFunc</a>, <a class="code" href="classnm_1_1base_func.html">baseFunc</a>))</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NM(ME(<a class="code" href="classnm_1_1print_func.html">printFunc</a>, <a class="code" href="classnm_1_1base_func.html">baseFunc</a>), CLONE(<a class="code" href="classnm_1_1print_func.html">printFunc</a>))</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classnm_1_1print_func.html#a11cfc637a92888969fa8715d11b6b6ca">   12</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1params.html">params</a>&amp; <a class="code" href="classnm_1_1print_func.html#a11cfc637a92888969fa8715d11b6b6ca">getParams</a>()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnm_1_1params.html">params</a> inner(*<span class="keyword">new</span> <a class="code" href="classnm_1_1param.html">param</a>(<span class="stringliteral">&quot;msg&quot;</span>, <span class="keyword">new</span> T()));</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; getType()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnm_1_1mgd_type.html">mgdType</a> inner(<span class="stringliteral">&quot;print&quot;</span>, <a class="code" href="classnm_1_1ttype.html">ttype&lt;me&gt;::get</a>(), <a class="code" href="classnm_1_1params.html">params</a>(*<span class="keyword">new</span> <a class="code" href="classnm_1_1param.html">param</a>(<span class="stringliteral">&quot;msg&quot;</span>, <span class="keyword">new</span> T())));</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <span class="keywordflow">return</span> inner;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        }</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classnm_1_1print_func.html#a99e429a9bd84b27648e79076dc17fcc6">   17</a></span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> <a class="code" href="classnm_1_1print_func.html#a99e429a9bd84b27648e79076dc17fcc6">getRet</a>()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> getRet()<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnm_1_1tstr.html">str</a> inner(<span class="keyword">new</span> T());</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <span class="keywordflow">return</span> inner;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        }</div>
@@ -108,14 +108,15 @@ $(function() {
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    };</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
-<div class="ttc" id="aclassnm_1_1base_func_html"><div class="ttname"><a href="classnm_1_1base_func.html">nm::baseFunc</a></div><div class="ttdef"><b>Definition:</b> baseFunc.hpp:12</div></div>
+<div class="ttc" id="aclassnm_1_1base_func_html"><div class="ttname"><a href="classnm_1_1base_func.html">nm::baseFunc</a></div><div class="ttdef"><b>Definition:</b> baseFunc.hpp:13</div></div>
+<div class="ttc" id="aclassnm_1_1mgd_type_html"><div class="ttname"><a href="classnm_1_1mgd_type.html">nm::mgdType</a></div><div class="ttdef"><b>Definition:</b> mgdType.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>
+<div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1param_html"><div class="ttname"><a href="classnm_1_1param.html">nm::param</a></div><div class="ttdef"><b>Definition:</b> param.hpp:8</div></div>
-<div class="ttc" id="aclassnm_1_1params_html"><div class="ttname"><a href="classnm_1_1params.html">nm::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:8</div></div>
+<div class="ttc" id="aclassnm_1_1params_html"><div class="ttname"><a href="classnm_1_1params.html">nm::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:10</div></div>
 <div class="ttc" id="aclassnm_1_1print_func_html"><div class="ttname"><a href="classnm_1_1print_func.html">nm::printFunc</a></div><div class="ttdef"><b>Definition:</b> printFunc.hpp:8</div></div>
-<div class="ttc" id="aclassnm_1_1print_func_html_a11cfc637a92888969fa8715d11b6b6ca"><div class="ttname"><a href="classnm_1_1print_func.html#a11cfc637a92888969fa8715d11b6b6ca">nm::printFunc::getParams</a></div><div class="ttdeci">const params &amp; getParams() const override</div><div class="ttdef"><b>Definition:</b> printFunc.hpp:12</div></div>
-<div class="ttc" id="aclassnm_1_1print_func_html_a99e429a9bd84b27648e79076dc17fcc6"><div class="ttname"><a href="classnm_1_1print_func.html#a99e429a9bd84b27648e79076dc17fcc6">nm::printFunc::getRet</a></div><div class="ttdeci">str getRet() const override</div><div class="ttdef"><b>Definition:</b> printFunc.hpp:17</div></div>
 <div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr&lt; node &gt;</a></div></div>
+<div class="ttc" id="aclassnm_1_1ttype_html"><div class="ttname"><a href="classnm_1_1ttype.html">nm::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
