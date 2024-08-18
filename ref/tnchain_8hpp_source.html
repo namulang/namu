@@ -99,8 +99,8 @@ $(function() {
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="comment">// has:</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        nbool has(<span class="keyword">const</span> K&amp; key) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        nbool has(<span class="keyword">const</span> V&amp; val) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        nbool in(<span class="keyword">const</span> K&amp; key) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        nbool in(<span class="keyword">const</span> V&amp; val) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="comment">// len:</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        ncnt len() <span class="keyword">const override</span>;</div>
@@ -136,9 +136,9 @@ $(function() {
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">const</span> me&amp; getNext()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *_next; }</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classnm_1_1tnchain.html#a62c80faa54037e9b73821626f8cab689">   68</a></span>&#160;        me&amp; <a class="code" href="classnm_1_1tnchain.html#a62c80faa54037e9b73821626f8cab689">getTail</a>();</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classnm_1_1tnchain.html#a6d5c0a36b098ffc98a05759b99710698">   69</a></span>&#160;        <span class="keyword">const</span> me&amp; <a class="code" href="classnm_1_1tnchain.html#a6d5c0a36b098ffc98a05759b99710698">getTail</a>() const NM_CONST_FUNC(<a class="code" href="classnm_1_1tnchain.html#a62c80faa54037e9b73821626f8cab689">getTail</a>())</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classnm_1_1tnchain.html#a29fa2297de84e3ce5c5d73e56cb13b04">   69</a></span>&#160;        <span class="keyword">const</span> me&amp; <a class="code" href="classnm_1_1tnchain.html#a29fa2297de84e3ce5c5d73e56cb13b04">getTail</a>() const NM_CONST_FUNC(<a class="code" href="classnm_1_1tnchain.html#a62c80faa54037e9b73821626f8cab689">getTail</a>())</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="classnm_1_1clonable.html">clonable</a>* cloneDeep() const override;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordtype">void</span> onCloneDeep(const <a class="code" href="classnm_1_1clonable.html">clonable</a>&amp; from) override;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
 <div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classnm_1_1tnchain.html#a57d0733b10aeec49dc0ee2b469455409">   81</a></span>&#160;        template &lt;typename T&gt; static T* <a class="code" href="classnm_1_1tnchain.html#a57d0733b10aeec49dc0ee2b469455409">wrap</a>(const super&amp; toShallowWrap);</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
@@ -186,9 +186,9 @@ $(function() {
 <div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1tnbicontainer_html"><div class="ttname"><a href="classnm_1_1tnbicontainer.html">nm::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1tnchain_html"><div class="ttname"><a href="classnm_1_1tnchain.html">nm::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:10</div></div>
+<div class="ttc" id="aclassnm_1_1tnchain_html_a29fa2297de84e3ce5c5d73e56cb13b04"><div class="ttname"><a href="classnm_1_1tnchain.html#a29fa2297de84e3ce5c5d73e56cb13b04">nm::tnchain::getTail</a></div><div class="ttdeci">const me &amp; getTail() const NM_CONST_FUNC(getTail()) void onCloneDeep(const clonable &amp;from) override</div></div>
 <div class="ttc" id="aclassnm_1_1tnchain_html_a57d0733b10aeec49dc0ee2b469455409"><div class="ttname"><a href="classnm_1_1tnchain.html#a57d0733b10aeec49dc0ee2b469455409">nm::tnchain::wrap</a></div><div class="ttdeci">static T * wrap(const super &amp;toShallowWrap)</div></div>
 <div class="ttc" id="aclassnm_1_1tnchain_html_a62c80faa54037e9b73821626f8cab689"><div class="ttname"><a href="classnm_1_1tnchain.html#a62c80faa54037e9b73821626f8cab689">nm::tnchain::getTail</a></div><div class="ttdeci">me &amp; getTail()</div><div class="ttdoc">return most not null next element of this chain.</div></div>
-<div class="ttc" id="aclassnm_1_1tnchain_html_a6d5c0a36b098ffc98a05759b99710698"><div class="ttname"><a href="classnm_1_1tnchain.html#a6d5c0a36b098ffc98a05759b99710698">nm::tnchain::getTail</a></div><div class="ttdeci">const me &amp; getTail() const NM_CONST_FUNC(getTail()) clonable *cloneDeep() const override</div></div>
 <div class="ttc" id="aclassnm_1_1tnchain_html_a895d0a301b522375c1f130d44fe0783f"><div class="ttname"><a href="classnm_1_1tnchain.html#a895d0a301b522375c1f130d44fe0783f">nm::tnchain::del</a></div><div class="ttdeci">nbool del(const K &amp;at) override</div><div class="ttdoc">delete last element if exists.</div></div>
 <div class="ttc" id="aclassnm_1_1tnchain_html_aed86242c9ecb1f93acba89b94cd89660"><div class="ttname"><a href="classnm_1_1tnchain.html#aed86242c9ecb1f93acba89b94cd89660">nm::tnchain::cloneChain</a></div><div class="ttdeci">me * cloneChain() const</div><div class="ttdoc">mock all of this chain until 'next' is null.</div><div class="ttdef"><b>Definition:</b> tnchain.hpp:91</div></div>
 <div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr&lt; me &gt;</a></div></div>

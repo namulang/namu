@@ -107,9 +107,9 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        ncnt len() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="comment">// has:</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">using</span> super::has;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">using</span> super::in;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        nbool has(nidx n)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> 0 &lt;= n &amp;&amp; n &lt; len(); }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        nbool in(nidx n)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> 0 &lt;= n &amp;&amp; n &lt; len(); }</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="comment">// get:</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">using</span> super::get;</div>
@@ -137,7 +137,7 @@ $(function() {
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="classnm_1_1clonable.html">clonable</a>* clone()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="keyword">new</span> me(*<span class="keyword">this</span>); }</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classnm_1_1clonable.html">clonable</a>* cloneDeep() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">void</span> onCloneDeep(<span class="keyword">const</span> <a class="code" href="classnm_1_1clonable.html">clonable</a>&amp; from) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        std::string asStr()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            std::string ret;</div>

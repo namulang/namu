@@ -108,9 +108,6 @@ $(function() {
 <li>cloneChain()
 : <a class="el" href="classnm_1_1tnchain.html#a3e145f92ed739e90999e14590d8779eb">nm::tnchain&lt; K, V, _defaultContainer &gt;</a>
 </li>
-<li>cloneDeep()
-: <a class="el" href="classnm_1_1tnmap.html#ae3f184564c9b1a03d2a8c006bec2f66e">nm::tnmap&lt; K, V, TACTIC &gt;</a>
-</li>
 </ul>
 
 
@@ -157,6 +154,7 @@ $(function() {
 , <a class="el" href="classnm_1_1def_array_expr.html#af3dd0d2f15d2693c90656b8d76ded1c0">nm::defArrayExpr</a>
 , <a class="el" href="classnm_1_1def_seq_expr.html#a47813beca7df500ba0525fd5d909335e">nm::defSeqExpr</a>
 , <a class="el" href="classnm_1_1def_var_expr.html#a868486dc19313ef161c1369515d68038">nm::defVarExpr</a>
+, <a class="el" href="classnm_1_1end_expr.html#ad14a861d7fe096332ea92fbb95ecd24a">nm::endExpr</a>
 , <a class="el" href="classnm_1_1_f_b_o_expr.html#a849b3870f2f1604c4212ce6c09767b1e">nm::FBOExpr</a>
 , <a class="el" href="classnm_1_1generic_origin.html#ada313fde72dc60598fe5b50e462ade34">nm::genericOrigin</a>
 , <a class="el" href="classnm_1_1get_expr.html#aebb16778d5d990f44233f9ee0a43b5f6">nm::getExpr</a>
@@ -175,27 +173,8 @@ $(function() {
 : <a class="el" href="classnm_1_1type.html#a19575a7ff97372a2206398b1b2fbffd0">nm::type</a>
 </li>
 <li>getParams()
-: <a class="el" href="classnm_1_1base_func.html#a72c3feaf8fc5a0f4b29d506e2dc2c762">nm::baseFunc</a>
-, <a class="el" href="classnm_1_1default_copy_ctor.html#a1f6db745634a49780a00b956dee0d0dc">nm::defaultCopyCtor</a>
-, <a class="el" href="classnm_1_1func.html#a03f87719fb8f3f1cab5dabe6eda05aaa">nm::func</a>
-, <a class="el" href="classnm_1_1input_func.html#aafa862e0b2be29fef95fb476e7185b64">nm::inputFunc</a>
-, <a class="el" href="classnm_1_1print_func.html#a11cfc637a92888969fa8715d11b6b6ca">nm::printFunc&lt; T &gt;</a>
-, <a class="el" href="classnm_1_1tbase_bridge_func.html#af116796e13d4c470cdb39208915ff796">nm::tbaseBridgeFunc&lt; Ret, T, Marshaling, Args &gt;</a>
-, <a class="el" href="classnm_1_1tbridge_closure.html#a3c23406f2754419836182484e45521d1">nm::tbridgeClosure&lt; Ret, T, Marshaling, Args &gt;</a>
-, <a class="el" href="classnm_1_1tbridge_closure_3_01void_00_01_t_00_01_marshaling_00_01_args_8_8_8_01_4.html#aa34b6cc8de960094674b78c39d3000ef">nm::tbridgeClosure&lt; void, T, Marshaling, Args... &gt;</a>
-</li>
-<li>getRet()
-: <a class="el" href="classnm_1_1base_ctor.html#a5399ab86543ae37523eb52fa4c6e3414">nm::baseCtor</a>
-, <a class="el" href="classnm_1_1base_func.html#a9592c8446217aedc31d5448e750c6d7a">nm::baseFunc</a>
-, <a class="el" href="classnm_1_1func.html#a497c30f69365e32a24b0b5548b08a0db">nm::func</a>
-, <a class="el" href="classnm_1_1input_func.html#ac1775b1c3ae8f575a47c0b2f3edc5620">nm::inputFunc</a>
-, <a class="el" href="classnm_1_1print_func.html#a99e429a9bd84b27648e79076dc17fcc6">nm::printFunc&lt; T &gt;</a>
-, <a class="el" href="classnm_1_1tbridge_closure.html#a60ad9c3d2b14ecf7ffcd61e4e030410f">nm::tbridgeClosure&lt; Ret, T, Marshaling, Args &gt;</a>
-, <a class="el" href="classnm_1_1tbridge_closure_3_01void_00_01_t_00_01_marshaling_00_01_args_8_8_8_01_4.html#a6fac59cf7466af659dae4b4764aa3c3a">nm::tbridgeClosure&lt; void, T, Marshaling, Args... &gt;</a>
-, <a class="el" href="classnm_1_1tbridge_func.html#a40eaabfdce614342dc61a9db1fdee3d9">nm::tbridgeFunc&lt; Ret, T, isBaseObj, Marshaling, Args &gt;</a>
-, <a class="el" href="classnm_1_1tbridge_func_3_01_ret_00_01_t_00_01true_00_01_marshaling_00_01_args_8_8_8_01_4.html#a0f62555d332d3cedf6140835ab24c318">nm::tbridgeFunc&lt; Ret, T, true, Marshaling, Args... &gt;</a>
-, <a class="el" href="classnm_1_1tbridge_func_3_01void_00_01_t_00_01false_00_01_marshaling_00_01_args_8_8_8_01_4.html#aa016f9346d07eda97947aeb1e07caebd">nm::tbridgeFunc&lt; void, T, false, Marshaling, Args... &gt;</a>
-, <a class="el" href="classnm_1_1tbridge_func_3_01void_00_01_t_00_01true_00_01_marshaling_00_01_args_8_8_8_01_4.html#a87bde07066202082926f34bf0975d191">nm::tbridgeFunc&lt; void, T, true, Marshaling, Args... &gt;</a>
+: <a class="el" href="classnm_1_1base_func.html#a403ba38bdb01b5e0baa77c15c52c345e">nm::baseFunc</a>
+, <a class="el" href="classnm_1_1default_copy_ctor.html#a708c49ab4c74545184ae99945d3be66c">nm::defaultCopyCtor</a>
 </li>
 <li>getSlots()
 : <a class="el" href="classnm_1_1thread.html#ae99f6382e93b3f7c1ac1ccf21a2bc4d0">nm::thread</a>
@@ -237,7 +216,8 @@ $(function() {
 
 <h3><a id="index_m"></a>- m -</h3><ul>
 <li>make()
-: <a class="el" href="classnm_1_1ttype_base_3_01void_00_01type_01_4.html#ae85af6449a046e61f35258887c3f1bc4">nm::ttypeBase&lt; void, type &gt;</a>
+: <a class="el" href="classnm_1_1mgd_type.html#aa3c7df89f68edcda8e0fdb5147dcd34c">nm::mgdType</a>
+, <a class="el" href="classnm_1_1ttype_base_3_01void_00_01type_01_4.html#ae85af6449a046e61f35258887c3f1bc4">nm::ttypeBase&lt; void, type &gt;</a>
 , <a class="el" href="classnm_1_1type.html#af47c7f7765a7839db72676b3d2059304">nm::type</a>
 </li>
 <li>mov()
@@ -262,6 +242,9 @@ $(function() {
 
 
 <h3><a id="index_o"></a>- o -</h3><ul>
+<li>onCloneDeep()
+: <a class="el" href="classnm_1_1tnmap.html#a0a14f7a398d06df8cc621f22808960be">nm::tnmap&lt; K, V, TACTIC &gt;</a>
+</li>
 <li>onSignal()
 : <a class="el" href="classnm_1_1signaler.html#a1059b4b90d54e3780076512002e2ae92">nm::signaler</a>
 </li>
@@ -330,6 +313,7 @@ $(function() {
 </li>
 <li>toStr()
 : <a class="el" href="classnm_1_1args.html#aa0375e5a2afd11de1e5877e62ab7606f">nm::args</a>
+, <a class="el" href="classnm_1_1params.html#a0a879f71eaf790498fc68b231f4c255c">nm::params</a>
 </li>
 <li>tstr()
 : <a class="el" href="classnm_1_1tstr.html#a6c6f97a4cb1cf504ab8cbb80f54d40ec">nm::tstr&lt; T, TACTIC &gt;</a>

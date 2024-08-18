@@ -76,14 +76,14 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classnm_1_1base_ctor.html">    7</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnm_1_1base_ctor.html">baseCtor</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1base_func.html">baseFunc</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NM(ADT(<a class="code" href="classnm_1_1base_ctor.html">baseCtor</a>, <a class="code" href="classnm_1_1base_func.html">baseFunc</a>), VISIT())</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        NM(ME(<a class="code" href="classnm_1_1base_ctor.html">baseCtor</a>, <a class="code" href="classnm_1_1base_func.html">baseFunc</a>), VISIT())</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classnm_1_1generalizer.html">generalizer</a>; <span class="comment">// for _setOrigin()</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <a class="code" href="classnm_1_1base_ctor.html">baseCtor</a>(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; org);</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classnm_1_1base_ctor.html#a5399ab86543ae37523eb52fa4c6e3414">   15</a></span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> <a class="code" href="classnm_1_1base_ctor.html#a5399ab86543ae37523eb52fa4c6e3414">getRet</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> getRet() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classnm_1_1base_ctor.html#a8dc9b6b092c4b3f438a7dc10e7e759f9">   16</a></span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> <a class="code" href="classnm_1_1base_ctor.html#a8dc9b6b092c4b3f438a7dc10e7e759f9">getEval</a>() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getOrigin() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
@@ -95,9 +95,8 @@ $(function() {
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    };</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1base_ctor_html"><div class="ttname"><a href="classnm_1_1base_ctor.html">nm::baseCtor</a></div><div class="ttdef"><b>Definition:</b> baseCtor.hpp:7</div></div>
-<div class="ttc" id="aclassnm_1_1base_ctor_html_a5399ab86543ae37523eb52fa4c6e3414"><div class="ttname"><a href="classnm_1_1base_ctor.html#a5399ab86543ae37523eb52fa4c6e3414">nm::baseCtor::getRet</a></div><div class="ttdeci">str getRet() const override</div></div>
 <div class="ttc" id="aclassnm_1_1base_ctor_html_a8dc9b6b092c4b3f438a7dc10e7e759f9"><div class="ttname"><a href="classnm_1_1base_ctor.html#a8dc9b6b092c4b3f438a7dc10e7e759f9">nm::baseCtor::getEval</a></div><div class="ttdeci">str getEval() const override</div></div>
-<div class="ttc" id="aclassnm_1_1base_func_html"><div class="ttname"><a href="classnm_1_1base_func.html">nm::baseFunc</a></div><div class="ttdef"><b>Definition:</b> baseFunc.hpp:12</div></div>
+<div class="ttc" id="aclassnm_1_1base_func_html"><div class="ttname"><a href="classnm_1_1base_func.html">nm::baseFunc</a></div><div class="ttdef"><b>Definition:</b> baseFunc.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1generalizer_html"><div class="ttname"><a href="classnm_1_1generalizer.html">nm::generalizer</a></div><div class="ttdef"><b>Definition:</b> generalizer.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>
 <div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr&lt; node &gt;</a></div></div>
