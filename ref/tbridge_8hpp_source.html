@@ -114,22 +114,26 @@ $(function() {
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        }</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">using</span> super::subs;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        T&amp; get() { <span class="keywordflow">return</span> *_real; }</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        scope&amp; subs()<span class="keyword"> override </span>{ <span class="keywordflow">return</span> tbridger&lt;T&gt;::_get().subs(); }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">const</span> T&amp; get()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *_real; }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        T&amp; get() { <span class="keywordflow">return</span> *_real; }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">const</span> T&amp; get()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *_real; }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        T* _real;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        nbool _ownReal = _real;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    };</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;} <span class="comment">// namespace nm</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1base_obj.html#a7de0646246fd7c82c8a9bdb7a4a5a925">baseObj</a>&amp; getOrigin()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keyword">static</span> tbaseObjOrigin&lt;tbridge&lt;T&gt;&gt; org(</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                tbridger&lt;T, tifSub&lt;<span class="keyword">typename</span> tadaptiveSuper&lt;T&gt;::super, <a class="code" href="classnm_1_1base_obj.html#a7de0646246fd7c82c8a9bdb7a4a5a925">baseObj</a>&gt;::is&gt;::subs());</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keyword">const</span> <a class="code" href="classnm_1_1base_obj.html#a7de0646246fd7c82c8a9bdb7a4a5a925">baseObj</a>&amp; supers = super::getOrigin();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordflow">return</span> &amp;supers == <span class="keyword">this</span> ? org : supers;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        T* _real;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        nbool _ownReal = _real;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    };</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1base_obj_html"><div class="ttname"><a href="classnm_1_1base_obj.html">nm::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:19</div></div>
+<div class="ttc" id="aclassnm_1_1base_obj_html_a7de0646246fd7c82c8a9bdb7a4a5a925"><div class="ttname"><a href="classnm_1_1base_obj.html#a7de0646246fd7c82c8a9bdb7a4a5a925">nm::baseObj::baseObj</a></div><div class="ttdeci">baseObj()=default</div></div>
 <div class="ttc" id="aclassnm_1_1origin_html"><div class="ttname"><a href="classnm_1_1origin.html">nm::origin</a></div><div class="ttdef"><b>Definition:</b> origin.hpp:22</div></div>
-<div class="ttc" id="aclassnm_1_1tbridge_func_html"><div class="ttname"><a href="classnm_1_1tbridge_func.html">nm::tbridgeFunc</a></div><div class="ttdef"><b>Definition:</b> tbridgeFunc.hpp:81</div></div>
+<div class="ttc" id="aclassnm_1_1tbridge_func_html"><div class="ttname"><a href="classnm_1_1tbridge_func.html">nm::tbridgeFunc</a></div><div class="ttdef"><b>Definition:</b> tbridgeFunc.hpp:86</div></div>
 <div class="ttc" id="aclassnm_1_1tbridge_html"><div class="ttname"><a href="classnm_1_1tbridge.html">nm::tbridge</a></div><div class="ttdef"><b>Definition:</b> tbridge.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1tbridge_html_a0e84fa4e77f19c684ec714b133fbd075"><div class="ttname"><a href="classnm_1_1tbridge.html#a0e84fa4e77f19c684ec714b133fbd075">nm::tbridge::tbridge</a></div><div class="ttdeci">tbridge()</div><div class="ttdoc">@hidden this api is only available to tmarshaling.</div><div class="ttdef"><b>Definition:</b> tbridge.hpp:36</div></div>
 <div class="ttc" id="aclassnm_1_1tbridger_html"><div class="ttname"><a href="classnm_1_1tbridger.html">nm::tbridger</a></div><div class="ttdef"><b>Definition:</b> tbridger.hpp:14</div></div>
