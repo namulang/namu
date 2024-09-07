@@ -81,13 +81,13 @@ $(function() {
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classnm_1_1frame_interactable.html">   11</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1frame_interactable.html">frameInteractable</a> {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> inFrame(<span class="keyword">const</span> <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) = 0;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> inFrame(<span class="keyword">const</span> <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keywordtype">void</span> inFrame() { inFrame(nulOf&lt;bicontainable&gt;()); }</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keywordtype">void</span> inFrame()<span class="keyword"> const </span>{ inFrame(nulOf&lt;bicontainable&gt;()); }</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> outFrame(<span class="keyword">const</span> <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) = 0;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> outFrame(<span class="keyword">const</span> <a class="code" href="classnm_1_1tbicontainable.html">bicontainable</a>&amp; <a class="code" href="classnm_1_1args.html">args</a>) <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">void</span> outFrame() { outFrame(nulOf&lt;bicontainable&gt;()); }</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">void</span> outFrame()<span class="keyword"> const </span>{ outFrame(nulOf&lt;bicontainable&gt;()); }</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    };</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>

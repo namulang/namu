@@ -78,21 +78,22 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">class </span>node;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">enum</span> typeAttr {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        NOTHING,</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        CONSTANT,</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        COMPLETE_OBJ,</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    };</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classnm_1_1util.html">   15</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1util.html">util</a> {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        NM(ME(<a class="code" href="classnm_1_1util.html">util</a>))</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">static</span> typeAttr checkTypeAttr(<span class="keyword">const</span> std::string&amp; name);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">static</span> std::string getEvalTypeFrom(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; n);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    };</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        ATTR_ERR,</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        ATTR_CONST,</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        ATTR_COMPLETE,</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        ATTR_INCOMPLETE</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    };</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classnm_1_1util.html">   16</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1util.html">util</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        NM(ME(<a class="code" href="classnm_1_1util.html">util</a>))</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">static</span> typeAttr checkTypeAttr(<span class="keyword">const</span> std::string&amp; name);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">static</span> std::string getEvalTypeFrom(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; n);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    };</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>
-<div class="ttc" id="aclassnm_1_1util_html"><div class="ttname"><a href="classnm_1_1util.html">nm::util</a></div><div class="ttdef"><b>Definition:</b> util.hpp:15</div></div>
+<div class="ttc" id="aclassnm_1_1util_html"><div class="ttname"><a href="classnm_1_1util.html">nm::util</a></div><div class="ttdef"><b>Definition:</b> util.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

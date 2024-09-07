@@ -84,18 +84,22 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classnm_1_1param.html">param</a>(<span class="keyword">const</span> std::string&amp; newName, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>* org);</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">const</span> std::string&amp; getName() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keywordtype">void</span> setName(<span class="keyword">const</span> std::string&amp; new1);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getOrigin() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">void</span> setOrigin(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; newType);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordtype">void</span> onCloneDeep(<span class="keyword">const</span> <a class="code" href="classnm_1_1clonable.html">clonable</a>&amp; from) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        std::string _name;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _org;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    };</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        nbool operator==(<span class="keyword">const</span> me&amp; rhs) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        nbool operator!=(<span class="keyword">const</span> me&amp; rhs) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">const</span> std::string&amp; getName() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordtype">void</span> setName(<span class="keyword">const</span> std::string&amp; new1);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getOrigin() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">void</span> setOrigin(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; newType);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">void</span> onCloneDeep(<span class="keyword">const</span> <a class="code" href="classnm_1_1clonable.html">clonable</a>&amp; from) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        std::string _name;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _org;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    };</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
 <div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1instance_html"><div class="ttname"><a href="classnm_1_1instance.html">nm::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:15</div></div>
 <div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>

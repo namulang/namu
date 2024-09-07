@@ -114,10 +114,13 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; T&amp; nulOf() { <span class="keywordflow">return</span> <a class="code" href="structnm_1_1nulr.html">nulr&lt;T&amp;&gt;::get</a>(); }</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">inline</span> nbool nul(T&amp; it) { <span class="keywordflow">return</span> nulr&lt;T&amp;&gt;::isNul(it); }</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; nbool nul(T* it) { <span class="keywordflow">return</span> nulr&lt;T*&gt;::isNul(it); }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;} <span class="comment">// namespace nm</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">inline</span> <span class="keyword">typename</span> std::enable_if&lt;!std::is_pointer_v&lt;T&gt;, nbool&gt;::type nul(<span class="keyword">const</span> T&amp; it) {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">return</span> nulr&lt;T&amp;&gt;::isNul(it);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">inline</span> nbool nul(<span class="keyword">const</span> T* it) { <span class="keywordflow">return</span> nulr&lt;T*&gt;::isNul(it); }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="astructnm_1_1nulr_html"><div class="ttname"><a href="structnm_1_1nulr.html">nm::nulr</a></div><div class="ttdef"><b>Definition:</b> nulr.hpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

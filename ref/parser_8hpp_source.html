@@ -306,59 +306,62 @@ $(function() {
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        <span class="keywordtype">void</span> onEndFunc();</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        <span class="keywordtype">void</span> onParseErr(<span class="keyword">const</span> std::string&amp; msg, <span class="keyword">const</span> nchar* symbolName);</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> posError(Args... <a class="code" href="classnm_1_1args.html">args</a>) {</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            _report(nerr::newErr(getArea().start, <a class="code" href="classnm_1_1args.html">args</a>...));</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        }</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160; </div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> posWarn(Args... <a class="code" href="classnm_1_1args.html">args</a>) {</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;            _report(nerr::newWarn(getArea().start, <a class="code" href="classnm_1_1args.html">args</a>...));</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        }</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> posInfo(Args... <a class="code" href="classnm_1_1args.html">args</a>) {</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            _report(nerr::newInfo(getArea().start, <a class="code" href="classnm_1_1args.html">args</a>...));</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        }</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        <span class="keywordtype">void</span>* _scanString(<span class="keyword">const</span> std::string&amp; <a class="code" href="classnm_1_1src.html">src</a>, <span class="keywordtype">void</span>* scanner);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        <a class="code" href="classnm_1_1expr_maker.html">exprMaker</a>&amp; _getMaker();</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        <span class="keywordtype">void</span> _prepare() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="keywordtype">void</span> _onEndWork() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160; </div>
-<div class="line"><a name="l00259"></a><span class="lineno"><a class="line" href="classnm_1_1parser.html#a0c6aa181cafe5ca0d4ae5fd8402ae288">  259</a></span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> <a class="code" href="classnm_1_1parser.html#a0c6aa181cafe5ca0d4ae5fd8402ae288">_onWork</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        nint _onTokenEndOfInlineBlock(nint tok);</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>* _onSetElem(<a class="code" href="classnm_1_1run_expr.html">runExpr</a>&amp; lhs, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; rhs);</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>* _onAssignElem(FBOExpr::rule <a class="code" href="classnm_1_1type.html">type</a>, <a class="code" href="classnm_1_1node.html">node</a>&amp; lhs, <a class="code" href="classnm_1_1node.html">node</a>&amp; rhs);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>* _onConvertAssignElem(<a class="code" href="classnm_1_1run_expr.html">runExpr</a>&amp; lhs, <a class="code" href="classnm_1_1node.html">node</a>&amp; rhs);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <a class="code" href="classnm_1_1run_expr.html">runExpr</a>* _onRunExpr(<a class="code" href="classnm_1_1node.html">node</a>&amp; <a class="code" href="classnm_1_1type.html">type</a>, <span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; a);</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <span class="keywordtype">void</span> _report(<a class="code" href="classnm_1_1base_err.html">baseErr</a>* new1);</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <a class="code" href="classnm_1_1params.html">params</a> _asParams(<span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; exprs);</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160; </div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        nbool _onInjectObjSubs(<a class="code" href="classnm_1_1obj.html">obj</a>&amp; it, <a class="code" href="classnm_1_1def_block.html">defBlock</a>&amp; blk);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        nbool _onInjectCtor(<a class="code" href="classnm_1_1obj.html">obj</a>&amp; it, <a class="code" href="classnm_1_1def_block.html">defBlock</a>&amp; blk);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        std::vector&lt;std::string&gt; _extractParamTypeNames(<span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; types);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        std::string _joinVectorString(<span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; container) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; _onDefArrayType(<span class="keyword">const</span> <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; items);</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        std::vector&lt;std::string&gt; _toDotnames(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; path);</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="keywordtype">void</span> _onCompilationUnit(<a class="code" href="classnm_1_1obj.html">obj</a>&amp; subpack, <a class="code" href="classnm_1_1def_block.html">defBlock</a>&amp; blk);</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <a class="code" href="classnm_1_1token_scan.html">tokenScan</a>* _mode;</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        nbool _isIgnoreWhitespace;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <a class="code" href="classnm_1_1token_dispatcher.html">tokenDispatcher</a> _dispatcher;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        std::vector&lt;ncnt&gt; _indents;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _subpack;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr&lt;scope&gt;</a> _filescope;</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        std::vector&lt;nint&gt; _states;</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <a class="code" href="classnm_1_1expr_maker.html">exprMaker</a> _maker;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <a class="code" href="classnm_1_1smart_dedent.html">smartDedent</a> _dedent;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">srcSupplies</a> _supplies;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <a class="code" href="classnm_1_1tweak.html">tweak&lt;func&gt;</a> _func;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    };</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;} <span class="comment">// namespace nm</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> posError(errCode code, Args... <a class="code" href="classnm_1_1args.html">args</a>) {</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            _report(</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;                nerr::newErr(getArea().start, code, __convert__((<span class="keyword">const</span> Args&amp;) <a class="code" href="classnm_1_1args.html">args</a>).unwrap()...));</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        }</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> posWarn(errCode code, Args... <a class="code" href="classnm_1_1args.html">args</a>) {</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            _report(</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;                nerr::newWarn(getArea().start, code, __convert__((<span class="keyword">const</span> Args&amp;) <a class="code" href="classnm_1_1args.html">args</a>).unwrap()...));</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        }</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> posInfo(errCode code, Args... <a class="code" href="classnm_1_1args.html">args</a>) {</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            _report(</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                nerr::newInfo(getArea().start, code, __convert__((<span class="keyword">const</span> Args&amp;) <a class="code" href="classnm_1_1args.html">args</a>).unwrap()...));</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        }</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="keywordtype">void</span>* _scanString(<span class="keyword">const</span> std::string&amp; <a class="code" href="classnm_1_1src.html">src</a>, <span class="keywordtype">void</span>* scanner);</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <a class="code" href="classnm_1_1expr_maker.html">exprMaker</a>&amp; _getMaker();</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        <span class="keywordtype">void</span> _prepare() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        <span class="keywordtype">void</span> _onEndWork() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
+<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="classnm_1_1parser.html#a0c6aa181cafe5ca0d4ae5fd8402ae288">  262</a></span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> <a class="code" href="classnm_1_1parser.html#a0c6aa181cafe5ca0d4ae5fd8402ae288">_onWork</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        nint _onTokenEndOfInlineBlock(nint tok);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>* _onSetElem(<a class="code" href="classnm_1_1run_expr.html">runExpr</a>&amp; lhs, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; rhs);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>* _onAssignElem(FBOExpr::rule <a class="code" href="classnm_1_1type.html">type</a>, <a class="code" href="classnm_1_1node.html">node</a>&amp; lhs, <a class="code" href="classnm_1_1node.html">node</a>&amp; rhs);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <a class="code" href="classnm_1_1node.html">node</a>* _onConvertAssignElem(<a class="code" href="classnm_1_1run_expr.html">runExpr</a>&amp; lhs, <a class="code" href="classnm_1_1node.html">node</a>&amp; rhs);</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <a class="code" href="classnm_1_1run_expr.html">runExpr</a>* _onRunExpr(<a class="code" href="classnm_1_1node.html">node</a>&amp; <a class="code" href="classnm_1_1type.html">type</a>, <span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; a);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        nint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <span class="keywordtype">void</span> _report(<a class="code" href="classnm_1_1base_err.html">baseErr</a>* new1);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <a class="code" href="classnm_1_1params.html">params</a> _asParams(<span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; exprs);</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        nbool _onInjectObjSubs(<a class="code" href="classnm_1_1obj.html">obj</a>&amp; it, <a class="code" href="classnm_1_1def_block.html">defBlock</a>&amp; blk);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        nbool _onInjectCtor(<a class="code" href="classnm_1_1obj.html">obj</a>&amp; it, <a class="code" href="classnm_1_1def_block.html">defBlock</a>&amp; blk);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        std::vector&lt;std::string&gt; _extractParamTypeNames(<span class="keyword">const</span> <a class="code" href="classnm_1_1args.html">args</a>&amp; types);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        std::string _joinVectorString(<span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; container) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; _onDefArrayType(<span class="keyword">const</span> <a class="code" href="classnm_1_1tnarr.html">narr</a>&amp; items);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        std::vector&lt;std::string&gt; _toDotnames(<span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; path);</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keywordtype">void</span> _onCompilationUnit(<a class="code" href="classnm_1_1obj.html">obj</a>&amp; subpack, <a class="code" href="classnm_1_1def_block.html">defBlock</a>&amp; blk);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        <a class="code" href="classnm_1_1token_scan.html">tokenScan</a>* _mode;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        nbool _isIgnoreWhitespace;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        <a class="code" href="classnm_1_1token_dispatcher.html">tokenDispatcher</a> _dispatcher;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        std::vector&lt;ncnt&gt; _indents;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _subpack;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr&lt;scope&gt;</a> _filescope;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        std::vector&lt;nint&gt; _states;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <a class="code" href="classnm_1_1expr_maker.html">exprMaker</a> _maker;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <a class="code" href="classnm_1_1smart_dedent.html">smartDedent</a> _dedent;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <a class="code" href="classnm_1_1tnarr.html">srcSupplies</a> _supplies;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <a class="code" href="classnm_1_1tweak.html">tweak&lt;func&gt;</a> _func;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    };</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1_f_b_o_expr_html"><div class="ttname"><a href="classnm_1_1_f_b_o_expr.html">nm::FBOExpr</a></div><div class="ttdef"><b>Definition:</b> FAOExpr.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1_f_u_o_expr_html"><div class="ttname"><a href="classnm_1_1_f_u_o_expr.html">nm::FUOExpr</a></div><div class="ttdef"><b>Definition:</b> FUOExpr.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1args_html"><div class="ttname"><a href="classnm_1_1args.html">nm::args</a></div><div class="ttdef"><b>Definition:</b> args.hpp:8</div></div>
@@ -375,7 +378,7 @@ $(function() {
 <div class="ttc" id="aclassnm_1_1expr_maker_html"><div class="ttname"><a href="classnm_1_1expr_maker.html">nm::exprMaker</a></div><div class="ttdef"><b>Definition:</b> exprMaker.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1func_html"><div class="ttname"><a href="classnm_1_1func.html">nm::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1generic_origin_html"><div class="ttname"><a href="classnm_1_1generic_origin.html">nm::genericOrigin</a></div><div class="ttdef"><b>Definition:</b> genericOrigin.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1get_expr_html"><div class="ttname"><a href="classnm_1_1get_expr.html">nm::getExpr</a></div><div class="ttdef"><b>Definition:</b> getExpr.hpp:10</div></div>
+<div class="ttc" id="aclassnm_1_1get_expr_html"><div class="ttname"><a href="classnm_1_1get_expr.html">nm::getExpr</a></div><div class="ttdef"><b>Definition:</b> getExpr.hpp:11</div></div>
 <div class="ttc" id="aclassnm_1_1if_expr_html"><div class="ttname"><a href="classnm_1_1if_expr.html">nm::ifExpr</a></div><div class="ttdef"><b>Definition:</b> ifExpr.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1is_expr_html"><div class="ttname"><a href="classnm_1_1is_expr.html">nm::isExpr</a></div><div class="ttdef"><b>Definition:</b> isExpr.hpp:6</div></div>
 <div class="ttc" id="aclassnm_1_1modifier_html"><div class="ttname"><a href="classnm_1_1modifier.html">nm::modifier</a></div><div class="ttdef"><b>Definition:</b> modifier.hpp:7</div></div>

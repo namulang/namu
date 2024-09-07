@@ -110,7 +110,7 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="classnm_1_1instance.html">instance</a>&amp; get();</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1instance.html">instance</a>&amp; get() <span class="keyword">const</span> NM_CONST_FUNC(get())</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt; E&amp; get() { <span class="keywordflow">return</span> safeGet(get(), <span class="keyword">template</span> cast&lt;E&gt;()); }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt; E&amp; get() { <span class="keywordflow">return</span> get() THEN(<span class="keyword">template</span> cast&lt;E&gt;()); }</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt; <span class="keyword">const</span> E&amp; get() <span class="keyword">const</span> NM_CONST_FUNC(get&lt;E&gt;())</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        nbool canBind(<span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; cls) <span class="keyword">const override</span>;</div>
