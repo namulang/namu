@@ -107,8 +107,6 @@ priorType&#160;</td><td class="memItemRight" valign="bottom"><b>prioritize</b> (
 <tr class="memitem:a01605d3f16734ed84be2f761e5755fa6"><td class="memItemLeft" align="right" valign="top"><a id="a01605d3f16734ed84be2f761e5755fa6"></a>
 <a class="el" href="classnm_1_1clonable.html">clonable</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () const override</td></tr>
 <tr class="separator:a01605d3f16734ed84be2f761e5755fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbace73c0cc71433c1c936101f6f93a5"><td class="memItemLeft" align="right" valign="top">nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1mock_node.html#acbace73c0cc71433c1c936101f6f93a5">isComplete</a> () const override</td></tr>
-<tr class="separator:acbace73c0cc71433c1c936101f6f93a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfd615e2bc3d1c260db0be9a43747f7e"><td class="memItemLeft" align="right" valign="top"><a id="acfd615e2bc3d1c260db0be9a43747f7e"></a>
 const <a class="el" href="classnm_1_1src.html">src</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSrc</b> () const override</td></tr>
 <tr class="separator:acfd615e2bc3d1c260db0be9a43747f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,6 +218,8 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a9cf289e66ec445378d0d439d7bfa3f2a inherit pub_methods_classnm_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a9cf289e66ec445378d0d439d7bfa3f2a"></a>
 virtual <a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>asImpli</b> (const <a class="el" href="classnm_1_1type.html">type</a> &amp;to) const</td></tr>
 <tr class="separator:a9cf289e66ec445378d0d439d7bfa3f2a inherit pub_methods_classnm_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af56cea85d24ce2972b6e8c4af3ba1f2f inherit pub_methods_classnm_1_1node"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1node.html#af56cea85d24ce2972b6e8c4af3ba1f2f">isComplete</a> () const</td></tr>
+<tr class="separator:af56cea85d24ce2972b6e8c4af3ba1f2f inherit pub_methods_classnm_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf6e9ca023760db52a62bb04387d4e74 inherit pub_methods_classnm_1_1node"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classnm_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1node.html#acf6e9ca023760db52a62bb04387d4e74">getEval</a> () const</td></tr>
 <tr class="separator:acf6e9ca023760db52a62bb04387d4e74 inherit pub_methods_classnm_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a544a2ab3cb84e9502ad88b62710f586a inherit pub_methods_classnm_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a544a2ab3cb84e9502ad88b62710f586a"></a>
@@ -340,35 +340,6 @@ const <a class="el" href="classnm_1_1node.html">node</a> &amp;operator[](const s
 static <a class="el" href="classnm_1_1instancer.html">instancer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getMgr</b> ()</td></tr>
 <tr class="separator:a50b04268c6f2246e36620e1b2c06460f inherit pro_static_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="acbace73c0cc71433c1c936101f6f93a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbace73c0cc71433c1c936101f6f93a5">&#9670;&nbsp;</a></span>isComplete()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">nbool nm::mockNode::isComplete </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>returns whether this instance is complete or not. if some instance is incomplete, it means that it's not accessible on namulang source codes. </p>
-
-<p>Reimplemented from <a class="el" href="classnm_1_1node.html#af56cea85d24ce2972b6e8c4af3ba1f2f">nm::node</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/runner/work/namu/namu/mod/core/ast/<a class="el" href="mock_node_8hpp_source.html">mockNode.hpp</a></li>
 </ul>
