@@ -71,7 +71,7 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;mockNode.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;tmock.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;baseObj.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>nm {</div>
@@ -91,7 +91,7 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; getSubPack()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnm_1_1mock_node.html">mockNode</a> inner;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="keyword">static</span> <a class="code" href="classnm_1_1tmock.html">mockNode</a> inner;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">return</span> inner;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
@@ -129,13 +129,13 @@ $(function() {
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="classnm_1_1tstr.html">tstr&lt;modifier&gt;</a> _mod;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    };</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;} <span class="comment">// namespace nm</span></div>
-<div class="ttc" id="aclassnm_1_1base_obj_html"><div class="ttname"><a href="classnm_1_1base_obj.html">nm::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:19</div></div>
+<div class="ttc" id="aclassnm_1_1base_obj_html"><div class="ttname"><a href="classnm_1_1base_obj.html">nm::baseObj</a></div><div class="ttdoc">baseObj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> baseObj.hpp:20</div></div>
 <div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
-<div class="ttc" id="aclassnm_1_1mock_node_html"><div class="ttname"><a href="classnm_1_1mock_node.html">nm::mockNode</a></div><div class="ttdef"><b>Definition:</b> mockNode.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1modifier_html"><div class="ttname"><a href="classnm_1_1modifier.html">nm::modifier</a></div><div class="ttdef"><b>Definition:</b> modifier.hpp:7</div></div>
-<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:23</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1tbase_obj_origin_html"><div class="ttname"><a href="classnm_1_1tbase_obj_origin.html">nm::tbaseObjOrigin</a></div><div class="ttdef"><b>Definition:</b> tbaseObjOrigin.hpp:19</div></div>
+<div class="ttc" id="aclassnm_1_1tmock_html"><div class="ttname"><a href="classnm_1_1tmock.html">nm::tmock</a></div><div class="ttdef"><b>Definition:</b> tmock.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1tnchain_html"><div class="ttname"><a href="classnm_1_1tnchain.html">nm::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></div></div>
 <div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1ttype_html"><div class="ttname"><a href="classnm_1_1ttype.html">nm::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:14</div></div>

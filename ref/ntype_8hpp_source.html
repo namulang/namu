@@ -136,22 +136,24 @@ $(function() {
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        std::<span class="keywordtype">string</span> createNameWithParams() const;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    protected:</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="comment">// ntype:</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        virtual const <a class="code" href="classnm_1_1ases.html">ases</a>&amp; _getImpliAses() const;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        virtual const <a class="code" href="classnm_1_1ases.html">ases</a>&amp; _getAses() const;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    private:</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        static deducers* _makeDeducers();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        static const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; _deduceSuperType(const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; l, const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; r);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    };</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    typedef std::vector&lt;const <a class="code" href="classnm_1_1ntype.html">ntype</a>*&gt; ntypes;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;} <span class="comment">// namespace nm</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        const nchar* getMetaTypeName() const override;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    protected:</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="comment">// ntype:</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        virtual const <a class="code" href="classnm_1_1ases.html">ases</a>&amp; _getImpliAses() const;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        virtual const <a class="code" href="classnm_1_1ases.html">ases</a>&amp; _getAses() const;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    private:</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        static deducers* _makeDeducers();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        static const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; _deduceSuperType(const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; l, const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; r);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    };</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    typedef std::vector&lt;const <a class="code" href="classnm_1_1ntype.html">ntype</a>*&gt; ntypes;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1arr_html"><div class="ttname"><a href="classnm_1_1arr.html">nm::arr</a></div><div class="ttdef"><b>Definition:</b> arr.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1ases_html"><div class="ttname"><a href="classnm_1_1ases.html">nm::ases</a></div><div class="ttdef"><b>Definition:</b> ases.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1generic_origin_html"><div class="ttname"><a href="classnm_1_1generic_origin.html">nm::genericOrigin</a></div><div class="ttdef"><b>Definition:</b> genericOrigin.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:23</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html_a448b1fc53f9ff631c5743c885906db42"><div class="ttname"><a href="classnm_1_1ntype.html#a448b1fc53f9ff631c5743c885906db42">nm::ntype::deduce</a></div><div class="ttdeci">const ntype &amp; deduce(const ntype &amp;r) const</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html_a819b24f2993a813b4ee1b9cecd0fd4b5"><div class="ttname"><a href="classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5">nm::ntype::deduce</a></div><div class="ttdeci">static const ntype &amp; deduce(const ntype &amp;l, const ntype &amp;r)</div></div>
@@ -161,7 +163,7 @@ $(function() {
 <div class="ttc" id="aclassnm_1_1seq_html"><div class="ttname"><a href="classnm_1_1seq.html">nm::seq</a></div><div class="ttdef"><b>Definition:</b> seq.hpp:16</div></div>
 <div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1ttype_html"><div class="ttname"><a href="classnm_1_1ttype.html">nm::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:14</div></div>
-<div class="ttc" id="aclassnm_1_1type_html"><div class="ttname"><a href="classnm_1_1type.html">nm::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1type_html"><div class="ttname"><a href="classnm_1_1type.html">nm::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1type_providable_html"><div class="ttname"><a href="classnm_1_1type_providable.html">nm::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
