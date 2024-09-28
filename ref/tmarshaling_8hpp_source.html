@@ -71,7 +71,7 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../../../ast/mockNode.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../../../ast/tmock.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../../builtin/primitive.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>nm {</div>
@@ -133,9 +133,9 @@ $(function() {
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; toNative(<a class="code" href="classnm_1_1node.html">node</a>&amp; it) { <span class="keywordflow">return</span> it; }</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">mgd</a>&amp; onAddParam() { <span class="keywordflow">return</span> *<span class="keyword">new</span> <a class="code" href="classnm_1_1mock_node.html">mockNode</a>(); }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">mgd</a>&amp; onAddParam() { <span class="keywordflow">return</span> *<span class="keyword">new</span> <a class="code" href="classnm_1_1tmock.html">mockNode</a>(); }</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">mgd</a>&amp; onGetRet() { <span class="keywordflow">return</span> *<span class="keyword">new</span> <a class="code" href="classnm_1_1mock_node.html">mockNode</a>(); }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">mgd</a>&amp; onGetRet() { <span class="keywordflow">return</span> *<span class="keyword">new</span> <a class="code" href="classnm_1_1tmock.html">mockNode</a>(); }</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keyword">static</span> yes canMarshal();</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    };</div>
@@ -317,12 +317,12 @@ $(function() {
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    };</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1arr_html"><div class="ttname"><a href="classnm_1_1arr.html">nm::arr</a></div><div class="ttdef"><b>Definition:</b> arr.hpp:12</div></div>
-<div class="ttc" id="aclassnm_1_1mock_node_html"><div class="ttname"><a href="classnm_1_1mock_node.html">nm::mockNode</a></div><div class="ttdef"><b>Definition:</b> mockNode.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1n_str_html"><div class="ttname"><a href="classnm_1_1n_str.html">nm::nStr</a></div><div class="ttdef"><b>Definition:</b> nStr.hpp:9</div></div>
 <div class="ttc" id="aclassnm_1_1n_void_html"><div class="ttname"><a href="classnm_1_1n_void.html">nm::nVoid</a></div><div class="ttdef"><b>Definition:</b> nVoid.hpp:7</div></div>
-<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:22</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:23</div></div>
 <div class="ttc" id="aclassnm_1_1tarr_html"><div class="ttname"><a href="classnm_1_1tarr.html">nm::tarr</a></div><div class="ttdef"><b>Definition:</b> tarr.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1tbridge_html"><div class="ttname"><a href="classnm_1_1tbridge.html">nm::tbridge</a></div><div class="ttdef"><b>Definition:</b> tbridge.hpp:13</div></div>
+<div class="ttc" id="aclassnm_1_1tmock_html"><div class="ttname"><a href="classnm_1_1tmock.html">nm::tmock</a></div><div class="ttdef"><b>Definition:</b> tmock.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclassnm_1_1tweak_html"><div class="ttname"><a href="classnm_1_1tweak.html">nm::tweak</a></div><div class="ttdef"><b>Definition:</b> tweak.hpp:10</div></div>
 <div class="ttc" id="astructnm_1_1marshal_err_html"><div class="ttname"><a href="structnm_1_1marshal_err.html">nm::marshalErr</a></div><div class="ttdef"><b>Definition:</b> tmarshaling.hpp:8</div></div>
