@@ -171,7 +171,6 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
 # Conversion
 markdown: kramdown
-highlighter: rouge
 lsi: false
 excerpt_separator: "\n\n"
 incremental: false
@@ -179,6 +178,8 @@ incremental: false
 
 # Markdown Processing
 kramdown:
+  syntax_highlighter_opts:
+    disable: true
   input: GFM
   hard_wrap: false
   auto_ids: true

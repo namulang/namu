@@ -3,6 +3,10 @@ layout: default
 journey: true
 ---
 
+  <link rel="stylesheet" type="text/css" href="/play/highlightjs-theme-namu.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://github.com/namulang/highlightjs-namu/releases/download/v0.2.8/highlightjs-namu-min.js"></script>
+  <script>hljs.highlightAll();</script>
 
 {% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
   {% include page__hero.html %}
@@ -22,7 +26,7 @@ journey: true
 
 <div id="main" role="main">
   {% include sidebar.html %}
-  
+
   <script type='text/javascript' src='/play/namu-starter.js'></script>
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
@@ -64,5 +68,5 @@ journey: true
   </article>
 
   {% comment %}<!-- only show related on a post page when `related: true` -->{% endcomment %}
-  
+
 </div>
