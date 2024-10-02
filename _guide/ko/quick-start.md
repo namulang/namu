@@ -15,7 +15,7 @@ TODO.
 ## 주석
 * [x] 주석은 `#` 으로 표현합니다.
 
-```go
+```namu
 # 한줄짜리 주석이구요
 
 ## 여러줄
@@ -24,7 +24,7 @@ TODO.
 
 ## 기본 타입 제공
 * [x]  다음의 기본타입(primitive types)이 있습니다.
-```go
+```namu
 "문자열" # str: 쌍따옴표로 표현합니다.
 3020202302 # int: 4byte 예요.
 true # bool
@@ -42,38 +42,38 @@ true # bool
 * [x] 무언가 값을 저장할 수 있는 변수를 namulang에서는 프로퍼티라고 합니다.
 * [x] namulang 에서 타입을 명시적으로 표현할때는 `식별자 <space> 타입명`으로, 항상 띄어쓰기 후 타입을 식별자 뒤에 표현합니다.
 * [x] 따라서 프로퍼티를 정의할때도 위의 타입 규칙을 따릅니다. 즉, 타입은 항상 뒤에오죠.
-```go
+```namu
 age int # 뒤의 int가 타입이죠.
 age = 22 # 누군지 몰라도, 부럽네요.
 ```
 * [x] 변수를 정의하면서 초기화도 같이 할 수 있는데, 그럴때는 `:=` 기호를 사용합니다.
-```go
+```namu
 everything int := 42 # int 타입이며, 모든 것의 값은 42 입니다.
 ```
 
 ## StringTemplate
 * [ ] StringTemplate도 지원합니다.
-```go
+```namu
 ch := '+'
 print("ch=$ch") # "ch=+"
 print("ch=" + ch) # "ch=+"
 ```
 * [ ] 기호가 포함될 경우에는 `{}` 로 감싸세요.
-```go
+```namu
 print("${a + b}")
 ```
 
 ## Map
 * [ ] namulang은 배열, map, sequence를 기본 제공합니다.
 * [ ] Map 객체는 대괄호를 사용해서 정의해요.
-```go
+```namu
 # <타입>[<타입>] 으로 Map 타입을 표현합니다.
 map int[str] # str이 key, int가 value인 map 입니다.
 ```
 * [x] 아쉽게도 Literal 상수를 표현할 수는 없습니다.
 * [ ] 존재하지 않는 원소에 대괄호를 사용해 접근하면, 자동으로 기본값이 할당되요.
 * [x] 모든 Container는 객체입니다. 그러니 여러 메소드를 가집니다.
-```go
+```namu
 map int[str] # str이 key, int가 value인 map을 만듭니다.
 map["apple"] = 300
 map["banana"] = 700
@@ -82,18 +82,18 @@ print(map["apple"]) # "300" 이 나옵니다. 사과 참 싸네요.
 
 ## 배열
 * [x] 배열타입은 어떻게 표현할까요? 배열은 Key가 항상 int인 Map처럼 표현합니다. <br/>실제로 둘은 매우 유사한 부분이 많습니다.
-```go
+```namu
 myArray int[] # int 배열입니다.
 myArray2 := int[]() # 배열은 객체이므로, 생성자도 있죠.
 ```
 * [x] 중괄호로 Literal 상수를 표현합니다.
-```go
+```namu
 myArray3 := {2, 3, 4} # 원소 2, 3, 4를 보고 int배열이라는 걸 유추합니다.
 ```
 * [x] 모든 container는 유동적인 size를 갖습니다.
 * [x] 전통을 따라, Index는 0부터 시작합니다.
 * [x] 대괄호로 원소에 접근합니다.
-```go
+```namu
 myArray.add(5)
 ++myArray[0] == 6 # true
 ```
@@ -102,7 +102,7 @@ myArray.add(5)
 * [x] `..` 으로 표현합니다. 정수의 범위를 표현합니다.
 * [x] container의 일종이므로, 객체입니다.
 * [x] 끝은 포함되지 않아요(exclusive). 예를들어 1..3 이라고 하면 {1, 2} 2개의 값까지만 의미해요.
-```go
+```namu
 "message"[1..3] # "es"
 for n in 2..5
  print(n) # 234 출력
@@ -111,7 +111,7 @@ for n in 2..5
 ## if
 * [x] if, else를 제공합니다.
 * [x] namulang은 소괄호가 싫습니다. 조건절에 소괄호를 넣지 않습니다.
-```go
+```namu
 if a == 5
   foo(1)
 else if a == 7
@@ -128,7 +128,7 @@ else
 * [x] 모든 Block문은 Scope를 표현합니다. Scope에 대해서는 나중에 더 얘기해보죠.
 * [x] `:` 는 블록문을 붙여서 쓸 수 있어요.
 * [x] `;` 는 이전 줄과 같은 블록문에 있는 구문을 한줄에 붙여 쓰겠다는 의미입니다.
-```go
+```namu
 if val == 0 # 2번: 위의 1번과 같은 코드입니다.
   print("1")
   print("2")
@@ -138,7 +138,7 @@ if val == 0: print("1"); print("2")
 
 * [x] `:`를 응용하면 이렇게도 쓸 수 있어요.
 
-```go
+```namu
 if val == 0: if val > 0: print("ok") # `:`를 2번 했어요.
   else: print("no") # 이 else는 indent를 1번 했죠? 그래서 두번째 if에 대한 else예요.
 
@@ -153,14 +153,14 @@ if val == 0
 
 * [x] namulang은 비어있는 블록문을 가능하면 피하고 싶습니다.
 * 꼭 명시해야하는 상황이라면 `: ;` 로 표현합니다.
-```go
+```namu
 if val == 0: ;
 else: val = 1
 ```
 
 ## while
 * [x] 조건식이 참(true) 일 동안 블록문을 반복 실행해요.
-```go
+```namu
 # while <조건절>
 #  <블록문>
 cnt := 0
@@ -172,7 +172,7 @@ while cnt++ < 5
 * [x] `for`는 container를 순회합니다.
 * [x] `break`는 가장 최근의 `while` 혹은 `for`을 벗어납니다.
 * [x] `next`는 다음 원소로 넘어갑니다.
-```go
+```namu
 # for <변수명> in <컨테이너>
 #    <블록문>
 arr := {1, 2, 3}
@@ -186,7 +186,7 @@ for n in arr
 ```
 ## Explicit 캐스팅
 * [x] `as` 를 사용해서 다른 타입으로 변경할 수 있어요.
-```go
+```namu
 val1 := 0 # int
 val2 := var1 as flt # val2는 flt이고 0.0 값을 갖죠.
 '0' as str # "0"
@@ -209,7 +209,7 @@ val2 := var1 as flt # val2는 flt이고 0.0 값을 갖죠.
 
 * [x] 사용자가 만든 타입일 경우, upcasting만 지원 되요.
 * [x] 2단계를 거쳐서 Implicit 캐스팅이 일어나진 않아요.
-```go
+```namu
 foo(a int)
  print(a)
 val1 := 27 as byte
@@ -221,7 +221,7 @@ val2 := foo(val1) # <-- 에러
 
 ## 연산자들
 * [x] 단형연산자 당연히 지원하고요.
-```go
+```namu
 var := 3
 ++var # 4, 전위 연산자도 되구요
 var-- # 4, 후위도 되요
@@ -229,7 +229,7 @@ var-- # 4, 후위도 되요
 ```
 
 * [x] 2항도 지원합니다.
-```go
+```namu
 var1 := 1
 var2 := 3
 var1 + var2 # 4
@@ -243,14 +243,14 @@ var2 == (3 - 2) # false, 소괄호를 쓰면 계산 우선순위가 높아져요
 ```
 
 * [ ] `==` 는 value equality를, `===` 를 reference equality를 검사합니다.
-```go
+```namu
 val1 := 1
 val2 := 1
 val1 == val2 # true
 val1 === val2 # false
 ```
 * [x] 비트연산 지원합니다.
-```go
+```namu
 var1 := 3 # 3:  0011
 var1 >> 1 # 1:  0001
 var1 << 2 # 12: 1100
@@ -259,7 +259,7 @@ var1 & 2 # 2: 0010
 60 ^ 13 # 49: 111100 ^ 001101 = 110001
 ```
 * [x] 할당연산자도 지원합니다.
-```go
+```namu
 var1 := 0
 var1 = 2 # 2
 var1 += 1 # 3
@@ -274,7 +274,7 @@ var1 &= 2 # var1 = var1 & 2 --> 2
 ## 함수
 * [x] parameter 목록과 반환형, Block문이 정의된 것을 함수라고 합니다.
 * [x] 프로퍼티때와 마찬가지로, 함수의 반환형 역시 뒤에 옵니다.
-```go
+```namu
 # foo() 함수는 int, flt, char를 인자로 받고 아무것도 반환하지 않는(void) 함수입니다.
 foo(a int, b flt, c char) void
     print(a + b + c) # print문은 기본 제공되는 함수로, 화면에 값을 출력합니다.
@@ -283,7 +283,7 @@ foo(a int, b flt, c char) void
 * [x] 위에서 제가 언급한 함수 정의에 함수명이 없다는 점을 눈치채셨나요?
 * [ ] 함수명을 적지 않으면 람다함수가 됩니다. 단, 람다함수는 반드시 함수 호출 안에서 적어야 돼요.
 * [ ] 람다함수는 parameter타입과 반환형을 생략할 수 있어요.
-```go
+```namu
 if true
   runLambda(val1, (a, b)
     a + b
@@ -291,13 +291,13 @@ if true
 ```
 
 * [ ] 앞에 정의한 람다를 다음처럼 한줄에 적을 수 있습니다.
-```go
+```namu
 runLambda(val1, (a, b): a + b, 33)
 ```
 
 * `ret` 는 값을 반환하고 함수를 종료합니다.
 * [ ] `...` 로 가변 인자를 표현할 수 있어요. 가변인자는 인자목록 끝에 정의해야 돼요.
-```go
+```namu
 sum(args... int) int
     sum := 0
     for a in args # args 는 int[] 과 같은 거예요.
@@ -309,7 +309,7 @@ sum(args... int) int
 * [x] namulang은 OOP언어입니다.
 * [x] 객체를 만드는 방법은 2가지가 있어요. 하나는 새로운 객체를 만드는 것이고, 다른 하나는 이미 만든 객체를 복제 하는 거예요.
 * [x] 새로운 객체를 만들때는 다음 처럼 하면 돼요.
-```go
+```namu
 # def <객체이름>
 #    <정의블록문>
 def person
@@ -323,7 +323,7 @@ def person
 * [x] 함수 안에서 이 함수를 소유한 객체를 `me` 로 접근합니다.
 * [x] `me` 는 생략이 가능합니다. 자세한 내용은 Scope에서 다룹니다.
 
-```go
+```namu
 def Person
     age := 0
     say() void: print("I'm ${me.age} yo.\n") # 여기서 me를 생략할 수 있단 얘기죠.
@@ -341,7 +341,7 @@ main() void
 * [x] 생성자는 `ctor` 이라고 하는 고유 함수명을 사용합니다.
 * [x] 생성자를 정의할 때 반환형은 생략합니다.
 
-```go
+```namu
 def Food
     name str
     price int
@@ -353,7 +353,7 @@ pizza := Food("pizza", 15000)
 * [ ] 생성자 안에서만 `ctor`로 생성자를 호출할 수 있습니다.
 * [x] 내부적으로 생성자는 객체 생성되고 나서 자동으로 호출됩니다.
 * [ ] 즉, 생성자 안에서 `ctor`로 또 호출한다고 해서 객체가 또 생기는 건 아니란 얘기입니다.
-```go
+```namu
 def Food
     name str
     price int
@@ -373,7 +373,7 @@ print(Food().name) # "defaultName"
 * [x] 이 `pack`은 시스템이 가져올 수 있는(import) module의 최소 단위입니다.
 * [x] `pack`은 결국 `def`처럼, 사용자가 정의한 객체에 불과합니다.
 
-```go
+```namu
 # file "a.nm" --
 pack example # 이 파일은 example이라는 객체를 `pack`으로 삼았습니다.
 # 여기서부터는 사실 example이라는 객체의 내부입니다.
@@ -393,7 +393,7 @@ def person # person 이라는 타입도 갖습니다.
 * [x] `main()` 함수는 반환형이 `void` 혹은 `int` 여야 합니다.
 * [x] `main()` 함수는 parameter가 비어있거나 `str[]` 여야 합니다.
 
-```go
+```namu
 # file "b.nm" --
 pack example
 # example의 scope 입니다. 그러니 파일이 달라도 example의 모든 식별자에 바로 접근 가능합니다.
@@ -424,7 +424,7 @@ main() void
      해당 파일의 코드가 실행될때만 scope이 등록됩니다.
  * [x] 보통 file scope에 외부 pack을 import 하기 위한 코드를 작성합니다.
 
-```go
+```namu
 pack nb_example
 # 여기서부터는 pack scope:
 age := 27 # nb_example.a
@@ -455,7 +455,7 @@ main() void
 * [x] 하나의 scope 안에서 같은 식별자를 정의할 수 없어요.
 * [x] 위 얘기는 scope이 다르다면 이름이 같아도 된다는 뜻이죠.
 
-```go
+```namu
 # file "a.nm" --
 pack example
 # 여기서부터는 pack scope.
@@ -488,7 +488,7 @@ main() void
 
 * [ ] obj가 아니라 pack scope 혹은 file scope 에 속한 식별자에 접근할때는 `pack`을 사용합니다.
 
-```go
+```namu
 scope := "file"
 pack example
 scope := "pack"
@@ -505,7 +505,7 @@ def A
 ## 오버로딩
 * [x] 오버로딩을 지원합니다.
 
-```go
+```namu
 add(a str, b str) str
     a + b
 add(a int, b int) int
@@ -518,7 +518,7 @@ add(a int, b int) int
     * 2) mutable 속성을 갖는 인자의 경우, 참조에 의한 복사가 되요.
 * [x] immutable은 primitive 객체에만 적용되는 것으로, 사용자는 자신이 정의한 객체에 immutable 속성을 줄 수 있는 방법은 없어요.
 
-```go
+```namu
 def Person
   age := 0
 
@@ -544,7 +544,7 @@ main() void
 * [ ] 함수 안에서 정의하더라도 아무것도 capture하지 않습니다.
 * [ ] 독립적이니, 외부에서 중첩객체를 정의하는 것도 가능합니다.
 
-```go
+```namu
 def person
   def house
     address str
@@ -570,7 +570,7 @@ main() void
 ## 중첩 함수
 * [ ] 객체를 정의할 수 있다면 함수도 정의할 수 있어야 합니다.
 
-```go
+```namu
 def teacher
   checkAttendence() void
     def student
@@ -589,7 +589,7 @@ main() void
 * [ ] 중첩 함수는 외부함수와 같은 obj scope을 사용합니다.
 * [ ] 중첩 함수는 정의 시점까지의 외부 식별자에 접근합니다.
 * [ ] 중첩 함수는 호출 시점까지의 outer scope을 capture 합니다.
-```go
+```namu
 def app
   foo() void
       arr := {1, 2, 3} # (1)
@@ -607,7 +607,7 @@ def app
 ## 클로저
 * [x] 함수를 다른 context로 넘기면(인자로 넣거나, 함수에서 반환) 클로져가 됩니다.
 * [x] 클로져 호출시에는 me 가 필요 없습니다.
-```go
+```namu
 def app
   func() int
   foo(n int) func
@@ -623,7 +623,7 @@ def app
 
 ## is
 * [x] `A is B` 는 A가 B 타입일때 true가 반환됩니다.
-```go
+```namu
 value := get()
 if value is flt
   print(value as flt)
@@ -631,7 +631,7 @@ if value is flt
 ## in
 * [x] `A in B` 는 B container의 A가 원소로 들어가 있으면 true 입니다.
 * [x] `in`은 value equality 관점에서 원소가 존재하는지를 검사합니다.
-```go
+```namu
 arr := {1, 2, 3}
 2 in arr # true
 ```
@@ -644,7 +644,7 @@ arr := {1, 2, 3}
 * [ ] 기호나 `in`, `is`로 시작하지 않는 경우, 해당 검사는 `==`로 간주합니다.
 * [ ] 위의 경우 `,` 를 통해 여러가지 값들 중 하나라도 매칭되는지 검사 할 수 있습니다.
 * [ ] fallthrough 를 지원하지 않습니다.
-```go
+```namu
 # matchers: (
 #    (<inline-expr> [, <inline-expr>]*)* <indentBlock>
 #    | in <inline-expr> <indentBlock>
@@ -676,7 +676,7 @@ while true
 * [ ] 이때는 파라메터를 정의할 때 타입 없이 `=프로퍼티명`을 적습니다.
 * [ ] 이 기능을 사용하면 함수의 정의를 비워도 abstract 가 아닙니다.
 
-```go
+```namu
 def A
     age := 0
     name str
@@ -696,7 +696,7 @@ def A
 * [ ] 생성자 뿐만 아니라 함수 정의시라면 다 사용합니다.
 * [ ] 람다에서도 동작합니다.
 
-```go
+```namu
 def a
     listener onClick
     onClick(@Button) int # abstract
@@ -718,7 +718,7 @@ main() void
 * [x] 불완전객체에 대해서 `@`를 사용하면 첫글자가 소문자로 풀어집니다.
 * [ ] 함수 타입 접근시에도 사용합니다.
 
-```go
+```namu
 def Abc
     foo(n int, x int) int: n + x
     boo(@int) int: int + x # err. int는 `@`를 사용할 수 없다.
@@ -729,7 +729,7 @@ koo(@Abc) int # --> abc Abc 로 풀어집니다.
 
 * [?] 당연히, `@Abe` 와 `=Abe`를 같이 쓸 수 없지요.
 
-```go
+```namu
 =@abe
 ```
 
@@ -745,7 +745,7 @@ koo(@Abc) int # --> abc Abc 로 풀어집니다.
 * [x] 완전객체를 protected 생성자로 만들면 싱글톤이 됩니다.
 * [x] `def` 시 소괄호를 사용해서 객체완전자를 정의하면 그 origin 객체는 완전객체가 됩니다.
 
-```go
+```namu
 # def <STRING> `(` <arguments> `)`
 #    <defBlock>
 def person(1, "default") # 객체완전자
@@ -762,7 +762,7 @@ main() void
 * [ ] 불완전객체는 극히 제한된 일부 하위요소(함수, 프로퍼티)만 사용이 가능합니다.
 * [ ] 불완전객체로 선언하려면 객체명을 대문자로 시작합니다.
 
-```go
+```namu
 def Person
   name str
 print(Person.name) # 에러! 불완전객체를 바로 사용할 수 없습니다.
@@ -772,7 +772,7 @@ print(Person().name) # ""
 * [ ] 정의할당문을 통해서 새로운 프로퍼티를 만들고, 그곳으로 불완전객체에 대한 참조를 옮길 수 있습니다.
 * [ ] 하지만 그 프로퍼티또한 불완전객체일 뿐입니다. 그러니 물론 프로퍼티 정의시 이름을 대문자로 시작합니다.
 
-```go
+```namu
 def ComplexLongNameBigCompanyParser
   ctor(): ret
   parse()
@@ -789,7 +789,7 @@ ShortParser := ComplexLongNameBigCompanyParser # ShortParser의 이름이 대문
 * [x] origin 객체여야만 객체를 생성할 수 있는게 아닙니다. 모든 객체는 객체를 생성할 수 있습니다.
 * [x] origin 객체여야만 타입을 표현하는 건 아닙니다. 모든 객체는 타입으로 표현될 수 있습니다.
 
-```go
+```namu
 def person()
   name := "default"
 
@@ -821,7 +821,7 @@ outerFunc(p p1) str # 에러! p1은 어디까지나 main() 안에서 정의되�
 * [x] attribute / constraint를 namulang에서는 스타일로 대체해서 표현합니다.
 * [x] 예를들어, 식별자이름 앞에 `_` 를 붙이면 `protected` 접근제한자를 의미합니다.
 
-```go
+```namu
 def Person
   name := "Diana"
   _age := 38
@@ -832,7 +832,7 @@ print(p.age) # 에러. 숙녀에게 나이 묻는 거 아닙니다.
 
 * [x] 대문자로만 적으면 상수입니다.
 
-```go
+```namu
 def Person
   NAME := "Chales"
 p Person
@@ -843,7 +843,7 @@ p.NAME = "doraemong" # 에러. NAME의 값은 한번 적으면, 변경될 수 �
 * [x] origin 객체명을 소문자로 시작하면 완전객체 입니다.
 * [x] 소문자로 시작하고, 객체완전자를 적지않으면 알아서 기본생성자를 통한 객체완전자로 인식합니다.
 
-```go
+```namu
 # 이제 왜 앞선 예제들이 가끔씩 소문자로 시작했는지 아시겠죠?
 def person # 객체명이 소문자로 시작한다는 것은,
            # 이 객체의 개발자는 이것을 일반객체처럼 다루길 원한다는 뜻입니다.
@@ -857,7 +857,7 @@ print(person.name) # "default"
 ## 타입 추론
 * [x] 변수를 정의할 때, 함수에 인자를 넘길 때 타입을 생략하면 값을 통해 유추합니다.
 
-```go
+```namu
 space := 42 # int
 spaces := {2, 35.5} # flt
 spaces2 := {3, 6.34, "wow"} # 에러! flt -> string은 implicit 캐스팅을 지원하지 않습니다.
@@ -865,7 +865,7 @@ spaces2 := {3, 6.34, "wow"} # 에러! flt -> string은 implicit 캐스팅을 지
 
 * [x] 람다의 반환형/param타입도 추론 마찬가지 입니다.
 
-```go
+```namu
 onClick(btn Button) int
 
 click(btn Button, onclick onClick) int
@@ -882,7 +882,7 @@ main() void
 * [ ] `getter`와 `setter` 정의할 때 소괄호를 넣지 않습니다.
 * [ ] `setter`시 외부에서 넣은 값은 `rhs`에 담겨 있습니다.
 
-```go
+```namu
 def person
   age int
     get
@@ -900,7 +900,7 @@ main() void
 * [ ] 값을 초기화한 프로퍼티에도 `getter`, `setter`를 넣을 수 있습니다.
 * [ ] 초기화한 값은 `it`에 담겨 있습니다.
 
-```go
+```namu
 def person
   age := 22
     get: it
@@ -916,7 +916,7 @@ main() void
 함수에서도 `getter`, `setter`를 지정할 수 있습니다.
 * [ ] 프로퍼티에 대한 참조를 함수에 넘길 수는 없습니다.
 
-```go
+```namu
 main() void
   age := 22
     get: it
@@ -933,7 +933,7 @@ foo(n int) # age의 get한 값이 n에 들어갈 뿐입니다.
 
 * [ ] `getter`, `setter` 를 생략하면 기본동작으로 실행됩니다.
 
-```go
+```namu
 age int # 값이 없는 프로퍼티 입니다.
   get: 22
   # 값이 없는데 set이 없습니다. 즉 set 호출은 에러입니다.
@@ -966,7 +966,7 @@ typedef A B;
 * [ ] 그 블록문을 실행할때 대상이 되는 expr의 값이 `it` 에 담겨있습니다.
 * [ ] `it`은 참조하는 코드가 있어야 생성됩니다.
 
-```go
+```namu
 for n in {1, 2, 3}
   if it.size == 3 # it은 container 입니다.
     print(n)
@@ -995,7 +995,7 @@ with foo()
 * [x] 정의문은 가독성 문제가 발생하므로 표현식이 아닙니다.
 * [x] ret, break 등 흐름에 영향을 주는 구문은 표현식이 아니예요.
 
-```go
+```namu
 isGood := true
 max := if !isGood
     print("1")
@@ -1016,7 +1016,7 @@ b := if foo()
 
 * [x] assignment는 expression이 아닙니다. 혼란을 일으키며, 굳이 지원했을때의 장점이 없습니다.
 
-```go
+```namu
 if a = get() # 만약 assignment가 expression이라면, a가 0이 아니면 true가 될 것입니다.
              # 그런데 굳이 이렇게까지 해야할까요?
 foo(a = get(), food = getFood()) # a를 get()로부터 할당하고, 그 a를 foo에 넣습니다.
@@ -1037,7 +1037,7 @@ foo(a, food)
 * [ ] `with`는 주어진 정의문 혹은 obj의 scope을 주어진 블록문 내부에서만 최상위 objscope으로 추가합니다.
 * [x] 이것을 확장이라고 표현합니다.
 
-```go
+```namu
 def Person: age := 22
 
 main() void
@@ -1056,7 +1056,7 @@ main() void
 * [ ] 블록문을 제공하지 않고도 `with`를 사용할 수 있습니다.
 * [ ] 이 경우, 해당 시점부터 `with` 구문을 가지는 블록문에서 벗어날때까지 지속됩니다.
 
-```go
+```namu
 pack example
 age := 23 # example.age 입니다.
 
@@ -1083,7 +1083,7 @@ main() void
 * [x] 반면 inline `with`는 무언가 값을 내보내는 것이 아닙니다. 따라서 정의문입니다.
 * [ ] 이 inline `with` 구문 간에 우선순위는 없습니다. 따라서 확장되는 식별자가 겹치지 않도록 조심해야 합니다.
 
-```go
+```namu
 def ceo
     sayHello() void: print("work more\n")
 def developer
@@ -1105,7 +1105,7 @@ main() void
 
 * [ ] 만약 inline with를 하는 대상의 일부분만을 확장하려면 only를 사용합니다.
 
-```go
+```namu
 def A
   foo() void: ...
   boo() void: ...
@@ -1150,7 +1150,7 @@ main() void
 
 * [ ] `def` 안에서 `with`는 항상 맨 앞에 나와야 합니다.
 
-```go
+```namu
 def Developer
     sayHello() void: ...
     with Person # `with` 규칙에 따르면 이 시점부터의 obj scope 보다 우선됩니다.
@@ -1166,7 +1166,7 @@ def Developer
 * [ ] 오버라이딩이란 의미로 함수명/프로퍼티명 앞에 `+` 를 붙여야 합니다.
 * [ ] `_` 기호와 순서는 상관이 없습니다.
 
-```go
+```namu
 def Person
     name str
     sayName() str: name
@@ -1179,7 +1179,7 @@ def Developer
 
 * [ ] 확장은 상속과 유사합니다.
 
-```go
+```namu
 main() void
     b B
     b.boo() # "B::foo()"
@@ -1198,7 +1198,7 @@ def B
 
 * [ ] 하지만 분명히 다릅니다.
 
-```go
+```namu
 pack example
 
 def A
@@ -1222,7 +1222,7 @@ main() void
 * [ ] 그러므로 결과는 `A::foo()` 가 됩니다.
 * [ ] 이렇게 오버라이딩 한 확장한 타입의 원본 함수를 그대로 호출하려면 `super` 를 사용합니다.
 
-```go
+```namu
 def A
     boo() void
         foo()
@@ -1243,7 +1243,7 @@ main() void
 * [ ] `A::B`는 `A.B`와 마찬가지로 A에 있는 B에 접근합니다. 단, 이 과정에서 obj scope이 변경되지 않습니다.
 * [ ] 단 `A`는 현재 `me`가 확장한 타입이어야 합니다.
 
-```go
+```namu
 pack example
 
 def A
@@ -1272,7 +1272,7 @@ main() void
 * [ ] 당연히 `with`를 여러개 할 수 있습니다.
 * [ ] 식별자가 겹칠 경우, override를 하면 해결이 가능합니다.
 
-```go
+```namu
 def Person
     name := ""
     sayName() str: name
@@ -1300,7 +1300,7 @@ def Developer
 * [ ] 불완전객체는 자신의 하위 요소들을 사용하지 못합니다.
 * [ ] 그런데 안에 완전객체가 중첩객체로 들어가 있으면 어떻게 될까요?
 
-```go
+```namu
 def Food
     printName() void
         print("Um... I don't know")
@@ -1320,7 +1320,7 @@ main() void
 * [ ] 함수/프로퍼티의 실행 가능한가에 대한 표현은 그 함수를 가지고 있는 origin 객체가 불완전이냐 아니냐로 표현됩니다.
 * [ ] 위의 예제에 with를 섞어주면, 다른 언어에서 static이라고 부르는 기능이 됩니다.
 
-```go
+```namu
 def Food
     printName() void
         print("Um... I don't know")
@@ -1337,7 +1337,7 @@ main() void
 
 * [ ] 그러나 함수의 정의된 객체가 완전객체이므로 확장된 불완전객체에서도 바로 사용할 수 있다는 점 때문에, 다음과 같이 헷갈릴 수 있습니다.
 
-```go
+```namu
 def a
   foo() void: boo()
   boo() void: print("a::boo()\n")
@@ -1355,7 +1355,7 @@ b.foo() # foo()가 정의된 곳은 b가 아니라 a 이므로
 * [ ] 그러니 B객체에 foo()를 호출하면 B가 me obj로 등록되는 게 자연스럽습니다.
 * [ ] 여기까지의 내용을 응용하면 불완전객체를 프로퍼티로 받아 `with`로 함으로써 static 처럼 사용할 수 있습니다.
 
-```go
+```namu
 def A
   age := 5
 def B
@@ -1368,7 +1368,7 @@ print(B.age)
 * [ ] 아시다시피 프로퍼티는 값을 바꿀 수 있습니다.
 * [ ] 그렇다면 `with` 한 프로퍼티도 값을 바꿀 수 있어야 합니다.
 
-```go
+```namu
 def person
     age := 2
 main() void
@@ -1382,7 +1382,7 @@ main() void
 ```
 * [ ] 이것을 응용하면 다른 언어에서 delegate 키워드로 제공하는 것을 대신할 수 있습니다.
 
-```go
+```namu
 def Pet
     name str
     eat() void: print("I can't eat")
@@ -1429,7 +1429,7 @@ main() void
 * [x] seedling 언어는 namu 언어와 거의 똑같습니다.
 * [ ] import 하려는 pack들의 충돌 문제를 완화할 수 있습니다.
 
-```go
+```namu
 def manifest
   import fjson@chales.lee:1.2.* as json1
   import gjson@giigle:0.7.* ~ 0.8.5 as json2
@@ -1437,7 +1437,7 @@ def manifest
 
 * [ ] import 기능 2은 `with`나 `:=`를 사용합니다.
 
-```go
+```namu
 with openai # 이제 openai pack의 모든 sub가 이 파일에 확장됩니다.
 
 main() void
@@ -1451,7 +1451,7 @@ main() void
 
 * [ ] 하나의 객체만 import 하고 싶다면 `:=` 를 사용하면 됩니다.
 
-```go
+```namu
 # import os.openai 하고 싶다면:
 openai := os.openai
 
@@ -1461,7 +1461,7 @@ main() void
 
 * [ ] 2개 이상의 여러개의 일부만 import를 하고 싶다면 `with only`를 응용합니다.
 
-```go
+```namu
 # 아래를 하고 싶다면:
 #  import os.openai.Parser
 #  import os.openai.parseText
@@ -1489,7 +1489,7 @@ main() void
 * [ ] 이를 ErrorableType이라고 합니다.
 * [ ] 참고로, null 도 err를 확장한 객체에 불과합니다.
 
-```go
+```namu
 getElem(key str) int? # int일 수도 있고 에러(? 기호) 일 수도 있습니다.
     if key == "": ret outOfBoundErr
     ret map[key]
@@ -1503,7 +1503,7 @@ main() void
 
 * [ ] ErrorableType은 결과적으로 처리를 지연시키는 효과를 가집니다.
 
-```go
+```namu
 getElem(key str) int? # int일 수도 있고 에러(? 기호) 일 수도 있습니다.
     if key == "": ret outOfBoundErr
     ret map[key]
@@ -1527,7 +1527,7 @@ main() void
 * [ ] 일반적인 언어와 달리 try, catch가 없습니다. 기능이 부족하다는 관점이 아니라, 불필요한 개념을 압축한 것이라고 생각해주세요.
 * [ ] 블록문에 대한 예외처리를 할 수 없습니다. 한줄마다 해야 합니다.
 
-```go
+```namu
 arr := getArrayFrom(...) # 얼마나 size가 되는지 모릅니다.
 print(arr[3]) # 그래도 일단 접근해보자!
               # 만약 size가 3 이하일 경우, array 객체로부터 outOfBoundErr가 발생합니다.
@@ -1542,7 +1542,7 @@ doSomethingWhenNoError()
 * [x] 익셉션이 처리되지 못하면, 그 시점부터 callstack이 남겨집니다.
 * [ ] 만약 정의할당 혹은 할당 연산 도중에 익셉션이 발생했다면, 예외처리시 `ret`를 하거나 정상적인 값으로 채워야 합니다.
 
-```go
+```namu
 def arr
     get(n int) int # 반환형은 errorable type이 아닙니다.
         if n == 3: ret outOfBoundErr # 그런데 갑자기 err를 반환합니다. 즉 익셉션입니다.
@@ -1560,7 +1560,7 @@ main() void
 
 * [ ] 만약 local scope에 속하지 않은 프로퍼티를 할당연산 도중에 exception의 예외처리를 하면, 반드시 이 프로퍼티의 값을 채워야 합니다.
 
-```go
+```namu
 def person
     age int
     foo() void
@@ -1579,7 +1579,7 @@ def person
 * [ ] abstract 객체를 확장한 객체는 모든 abstract 요소를 오버라이딩해야 객체로 생성할 수 있습니다.
 * [ ] abstract 함수는 body를 명시하지 않으면 됩니다.
 
-```go
+```namu
 add(a int, b int) int # 이 함수는 abstract 합니다. 이 함수를 바로 호출 할 수 없습니다.
 foo(cl add) int
   ret cl() # 타입으로 사용가능합니다.
@@ -1594,7 +1594,7 @@ main() void
 * [?] 바로 그 초기값이 없는 프로퍼티를 만들어 놓고 `get`, `set`을 생략해버리면 인터프리터 입장에서 그 기본 동작으로, 어떤 것도 대신 해줄 수 없습니다. 즉 호출시 컴파일 에러로 처리하는 게 최선입니다.
 * [?] 그러니 `get`, `set`을 정의할 뿐 구현부를 비워놓으면 `get`도 `set` 도 불가능한, abstract 한 프로퍼티가 됩니다.
 
-```go
+```namu
 def Base
     age int
         get; set; # 초기값이 없는데 getter, setter를 지정한다는 건, 사용자가 이 프로퍼티에 대한 get과 set을
@@ -1606,7 +1606,7 @@ def Base
 
 * [?] 두번째 방법은 abstract 타입으로 정의하는 겁니다.
 
-```go
+```namu
 def Base # abstract를 가지고 있으니 불완전객체로 정의해야 했습니다.
     fly() void # abstract 함수입니다.
 
@@ -1618,7 +1618,7 @@ def Derived
 
 * [ ] abstract 객체로부터 객체를 생성하고 싶다면 반드시 abstract 요소를 모두 오버라이딩으로 채워야 합니다.
 
-```go
+```namu
 def Base
     age int: get;set # abstract 프로퍼티
     fly() void # abstract 함수
@@ -1636,7 +1636,7 @@ main() void
 
 * [ ] abstract 타입으로 프로퍼티를 만들었어도 생성자에서 채우면 abstract가 아닙니다.
 
-```go
+```namu
 def Base # abstract 객체 입니다.
     fly() void # abstract 함수입니다.
 
@@ -1672,7 +1672,7 @@ def Derived
 * [x] namulang은 함수타입을 제공하지 않습니다.
 * [x] 함수에 대한 정의 자체가 함수에 대한 타입입니다.
 
-```go
+```namu
 def Person # 우리는 객체를 정의했고,
   name str
 p Person # 정의했으니 타입으로 쓸 수 있습니다.
@@ -1688,7 +1688,7 @@ main() void
 
 * [ ] 함수 이름만 가지고 구분이 되지 않으면 signature를 적어야 합니다.
 
-```go
+```namu
 foo(n int) int: ret 0
 foo(n flt) flt: ret 0.1
 dispatch(listener foo(n int)) int
@@ -1697,7 +1697,7 @@ dispatch(listener foo(n int)) int
 
 * [x] 하지만 그보다는 이름을 바꿉시다.
 
-```go
+```namu
 OnEvent(n int): int
 dispatch(listener OnEvent) int
   ret listener(3)
@@ -1712,7 +1712,7 @@ dispatch(listener OnEvent) int
 
 * [x] origin 객체를 정의할때 이름 뒤에 <타입인자목록> 을 추가함으로써 제네릭 객체를 정의할 수 있습니다.
 
-```go
+```namu
 # def 객체이름<타입인자목록>
 #    <정의블록문>
 def adder<T, R>()
@@ -1762,4 +1762,3 @@ main() void
         is, return, and, continue, for, lambda, try, as, def, from,
         nonlocal, while, assert, del, global, not, with, async, elif, if,
         or, yield
-
