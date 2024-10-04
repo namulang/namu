@@ -1132,7 +1132,7 @@ main() void
 * [ ] 그러니 `with`를 `def` 안에서 사용하는 것은 완전히 허용되어야 합니다.
 * [x] 그러면 과연 `def` 안에서 `with`를 쓰면 어떤 의미를 가질까요?
 
-``` go
+```namu
 def Person
     age int
     name str

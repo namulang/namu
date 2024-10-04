@@ -11,7 +11,7 @@ code.hljs {
     background: #152330
 }
 .hljs-comment, .hljs-quote {
-    color: #40514e;
+    color:#556d69;
     font-style:italic
 }
 .hljs-doctag, .hljs-formula, .hljs-keyword {
@@ -24,19 +24,19 @@ code.hljs {
     color:#56b6c2
 }
 .hljs-operator {
-    color:#3d4e5f
+    color:#355689
 }
 .hljs-type {
     color:#22E78A
 }
 .hljs-addition, .hljs-attribute, .hljs-meta .hljs-string, .hljs-regexp, .hljs-string {
-    color:#607199
+    color:#D12C58
 }
 .hljs-number {
     color:#b9a999
 }
 .hljs-bullet, .hljs-link, .hljs-meta, .hljs-selector-id, .hljs-symbol, .hljs-title {
-    color:#b3a927
+    color:#2d8bff
 }
 .hljs-built_in, .hljs-class .hljs-title, .hljs-title.class_ {
     color:#22E78A
