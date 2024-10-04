@@ -50,6 +50,7 @@ age = 22 # 누군지 몰라도, 부럽네요.
 ```namu
 everything int := 42 # int 타입이며, 모든 것의 값은 42 입니다.
 ```
+* [x] 식별자는 영문자나 `_` 혹은 숫자로 정의합니다만, 첫글자는 오직 영문자만 가능합니다.
 
 ## StringTemplate
 * [ ] StringTemplate도 지원합니다.
