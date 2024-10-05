@@ -27,10 +27,10 @@ code.hljs {
     color:#355689
 }
 .hljs-type {
-    color:#22E78A
+    color:#369d44
 }
 .hljs-addition, .hljs-attribute, .hljs-meta .hljs-string, .hljs-regexp, .hljs-string {
-    color:#D12C58
+    color:#ff507f
 }
 .hljs-number {
     color:#b9a999
@@ -39,7 +39,7 @@ code.hljs {
     color:#2d8bff
 }
 .hljs-built_in, .hljs-class .hljs-title, .hljs-title.class_ {
-    color:#22E78A
+    color:#369d44
 }
 .hljs-emphasis {
     font-style:italic
