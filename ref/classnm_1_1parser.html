@@ -144,6 +144,12 @@ nint&#160;</td><td class="memItemRight" valign="bottom"><b>onTokenRParan</b> (ni
 <tr class="memitem:a48c094f0ca987ce6ec7c8e1d07552732"><td class="memItemLeft" align="right" valign="top"><a id="a48c094f0ca987ce6ec7c8e1d07552732"></a>
 nint&#160;</td><td class="memItemRight" valign="bottom"><b>onTokenComma</b> (nint tok)</td></tr>
 <tr class="separator:a48c094f0ca987ce6ec7c8e1d07552732"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb7a3180783203dee77a5757b4630f6c"><td class="memItemLeft" align="right" valign="top"><a id="aeb7a3180783203dee77a5757b4630f6c"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>onTokenEndOfBraces</b> ()</td></tr>
+<tr class="separator:aeb7a3180783203dee77a5757b4630f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e4bd4e05287aea19870d12f5d569cbb"><td class="memItemLeft" align="right" valign="top"><a id="a2e4bd4e05287aea19870d12f5d569cbb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>onTokenStartOfStrTemplateBrace</b> ()</td></tr>
+<tr class="separator:a2e4bd4e05287aea19870d12f5d569cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ba0b2620f191078494dc9604b4e33c6"><td class="memItemLeft" align="right" valign="top"><a id="a3ba0b2620f191078494dc9604b4e33c6"></a>
 nint&#160;</td><td class="memItemRight" valign="bottom"><b>onIndent</b> (ncnt col, nint tok)</td></tr>
 <tr class="separator:a3ba0b2620f191078494dc9604b4e33c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -345,10 +351,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onSrcArea</b> (const 
 <tr class="memitem:a681b7997fa5127033b96c1b055a26fd4"><td class="memItemLeft" align="right" valign="top"><a id="a681b7997fa5127033b96c1b055a26fd4"></a>
 <a class="el" href="classnm_1_1args.html">args</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onTypeNames</b> (<a class="el" href="classnm_1_1args.html">args</a> &amp;<a class="el" href="classnm_1_1params.html">params</a>, const <a class="el" href="classnm_1_1node.html">node</a> &amp;<a class="el" href="classnm_1_1param.html">param</a>)</td></tr>
 <tr class="separator:a681b7997fa5127033b96c1b055a26fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53206dcb823c7aa8941f70f1b6262b24"><td class="memTemplParams" colspan="2"><a id="a53206dcb823c7aa8941f70f1b6262b24"></a>
-template&lt;typename T , typename... Args&gt; </td></tr>
-<tr class="memitem:a53206dcb823c7aa8941f70f1b6262b24"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><b>onPrimitive</b> (Args... <a class="el" href="classnm_1_1args.html">args</a>)</td></tr>
-<tr class="separator:a53206dcb823c7aa8941f70f1b6262b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4176019c88cc30f74b890030a4622d89"><td class="memTemplParams" colspan="2"><a id="a4176019c88cc30f74b890030a4622d89"></a>
+template&lt;typename T , typename Arg &gt; </td></tr>
+<tr class="memitem:a4176019c88cc30f74b890030a4622d89"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><b>onPrimitive</b> (const Arg &amp;arg)</td></tr>
+<tr class="separator:a4176019c88cc30f74b890030a4622d89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73d6993ba3fb5f3b017615955b2bfc76"><td class="memTemplParams" colspan="2"><a id="a73d6993ba3fb5f3b017615955b2bfc76"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a73d6993ba3fb5f3b017615955b2bfc76"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><b>onPrimitive</b> ()</td></tr>
+<tr class="separator:a73d6993ba3fb5f3b017615955b2bfc76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c3fbf10dfd2b045c72a212035f338d3"><td class="memItemLeft" align="right" valign="top"><a id="a4c3fbf10dfd2b045c72a212035f338d3"></a>
 <a class="el" href="classnm_1_1node.html">node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDefProp</b> (const <a class="el" href="classnm_1_1modifier.html">modifier</a> &amp;mod, const std::string &amp;name, const <a class="el" href="classnm_1_1node.html">node</a> &amp;rhs)</td></tr>
 <tr class="separator:a4c3fbf10dfd2b045c72a212035f338d3"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['narriteration_565',['narrIteration',['../classnarr_iteration.html',1,'']]],
-  ['nbool_566',['nBool',['../classnm_1_1n_bool.html',1,'nm']]],
-  ['nbyte_567',['nByte',['../classnm_1_1n_byte.html',1,'nm']]],
-  ['nchar_568',['nChar',['../classnm_1_1n_char.html',1,'nm']]],
+  ['narriteration_566',['narrIteration',['../classnarr_iteration.html',1,'']]],
+  ['nbool_567',['nBool',['../classnm_1_1n_bool.html',1,'nm']]],
+  ['nbyte_568',['nByte',['../classnm_1_1n_byte.html',1,'nm']]],
   ['ndummyerr_569',['ndummyErr',['../structnm_1_1ndummy_err.html',1,'nm']]],
   ['nerr_570',['nerr',['../structnm_1_1nerr.html',1,'nm']]],
   ['nextexpr_571',['nextExpr',['../classnm_1_1next_expr.html',1,'nm']]],
