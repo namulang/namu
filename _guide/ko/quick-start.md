@@ -31,10 +31,10 @@ true # bool
 3.5 # flt: 4byte float이예요.
 0xff # 255를 뜻하는 16진법 int
 017 # 15를 뜻하는 8진법 int
-'a' # char
-'\0x2B' # ascii 2B(10진수 43)에 해당하는 '+'
-'\43' # ascii '+'. 위와 같은 코드예요.
-# byte도 있어요. 0 ~ 255까지 표현 가능해요.
+"a" # character type 은 존재하지 않습니다.
+"\0x2B" # ascii 2B(10진수 43)에 해당하는 '+'
+"\43" # ascii '+'. 위와 같은 코드입니다.
+# byte도 있어요. 0 ~ 255까지 표현 가능하죠.
 # void 도 있어요. 물론 void 타입의 변수를 만들 수는 없죠.
 ```
 
@@ -55,7 +55,7 @@ everything int := 42 # int 타입이며, 모든 것의 값은 42 입니다.
 ## StringTemplate
 * [ ] StringTemplate도 지원합니다.
 ```namu
-ch := '+'
+ch := "+"
 print("ch=$ch") # "ch=+"
 print("ch=" + ch) # "ch=+"
 ```
@@ -146,9 +146,9 @@ if val == 0: if val > 0: print("ok") # `:`를 2번 했어요.
 ## 풀어쓰면 이런 코드가 됩니다:
 if val == 0
     if val > 0
-        print('ok')
+        print("ok")
     else
-        print('no')
+        print("no")
 ##
 ```
 
@@ -190,9 +190,8 @@ for n in arr
 ```namu
 val1 := 0 # int
 val2 := var1 as flt # val2는 flt이고 0.0 값을 갖죠.
-'0' as str # "0"
+"0" as str # "0"
 "123" as int # 123, 문자를 숫자로 바꿀 수 있죠.
-43 as char # 이건 '+'가 되요. 43 ascii 값이 '+' 거든요.
 ```
 ## Implicit 캐스팅
 * [x] 함수호출시 자동으로 동작하는 캐스팅입니다.
@@ -200,8 +199,7 @@ val2 := var1 as flt # val2는 flt이고 0.0 값을 갖죠.
 
 | 타입 | 변환 가능한 타입 |
 |------|------------------|
-| char | bool, int, byte  |
-| byte | flt, char        |
+| byte | bool, int        |
 | int  | flt, byte, bool  |
 | flt  | int, byte, bool  |
 | bool | flt, byte, int   |
@@ -211,13 +209,13 @@ val2 := var1 as flt # val2는 flt이고 0.0 값을 갖죠.
 * [x] 사용자가 만든 타입일 경우, upcasting만 지원 되요.
 * [x] 2단계를 거쳐서 Implicit 캐스팅이 일어나진 않아요.
 ```namu
-foo(a int)
- print(a)
+foo(a flt)
+    print(a)
 val1 := 27 as byte
 val2 := foo(val1) # <-- 에러
-# val1(byte) --> char --> int  이렇게 암시적 캐스팅이 2번 일어나면 에러가 아니었겠죠.
-# 그러나 암시적 캐스팅은 1번만 일어나요.
-# byte 는 flt, char에 대해서만 암시적 캐스팅이 일어나기 떄문에 이건 에러예요.
+# val1(byte) --> int --> flt 이렇게 암시적 캐스팅이 2번 일어나면 에러가 아니었겠죠.
+# 그러나 암시적 캐스팅은 1번만 일어납니다.
+# byte 는 bool, int에 대해서만 암시적 캐스팅이 일어나기 떄문에 이건 에러입니다.
 ```
 
 ## 연산자들
@@ -276,8 +274,8 @@ var1 &= 2 # var1 = var1 & 2 --> 2
 * [x] parameter 목록과 반환형, Block문이 정의된 것을 함수라고 합니다.
 * [x] 프로퍼티때와 마찬가지로, 함수의 반환형 역시 뒤에 옵니다.
 ```namu
-# foo() 함수는 int, flt, char를 인자로 받고 아무것도 반환하지 않는(void) 함수입니다.
-foo(a int, b flt, c char) void
+# foo() 함수는 int, flt, nbool를 인자로 받고 아무것도 반환하지 않는(void) 함수입니다.
+foo(a int, b flt, c nbool) void
     print(a + b + c) # print문은 기본 제공되는 함수로, 화면에 값을 출력합니다.
 ```
 
@@ -700,7 +698,7 @@ def A
 ```namu
 def a
     listener onClick
-    onClick(@Button) int # abstract
+    onClick(Button') int # abstract
     setListener(listener) void # abstract가 아니다.
     setListener(=onClick) void # 에러! onClick이라는 프로퍼티는 없다.
 
@@ -710,32 +708,32 @@ main() void
     a.dispatch()
 ```
 
-## 변수명을 타입명과 동일하게 하려면 `@`으로 편하게 합니다.
-* [x] 변수 정의시에 `@Abe`라고 정의할 수 있습니다.
-* [x] `@Abe`는 앞자리를 소문자로 한, `abe Abe`로 풀어집니다.
-* [x] `@`를 사용할때는 `int` 같은 primitive type을 사용할 수 없습니다.
+## 변수명을 타입명과 동일하게 하려면 `'`으로 편하게 합니다.
+* [x] 변수 정의시에 `Abe'`라고 정의할 수 있습니다.
+* [x] `Abe'`는 앞자리를 소문자로 한, `abe Abe`로 풀어집니다.
+* [x] `'`를 사용할때는 `int` 같은 primitive type을 사용할 수 없습니다.
 * [x] `person[]` 와 같은 `map`, `array`, `seq` 도 사용 할 수 없습니다.
 * [x] 변수 정의시에 사용하므로 함수 parameter에서도, 본문에서도, 프로퍼티 선언시에도 다 됩니다.
-* [x] 불완전객체에 대해서 `@`를 사용하면 첫글자가 소문자로 풀어집니다.
+* [x] 불완전객체에 대해서 `'`를 사용하면 첫글자가 소문자로 풀어집니다.
 * [ ] 함수 타입 접근시에도 사용합니다.
 
 ```namu
 def Abc
     foo(n int, x int) int: n + x
-    boo(@int) int: int + x # err. int는 `@`를 사용할 수 없다.
+    boo(int') int: int + x # err. int는 `'`를 사용할 수 없다.
 
-koo(@Abc) int # --> abc Abc 로 풀어집니다.
+koo(Abc') int # --> abc Abc 로 풀어집니다.
     ret abc.foo(1, 2)
 ```
 
-* [?] 당연히, `@Abe` 와 `=Abe`를 같이 쓸 수 없지요.
+* [?] 당연히, `Abe'` 와 `=Abe'`를 같이 쓸 수 없지요.
 
 ```namu
-=@abe
+=abe'
 ```
 
 * [?] abe는 프로퍼티를 정의하는게 아니므로 프로퍼티 명1개만 필요합니다.
-* [?] 그러니 `@abe`로 프로퍼티명과 타입을 같이 서술하고자 하는게 의미가 없습니다.
+* [?] 그러니 `abe'`로 프로퍼티명과 타입을 같이 서술하고자 하는게 의미가 없습니다.
 
 ## 클래스라는 건 없습니다
 * [x] 사용자가 `def`를 통해 정의한 것은 클래스가 아니라 객체입니다. 이를 origin 객체라고 합니다.
@@ -1279,7 +1277,7 @@ def Person
     sayName() str: name
 def KeyboardTyper
     name := ""
-    typeKey() char: '\n'
+    typeKey() str: "\n"
 def Developer
     with p Person
     with k KeyboardTyper
@@ -1399,7 +1397,7 @@ def cat
 def ProxyPet1
     _realPet Pet
 
-    ctor(@realPet): ret
+    ctor(realPet'): ret
     eat() void: realPet.eat()
     fly() void: realPet.fly()
     # 이렇게 Pet의 모든 함수에 다 delegate 해줘야 할까요?
@@ -1748,18 +1746,12 @@ main() void
 
 # 끝맺으면서
 * 간결한 언어입니다.
-    * 키워드:
-        pack, def, in, as, is, for, while, next, break, again,
-        with, if, else, ret, enum, get, set, end, only
-    * 선정의 타입:
-        void, err, null, int, super, byte, flt, str, char, true,
-        false, me, it, ctor
-
-* C:    break, case, const, continue, return, default, do, while, else, enum,
-        extern, for, goto, if, signed, sizeof, static, struct, switch, typedef,
-        union, unsigned, volatile, while
+* namu:
+    * pack, def, in, as, is, for, while, next, break, with, if, else, ret, enum, get, set, end, only
+* C:
+    * break, case, const, continue, return, default, do, while, else, enum, extern, for, goto, if,
+    * signed, sizeof, static, struct, switch, typedef, union, unsigned, volatile, while
 * python:
-        await, else, import, pass, break, except, in, raise, class, finally,
-        is, return, and, continue, for, lambda, try, as, def, from,
-        nonlocal, while, assert, del, global, not, with, async, elif, if,
-        or, yield
+    * await, else, import, pass, break, except, in, raise, class, finally, is, return, and, continue,
+    * for, lambda, try, as, def, from, nonlocal, while, assert, del, global, not, with, async, elif,
+    * if, or, yield
