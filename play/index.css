@@ -24,7 +24,7 @@ div#codepad textarea, div#codepad pre {
     white-space: break-spaces;
     padding-left: 50px;
     padding-right: 50px;
-    flex: 1 0 auto;
+    overflow-y: auto;
 }
 
 div#bottom_pane {
@@ -35,19 +35,19 @@ div#bottom_pane {
 div#codepad{
   width: 100%;
   background-color: #152330;
-  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
 }
 
 textarea#ta_codepad {
+    width: 100%;
     position:absolute;
     color: transparent;
     z-index: 1;
     border: none;
-    margin-top: -4px;
     resize: none;
-    overflow-y: hidden;
+    padding-top: 0px;
+    padding-bottom: 0px;
     caret-color: white;
 }
 
@@ -57,7 +57,6 @@ textarea#ta_codepad:focus {
 }
 
 pre#pre_codepad {
-    height:100%;
     z-index: 0;
     margin: 0;
     text-overflow: ellipsis;
@@ -118,7 +117,7 @@ label#lb_verbose {
 }
 
 .scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .scrollbar::-webkit-scrollbar-track {

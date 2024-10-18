@@ -46,10 +46,18 @@ function resizeCodePad() {
     let ta = document.getElementById("ta_codepad");
     let pre = document.getElementById("pre_codepad");
     let preStyle = window.getComputedStyle(document.getElementById('pre_codepad'))
-    //ta.style.paddingLeft = (pre.offsetLeft + 50) + "px";
-    //ta.style.paddingTop = pre.offsetRight + "px";
-    ta.style.width = pre.offsetWidth + "px";
-    ta.style.height = preStyle.height;
+    let top_pane = document.getElementById("top_pane");
+
+    let top_height = top_pane.offsetTop + top_pane.offsetHeight;
+    let bottom_height = document.getElementById("footer")?.offsetHeight || 0;
+    let window_height = window.innerHeight;
+    let codepad_height = window_height - (top_height + bottom_height + 30) + "px";
+
+    ta.style.maxHeight = codepad_height;
+    ta.style.height = codepad_height;
+    pre.style.maxHeight = codepad_height;
+    pre.style.height = codepad_height;
+    ta.style.width = pre.offsetWidth;
 }
 
 function onchangeSrc(value) {
@@ -87,6 +95,10 @@ main() void
 window.onload = function() {
   onchangeSrc('hello-world');
   resizeCodePad();
+
+  var ta = document.getElementById('ta_codepad');
+  var pre = document.getElementById('pre_codepad');
+  document.getElementById("ta_codepad").addEventListener('scroll', (e) => pre.scrollTop = ta.scrollTop, false);
 }
 
 function runNamuSrc(iframeId, src) {
