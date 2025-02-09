@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['setenable_855',['setEnable',['../classnm_1_1logger.html#a7730c4254cad377c559840edce3c36b7',1,'nm::logger::setEnable()'],['../classnm_1_1stream.html#a0f75abbdb37218ebecb5491e0b574b62',1,'nm::stream::setEnable()']]],
-  ['setme_856',['setMe',['../classnm_1_1args.html#adca653c6e95bc3966e5447bc3d0451ac',1,'nm::args']]],
-  ['setreport_857',['setReport',['../classnm_1_1autoslot.html#a393bf57d1027583a6ca75c1d9e99124c',1,'nm::autoslot']]],
-  ['substr_858',['substr',['../classnm_1_1n_str.html#af7a7065859176780cc14b87019636900',1,'nm::nStr']]]
+  ['rel_890',['rel',['../classnm_1_1autoslot.html#a43c15dba55d0d59c4fd3a6d5d3677386',1,'nm::autoslot::rel()'],['../classnm_1_1block_expr.html#a517cd6028285bb4c6016839f3c257e30',1,'nm::blockExpr::rel()'],['../classnm_1_1node.html#a0bb02642191b4ed25621251170d4f227',1,'nm::node::rel()'],['../classiter.html#aaf274264761ec432af9c496d598630d8',1,'iter::rel() override'],['../classiter.html#aaf274264761ec432af9c496d598630d8',1,'iter::rel() override'],['../classnm_1_1frame.html#a3d8ba382b63faabac202303ec2c09888',1,'nm::frame::rel()'],['../classnm_1_1thread.html#add40739f655dd3879d43bf3e37db3fca',1,'nm::thread::rel()']]],
+  ['resize_891',['resize',['../classnm_1_1chunks.html#ac6dc039c7fbe70b027087a490824bc50',1,'nm::chunks']]]
 ];

@@ -114,41 +114,31 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 <div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classnm_1_1mgd_type.html#aa3c7df89f68edcda8e0fdb5147dcd34c">   44</a></span>&#160;        <span class="keywordtype">void</span>* <a class="code" href="classnm_1_1mgd_type.html#aa3c7df89f68edcda8e0fdb5147dcd34c">make</a>() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">static</span> <a class="code" href="classnm_1_1mgd_type.html">mgdType</a> make(<span class="keyword">const</span> std::string&amp; name) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classnm_1_1mgd_type.html">mgdType</a>(name, <a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>(), <a class="code" href="classnm_1_1params.html">params</a>(), !std::is_constructible&lt;T&gt;::value,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                nulOf&lt;node&gt;());</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">static</span> <a class="code" href="classnm_1_1mgd_type.html">mgdType</a> make(<span class="keyword">const</span> <a class="code" href="classnm_1_1params.html">params</a>&amp; ps, <span class="keyword">const</span> <a class="code" href="classnm_1_1node.html">node</a>&amp; ret) {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; t = <a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>();</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classnm_1_1mgd_type.html">mgdType</a>(t.getName(), t, ps, !std::is_constructible&lt;T&gt;::value, ret);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        types&amp; _getSupers() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        types&amp; _getSubs() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        type&amp; _getStatic() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        types** _onGetLeafs() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">void</span> _initSupers(<span class="keyword">const</span> type&amp; super);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        std::string _name;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        types _supers;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        types _subs;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        params _params;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        nbool _isAdt;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        str _ret;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    };</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;} <span class="comment">// namespace nm</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        types&amp; _getSupers() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        types&amp; _getSubs() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="classnm_1_1type.html">type</a>&amp; _getStatic() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        types** _onGetLeafs() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">void</span> _initSupers(<span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; super);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        std::string _name;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        types _supers;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        types _subs;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <a class="code" href="classnm_1_1params.html">params</a> _params;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        nbool _isAdt;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <a class="code" href="classnm_1_1tstr.html">str</a> _ret;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    };</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1clonable_html"><div class="ttname"><a href="classnm_1_1clonable.html">nm::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclassnm_1_1mgd_type_html"><div class="ttname"><a href="classnm_1_1mgd_type.html">nm::mgdType</a></div><div class="ttdef"><b>Definition:</b> mgdType.hpp:12</div></div>
 <div class="ttc" id="aclassnm_1_1mgd_type_html_aa3c7df89f68edcda8e0fdb5147dcd34c"><div class="ttname"><a href="classnm_1_1mgd_type.html#aa3c7df89f68edcda8e0fdb5147dcd34c">nm::mgdType::make</a></div><div class="ttdeci">void * make() const override</div><div class="ttdoc">create an instance to be refered this type.</div></div>
-<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:23</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:24</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1params_html"><div class="ttname"><a href="classnm_1_1params.html">nm::params</a></div><div class="ttdef"><b>Definition:</b> params.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1ttype_html"><div class="ttname"><a href="classnm_1_1ttype.html">nm::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:14</div></div>
+<div class="ttc" id="aclassnm_1_1tstr_html"><div class="ttname"><a href="classnm_1_1tstr.html">nm::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclassnm_1_1type_html"><div class="ttname"><a href="classnm_1_1type.html">nm::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

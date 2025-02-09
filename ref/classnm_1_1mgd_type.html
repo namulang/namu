@@ -67,7 +67,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classnm_1_1mgd_type-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -80,9 +79,10 @@ Inheritance diagram for nm::mgdType:</div>
  <div class="center">
   <img src="classnm_1_1mgd_type.png" usemap="#nm::mgdType_map" alt=""/>
   <map id="nm::mgdType_map" name="nm::mgdType_map">
-<area href="classnm_1_1ntype.html" alt="nm::ntype" shape="rect" coords="0,56,85,80"/>
-<area href="classnm_1_1clonable.html" alt="nm::clonable" shape="rect" coords="95,56,180,80"/>
-<area href="classnm_1_1type.html" alt="nm::type" shape="rect" coords="0,0,85,24"/>
+<area href="classnm_1_1ntype.html" alt="nm::ntype" shape="rect" coords="0,56,112,80"/>
+<area href="classnm_1_1clonable.html" alt="nm::clonable" shape="rect" coords="122,56,234,80"/>
+<area href="classnm_1_1type.html" alt="nm::type" shape="rect" coords="0,0,112,24"/>
+<area href="classnm_1_1func_mgd_type.html" alt="nm::funcMgdType" shape="rect" coords="61,168,173,192"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -234,20 +234,6 @@ virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>cloneDeep</b>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onCloneDeep</b> (const me &amp;from)</td></tr>
 <tr class="separator:a2e39c59bd59ed90f9651e50954d60dee inherit pub_methods_classnm_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae9f19d4692fcbbdd120aad66da0e5624"><td class="memTemplParams" colspan="2"><a id="ae9f19d4692fcbbdd120aad66da0e5624"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ae9f19d4692fcbbdd120aad66da0e5624"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classnm_1_1mgd_type.html">mgdType</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>make</b> (const std::string &amp;name)</td></tr>
-<tr class="separator:ae9f19d4692fcbbdd120aad66da0e5624"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f55d5a49f850a4135efa6516560f869"><td class="memTemplParams" colspan="2"><a id="a8f55d5a49f850a4135efa6516560f869"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8f55d5a49f850a4135efa6516560f869"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classnm_1_1mgd_type.html">mgdType</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>make</b> (const <a class="el" href="classnm_1_1params.html">params</a> &amp;ps, const <a class="el" href="classnm_1_1node.html">node</a> &amp;ret)</td></tr>
-<tr class="separator:a8f55d5a49f850a4135efa6516560f869"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_static_methods_classnm_1_1ntype"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classnm_1_1ntype')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classnm_1_1ntype.html">nm::ntype</a></td></tr>
-<tr class="memitem:a819b24f2993a813b4ee1b9cecd0fd4b5 inherit pub_static_methods_classnm_1_1ntype"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5">deduce</a> (const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;l, const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;r)</td></tr>
-<tr class="separator:a819b24f2993a813b4ee1b9cecd0fd4b5 inherit pub_static_methods_classnm_1_1ntype"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a4fb02eef1094063203489572e55e8df6"><td class="memItemLeft" align="right" valign="top"><a id="a4fb02eef1094063203489572e55e8df6"></a>
@@ -279,6 +265,19 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>_onAddSubClas
 <tr class="memitem:a7d16eb9ad37fa1c6bdaba07f79265806 inherit pro_methods_classnm_1_1type"><td class="memItemLeft" align="right" valign="top"><a id="a7d16eb9ad37fa1c6bdaba07f79265806"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>_setLeafs</b> (types *newLeafs) const</td></tr>
 <tr class="separator:a7d16eb9ad37fa1c6bdaba07f79265806 inherit pro_methods_classnm_1_1type"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10d98db9bec6f1d1d3399ad383b9779f inherit pro_methods_classnm_1_1type"><td class="memItemLeft" align="right" valign="top"><a id="a10d98db9bec6f1d1d3399ad383b9779f"></a>
+virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getNativeName</b> () const</td></tr>
+<tr class="separator:a10d98db9bec6f1d1d3399ad383b9779f inherit pro_methods_classnm_1_1type"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_static_methods_classnm_1_1ntype"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classnm_1_1ntype')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classnm_1_1ntype.html">nm::ntype</a></td></tr>
+<tr class="memitem:a819b24f2993a813b4ee1b9cecd0fd4b5 inherit pub_static_methods_classnm_1_1ntype"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5">deduce</a> (const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;l, const <a class="el" href="classnm_1_1ntype.html">ntype</a> &amp;r)</td></tr>
+<tr class="separator:a819b24f2993a813b4ee1b9cecd0fd4b5 inherit pub_static_methods_classnm_1_1ntype"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classnm_1_1ntype"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classnm_1_1ntype')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classnm_1_1ntype.html">nm::ntype</a></td></tr>
+<tr class="memitem:ab014301bd652f1027c55094e97bdf30e inherit pub_static_attribs_classnm_1_1ntype"><td class="memItemLeft" align="right" valign="top"><a id="ab014301bd652f1027c55094e97bdf30e"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>META_TYPENAME</b> = &quot;ntype&quot;</td></tr>
+<tr class="separator:ab014301bd652f1027c55094e97bdf30e inherit pub_static_attribs_classnm_1_1ntype"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aa3c7df89f68edcda8e0fdb5147dcd34c"></a>

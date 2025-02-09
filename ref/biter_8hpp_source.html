@@ -80,11 +80,11 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> K1, <span class="keyword">typename</span> V1, <span class="keyword">typename</span> TACTIC&gt; <span class="keyword">friend</span> <span class="keyword">class </span>tnmap;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <a class="code" href="classiter.html">iter</a>() { <a class="code" href="classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84">_nextToMatchParamType</a>(); }</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <a class="code" href="classiter.html">iter</a>();</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classiter.html">iter</a>(<a class="code" href="classiteration.html">iteration</a>* newStep): _step(newStep) { <a class="code" href="classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84">_nextToMatchParamType</a>(); }</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classiter.html">iter</a>(<a class="code" href="classiteration.html">iteration</a>* newStep);</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="classiter.html">iter</a>(<span class="keyword">const</span> me&amp; rhs) { _assign(rhs); }</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <a class="code" href="classiter.html">iter</a>(<span class="keyword">const</span> me&amp; rhs);</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    me operator+(ncnt step);</div>
@@ -98,39 +98,50 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    me&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> me&amp; rhs);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">explicit</span> <span class="keyword">operator</span> nbool() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    nbool isFrom(<span class="keyword">const</span> tbicontainable&amp; it) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    nbool isEnd() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    nbool isReversed() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">   33</a></span>&#160;    ncnt <a class="code" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">next</a>(ncnt step) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">const</span> K&amp; getKey() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt; <span class="keyword">const</span> E&amp; getKey()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> getKey().template cast&lt;E&gt;(); }</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classiter.html#aaf274264761ec432af9c496d598630d8">   34</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classiter.html#aaf274264761ec432af9c496d598630d8">rel</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    nbool isFrom(<span class="keyword">const</span> tbicontainable&amp; it) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    nbool isEnd() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">using</span> iterable::getVal;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    V&amp; getVal() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt; E&amp; getVal() { <span class="keywordflow">return</span> getVal().template cast&lt;E&gt;(); }</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">   39</a></span>&#160;    ncnt <a class="code" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">next</a>(ncnt step) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    ncnt prev(ncnt step) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    ncnt stepForward(ncnt step) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    ncnt stepBackward(ncnt step) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">using</span> iterable::setVal;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> setVal(<span class="keyword">const</span> V&amp; new1) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    tbicontainable&lt;K, V&gt;&amp; getContainer() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">const</span> tbicontainable&lt;K, V&gt;&amp; getContainer() const NM_CONST_FUNC(getContainer())</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">const</span> K&amp; getKey() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt; <span class="keyword">const</span> E&amp; getKey()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> getKey().template cast&lt;E&gt;(); }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">using</span> iterable::getVal;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    V&amp; getVal() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;private:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    me&amp; _assign(const me&amp; rhs);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    nbool _onSame(const typeProvidable&amp; rhs) const override;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84">   57</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84">_nextToMatchParamType</a>();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;protected:</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    tstr&lt;<a class="code" href="classiteration.html">iteration</a>&gt; _step;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;};</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt; E&amp; getVal() { <span class="keywordflow">return</span> getVal().template cast&lt;E&gt;(); }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">using</span> iterable::setVal;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> setVal(<span class="keyword">const</span> V&amp; new1) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    tbicontainable&lt;K, V&gt;&amp; getContainer() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">const</span> tbicontainable&lt;K, V&gt;&amp; getContainer() const NM_CONST_FUNC(getContainer())</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;private:</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    me&amp; _assign(const me&amp; rhs);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    nbool _onSame(const typeProvidable&amp; rhs) const override;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classiter.html#a6aa0b8c1cb40aa232e7c2c9a687bdf5b">   66</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classiter.html#a6aa0b8c1cb40aa232e7c2c9a687bdf5b">_nextToMatchParamType</a>(typename <a class="code" href="classiterable.html">iterable</a>::iterationType type);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    ncnt _step(typename <a class="code" href="classiterable.html">iterable</a>::iterationType type, ncnt step);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    ncnt _iterate(typename <a class="code" href="classiterable.html">iterable</a>::iterationType type);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;protected:</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    tstr&lt;<a class="code" href="classiteration.html">iteration</a>&gt; _iteration;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;};</div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
-<div class="ttc" id="aclassiter_html_a49fac8ab2f41f3fe8a63450e1dd60a84"><div class="ttname"><a href="classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84">iter::_nextToMatchParamType</a></div><div class="ttdeci">void _nextToMatchParamType()</div></div>
+<div class="ttc" id="aclassiter_html_a6aa0b8c1cb40aa232e7c2c9a687bdf5b"><div class="ttname"><a href="classiter.html#a6aa0b8c1cb40aa232e7c2c9a687bdf5b">iter::_nextToMatchParamType</a></div><div class="ttdeci">void _nextToMatchParamType(typename iterable::iterationType type)</div></div>
 <div class="ttc" id="aclassiter_html_a79b17f1cb6a7aa6d8b595dac778f73ab"><div class="ttname"><a href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">iter::next</a></div><div class="ttdeci">ncnt next(ncnt step) override</div></div>
+<div class="ttc" id="aclassiter_html_aaf274264761ec432af9c496d598630d8"><div class="ttname"><a href="classiter.html#aaf274264761ec432af9c496d598630d8">iter::rel</a></div><div class="ttdeci">void rel() override</div><div class="ttdoc">once rel(), an iterator enters a state where it can never be reused again.</div></div>
 <div class="ttc" id="aclassiterable_html"><div class="ttname"><a href="classiterable.html">iterable</a></div><div class="ttdef"><b>Definition:</b> biterable.hpp:2</div></div>
 <div class="ttc" id="aclassiteration_html"><div class="ttname"><a href="classiteration.html">iteration</a></div><div class="ttdef"><b>Definition:</b> biteration.hpp:4</div></div>
 </div><!-- fragment --></div><!-- contents -->

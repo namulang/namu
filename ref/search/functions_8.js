@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['logbypass_844',['logBypass',['../classnm_1_1logger.html#a775d4b6c59f068d7c2716cdff923b671',1,'nm::logger::logBypass()'],['../classnm_1_1console_stream.html#a3609d4bffa1312d34bfc9dda9ac928d4',1,'nm::consoleStream::logBypass()'],['../classnm_1_1file_log_stream.html#a0e525dd5af2f273ab6bc5c7af57b1e2e',1,'nm::fileLogStream::logBypass()'],['../classnm_1_1stream.html#a21f40773d9f143e709662086c5581c6e',1,'nm::stream::logBypass()']]]
+  ['iscomplete_876',['isComplete',['../classnm_1_1node.html#af56cea85d24ce2972b6e8c4af3ba1f2f',1,'nm::node::isComplete()'],['../classnm_1_1origin.html#a69f2353df63f7256e83f9a26a69c8d9f',1,'nm::origin::isComplete()']]],
+  ['iscustom_877',['isCustom',['../classnm_1_1ntype.html#ab03216a32307ef18d67776cf5c159262',1,'nm::ntype']]],
+  ['isimpli_878',['isImpli',['../classnm_1_1ntype.html#ad16bb5534df66d9b96b7c952102caa13',1,'nm::ntype']]],
+  ['islooping_879',['isLooping',['../classnm_1_1loop_expr_1_1loop.html#a042337a25de1023a9e20f15f0f98cb0f',1,'nm::loopExpr::loop']]]
 ];

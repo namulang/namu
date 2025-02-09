@@ -93,7 +93,7 @@ $(function() {
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">virtual</span> nbool isTemplate() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">virtual</span> nbool isAbstract() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> std::string&amp; getName() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> std::string&amp; getName() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classnm_1_1type.html#af47c7f7765a7839db72676b3d2059304">   32</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span>* <a class="code" href="classnm_1_1type.html#af47c7f7765a7839db72676b3d2059304">make</a>() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
@@ -130,12 +130,13 @@ $(function() {
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        virtual <span class="keywordtype">void</span> _onAddSubClass(const me&amp; subClass);</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        virtual types** _onGetLeafs() const = 0;</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordtype">void</span> _setLeafs(types* newLeafs) const;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    private:</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        nbool _logInitOk(nbool res);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordtype">void</span> _findLeafs(const <a class="code" href="classnm_1_1type.html">type</a>&amp; cls, types&amp; tray) const;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    };</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;} <span class="comment">// namespace nm</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        virtual const std::<span class="keywordtype">string</span>&amp; _getNativeName() const;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    private:</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        nbool _logInitOk(nbool res);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordtype">void</span> _findLeafs(const <a class="code" href="classnm_1_1type.html">type</a>&amp; cls, types&amp; tray) const;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    };</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1type_html"><div class="ttname"><a href="classnm_1_1type.html">nm::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1type_html_a19575a7ff97372a2206398b1b2fbffd0"><div class="ttname"><a href="classnm_1_1type.html#a19575a7ff97372a2206398b1b2fbffd0">nm::type::getLeafs</a></div><div class="ttdeci">const types &amp; getLeafs() const</div><div class="ttdoc">returns all most derived class from this class.</div></div>
 <div class="ttc" id="aclassnm_1_1type_html_a83f2d96f875defe97e6a436ae827cb11"><div class="ttname"><a href="classnm_1_1type.html#a83f2d96f875defe97e6a436ae827cb11">nm::type::getStatic</a></div><div class="ttdeci">const type &amp; getStatic() const NM_CONST_FUNC(_getStatic()) virtual const nchar *getMetaTypeName() const</div></div>

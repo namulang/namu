@@ -87,6 +87,7 @@ Inheritance diagram for nm::type:</div>
 <area href="classnm_1_1ttype.html" alt="nm::ttype&lt; T &gt;" shape="rect" coords="0,112,415,136"/>
 <area href="classnm_1_1expr_1_1expr_type.html" alt="nm::expr::exprType" shape="rect" coords="425,112,840,136"/>
 <area href="classnm_1_1mgd_type.html" alt="nm::mgdType" shape="rect" coords="850,112,1265,136"/>
+<area href="classnm_1_1func_mgd_type.html" alt="nm::funcMgdType" shape="rect" coords="850,168,1265,192"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -104,9 +105,9 @@ virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isTemplate</
 <tr class="memitem:ac7819b24c845e988eef54296af78fc17"><td class="memItemLeft" align="right" valign="top"><a id="ac7819b24c845e988eef54296af78fc17"></a>
 virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isAbstract</b> () const =0</td></tr>
 <tr class="separator:ac7819b24c845e988eef54296af78fc17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a135e324143b0a31cc32f1203c35228f3"><td class="memItemLeft" align="right" valign="top"><a id="a135e324143b0a31cc32f1203c35228f3"></a>
-virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const =0</td></tr>
-<tr class="separator:a135e324143b0a31cc32f1203c35228f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a582b2bdfd5e35e14769fd6ba42421595"><td class="memItemLeft" align="right" valign="top"><a id="a582b2bdfd5e35e14769fd6ba42421595"></a>
+virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const</td></tr>
+<tr class="separator:a582b2bdfd5e35e14769fd6ba42421595"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af47c7f7765a7839db72676b3d2059304"><td class="memItemLeft" align="right" valign="top">virtual void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1type.html#af47c7f7765a7839db72676b3d2059304">make</a> () const =0</td></tr>
 <tr class="memdesc:af47c7f7765a7839db72676b3d2059304"><td class="mdescLeft">&#160;</td><td class="mdescRight">create an instance to be refered this type.  <a href="classnm_1_1type.html#af47c7f7765a7839db72676b3d2059304">More...</a><br /></td></tr>
 <tr class="separator:af47c7f7765a7839db72676b3d2059304"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,6 +180,9 @@ virtual types **&#160;</td><td class="memItemRight" valign="bottom"><b>_onGetLea
 <tr class="memitem:a7d16eb9ad37fa1c6bdaba07f79265806"><td class="memItemLeft" align="right" valign="top"><a id="a7d16eb9ad37fa1c6bdaba07f79265806"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>_setLeafs</b> (types *newLeafs) const</td></tr>
 <tr class="separator:a7d16eb9ad37fa1c6bdaba07f79265806"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10d98db9bec6f1d1d3399ad383b9779f"><td class="memItemLeft" align="right" valign="top"><a id="a10d98db9bec6f1d1d3399ad383b9779f"></a>
+virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getNativeName</b> () const</td></tr>
+<tr class="separator:a10d98db9bec6f1d1d3399ad383b9779f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section remark"><dt>Remarks</dt><dd>type returning ttype&lt;type&gt; as result of getType() </dd></dl>

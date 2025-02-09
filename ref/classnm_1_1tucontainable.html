@@ -109,6 +109,33 @@ template&lt;typename T1 &gt; </td></tr>
 <tr class="memitem:adfb70d080167340a3309c9f32d996e06"><td class="memItemLeft" align="right" valign="top"><a id="adfb70d080167340a3309c9f32d996e06"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>each</b> (std::function&lt; nbool(T &amp;)&gt; l)</td></tr>
 <tr class="separator:adfb70d080167340a3309c9f32d996e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a070c19145f1a4ff6f392cf790b240e13"><td class="memItemLeft" align="right" valign="top"><a id="a070c19145f1a4ff6f392cf790b240e13"></a>
+virtual <a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const</td></tr>
+<tr class="separator:a070c19145f1a4ff6f392cf790b240e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae92a4e850fd4d876429e5bd1314062d0"><td class="memItemLeft" align="right" valign="top"><a id="ae92a4e850fd4d876429e5bd1314062d0"></a>
+virtual <a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rend</b> () const</td></tr>
+<tr class="separator:ae92a4e850fd4d876429e5bd1314062d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5aaa5b7d6170a64241eda41c18e76a2"><td class="memItemLeft" align="right" valign="top"><a id="ae5aaa5b7d6170a64241eda41c18e76a2"></a>
+virtual <a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>last</b> () const</td></tr>
+<tr class="separator:ae5aaa5b7d6170a64241eda41c18e76a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f168fc8be34886b0d77ab086dd4718c"><td class="memItemLeft" align="right" valign="top"><a id="a0f168fc8be34886b0d77ab086dd4718c"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>iterate</b> (ncnt step) const</td></tr>
+<tr class="separator:a0f168fc8be34886b0d77ab086dd4718c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e912bb7ef3cef81bbc3cfa93e405996"><td class="memItemLeft" align="right" valign="top"><a id="a0e912bb7ef3cef81bbc3cfa93e405996"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>iterate</b> (const T &amp;it) const</td></tr>
+<tr class="separator:a0e912bb7ef3cef81bbc3cfa93e405996"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3e77c6e7016396bced64c9f53eb2ae0"><td class="memItemLeft" align="right" valign="top"><a id="ab3e77c6e7016396bced64c9f53eb2ae0"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>riterate</b> (ncnt step) const</td></tr>
+<tr class="separator:ab3e77c6e7016396bced64c9f53eb2ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1a44deea518381567037bdd36374cc1"><td class="memItemLeft" align="right" valign="top"><a id="af1a44deea518381567037bdd36374cc1"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>riterate</b> (const T &amp;it) const</td></tr>
+<tr class="separator:af1a44deea518381567037bdd36374cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add769c13b7e01935e1fee072155e457e"><td class="memItemLeft" align="right" valign="top"><a id="add769c13b7e01935e1fee072155e457e"></a>
+virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (const <a class="el" href="classiter.html">iter</a> &amp;at, const T &amp;new1)=0</td></tr>
+<tr class="separator:add769c13b7e01935e1fee072155e457e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c92194f884a737e891c5736ac21fe2f"><td class="memItemLeft" align="right" valign="top"><a id="a0c92194f884a737e891c5736ac21fe2f"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (const <a class="el" href="classiter.html">iter</a> &amp;at, const T *new1)</td></tr>
+<tr class="separator:a0c92194f884a737e891c5736ac21fe2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a163f9bba72d41a95b8aed841aeba877d"><td class="memItemLeft" align="right" valign="top"><a id="a163f9bba72d41a95b8aed841aeba877d"></a>
 virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classiter.html">iter</a> &amp;at, const T &amp;new1)=0</td></tr>
 <tr class="separator:a163f9bba72d41a95b8aed841aeba877d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,7 +189,7 @@ nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const T &am
 virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;it)=0</td></tr>
 <tr class="separator:a1d6954dfdb7340d0114dd1c5411f754e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbd8784cbc060e9f1b59a9afe00cae8c"><td class="memItemLeft" align="right" valign="top"><a id="afbd8784cbc060e9f1b59a9afe00cae8c"></a>
-virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;from, const <a class="el" href="classiter.html">iter</a> &amp;end)=0</td></tr>
+virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;from, const <a class="el" href="classiter.html">iter</a> &amp;<a class="el" href="classnm_1_1end.html">end</a>)=0</td></tr>
 <tr class="separator:afbd8784cbc060e9f1b59a9afe00cae8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1e56fc62ec5c4af14a5507d7e0a1b70"><td class="memItemLeft" align="right" valign="top"><a id="af1e56fc62ec5c4af14a5507d7e0a1b70"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classnm_1_1tucontainable.html">tucontainable</a> &amp;rhs)</td></tr>
@@ -177,16 +204,16 @@ Public Attributes</h2></td></tr>
 template&lt;typename T1 &gt; </td></tr>
 <tr class="memitem:af3f633da2635ebf70c85314cfaf569e5"><td class="memTemplItemLeft" align="right" valign="top">const T1 &amp;get(std::function&lt; nbool(const T1 &amp;)&gt; l) const NM_CONST_FUNC(get(l)) const R get(std <a class="el" href="classnm_1_1tnarr.html">tnarr</a>&lt; T, <a class="el" href="classnm_1_1str_tactic.html">strTactic</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>getAll</b> (std::function&lt; nbool(const T &amp;)&gt; l) const</td></tr>
 <tr class="separator:af3f633da2635ebf70c85314cfaf569e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a989869d4225a32fa8151a5ba6622ec3d"><td class="memTemplParams" colspan="2"><a id="a989869d4225a32fa8151a5ba6622ec3d"></a>
+<tr class="memitem:a0436a41ba269e12e092100e663a98fe8"><td class="memTemplParams" colspan="2"><a id="a0436a41ba269e12e092100e663a98fe8"></a>
 template&lt;typename T1 &gt; </td></tr>
-<tr class="memitem:a989869d4225a32fa8151a5ba6622ec3d"><td class="memTemplItemLeft" align="right" valign="top">void each(std::function&lt; nbool(const T1 &amp;)&gt; l) const NM_CONST_FUNC(each(l)) void each(std nbool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>set</b> (const <a class="el" href="classiter.html">iter</a> &amp;at, const T *new1)</td></tr>
-<tr class="separator:a989869d4225a32fa8151a5ba6622ec3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0436a41ba269e12e092100e663a98fe8"><td class="memTemplItemLeft" align="right" valign="top">void each(std::function&lt; nbool(const T1 &amp;)&gt; l) const NM_CONST_FUNC(each(l)) void each(std <a class="el" href="classiter.html">iter</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>rbegin</b> () const</td></tr>
+<tr class="separator:a0436a41ba269e12e092100e663a98fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac7f7a0c1191ca1ad42f243826bd244f2"><td class="memItemLeft" align="right" valign="top"><a id="ac7f7a0c1191ca1ad42f243826bd244f2"></a>
-virtual <a class="el" href="classiteration.html">iteration</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeIteration</b> (ncnt step) const =0</td></tr>
-<tr class="separator:ac7f7a0c1191ca1ad42f243826bd244f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1f275480ac7b32a7b5ee5e2751bccfa"><td class="memItemLeft" align="right" valign="top"><a id="af1f275480ac7b32a7b5ee5e2751bccfa"></a>
+virtual <a class="el" href="classiteration.html">iteration</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeIteration</b> (ncnt step, nbool isReversed) const =0</td></tr>
+<tr class="separator:af1f275480ac7b32a7b5ee5e2751bccfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T, typename R = T&amp;&gt;<br />

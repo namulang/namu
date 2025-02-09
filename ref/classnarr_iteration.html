@@ -84,14 +84,20 @@ Inheritance diagram for narrIteration:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab36e25c54c2d521718aeaa9786171475"><td class="memItemLeft" align="right" valign="top"><a id="ab36e25c54c2d521718aeaa9786171475"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>narrIteration</b> (tnarr &amp;own, nidx n)</td></tr>
-<tr class="separator:ab36e25c54c2d521718aeaa9786171475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8941751b818e213ffb85a581e7ebef53"><td class="memItemLeft" align="right" valign="top"><a id="a8941751b818e213ffb85a581e7ebef53"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>narrIteration</b> (tnarr &amp;own, nidx n, nbool isReversed)</td></tr>
+<tr class="separator:a8941751b818e213ffb85a581e7ebef53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6637b566be8f75830dbe51e915b1729f"><td class="memItemLeft" align="right" valign="top"><a id="a6637b566be8f75830dbe51e915b1729f"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isEnd</b> () const override</td></tr>
 <tr class="separator:a6637b566be8f75830dbe51e915b1729f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68835c58bc641c53744f9bdc700fd96c"><td class="memItemLeft" align="right" valign="top">ncnt&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnarr_iteration.html#a68835c58bc641c53744f9bdc700fd96c">next</a> (ncnt step) override</td></tr>
-<tr class="separator:a68835c58bc641c53744f9bdc700fd96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3611858149a39de2b5f2184a5de55796"><td class="memItemLeft" align="right" valign="top"><a id="a3611858149a39de2b5f2184a5de55796"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>rel</b> () override</td></tr>
+<tr class="separator:a3611858149a39de2b5f2184a5de55796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58ef53cbe1221dd4560a482033f0fc55"><td class="memItemLeft" align="right" valign="top">ncnt&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnarr_iteration.html#a58ef53cbe1221dd4560a482033f0fc55">stepForward</a> (ncnt step) override</td></tr>
+<tr class="separator:a58ef53cbe1221dd4560a482033f0fc55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a134271602255666589a154bc28ed7748"><td class="memItemLeft" align="right" valign="top"><a id="a134271602255666589a154bc28ed7748"></a>
+ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>stepBackward</b> (ncnt step) override</td></tr>
+<tr class="separator:a134271602255666589a154bc28ed7748"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3d40d5d8a68cb00634e2adc94103ab9"><td class="memItemLeft" align="right" valign="top"><a id="af3d40d5d8a68cb00634e2adc94103ab9"></a>
 T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> () override</td></tr>
 <tr class="separator:af3d40d5d8a68cb00634e2adc94103ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -99,13 +105,30 @@ T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> () overrid
 tucontainable&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getContainer</b> () override</td></tr>
 <tr class="separator:aeeaa489bc30d2974ffb48c92849c705f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classiteration"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classiteration')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classiteration.html">iteration</a></td></tr>
+<tr class="memitem:af08347e95be6fe8284e9ea318412357d inherit pub_methods_classiteration"><td class="memItemLeft" align="right" valign="top"><a id="af08347e95be6fe8284e9ea318412357d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>iteration</b> (nbool isReversed)</td></tr>
+<tr class="separator:af08347e95be6fe8284e9ea318412357d inherit pub_methods_classiteration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa88f99516fc66a8f309621dfdca1f825 inherit pub_methods_classiteration"><td class="memItemLeft" align="right" valign="top"><a id="aa88f99516fc66a8f309621dfdca1f825"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isFrom</b> (const tbicontainable &amp;rhs) const override</td></tr>
 <tr class="separator:aa88f99516fc66a8f309621dfdca1f825 inherit pub_methods_classiteration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9cdea31b2c29ada31d95fff26d3f226 inherit pub_methods_classiteration"><td class="memItemLeft" align="right" valign="top"><a id="aa9cdea31b2c29ada31d95fff26d3f226"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isReversed</b> () const override</td></tr>
+<tr class="separator:aa9cdea31b2c29ada31d95fff26d3f226 inherit pub_methods_classiteration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af08347e95be6fe8284e9ea318412357d inherit pub_methods_classiteration"><td class="memItemLeft" align="right" valign="top"><a id="af08347e95be6fe8284e9ea318412357d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>iteration</b> (nbool isReversed)</td></tr>
+<tr class="separator:af08347e95be6fe8284e9ea318412357d inherit pub_methods_classiteration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11e8d353728999a84ad7111877d1de0a inherit pub_methods_classiteration"><td class="memItemLeft" align="right" valign="top"><a id="a11e8d353728999a84ad7111877d1de0a"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isFrom</b> (const tucontainable &amp;rhs) const override</td></tr>
 <tr class="separator:a11e8d353728999a84ad7111877d1de0a inherit pub_methods_classiteration"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9cdea31b2c29ada31d95fff26d3f226 inherit pub_methods_classiteration"><td class="memItemLeft" align="right" valign="top"><a id="aa9cdea31b2c29ada31d95fff26d3f226"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>isReversed</b> () const override</td></tr>
+<tr class="separator:aa9cdea31b2c29ada31d95fff26d3f226 inherit pub_methods_classiteration"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classiterable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classiterable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classiterable.html">iterable</a></td></tr>
+<tr class="memitem:a5aa5fa0137d92cd6cf593ade469faa20 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top">virtual ncnt&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiterable.html#a5aa5fa0137d92cd6cf593ade469faa20">next</a> (ncnt step)</td></tr>
+<tr class="separator:a5aa5fa0137d92cd6cf593ade469faa20 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16d901421899adf63dbae9eb4caf58a5 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="a16d901421899adf63dbae9eb4caf58a5"></a>
+virtual ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>prev</b> (ncnt step)</td></tr>
+<tr class="separator:a16d901421899adf63dbae9eb4caf58a5 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a076814d3a554723623768a4885613af4 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="a076814d3a554723623768a4885613af4"></a>
 virtual const K &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getKey</b> () const =0</td></tr>
 <tr class="separator:a076814d3a554723623768a4885613af4 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,6 +141,11 @@ const V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getVal</b> (
 <tr class="memitem:a3d69338f48f37413979e5cf45667a224 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="a3d69338f48f37413979e5cf45667a224"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setVal</b> (const V *newVal)</td></tr>
 <tr class="separator:a3d69338f48f37413979e5cf45667a224 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aa5fa0137d92cd6cf593ade469faa20 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top">virtual ncnt&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiterable.html#a5aa5fa0137d92cd6cf593ade469faa20">next</a> (ncnt step)</td></tr>
+<tr class="separator:a5aa5fa0137d92cd6cf593ade469faa20 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16d901421899adf63dbae9eb4caf58a5 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="a16d901421899adf63dbae9eb4caf58a5"></a>
+virtual ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>prev</b> (ncnt step)</td></tr>
+<tr class="separator:a16d901421899adf63dbae9eb4caf58a5 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cc73bd3546fce0c605c3819c7871f57 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="a6cc73bd3546fce0c605c3819c7871f57"></a>
 const R&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> () const NM_CONST_FUNC(get()) virtual nbool isFrom(const tucontainable &amp;it) const =0</td></tr>
 <tr class="separator:a6cc73bd3546fce0c605c3819c7871f57 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,10 +161,40 @@ Friends</h2></td></tr>
 <tr class="memitem:ab72739d31652d651f5745cfc626c0346"><td class="memItemLeft" align="right" valign="top"><a id="ab72739d31652d651f5745cfc626c0346"></a>
 class&#160;</td><td class="memItemRight" valign="bottom"><b>tnarr</b></td></tr>
 <tr class="separator:ab72739d31652d651f5745cfc626c0346"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_types_classiterable"><td colspan="2" onclick="javascript:toggleInherit('pro_types_classiterable')"><img src="closed.png" alt="-"/>&#160;Protected Types inherited from <a class="el" href="classiterable.html">iterable</a></td></tr>
+<tr class="memitem:acc690da749411c5da743256ef15e0574 inherit pro_types_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="acc690da749411c5da743256ef15e0574"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>iterationType</b> { <br />
+&#160;&#160;<b>NEXT</b>
+, <b>PREV</b>
+, <b>FORWARD</b>
+, <b>BACKWARD</b>
+, <br />
+&#160;&#160;<b>NEXT</b>
+, <b>PREV</b>
+, <b>FORWARD</b>
+, <b>BACKWARD</b>
+<br />
+ }</td></tr>
+<tr class="separator:acc690da749411c5da743256ef15e0574 inherit pro_types_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc690da749411c5da743256ef15e0574 inherit pro_types_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="acc690da749411c5da743256ef15e0574"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>iterationType</b> { <br />
+&#160;&#160;<b>NEXT</b>
+, <b>PREV</b>
+, <b>FORWARD</b>
+, <b>BACKWARD</b>
+, <br />
+&#160;&#160;<b>NEXT</b>
+, <b>PREV</b>
+, <b>FORWARD</b>
+, <b>BACKWARD</b>
+<br />
+ }</td></tr>
+<tr class="separator:acc690da749411c5da743256ef15e0574 inherit pro_types_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a68835c58bc641c53744f9bdc700fd96c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68835c58bc641c53744f9bdc700fd96c">&#9670;&nbsp;</a></span>next()</h2>
+<a id="a58ef53cbe1221dd4560a482033f0fc55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58ef53cbe1221dd4560a482033f0fc55">&#9670;&nbsp;</a></span>stepForward()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -145,7 +203,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>tnarr</b></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">ncnt narrIteration::next </td>
+          <td class="memname">ncnt narrIteration::stepForward </td>
           <td>(</td>
           <td class="paramtype">ncnt&#160;</td>
           <td class="paramname"><em>step</em></td><td>)</td>
@@ -160,7 +218,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>tnarr</b></td></tr>
 </div><div class="memdoc">
 <p>if iteration reached to the last element to iterate, it can precede to next, which means to the End of a buffer. however, this step wasn't regarded to a step even though it proceeds. </p>
 
-<p>Implements <a class="el" href="classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f">iterable</a>.</p>
+<p>Implements <a class="el" href="classiterable.html">iterable</a>.</p>
 
 </div>
 </div>

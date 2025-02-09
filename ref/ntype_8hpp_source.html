@@ -72,14 +72,14 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;as/ases.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>nm {</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">class </span>node;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TACTIC&gt; <span class="keyword">class </span>tnarr;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">typedef</span> tnarr&lt;node, strTactic&gt; narr;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">class </span>params;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">class </span>node;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TACTIC&gt; <span class="keyword">class </span>tnarr;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">typedef</span> tnarr&lt;node, strTactic&gt; narr;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">class </span>params;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">class </span>ases;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classnm_1_1ntype.html">   13</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnm_1_1ntype.html">ntype</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1type.html">type</a> {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        NM_ME(<a class="code" href="classnm_1_1ntype.html">ntype</a>, <a class="code" href="classnm_1_1type.html">type</a>)</div>
@@ -146,14 +146,17 @@ $(function() {
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    private:</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        static deducers* _makeDeducers();</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        static const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; _deduceSuperType(const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; l, const <a class="code" href="classnm_1_1ntype.html">ntype</a>&amp; r);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    };</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    typedef std::vector&lt;const <a class="code" href="classnm_1_1ntype.html">ntype</a>*&gt; ntypes;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;} <span class="comment">// namespace nm</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    public:</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        const static inline std::<span class="keywordtype">string</span> META_TYPENAME = &quot;<a class="code" href="classnm_1_1ntype.html">ntype</a>&quot;;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    };</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    typedef std::vector&lt;const <a class="code" href="classnm_1_1ntype.html">ntype</a>*&gt; ntypes;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;} <span class="comment">// namespace nm</span></div>
 <div class="ttc" id="aclassnm_1_1arr_html"><div class="ttname"><a href="classnm_1_1arr.html">nm::arr</a></div><div class="ttdef"><b>Definition:</b> arr.hpp:12</div></div>
-<div class="ttc" id="aclassnm_1_1ases_html"><div class="ttname"><a href="classnm_1_1ases.html">nm::ases</a></div><div class="ttdef"><b>Definition:</b> ases.hpp:7</div></div>
+<div class="ttc" id="aclassnm_1_1ases_html"><div class="ttname"><a href="classnm_1_1ases.html">nm::ases</a></div><div class="ttdef"><b>Definition:</b> ases.hpp:8</div></div>
 <div class="ttc" id="aclassnm_1_1generic_origin_html"><div class="ttname"><a href="classnm_1_1generic_origin.html">nm::genericOrigin</a></div><div class="ttdef"><b>Definition:</b> genericOrigin.hpp:10</div></div>
-<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:23</div></div>
+<div class="ttc" id="aclassnm_1_1node_html"><div class="ttname"><a href="classnm_1_1node.html">nm::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:24</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html"><div class="ttname"><a href="classnm_1_1ntype.html">nm::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:13</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html_a448b1fc53f9ff631c5743c885906db42"><div class="ttname"><a href="classnm_1_1ntype.html#a448b1fc53f9ff631c5743c885906db42">nm::ntype::deduce</a></div><div class="ttdeci">const ntype &amp; deduce(const ntype &amp;r) const</div></div>
 <div class="ttc" id="aclassnm_1_1ntype_html_a819b24f2993a813b4ee1b9cecd0fd4b5"><div class="ttname"><a href="classnm_1_1ntype.html#a819b24f2993a813b4ee1b9cecd0fd4b5">nm::ntype::deduce</a></div><div class="ttdeci">static const ntype &amp; deduce(const ntype &amp;l, const ntype &amp;r)</div></div>

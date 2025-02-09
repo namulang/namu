@@ -26,7 +26,7 @@ var searchData=
   ['_5f_5funwrap_5fbinder_5f_5f_3c_20tweak_3c_20t_20_3e_20_2a_20_3e_23',['__unwrap_binder__&lt; tweak&lt; T &gt; * &gt;',['../structnm_1_1____unwrap__binder_____3_01tweak_3_01_t_01_4_01_5_01_4.html',1,'nm']]],
   ['_5f_5funwrap_5fbinder_5f_5f_3c_20tweak_3c_20t_20_3e_20_3e_24',['__unwrap_binder__&lt; tweak&lt; T &gt; &gt;',['../structnm_1_1____unwrap__binder_____3_01tweak_3_01_t_01_4_01_4.html',1,'nm']]],
   ['_5fget_25',['_get',['../classnm_1_1chunk.html#ab03319a25d5c0d96bcdf57f3e05931bb',1,'nm::chunk']]],
-  ['_5fnexttomatchparamtype_26',['_nextToMatchParamType',['../classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84',1,'iter::_nextToMatchParamType()'],['../classiter.html#a49fac8ab2f41f3fe8a63450e1dd60a84',1,'iter::_nextToMatchParamType()']]],
+  ['_5fnexttomatchparamtype_26',['_nextToMatchParamType',['../classiter.html#a6aa0b8c1cb40aa232e7c2c9a687bdf5b',1,'iter::_nextToMatchParamType(typename iterable::iterationType type)'],['../classiter.html#a6aa0b8c1cb40aa232e7c2c9a687bdf5b',1,'iter::_nextToMatchParamType(typename iterable::iterationType type)']]],
   ['_5foncontinuousargcount_27',['_onContinuousArgCount',['../classnm_1_1flag.html#a72adb68cecdb71ed49c04e19232ac2ae',1,'nm::flag::_onContinuousArgCount()'],['../classnm_1_1buffer_src_flag.html#acf71eab51fcc33adbcc58bec6f99ffa5',1,'nm::bufferSrcFlag::_onContinuousArgCount()']]],
   ['_5fonwork_28',['_onWork',['../classnm_1_1parser.html#a0c6aa181cafe5ca0d4ae5fd8402ae288',1,'nm::parser']]]
 ];

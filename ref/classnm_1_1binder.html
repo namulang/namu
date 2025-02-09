@@ -92,14 +92,14 @@ Inheritance diagram for nm::binder:</div>
 <area href="classnm_1_1tstr.html" alt="nm::tstr&lt; T, TACTIC &gt;" shape="rect" coords="332,168,488,192"/>
 <area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::errReport &gt;" shape="rect" coords="664,168,820,192"/>
 <area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::blockExpr &gt;" shape="rect" coords="664,224,820,248"/>
-<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; node &gt;" shape="rect" coords="664,280,820,304"/>
-<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::baseFunc &gt;" shape="rect" coords="664,336,820,360"/>
-<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::callstack &gt;" shape="rect" coords="664,392,820,416"/>
-<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::tnmap &gt;" shape="rect" coords="664,448,820,472"/>
-<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::args &gt;" shape="rect" coords="664,504,820,528"/>
-<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; super &gt;" shape="rect" coords="664,560,820,584"/>
-<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::obj &gt;" shape="rect" coords="664,616,820,640"/>
-<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; me &gt;" shape="rect" coords="664,672,820,696"/>
+<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::func &gt;" shape="rect" coords="664,280,820,304"/>
+<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; node &gt;" shape="rect" coords="664,336,820,360"/>
+<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::baseFunc &gt;" shape="rect" coords="664,392,820,416"/>
+<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::callstack &gt;" shape="rect" coords="664,448,820,472"/>
+<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::tnmap &gt;" shape="rect" coords="664,504,820,528"/>
+<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::args &gt;" shape="rect" coords="664,560,820,584"/>
+<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; super &gt;" shape="rect" coords="664,616,820,640"/>
+<area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::obj &gt;" shape="rect" coords="664,672,820,696"/>
 <area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::frame &gt;" shape="rect" coords="664,728,820,752"/>
 <area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::nStr &gt;" shape="rect" coords="664,784,820,808"/>
 <area href="classnm_1_1tstr.html" alt="nm::tstr&lt; nm::tnarr &gt;" shape="rect" coords="664,840,820,864"/>
@@ -261,6 +261,13 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>bindTag</b></td></tr
 <tr class="memitem:a60519f1c6bd00b89a29ae86c8942f82d"><td class="memItemLeft" align="right" valign="top"><a id="a60519f1c6bd00b89a29ae86c8942f82d"></a>
 struct&#160;</td><td class="memItemRight" valign="bottom"><b>::binderTest</b></td></tr>
 <tr class="separator:a60519f1c6bd00b89a29ae86c8942f82d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_static_methods_classnm_1_1type_providable"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classnm_1_1type_providable')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classnm_1_1type_providable.html">nm::typeProvidable</a></td></tr>
+<tr class="memitem:a245fddafec1b1736c254448738bea4b3 inherit pub_static_methods_classnm_1_1type_providable"><td class="memTemplParams" colspan="2">template&lt;typename T , typename A &gt; </td></tr>
+<tr class="memitem:a245fddafec1b1736c254448738bea4b3 inherit pub_static_methods_classnm_1_1type_providable"><td class="memTemplItemLeft" align="right" valign="top">static T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classnm_1_1type_providable.html#a245fddafec1b1736c254448738bea4b3">safeCast</a> (const A &amp;any)</td></tr>
+<tr class="separator:a245fddafec1b1736c254448738bea4b3 inherit pub_static_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>bind: overview: can guarrantee that specific instance freed completely and track of them. this has 3 features. 1) can distringuish what given abstract type actually was and reject or accept it regarding that. 2) free instance completely. using RAII. 3) can notice that binding instance was replaced or freed without unexpected exception. in conlusion, it prevent halting process or give a chance to let developer be advised.</p>

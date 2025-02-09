@@ -121,24 +121,24 @@ ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>chainLen</b> () const
 <tr class="memitem:af54e8962f60f0a4804cc476f877dda89 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="af54e8962f60f0a4804cc476f877dda89"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const std::string &amp;key, const <a class="el" href="classnm_1_1node.html">node</a> &amp;val) override</td></tr>
 <tr class="separator:af54e8962f60f0a4804cc476f877dda89 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae746a697654469db98fee03055b88a2e inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="ae746a697654469db98fee03055b88a2e"></a>
-<a class="el" href="classnm_1_1tstr.html">tstr</a>&lt; me &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>link</b> (const super &amp;new1)</td></tr>
-<tr class="separator:ae746a697654469db98fee03055b88a2e inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7245d7902aade349604d34c0c7b254d9 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a7245d7902aade349604d34c0c7b254d9"></a>
-virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>link</b> (const me &amp;new1)</td></tr>
-<tr class="separator:a7245d7902aade349604d34c0c7b254d9 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5db3913444eadededbbf98d81d520ab2 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a5db3913444eadededbbf98d81d520ab2">link</a> (const <a class="el" href="classiter.html">iter</a> &amp;portion)</td></tr>
+<tr class="memdesc:a5db3913444eadededbbf98d81d520ab2 inherit pub_methods_classnm_1_1tnchain"><td class="mdescLeft">&#160;</td><td class="mdescRight">link to another chain instance. if iterator is not the begin of another chain, this chain won't link unaccessible elements via given iterator. using this point, you can choose which elements to link and which elements not. even if you specified a reverse iterator to link, this chain will only traverse in reverse way for that container refered by the reversed iterator.  <a href="classnm_1_1tnchain.html#a5db3913444eadededbbf98d81d520ab2">More...</a><br /></td></tr>
+<tr class="separator:a5db3913444eadededbbf98d81d520ab2 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c42a1e7f1d74d2d7bbb526c64351003 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a4c42a1e7f1d74d2d7bbb526c64351003"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>link</b> (const me &amp;new1)</td></tr>
+<tr class="separator:a4c42a1e7f1d74d2d7bbb526c64351003 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae14ce3504e2a9132ca5a452911d0f41d inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="ae14ce3504e2a9132ca5a452911d0f41d"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>unlink</b> ()</td></tr>
 <tr class="separator:ae14ce3504e2a9132ca5a452911d0f41d inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a895d0a301b522375c1f130d44fe0783f inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a895d0a301b522375c1f130d44fe0783f"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const std::string &amp;at) override</td></tr>
-<tr class="memdesc:a895d0a301b522375c1f130d44fe0783f inherit pub_methods_classnm_1_1tnchain"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete last element if exists. <br /></td></tr>
-<tr class="separator:a895d0a301b522375c1f130d44fe0783f inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f8847e00a14dc7aa74d79483eca9d23 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a6f8847e00a14dc7aa74d79483eca9d23"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a6f8847e00a14dc7aa74d79483eca9d23">del</a> (const std::string &amp;key) override</td></tr>
+<tr class="memdesc:a6f8847e00a14dc7aa74d79483eca9d23 inherit pub_methods_classnm_1_1tnchain"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete all elements matching by given key. <br /></td></tr>
+<tr class="separator:a6f8847e00a14dc7aa74d79483eca9d23 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0390c308a32fdb0a0215c0784b647c7c inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a0390c308a32fdb0a0215c0784b647c7c"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;at) override</td></tr>
 <tr class="separator:a0390c308a32fdb0a0215c0784b647c7c inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a327a9556abf4cceb72fe9cca166b120d inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a327a9556abf4cceb72fe9cca166b120d"></a>
-nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;from, const <a class="el" href="classiter.html">iter</a> &amp;end) override</td></tr>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;from, const <a class="el" href="classiter.html">iter</a> &amp;<a class="el" href="classnm_1_1end.html">end</a>) override</td></tr>
 <tr class="separator:a327a9556abf4cceb72fe9cca166b120d inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2eddf0680126a1a8b570776908e032b3 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a2eddf0680126a1a8b570776908e032b3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>rel</b> () override</td></tr>
@@ -152,13 +152,13 @@ const super &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getConta
 <tr class="memitem:a88ec1020c8c3b5b0a177f6278b1c93f0 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a88ec1020c8c3b5b0a177f6278b1c93f0"></a>
 me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getNext</b> ()</td></tr>
 <tr class="separator:a88ec1020c8c3b5b0a177f6278b1c93f0 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d1a4d4a44a0c6fef5e12ea74f533414 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a3d1a4d4a44a0c6fef5e12ea74f533414"></a>
-const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getNext</b> () const</td></tr>
-<tr class="separator:a3d1a4d4a44a0c6fef5e12ea74f533414 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62c80faa54037e9b73821626f8cab689 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a62c80faa54037e9b73821626f8cab689"></a>
-me &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a62c80faa54037e9b73821626f8cab689">getTail</a> ()</td></tr>
-<tr class="memdesc:a62c80faa54037e9b73821626f8cab689 inherit pub_methods_classnm_1_1tnchain"><td class="mdescLeft">&#160;</td><td class="mdescRight">return most not null next element of this chain. <br /></td></tr>
-<tr class="separator:a62c80faa54037e9b73821626f8cab689 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42f0aadf3ceec2624a0c73d3e5df5a56 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a42f0aadf3ceec2624a0c73d3e5df5a56"></a>
+const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getNext</b> () const NM_CONST_FUNC(getNext()) me &amp;<a class="el" href="classnm_1_1tnchain.html#a81ea50118b02ea441f0c61b583ebc5e9">getPrev</a>()</td></tr>
+<tr class="separator:a42f0aadf3ceec2624a0c73d3e5df5a56 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81ea50118b02ea441f0c61b583ebc5e9 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a81ea50118b02ea441f0c61b583ebc5e9"></a>
+const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a81ea50118b02ea441f0c61b583ebc5e9">getPrev</a> () const NM_CONST_FUNC(getPrev()) me &amp;<a class="el" href="classnm_1_1tnchain.html#a29fa2297de84e3ce5c5d73e56cb13b04">getTail</a>()</td></tr>
+<tr class="memdesc:a81ea50118b02ea441f0c61b583ebc5e9 inherit pub_methods_classnm_1_1tnchain"><td class="mdescLeft">&#160;</td><td class="mdescRight">return most not null next element of this chain. <br /></td></tr>
+<tr class="separator:a81ea50118b02ea441f0c61b583ebc5e9 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29fa2297de84e3ce5c5d73e56cb13b04 inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top">const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a29fa2297de84e3ce5c5d73e56cb13b04">getTail</a> () const NM_CONST_FUNC(getTail()) void onCloneDeep(const <a class="el" href="classnm_1_1clonable.html">clonable</a> &amp;from) override</td></tr>
 <tr class="separator:a29fa2297de84e3ce5c5d73e56cb13b04 inherit pub_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e145f92ed739e90999e14590d8779eb inherit pub_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top">me *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a3e145f92ed739e90999e14590d8779eb">cloneChain</a> (const super &amp;until) const</td></tr>
@@ -287,21 +287,64 @@ template&lt;typename V1 &gt; </td></tr>
 <tr class="memitem:a81d90ccc5d29aeaa8e3bca84c673a739 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a81d90ccc5d29aeaa8e3bca84c673a739"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>each</b> (std::function&lt; nbool(const K &amp;, V &amp;)&gt; l)</td></tr>
 <tr class="separator:a81d90ccc5d29aeaa8e3bca84c673a739 inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11282f3bad4b44bd08f2228b62e10380 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a11282f3bad4b44bd08f2228b62e10380"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rbegin</b> () const</td></tr>
+<tr class="separator:a11282f3bad4b44bd08f2228b62e10380 inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14565b18068763f62f68547a9621ffdd inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a14565b18068763f62f68547a9621ffdd"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rbegin</b> (const K &amp;key) const</td></tr>
+<tr class="separator:a14565b18068763f62f68547a9621ffdd inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b40989ce5ba797261ccbfd755725843 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a5b40989ce5ba797261ccbfd755725843"></a>
+virtual <a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const</td></tr>
+<tr class="separator:a5b40989ce5ba797261ccbfd755725843 inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d29590d17aeb946738ec77d106430ac inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a0d29590d17aeb946738ec77d106430ac"></a>
+virtual <a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rend</b> () const</td></tr>
+<tr class="separator:a0d29590d17aeb946738ec77d106430ac inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1461dd3bd9aa8293317707a57f35682b inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a1461dd3bd9aa8293317707a57f35682b"></a>
+virtual <a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>last</b> () const</td></tr>
+<tr class="separator:a1461dd3bd9aa8293317707a57f35682b inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf50b8ad23ef87c8a9104757221573c inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="acbf50b8ad23ef87c8a9104757221573c"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>iterate</b> (ncnt step) const</td></tr>
+<tr class="separator:acbf50b8ad23ef87c8a9104757221573c inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f5ecd5511d44a87473d8f0155dfe551 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a9f5ecd5511d44a87473d8f0155dfe551"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>iterate</b> (ncnt step, nbool isBoundary) const</td></tr>
+<tr class="separator:a9f5ecd5511d44a87473d8f0155dfe551 inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af19bde0bb94383687440a3eff348b8b2 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="af19bde0bb94383687440a3eff348b8b2"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>iterate</b> (const K &amp;key) const</td></tr>
+<tr class="separator:af19bde0bb94383687440a3eff348b8b2 inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f2bbf0e9d0acddc2d275e6bcaab10ad inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a6f2bbf0e9d0acddc2d275e6bcaab10ad"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>iterate</b> (const K &amp;key, nbool isBoundary) const</td></tr>
+<tr class="separator:a6f2bbf0e9d0acddc2d275e6bcaab10ad inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab694f2307e375073afc9f086732e67b inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="aab694f2307e375073afc9f086732e67b"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>riterate</b> (ncnt step) const</td></tr>
+<tr class="separator:aab694f2307e375073afc9f086732e67b inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43359d7b3e6146a4b86f076c969f0c87 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a43359d7b3e6146a4b86f076c969f0c87"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>riterate</b> (ncnt step, nbool isBoundary) const</td></tr>
+<tr class="separator:a43359d7b3e6146a4b86f076c969f0c87 inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac38cb28a56b399c414c65fed20c28cab inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="ac38cb28a56b399c414c65fed20c28cab"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>riterate</b> (const K &amp;key) const</td></tr>
+<tr class="separator:ac38cb28a56b399c414c65fed20c28cab inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a47e2942f78def65912640dc2d7753e inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a9a47e2942f78def65912640dc2d7753e"></a>
+<a class="el" href="classiter.html">iter</a>&#160;</td><td class="memItemRight" valign="bottom"><b>riterate</b> (const K &amp;key, nbool isBoundary) const</td></tr>
+<tr class="separator:a9a47e2942f78def65912640dc2d7753e inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2c21fbad97c220be4563d4bc2aa1d55 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="ac2c21fbad97c220be4563d4bc2aa1d55"></a>
+virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const K &amp;key, const V &amp;val)=0</td></tr>
+<tr class="separator:ac2c21fbad97c220be4563d4bc2aa1d55 inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34df2e097fb9f94c4a28708e674bf9dc inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a34df2e097fb9f94c4a28708e674bf9dc"></a>
+nbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const K &amp;key, const V *val)</td></tr>
+<tr class="separator:a34df2e097fb9f94c4a28708e674bf9dc inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcab0d78d38445c5f27b58297c52b646 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="adcab0d78d38445c5f27b58297c52b646"></a>
 ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classiter.html">iter</a> &amp;from, const <a class="el" href="classiter.html">iter</a> &amp;to)</td></tr>
 <tr class="separator:adcab0d78d38445c5f27b58297c52b646 inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a190569ef2cdfd09b876714d3ffbf6b3f inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a190569ef2cdfd09b876714d3ffbf6b3f"></a>
 ncnt&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classnm_1_1tbicontainable.html">tbicontainable</a> &amp;rhs)</td></tr>
 <tr class="separator:a190569ef2cdfd09b876714d3ffbf6b3f inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9ea4d81bf2a2ccc5559014c09d0342a inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="ab9ea4d81bf2a2ccc5559014c09d0342a"></a>
-virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tbicontainable.html#ab9ea4d81bf2a2ccc5559014c09d0342a">del</a> (const K &amp;it)=0</td></tr>
-<tr class="memdesc:ab9ea4d81bf2a2ccc5559014c09d0342a inherit pub_methods_classnm_1_1tbicontainable"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete last element if exists. <br /></td></tr>
-<tr class="separator:ab9ea4d81bf2a2ccc5559014c09d0342a inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d5fdbd6a11f1bd802c715f9b6fb8432 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tbicontainable.html#a4d5fdbd6a11f1bd802c715f9b6fb8432">del</a> (const K &amp;key)=0</td></tr>
+<tr class="separator:a4d5fdbd6a11f1bd802c715f9b6fb8432 inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a674baa51d2202c7663abb5f8ff72ce4f inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a674baa51d2202c7663abb5f8ff72ce4f"></a>
 virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;at)=0</td></tr>
 <tr class="separator:a674baa51d2202c7663abb5f8ff72ce4f inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a987c90599d2926becef89f5b7b467c48 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a987c90599d2926becef89f5b7b467c48"></a>
-virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;from, const <a class="el" href="classiter.html">iter</a> &amp;end)=0</td></tr>
+virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;from, const <a class="el" href="classiter.html">iter</a> &amp;<a class="el" href="classnm_1_1end.html">end</a>)=0</td></tr>
 <tr class="separator:a987c90599d2926becef89f5b7b467c48 inherit pub_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a701dbcef71fa0183b6fcedc36feb7846 inherit pub_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a701dbcef71fa0183b6fcedc36feb7846"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classnm_1_1tbicontainable.html">tbicontainable</a> &amp;rhs)</td></tr>
@@ -315,6 +358,13 @@ static me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>singletone
 <tr class="inherit_header pub_static_methods_classnm_1_1tnchain"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classnm_1_1tnchain')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classnm_1_1tnchain.html">nm::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></td></tr>
 <tr class="memitem:a57d0733b10aeec49dc0ee2b469455409 inherit pub_static_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top">static T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1tnchain.html#a57d0733b10aeec49dc0ee2b469455409">wrap</a> (const super &amp;toShallowWrap)</td></tr>
 <tr class="separator:a57d0733b10aeec49dc0ee2b469455409 inherit pub_static_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20af0ceb3b10565baab7d93ec5058611 inherit pub_static_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a20af0ceb3b10565baab7d93ec5058611"></a>
+static me *&#160;</td><td class="memItemRight" valign="bottom"><b>wrap</b> (const super &amp;toShallowWrap)</td></tr>
+<tr class="separator:a20af0ceb3b10565baab7d93ec5058611 inherit pub_static_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_classnm_1_1type_providable"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classnm_1_1type_providable')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classnm_1_1type_providable.html">nm::typeProvidable</a></td></tr>
+<tr class="memitem:a245fddafec1b1736c254448738bea4b3 inherit pub_static_methods_classnm_1_1type_providable"><td class="memTemplParams" colspan="2">template&lt;typename T , typename A &gt; </td></tr>
+<tr class="memitem:a245fddafec1b1736c254448738bea4b3 inherit pub_static_methods_classnm_1_1type_providable"><td class="memTemplItemLeft" align="right" valign="top">static T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classnm_1_1type_providable.html#a245fddafec1b1736c254448738bea4b3">safeCast</a> (const A &amp;any)</td></tr>
+<tr class="separator:a245fddafec1b1736c254448738bea4b3 inherit pub_static_methods_classnm_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -337,17 +387,14 @@ template&lt;typename V1 &gt; </td></tr>
 template&lt;typename V1 &gt; </td></tr>
 <tr class="memitem:ab47d656c8a3ccad1e5c0d585760d0ae1 inherit pub_attribs_classnm_1_1tbicontainable"><td class="memTemplItemLeft" align="right" valign="top">const V1 &amp;get(std::function&lt; nbool(const K &amp;, const V1 &amp;)&gt; l) const NM_CONST_FUNC(get(l)) const V &amp;get(std <a class="el" href="classnm_1_1tnarr.html">tnarr</a>&lt; V1, <a class="el" href="classnm_1_1str_tactic.html">strTactic</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>getAll</b> () const</td></tr>
 <tr class="separator:ab47d656c8a3ccad1e5c0d585760d0ae1 inherit pub_attribs_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76679e56c1798b8a70549ae1db8b2ea3 inherit pub_attribs_classnm_1_1tbicontainable"><td class="memTemplParams" colspan="2"><a id="a76679e56c1798b8a70549ae1db8b2ea3"></a>
+<tr class="memitem:a139571c1c689eb1fc0399ea50f508c33 inherit pub_attribs_classnm_1_1tbicontainable"><td class="memTemplParams" colspan="2"><a id="a139571c1c689eb1fc0399ea50f508c33"></a>
 template&lt;typename V1 &gt; </td></tr>
-<tr class="memitem:a76679e56c1798b8a70549ae1db8b2ea3 inherit pub_attribs_classnm_1_1tbicontainable"><td class="memTemplItemLeft" align="right" valign="top">void each(std::function&lt; nbool(const K &amp;, const V1 &amp;)&gt; l) const NM_CONST_FUNC(each(l)) void each(std nbool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>add</b> (const K &amp;key, const V *val)</td></tr>
-<tr class="separator:a76679e56c1798b8a70549ae1db8b2ea3 inherit pub_attribs_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a139571c1c689eb1fc0399ea50f508c33 inherit pub_attribs_classnm_1_1tbicontainable"><td class="memTemplItemLeft" align="right" valign="top">void each(std::function&lt; nbool(const K &amp;, const V1 &amp;)&gt; l) const NM_CONST_FUNC(each(l)) void each(std <a class="el" href="classiter.html">iter</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>begin</b> (const K &amp;key) const</td></tr>
+<tr class="separator:a139571c1c689eb1fc0399ea50f508c33 inherit pub_attribs_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classnm_1_1tnchain"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classnm_1_1tnchain')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classnm_1_1tnchain.html">nm::tnchain&lt; std::string, node, tnmap&lt; std::string, node, immutableTactic &gt; &gt;</a></td></tr>
-<tr class="memitem:a68c6ad704df09eccc4a7864f4952df47 inherit pro_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a68c6ad704df09eccc4a7864f4952df47"></a>
-<a class="el" href="classiteration.html">iteration</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeIteration</b> (ncnt step) const override</td></tr>
-<tr class="separator:a68c6ad704df09eccc4a7864f4952df47 inherit pro_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5e19b83889e10e696d5ee139bfde1a8 inherit pro_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="aa5e19b83889e10e696d5ee139bfde1a8"></a>
-<a class="el" href="classiteration.html">iteration</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeIteration</b> (const std::string &amp;key) const override</td></tr>
-<tr class="separator:aa5e19b83889e10e696d5ee139bfde1a8 inherit pro_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba798872c54bb65df8293e77d5c50ffd inherit pro_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="aba798872c54bb65df8293e77d5c50ffd"></a>
+<a class="el" href="classiteration.html">iteration</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeIteration</b> (const std::string &amp;key, nbool isReversed, ncnt step, nbool isBoundary) const override</td></tr>
+<tr class="separator:aba798872c54bb65df8293e77d5c50ffd inherit pro_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4748c9c36d39be1d074cb2a90f5d3a28 inherit pro_methods_classnm_1_1tnchain"><td class="memItemLeft" align="right" valign="top"><a id="a4748c9c36d39be1d074cb2a90f5d3a28"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>_getAll</b> (const std::string &amp;key, <a class="el" href="classnm_1_1tnarr.html">narr</a> &amp;tray) const override</td></tr>
 <tr class="separator:a4748c9c36d39be1d074cb2a90f5d3a28 inherit pro_methods_classnm_1_1tnchain"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -356,9 +403,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>_getAll</b> (const st
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>_setId</b> (<a class="el" href="structnm_1_1id.html">id</a> new1)</td></tr>
 <tr class="separator:a3866d1ca0e414499312a18fa1056593b inherit pro_methods_classnm_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classnm_1_1tbicontainable"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classnm_1_1tbicontainable')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classnm_1_1tbicontainable.html">nm::tbicontainable&lt; K, V &gt;</a></td></tr>
-<tr class="memitem:a507d34ad2ad885129fd5bef018b10844 inherit pro_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a507d34ad2ad885129fd5bef018b10844"></a>
-virtual <a class="el" href="classiteration.html">iteration</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeIteration</b> (const K &amp;key) const =0</td></tr>
-<tr class="separator:a507d34ad2ad885129fd5bef018b10844 inherit pro_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d993f7ba4e13dd9b4fa1257523b268a inherit pro_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a0d993f7ba4e13dd9b4fa1257523b268a"></a>
+virtual <a class="el" href="classiteration.html">iteration</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeIteration</b> (const K &amp;key, nbool isReversed, ncnt step, nbool isBoundary) const =0</td></tr>
+<tr class="separator:a0d993f7ba4e13dd9b4fa1257523b268a inherit pro_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b38542e53b3dcab0c11bb6bbf5e4293 inherit pro_methods_classnm_1_1tbicontainable"><td class="memItemLeft" align="right" valign="top"><a id="a3b38542e53b3dcab0c11bb6bbf5e4293"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>_getAll</b> (const K &amp;key, <a class="el" href="classnm_1_1tnarr.html">narr</a> &amp;tray) const =0</td></tr>
 <tr class="separator:a3b38542e53b3dcab0c11bb6bbf5e4293 inherit pro_methods_classnm_1_1tbicontainable"><td class="memSeparator" colspan="2">&#160;</td></tr>

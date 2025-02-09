@@ -71,22 +71,24 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;asable.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>nm {</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">class </span>ntype;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="structnm_1_1tas.html">    9</a></span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span><a class="code" href="structnm_1_1tas.html">tas</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1asable.html">asable</a> {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="structnm_1_1tas.html">tas</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        nbool is(<span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> to == <a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>(); }</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    };</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
-<div class="ttc" id="aclassnm_1_1asable_html"><div class="ttname"><a href="classnm_1_1asable.html">nm::asable</a></div><div class="ttdef"><b>Definition:</b> asable.hpp:7</div></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;aser.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../ntype.hpp&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>nm {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="structnm_1_1tas.html">    8</a></span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span><a class="code" href="structnm_1_1tas.html">tas</a>: <span class="keyword">public</span> <a class="code" href="classnm_1_1aser.html">aser</a> {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        NM(ADT(<a class="code" href="structnm_1_1tas.html">tas&lt;T&gt;</a>, <a class="code" href="classnm_1_1aser.html">aser</a>))</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="structnm_1_1tas.html">tas</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        nbool is(<span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classnm_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> to == <a class="code" href="classnm_1_1ttype.html">ttype&lt;T&gt;::get</a>(); }</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    };</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
+<div class="ttc" id="aclassnm_1_1aser_html"><div class="ttname"><a href="classnm_1_1aser.html">nm::aser</a></div><div class="ttdef"><b>Definition:</b> aser.hpp:6</div></div>
 <div class="ttc" id="aclassnm_1_1ttype_html"><div class="ttname"><a href="classnm_1_1ttype.html">nm::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:14</div></div>
 <div class="ttc" id="aclassnm_1_1type_html"><div class="ttname"><a href="classnm_1_1type.html">nm::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:13</div></div>
-<div class="ttc" id="astructnm_1_1tas_html"><div class="ttname"><a href="structnm_1_1tas.html">nm::tas</a></div><div class="ttdef"><b>Definition:</b> tas.hpp:9</div></div>
+<div class="ttc" id="astructnm_1_1tas_html"><div class="ttname"><a href="structnm_1_1tas.html">nm::tas</a></div><div class="ttdef"><b>Definition:</b> tas.hpp:8</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
