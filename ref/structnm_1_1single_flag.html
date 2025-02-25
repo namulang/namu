@@ -88,6 +88,12 @@ Inheritance diagram for nm::singleFlag:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_types_classnm_1_1flag"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classnm_1_1flag')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classnm_1_1flag.html">nm::flag</a></td></tr>
+<tr class="memitem:afbc89dd6765a3d3739cd93c3a9402b8c inherit pub_types_classnm_1_1flag"><td class="memItemLeft" align="right" valign="top"><a id="afbc89dd6765a3d3739cd93c3a9402b8c"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>res</b> { <b>MATCH</b>
+, <b>EXIT_PROGRAM</b>
+, <b>NOT_MATCH</b>
+ }</td></tr>
+<tr class="separator:afbc89dd6765a3d3739cd93c3a9402b8c inherit pub_types_classnm_1_1flag"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1flag"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1flag')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1flag.html">nm::flag</a></td></tr>
 <tr class="memitem:a22f4c91fffbf6483a9cecc0fd3348878 inherit pub_methods_classnm_1_1flag"><td class="memItemLeft" align="right" valign="top"><a id="a22f4c91fffbf6483a9cecc0fd3348878"></a>
 virtual const nchar *&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const =0</td></tr>
@@ -95,8 +101,8 @@ virtual const nchar *&#160;</td><td class="memItemRight" valign="bottom"><b>getN
 <tr class="memitem:a36a0ccc10518601e73c3194291cba032 inherit pub_methods_classnm_1_1flag"><td class="memItemLeft" align="right" valign="top"><a id="a36a0ccc10518601e73c3194291cba032"></a>
 virtual const nchar *&#160;</td><td class="memItemRight" valign="bottom"><b>getDescription</b> () const =0</td></tr>
 <tr class="separator:a36a0ccc10518601e73c3194291cba032 inherit pub_methods_classnm_1_1flag"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcd2011fff664c34466d1fd208c03d1f inherit pub_methods_classnm_1_1flag"><td class="memItemLeft" align="right" valign="top">virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1flag.html#adcd2011fff664c34466d1fd208c03d1f">take</a> (<a class="el" href="classnm_1_1interpreter.html">interpreter</a> &amp;ip, <a class="el" href="classnm_1_1starter.html">starter</a> &amp;s, <a class="el" href="structnm_1_1cli.html">cli</a> &amp;c, flagArgs &amp;a) const</td></tr>
-<tr class="separator:adcd2011fff664c34466d1fd208c03d1f inherit pub_methods_classnm_1_1flag"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b24a35b960b89de333e4ff8679a8d45 inherit pub_methods_classnm_1_1flag"><td class="memItemLeft" align="right" valign="top">virtual res&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnm_1_1flag.html#a3b24a35b960b89de333e4ff8679a8d45">take</a> (<a class="el" href="classnm_1_1interpreter.html">interpreter</a> &amp;ip, <a class="el" href="classnm_1_1starter.html">starter</a> &amp;s, <a class="el" href="structnm_1_1cli.html">cli</a> &amp;c, flagArgs &amp;a) const</td></tr>
+<tr class="separator:a3b24a35b960b89de333e4ff8679a8d45 inherit pub_methods_classnm_1_1flag"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classnm_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classnm_1_1instance')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classnm_1_1instance.html">nm::instance</a></td></tr>
 <tr class="memitem:a0a106bce4bfaad1ef5c52d195fd17176 inherit pub_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a0a106bce4bfaad1ef5c52d195fd17176"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> (<a class="el" href="structnm_1_1id.html">id</a> newId)</td></tr>
@@ -177,12 +183,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onCloneDeep</
 <tr class="memitem:aac264859bc38d97f85de761cc52f2fbf inherit pro_methods_classnm_1_1flag"><td class="memItemLeft" align="right" valign="top"><a id="aac264859bc38d97f85de761cc52f2fbf"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>_delArgs</b> (flagArgs &amp;a, std::vector&lt; int &gt; indices) const</td></tr>
 <tr class="separator:aac264859bc38d97f85de761cc52f2fbf inherit pro_methods_classnm_1_1flag"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9998dc98ed0fc11fed786b53dc76e70b inherit pro_methods_classnm_1_1flag"><td class="memItemLeft" align="right" valign="top"><a id="a9998dc98ed0fc11fed786b53dc76e70b"></a>
-virtual const nchar *&#160;</td><td class="memItemRight" valign="bottom"><b>_getRegExpr</b> () const =0</td></tr>
-<tr class="separator:a9998dc98ed0fc11fed786b53dc76e70b inherit pro_methods_classnm_1_1flag"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b70c33dd7539cc6051a1fcdea82dc35 inherit pro_methods_classnm_1_1flag"><td class="memItemLeft" align="right" valign="top"><a id="a7b70c33dd7539cc6051a1fcdea82dc35"></a>
-virtual nbool&#160;</td><td class="memItemRight" valign="bottom"><b>_onTake</b> (const flagArgs &amp;tray, <a class="el" href="structnm_1_1cli.html">cli</a> &amp;c, <a class="el" href="classnm_1_1interpreter.html">interpreter</a> &amp;ip, <a class="el" href="classnm_1_1starter.html">starter</a> &amp;s) const =0</td></tr>
-<tr class="separator:a7b70c33dd7539cc6051a1fcdea82dc35 inherit pro_methods_classnm_1_1flag"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eeff8119bee3f499d612bff50f50fb8 inherit pro_methods_classnm_1_1flag"><td class="memItemLeft" align="right" valign="top"><a id="a5eeff8119bee3f499d612bff50f50fb8"></a>
+virtual const strings &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getRegExpr</b> () const =0</td></tr>
+<tr class="separator:a5eeff8119bee3f499d612bff50f50fb8 inherit pro_methods_classnm_1_1flag"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac303077f8a29363822b5a9f3ceb623f6 inherit pro_methods_classnm_1_1flag"><td class="memItemLeft" align="right" valign="top"><a id="ac303077f8a29363822b5a9f3ceb623f6"></a>
+virtual res&#160;</td><td class="memItemRight" valign="bottom"><b>_onTake</b> (const flagArgs &amp;tray, <a class="el" href="structnm_1_1cli.html">cli</a> &amp;c, <a class="el" href="classnm_1_1interpreter.html">interpreter</a> &amp;ip, <a class="el" href="classnm_1_1starter.html">starter</a> &amp;s) const =0</td></tr>
+<tr class="separator:ac303077f8a29363822b5a9f3ceb623f6 inherit pro_methods_classnm_1_1flag"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classnm_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classnm_1_1instance')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classnm_1_1instance.html">nm::instance</a></td></tr>
 <tr class="memitem:a3866d1ca0e414499312a18fa1056593b inherit pro_methods_classnm_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a3866d1ca0e414499312a18fa1056593b"></a>
 nbool&#160;</td><td class="memItemRight" valign="bottom"><b>_setId</b> (<a class="el" href="structnm_1_1id.html">id</a> new1)</td></tr>
