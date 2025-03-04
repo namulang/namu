@@ -495,8 +495,8 @@ pre {
   font-family: $monospace;
 }
 
-pre {
-  overflow-x: auto; /* add scrollbars to wide code blocks*/
+code.hljs {
+  white-space: pre-wrap;
 }
 
 /* horizontal rule */
