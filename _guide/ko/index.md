@@ -2,6 +2,7 @@
 title: intro
 lang: ko
 layout: guide
+toc: true
 ---
 
 안녕하세요!

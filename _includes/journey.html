@@ -3,4 +3,12 @@
   <div style="margin-top: 2em;" class="entries-{{ entries_layout }}">
     {% include documents-collection.html collection=page.collection sort_by=page.sort_by sort_order=page.sort_order type=entries_layout %}
   </div>
+  {% if page.toc %}
+    <aside class="sidebar__right {% if page.toc_sticky %}sticky{% endif %}">
+      <nav class="toc">
+        <header><h4 class="nav__title"><i class="fas fa-{{ page.toc_icon | default: 'file-alt' }}"></i> {{ page.toc_label | default: site.data.ui-text[site.locale].toc_label | default: "On this page" }}</h4></header>
+        {% include toc.html sanitize=true html=content h_min=1 h_max=6 class="toc__menu" skip_no_ids=true %}
+      </nav>
+    </aside>
+  {% endif %}
 </div>

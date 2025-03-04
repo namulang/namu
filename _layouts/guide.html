@@ -6,7 +6,15 @@ journey: true
   <link rel="stylesheet" type="text/css" href="/play/highlightjs-theme-namu.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://github.com/namulang/highlightjs-namu/releases/download/v0.2.8/highlightjs-namu-min.js"></script>
-  <script>hljs.highlightAll();</script>
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function(e) {
+      $('nav.toc header').click(function() {
+        $('ul.toc__menu').toggle(500)
+      })
+    })
+    hljs.highlightAll();
+  </script>
 
 {% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
   {% include page__hero.html %}
