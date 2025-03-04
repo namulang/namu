@@ -3,3 +3,5 @@
 .jekyll-metadata
 /vendor/
 _site/
+*.patch
+Gemfile.lock
