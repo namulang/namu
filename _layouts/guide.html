@@ -7,33 +7,7 @@ journey: true
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://github.com/namulang/highlightjs-namu/releases/download/v0.2.8/highlightjs-namu-min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
-  <script>
-    $(document).ready(function(e) {
-      $('nav.toc header').click(function() {
-        $('ul.toc__menu').toggle(500)
-      })
-      $('code.language-namu').each(function(index) {
-        $(this).attr("src", this.innerHTML)
-      })
-      hljs.highlightAll();
-      $('code.hljs').hover(function() {
-        var codeTag = $(this)[0]
-        if($(this).find(".play_button").length) return
-        $(this).append('<a class="play_button"><span/></a>')
-        $(this).find('a.play_button').click(function() {
-          redirectPlay(codeTag)
-        })
-      }, function() {
-        $('.play_button').remove()
-      })
-    })
-
-    function redirectPlay(codeTag) {
-      var src = $(codeTag).attr("src")
-      localStorage.setItem("src", src)
-      window.location.replace("/play")
-    }
-  </script>
+  <script type="text/javascript" src="/guide.js"></script>
 
 {% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
   {% include page__hero.html %}
@@ -53,8 +27,6 @@ journey: true
 
 <div id="main" role="main">
   {% include sidebar.html %}
-
-  <script type='text/javascript' src='/play/namu-starter.js'></script>
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     {% if page.title %}<meta itemprop="headline" content="{{ page.title | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}

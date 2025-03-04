@@ -1,5 +1,3 @@
-import { Octokit, App } from "https://esm.sh/octokit";
-
 let examples = {
   'hello-world': `# Hello, I'm Namu language.
 # Please edit your code freely and press button in the top right to run.
@@ -126,30 +124,9 @@ function onchangeSrc(value) {
     updateCode(example);
 }
 
-async function updateVersion() {
-  const octokit = new Octokit({
-    // contents-read-only for namu repository.
-    auth: 'unknown'
-  })
-
-  await octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
-    owner: 'namulang',
-    repo: 'namu',
-    headers: {
-      'X-GitHub-Api-Version': '2022-11-28'
-    }
-  }).then(resp => {
-    if(resp.status == 200) {
-      var aTag = document.getElementById("version");
-      aTag.textContent = "namu " + resp.data.name;
-    }
-  })
-}
-
 window.onload = function() {
   loadStorage();
   resizeCodePad();
-  updateVersion();
 
   var ta = document.getElementById('ta_codepad');
   var pre = document.getElementById('pre_codepad');
