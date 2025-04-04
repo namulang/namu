@@ -24,8 +24,6 @@ jobs:
 
     - name: Install clang-format-18
       run: |
-        cd ${{github.workspace}}
-        git checkout test-workflow
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         echo "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-18 main" | sudo tee /etc/apt/sources.list.d/llvm.list
         sudo apt update
@@ -36,12 +34,9 @@ jobs:
         cd ${{github.workspace}} 
         python3 build/builder.py format
 
-    - name: check that there is a change
+    - name: check if there is a style violiations 
       run: |
-        cat ${{github.workspace}}/mod/core/builtin/container/tbicontainable.inl
-        git diff
         git diff > output.txt
-        cat output.txt
         if [ -s output.txt ]; then
           echo "error: some codes violates our code style."
           cat output.txt
