@@ -28,33 +28,16 @@ jobs:
         sudo apt update
         sudo apt install -y clang-format-18
 
-    - name: Determine base commit
-      id: get-base
+    - name: run formatter 
       run: |
-        if git rev-parse HEAD^; then
-          echo "BASE=HEAD^" >> $GITHUB_OUTPUT
-        else
-          echo "BASE=4b825dc642cb6eb9a060e54bf8d69288fbee4904" >> $GITHUB_OUTPUT
-        fi
+        cd ${{github.workspace}} 
+        python3 build/builder.py format
 
-    - name: Run clang-format check
-      id: format-check
+    - name: check that there is a change
       run: |
-        # 실제 diff 생성 (오류 무시하지 않음)
-        git clang-format-18 --diff --binary clang-format-18 ${{ steps.get-base.outputs.BASE }} \
-          --extensions c,cpp,h,hpp,inl > clang-format.diff || true
-        
-        # diff 내용 분석
-        if grep -q "diff --git" clang-format.diff; then
-          echo "result=failure" >> $GITHUB_ENV
-          exit 1  # 명시적 실패 처리
-        else
-          echo "result=success" >> $GITHUB_ENV
+        git diff > output.txt
+        if [ -n $(cat output.txt) ]; then
+          echo "error: some codes violates our code style."
+          cat output.txt
+          exit 1
         fi
-
-    - name: Report formatting issues
-      if: env.result == 'failure'
-      run: |
-        echo "❌ clang-format 형식 오류:1"
-        cat clang-format.diff
-        exit 1  # 최종 실패 상태 전달
