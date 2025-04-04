@@ -36,7 +36,7 @@ jobs:
     - name: check that there is a change
       run: |
         git diff > output.txt
-        if [ -n $(cat output.txt) ]; then
+        if [ ! -s output.txt ]; then
           echo "error: some codes violates our code style."
           cat output.txt
           exit 1
