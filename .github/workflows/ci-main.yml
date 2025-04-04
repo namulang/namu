@@ -36,7 +36,10 @@ jobs:
 
     - name: check that there is a change
       run: |
+        cat ${{github.workspace}}/mod/core/builtin/container/tbicontainable.inl
+        git diff
         git diff > output.txt
+        cat output.txt
         if [ ! -s output.txt ]; then
           echo "error: some codes violates our code style."
           cat output.txt
