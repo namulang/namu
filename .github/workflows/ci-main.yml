@@ -42,7 +42,7 @@ jobs:
         git diff
         git diff > output.txt
         cat output.txt
-        if [ ! -s output.txt ]; then
+        if [ -s output.txt ]; then
           echo "error: some codes violates our code style."
           cat output.txt
           exit 1
