@@ -18,6 +18,8 @@ jobs:
     steps:
     - name: checkout repository codes
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Install clang-format-18
       run: |
@@ -33,7 +35,7 @@ jobs:
     - name: check formatting
       run: |
         if [ -s clang-format.diff ]; then
-          echo "error: clang-format check failure."
+          echo "error: clang-format check failure.."
           cat clang-format.diff
           exit 1
         fi
