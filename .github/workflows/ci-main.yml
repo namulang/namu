@@ -28,14 +28,34 @@ jobs:
         sudo apt update
         sudo apt install -y clang-format-18
 
-    - name: run clang-format
+    - name: Determine base commit
+      id: get-base
       run: |
-        git clang-format-18 --diff --binary clang-format-18 HEAD^ --extensions c,cpp,h,hpp,inl > clang-format.diff
+        if git rev-parse HEAD^ >/dev/null 2>&1; then
+          echo "BASE=HEAD^" >> $GITHUB_OUTPUT
+        else
+          echo "BASE=4b825dc642cb6eb9a060e54bf8d69288fbee4904" >> $GITHUB_OUTPUT
+        fi  # 빈 트리 해시 대체[7]
 
-    - name: check formatting
+    - name: Run clang-format check
+      id: format-check
       run: |
-        if [ -s clang-format.diff ]; then
-          echo "error: clang-format check failure.."
-          cat clang-format.diff
-          exit 1
+        OUTPUT=$(git clang-format-18 --diff --binary clang-format-18 ${{ steps.get-base.outputs.BASE }} \
+          --extensions c,cpp,h,hpp,inl)
+        echo "output<<EOF" >> $GITHUB_OUTPUT
+        echo "$OUTPUT" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+        
+        # 실제 diff 존재 여부 검사
+        if [ -n "$OUTPUT" ] && [[ "$OUTPUT" != "no modified files to format"* ]] && [[ "$OUTPUT" != "clang-format did not modify any files"* ]]; then
+          echo "result=failure" >> $GITHUB_OUTPUT
+        else
+          echo "result=success" >> $GITHUB_OUTPUT
         fi
+
+    - name: Report formatting issues
+      if: steps.format-check.outputs.result == 'failure'
+      run: |
+        echo "❌ clang-format 검사 실패:"
+        echo "${{ steps.format-check.outputs.output }}"
+        exit 1
