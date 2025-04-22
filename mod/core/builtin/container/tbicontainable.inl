@@ -20,7 +20,8 @@ namespace nm {
     const V& ME::operator[](const K& key) const { return get(key); }
 
     TEMPL
-    ncnt ME::isEmpty() const { return len() <= 0; }
+    ncnt ME::isEmpty() const { return len()
+        <= 0; }
 
     TEMPL
     nbool ME::in(const V& val) const {
