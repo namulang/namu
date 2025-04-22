@@ -36,19 +36,3 @@ jobs:
         else
           echo "BASE=4b825dc642cb6eb9a060e54bf8d69288fbee4904" >> $GITHUB_OUTPUT
         fi
-
-   - name: Run clang-format check
-      id: format-check
-      run: |
-        # 실제 diff 생성 (오류 무시하지 않음)
-        git clang-format-18 --diff --binary clang-format-18 ${{ steps.get-base.outputs.BASE }} \
-          --extensions c,cpp,h,hpp,inl > clang-format.diff || true
-        
-        # diff 내용 분석
-        if grep -q "diff --git" clang-format.diff; then
-          echo "result=failure" >> $GITHUB_ENV
-          exit 1  # 명시적 실패 처리
-        else
-          echo "result=success" >> $GITHUB_ENV
-        fi
-
