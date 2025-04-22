@@ -41,14 +41,16 @@ jobs:
       id: format-check
       run: |
         OUTPUT=$(git clang-format-18 --diff --binary clang-format-18 ${{ steps.get-base.outputs.BASE }} \
-          --extensions c,cpp,h,hpp,inl)
+          --extensions c,cpp,h,hpp,inl 2>&1 || true)
         echo "output<<EOF" >> $GITHUB_OUTPUT
         echo "$OUTPUT" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
-        
-        # 실제 diff 존재 여부 검사
-        if [ -n "$OUTPUT" ] && [[ "$OUTPUT" != "no modified files to format"* ]] && [[ "$OUTPUT" != "clang-format did not modify any files"* ]]; then
+
+        # 실제 오류 판별
+        if [[ "$OUTPUT" =~ "diff --git" ]] || 
+           [[ "$OUTPUT" =~ "clang-format modified" ]]; then
           echo "result=failure" >> $GITHUB_OUTPUT
+          exit 1  # 여기서 수동으로 오류 발생
         else
           echo "result=success" >> $GITHUB_OUTPUT
         fi
