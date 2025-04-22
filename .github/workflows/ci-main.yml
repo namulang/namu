@@ -31,33 +31,38 @@ jobs:
     - name: Determine base commit
       id: get-base
       run: |
-        if git rev-parse HEAD^ >/dev/null 2>&1; then
+        if git rev-parse HEAD^; then
           echo "BASE=HEAD^" >> $GITHUB_OUTPUT
         else
           echo "BASE=4b825dc642cb6eb9a060e54bf8d69288fbee4904" >> $GITHUB_OUTPUT
-        fi  # 빈 트리 해시 대체[7]
+        fi
 
     - name: Run clang-format check
       id: format-check
       run: |
+        # 오류 무시하고 출력 캡처 (|| true 추가)
         OUTPUT=$(git clang-format-18 --diff --binary clang-format-18 ${{ steps.get-base.outputs.BASE }} \
           --extensions c,cpp,h,hpp,inl 2>&1 || true)
-        echo "output<<EOF" >> $GITHUB_OUTPUT
-        echo "$OUTPUT" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
+        
+        echo "$OUTPUT" > clang-format.diff
 
         # 실제 오류 판별
         if [[ "$OUTPUT" =~ "diff --git" ]] || 
            [[ "$OUTPUT" =~ "clang-format modified" ]]; then
-          echo "result=failure" >> $GITHUB_OUTPUT
+          echo "result=failure" >> $GITHUB_ENV  # 실패 상태 기록
           exit 1  # 여기서 수동으로 오류 발생
         else
-          echo "result=success" >> $GITHUB_OUTPUT
+          echo "result=success" >> $GITHUB_ENV  # 성공 상태 기록
         fi
 
     - name: Report formatting issues
-      if: steps.format-check.outputs.result == 'failure'
+      if: env.result == 'failure'
       run: |
-        echo "❌ clang-format 검사 실패:"
-        echo "${{ steps.format-check.outputs.output }}"
-        exit 1
+        echo "❌ clang-format 형식 오류 발견:"
+        cat clang-format.diff
+        exit 1  # 최종 오류 표시
+
+    - name: Final success message (optional)
+      if: env.result == 'success'
+      run: |
+        echo "✅ All files are properly formatted!"
