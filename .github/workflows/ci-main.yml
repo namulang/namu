@@ -55,6 +55,6 @@ jobs:
     - name: Report formatting issues
       if: env.result == 'failure'
       run: |
-        echo "❌ clang-format 형식 오류:"
+        echo "❌ clang-format 형식 오류:1"
         cat clang-format.diff
         exit 1  # 최종 실패 상태 전달
