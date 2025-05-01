@@ -9,7 +9,7 @@ on:
 jobs:
   build-on-macos:
     name: build on macos
-    runs-on: macos-15
+    runs-on: macos-15-intel
 
     steps:
     - name: checkout repository codes
