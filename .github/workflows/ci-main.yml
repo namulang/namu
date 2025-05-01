@@ -9,7 +9,7 @@ on:
 jobs:
   build-on-macos:
     name: build on macos
-    runs-on: macos-15-intel
+    runs-on: macos-13
 
     steps:
     - name: checkout repository codes
@@ -18,7 +18,7 @@ jobs:
     - name: install native dependencies.
       run: |
         brew unlink python && brew link --overwrite python
-        brew install wget bison flex graphviz llvm
+        brew install wget bison flex graphviz llvm clang-tidy
         echo 'export PATH="/opt/homebrew/opt/llvm/bin:$PATH"' >> /Users/runner/.bash_profile
         source /Users/runner/.bash_profile
 
