@@ -20,7 +20,9 @@ namespace nm {
         tstr(const T& it);
         tstr(const T* it);
         tstr(const binder& rhs);
+        tstr(const me& rhs);
+        ~tstr() override = default;
 
-        using super::operator=;
+        me& operator=(const me& rhs) = default;
     };
 }
