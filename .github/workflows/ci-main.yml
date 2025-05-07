@@ -7,16 +7,22 @@ on:
     branches: [ test-workflow ]
 
 jobs:
-  build-on-linux-gcc:
-    name: build on linux
-    runs-on: ubuntu-22.04
+  build-on-macos:
+    name: build on macos
+    runs-on: macos-15
 
     steps:
+    - name: checkout repository codes
+      uses: actions/checkout@v4
+
     - name: install native dependencies.
       run: |
-        sudo apt-get update
-        sudo apt install -y python3 python3-pip cmake wget flex graphviz
-        ls .
+        brew unlink python && brew link --overwrite python
+        brew install wget bison flex graphviz llvm
+        echo 'export PATH="/opt/homebrew/opt/llvm/bin:$PATH"' >> /Users/runner/.bash_profile
+        source /Users/runner/.bash_profile
+
+        echo "install bison"
         sudo wget https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.gz
         tar -zxvf bison-3.8.2.tar.gz
         cd bison-3.8.2
@@ -24,31 +30,21 @@ jobs:
         sudo make
         sudo make install
         cd ..
-        sudo rm -rf bison-3.8.2
-        if [ -f /usr/bin/bison ]; then
-          sudo mv /usr/bin/bison /usr/bin/bison-prev
-        fi
-        sudo ln -s /usr/local/bin/bison /usr/bin/bison
-
-    - name: remove clang
-      run: |
-        which clang++
-        if [ $? -ne 0 ]; then
-          sudo mv $(which clang++) /tmp
-        fi
-
-    - name: checkout repository codes
-      uses: actions/checkout@v2
 
     - name: build in release mode & test current codes.
       run: |
+        source /Users/runner/.bash_profile
+        export PATH="$PATH:/usr/local/opt/flex/bin:/usr/local/opt/bison/bin"
         export C=clang CXX=clang++ PYTHON=$(which python3)
         ls -l ${{github.workspace}}/mod/leaf/parser/bison
-        sudo $PYTHON ${{github.workspace}}/build/builder.py pub deb
-        sudo $PYTHON ${{github.workspace}}/build/builder.py test
+        $PYTHON ${{github.workspace}}/build/builder.py pub mac
+        $PYTHON ${{github.workspace}}/build/builder.py test
+
+    - name: archive to tar files
+      run: tar -cvf namu-macos-x64.tar ${{github.workspace}}/bin/
 
     - name: upload output files.
       uses: actions/upload-artifact@v4
       with:
-        name: namu-ubuntu-x64
-        path: ${{github.workspace}}/bin/namu-ubuntu-x64.deb
+        name: namu-macos-x64
+        path: namu-macos-x64.tar
