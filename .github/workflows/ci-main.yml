@@ -19,6 +19,11 @@ jobs:
       run: |
         brew unlink python && brew link --overwrite python
         brew install wget bison flex graphviz llvm clang-tidy
+
+        # softlink for clang-format and clang-tidy 
+        ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+        ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
+
         echo 'export PATH="/opt/homebrew/opt/llvm/bin:$PATH"' >> /Users/runner/.bash_profile
         source /Users/runner/.bash_profile
 
