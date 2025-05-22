@@ -45,7 +45,7 @@ public:
     using super::get;
 
     nInt get() override {
-        WHEN(isEnd()).retNul<nInt>();
+        WHEN(isEnd()).ret(nInt(0));
         return _own[_n];
     }
 

@@ -61,7 +61,7 @@ namespace nm {
     template <typename T1> tnarr<T1> ME::getAll(std::function<nbool(const T1&)> l) const {
         tnarr<T1> ret;
         for(auto e = begin(); e; ++e) {
-            const T1& val = e->template cast<T1>();
+            const T1& val = e->template cast<T1>() OR_CONTINUE;
             if(nul(val) || !l(val)) continue;
 
             ret.add(val);
@@ -126,11 +126,16 @@ namespace nm {
     typename ME::iter ME::iterate(ncnt step) const { return iter(_onMakeIteration(step, false)); }
 
     TEMPL
+    typename ME::iter ME::iterate(const T* it) const {
+        return it ? iterate(*it) : end();
+    }
+
+    TEMPL
     typename ME::iter ME::iterate(const T& it) const {
         for(iter e = begin(); e; ++e)
             WHEN(&e.get() == &it).ret(iter(e));
 
-        return iter();
+        return end();
     }
 
     TEMPL
@@ -141,7 +146,12 @@ namespace nm {
         for(iter e = rbegin(); e; ++e)
             WHEN(&e.get() == &it).ret(iter(e));
 
-        return iter();
+        return rend();
+    }
+
+    TEMPL
+    typename ME::iter ME::riterate(const T* it) const {
+        return it ? riterate(*it) : rend();
     }
 
     TEMPL

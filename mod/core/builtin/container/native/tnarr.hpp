@@ -32,7 +32,7 @@ namespace nm {
     public:
         using tarrayable<T>::operator[];
 
-        T& operator[](nidx n) override { return get(n); }
+        T& operator[](nidx n) override { return *get(n); }
 
     public:
         // len:

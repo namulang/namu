@@ -61,7 +61,7 @@ namespace nm {
         void onCloneDeep(const clonable& from) override;
 
     protected:
-        iteration* _onMakeIteration(const K& key, nbool isReversed, ncnt step,
+        iteration* _onMakeIteration(const K* key, nbool isReversed, ncnt step,
             nbool isBoundary) const override;
 
         void _getAll(const K& key, narr& tray) const override;

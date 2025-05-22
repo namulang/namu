@@ -44,7 +44,7 @@ public:
 
     using super::get;
 
-    T& get() override {
+    T* get() override {
         WHEN(isEnd()).retNul<T>();
         return _own.get(_n);
     }

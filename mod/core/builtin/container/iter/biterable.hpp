@@ -32,11 +32,12 @@ public:
     virtual ncnt stepForward(ncnt step) = 0;
     virtual ncnt stepBackward(ncnt step) = 0;
 
-    virtual const K& getKey() const = 0;
-    virtual V& getVal() = 0;
-    const V& getVal() const NM_CONST_FUNC(getVal())
-    virtual void setVal(const V& newVal) = 0;
+    virtual const K* getKey() const = 0;
 
+    virtual V* getVal() = 0;
+    const V* getVal() const NM_CONST_FUNC(getVal())
+
+    virtual void setVal(const V& newVal) = 0;
     void setVal(const V* newVal) { return setVal(*newVal); }
 
     virtual nbool isFrom(const tbicontainable& it) const = 0;

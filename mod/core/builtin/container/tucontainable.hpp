@@ -5,13 +5,13 @@
 namespace nm {
 
     class node;
-    template <typename T, typename R = T&> class tnucontainer;
+    template <typename T, typename R = T*> class tnucontainer;
     template <typename T, typename TACTIC> class tnarr;
     typedef class _nout tnarr<node, strTactic> narr;
     template <typename K, typename V> class tbicontainable;
 
     /// @remark tucontainable has API treating iter ref and element as its parameter.
-    template <typename T, typename R = T&> class tucontainable {
+    template <typename T, typename R = T*> class tucontainable {
         NM_ME(tucontainable)
 
     public:
@@ -56,9 +56,11 @@ namespace nm {
 
         iter iterate(ncnt step) const;
         iter iterate(const T& it) const;
+        iter iterate(const T* it) const;
 
         iter riterate(ncnt step) const;
         iter riterate(const T& it) const;
+        iter riterate(const T* it) const;
 
         // set:
         virtual nbool set(const iter& at, const T& new1) = 0;
